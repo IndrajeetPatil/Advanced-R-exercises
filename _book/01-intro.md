@@ -4,12 +4,15 @@
 
 ### Q1. Differences between `t.test` and `t.data.frame`
 
-```{r}
+
+```r
 library(sloop)
 
 # function type
 ftype(t.test)
+#> [1] "S3"      "generic"
 ftype(t.data.frame)
+#> [1] "S3"     "method"
 ```
 
 - `t.test()` is a **generic** function to perform t-test.
@@ -25,8 +28,10 @@ etc.
 
 For example,
 
-```{r}
+
+```r
 ftype(as.data.frame)
+#> [1] "S3"      "generic"
 ```
 
 ### Q3. What does `as.data.frame.data.frame()` do?
@@ -41,48 +46,78 @@ Before unclassing, the S3 dispatches `.Date` method, while after `.numeric` meth
 
 Before
 
-```{r}
+
+```r
 some_days <- as.Date("2017-01-31") + sample(10, 5)
 
 some_days
-
+#> [1] "2017-02-08" "2017-02-02" "2017-02-09" "2017-02-07"
+#> [5] "2017-02-05"
 s3_dispatch(mean(some_days))
-
+#> => mean.Date
+#>  * mean.default
 mean(some_days)
+#> [1] "2017-02-06"
 ```
 
 After
 
-```{r}
+
+```r
 unclass(some_days)
-
+#> [1] 17205 17199 17206 17204 17202
 mean(unclass(some_days))
-
+#> [1] 17203.2
 s3_dispatch(mean(unclass(some_days)))
+#>    mean.double
+#>    mean.numeric
+#> => mean.default
 ```
 
 ### Q5. Object properties 
 
-```{r}
+
+```r
 x <- ecdf(rpois(100, 10))
 x
-
+#> Empirical CDF 
+#> Call: ecdf(rpois(100, 10))
+#>  x[1:15] =      4,      5,      6,  ...,     17,     18
 otype(x)
-
+#> [1] "S3"
 attributes(x)
-
+#> $class
+#> [1] "ecdf"     "stepfun"  "function"
+#> 
+#> $call
+#> ecdf(rpois(100, 10))
 s3_class(x)
+#> [1] "ecdf"     "stepfun"  "function"
 ```
 
 ### Q6. Object properties 
 
-```{r}
+
+```r
 x <- table(rpois(100, 5))
 x
-
+#> 
+#>  0  1  2  3  4  5  6  7  8  9 10 11 
+#>  1  1  5 11 20 22 15 12  5  6  1  1
 otype(x)
-
+#> [1] "S3"
 attributes(x)
-
+#> $dim
+#> [1] 12
+#> 
+#> $dimnames
+#> $dimnames[[1]]
+#>  [1] "0"  "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10"
+#> [12] "11"
+#> 
+#> 
+#> $class
+#> [1] "table"
 s3_class(x)
+#> [1] "table"
 ```
