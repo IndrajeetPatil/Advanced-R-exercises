@@ -4,6 +4,8 @@
 
 ### Q1. R6 class for bank account
 
+Create the superclass and make sure it works as expected.
+
 ```{r, error=TRUE}
 library(R6)
 
@@ -14,35 +16,31 @@ bankAccount <- R6::R6Class(
     # fields -----------------------
     balance = NA,
     name = NA,
-    
+
     # methods ----------------------
     initialize = function(name = NULL, balance) {
       self$validate(balance)
-      
+
       self$name <- name
       self$balance <- balance
     },
-    
     deposit = function(amount) {
       self$validate(amount)
       cat("Current balance is: ", self$balance, "\n", sep = "")
       cat("And you are depositing: ", amount)
-      self$balance = self$balance + amount
+      self$balance <- self$balance + amount
       invisible(self)
     },
-    
     withdraw = function(amount) {
       self$validate(amount)
       cat("Current balance is: ", self$balance, "\n", sep = "")
-      cat("And you are withdrawing: ", amount)
-      self$balance = self$balance - amount
+      cat("And you are withdrawing: ", amount, "\n", sep = "")
+      self$balance <- self$balance - amount
       invisible(self)
     },
-    
     validate = function(amount) {
       stopifnot(is.numeric(amount), amount >= 0)
     },
-    
     print = function() {
       cat("Dear ", self$name, ", your balance is: ", self$balance, sep = "")
       invisible(self)
@@ -69,4 +67,89 @@ indra$deposit(-20)
 indra$deposit("pizza")
 indra$withdraw(-54)
 Anne <- bankAccount$new(name = "Anne", balance = -45)
+```
+
+Create a subclass that errors if you attempt to overdraw
+
+```{r, error=TRUE}
+bankAccountStrict <- R6::R6Class(
+  "bankAccountStrict",
+  inherit = bankAccount,
+  public = list(
+    withdraw = function(amount) {
+      # use method from superclass
+      super$withdraw(amount)
+
+      if (self$balance < 0) {
+        invisible(self)
+        stop(
+          cat("\nYou are trying to withdraw more that your balance.\n"),
+          cat("I'm sorry, ", self$name, ", I'm afraid I can't do that.", sep = ""),
+          call. = FALSE
+        )
+      }
+    }
+  )
+)
+
+# create an instance of an object
+Pritesh <- bankAccountStrict$new(name = "Pritesh", balance = 100)
+
+Pritesh
+
+# do deposits and withdrawals to see if the balance changes
+Pritesh$deposit(20)
+
+Pritesh
+
+Pritesh$withdraw(150)
+
+Pritesh
+
+# make sure input validation checks work
+Pritesh$deposit(-20)
+Pritesh$deposit("pizza")
+Pritesh$withdraw(-54)
+Pritesh <- bankAccountStrict$new(name = "Pritesh", balance = -45)
+```
+
+Create a subclass that charges a fee if overdraw
+
+```{r, error=TRUE}
+bankAccountFee <- R6::R6Class(
+  "bankAccountFee",
+  inherit = bankAccount,
+  public = list(
+    withdraw = function(amount) {
+      # use method from superclass
+      super$withdraw(amount)
+      
+      if (self$balance < 0) {
+        cat("\nI am charging you 10 euros for overdrawing.\n")
+        self$balance = self$balance - 10
+        invisible(self)
+      }
+    }
+  )
+)
+
+# create an instance of an object
+Mangesh <- bankAccountFee$new(name = "Mangesh", balance = 100)
+
+Mangesh
+
+# do deposits and withdrawals to see if the balance changes
+Mangesh$deposit(20)
+
+Mangesh
+
+Mangesh$withdraw(150)
+
+Mangesh
+
+# make sure input validation checks work
+Mangesh$deposit(-20)
+Mangesh$deposit("pizza")
+Mangesh$withdraw(-54)
+Mangesh <- bankAccountFee$new(name = "Mangesh", balance = -45)
 ```
