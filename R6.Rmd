@@ -1,0 +1,72 @@
+# R6
+
+## Exercise 14.2.6
+
+### Q1. R6 class for bank account
+
+```{r, error=TRUE}
+library(R6)
+
+# define the needed class
+bankAccount <- R6::R6Class(
+  "bankAccount",
+  public = list(
+    # fields -----------------------
+    balance = NA,
+    name = NA,
+    
+    # methods ----------------------
+    initialize = function(name = NULL, balance) {
+      self$validate(balance)
+      
+      self$name <- name
+      self$balance <- balance
+    },
+    
+    deposit = function(amount) {
+      self$validate(amount)
+      cat("Current balance is: ", self$balance, "\n", sep = "")
+      cat("And you are depositing: ", amount)
+      self$balance = self$balance + amount
+      invisible(self)
+    },
+    
+    withdraw = function(amount) {
+      self$validate(amount)
+      cat("Current balance is: ", self$balance, "\n", sep = "")
+      cat("And you are withdrawing: ", amount)
+      self$balance = self$balance - amount
+      invisible(self)
+    },
+    
+    validate = function(amount) {
+      stopifnot(is.numeric(amount), amount >= 0)
+    },
+    
+    print = function() {
+      cat("Dear ", self$name, ", your balance is: ", self$balance, sep = "")
+      invisible(self)
+    }
+  )
+)
+
+# create an instance of an object
+indra <- bankAccount$new(name = "Indra", balance = 100)
+
+indra
+
+# do deposits and withdrawals to see if the balance changes
+indra$deposit(20)
+
+indra
+
+indra$withdraw(10)
+
+indra
+
+# make sure input validation checks work
+indra$deposit(-20)
+indra$deposit("pizza")
+indra$withdraw(-54)
+Anne <- bankAccount$new(name = "Anne", balance = -45)
+```

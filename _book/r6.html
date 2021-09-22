@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 2 R6 | Advanced R Exercises</title>
+<meta name="author" content="Indrajeet Patil">
+<meta name="description" content='2.1 Exercise 14.2.6  2.1.1 Q1. R6 class for bank account library(R6) # define the needed class bankAccount &lt;- R6::R6Class(  "bankAccount",  public = list(   # fields -----------------------  ...'>
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 2 R6 | Advanced R Exercises">
+<meta property="og:type" content="book">
+<meta property="og:description" content='2.1 Exercise 14.2.6  2.1.1 Q1. R6 class for bank account library(R6) # define the needed class bankAccount &lt;- R6::R6Class(  "bankAccount",  public = list(   # fields -----------------------  ...'>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 2 R6 | Advanced R Exercises">
+<meta name="twitter:description" content='2.1 Exercise 14.2.6  2.1.1 Q1. R6 class for bank account library(R6) # define the needed class bankAccount &lt;- R6::R6Class(  "bankAccount",  public = list(   # fields -----------------------  ...'>
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Advanced R Exercises</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> About</a></li>
+<li><a class="active" href="r6.html"><span class="header-section-number">2</span> R6</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">3</span> S3</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="r6" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> R6<a class="anchor" aria-label="anchor" href="#r6"><i class="fas fa-link"></i></a>
+</h1>
+<div id="exercise-14.2.6" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> Exercise 14.2.6<a class="anchor" aria-label="anchor" href="#exercise-14.2.6"><i class="fas fa-link"></i></a>
+</h2>
+<div id="q1.-r6-class-for-bank-account" class="section level3" number="2.1.1">
+<h3>
+<span class="header-section-number">2.1.1</span> Q1. R6 class for bank account<a class="anchor" aria-label="anchor" href="#q1.-r6-class-for-bank-account"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r6.r-lib.org">R6</a></span><span class="op">)</span>
+
+<span class="co"># define the needed class</span>
+<span class="va">bankAccount</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span>
+  <span class="st">"bankAccount"</span>,
+  public <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    <span class="co"># fields -----------------------</span>
+    balance <span class="op">=</span> <span class="cn">NA</span>,
+    name <span class="op">=</span> <span class="cn">NA</span>,
+    
+    <span class="co"># methods ----------------------</span>
+    initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">balance</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">self</span><span class="op">$</span><span class="fu">validate</span><span class="op">(</span><span class="va">balance</span><span class="op">)</span>
+      
+      <span class="va">self</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="va">name</span>
+      <span class="va">self</span><span class="op">$</span><span class="va">balance</span> <span class="op">&lt;-</span> <span class="va">balance</span>
+    <span class="op">}</span>,
+    
+    deposit <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">amount</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">self</span><span class="op">$</span><span class="fu">validate</span><span class="op">(</span><span class="va">amount</span><span class="op">)</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Current balance is: "</span>, <span class="va">self</span><span class="op">$</span><span class="va">balance</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"And you are depositing: "</span>, <span class="va">amount</span><span class="op">)</span>
+      <span class="va">self</span><span class="op">$</span><span class="va">balance</span> <span class="op">=</span> <span class="va">self</span><span class="op">$</span><span class="va">balance</span> <span class="op">+</span> <span class="va">amount</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span>
+    <span class="op">}</span>,
+    
+    withdraw <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">amount</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">self</span><span class="op">$</span><span class="fu">validate</span><span class="op">(</span><span class="va">amount</span><span class="op">)</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Current balance is: "</span>, <span class="va">self</span><span class="op">$</span><span class="va">balance</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"And you are withdrawing: "</span>, <span class="va">amount</span><span class="op">)</span>
+      <span class="va">self</span><span class="op">$</span><span class="va">balance</span> <span class="op">=</span> <span class="va">self</span><span class="op">$</span><span class="va">balance</span> <span class="op">-</span> <span class="va">amount</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span>
+    <span class="op">}</span>,
+    
+    validate <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">amount</span><span class="op">)</span> <span class="op">{</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">amount</span><span class="op">)</span>, <span class="va">amount</span> <span class="op">&gt;=</span> <span class="fl">0</span><span class="op">)</span>
+    <span class="op">}</span>,
+    
+    print <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Dear "</span>, <span class="va">self</span><span class="op">$</span><span class="va">name</span>, <span class="st">", your balance is: "</span>, <span class="va">self</span><span class="op">$</span><span class="va">balance</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span>
+    <span class="op">}</span>
+  <span class="op">)</span>
+<span class="op">)</span>
+
+<span class="co"># create an instance of an object</span>
+<span class="va">indra</span> <span class="op">&lt;-</span> <span class="va">bankAccount</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Indra"</span>, balance <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
+
+<span class="va">indra</span>
+<span class="co">#&gt; Dear Indra, your balance is: 100</span>
+
+<span class="co"># do deposits and withdrawals to see if the balance changes</span>
+<span class="va">indra</span><span class="op">$</span><span class="fu">deposit</span><span class="op">(</span><span class="fl">20</span><span class="op">)</span>
+<span class="co">#&gt; Current balance is: 100</span>
+<span class="co">#&gt; And you are depositing:  20</span>
+
+<span class="va">indra</span>
+<span class="co">#&gt; Dear Indra, your balance is: 120</span>
+
+<span class="va">indra</span><span class="op">$</span><span class="fu">withdraw</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
+<span class="co">#&gt; Current balance is: 120</span>
+<span class="co">#&gt; And you are withdrawing:  10</span>
+
+<span class="va">indra</span>
+<span class="co">#&gt; Dear Indra, your balance is: 110</span>
+
+<span class="co"># make sure input validation checks work</span>
+<span class="va">indra</span><span class="op">$</span><span class="fu">deposit</span><span class="op">(</span><span class="op">-</span><span class="fl">20</span><span class="op">)</span>
+<span class="co">#&gt; Error in self$validate(amount): amount &gt;= 0 is not TRUE</span>
+<span class="va">indra</span><span class="op">$</span><span class="fu">deposit</span><span class="op">(</span><span class="st">"pizza"</span><span class="op">)</span>
+<span class="co">#&gt; Error in self$validate(amount): is.numeric(amount) is not TRUE</span>
+<span class="va">indra</span><span class="op">$</span><span class="fu">withdraw</span><span class="op">(</span><span class="op">-</span><span class="fl">54</span><span class="op">)</span>
+<span class="co">#&gt; Error in self$validate(amount): amount &gt;= 0 is not TRUE</span>
+<span class="va">Anne</span> <span class="op">&lt;-</span> <span class="va">bankAccount</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Anne"</span>, balance <span class="op">=</span> <span class="op">-</span><span class="fl">45</span><span class="op">)</span>
+<span class="co">#&gt; Error in self$validate(balance): amount &gt;= 0 is not TRUE</span></code></pre></div>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html"><span class="header-section-number">1</span> About</a></div>
+<div class="next"><a href="s3.html"><span class="header-section-number">3</span> S3</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#r6"><span class="header-section-number">2</span> R6</a></li>
+<li>
+<a class="nav-link" href="#exercise-14.2.6"><span class="header-section-number">2.1</span> Exercise 14.2.6</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#q1.-r6-class-for-bank-account"><span class="header-section-number">2.1.1</span> Q1. R6 class for bank account</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/R6.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/R6.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2021-09-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>
