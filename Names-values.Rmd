@@ -1,0 +1,58 @@
+# Names and values
+
+##  2.2.2 Exercises
+
+### Q1. Explain the relationship
+
+```{r}
+a <- 1:10
+b <- a
+c <- b
+d <- 1:10
+```
+
+All of these variable names are actively bound to the same value.
+
+```{r}
+library(lobstr)
+
+obj_addr(a)
+obj_addr(b)
+obj_addr(c)
+obj_addr(d)
+```
+
+### Q2. Function object address
+
+Following code verifies that indeed these calls all point to the same underlying function object.
+
+```{r}
+obj_addr(mean)
+obj_addr(base::mean)
+obj_addr(get("mean"))
+obj_addr(evalq(mean))
+obj_addr(match.fun("mean"))
+```
+
+### Q3. Converting non-syntactic names
+
+The conversion of non-syntactic names to syntactic ones can sometimes corrupt the data. Some datasets may require non-syntactic names.
+
+To suppress this behavior, one can set `check.names = FALSE`.
+
+### Q4. Behavior of `make.names()`
+
+It just prepends `X` in non-syntactic names and invalid characters (like `@`) are translated to `.`.
+
+```{r}
+make.names(c("123abc", "@me", "_yu", "  gh", "else"))
+```
+
+### Q5. Why is `.123e1` not a syntactic name?
+
+Because it is parsed as a number.
+
+```{r}
+.123e1 < 1
+```
+
