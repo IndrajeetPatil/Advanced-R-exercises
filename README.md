@@ -1,13 +1,9 @@
 Welcome! 
 
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). 
+My solutions to exercises from Hadley Wickham's *Advanced R* book:
 
-This template provides a skeleton file structure that you can edit to create your book. 
+<https://adv-r.hadley.nz/>
 
-The contents inside the .Rmd files provide some pointers to help you get started, but feel free to also delete the content in each file and start fresh.
+For the official solutions, have a look at this book:
 
-Additional resources:
-
-The **bookdown** book: https://bookdown.org/yihui/bookdown/
-
-The **bookdown** package reference site: https://pkgs.rstudio.com/bookdown
+<https://advanced-r-solutions.rbind.io/>

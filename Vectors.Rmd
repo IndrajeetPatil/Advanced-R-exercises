@@ -1,0 +1,79 @@
+# Vectors
+
+## Exercise 3.2.5 
+
+### Q1. Create raw and complex scalars {-}
+
+The raw type holds raw bytes. For example,
+
+```{r}
+x <- "A string"
+
+(y <- charToRaw(x))
+
+typeof(y)
+```
+
+You can use it to also figure out some encoding issues (both of these are scalars):
+
+```{r}
+charToRaw("\"")
+charToRaw("”")
+```
+
+Complex vectors can be used to represent (surprise!) complex numbers.
+
+Example of a complex scalar:
+
+```{r}
+(x <- complex(length.out = 1, real = 1, imaginary = 8))
+
+typeof(x)
+```
+
+### Q2. Vector coercion rules {-}
+
+Usually, the more *general* type would take precedence.
+
+```{r}
+c(1, FALSE)
+
+c("a", 1)
+
+c(TRUE, 1L)
+```
+
+Let's try some more examples.
+
+```{r}
+c(1.0, 1L)
+
+c(1.0, "1.0")
+
+c(TRUE, "1.0")
+```
+
+### Q3. Comparisons between different types {-}
+
+The coercion in vectors reveal why some of these comparisons return the results that they do.
+
+```{r}
+1 == "1"
+
+c(1, "1")
+```
+
+```{r}
+-1 < FALSE
+
+c(-1, FALSE)
+```
+
+```{r}
+"one" < 2
+
+c("one", 2)
+
+sort(c("one", 2))
+```
+

@@ -1,6 +1,6 @@
 # Names and values
 
-## 2.2.2 Exercises {-}
+## 2.2.2 Exercises 
 
 ### Q1. Explain the relationship {-}
 
@@ -56,7 +56,7 @@ Because it is parsed as a number.
 .123e1 < 1
 ```
 
-## 2.3.6 Exercises {-}
+## 2.3.6 Exercises 
 
 ### Q1. Usefulness of `tracemem()` {-}
 
@@ -121,7 +121,7 @@ ref(x)
 Figure here:
 <https://advanced-r-solutions.rbind.io/images/names_values/copy_on_modify_fig2.png>
 
-## 2.4.1 Exercises {-}
+## 2.4.1 Exercises 
 
 ### Q1. Object size difference between `{base}` and `{lobstr}` {-}
 
@@ -173,3 +173,41 @@ obj_size(b)
 obj_size(a, b)
 ```
 
+## 2.5.3 Exercises
+
+### Q1. Why not a circular list? {-}
+
+Copy-on-modify prevents the creation of a circular list.
+
+```{r}
+x <- list()
+
+obj_addr(x)
+
+tracemem(x)
+
+x[[1]] <- x
+
+obj_addr(x[[1]])
+```
+
+### Q2. Why are loops so slow {-}
+
+<!-- TODO -->
+
+```{r}
+library(bench)
+
+```
+
+
+### Q3. `tracemem()` on an environment {-}
+
+It doesn't work and the documentation makes it clear as to why:
+
+> It is not useful to trace NULL, environments, promises, weak references, or external pointer objects, as these are not duplicated
+
+```{r, error=TRUE}
+e <- rlang::env(a = 1, b = "3")
+tracemem(e)
+```

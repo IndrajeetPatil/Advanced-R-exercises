@@ -1,6 +1,6 @@
 # Names and values
 
-## 2.2.2 Exercises {-}
+## 2.2.2 Exercises 
 
 ### Q1. Explain the relationship {-}
 
@@ -19,13 +19,13 @@ All of these variable names are actively bound to the same value.
 library(lobstr)
 
 obj_addr(a)
-#> [1] "0x2a09a9a8"
+#> [1] "0x2a119f38"
 obj_addr(b)
-#> [1] "0x2a09a9a8"
+#> [1] "0x2a119f38"
 obj_addr(c)
-#> [1] "0x2a09a9a8"
+#> [1] "0x2a119f38"
 obj_addr(d)
-#> [1] "0x2a197890"
+#> [1] "0x2a214db8"
 ```
 
 ### Q2. Function object address {-}
@@ -35,15 +35,15 @@ Following code verifies that indeed these calls all point to the same underlying
 
 ```r
 obj_addr(mean)
-#> [1] "0x195928f0"
+#> [1] "0x19591d28"
 obj_addr(base::mean)
-#> [1] "0x195928f0"
+#> [1] "0x19591d28"
 obj_addr(get("mean"))
-#> [1] "0x195928f0"
+#> [1] "0x19591d28"
 obj_addr(evalq(mean))
-#> [1] "0x195928f0"
+#> [1] "0x19591d28"
 obj_addr(match.fun("mean"))
-#> [1] "0x195928f0"
+#> [1] "0x19591d28"
 ```
 
 ### Q3. Converting non-syntactic names  {-}
@@ -72,7 +72,7 @@ Because it is parsed as a number.
 #> [1] FALSE
 ```
 
-## 2.3.6 Exercises {-}
+## 2.3.6 Exercises 
 
 ### Q1. Usefulness of `tracemem()` {-}
 
@@ -81,7 +81,7 @@ Because it is parsed as a number.
 
 ```r
 tracemem(1:10)
-#> [1] "<00000000120D13E8>"
+#> [1] "<000000002AEC5388>"
 ```
 
 ### Q2. Why two copies when you run this code? {-}
@@ -92,11 +92,11 @@ Were it not for `4` being a double - and not an integer (`4L`) - this would have
 ```r
 x <- c(1L, 2L, 3L)
 tracemem(x)
-#> [1] "<0000000015470B68>"
+#> [1] "<000000002E1F9698>"
 
 x[[3]] <- 4
-#> tracemem[0x0000000015470b68 -> 0x0000000015490af8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
-#> tracemem[0x0000000015490af8 -> 0x000000001549c0a8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x000000002e1f9698 -> 0x000000002e217708]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
+#> tracemem[0x000000002e217708 -> 0x000000002e222c78]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 ```
 
 Try with integer:
@@ -105,10 +105,10 @@ Try with integer:
 ```r
 x <- c(1L, 2L, 3L)
 tracemem(x)
-#> [1] "<00000000154ED9D0>"
+#> [1] "<000000002E26C980>"
 
 x[[3]] <- 4L
-#> tracemem[0x00000000154ed9d0 -> 0x0000000015516630]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x000000002e26c980 -> 0x000000002e29d240]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 ```
 
 As for why this still produces a copy, this is from Solutions manual:
@@ -124,20 +124,20 @@ b <- list(a, a)
 c <- list(b, a, 1:10)
 
 ref(a)
-#> [1:0x19546e38] <int>
+#> [1:0x19406d50] <int>
 
 ref(b)
-#> o [1:0x25b81218] <list> 
-#> +-[2:0x19546e38] <int> 
-#> \-[2:0x19546e38]
+#> o [1:0x25b5b9e0] <list> 
+#> +-[2:0x19406d50] <int> 
+#> \-[2:0x19406d50]
 
 ref(c)
-#> o [1:0x29bd4e40] <list> 
-#> +-o [2:0x25b81218] <list> 
-#> | +-[3:0x19546e38] <int> 
-#> | \-[3:0x19546e38] 
-#> +-[3:0x19546e38] 
-#> \-[4:0x193626e0] <int>
+#> o [1:0x29d52648] <list> 
+#> +-o [2:0x25b5b9e0] <list> 
+#> | +-[3:0x19406d50] <int> 
+#> | \-[3:0x19406d50] 
+#> +-[3:0x19406d50] 
+#> \-[4:0x192b12f0] <int>
 ```
 
 ### Q4. List inside another list {-}
@@ -149,7 +149,7 @@ x
 #> [[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x29ea7690"
+#> [1] "0x29f6cea8"
 
 x[[2]] <- x
 x
@@ -160,19 +160,19 @@ x
 #> [[2]][[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x196c4f58"
+#> [1] "0x19331ce0"
 
 ref(x)
-#> o [1:0x196c4f58] <list> 
-#> +-[2:0x29c73b18] <int> 
-#> \-o [3:0x29ea7690] <list> 
-#>   \-[2:0x29c73b18]
+#> o [1:0x19331ce0] <list> 
+#> +-[2:0x29ce79b0] <int> 
+#> \-o [3:0x29f6cea8] <list> 
+#>   \-[2:0x29ce79b0]
 ```
 
 Figure here:
 <https://advanced-r-solutions.rbind.io/images/names_values/copy_on_modify_fig2.png>
 
-## 2.4.1 Exercises {-}
+## 2.4.1 Exercises 
 
 ### Q1. Object size difference between `{base}` and `{lobstr}` {-}
 
@@ -242,3 +242,48 @@ obj_size(a, b)
 #> 24,000,208 B
 ```
 
+## 2.5.3 Exercises
+
+### Q1. Why not a circular list? {-}
+
+Copy-on-modify prevents the creation of a circular list.
+
+
+```r
+x <- list()
+
+obj_addr(x)
+#> [1] "0x2b37b6f8"
+
+tracemem(x)
+#> [1] "<000000002B37B6F8>"
+
+x[[1]] <- x
+#> tracemem[0x000000002b37b6f8 -> 0x000000002b482310]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+
+obj_addr(x[[1]])
+#> [1] "0x2b37b6f8"
+```
+
+### Q2. Why are loops so slow {-}
+
+<!-- TODO -->
+
+
+```r
+library(bench)
+```
+
+
+### Q3. `tracemem()` on an environment {-}
+
+It doesn't work and the documentation makes it clear as to why:
+
+> It is not useful to trace NULL, environments, promises, weak references, or external pointer objects, as these are not duplicated
+
+
+```r
+e <- rlang::env(a = 1, b = "3")
+tracemem(e)
+#> Error in tracemem(e): 'tracemem' is not useful for promise and environment objects
+```
