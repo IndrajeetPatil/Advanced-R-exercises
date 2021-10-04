@@ -123,10 +123,10 @@ bankAccountFee <- R6::R6Class(
     withdraw = function(amount) {
       # use method from superclass
       super$withdraw(amount)
-      
+
       if (self$balance < 0) {
         cat("\nI am charging you 10 euros for overdrawing.\n")
-        self$balance = self$balance - 10
+        self$balance <- self$balance - 10
         invisible(self)
       }
     }
@@ -152,4 +152,41 @@ Mangesh$deposit(-20)
 Mangesh$deposit("pizza")
 Mangesh$withdraw(-54)
 Mangesh <- bankAccountFee$new(name = "Mangesh", balance = -45)
+```
+
+### Q2. R6 class for carddeck {-}
+
+```{r, eval=FALSE}
+suit <- c("SPADE", "HEARTS", "DIAMOND", "CLUB") # sigh, Windows encoding issues
+value <- c("A", 2:10, "J", "Q", "K")
+cards <- paste(rep(value, 4), suit)
+
+deck <- R6::R6Class(
+  "deck",
+  public = list(
+    # fields -----------------------
+
+
+    # methods -----------------------
+    draw = function(n) {
+      sample(self$cards, n)
+    },
+    reshuffle = function() {
+      sample(self$cards)
+      invisible(self)
+    },
+    print = function() {
+      "Drawn cards are:"
+      "Number of remaining cards:"
+    }
+  )
+)
+
+# create a new instance of this object
+mydeck <- deck$new()
+
+# draw cards
+mydeck$draw(4)
+
+# reshuffle
 ```

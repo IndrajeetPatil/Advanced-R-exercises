@@ -155,3 +155,205 @@ structure(1:5, x = "my attribute")
 structure(1:5, comment = "my attribute")
 ```
 
+## Exercise 3.4.5
+
+### Q1. `table()` function {-}
+
+`table()` returns an array with integer type and its dimensions scale with the number of variables present.
+
+```{r}
+(x <- table(mtcars$am))
+(y <- table(mtcars$am, mtcars$cyl))
+(z <- table(mtcars$am, mtcars$cyl, mtcars$vs))
+
+# type
+purrr::map(list(x, y, z), typeof)
+
+# attributes
+purrr::map(list(x, y, z), attributes)
+```
+
+### Q2. Factor reversal {-}
+
+Its levels changes but the underlying integer values remain the same.
+
+```{r}
+f1 <- factor(letters)
+f1
+as.integer(f1)
+
+levels(f1) <- rev(levels(f1))
+f1
+as.integer(f1)
+```
+
+### Q3. Factor reversal-2 {-}
+
+`f2`: Only the underlying integers are reversed, but levels remain unchanged.
+`f3`: Both the levels and the underlying integers are reversed.
+
+```{r}
+f2 <- rev(factor(letters))
+f2
+as.integer(f2)
+
+f3 <- factor(letters, levels = rev(letters))
+f3
+as.integer(f3)
+```
+
+## Exercise 3.5.4
+
+### Q1. Differences between list and atomic vector {-}
+
+feature | atomic vector  | list (aka generic vector)
+------- | -------------- | --------------
+element type | unique | mixed^[a list can contain a mix of types]
+recursive? | no | yes^[(a list can contain itself)]
+return for out-of-bounds index | `NA`^[(e.g. `c(1)[2]`)] | `NULL`^[(e.g. `list(1)[2]`)]
+memory address | single memory reference^[`lobstr::ref(c(1, 2))`] | reference per list element^[`lobstr::ref(list(1, 2))`]
+
+
+### Q2. Converting a list to an atomic vector {-}
+
+List already *is* a vector, so `as.vector` is not going to change anything, and there is no `as.atomic.vector`. Thus the need to use `unlist()`.
+
+```{r}
+x <- list(a = 1, b = 2)
+
+is.vector(x)
+is.atomic(x)
+
+as.vector(x)
+
+unlist(x)
+```
+
+### Q3. Comparing `c()` and `unlist()` for date and datetime {-}
+
+```{r}
+# creating a date and datetime
+date <- as.Date("1947-08-15")
+datetime <- as.POSIXct("1950-01-26 00:01", tz = "UTC")
+
+# check attributes
+attributes(date)
+attributes(datetime)
+
+# check their underlying double representation
+as.double(date) # number of days since the Unix epoch 1970-01-01
+as.double(datetime) # number of seconds since then
+```
+
+Behavior with `c()`: Works as expected. Only odd thing is that it strips the `tzone` attribute.
+
+```{r}
+c(date, datetime)
+
+attributes(c(date, datetime))
+
+c(datetime, date)
+
+attributes(c(datetime, date))
+```
+
+Behavior with `unlist()`: Removes all attributes and we are left only with the underlying double representations of these objects.
+
+```{r}
+unlist(list(date, datetime))
+
+unlist(list(datetime, date))
+```
+
+## Exercise 3.6.8
+
+### Q1. Data frame with 0 dimensions {-}
+
+Data frame with 0 rows is possible. This is basically a list with a vector of length 0.
+
+```{r}
+data.frame(x = numeric(0))
+```
+
+Data frame with 0 columns is possible. This will be an empty list.
+
+```{r}
+data.frame(row.names = 1)
+```
+
+Both in one go:
+
+```{r}
+data.frame()
+
+dim(data.frame())
+```
+
+### Q2. Non-unique rownames {-}
+
+If you attempt to set rownames that are not unique, it will not work.
+
+```{r, error=TRUE}
+data.frame(row.names = c(1, 1))
+```
+
+### Q3. Transposing dataframes {-}
+
+Transposing a dataframe transforms it into a matrix and coerces all its elements to be of the same type.
+
+```{r}
+# original
+(df <- head(iris))
+
+# transpose
+t(df)
+
+# transpose of a transpose
+t(t(df))
+
+# is it a dataframe?
+is.data.frame(df)
+is.data.frame(t(df))
+is.data.frame(t(t(df)))
+
+# check type
+typeof(df)
+typeof(t(df))
+typeof(t(t(df)))
+
+# check dimensions
+dim(df)
+dim(t(df))
+dim(t(t(df)))
+```
+
+### Q4. `as.matrix()` and dataframe {-}
+
+The return type of `as.matrix()` depends on dataframe column types.
+
+```{r}
+# example with mixed types (coerced to character)
+(df <- head(iris))
+
+as.matrix(df)
+
+str(as.matrix(df))
+
+# another example (no such coercion)
+BOD
+
+as.matrix(BOD)
+```
+
+From documentation of `data.matrix()`:
+
+> Return the matrix obtained by converting all the variables in a data frame to numeric mode and then binding them together as the columns of a matrix.
+
+So `data.matrix()` always returns a numeric matrix:
+
+```{r}
+data.matrix(df)
+
+str(data.matrix(df))
+```
+
