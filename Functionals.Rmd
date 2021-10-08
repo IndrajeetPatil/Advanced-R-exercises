@@ -1,0 +1,45 @@
+# Control flow
+
+## Exercise 9.2.6 {-}
+
+### Q1. Study `as_mapper()` {-}
+
+```{r}
+library(purrr)
+
+# mapping by position -----------------------
+
+x <- list(1, list(2, 3, list(1, 2)))
+
+map(x, 1)
+as_mapper(1)
+
+map(x, list(2, 1))
+as_mapper(list(2, 1))
+
+# mapping by name -----------------------
+
+y <- list(
+  list(m = "a", list(1, m = "mo")),
+  list(n = "b", list(2, n = "no"))
+)
+
+map(y, "m")
+as_mapper("m")
+
+# mixing position and name
+map(y, list(2, "m"))
+as_mapper(list(2, "m"))
+
+# compact functions ----------------------------
+
+map(y, ~ length(.x))
+as_mapper(~ length(.x))
+```
+
+You can extract attributes using `purrr::attr_getter()`:
+
+```{r}
+pluck(Titanic, attr_getter("class"))
+```
+
