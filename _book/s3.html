@@ -16,7 +16,7 @@
 <meta name="twitter:title" content="Chapter 5 S3 | Advanced R Exercises">
 <meta name="twitter:description" content='5.1 Exercise 13.2.1  Q1. Differences between t.test and t.data.frame library(sloop) # function type ftype(t.test) #&gt; [1] "S3"   "generic" ftype(t.data.frame) #&gt; [1] "S3"   "method" t.test() is a...'>
 <meta name="twitter:image" content="/cover.jpg">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11.3/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
@@ -67,7 +67,7 @@
 <div id="q1.-differences-between-t.test-and-t.data.frame" class="section level3 unnumbered">
 <h3>Q1. Differences between <code>t.test</code> and <code>t.data.frame</code><a class="anchor" aria-label="anchor" href="#q1.-differences-between-t.test-and-t.data.frame"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-lib/sloop">sloop</a></span><span class="op">)</span>
 
 <span class="co"># function type</span>
@@ -92,7 +92,7 @@
 etc.</li>
 </ul>
 <p>For example,</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://sloop.r-lib.org/reference/ftype.html">ftype</a></span><span class="op">(</span><span class="va">as.data.frame</span><span class="op">)</span>
 <span class="co">#&gt; [1] "S3"      "generic"</span></code></pre></div>
 </div>
@@ -107,26 +107,26 @@ etc.</li>
 </h3>
 <p>Before unclassing, the S3 dispatches <code>.Date</code> method, while after <code>.numeric</code> method.</p>
 <p>Before</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">some_days</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2017-01-31"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="va">some_days</span>
-<span class="co">#&gt; [1] "2017-02-03" "2017-02-10" "2017-02-06" "2017-02-07"</span>
-<span class="co">#&gt; [5] "2017-02-05"</span>
+<span class="co">#&gt; [1] "2017-02-09" "2017-02-02" "2017-02-04" "2017-02-08"</span>
+<span class="co">#&gt; [5] "2017-02-06"</span>
 
 <span class="fu"><a href="https://sloop.r-lib.org/reference/s3_dispatch.html">s3_dispatch</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">some_days</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; =&gt; mean.Date</span>
 <span class="co">#&gt;  * mean.default</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">some_days</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2017-02-06"</span></code></pre></div>
+<span class="co">#&gt; [1] "2017-02-05"</span></code></pre></div>
 <p>After</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">unclass</a></span><span class="op">(</span><span class="va">some_days</span><span class="op">)</span>
-<span class="co">#&gt; [1] 17200 17207 17203 17204 17202</span>
+<span class="co">#&gt; [1] 17206 17199 17201 17205 17203</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html">unclass</a></span><span class="op">(</span><span class="va">some_days</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 17203.2</span>
+<span class="co">#&gt; [1] 17202.8</span>
 
 <span class="fu"><a href="https://sloop.r-lib.org/reference/s3_dispatch.html">s3_dispatch</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html">unclass</a></span><span class="op">(</span><span class="va">some_days</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;    mean.double</span>
@@ -136,12 +136,12 @@ etc.</li>
 <div id="q5.-object-properties" class="section level3 unnumbered">
 <h3>Q5. Object properties<a class="anchor" aria-label="anchor" href="#q5.-object-properties"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ecdf.html">ecdf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>
 <span class="va">x</span>
 <span class="co">#&gt; Empirical CDF </span>
 <span class="co">#&gt; Call: ecdf(rpois(100, 10))</span>
-<span class="co">#&gt;  x[1:16] =      3,      4,      5,  ...,     18,     19</span>
+<span class="co">#&gt;  x[1:13] =      3,      4,      5,  ...,     14,     15</span>
 
 <span class="fu"><a href="https://sloop.r-lib.org/reference/otype.html">otype</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1] "S3"</span>
@@ -159,12 +159,12 @@ etc.</li>
 <div id="q6.-object-properties" class="section level3 unnumbered">
 <h3>Q6. Object properties<a class="anchor" aria-label="anchor" href="#q6.-object-properties"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="va">x</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;  1  2  3  4  5  6  7  8  9 10 11 12 14 </span>
-<span class="co">#&gt;  5  7 16 18 18 11 13  1  5  2  2  1  1</span>
+<span class="co">#&gt;  0  1  2  3  4  5  6  7  8  9 10 11 12 </span>
+<span class="co">#&gt;  1  5  9 13 18 21 13  7  5  1  5  1  1</span>
 
 <span class="fu"><a href="https://sloop.r-lib.org/reference/otype.html">otype</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1] "S3"</span>
@@ -175,8 +175,8 @@ etc.</li>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $dimnames</span>
 <span class="co">#&gt; $dimnames[[1]]</span>
-<span class="co">#&gt;  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11"</span>
-<span class="co">#&gt; [12] "12" "14"</span>
+<span class="co">#&gt;  [1] "0"  "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10"</span>
+<span class="co">#&gt; [12] "11" "12"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $class</span>
@@ -222,7 +222,7 @@ etc.</li>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2021-10-08.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2021-10-10.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
