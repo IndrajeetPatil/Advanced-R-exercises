@@ -49,6 +49,7 @@
 <li><a class="" href="control-flow-1.html"><span class="header-section-number">4</span> Control flow</a></li>
 <li><a class="" href="s3.html"><span class="header-section-number">5</span> S3</a></li>
 <li><a class="active" href="r6.html"><span class="header-section-number">6</span> R6</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">7</span> Big Picture</a></li>
 </ul>
 
         <div class="book-extra">
@@ -68,7 +69,7 @@
 <h3>Q1. R6 class for bank account<a class="anchor" aria-label="anchor" href="#q1.-r6-class-for-bank-account"><i class="fas fa-link"></i></a>
 </h3>
 <p>Create the superclass and make sure it works as expected.</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r6.r-lib.org">R6</a></span><span class="op">)</span>
 
 <span class="co"># define the needed class</span>
@@ -141,7 +142,7 @@
 <span class="va">Anne</span> <span class="op">&lt;-</span> <span class="va">bankAccount</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Anne"</span>, balance <span class="op">=</span> <span class="op">-</span><span class="fl">45</span><span class="op">)</span>
 <span class="co">#&gt; Error in self$validate(balance): amount &gt;= 0 is not TRUE</span></code></pre></div>
 <p>Create a subclass that errors if you attempt to overdraw</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bankAccountStrict</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span>
   <span class="st">"bankAccountStrict"</span>,
   inherit <span class="op">=</span> <span class="va">bankAccount</span>,
@@ -197,7 +198,7 @@
 <span class="va">Pritesh</span> <span class="op">&lt;-</span> <span class="va">bankAccountStrict</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Pritesh"</span>, balance <span class="op">=</span> <span class="op">-</span><span class="fl">45</span><span class="op">)</span>
 <span class="co">#&gt; Error in self$validate(balance): amount &gt;= 0 is not TRUE</span></code></pre></div>
 <p>Create a subclass that charges a fee if overdraw</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bankAccountFee</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span>
   <span class="st">"bankAccountFee"</span>,
   inherit <span class="op">=</span> <span class="va">bankAccount</span>,
@@ -251,7 +252,7 @@
 <div id="q2.-r6-class-for-carddeck" class="section level3 unnumbered">
 <h3>Q2. R6 class for carddeck<a class="anchor" aria-label="anchor" href="#q2.-r6-class-for-carddeck"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">suit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SPADE"</span>, <span class="st">"HEARTS"</span>, <span class="st">"DIAMOND"</span>, <span class="st">"CLUB"</span><span class="op">)</span> <span class="co"># sigh, Windows encoding issues</span>
 <span class="va">value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">10</span>, <span class="st">"J"</span>, <span class="st">"Q"</span>, <span class="st">"K"</span><span class="op">)</span>
 <span class="va">cards</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">value</span>, <span class="fl">4</span><span class="op">)</span>, <span class="va">suit</span><span class="op">)</span>
@@ -287,20 +288,9 @@
 </div>
 </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
   <div class="chapter-nav">
 <div class="prev"><a href="s3.html"><span class="header-section-number">5</span> S3</a></div>
-<div class="empty"></div>
+<div class="next"><a href="big-picture.html"><span class="header-section-number">7</span> Big Picture</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">

@@ -1,4 +1,4 @@
-# Control flow
+# Functionals
 
 ## Exercise 9.2.6 {-}
 
@@ -41,5 +41,120 @@ You can extract attributes using `purrr::attr_getter()`:
 
 ```{r}
 pluck(Titanic, attr_getter("class"))
+```
+
+### Q2. Properly specifying anonymous functions {-}
+
+As shown by `as_mapper()` outputs below, the second call is not appropriate for generating random numbers because it translates to `pluck()` function where the indices for plucking are taken to be randomly generated numbers.
+
+```{r}
+library(purrr)
+
+map(1:3, ~ runif(2))
+as_mapper(~ runif(2))
+
+map(1:3, runif(2))
+as_mapper(runif(2))
+```
+
+### Q3. Use the appropriate `map()` function {-}
+
+Compute the standard deviation of every column in a numeric data frame.
+
+```{r}
+map_dbl(mtcars, sd)
+```
+
+Compute the standard deviation of every numeric column in a mixed data frame. 
+
+```{r}
+keep(iris, is.numeric) %>%
+  map_dbl(sd)
+```
+
+Compute the number of levels for every factor in a data frame.
+
+```{r}
+modify_if(dplyr::starwars, is.character, as.factor) %>%
+  keep(is.factor) %>%
+  map_int(~ length(levels(.)))
+```
+
+### Q4. Statistics and visualization with `{purrr}` {-}
+
+Extract the *p*-value from each test, then visualise.
+
+```{r}
+trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(7, 10)))
+
+p <- map_dbl(trials, "p.value")
+
+plot(p)
+```
+
+### Q5. Fixing non-functioning code {-}
+
+```{r}
+x <- list(
+  list(1, c(3, 9)),
+  list(c(3, 6), 7, c(4, 7, 6))
+)
+
+triple <- function(x) x * 3
+map(x, .f = ~ map(., ~ triple(.)))
+```
+
+### Q6. Use `map()` to fit linear models to the `mtcars` dataset {-}
+
+```{r}
+formulas <- list(
+  mpg ~ disp,
+  mpg ~ I(1 / disp),
+  mpg ~ disp + wt,
+  mpg ~ I(1 / disp) + wt
+)
+
+map(formulas, ~ lm(formula = ., data = mtcars))
+```
+
+### Q7. Computing R-squared {-}
+
+```{r}
+bootstrap <- function(df) {
+  df[sample(nrow(df), replace = TRUE), , drop = FALSE]
+}
+
+bootstraps <- map(1:10, ~ bootstrap(mtcars))
+
+map_dbl(
+  bootstraps,
+  ~ summary(lm(formula = mpg ~ disp, data = .))$r.squared
+)
+```
+
+## Exercise 9.4.6 {-}
+
+### Q1. Explain the results {-}
+
+`modify()` returns the object of type same as the input. Since the input here is a dataframe of certain dimensions and `.f = 1` translates to plucking the first element in each column, it returns a dataframes with the same dimensions with the plucked element recycled across rows.
+
+```{r}
+head(modify(mtcars, 1))
+```
+
+### Q2. Use `iwalk()` instead of `walk2()` {-}
+
+```{r, eval=FALSE}
+# with walk2() -----------------------
+
+cyls <- split(mtcars, mtcars$cyl)
+paths <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
+walk2(.x = cyls, .y = paths, .f = write.csv)
+
+# with iwalk --------------------------
+
+cyls <- split(mtcars, mtcars$cyl)
+names(cyls) <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
+iwalk(cyls, ~ write.csv(.x, .y))
 ```
 
