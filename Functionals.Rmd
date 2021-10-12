@@ -1,6 +1,6 @@
 # Functionals
 
-## Exercise 9.2.6 {-}
+## Exercise 9.2.6
 
 ### Q1. Study `as_mapper()` {-}
 
@@ -132,7 +132,7 @@ map_dbl(
 )
 ```
 
-## Exercise 9.4.6 {-}
+## Exercise 9.4.6
 
 ### Q1. Explain the results {-}
 
@@ -156,5 +156,35 @@ walk2(.x = cyls, .y = paths, .f = write.csv)
 cyls <- split(mtcars, mtcars$cyl)
 names(cyls) <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
 iwalk(cyls, ~ write.csv(.x, .y))
+```
+
+### Q3. Explain the code {-}
+
+`map2()` supplies the functions defined in `.x = trans` as `f` in the anonymous functions, while the names of the columns defined in  `.y = mtcars[nm]` are picked up by `var` in the anonymous function. Note that the function is iterating over indices for vectors of transformations and column names.
+
+```{r, eval=FALSE}
+trans <- list(
+  disp = function(x) x * 0.0163871,
+  am = function(x) factor(x, labels = c("auto", "manual"))
+)
+
+nm <- names(trans)
+mtcars[nm] <- map2(trans, mtcars[nm], function(f, var) f(var))
+```
+
+In the `map` approach, the function is iterating over indices for vectors of column names.
+
+```{r, eval=FALSE}
+mtcars[nm] <- map(nm, ~ trans[[.x]](mtcars[[.x]]))
+```
+
+### Q4. Difference between `map2()` and `walk2()` {-}
+
+If we use `map2()`, it will work, but it will print `NULL` to the terminal for every element of the list.
+
+```{r, eval=FALSE}
+bods <- split(BOD, BOD$Time)
+nm <- names(bods)
+map2(bods, nm, write.csv)
 ```
 

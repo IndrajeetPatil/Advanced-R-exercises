@@ -1,6 +1,6 @@
 # Functionals
 
-## Exercise 9.2.6 {-}
+## Exercise 9.2.6
 
 ### Q1. Study `as_mapper()` {-}
 
@@ -21,7 +21,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x0000000012cf6368>
+#> <environment: 0x0000000028f07160>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -32,7 +32,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x0000000012daf518>
+#> <environment: 0x0000000028fb72c8>
 
 # mapping by name -----------------------
 
@@ -50,7 +50,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x0000000012eba320>
+#> <environment: 0x00000000290bece0>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -62,7 +62,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x0000000012f66b18>
+#> <environment: 0x0000000029173870>
 
 # compact functions ----------------------------
 
@@ -98,13 +98,13 @@ library(purrr)
 
 map(1:3, ~ runif(2))
 #> [[1]]
-#> [1] 0.5033113 0.8831831
+#> [1] 0.4744620 0.7159331
 #> 
 #> [[2]]
-#> [1] 0.6396661 0.1980272
+#> [1] 0.1927984 0.8429068
 #> 
 #> [[3]]
-#> [1] 0.8668740 0.4659268
+#> [1] 0.25538495 0.08651778
 as_mapper(~ runif(2))
 #> <lambda>
 #> function (..., .x = ..1, .y = ..2, . = ..1) 
@@ -123,8 +123,8 @@ map(1:3, runif(2))
 #> NULL
 as_mapper(runif(2))
 #> function (x, ...) 
-#> pluck(x, 0.140431632753462, 0.824880666797981, .default = NULL)
-#> <environment: 0x00000000136f5f78>
+#> pluck(x, 0.988978295121342, 0.12425332213752, .default = NULL)
+#> <environment: 0x0000000029905018>
 ```
 
 ### Q3. Use the appropriate `map()` function {-}
@@ -276,11 +276,11 @@ map_dbl(
   bootstraps,
   ~ summary(lm(formula = mpg ~ disp, data = .))$r.squared
 )
-#>  [1] 0.7709812 0.5880121 0.7399332 0.8257437 0.7064241
-#>  [6] 0.5695829 0.7289304 0.7578368 0.6953068 0.6120790
+#>  [1] 0.8474052 0.6785819 0.6836332 0.7132254 0.6027109
+#>  [6] 0.7480303 0.7580465 0.7311158 0.6054294 0.7267147
 ```
 
-## Exercise 9.4.6 {-}
+## Exercise 9.4.6
 
 ### Q1. Explain the results {-}
 
@@ -320,5 +320,38 @@ walk2(.x = cyls, .y = paths, .f = write.csv)
 cyls <- split(mtcars, mtcars$cyl)
 names(cyls) <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
 iwalk(cyls, ~ write.csv(.x, .y))
+```
+
+### Q3. Explain the code {-}
+
+`map2()` supplies the functions defined in `.x = trans` as `f` in the anonymous functions, while the names of the columns defined in  `.y = mtcars[nm]` are picked up by `var` in the anonymous function. Note that the function is iterating over indices for vectors of transformations and column names.
+
+
+```r
+trans <- list(
+  disp = function(x) x * 0.0163871,
+  am = function(x) factor(x, labels = c("auto", "manual"))
+)
+
+nm <- names(trans)
+mtcars[nm] <- map2(trans, mtcars[nm], function(f, var) f(var))
+```
+
+In the `map` approach, the function is iterating over indices for vectors of column names.
+
+
+```r
+mtcars[nm] <- map(nm, ~ trans[[.x]](mtcars[[.x]]))
+```
+
+### Q4. Difference between `map2()` and `walk2()` {-}
+
+If we use `map2()`, it will work, but it will print `NULL` to the terminal for every element of the list.
+
+
+```r
+bods <- split(BOD, BOD$Time)
+nm <- names(bods)
+map2(bods, nm, write.csv)
 ```
 

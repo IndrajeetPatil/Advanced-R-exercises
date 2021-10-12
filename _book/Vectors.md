@@ -138,7 +138,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x00000000178c4690>
+#> <bytecode: 0x00000000178d4fd0>
 #> <environment: namespace:stats>
 
 setNames(c(1, 2), c("a", "b"))
