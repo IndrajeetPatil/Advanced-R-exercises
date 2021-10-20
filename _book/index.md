@@ -1,7 +1,7 @@
 --- 
 title: "Advanced R Exercises"
 author: "Indrajeet Patil"
-date: "2021-10-12"
+date: "2021-10-20"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -19,6 +19,6 @@ My solutions to exercises from Hadley Wickham's *Advanced R* book:
 
 <https://adv-r.hadley.nz/>
 
-For the official solutions, have a look at this book:
+For the official solution manual, see:
 
 <https://advanced-r-solutions.rbind.io/>

@@ -21,7 +21,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x0000000028f07160>
+#> <environment: 0x0000000028fe8448>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -32,7 +32,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x0000000028fb72c8>
+#> <environment: 0x0000000029099ac8>
 
 # mapping by name -----------------------
 
@@ -50,7 +50,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x00000000290bece0>
+#> <environment: 0x000000002919cd88>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -62,7 +62,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x0000000029173870>
+#> <environment: 0x0000000029252768>
 
 # compact functions ----------------------------
 
@@ -98,13 +98,13 @@ library(purrr)
 
 map(1:3, ~ runif(2))
 #> [[1]]
-#> [1] 0.4744620 0.7159331
+#> [1] 0.8633161 0.8379777
 #> 
 #> [[2]]
-#> [1] 0.1927984 0.8429068
+#> [1] 0.55501957 0.09123438
 #> 
 #> [[3]]
-#> [1] 0.25538495 0.08651778
+#> [1] 0.6254702 0.5517400
 as_mapper(~ runif(2))
 #> <lambda>
 #> function (..., .x = ..1, .y = ..2, . = ..1) 
@@ -123,8 +123,8 @@ map(1:3, runif(2))
 #> NULL
 as_mapper(runif(2))
 #> function (x, ...) 
-#> pluck(x, 0.988978295121342, 0.12425332213752, .default = NULL)
-#> <environment: 0x0000000029905018>
+#> pluck(x, 0.239317416679114, 0.38918758300133, .default = NULL)
+#> <environment: 0x00000000299e2100>
 ```
 
 ### Q3. Use the appropriate `map()` function {-}
@@ -276,8 +276,8 @@ map_dbl(
   bootstraps,
   ~ summary(lm(formula = mpg ~ disp, data = .))$r.squared
 )
-#>  [1] 0.8474052 0.6785819 0.6836332 0.7132254 0.6027109
-#>  [6] 0.7480303 0.7580465 0.7311158 0.6054294 0.7267147
+#>  [1] 0.7613668 0.6564507 0.6440065 0.7627229 0.7016468
+#>  [6] 0.7355944 0.7582350 0.7607588 0.7593386 0.7076913
 ```
 
 ## Exercise 9.4.6
@@ -355,3 +355,116 @@ nm <- names(bods)
 map2(bods, nm, write.csv)
 ```
 
+## Exercise 9.6.3
+
+### Q1. Predicate functions {-}
+
+> A predicate is a function that returns a **single** `TRUE` or `FALSE`.
+
+The `is.na()` function does not return a single value, but instead returns a vector and thus isn't a predicate function.
+
+
+```r
+# contrast the following behavior of predicate functions
+is.character(c("x", 2))
+#> [1] TRUE
+is.null(c(3, NULL))
+#> [1] FALSE
+
+# with this behavior
+is.na(c(NA, 1))
+#> [1]  TRUE FALSE
+```
+
+The closest equivalent of a predicate function in base-R is `anyNA()` function.
+
+
+```r
+anyNA(c(NA, 1))
+#> [1] TRUE
+```
+
+### Q2. Fix `simple_reduce` {-}
+
+Supplied function:
+
+
+```r
+simple_reduce <- function(x, f) {
+  out <- x[[1]]
+  for (i in seq(2, length(x))) {
+    out <- f(out, x[[i]])
+  }
+  out
+}
+```
+
+Struggles with inputs of length 0 and 1 because function tries to access out-of-bound values.
+
+
+```r
+simple_reduce(numeric(), sum)
+#> Error in x[[1]]: subscript out of bounds
+simple_reduce(1, sum)
+#> Error in x[[i]]: subscript out of bounds
+simple_reduce(1:3, sum)
+#> [1] 6
+```
+
+This problem can be solved by adding `init` argument, which supplies the default or initial value for the function to operate on:
+
+
+```r
+simple_reduce2 <- function(x, f, init = 0) {
+  # initializer will become the first value
+  if (length(x) == 0L) {
+    return(init)
+  }
+  if (length(x) == 1L) {
+    return(x[[1L]])
+  }
+
+  out <- x[[1]]
+
+  for (i in seq(2, length(x))) {
+    out <- f(out, x[[i]])
+  }
+  out
+}
+```
+
+Let's try it out:
+
+
+```r
+simple_reduce2(numeric(), sum)
+#> [1] 0
+simple_reduce2(1, sum)
+#> [1] 1
+simple_reduce2(1:3, sum)
+#> [1] 6
+```
+
+With a different kind of function:
+
+
+```r
+simple_reduce2(numeric(), `*`, init = 1)
+#> [1] 1
+simple_reduce2(1, `*`, init = 1)
+#> [1] 1
+simple_reduce2(1:3, `*`, init = 1)
+#> [1] 6
+```
+
+And another one:
+
+
+```r
+simple_reduce2(numeric(), `%/%`)
+#> [1] 0
+simple_reduce2(1, `%/%`)
+#> [1] 1
+simple_reduce2(1:3, `%/%`)
+#> [1] 0
+```
