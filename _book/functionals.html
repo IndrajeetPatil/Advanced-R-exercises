@@ -1,54 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <title>Chapter 4 Functionals | Advanced R Exercises</title>
-
-    <meta name="author" content="Indrajeet Patil" />
-  
-   <meta name="description" content="My solutions to exercises in Advanced R book." />
-   <meta name="generator" content="placeholder" />
-  <meta property="og:title" content="Chapter 4 Functionals | Advanced R Exercises" />
-  <meta property="og:type" content="book" />
-  
-  <meta property="og:image" content="/cover.jpg" />
-  <meta property="og:description" content="My solutions to exercises in Advanced R book." />
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Functionals | Advanced R Exercises" />
-  
-  <meta name="twitter:description" content="My solutions to exercises in Advanced R book." />
-  <meta name="twitter:image" content="/cover.jpg" />
-  <!-- JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
-    <script src="libs/header-attrs-2.11.3/header-attrs.js"></script>
-    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
-    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
-    <script src="libs/bs3compat-0.3.1/transition.js"></script>
-    <script src="libs/bs3compat-0.3.1/tabs.js"></script>
-    <script src="libs/bs3compat-0.3.1/bs3compat.js"></script>
-    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
-    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
-
-  <!-- CSS -->
-    <link rel="stylesheet" href="bs4_style.css" />
-  
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 4 Functionals | Advanced R Exercises</title>
+<meta name="author" content="Indrajeet Patil">
+<meta name="description" content="4.1 Exercise 9.2.6  Q1. Study as_mapper() library(purrr) # mapping by position ----------------------- x &lt;- list(1, list(2, 3, list(1, 2))) map(x, 1) #&gt; [[1]] #&gt; [1] 1 #&gt; #&gt; [[2]] #&gt; [1] 2...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 4 Functionals | Advanced R Exercises">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/cover.jpg">
+<meta property="og:description" content="4.1 Exercise 9.2.6  Q1. Study as_mapper() library(purrr) # mapping by position ----------------------- x &lt;- list(1, list(2, 3, list(1, 2))) map(x, 1) #&gt; [[1]] #&gt; [1] 1 #&gt; #&gt; [[2]] #&gt; [1] 2...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 4 Functionals | Advanced R Exercises">
+<meta name="twitter:description" content="4.1 Exercise 9.2.6  Q1. Study as_mapper() library(purrr) # mapping by position ----------------------- x &lt;- list(1, list(2, 3, list(1, 2))) map(x, 1) #&gt; [[1]] #&gt; [1] 1 #&gt; #&gt; [[2]] #&gt; [1] 2...">
+<meta name="twitter:image" content="/cover.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11.15/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
 </head>
-
 <body data-spy="scroll" data-target="#toc">
 
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
-    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
@@ -60,97 +37,524 @@
     <div id="main-nav" class="collapse-lg">
       <form role="search">
         <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-      </form>
+</form>
 
-      <nav aria-label="Table of contents">
-        <h2>Table of contents</h2>
-        <div id="book-toc"></div>
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li class="book-part">Foundations</li>
+<li><a class="" href="names-and-values.html"><span class="header-section-number">1</span> Names and values</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">2</span> Vectors</a></li>
+<li><a class="" href="control-flow.html"><span class="header-section-number">3</span> Control flow</a></li>
+<li><a class="active" href="functionals.html"><span class="header-section-number">4</span> Functionals</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">5</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">6</span> R6</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">7</span> Big Picture</a></li>
+</ul>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
+          <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
-    </div>
-  </header>
-
-  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
-<div id="functionals" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Functionals</h1>
-<p>Placeholder</p>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="functionals" class="section level1" number="4">
+<h1>
+<span class="header-section-number">4</span> Functionals<a class="anchor" aria-label="anchor" href="#functionals"><i class="fas fa-link"></i></a>
+</h1>
 <div id="exercise-9.2.6" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Exercise 9.2.6</h2>
+<h2>
+<span class="header-section-number">4.1</span> Exercise 9.2.6<a class="anchor" aria-label="anchor" href="#exercise-9.2.6"><i class="fas fa-link"></i></a>
+</h2>
 <div id="q1.-study-as_mapper" class="section level3 unnumbered">
-<h3>Q1. Study <code>as_mapper()</code></h3>
+<h3>Q1. Study <code>as_mapper()</code><a class="anchor" aria-label="anchor" href="#q1.-study-as_mapper"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
+
+<span class="co"># mapping by position -----------------------</span>
+
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] 2</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+<span class="co">#&gt; function (x, ...) </span>
+<span class="co">#&gt; pluck(x, 1, .default = NULL)</span>
+<span class="co">#&gt; &lt;environment: 0x00000000176dcf58&gt;</span>
+
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; NULL</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] 3</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; function (x, ...) </span>
+<span class="co">#&gt; pluck(x, 2, 1, .default = NULL)</span>
+<span class="co">#&gt; &lt;environment: 0x0000000016d60f40&gt;</span>
+
+<span class="co"># mapping by name -----------------------</span>
+
+<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>m <span class="op">=</span> <span class="st">"a"</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>, m <span class="op">=</span> <span class="st">"mo"</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="st">"b"</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">2</span>, n <span class="op">=</span> <span class="st">"no"</span><span class="op">)</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="st">"m"</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "a"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; NULL</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span>
+<span class="co">#&gt; function (x, ...) </span>
+<span class="co">#&gt; pluck(x, "m", .default = NULL)</span>
+<span class="co">#&gt; &lt;environment: 0x0000000016b5a6a0&gt;</span>
+
+<span class="co"># mixing position and name</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"m"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "mo"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; NULL</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"m"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; function (x, ...) </span>
+<span class="co">#&gt; pluck(x, 2, "m", .default = NULL)</span>
+<span class="co">#&gt; &lt;environment: 0x0000000014b2d828&gt;</span>
+
+<span class="co"># compact functions ----------------------------</span>
+
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] 2</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] 2</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; &lt;lambda&gt;</span>
+<span class="co">#&gt; function (..., .x = ..1, .y = ..2, . = ..1) </span>
+<span class="co">#&gt; length(.x)</span>
+<span class="co">#&gt; attr(,"class")</span>
+<span class="co">#&gt; [1] "rlang_lambda_function" "function"</span></code></pre></div>
+<p>You can extract attributes using <code><a href="https://purrr.tidyverse.org/reference/attr_getter.html">purrr::attr_getter()</a></code>:</p>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck</a></span><span class="op">(</span><span class="va">Titanic</span>, <span class="fu"><a href="https://purrr.tidyverse.org/reference/attr_getter.html">attr_getter</a></span><span class="op">(</span><span class="st">"class"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] "table"</span></code></pre></div>
 </div>
 <div id="q2.-properly-specifying-anonymous-functions" class="section level3 unnumbered">
-<h3>Q2. Properly specifying anonymous functions</h3>
+<h3>Q2. Properly specifying anonymous functions<a class="anchor" aria-label="anchor" href="#q2.-properly-specifying-anonymous-functions"><i class="fas fa-link"></i></a>
+</h3>
+<p>As shown by <code><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper()</a></code> outputs below, the second call is not appropriate for generating random numbers because it translates to <code><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck()</a></code> function where the indices for plucking are taken to be randomly generated numbers.</p>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
+
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] 0.08260567 0.03363129</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] 0.9633034 0.7978496</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; [1] 0.7404899 0.4564104</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; &lt;lambda&gt;</span>
+<span class="co">#&gt; function (..., .x = ..1, .y = ..2, . = ..1) </span>
+<span class="co">#&gt; runif(2)</span>
+<span class="co">#&gt; attr(,"class")</span>
+<span class="co">#&gt; [1] "rlang_lambda_function" "function"</span>
+
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; NULL</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; NULL</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; NULL</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; function (x, ...) </span>
+<span class="co">#&gt; pluck(x, 0.395235038828105, 0.857282711192966, .default = NULL)</span>
+<span class="co">#&gt; &lt;environment: 0x000000002f4882c8&gt;</span></code></pre></div>
 </div>
 <div id="q3.-use-the-appropriate-map-function" class="section level3 unnumbered">
-<h3>Q3. Use the appropriate <code>map()</code> function</h3>
+<h3>Q3. Use the appropriate <code>map()</code> function<a class="anchor" aria-label="anchor" href="#q3.-use-the-appropriate-map-function"><i class="fas fa-link"></i></a>
+</h3>
+<p>Compute the standard deviation of every column in a numeric data frame.</p>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">sd</span><span class="op">)</span>
+<span class="co">#&gt;         mpg         cyl        disp          hp        drat </span>
+<span class="co">#&gt;   6.0269481   1.7859216 123.9386938  68.5628685   0.5346787 </span>
+<span class="co">#&gt;          wt        qsec          vs          am        gear </span>
+<span class="co">#&gt;   0.9784574   1.7869432   0.5040161   0.4989909   0.7378041 </span>
+<span class="co">#&gt;        carb </span>
+<span class="co">#&gt;   1.6152000</span></code></pre></div>
+<p>Compute the standard deviation of every numeric column in a mixed data frame.</p>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">keep</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">is.numeric</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">sd</span><span class="op">)</span>
+<span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span>
+<span class="co">#&gt;    0.8280661    0.4358663    1.7652982    0.7622377</span></code></pre></div>
+<p>Compute the number of levels for every factor in a data frame.</p>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html">modify_if</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/starwars.html">starwars</a></span>, <span class="va">is.character</span>, <span class="va">as.factor</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">keep</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_int</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;       name hair_color skin_color  eye_color        sex </span>
+<span class="co">#&gt;         87         12         31         15          4 </span>
+<span class="co">#&gt;     gender  homeworld    species </span>
+<span class="co">#&gt;          2         48         37</span></code></pre></div>
 </div>
 <div id="q4.-statistics-and-visualization-with-purrr" class="section level3 unnumbered">
-<h3>Q4. Statistics and visualization with <code>{purrr}</code></h3>
+<h3>Q4. Statistics and visualization with <code>{purrr}</code><a class="anchor" aria-label="anchor" href="#q4.-statistics-and-visualization-with-purrr"><i class="fas fa-link"></i></a>
+</h3>
+<p>Extract the <em>p</em>-value from each test, then visualise.</p>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">trials</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">trials</span>, <span class="st">"p.value"</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="Functionals_files/figure-html/unnamed-chunk-7-1.png" width="672"></div>
 </div>
 <div id="q5.-fixing-non-functioning-code" class="section level3 unnumbered">
-<h3>Q5. Fixing non-functioning code</h3>
+<h3>Q5. Fixing non-functioning code<a class="anchor" aria-label="anchor" href="#q5.-fixing-non-functioning-code"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">6</span><span class="op">)</span>, <span class="fl">7</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">7</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">triple</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">3</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">x</span>, .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">.</span>, <span class="op">~</span> <span class="fu">triple</span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [[1]][[1]]</span>
+<span class="co">#&gt; [1] 3</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[1]][[2]]</span>
+<span class="co">#&gt; [1]  9 27</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [[2]][[1]]</span>
+<span class="co">#&gt; [1]  9 18</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]][[2]]</span>
+<span class="co">#&gt; [1] 21</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]][[3]]</span>
+<span class="co">#&gt; [1] 12 21 18</span></code></pre></div>
 </div>
 <div id="q6.-use-map-to-fit-linear-models-to-the-mtcars-dataset" class="section level3 unnumbered">
-<h3>Q6. Use <code>map()</code> to fit linear models to the <code>mtcars</code> dataset</h3>
+<h3>Q6. Use <code>map()</code> to fit linear models to the <code>mtcars</code> dataset<a class="anchor" aria-label="anchor" href="#q6.-use-map-to-fit-linear-models-to-the-mtcars-dataset"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">formulas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  <span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>,
+  <span class="va">mpg</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">disp</span><span class="op">)</span>,
+  <span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span> <span class="op">+</span> <span class="va">wt</span>,
+  <span class="va">mpg</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">disp</span><span class="op">)</span> <span class="op">+</span> <span class="va">wt</span>
+<span class="op">)</span>
+
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">formulas</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; lm(formula = ., data = mtcars)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt; (Intercept)         disp  </span>
+<span class="co">#&gt;    29.59985     -0.04122  </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; lm(formula = ., data = mtcars)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt; (Intercept)    I(1/disp)  </span>
+<span class="co">#&gt;       10.75      1557.67  </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; lm(formula = ., data = mtcars)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt; (Intercept)         disp           wt  </span>
+<span class="co">#&gt;    34.96055     -0.01772     -3.35083  </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[4]]</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; lm(formula = ., data = mtcars)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt; (Intercept)    I(1/disp)           wt  </span>
+<span class="co">#&gt;      19.024     1142.560       -1.798</span></code></pre></div>
 </div>
 <div id="q7.-computing-r-squared" class="section level3 unnumbered">
-<h3>Q7. Computing R-squared</h3>
+<h3>Q7. Computing R-squared<a class="anchor" aria-label="anchor" href="#q7.-computing-r-squared"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bootstrap</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
+<span class="op">}</span>
+
+<span class="va">bootstraps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">~</span> <span class="fu">bootstrap</span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span>
+  <span class="va">bootstraps</span>,
+  <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>, data <span class="op">=</span> <span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">r.squared</span>
+<span class="op">)</span>
+<span class="co">#&gt;  [1] 0.7086782 0.6205780 0.7484682 0.8616879 0.6940498</span>
+<span class="co">#&gt;  [6] 0.7661087 0.6933255 0.7775210 0.7287404 0.6970504</span></code></pre></div>
 </div>
 </div>
 <div id="exercise-9.4.6" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Exercise 9.4.6</h2>
+<h2>
+<span class="header-section-number">4.2</span> Exercise 9.4.6<a class="anchor" aria-label="anchor" href="#exercise-9.4.6"><i class="fas fa-link"></i></a>
+</h2>
 <div id="q1.-explain-the-results" class="section level3 unnumbered">
-<h3>Q1. Explain the results</h3>
+<h3>Q1. Explain the results<a class="anchor" aria-label="anchor" href="#q1.-explain-the-results"><i class="fas fa-link"></i></a>
+</h3>
+<p><code><a href="https://purrr.tidyverse.org/reference/modify.html">modify()</a></code> returns the object of type same as the input. Since the input here is a dataframe of certain dimensions and <code>.f = 1</code> translates to plucking the first element in each column, it returns a dataframes with the same dimensions with the plucked element recycled across rows.</p>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html">modify</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;                   mpg cyl disp  hp drat   wt  qsec vs am</span>
+<span class="co">#&gt; Mazda RX4          21   6  160 110  3.9 2.62 16.46  0  1</span>
+<span class="co">#&gt; Mazda RX4 Wag      21   6  160 110  3.9 2.62 16.46  0  1</span>
+<span class="co">#&gt; Datsun 710         21   6  160 110  3.9 2.62 16.46  0  1</span>
+<span class="co">#&gt; Hornet 4 Drive     21   6  160 110  3.9 2.62 16.46  0  1</span>
+<span class="co">#&gt; Hornet Sportabout  21   6  160 110  3.9 2.62 16.46  0  1</span>
+<span class="co">#&gt; Valiant            21   6  160 110  3.9 2.62 16.46  0  1</span>
+<span class="co">#&gt;                   gear carb</span>
+<span class="co">#&gt; Mazda RX4            4    4</span>
+<span class="co">#&gt; Mazda RX4 Wag        4    4</span>
+<span class="co">#&gt; Datsun 710           4    4</span>
+<span class="co">#&gt; Hornet 4 Drive       4    4</span>
+<span class="co">#&gt; Hornet Sportabout    4    4</span>
+<span class="co">#&gt; Valiant              4    4</span></code></pre></div>
 </div>
 <div id="q2.-use-iwalk-instead-of-walk2" class="section level3 unnumbered">
-<h3>Q2. Use <code>iwalk()</code> instead of <code>walk2()</code></h3>
+<h3>Q2. Use <code>iwalk()</code> instead of <code>walk2()</code><a class="anchor" aria-label="anchor" href="#q2.-use-iwalk-instead-of-walk2"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># with walk2() -----------------------</span>
+
+<span class="va">cyls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span>
+<span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"cyl-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">cyls</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">walk2</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">cyls</span>, .y <span class="op">=</span> <span class="va">paths</span>, .f <span class="op">=</span> <span class="va">write.csv</span><span class="op">)</span>
+
+<span class="co"># with iwalk --------------------------</span>
+
+<span class="va">cyls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">cyls</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"cyl-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">cyls</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/imap.html">iwalk</a></span><span class="op">(</span><span class="va">cyls</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="q3.-explain-the-code" class="section level3 unnumbered">
-<h3>Q3. Explain the code</h3>
+<h3>Q3. Explain the code<a class="anchor" aria-label="anchor" href="#q3.-explain-the-code"><i class="fas fa-link"></i></a>
+</h3>
+<p><code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> supplies the functions defined in <code>.x = trans</code> as <code>f</code> in the anonymous functions, while the names of the columns defined in <code>.y = mtcars[nm]</code> are picked up by <code>var</code> in the anonymous function. Note that the function is iterating over indices for vectors of transformations and column names.</p>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  disp <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">0.0163871</span>,
+  am <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">x</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"auto"</span>, <span class="st">"manual"</span><span class="op">)</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">nm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">trans</span><span class="op">)</span>
+<span class="va">mtcars</span><span class="op">[</span><span class="va">nm</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span><span class="va">trans</span>, <span class="va">mtcars</span><span class="op">[</span><span class="va">nm</span><span class="op">]</span>, <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">var</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>In the <code>map</code> approach, the function is iterating over indices for vectors of column names.</p>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mtcars</span><span class="op">[</span><span class="va">nm</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">nm</span>, <span class="op">~</span> <span class="va">trans</span><span class="op">[[</span><span class="va">.x</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[[</span><span class="va">.x</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="q4.-difference-between-map2-and-walk2" class="section level3 unnumbered">
-<h3>Q4. Difference between <code>map2()</code> and <code>walk2()</code></h3>
+<h3>Q4. Difference between <code>map2()</code> and <code>walk2()</code><a class="anchor" aria-label="anchor" href="#q4.-difference-between-map2-and-walk2"><i class="fas fa-link"></i></a>
+</h3>
+<p>If we use <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code>, it will work, but it will print <code>NULL</code> to the terminal for every element of the list.</p>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">BOD</span>, <span class="va">BOD</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span>
+<span class="va">nm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">bods</span><span class="op">)</span>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span><span class="va">bods</span>, <span class="va">nm</span>, <span class="va">write.csv</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="exercise-9.6.3" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Exercise 9.6.3</h2>
+<h2>
+<span class="header-section-number">4.3</span> Exercise 9.6.3<a class="anchor" aria-label="anchor" href="#exercise-9.6.3"><i class="fas fa-link"></i></a>
+</h2>
 <div id="q1.-predicate-functions" class="section level3 unnumbered">
-<h3>Q1. Predicate functions</h3>
+<h3>Q1. Predicate functions<a class="anchor" aria-label="anchor" href="#q1.-predicate-functions"><i class="fas fa-link"></i></a>
+</h3>
+<blockquote>
+<p>A predicate is a function that returns a <strong>single</strong> <code>TRUE</code> or <code>FALSE</code>.</p>
+</blockquote>
+<p>The <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code> function does not return a single value, but instead returns a vector and thus isn’t a predicate function.</p>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># contrast the following behavior of predicate functions</span>
+<span class="fu"><a href="https://rdrr.io/r/base/character.html">is.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span>
+<span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] FALSE</span>
+
+<span class="co"># with this behavior</span>
+<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1]  TRUE FALSE</span></code></pre></div>
+<p>The closest equivalent of a predicate function in base-R is <code><a href="https://rdrr.io/r/base/NA.html">anyNA()</a></code> function.</p>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/NA.html">anyNA</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
 </div>
 <div id="q2.-fix-simple_reduce" class="section level3 unnumbered">
-<h3>Q2. Fix <code>simple_reduce</code></h3>
+<h3>Q2. Fix <code>simple_reduce</code><a class="anchor" aria-label="anchor" href="#q2.-fix-simple_reduce"><i class="fas fa-link"></i></a>
+</h3>
+<p>Supplied function:</p>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simple_reduce</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">out</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="va">out</span>, <span class="va">x</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+  <span class="op">}</span>
+  <span class="va">out</span>
+<span class="op">}</span></code></pre></div>
+<p>Struggles with inputs of length 0 and 1 because function tries to access out-of-bound values.</p>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">simple_reduce</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">sum</span><span class="op">)</span>
+<span class="co">#&gt; Error in x[[1]]: subscript out of bounds</span>
+<span class="fu">simple_reduce</span><span class="op">(</span><span class="fl">1</span>, <span class="va">sum</span><span class="op">)</span>
+<span class="co">#&gt; Error in x[[i]]: subscript out of bounds</span>
+<span class="fu">simple_reduce</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sum</span><span class="op">)</span>
+<span class="co">#&gt; [1] 6</span></code></pre></div>
+<p>This problem can be solved by adding <code>init</code> argument, which supplies the default or initial value for the function to operate on:</p>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simple_reduce2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span>, <span class="va">init</span> <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
+  <span class="co"># initializer will become the first value</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0L</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">init</span><span class="op">)</span>
+  <span class="op">}</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1L</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="fl">1L</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+  <span class="op">}</span>
+
+  <span class="va">out</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="va">out</span>, <span class="va">x</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+  <span class="op">}</span>
+  <span class="va">out</span>
+<span class="op">}</span></code></pre></div>
+<p>Let’s try it out:</p>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">simple_reduce2</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">sum</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0</span>
+<span class="fu">simple_reduce2</span><span class="op">(</span><span class="fl">1</span>, <span class="va">sum</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1</span>
+<span class="fu">simple_reduce2</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sum</span><span class="op">)</span>
+<span class="co">#&gt; [1] 6</span></code></pre></div>
+<p>With a different kind of function:</p>
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">simple_reduce2</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">`*`</span>, init <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1</span>
+<span class="fu">simple_reduce2</span><span class="op">(</span><span class="fl">1</span>, <span class="va">`*`</span>, init <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1</span>
+<span class="fu">simple_reduce2</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">`*`</span>, init <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="co">#&gt; [1] 6</span></code></pre></div>
+<p>And another one:</p>
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">simple_reduce2</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">`%/%`</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0</span>
+<span class="fu">simple_reduce2</span><span class="op">(</span><span class="fl">1</span>, <span class="va">`%/%`</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1</span>
+<span class="fu">simple_reduce2</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">`%/%`</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0</span></code></pre></div>
+</div>
+</div>
+<div id="exercise-9.7.3" class="section level2" number="4.4">
+<h2>
+<span class="header-section-number">4.4</span> Exercise 9.7.3<a class="anchor" aria-label="anchor" href="#exercise-9.7.3"><i class="fas fa-link"></i></a>
+</h2>
+<div id="q1." class="section level3 unnumbered">
+<h3>Q1.<a class="anchor" aria-label="anchor" href="#q1."><i class="fas fa-link"></i></a>
+</h3>
+</div>
+<div id="q2.-eapply-and-rapply" class="section level3 unnumbered">
+<h3>Q2. <code>eapply()</code> and <code>rapply()</code><a class="anchor" aria-label="anchor" href="#q2.-eapply-and-rapply"><i class="fas fa-link"></i></a>
+</h3>
+<blockquote>
+<p><code><a href="https://rdrr.io/r/base/eapply.html">eapply()</a></code> applies FUN to the named values from an environment and returns the results as a list.</p>
+</blockquote>
+<blockquote>
+<p><code><a href="https://rdrr.io/r/base/rapply.html">rapply()</a></code> is a recursive version of lapply with flexibility in how the result is structured (how = “..”).</p>
+</blockquote>
 
 </div>
 </div>
 </div>
-  </main>
-
-  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page">
-      <h2>On this page</h2>
-      <div id="book-on-this-page"></div>
+  <div class="chapter-nav">
+<div class="prev"><a href="control-flow.html"><span class="header-section-number">3</span> Control flow</a></div>
+<div class="next"><a href="s3.html"><span class="header-section-number">5</span> S3</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#functionals"><span class="header-section-number">4</span> Functionals</a></li>
+<li>
+<a class="nav-link" href="#exercise-9.2.6"><span class="header-section-number">4.1</span> Exercise 9.2.6</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#q1.-study-as_mapper">Q1. Study as_mapper()</a></li>
+<li><a class="nav-link" href="#q2.-properly-specifying-anonymous-functions">Q2. Properly specifying anonymous functions</a></li>
+<li><a class="nav-link" href="#q3.-use-the-appropriate-map-function">Q3. Use the appropriate map() function</a></li>
+<li><a class="nav-link" href="#q4.-statistics-and-visualization-with-purrr">Q4. Statistics and visualization with {purrr}</a></li>
+<li><a class="nav-link" href="#q5.-fixing-non-functioning-code">Q5. Fixing non-functioning code</a></li>
+<li><a class="nav-link" href="#q6.-use-map-to-fit-linear-models-to-the-mtcars-dataset">Q6. Use map() to fit linear models to the mtcars dataset</a></li>
+<li><a class="nav-link" href="#q7.-computing-r-squared">Q7. Computing R-squared</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#exercise-9.4.6"><span class="header-section-number">4.2</span> Exercise 9.4.6</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#q1.-explain-the-results">Q1. Explain the results</a></li>
+<li><a class="nav-link" href="#q2.-use-iwalk-instead-of-walk2">Q2. Use iwalk() instead of walk2()</a></li>
+<li><a class="nav-link" href="#q3.-explain-the-code">Q3. Explain the code</a></li>
+<li><a class="nav-link" href="#q4.-difference-between-map2-and-walk2">Q4. Difference between map2() and walk2()</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#exercise-9.6.3"><span class="header-section-number">4.3</span> Exercise 9.6.3</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#q1.-predicate-functions">Q1. Predicate functions</a></li>
+<li><a class="nav-link" href="#q2.-fix-simple_reduce">Q2. Fix simple_reduce</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#exercise-9.7.3"><span class="header-section-number">4.4</span> Exercise 9.7.3</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#q1.">Q1.</a></li>
+<li><a class="nav-link" href="#q2.-eapply-and-rapply">Q2. eapply() and rapply()</a></li>
+</ul>
+</li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Functionals.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Functionals.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
-      </div>
+</div>
     </nav>
-  </div>
+</div>
 
 </div>
 </div> <!-- .container -->
 
-<footer class="bg-primary text-light mt-5">
-  <div class="container"><div class="row">
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2021-10-20.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-02-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -159,8 +563,5 @@
 
 </div></div>
 </footer>
-
-
 </body>
-
 </html>

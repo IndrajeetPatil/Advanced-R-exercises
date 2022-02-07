@@ -21,7 +21,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x0000000028fe8448>
+#> <environment: 0x00000000176dcf58>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -32,7 +32,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x0000000029099ac8>
+#> <environment: 0x0000000016d60f40>
 
 # mapping by name -----------------------
 
@@ -50,7 +50,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x000000002919cd88>
+#> <environment: 0x0000000016b5a6a0>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -62,7 +62,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x0000000029252768>
+#> <environment: 0x0000000014b2d828>
 
 # compact functions ----------------------------
 
@@ -98,13 +98,13 @@ library(purrr)
 
 map(1:3, ~ runif(2))
 #> [[1]]
-#> [1] 0.8633161 0.8379777
+#> [1] 0.08260567 0.03363129
 #> 
 #> [[2]]
-#> [1] 0.55501957 0.09123438
+#> [1] 0.9633034 0.7978496
 #> 
 #> [[3]]
-#> [1] 0.6254702 0.5517400
+#> [1] 0.7404899 0.4564104
 as_mapper(~ runif(2))
 #> <lambda>
 #> function (..., .x = ..1, .y = ..2, . = ..1) 
@@ -123,8 +123,8 @@ map(1:3, runif(2))
 #> NULL
 as_mapper(runif(2))
 #> function (x, ...) 
-#> pluck(x, 0.239317416679114, 0.38918758300133, .default = NULL)
-#> <environment: 0x00000000299e2100>
+#> pluck(x, 0.395235038828105, 0.857282711192966, .default = NULL)
+#> <environment: 0x000000002f4882c8>
 ```
 
 ### Q3. Use the appropriate `map()` function {-}
@@ -276,8 +276,8 @@ map_dbl(
   bootstraps,
   ~ summary(lm(formula = mpg ~ disp, data = .))$r.squared
 )
-#>  [1] 0.7613668 0.6564507 0.6440065 0.7627229 0.7016468
-#>  [6] 0.7355944 0.7582350 0.7607588 0.7593386 0.7076913
+#>  [1] 0.7086782 0.6205780 0.7484682 0.8616879 0.6940498
+#>  [6] 0.7661087 0.6933255 0.7775210 0.7287404 0.6970504
 ```
 
 ## Exercise 9.4.6
@@ -468,3 +468,14 @@ simple_reduce2(1, `%/%`)
 simple_reduce2(1:3, `%/%`)
 #> [1] 0
 ```
+
+
+## Exercise 9.7.3
+
+### Q1.  {-}
+
+### Q2. `eapply()` and `rapply()` {-}
+
+> `eapply()` applies FUN to the named values from an environment and returns the results as a list.
+
+> `rapply()` is a recursive version of lapply with flexibility in how the result is structured (how = "..").

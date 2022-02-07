@@ -1,54 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <title>Chapter 3 Control flow | Advanced R Exercises</title>
-
-    <meta name="author" content="Indrajeet Patil" />
-  
-   <meta name="description" content="My solutions to exercises in Advanced R book." />
-   <meta name="generator" content="placeholder" />
-  <meta property="og:title" content="Chapter 3 Control flow | Advanced R Exercises" />
-  <meta property="og:type" content="book" />
-  
-  <meta property="og:image" content="/cover.jpg" />
-  <meta property="og:description" content="My solutions to exercises in Advanced R book." />
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Control flow | Advanced R Exercises" />
-  
-  <meta name="twitter:description" content="My solutions to exercises in Advanced R book." />
-  <meta name="twitter:image" content="/cover.jpg" />
-  <!-- JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
-    <script src="libs/header-attrs-2.11.3/header-attrs.js"></script>
-    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
-    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
-    <script src="libs/bs3compat-0.3.1/transition.js"></script>
-    <script src="libs/bs3compat-0.3.1/tabs.js"></script>
-    <script src="libs/bs3compat-0.3.1/bs3compat.js"></script>
-    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
-    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
-
-  <!-- CSS -->
-    <link rel="stylesheet" href="bs4_style.css" />
-  
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 3 Control flow | Advanced R Exercises</title>
+<meta name="author" content="Indrajeet Patil">
+<meta name="description" content="Exercise 5.2.4  Q1. ifelse() return type It’s type unstable, i.e. the type of return will depend on the type of each condition (yes and no, i.e.), and works only for cases where test argument...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 3 Control flow | Advanced R Exercises">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/cover.jpg">
+<meta property="og:description" content="Exercise 5.2.4  Q1. ifelse() return type It’s type unstable, i.e. the type of return will depend on the type of each condition (yes and no, i.e.), and works only for cases where test argument...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 3 Control flow | Advanced R Exercises">
+<meta name="twitter:description" content="Exercise 5.2.4  Q1. ifelse() return type It’s type unstable, i.e. the type of return will depend on the type of each condition (yes and no, i.e.), and works only for cases where test argument...">
+<meta name="twitter:image" content="/cover.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11.15/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
 </head>
-
 <body data-spy="scroll" data-target="#toc">
 
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
-    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
@@ -60,70 +37,203 @@
     <div id="main-nav" class="collapse-lg">
       <form role="search">
         <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-      </form>
+</form>
 
-      <nav aria-label="Table of contents">
-        <h2>Table of contents</h2>
-        <div id="book-toc"></div>
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li class="book-part">Foundations</li>
+<li><a class="" href="names-and-values.html"><span class="header-section-number">1</span> Names and values</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">2</span> Vectors</a></li>
+<li><a class="active" href="control-flow.html"><span class="header-section-number">3</span> Control flow</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">4</span> Functionals</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">5</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">6</span> R6</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">7</span> Big Picture</a></li>
+</ul>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
+          <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
-    </div>
-  </header>
-
-  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
-<div id="control-flow" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Control flow</h1>
-<p>Placeholder</p>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="control-flow" class="section level1" number="3">
+<h1>
+<span class="header-section-number">3</span> Control flow<a class="anchor" aria-label="anchor" href="#control-flow"><i class="fas fa-link"></i></a>
+</h1>
 <div id="exercise-5.2.4" class="section level2 unnumbered">
-<h2>Exercise 5.2.4</h2>
+<h2>Exercise 5.2.4<a class="anchor" aria-label="anchor" href="#exercise-5.2.4"><i class="fas fa-link"></i></a>
+</h2>
 <div id="q1.-ifelse-return-type" class="section level3 unnumbered">
-<h3>Q1. <code>ifelse()</code> return type</h3>
+<h3>Q1. <code>ifelse()</code> return type<a class="anchor" aria-label="anchor" href="#q1.-ifelse-return-type"><i class="fas fa-link"></i></a>
+</h3>
+<p>It’s type unstable, i.e. the type of return will depend on the type of each condition (<code>yes</code> and <code>no</code>, i.e.), and works only for cases where <code>test</code> argument evaluated to a <code>logical</code> type.</p>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span> <span class="co"># numeric returned</span>
+<span class="co">#&gt; [1] 1</span>
+<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span> <span class="co"># character returned</span>
+<span class="co">#&gt; [1] "no"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span>
+<span class="co">#&gt; [1] NA</span></code></pre></div>
+<p>Additionally, if the test doesn’t resolve to <code>logical</code> type, it will try to coerce whatever the resulting type to <code>logical</code>:</p>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># will work</span>
+<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="st">"TRUE"</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1</span>
+<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="st">"true"</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1</span>
+
+<span class="co"># won't work</span>
+<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="st">"tRuE"</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span>
+<span class="co">#&gt; [1] NA</span>
+<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">NaN</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span>
+<span class="co">#&gt; [1] NA</span></code></pre></div>
 </div>
 <div id="q2.-why-does-the-following-code-work" class="section level3 unnumbered">
-<h3>Q2. Why does the following code work?</h3>
+<h3>Q2. Why does the following code work?<a class="anchor" aria-label="anchor" href="#q2.-why-does-the-following-code-work"><i class="fas fa-link"></i></a>
+</h3>
+<p>As can be seen, the code works because the tests are successfully coerced to a logical type.</p>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>
+<span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span>
+<span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="st">"not empty"</span> <span class="kw">else</span> <span class="st">"empty"</span>
+<span class="co">#&gt; [1] "not empty"</span>
+
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] FALSE</span>
+<span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="st">"not empty"</span> <span class="kw">else</span> <span class="st">"empty"</span>
+<span class="co">#&gt; [1] "empty"</span></code></pre></div>
 </div>
 </div>
 <div id="exercise-5.3.3" class="section level2 unnumbered">
-<h2>Exercise 5.3.3</h2>
+<h2>Exercise 5.3.3<a class="anchor" aria-label="anchor" href="#exercise-5.3.3"><i class="fas fa-link"></i></a>
+</h2>
 <div id="q1.-why-does-this-work" class="section level3 unnumbered">
-<h3>Q1. Why does this work?</h3>
+<h3>Q1. Why does this work?<a class="anchor" aria-label="anchor" href="#q1.-why-does-this-work"><i class="fas fa-link"></i></a>
+</h3>
+<p>This works because <code>1:length(x)</code> goes both ways; in this case, from 1 to 0. And, since out-of-bound values for atomic vectors is <code>NA</code>, all related operations with it also lead to <code>NA</code>.</p>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">out</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
+
+  <span class="va">out</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">^</span><span class="fl">2</span>
+<span class="op">}</span>
+<span class="co">#&gt; [1] NA</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; NULL</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; numeric(0)</span>
+<span class="co">#&gt; list()</span>
+
+<span class="va">out</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] NA</span></code></pre></div>
+<p>A way to do avoid this unintended behavior would be:</p>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">out</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">^</span><span class="fl">2</span>
+<span class="op">}</span>
+<span class="co">#&gt; Error in 1:seq_along(x): argument of length 0</span>
+
+<span class="va">out</span>
+<span class="co">#&gt; list()</span></code></pre></div>
 </div>
 <div id="q2.-index-vectors" class="section level3 unnumbered">
-<h3>Q2. Index vectors</h3>
+<h3>Q2. Index vectors<a class="anchor" aria-label="anchor" href="#q2.-index-vectors"><i class="fas fa-link"></i></a>
+</h3>
+<p>Surprisingly (at least to me), <code>x</code> takes all values of the vector <code>xs</code>:</p>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># xs &lt;- c(1, 2, 3)</span>
+<span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">x</span> <span class="kw">in</span> <span class="va">xs</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  <span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">x</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="co">#&gt; [1] 4</span>
+<span class="co">#&gt; [1] 5</span>
+<span class="co">#&gt; [1] 6</span>
+
+<span class="va">xs</span>
+<span class="co">#&gt; [1]  4  5  6  8 10 12</span></code></pre></div>
 </div>
 <div id="q3.-index-increase" class="section level3 unnumbered">
-<h3>Q3. Index increase</h3>
+<h3>Q3. Index increase<a class="anchor" aria-label="anchor" href="#q3.-index-increase"><i class="fas fa-link"></i></a>
+</h3>
+<p>In a <code>for</code> loop - like in a <code>while</code> loop - the index is updated in the beginning of each iteration.</p>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"before: "</span>, <span class="va">i</span>, <span class="st">"\n"</span><span class="op">)</span>
+  <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">*</span> <span class="fl">2</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"after: "</span>, <span class="va">i</span>, <span class="st">"\n"</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="co">#&gt; before:  1 </span>
+<span class="co">#&gt; after:  2 </span>
+<span class="co">#&gt; before:  2 </span>
+<span class="co">#&gt; after:  4 </span>
+<span class="co">#&gt; before:  3 </span>
+<span class="co">#&gt; after:  6</span>
+
+<span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">1</span>
+<span class="kw">while</span> <span class="op">(</span><span class="va">i</span> <span class="op">&lt;</span> <span class="fl">3</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"before: "</span>, <span class="va">i</span>, <span class="st">"\n"</span><span class="op">)</span>
+  <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">*</span> <span class="fl">2</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"after: "</span>, <span class="va">i</span>, <span class="st">"\n"</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="co">#&gt; before:  1 </span>
+<span class="co">#&gt; after:  2 </span>
+<span class="co">#&gt; before:  2 </span>
+<span class="co">#&gt; after:  4</span></code></pre></div>
 
 </div>
 </div>
 </div>
-  </main>
-
-  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page">
-      <h2>On this page</h2>
-      <div id="book-on-this-page"></div>
+  <div class="chapter-nav">
+<div class="prev"><a href="vectors.html"><span class="header-section-number">2</span> Vectors</a></div>
+<div class="next"><a href="functionals.html"><span class="header-section-number">4</span> Functionals</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#control-flow"><span class="header-section-number">3</span> Control flow</a></li>
+<li>
+<a class="nav-link" href="#exercise-5.2.4">Exercise 5.2.4</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#q1.-ifelse-return-type">Q1. ifelse() return type</a></li>
+<li><a class="nav-link" href="#q2.-why-does-the-following-code-work">Q2. Why does the following code work?</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#exercise-5.3.3">Exercise 5.3.3</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#q1.-why-does-this-work">Q1. Why does this work?</a></li>
+<li><a class="nav-link" href="#q2.-index-vectors">Q2. Index vectors</a></li>
+<li><a class="nav-link" href="#q3.-index-increase">Q3. Index increase</a></li>
+</ul>
+</li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Control-flow.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Control-flow.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
-      </div>
+</div>
     </nav>
-  </div>
+</div>
 
 </div>
 </div> <!-- .container -->
 
-<footer class="bg-primary text-light mt-5">
-  <div class="container"><div class="row">
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2021-10-20.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-02-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -132,8 +242,5 @@
 
 </div></div>
 </footer>
-
-
 </body>
-
 </html>
