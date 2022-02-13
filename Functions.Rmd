@@ -1,0 +1,147 @@
+# Functions
+
+## Exercise 6.2.5
+
+### Q1. Function names {-}
+
+Given a name, `match.fun()` lets you find a function.
+
+```{r}
+match.fun("mean")
+```
+
+But, given a function, it doesn't make sense to find its name in R because there can be multiple names bound to the same function.
+
+```{r}
+f1 <- function(x) mean(x)
+f2 <- f1
+
+match.fun("f1")
+
+match.fun("f1")
+```
+
+### Q2. Correct way to call anonymous functions {-}
+
+This is not correct since the function will evaluate `3()`, which is syntactically not allowed since literals can't be treated like functions.
+
+```{r, error=TRUE}
+(function(x) 3())()
+```
+
+This is correct.
+
+```{r}
+(function(x) 3)()
+```
+
+### Q3. Scan code for opportunities to use anonymous function {-}
+
+Self activity.
+
+### Q4. Detecting functions and primitive functions {-}
+
+Use `is.function()` to check if an object is a function:
+
+```{r}
+# these are functions
+f <- function(x) 3
+is.function(mean)
+is.function(f)
+
+# these aren't
+is.function("x")
+is.function(new.env())
+```
+
+Use `is.primitive()` to check if a function is primitive:
+
+```{r}
+# primitive
+is.primitive(sum)
+is.primitive(`+`)
+
+# not primitive
+is.primitive(mean)
+is.primitive(read.csv)
+```
+
+### Q5. Detecting functions and primitive functions {-}
+
+```{r}
+objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
+funs <- Filter(is.function, objs)
+```
+
+> Which base function has the most arguments?
+
+`scan()` function has the most arguments.
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+
+df_formals <- purrr::map_df(funs, ~ length(formals(.))) %>%
+  tidyr::pivot_longer(
+    cols = dplyr::everything(),
+    names_to = "function",
+    values_to = "argumentCount"
+  ) %>%
+  dplyr::arrange(desc(argumentCount))
+
+```
+
+> How many base functions have no arguments? What’s special about those functions?
+
+At the time of writing, 253 base functions have no arguments. All of these are primitive functions
+
+```{r}
+dplyr::filter(df_formals, argumentCount == 0)
+```
+
+> How could you adapt the code to find all primitive functions?
+
+```{r}
+objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
+funs <- Filter(is.function, objs)
+primitives <- Filter(is.primitive, funs)
+
+names(primitives)
+```
+
+### Q6. Important components of a function {-}
+
+Except for primitive functions, all functions have 3 important components:
+
+* `formals()`
+* `body()`
+* `environment()`
+
+### Q7. Printing of function environment {-}
+
+All package functions print their environment:
+
+```{r}
+# base
+mean
+
+# other package function
+purrr::map
+```
+
+There are two exceptions to this rule:
+
+* primitive functions:
+
+```{r}
+sum
+```
+
+* functions created in the global environment:
+
+```{r}
+f <- function(x) mean(x)
+f
+```
+
+
+
