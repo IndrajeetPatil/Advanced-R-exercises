@@ -143,5 +143,45 @@ f <- function(x) mean(x)
 f
 ```
 
+## Exercise 6.4.5
 
+### Q1. All about *c* {-}
+
+In `c(c = c)`:
+* first *c* is interpreted as a function `c()`
+* second *c* as a name for the vector element
+* third *c* as a variable with value `10`
+
+```{r}
+c <- 10
+c(c = c)
+```
+
+### Q2. Four principles that govern how R looks for values {-}
+
+1. Name masking (names defined inside a function mask names defined outside a function)
+
+2. Functions vs. variables (the rule above also applies to function names) 
+
+3. A fresh start (every time a function is called a new environment is created to host its execution)
+
+4. Dynamic look-up (R looks for values when the function is run, not when the function is created)
+
+### Q3. Predict the return {-}
+
+Correctly predicted 😉😉
+
+```{r}
+f <- function(x) {
+  f <- function(x) {
+    f <- function() {
+      x ^ 2
+    }
+    f() + 1
+  }
+  f(x) * 2
+}
+
+f(10)
+```
 

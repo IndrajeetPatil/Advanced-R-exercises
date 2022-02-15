@@ -11,7 +11,7 @@ Given a name, `match.fun()` lets you find a function.
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x000000001653ec78>
+#> <bytecode: 0x000000001653eb98>
 #> <environment: namespace:base>
 ```
 
@@ -267,7 +267,7 @@ All package functions print their environment:
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x000000001653ec78>
+#> <bytecode: 0x000000001653eb98>
 #> <environment: namespace:base>
 
 # other package function
@@ -277,7 +277,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x0000000017bc9120>
+#> <bytecode: 0x000000002ea69938>
 #> <environment: namespace:purrr>
 ```
 
@@ -300,5 +300,50 @@ f
 #> function(x) mean(x)
 ```
 
+## Exercise 6.4.5
 
+### Q1. All about *c* {-}
+
+In `c(c = c)`:
+* first *c* is interpreted as a function `c()`
+* second *c* as a name for the vector element
+* third *c* as a variable with value `10`
+
+
+```r
+c <- 10
+c(c = c)
+#>  c 
+#> 10
+```
+
+### Q2. Four principles that govern how R looks for values {-}
+
+1. Name masking (names defined inside a function mask names defined outside a function)
+
+2. Functions vs. variables (the rule above also applies to function names) 
+
+3. A fresh start (every time a function is called a new environment is created to host its execution)
+
+4. Dynamic look-up (R looks for values when the function is run, not when the function is created)
+
+### Q3. Predict the return {-}
+
+Correctly predicted 😉😉
+
+
+```r
+f <- function(x) {
+  f <- function(x) {
+    f <- function() {
+      x ^ 2
+    }
+    f() + 1
+  }
+  f(x) * 2
+}
+
+f(10)
+#> [1] 202
+```
 

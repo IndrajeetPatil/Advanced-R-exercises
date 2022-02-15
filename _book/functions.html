@@ -6,15 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 4 Functions | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content='4.1 Exercise 6.2.5  Q1. Function names Given a name, match.fun() lets you find a function. match.fun("mean") #&gt; function (x, ...) #&gt; UseMethod("mean") #&gt; &lt;bytecode: 0x000000001653ec78&gt; #&gt;...'>
+<meta name="description" content='4.1 Exercise 6.2.5  Q1. Function names Given a name, match.fun() lets you find a function. match.fun("mean") #&gt; function (x, ...) #&gt; UseMethod("mean") #&gt; &lt;bytecode: 0x000000001653eb98&gt; #&gt;...'>
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 4 Functions | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.jpg">
-<meta property="og:description" content='4.1 Exercise 6.2.5  Q1. Function names Given a name, match.fun() lets you find a function. match.fun("mean") #&gt; function (x, ...) #&gt; UseMethod("mean") #&gt; &lt;bytecode: 0x000000001653ec78&gt; #&gt;...'>
+<meta property="og:description" content='4.1 Exercise 6.2.5  Q1. Function names Given a name, match.fun() lets you find a function. match.fun("mean") #&gt; function (x, ...) #&gt; UseMethod("mean") #&gt; &lt;bytecode: 0x000000001653eb98&gt; #&gt;...'>
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 4 Functions | Advanced R Exercises">
-<meta name="twitter:description" content='4.1 Exercise 6.2.5  Q1. Function names Given a name, match.fun() lets you find a function. match.fun("mean") #&gt; function (x, ...) #&gt; UseMethod("mean") #&gt; &lt;bytecode: 0x000000001653ec78&gt; #&gt;...'>
+<meta name="twitter:description" content='4.1 Exercise 6.2.5  Q1. Function names Given a name, match.fun() lets you find a function. match.fun("mean") #&gt; function (x, ...) #&gt; UseMethod("mean") #&gt; &lt;bytecode: 0x000000001653eb98&gt; #&gt;...'>
 <meta name="twitter:image" content="/cover.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11.15/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +40,18 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 4</span> Functions</a></li></ul>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li class="book-part">Foundations</li>
+<li><a class="" href="names-and-values.html"><span class="header-section-number">1</span> Names and values</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">2</span> Vectors</a></li>
+<li><a class="" href="control-flow.html"><span class="header-section-number">3</span> Control flow</a></li>
+<li><a class="active" href="functions.html"><span class="header-section-number">4</span> Functions</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">5</span> Functionals</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">6</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">7</span> R6</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">8</span> Big Picture</a></li>
+</ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
@@ -59,14 +70,14 @@
 <h3>Q1. Function names<a class="anchor" aria-label="anchor" href="#q1.-function-names"><i class="fas fa-link"></i></a>
 </h3>
 <p>Given a name, <code><a href="https://rdrr.io/r/base/match.fun.html">match.fun()</a></code> lets you find a function.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x000000001653ec78&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x000000001653eb98&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>But, given a function, it doesn’t make sense to find its name in R because there can be multiple names bound to the same function.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="va">f2</span> <span class="op">&lt;-</span> <span class="va">f1</span>
 
@@ -80,11 +91,11 @@
 <h3>Q2. Correct way to call anonymous functions<a class="anchor" aria-label="anchor" href="#q2.-correct-way-to-call-anonymous-functions"><i class="fas fa-link"></i></a>
 </h3>
 <p>This is not correct since the function will evaluate <code>3()</code>, which is syntactically not allowed since literals can’t be treated like functions.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">3</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Error in (function(x) 3())(): attempt to apply non-function</span></code></pre></div>
 <p>This is correct.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">3</span><span class="op">)</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] 3</span></code></pre></div>
 </div>
@@ -97,7 +108,7 @@
 <h3>Q4. Detecting functions and primitive functions<a class="anchor" aria-label="anchor" href="#q4.-detecting-functions-and-primitive-functions"><i class="fas fa-link"></i></a>
 </h3>
 <p>Use <code><a href="https://rdrr.io/r/base/is.function.html">is.function()</a></code> to check if an object is a function:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># these are functions</span>
 <span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">3</span>
 <span class="fu"><a href="https://rdrr.io/r/base/is.function.html">is.function</a></span><span class="op">(</span><span class="va">mean</span><span class="op">)</span>
@@ -111,7 +122,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/is.function.html">is.function</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/environment.html">new.env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] FALSE</span></code></pre></div>
 <p>Use <code><a href="https://rdrr.io/r/base/is.function.html">is.primitive()</a></code> to check if a function is primitive:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># primitive</span>
 <span class="fu"><a href="https://rdrr.io/r/base/is.function.html">is.primitive</a></span><span class="op">(</span><span class="va">sum</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span>
@@ -127,14 +138,14 @@
 <div id="q5.-detecting-functions-and-primitive-functions" class="section level3 unnumbered">
 <h3>Q5. Detecting functions and primitive functions<a class="anchor" aria-label="anchor" href="#q5.-detecting-functions-and-primitive-functions"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">objs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html">mget</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="st">"package:base"</span>, all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, inherits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">funs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Filter</a></span><span class="op">(</span><span class="va">is.function</span>, <span class="va">objs</span><span class="op">)</span></code></pre></div>
 <blockquote>
 <p>Which base function has the most arguments?</p>
 </blockquote>
 <p><code><a href="https://rdrr.io/r/base/scan.html">scan()</a></code> function has the most arguments.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 
 <span class="va">df_formals</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span><span class="op">(</span><span class="va">funs</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
@@ -148,7 +159,7 @@
 <p>How many base functions have no arguments? What’s special about those functions?</p>
 </blockquote>
 <p>At the time of writing, 253 base functions have no arguments. All of these are primitive functions</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">df_formals</span>, <span class="va">argumentCount</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 253 x 2</span>
 <span class="co">#&gt;    `function` argumentCount</span>
@@ -167,7 +178,7 @@
 <blockquote>
 <p>How could you adapt the code to find all primitive functions?</p>
 </blockquote>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">objs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html">mget</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="st">"package:base"</span>, all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, inherits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">funs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Filter</a></span><span class="op">(</span><span class="va">is.function</span>, <span class="va">objs</span><span class="op">)</span>
 <span class="va">primitives</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Filter</a></span><span class="op">(</span><span class="va">is.primitive</span>, <span class="va">funs</span><span class="op">)</span>
@@ -290,12 +301,12 @@
 <h3>Q7. Printing of function environment<a class="anchor" aria-label="anchor" href="#q7.-printing-of-function-environment"><i class="fas fa-link"></i></a>
 </h3>
 <p>All package functions print their environment:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># base</span>
 <span class="va">mean</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x000000001653ec78&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x000000001653eb98&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span>
 
 <span class="co"># other package function</span>
@@ -305,36 +316,103 @@
 <span class="co">#&gt;     .f &lt;- as_mapper(.f, ...)</span>
 <span class="co">#&gt;     .Call(map_impl, environment(), ".x", ".f", "list")</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x0000000017bc9120&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x000000002ea69938&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></code></pre></div>
 <p>There are two exceptions to this rule:</p>
 <ul>
 <li>primitive functions:</li>
 </ul>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sum</span>
 <span class="co">#&gt; function (..., na.rm = FALSE)  .Primitive("sum")</span></code></pre></div>
 <ul>
 <li>functions created in the global environment:</li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="va">f</span>
 <span class="co">#&gt; function(x) mean(x)</span></code></pre></div>
+</div>
+</div>
+<div id="exercise-6.4.5" class="section level2" number="4.2">
+<h2>
+<span class="header-section-number">4.2</span> Exercise 6.4.5<a class="anchor" aria-label="anchor" href="#exercise-6.4.5"><i class="fas fa-link"></i></a>
+</h2>
+<div id="q1.-all-about-c" class="section level3 unnumbered">
+<h3>Q1. All about <em>c</em><a class="anchor" aria-label="anchor" href="#q1.-all-about-c"><i class="fas fa-link"></i></a>
+</h3>
+<p>In <code>c(c = c)</code>:
+* first <em>c</em> is interpreted as a function <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>
+* second <em>c</em> as a name for the vector element
+* third <em>c</em> as a variable with value <code>10</code></p>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">c</span> <span class="op">&lt;-</span> <span class="fl">10</span>
+<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>c <span class="op">=</span> <span class="va">c</span><span class="op">)</span>
+<span class="co">#&gt;  c </span>
+<span class="co">#&gt; 10</span></code></pre></div>
+</div>
+<div id="q2.-four-principles-that-govern-how-r-looks-for-values" class="section level3 unnumbered">
+<h3>Q2. Four principles that govern how R looks for values<a class="anchor" aria-label="anchor" href="#q2.-four-principles-that-govern-how-r-looks-for-values"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li><p>Name masking (names defined inside a function mask names defined outside a function)</p></li>
+<li><p>Functions vs. variables (the rule above also applies to function names)</p></li>
+<li><p>A fresh start (every time a function is called a new environment is created to host its execution)</p></li>
+<li><p>Dynamic look-up (R looks for values when the function is run, not when the function is created)</p></li>
+</ol>
+</div>
+<div id="q3.-predict-the-return" class="section level3 unnumbered">
+<h3>Q3. Predict the return<a class="anchor" aria-label="anchor" href="#q3.-predict-the-return"><i class="fas fa-link"></i></a>
+</h3>
+<p>Correctly predicted 😉😉</p>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">x</span> <span class="op">^</span> <span class="fl">2</span>
+    <span class="op">}</span>
+    <span class="fu">f</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span>
+  <span class="op">}</span>
+  <span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">*</span> <span class="fl">2</span>
+<span class="op">}</span>
+
+<span class="fu">f</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
+<span class="co">#&gt; [1] 202</span></code></pre></div>
 
 </div>
 </div>
 </div>
   <div class="chapter-nav">
-<div class="empty"></div>
-<div class="empty"></div>
+<div class="prev"><a href="control-flow.html"><span class="header-section-number">3</span> Control flow</a></div>
+<div class="next"><a href="functionals.html"><span class="header-section-number">5</span> Functionals</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <div id="book-on-this-page"></div>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#functions"><span class="header-section-number">4</span> Functions</a></li>
+<li>
+<a class="nav-link" href="#exercise-6.2.5"><span class="header-section-number">4.1</span> Exercise 6.2.5</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#q1.-function-names">Q1. Function names</a></li>
+<li><a class="nav-link" href="#q2.-correct-way-to-call-anonymous-functions">Q2. Correct way to call anonymous functions</a></li>
+<li><a class="nav-link" href="#q3.-scan-code-for-opportunities-to-use-anonymous-function">Q3. Scan code for opportunities to use anonymous function</a></li>
+<li><a class="nav-link" href="#q4.-detecting-functions-and-primitive-functions">Q4. Detecting functions and primitive functions</a></li>
+<li><a class="nav-link" href="#q5.-detecting-functions-and-primitive-functions">Q5. Detecting functions and primitive functions</a></li>
+<li><a class="nav-link" href="#q6.-important-components-of-a-function">Q6. Important components of a function</a></li>
+<li><a class="nav-link" href="#q7.-printing-of-function-environment">Q7. Printing of function environment</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#exercise-6.4.5"><span class="header-section-number">4.2</span> Exercise 6.4.5</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#q1.-all-about-c">Q1. All about c</a></li>
+<li><a class="nav-link" href="#q2.-four-principles-that-govern-how-r-looks-for-values">Q2. Four principles that govern how R looks for values</a></li>
+<li><a class="nav-link" href="#q3.-predict-the-return">Q3. Predict the return</a></li>
+</ul>
+</li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Functions.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Functions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -346,7 +424,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-02-13.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-02-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
