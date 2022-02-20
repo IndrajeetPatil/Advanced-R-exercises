@@ -1,9 +1,10 @@
-Welcome! 
+My solutions to exercises from the _Advanced R_ (2nd Edition) [book](https://adv-r.hadley.nz/). 
 
-My solutions to exercises from Hadley Wickham's *Advanced R* book:
+Note that you **should be** reading the [official solutions manual](https://advanced-r-solutions.rbind.io/index.html), which has more detailed explanations and are guaranteed to have correct solutions as the original author was also involved in writing these solutions. I provide no such guarantees. 😬
 
-<https://adv-r.hadley.nz/>
+<img src="assets/combined.jpg" width="80%" />
 
-For the official solution manual, see:
+- [My solutions](https://github.com/IndrajeetPatil/Advanced-R-exercises)
 
-<https://advanced-r-solutions.rbind.io/>
+- [Official solutions](https://advanced-r-solutions.rbind.io/index.html)
+

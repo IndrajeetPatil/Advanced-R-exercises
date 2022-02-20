@@ -6,15 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 4 Functions | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content='4.1 Exercise 6.2.5  Q1. Function names Given a name, match.fun() lets you find a function. match.fun("mean") #&gt; function (x, ...) #&gt; UseMethod("mean") #&gt; &lt;bytecode: 0x000000001653eb98&gt; #&gt;...'>
+<meta name="description" content='4.1 Exercise 6.2.5  Q1. Function names Given a name, match.fun() lets you find a function. match.fun("mean") #&gt; function (x, ...) #&gt; UseMethod("mean") #&gt; &lt;bytecode: 0x000000001652f420&gt; #&gt;...'>
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 4 Functions | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.jpg">
-<meta property="og:description" content='4.1 Exercise 6.2.5  Q1. Function names Given a name, match.fun() lets you find a function. match.fun("mean") #&gt; function (x, ...) #&gt; UseMethod("mean") #&gt; &lt;bytecode: 0x000000001653eb98&gt; #&gt;...'>
+<meta property="og:description" content='4.1 Exercise 6.2.5  Q1. Function names Given a name, match.fun() lets you find a function. match.fun("mean") #&gt; function (x, ...) #&gt; UseMethod("mean") #&gt; &lt;bytecode: 0x000000001652f420&gt; #&gt;...'>
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 4 Functions | Advanced R Exercises">
-<meta name="twitter:description" content='4.1 Exercise 6.2.5  Q1. Function names Given a name, match.fun() lets you find a function. match.fun("mean") #&gt; function (x, ...) #&gt; UseMethod("mean") #&gt; &lt;bytecode: 0x000000001653eb98&gt; #&gt;...'>
+<meta name="twitter:description" content='4.1 Exercise 6.2.5  Q1. Function names Given a name, match.fun() lets you find a function. match.fun("mean") #&gt; function (x, ...) #&gt; UseMethod("mean") #&gt; &lt;bytecode: 0x000000001652f420&gt; #&gt;...'>
 <meta name="twitter:image" content="/cover.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11.15/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -74,7 +74,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x000000001653eb98&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x000000001652f420&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>But, given a function, it doesn’t make sense to find its name in R because there can be multiple names bound to the same function.</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
@@ -84,7 +84,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"f1"</span><span class="op">)</span>
 <span class="co">#&gt; function(x) mean(x)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"f1"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"f2"</span><span class="op">)</span>
 <span class="co">#&gt; function(x) mean(x)</span></code></pre></div>
 </div>
 <div id="q2.-correct-way-to-call-anonymous-functions" class="section level3 unnumbered">
@@ -158,7 +158,7 @@
 <blockquote>
 <p>How many base functions have no arguments? What’s special about those functions?</p>
 </blockquote>
-<p>At the time of writing, 253 base functions have no arguments. All of these are primitive functions</p>
+<p>At the time of writing, 253 base functions have no arguments. Most of these are primitive functions</p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">df_formals</span>, <span class="va">argumentCount</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 253 x 2</span>
@@ -306,7 +306,7 @@
 <span class="va">mean</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x000000001653eb98&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x000000001652f420&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span>
 
 <span class="co"># other package function</span>
@@ -316,7 +316,7 @@
 <span class="co">#&gt;     .f &lt;- as_mapper(.f, ...)</span>
 <span class="co">#&gt;     .Call(map_impl, environment(), ".x", ".f", "list")</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x000000002ea69938&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x0000000017d49080&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></code></pre></div>
 <p>There are two exceptions to this rule:</p>
 <ul>
@@ -378,6 +378,71 @@
 
 <span class="fu">f</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
 <span class="co">#&gt; [1] 202</span></code></pre></div>
+</div>
+</div>
+<div id="exercise-6.5.4" class="section level2" number="4.3">
+<h2>
+<span class="header-section-number">4.3</span> Exercise 6.5.4<a class="anchor" aria-label="anchor" href="#exercise-6.5.4"><i class="fas fa-link"></i></a>
+</h2>
+<div id="q1.-property-of" class="section level3 unnumbered">
+<h3>Q1. Property of <code>&amp;&amp;</code><a class="anchor" aria-label="anchor" href="#q1.-property-of"><i class="fas fa-link"></i></a>
+</h3>
+<p><code>&amp;&amp;</code> evaluates left to right and short-circuit evaluation, i.e., if the first operand is <code>TRUE</code>, R will short-circuit and not even look at the second operand.</p>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x_ok</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;&amp;</span> <span class="va">x</span> <span class="op">&gt;</span> <span class="fl">0</span>
+<span class="op">}</span>
+
+<span class="fu">x_ok</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>
+<span class="co">#&gt; [1] FALSE</span>
+<span class="fu">x_ok</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span>
+<span class="fu">x_ok</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>
+<span class="co">#&gt; [1] FALSE</span></code></pre></div>
+<p>Replacing <code>&amp;&amp;</code> is <code>&amp;</code> is undesirable because it performs element-wise logical comparisons and returns a vector of values that is not always useful for decision (<code>TRUE</code>, <code>FALSE</code>, or <code>NA</code>).</p>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x_ok</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&gt;</span> <span class="fl">0</span>
+<span class="op">}</span>
+
+<span class="fu">x_ok</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>
+<span class="co">#&gt; logical(0)</span>
+<span class="fu">x_ok</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span>
+<span class="fu">x_ok</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>
+<span class="co">#&gt; [1] FALSE FALSE FALSE</span></code></pre></div>
+</div>
+<div id="q2.-principle-behind-return" class="section level3 unnumbered">
+<h3>Q2. Principle behind return<a class="anchor" aria-label="anchor" href="#q2.-principle-behind-return"><i class="fas fa-link"></i></a>
+</h3>
+<p>The function returns <code>100</code>, and the principle at work here is lazy evaluation. When function environment encounters <code>x</code>, it evaluates argument <code>x = z</code> and since the name <code>z</code> is already bound to value 100, <code>x</code> is also bound to the same value.</p>
+<p>We can check this by looking at the memory addresses:</p>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">f2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span> <span class="op">=</span> <span class="va">z</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">z</span> <span class="op">&lt;-</span> <span class="fl">100</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">z</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="fu">f2</span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; [1] 100</span>
+<span class="co">#&gt; [1] "0x33ad3458" "0x33ad3458"</span></code></pre></div>
+</div>
+<div id="q3.-principle-behind-return" class="section level3 unnumbered">
+<h3>Q3. Principle behind return<a class="anchor" aria-label="anchor" href="#q3.-principle-behind-return"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">10</span>
+<span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span> <span class="op">=</span> <span class="op">{</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">1</span>; <span class="fl">2</span><span class="op">}</span>, <span class="va">y</span> <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="fu">f1</span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; [1] 2 1</span>
+
+<span class="va">y</span>
+<span class="co">#&gt; [1] 10</span></code></pre></div>
 
 </div>
 </div>
@@ -407,6 +472,13 @@
 <li><a class="nav-link" href="#q3.-predict-the-return">Q3. Predict the return</a></li>
 </ul>
 </li>
+<li>
+<a class="nav-link" href="#exercise-6.5.4"><span class="header-section-number">4.3</span> Exercise 6.5.4</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#q1.-property-of">Q1. Property of &amp;&amp;</a></li>
+<li><a class="nav-link" href="#q2.-principle-behind-return">Q2. Principle behind return</a></li>
+<li><a class="nav-link" href="#q3.-principle-behind-return">Q3. Principle behind return</a></li>
+</ul>
+</li>
 </ul>
 
       <div class="book-extra">
@@ -424,7 +496,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-02-15.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-02-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

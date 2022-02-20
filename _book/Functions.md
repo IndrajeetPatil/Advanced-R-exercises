@@ -11,7 +11,7 @@ Given a name, `match.fun()` lets you find a function.
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x000000001653eb98>
+#> <bytecode: 0x000000001652f420>
 #> <environment: namespace:base>
 ```
 
@@ -25,7 +25,7 @@ f2 <- f1
 match.fun("f1")
 #> function(x) mean(x)
 
-match.fun("f1")
+match.fun("f2")
 #> function(x) mean(x)
 ```
 
@@ -115,7 +115,7 @@ df_formals <- purrr::map_df(funs, ~ length(formals(.))) %>%
 
 > How many base functions have no arguments? What’s special about those functions?
 
-At the time of writing, 253 base functions have no arguments. All of these are primitive functions
+At the time of writing, 253 base functions have no arguments. Most of these are primitive functions
 
 
 ```r
@@ -267,7 +267,7 @@ All package functions print their environment:
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x000000001653eb98>
+#> <bytecode: 0x000000001652f420>
 #> <environment: namespace:base>
 
 # other package function
@@ -277,7 +277,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x000000002ea69938>
+#> <bytecode: 0x0000000017d49080>
 #> <environment: namespace:purrr>
 ```
 
@@ -345,5 +345,78 @@ f <- function(x) {
 
 f(10)
 #> [1] 202
+```
+
+
+## Exercise 6.5.4 
+
+### Q1. Property of `&&` {-}
+
+`&&` evaluates left to right and short-circuit evaluation, i.e., if the first operand is `TRUE`, R will short-circuit and not even look at the second operand.
+
+
+```r
+x_ok <- function(x) {
+  !is.null(x) && length(x) == 1 && x > 0
+}
+
+x_ok(NULL)
+#> [1] FALSE
+x_ok(1)
+#> [1] TRUE
+x_ok(1:3)
+#> [1] FALSE
+```
+
+Replacing `&&` is `&` is undesirable because it performs element-wise logical comparisons and returns a vector of values that is not always useful for decision (`TRUE`, `FALSE`, or `NA`).
+
+
+```r
+x_ok <- function(x) {
+  !is.null(x) & length(x) == 1 & x > 0
+}
+
+x_ok(NULL)
+#> logical(0)
+x_ok(1)
+#> [1] TRUE
+x_ok(1:3)
+#> [1] FALSE FALSE FALSE
+```
+
+### Q2. Principle behind return {-}
+
+The function returns `100`, and the principle at work here is lazy evaluation. When function environment encounters `x`, it evaluates argument `x = z` and since the name `z` is already bound to value 100, `x` is also bound to the same value.
+
+We can check this by looking at the memory addresses:
+
+
+```r
+f2 <- function(x = z) {
+  z <- 100
+  print(x)
+  
+  print(lobstr::obj_addrs(list(x, z)))
+}
+
+f2()
+#> [1] 100
+#> [1] "0x33ad3458" "0x33ad3458"
+```
+
+### Q3. Principle behind return {-}
+
+
+```r
+y <- 10
+f1 <- function(x = {y <- 1; 2}, y = 0) {
+  c(x, y)
+}
+
+f1()
+#> [1] 2 1
+
+y
+#> [1] 10
 ```
 
