@@ -11,7 +11,7 @@ Given a name, `match.fun()` lets you find a function.
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x000000001652f420>
+#> <bytecode: 0x0000000018e2f720>
 #> <environment: namespace:base>
 ```
 
@@ -267,7 +267,7 @@ All package functions print their environment:
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x000000001652f420>
+#> <bytecode: 0x0000000018e2f720>
 #> <environment: namespace:base>
 
 # other package function
@@ -277,7 +277,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x0000000017d49080>
+#> <bytecode: 0x00000000196dde80>
 #> <environment: namespace:purrr>
 ```
 
@@ -336,7 +336,7 @@ Correctly predicted 😉😉
 f <- function(x) {
   f <- function(x) {
     f <- function() {
-      x ^ 2
+      x^2
     }
     f() + 1
   }
@@ -362,8 +362,10 @@ x_ok <- function(x) {
 
 x_ok(NULL)
 #> [1] FALSE
+
 x_ok(1)
 #> [1] TRUE
+
 x_ok(1:3)
 #> [1] FALSE
 ```
@@ -378,8 +380,10 @@ x_ok <- function(x) {
 
 x_ok(NULL)
 #> logical(0)
+
 x_ok(1)
 #> [1] TRUE
+
 x_ok(1:3)
 #> [1] FALSE FALSE FALSE
 ```
@@ -395,21 +399,29 @@ We can check this by looking at the memory addresses:
 f2 <- function(x = z) {
   z <- 100
   print(x)
-  
+
   print(lobstr::obj_addrs(list(x, z)))
 }
 
 f2()
 #> [1] 100
-#> [1] "0x33ad3458" "0x33ad3458"
+#> [1] "0x14ae0780" "0x14ae0780"
 ```
 
 ### Q3. Principle behind return {-}
 
+TODO:
+
 
 ```r
 y <- 10
-f1 <- function(x = {y <- 1; 2}, y = 0) {
+f1 <- function(x =
+                 {
+                   y <- 1
+                   2
+                 },
+               y = 0)
+{
   c(x, y)
 }
 
@@ -420,3 +432,80 @@ y
 #> [1] 10
 ```
 
+## Exercise 6.6.1
+
+### Q1. Explain results {-}
+
+
+```r
+sum(1, 2, 3)
+#> [1] 6
+
+mean(1, 2, 3)
+#> [1] 1
+
+sum(1, 2, 3, na.omit = TRUE)
+#> [1] 7
+
+mean(1, 2, 3, na.omit = TRUE)
+#> [1] 1
+```
+
+Let's look at arguments for these functions:
+
+
+```r
+str(sum)
+#> function (..., na.rm = FALSE)
+str(mean)
+#> function (x, ...)
+```
+
+As can be seen, `sum()` function doesn't have `na.omit` argument. So, the input `na.omit = TRUE` is treated as `1` (logical implicitly coerced to numeric), and thus the results. So, the expression evaluates to `sum(1, 2, 3, 1)`.
+
+For `mean()` function, there is only one parameter (`x`) and it's matched by the first argument (`1`). So, the expression evaluates to `mean(1)`.
+
+### Q2. Finding documentation for `plot` arguments {-}
+
+First, check documentation for `plot()`:
+
+
+```r
+str(plot)
+#> function (x, y, ...)
+```
+
+Since `...` are passed to `par()`, we can look at its documentation:
+
+
+```r
+str(par)
+#> function (..., no.readonly = FALSE)
+```
+
+The docs for all parameters of interest [reside there](https://rdrr.io/r/graphics/par.html).
+
+### Q3. Reading source code for `plot.default` {-}
+
+Source code can be found [here](https://github.com/wch/r-source/blob/79e73dba5259b25ec30118d45fea64aeac0f41dc/src/library/graphics/R/plot.R#L51-L84).
+
+`plot.default()` passes `...` to `localTitle()`, which passes it to `title()`.
+
+`title()` has four parts: `main`, `sub`, `xlab`, `ylab`.
+
+So having a single argument `col` would not work as it will be ambiguous as to which element to apply this argument to.
+
+
+```r
+localTitle <- function(..., col, bg, pch, cex, lty, lwd) title(...)
+
+title <- function(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
+                  line = NA, outer = FALSE, ...) {
+  main <- as.graphicsAnnot(main)
+  sub <- as.graphicsAnnot(sub)
+  xlab <- as.graphicsAnnot(xlab)
+  ylab <- as.graphicsAnnot(ylab)
+  .External.graphics(C_title, main, sub, xlab, ylab, line, outer, ...)
+  invisible()
+}
+```

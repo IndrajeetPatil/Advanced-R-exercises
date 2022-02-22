@@ -87,7 +87,6 @@ df_formals <- purrr::map_df(funs, ~ length(formals(.))) %>%
     values_to = "argumentCount"
   ) %>%
   dplyr::arrange(desc(argumentCount))
-
 ```
 
 > How many base functions have no arguments? What’s special about those functions?
@@ -175,7 +174,7 @@ Correctly predicted 😉😉
 f <- function(x) {
   f <- function(x) {
     f <- function() {
-      x ^ 2
+      x^2
     }
     f() + 1
   }
@@ -192,32 +191,30 @@ f(10)
 
 `&&` evaluates left to right and short-circuit evaluation, i.e., if the first operand is `TRUE`, R will short-circuit and not even look at the second operand.
 
-```{r, eval=FALSE}
+```{r}
 x_ok <- function(x) {
   !is.null(x) && length(x) == 1 && x > 0
 }
 
 x_ok(NULL)
-#> [1] FALSE
+
 x_ok(1)
-#> [1] TRUE
+
 x_ok(1:3)
-#> [1] FALSE
 ```
 
 Replacing `&&` is `&` is undesirable because it performs element-wise logical comparisons and returns a vector of values that is not always useful for decision (`TRUE`, `FALSE`, or `NA`).
 
-```{r, eval=FALSE}
+```{r}
 x_ok <- function(x) {
   !is.null(x) & length(x) == 1 & x > 0
 }
 
 x_ok(NULL)
-#> logical(0)
+
 x_ok(1)
-#> [1] TRUE
+
 x_ok(1:3)
-#> [1] FALSE FALSE FALSE
 ```
 
 ### Q2. Principle behind return {-}
@@ -226,11 +223,11 @@ The function returns `100`, and the principle at work here is lazy evaluation. W
 
 We can check this by looking at the memory addresses:
 
-```{r, eval=TRUE}
+```{r}
 f2 <- function(x = z) {
   z <- 100
   print(x)
-  
+
   print(lobstr::obj_addrs(list(x, z)))
 }
 
@@ -239,9 +236,17 @@ f2()
 
 ### Q3. Principle behind return {-}
 
+TODO:
+
 ```{r}
 y <- 10
-f1 <- function(x = {y <- 1; 2}, y = 0) {
+f1 <- function(x =
+                 {
+                   y <- 1
+                   2
+                 },
+               y = 0)
+{
   c(x, y)
 }
 
@@ -250,3 +255,67 @@ f1()
 y
 ```
 
+## Exercise 6.6.1
+
+### Q1. Explain results {-}
+
+```{r}
+sum(1, 2, 3)
+
+mean(1, 2, 3)
+
+sum(1, 2, 3, na.omit = TRUE)
+
+mean(1, 2, 3, na.omit = TRUE)
+```
+
+Let's look at arguments for these functions:
+
+```{r}
+str(sum)
+str(mean)
+```
+
+As can be seen, `sum()` function doesn't have `na.omit` argument. So, the input `na.omit = TRUE` is treated as `1` (logical implicitly coerced to numeric), and thus the results. So, the expression evaluates to `sum(1, 2, 3, 1)`.
+
+For `mean()` function, there is only one parameter (`x`) and it's matched by the first argument (`1`). So, the expression evaluates to `mean(1)`.
+
+### Q2. Finding documentation for `plot` arguments {-}
+
+First, check documentation for `plot()`:
+
+```{r}
+str(plot)
+```
+
+Since `...` are passed to `par()`, we can look at its documentation:
+
+```{r}
+str(par)
+```
+
+The docs for all parameters of interest [reside there](https://rdrr.io/r/graphics/par.html).
+
+### Q3. Reading source code for `plot.default` {-}
+
+Source code can be found [here](https://github.com/wch/r-source/blob/79e73dba5259b25ec30118d45fea64aeac0f41dc/src/library/graphics/R/plot.R#L51-L84).
+
+`plot.default()` passes `...` to `localTitle()`, which passes it to `title()`.
+
+`title()` has four parts: `main`, `sub`, `xlab`, `ylab`.
+
+So having a single argument `col` would not work as it will be ambiguous as to which element to apply this argument to.
+
+```{r eval=FALSE}
+localTitle <- function(..., col, bg, pch, cex, lty, lwd) title(...)
+
+title <- function(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
+                  line = NA, outer = FALSE, ...) {
+  main <- as.graphicsAnnot(main)
+  sub <- as.graphicsAnnot(sub)
+  xlab <- as.graphicsAnnot(xlab)
+  ylab <- as.graphicsAnnot(ylab)
+  .External.graphics(C_title, main, sub, xlab, ylab, line, outer, ...)
+  invisible()
+}
+```
