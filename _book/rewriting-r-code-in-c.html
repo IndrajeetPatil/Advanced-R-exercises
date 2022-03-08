@@ -180,6 +180,55 @@
 <span class="co">#&gt; [1] 1 2 4 2 6 1</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmin</a></span><span class="op">(</span><span class="va">v1</span>, <span class="va">v2</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1 2 4 2 6 1</span></code></pre></div>
+</div>
+<div id="q2.-converting-base-function-to-rcpp" class="section level3 unnumbered">
+<h3>Q2. Converting base function to Rcpp<a class="anchor" aria-label="anchor" href="#q2.-converting-base-function-to-rcpp"><i class="fas fa-link"></i></a>
+</h3>
+<p><code><a href="https://rdrr.io/r/base/all.html">all()</a></code></p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb117-1"><a href="rewriting-r-code-in-c.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb117-2"><a href="rewriting-r-code-in-c.html#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb117-3"><a href="rewriting-r-code-in-c.html#cb117-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-4"><a href="rewriting-r-code-in-c.html#cb117-4" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> allC<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;</span> x<span class="op">)</span></span>
+<span id="cb117-5"><a href="rewriting-r-code-in-c.html#cb117-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb117-6"><a href="rewriting-r-code-in-c.html#cb117-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n <span class="op">=</span> x<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb117-7"><a href="rewriting-r-code-in-c.html#cb117-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-8"><a href="rewriting-r-code-in-c.html#cb117-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb117-9"><a href="rewriting-r-code-in-c.html#cb117-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb117-10"><a href="rewriting-r-code-in-c.html#cb117-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>x<span class="op">[</span>i<span class="op">])</span></span>
+<span id="cb117-11"><a href="rewriting-r-code-in-c.html#cb117-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb117-12"><a href="rewriting-r-code-in-c.html#cb117-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb117-13"><a href="rewriting-r-code-in-c.html#cb117-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-14"><a href="rewriting-r-code-in-c.html#cb117-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb117-15"><a href="rewriting-r-code-in-c.html#cb117-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">10</span><span class="op">)</span>
+<span class="va">v2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="va">v1</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span>
+<span class="fu">allC</span><span class="op">(</span><span class="va">v1</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="va">v2</span><span class="op">)</span>
+<span class="co">#&gt; [1] FALSE</span>
+<span class="fu">allC</span><span class="op">(</span><span class="va">v2</span><span class="op">)</span>
+<span class="co">#&gt; [1] FALSE</span>
+
+<span class="co"># performance benefits?</span>
+<span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">1000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu">allC</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">1000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+  iterations <span class="op">=</span> <span class="fl">100</span>
+<span class="op">)</span>
+<span class="co">#&gt; # A tibble: 2 x 6</span>
+<span class="co">#&gt;   expression                                      min</span>
+<span class="co">#&gt;   &lt;bch:expr&gt;                                 &lt;bch:tm&gt;</span>
+<span class="co">#&gt; 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     8.5us</span>
+<span class="co">#&gt; 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))     12us</span>
+<span class="co">#&gt;     median `itr/sec` mem_alloc `gc/sec`</span>
+<span class="co">#&gt;   &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt; 1    9.2us   107250.    15.8KB        0</span>
+<span class="co">#&gt; 2   12.5us    79158.    18.3KB        0</span></code></pre></div>
 
 </div>
 </div>
@@ -203,7 +252,10 @@
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#rewriting-r-code-in-c"><span class="header-section-number">9</span> Rewriting R code in C++</a></li>
 <li>
-<a class="nav-link" href="#exercise-25.2.6"><span class="header-section-number">9.1</span> Exercise 25.2.6</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#q1.-figure-out-base-function-corresponding-to-rccp-code">Q1. Figure out base function corresponding to Rccp code</a></li></ul>
+<a class="nav-link" href="#exercise-25.2.6"><span class="header-section-number">9.1</span> Exercise 25.2.6</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#q1.-figure-out-base-function-corresponding-to-rccp-code">Q1. Figure out base function corresponding to Rccp code</a></li>
+<li><a class="nav-link" href="#q2.-converting-base-function-to-rcpp">Q2. Converting base function to Rcpp</a></li>
+</ul>
 </li>
 </ul>
 

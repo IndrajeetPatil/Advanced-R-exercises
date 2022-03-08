@@ -141,3 +141,58 @@ f5(v1, v2)
 pmin(v1, v2)
 #> [1] 1 2 4 2 6 1
 ```
+
+### Q2. Converting base function to Rcpp {-}
+
+`all()`
+
+
+```cpp
+// [[Rcpp::export]]
+#include <vector>
+
+bool allC(std::vector<bool> x)
+{
+    int n = x.size();
+
+    for (int i = 0; i < n; i++)
+    {
+        if (!x[i])
+            return false;
+    }
+
+    return true;
+}
+```
+
+
+```r
+v1 <- rep(TRUE, 10)
+v2 <- c(rep(TRUE, 5), rep(FALSE, 5))
+
+all(v1)
+#> [1] TRUE
+allC(v1)
+#> [1] TRUE
+
+all(v2)
+#> [1] FALSE
+allC(v2)
+#> [1] FALSE
+
+# performance benefits?
+bench::mark(
+  all(c(rep(TRUE, 1000), rep(FALSE, 1000))),
+  allC(c(rep(TRUE, 1000), rep(FALSE, 1000))),
+  iterations = 100
+)
+#> # A tibble: 2 x 6
+#>   expression                                      min
+#>   <bch:expr>                                 <bch:tm>
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     8.5us
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))     12us
+#>     median `itr/sec` mem_alloc `gc/sec`
+#>   <bch:tm>     <dbl> <bch:byt>    <dbl>
+#> 1    9.2us   107250.    15.8KB        0
+#> 2   12.5us    79158.    18.3KB        0
+```

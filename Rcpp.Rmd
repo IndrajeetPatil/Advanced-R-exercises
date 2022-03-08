@@ -122,3 +122,42 @@ v2 <- c(1, 2, 7, 2, 8, 1)
 f5(v1, v2)
 pmin(v1, v2)
 ```
+
+### Q2. Converting base function to Rcpp {-}
+
+`all()`
+
+```{r, engine='Rcpp'}
+// [[Rcpp::export]]
+#include <vector>
+
+bool allC(std::vector<bool> x)
+{
+    int n = x.size();
+
+    for (int i = 0; i < n; i++)
+    {
+        if (!x[i]) return false;
+    }
+
+    return true;
+}
+```
+
+```{r}
+v1 <- rep(TRUE, 10)
+v2 <- c(rep(TRUE, 5), rep(FALSE, 5))
+
+all(v1)
+allC(v1)
+
+all(v2)
+allC(v2)
+
+# performance benefits?
+bench::mark(
+  all(c(rep(TRUE, 1000), rep(FALSE, 1000))),
+  allC(c(rep(TRUE, 1000), rep(FALSE, 1000))),
+  iterations = 100
+)
+```
