@@ -19,13 +19,13 @@ All of these variable names are actively bound to the same value.
 library(lobstr)
 
 obj_addr(a)
-#> [1] "0x17d3e308"
+#> [1] "0x17e53910"
 obj_addr(b)
-#> [1] "0x17d3e308"
+#> [1] "0x17e53910"
 obj_addr(c)
-#> [1] "0x17d3e308"
+#> [1] "0x17e53910"
 obj_addr(d)
-#> [1] "0x17ba7c28"
+#> [1] "0x18308578"
 ```
 
 ### Q2. Function object address {-}
@@ -35,15 +35,15 @@ Following code verifies that indeed these calls all point to the same underlying
 
 ```r
 obj_addr(mean)
-#> [1] "0x18e2f4f8"
+#> [1] "0x18e2be78"
 obj_addr(base::mean)
-#> [1] "0x18e2f4f8"
+#> [1] "0x18e2be78"
 obj_addr(get("mean"))
-#> [1] "0x18e2f4f8"
+#> [1] "0x18e2be78"
 obj_addr(evalq(mean))
-#> [1] "0x18e2f4f8"
+#> [1] "0x18e2be78"
 obj_addr(match.fun("mean"))
-#> [1] "0x18e2f4f8"
+#> [1] "0x18e2be78"
 ```
 
 ### Q3. Converting non-syntactic names  {-}
@@ -81,7 +81,7 @@ Because it is parsed as a number.
 
 ```r
 tracemem(1:10)
-#> [1] "<0000000014994410>"
+#> [1] "<000000003161D910>"
 ```
 
 ### Q2. Why two copies when you run this code? {-}
@@ -92,11 +92,11 @@ Were it not for `4` being a double - and not an integer (`4L`) - this would have
 ```r
 x <- c(1L, 2L, 3L)
 tracemem(x)
-#> [1] "<0000000014B74EF8>"
+#> [1] "<00000000317ABD88>"
 
 x[[3]] <- 4
-#> tracemem[0x0000000014b74ef8 -> 0x0000000014c18438]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
-#> tracemem[0x0000000014c18438 -> 0x0000000014c2f728]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x00000000317abd88 -> 0x00000000318cf8e8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
+#> tracemem[0x00000000318cf8e8 -> 0x0000000031867008]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 ```
 
 Try with integer:
@@ -105,10 +105,10 @@ Try with integer:
 ```r
 x <- c(1L, 2L, 3L)
 tracemem(x)
-#> [1] "<0000000014DEF248>"
+#> [1] "<0000000031A8D298>"
 
 x[[3]] <- 4L
-#> tracemem[0x0000000014def248 -> 0x0000000014e668f8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x0000000031a8d298 -> 0x0000000031b24b98]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 ```
 
 As for why this still produces a copy, this is from Solutions manual:
@@ -124,20 +124,20 @@ b <- list(a, a)
 c <- list(b, a, 1:10)
 
 ref(a)
-#> [1:0x151d8810] <int>
+#> [1:0x31e70110] <int>
 
 ref(b)
-#> o [1:0x151b37b8] <list> 
-#> +-[2:0x151d8810] <int> 
-#> \-[2:0x151d8810]
+#> o [1:0x31e66ea8] <list> 
+#> +-[2:0x31e70110] <int> 
+#> \-[2:0x31e70110]
 
 ref(c)
-#> o [1:0x15228198] <list> 
-#> +-o [2:0x151b37b8] <list> 
-#> | +-[3:0x151d8810] <int> 
-#> | \-[3:0x151d8810] 
-#> +-[3:0x151d8810] 
-#> \-[4:0x1529a430] <int>
+#> o [1:0x31eec728] <list> 
+#> +-o [2:0x31e66ea8] <list> 
+#> | +-[3:0x31e70110] <int> 
+#> | \-[3:0x31e70110] 
+#> +-[3:0x31e70110] 
+#> \-[4:0x31f31d30] <int>
 ```
 
 ### Q4. List inside another list {-}
@@ -149,7 +149,7 @@ x
 #> [[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x15b06008"
+#> [1] "0x33200690"
 
 x[[2]] <- x
 x
@@ -160,13 +160,13 @@ x
 #> [[2]][[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x16988898"
+#> [1] "0x33728100"
 
 ref(x)
-#> o [1:0x16988898] <list> 
-#> +-[2:0x157984c8] <int> 
-#> \-o [3:0x15b06008] <list> 
-#>   \-[2:0x157984c8]
+#> o [1:0x33728100] <list> 
+#> +-[2:0x32d4a638] <int> 
+#> \-o [3:0x33200690] <list> 
+#>   \-[2:0x32d4a638]
 ```
 
 Figure here:
@@ -253,16 +253,16 @@ Copy-on-modify prevents the creation of a circular list.
 x <- list()
 
 obj_addr(x)
-#> [1] "0x14856380"
+#> [1] "0x322cd8d0"
 
 tracemem(x)
-#> [1] "<0000000014856380>"
+#> [1] "<00000000322CD8D0>"
 
 x[[1]] <- x
-#> tracemem[0x0000000014856380 -> 0x0000000014970bb8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x00000000322cd8d0 -> 0x00000000323efa38]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 
 obj_addr(x[[1]])
-#> [1] "0x14856380"
+#> [1] "0x322cd8d0"
 ```
 
 ### Q2. Why are loops so slow {-}
