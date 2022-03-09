@@ -144,21 +144,35 @@ pmin(v1, v2)
 
 ### Q2. Converting base function to Rcpp {-}
 
-`all()`
+The performance benefits are not going to be observed if the function is primitive since those are already tuned to the max in R for performance. So, expect performance gain only for `diff()` and `var()`.
+
+
+```r
+is.primitive(all)
+#> [1] TRUE
+is.primitive(cumprod)
+#> [1] TRUE
+is.primitive(diff)
+#> [1] FALSE
+is.primitive(range)
+#> [1] TRUE
+is.primitive(var)
+#> [1] FALSE
+```
+
+- `all()`
 
 
 ```cpp
-// [[Rcpp::export]]
 #include <vector>
+// [[Rcpp::plugins(cpp11)]]
 
+// [[Rcpp::export]]
 bool allC(std::vector<bool> x)
 {
-    int n = x.size();
-
-    for (int i = 0; i < n; i++)
+    for (auto xElement : x)
     {
-        if (!x[i])
-            return false;
+        if (!xElement) return false;
     }
 
     return true;
@@ -189,10 +203,115 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
-#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     8.5us
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))     12us
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     8.4us
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   12.7us
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1    9.2us   107250.    15.8KB        0
-#> 2   12.5us    79158.    18.3KB        0
+#> 1    9.8us    87245.    15.8KB        0
+#> 2   15.4us    55556.    18.3KB        0
+```
+
+- `cumprod()`
+
+
+```cpp
+#include <vector>
+
+// [[Rcpp::export]]
+std::vector<double> cumulativeProduct(std::vector<double> x)
+{
+    std::vector<double> out = x;
+
+    for (size_t i = 1; i < x.size(); i++)
+    {
+        out[i] = out[i - 1] * x[i];
+    }
+
+    return out;
+}
+```
+
+
+
+```r
+v1 <- c(10, 4, 6, 8)
+
+cumprod(v1)
+#> [1]   10   40  240 1920
+cumulativeProduct(v1)
+#> [1]   10   40  240 1920
+
+# performance benefits?
+bench::mark(
+  cumprod(v1),
+  cumulativeProduct(v1),
+  iterations = 100
+)
+#> # A tibble: 2 x 6
+#>   expression                 min   median `itr/sec`
+#>   <bch:expr>            <bch:tm> <bch:tm>     <dbl>
+#> 1 cumprod(v1)              200ns    300ns  2666667.
+#> 2 cumulativeProduct(v1)    2.4us    3.8us   236463.
+#>   mem_alloc `gc/sec`
+#>   <bch:byt>    <dbl>
+#> 1        0B        0
+#> 2    6.62KB        0
+```
+
+- `diff()`
+
+- `var()`
+
+
+```cpp
+#include <vector>
+#include <cmath>
+#include <numeric>
+using namespace std;
+
+// [[Rcpp::export]]
+double variance(std::vector<double> x)
+{
+    double sumSquared{0};
+
+    unsigned int n = static_cast<unsigned int>(x.size());
+
+    double mean = std::accumulate(x.begin(), x.end(), 0.0) / n;
+
+    for (auto xElement : x)
+    {
+        sumSquared += pow(xElement - mean, 2.0);
+    }
+
+    double var = sumSquared / (n - 1);
+
+    return var;
+}
+```
+
+
+
+```r
+v1 <- c(1, 4, 7, 8)
+
+var(v1)
+#> [1] 10
+variance(v1)
+#> [1] 10
+
+# performance benefits?
+bench::mark(
+  var(v1),
+  variance(v1),
+  iterations = 100
+)
+#> # A tibble: 2 x 6
+#>   expression        min   median `itr/sec` mem_alloc
+#>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
+#> 1 var(v1)        10.1us   13.8us    58917.        0B
+#> 2 variance(v1)    2.1us    3.5us   285959.    6.62KB
+#>   `gc/sec`
+#>      <dbl>
+#> 1        0
+#> 2        0
 ```

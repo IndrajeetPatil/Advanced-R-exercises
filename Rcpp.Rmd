@@ -125,19 +125,28 @@ pmin(v1, v2)
 
 ### Q2. Converting base function to Rcpp {-}
 
-`all()`
+The performance benefits are not going to be observed if the function is primitive since those are already tuned to the max in R for performance. So, expect performance gain only for `diff()` and `var()`.
+
+```{r}
+is.primitive(all)
+is.primitive(cumprod)
+is.primitive(diff)
+is.primitive(range)
+is.primitive(var)
+```
+
+- `all()`
 
 ```{r, engine='Rcpp'}
-// [[Rcpp::export]]
 #include <vector>
+// [[Rcpp::plugins(cpp11)]]
 
+// [[Rcpp::export]]
 bool allC(std::vector<bool> x)
 {
-    int n = x.size();
-
-    for (int i = 0; i < n; i++)
+    for (auto xElement : x)
     {
-        if (!x[i]) return false;
+        if (!xElement) return false;
     }
 
     return true;
@@ -158,6 +167,85 @@ allC(v2)
 bench::mark(
   all(c(rep(TRUE, 1000), rep(FALSE, 1000))),
   allC(c(rep(TRUE, 1000), rep(FALSE, 1000))),
+  iterations = 100
+)
+```
+
+- `cumprod()`
+
+```{r, engine='Rcpp'}
+#include <vector>
+
+// [[Rcpp::export]]
+std::vector<double> cumulativeProduct(std::vector<double> x)
+{
+    std::vector<double> out = x;
+
+    for (size_t i = 1; i < x.size(); i++)
+    {
+        out[i] = out[i - 1] * x[i];
+    }
+
+    return out;
+}
+```
+
+
+```{r}
+v1 <- c(10, 4, 6, 8)
+
+cumprod(v1)
+cumulativeProduct(v1)
+
+# performance benefits?
+bench::mark(
+  cumprod(v1),
+  cumulativeProduct(v1),
+  iterations = 100
+)
+```
+
+- `diff()`
+
+- `var()`
+
+```{r, engine='Rcpp'}
+#include <vector>
+#include <cmath>
+#include <numeric>
+using namespace std;
+
+// [[Rcpp::export]]
+double variance(std::vector<double> x)
+{
+    double sumSquared{0};
+
+    unsigned int n = static_cast<unsigned int>(x.size());
+
+    double mean = std::accumulate(x.begin(), x.end(), 0.0) / n;
+
+    for (auto xElement : x)
+    {
+        sumSquared += pow(xElement - mean, 2.0);
+    }
+
+    double var = sumSquared / (n - 1);
+
+    return var;
+}
+```
+
+
+```{r}
+v1 <- c(1, 4, 7, 8)
+
+var(v1)
+variance(v1)
+
+# performance benefits?
+bench::mark(
+  var(v1),
+  variance(v1),
   iterations = 100
 )
 ```
