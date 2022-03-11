@@ -203,12 +203,12 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
-#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     8.4us
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   12.7us
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     8.8us
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   14.1us
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1    9.8us    87245.    15.8KB        0
-#> 2   15.4us    55556.    18.3KB        0
+#> 1   10.3us    90293.    15.8KB        0
+#> 2   15.8us    59109.    18.3KB        0
 ```
 
 - `cumprod()`
@@ -250,8 +250,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                 min   median `itr/sec`
 #>   <bch:expr>            <bch:tm> <bch:tm>     <dbl>
-#> 1 cumprod(v1)              200ns    300ns  2666667.
-#> 2 cumulativeProduct(v1)    2.4us    3.8us   236463.
+#> 1 cumprod(v1)              200ns    300ns  2457002.
+#> 2 cumulativeProduct(v1)    2.3us    3.7us   278474.
 #>   mem_alloc `gc/sec`
 #>   <bch:byt>    <dbl>
 #> 1        0B        0
@@ -274,18 +274,14 @@ double variance(std::vector<double> x)
 {
     double sumSquared{0};
 
-    unsigned int n = static_cast<unsigned int>(x.size());
-
-    double mean = std::accumulate(x.begin(), x.end(), 0.0) / n;
+    double mean = std::accumulate(x.begin(), x.end(), 0.0) / x.size();
 
     for (auto xElement : x)
     {
         sumSquared += pow(xElement - mean, 2.0);
     }
 
-    double var = sumSquared / (n - 1);
-
-    return var;
+    return sumSquared / (x.size() - 1);
 }
 ```
 
@@ -308,8 +304,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 var(v1)        10.1us   13.8us    58917.        0B
-#> 2 variance(v1)    2.1us    3.5us   285959.    6.62KB
+#> 1 var(v1)         9.5us   10.8us    73975.        0B
+#> 2 variance(v1)    2.1us    3.5us   299850.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

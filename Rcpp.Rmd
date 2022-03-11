@@ -9,7 +9,7 @@ library(Rcpp)
 ```
 
 
-```{r, engine='Rcpp'}
+```{Rcpp}
 #include <Rcpp.h>
 using namespace Rcpp;
 
@@ -137,7 +137,7 @@ is.primitive(var)
 
 - `all()`
 
-```{r, engine='Rcpp'}
+```{Rcpp}
 #include <vector>
 // [[Rcpp::plugins(cpp11)]]
 
@@ -173,7 +173,7 @@ bench::mark(
 
 - `cumprod()`
 
-```{r, engine='Rcpp'}
+```{Rcpp}
 #include <vector>
 
 // [[Rcpp::export]]
@@ -209,7 +209,7 @@ bench::mark(
 
 - `var()`
 
-```{r, engine='Rcpp'}
+```{Rcpp}
 #include <vector>
 #include <cmath>
 #include <numeric>
@@ -220,18 +220,14 @@ double variance(std::vector<double> x)
 {
     double sumSquared{0};
 
-    unsigned int n = static_cast<unsigned int>(x.size());
-
-    double mean = std::accumulate(x.begin(), x.end(), 0.0) / n;
+    double mean = std::accumulate(x.begin(), x.end(), 0.0) / x.size();
 
     for (auto xElement : x)
     {
         sumSquared += pow(xElement - mean, 2.0);
     }
 
-    double var = sumSquared / (n - 1);
-
-    return var;
+    return sumSquared / (x.size() - 1);
 }
 ```
 

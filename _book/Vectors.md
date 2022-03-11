@@ -138,7 +138,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x000000001a269f80>
+#> <bytecode: 0x000000001798a7c0>
 #> <environment: namespace:stats>
 
 setNames(c(1, 2), c("a", "b"))
@@ -157,7 +157,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x000000001746fba0>
+#> <bytecode: 0x0000000014b7fb50>
 #> <environment: namespace:base>
 
 A <- provideDimnames(N <- array(1:24, dim = 2:4))
