@@ -207,6 +207,8 @@ bench::mark(
 
 - `diff()`
 
+TODO
+
 - `var()`
 
 ```{Rcpp}
@@ -242,6 +244,55 @@ variance(v1)
 bench::mark(
   var(v1),
   variance(v1),
+  iterations = 100
+)
+```
+
+## Exercise 25.4.5
+
+
+## Exercise 25.5.7
+
+### Q1. `median.default()` using `partial_sort()` {-}
+
+```{Rcpp}
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// [[Rcpp::export]]
+double medianC(std::vector<double> x)
+{
+    int middleIndex = static_cast<int>(x.size() / 2);
+
+    std::partial_sort(x.begin(), x.begin() + middleIndex, x.end());
+
+    // for even number of observations
+    if (x.size() % 2 == 0)
+    {
+        return (x[middleIndex - 1] + x[middleIndex]) / 2;
+    }
+
+    return x[middleIndex];
+}
+```
+
+
+```{r}
+v1 <- c(1, 3, 3, 6, 7, 8, 9)
+v2 <- c(1, 2, 3, 4, 5, 6, 8, 9)
+
+median.default(v1)
+medianC(v1)
+
+median.default(v2)
+medianC(v2)
+
+# performance benefits?
+bench::mark(
+  median.default(v2),
+  medianC(v2),
   iterations = 100
 )
 ```

@@ -235,12 +235,12 @@
 <span class="co">#&gt; # A tibble: 2 x 6</span>
 <span class="co">#&gt;   expression                                      min</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;                                 &lt;bch:tm&gt;</span>
-<span class="co">#&gt; 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     8.8us</span>
-<span class="co">#&gt; 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   14.1us</span>
+<span class="co">#&gt; 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     8.2us</span>
+<span class="co">#&gt; 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   13.5us</span>
 <span class="co">#&gt;     median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1   10.3us    90293.    15.8KB        0</span>
-<span class="co">#&gt; 2   15.8us    59109.    18.3KB        0</span></code></pre></div>
+<span class="co">#&gt; 1   8.85us   111508.    15.8KB        0</span>
+<span class="co">#&gt; 2   14.2us    69502.    18.3KB        0</span></code></pre></div>
 <ul>
 <li><code><a href="https://rdrr.io/r/base/cumsum.html">cumprod()</a></code></li>
 </ul>
@@ -275,15 +275,18 @@
 <span class="co">#&gt; # A tibble: 2 x 6</span>
 <span class="co">#&gt;   expression                 min   median `itr/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;            &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 cumprod(v1)              200ns    300ns  2457002.</span>
-<span class="co">#&gt; 2 cumulativeProduct(v1)    2.3us    3.7us   278474.</span>
+<span class="co">#&gt; 1 cumprod(v1)              200ns    300ns  3125000.</span>
+<span class="co">#&gt; 2 cumulativeProduct(v1)    2.3us    3.7us   281770.</span>
 <span class="co">#&gt;   mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:byt&gt;    &lt;dbl&gt;</span>
 <span class="co">#&gt; 1        0B        0</span>
 <span class="co">#&gt; 2    6.62KB        0</span></code></pre></div>
 <ul>
-<li><p><code><a href="https://rdrr.io/r/base/diff.html">diff()</a></code></p></li>
-<li><p><code><a href="https://rdrr.io/r/stats/cor.html">var()</a></code></p></li>
+<li><code><a href="https://rdrr.io/r/base/diff.html">diff()</a></code></li>
+</ul>
+<p>TODO</p>
+<ul>
+<li><code><a href="https://rdrr.io/r/stats/cor.html">var()</a></code></li>
 </ul>
 <div class="sourceCode" id="cb122"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb122-1"><a href="rewriting-r-code-in-c.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
 <span id="cb122-2"><a href="rewriting-r-code-in-c.html#cb122-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
@@ -321,8 +324,71 @@
 <span class="co">#&gt; # A tibble: 2 x 6</span>
 <span class="co">#&gt;   expression        min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 var(v1)         9.5us   10.8us    73975.        0B</span>
-<span class="co">#&gt; 2 variance(v1)    2.1us    3.5us   299850.    6.62KB</span>
+<span class="co">#&gt; 1 var(v1)        10.6us   11.2us    81334.        0B</span>
+<span class="co">#&gt; 2 variance(v1)    2.1us    3.6us   292740.    6.62KB</span>
+<span class="co">#&gt;   `gc/sec`</span>
+<span class="co">#&gt;      &lt;dbl&gt;</span>
+<span class="co">#&gt; 1        0</span>
+<span class="co">#&gt; 2        0</span></code></pre></div>
+</div>
+</div>
+<div id="exercise-25.4.5" class="section level2" number="9.2">
+<h2>
+<span class="header-section-number">9.2</span> Exercise 25.4.5<a class="anchor" aria-label="anchor" href="#exercise-25.4.5"><i class="fas fa-link"></i></a>
+</h2>
+</div>
+<div id="exercise-25.5.7" class="section level2" number="9.3">
+<h2>
+<span class="header-section-number">9.3</span> Exercise 25.5.7<a class="anchor" aria-label="anchor" href="#exercise-25.5.7"><i class="fas fa-link"></i></a>
+</h2>
+<div id="q1.-median.default-using-partial_sort" class="section level3 unnumbered">
+<h3>Q1. <code>median.default()</code> using <code>partial_sort()</code><a class="anchor" aria-label="anchor" href="#q1.-median.default-using-partial_sort"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb124"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb124-1"><a href="rewriting-r-code-in-c.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb124-2"><a href="rewriting-r-code-in-c.html#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb124-3"><a href="rewriting-r-code-in-c.html#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span id="cb124-4"><a href="rewriting-r-code-in-c.html#cb124-4" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb124-5"><a href="rewriting-r-code-in-c.html#cb124-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-6"><a href="rewriting-r-code-in-c.html#cb124-6" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb124-7"><a href="rewriting-r-code-in-c.html#cb124-7" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> medianC<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> x<span class="op">)</span></span>
+<span id="cb124-8"><a href="rewriting-r-code-in-c.html#cb124-8" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb124-9"><a href="rewriting-r-code-in-c.html#cb124-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> middleIndex <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>x<span class="op">.</span>size<span class="op">()</span> <span class="op">/</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb124-10"><a href="rewriting-r-code-in-c.html#cb124-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-11"><a href="rewriting-r-code-in-c.html#cb124-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>partial_sort<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>begin<span class="op">()</span> <span class="op">+</span> middleIndex<span class="op">,</span> x<span class="op">.</span>end<span class="op">());</span></span>
+<span id="cb124-12"><a href="rewriting-r-code-in-c.html#cb124-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-13"><a href="rewriting-r-code-in-c.html#cb124-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// for even number of observations</span></span>
+<span id="cb124-14"><a href="rewriting-r-code-in-c.html#cb124-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>x<span class="op">.</span>size<span class="op">()</span> <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb124-15"><a href="rewriting-r-code-in-c.html#cb124-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb124-16"><a href="rewriting-r-code-in-c.html#cb124-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">(</span>x<span class="op">[</span>middleIndex <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">+</span> x<span class="op">[</span>middleIndex<span class="op">])</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb124-17"><a href="rewriting-r-code-in-c.html#cb124-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb124-18"><a href="rewriting-r-code-in-c.html#cb124-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-19"><a href="rewriting-r-code-in-c.html#cb124-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x<span class="op">[</span>middleIndex<span class="op">];</span></span>
+<span id="cb124-20"><a href="rewriting-r-code-in-c.html#cb124-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span><span class="op">)</span>
+<span class="va">v2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">9</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/stats/median.html">median.default</a></span><span class="op">(</span><span class="va">v1</span><span class="op">)</span>
+<span class="co">#&gt; [1] 6</span>
+<span class="fu">medianC</span><span class="op">(</span><span class="va">v1</span><span class="op">)</span>
+<span class="co">#&gt; [1] 6</span>
+
+<span class="fu"><a href="https://rdrr.io/r/stats/median.html">median.default</a></span><span class="op">(</span><span class="va">v2</span><span class="op">)</span>
+<span class="co">#&gt; [1] 4.5</span>
+<span class="fu">medianC</span><span class="op">(</span><span class="va">v2</span><span class="op">)</span>
+<span class="co">#&gt; [1] 4.5</span>
+
+<span class="co"># performance benefits?</span>
+<span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median.default</a></span><span class="op">(</span><span class="va">v2</span><span class="op">)</span>,
+  <span class="fu">medianC</span><span class="op">(</span><span class="va">v2</span><span class="op">)</span>,
+  iterations <span class="op">=</span> <span class="fl">100</span>
+<span class="op">)</span>
+<span class="co">#&gt; # A tibble: 2 x 6</span>
+<span class="co">#&gt;   expression              min   median `itr/sec` mem_alloc</span>
+<span class="co">#&gt;   &lt;bch:expr&gt;         &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
+<span class="co">#&gt; 1 median.default(v2)   30.7us   31.9us    30333.        0B</span>
+<span class="co">#&gt; 2 medianC(v2)           2.4us    2.6us   355745.    2.49KB</span>
 <span class="co">#&gt;   `gc/sec`</span>
 <span class="co">#&gt;      &lt;dbl&gt;</span>
 <span class="co">#&gt; 1        0</span>
@@ -355,6 +421,10 @@
 <li><a class="nav-link" href="#q2.-converting-base-function-to-rcpp">Q2. Converting base function to Rcpp</a></li>
 </ul>
 </li>
+<li><a class="nav-link" href="#exercise-25.4.5"><span class="header-section-number">9.2</span> Exercise 25.4.5</a></li>
+<li>
+<a class="nav-link" href="#exercise-25.5.7"><span class="header-section-number">9.3</span> Exercise 25.5.7</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#q1.-median.default-using-partial_sort">Q1. median.default() using partial_sort()</a></li></ul>
+</li>
 </ul>
 
       <div class="book-extra">
@@ -372,7 +442,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-03-11.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-03-12.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

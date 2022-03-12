@@ -203,12 +203,12 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
-#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     8.8us
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   14.1us
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     8.2us
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   13.5us
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1   10.3us    90293.    15.8KB        0
-#> 2   15.8us    59109.    18.3KB        0
+#> 1   8.85us   111508.    15.8KB        0
+#> 2   14.2us    69502.    18.3KB        0
 ```
 
 - `cumprod()`
@@ -250,8 +250,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                 min   median `itr/sec`
 #>   <bch:expr>            <bch:tm> <bch:tm>     <dbl>
-#> 1 cumprod(v1)              200ns    300ns  2457002.
-#> 2 cumulativeProduct(v1)    2.3us    3.7us   278474.
+#> 1 cumprod(v1)              200ns    300ns  3125000.
+#> 2 cumulativeProduct(v1)    2.3us    3.7us   281770.
 #>   mem_alloc `gc/sec`
 #>   <bch:byt>    <dbl>
 #> 1        0B        0
@@ -259,6 +259,8 @@ bench::mark(
 ```
 
 - `diff()`
+
+TODO
 
 - `var()`
 
@@ -304,8 +306,72 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 var(v1)         9.5us   10.8us    73975.        0B
-#> 2 variance(v1)    2.1us    3.5us   299850.    6.62KB
+#> 1 var(v1)        10.6us   11.2us    81334.        0B
+#> 2 variance(v1)    2.1us    3.6us   292740.    6.62KB
+#>   `gc/sec`
+#>      <dbl>
+#> 1        0
+#> 2        0
+```
+
+## Exercise 25.4.5
+
+
+## Exercise 25.5.7
+
+### Q1. `median.default()` using `partial_sort()` {-}
+
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// [[Rcpp::export]]
+double medianC(std::vector<double> x)
+{
+    int middleIndex = static_cast<int>(x.size() / 2);
+
+    std::partial_sort(x.begin(), x.begin() + middleIndex, x.end());
+
+    // for even number of observations
+    if (x.size() % 2 == 0)
+    {
+        return (x[middleIndex - 1] + x[middleIndex]) / 2;
+    }
+
+    return x[middleIndex];
+}
+```
+
+
+
+```r
+v1 <- c(1, 3, 3, 6, 7, 8, 9)
+v2 <- c(1, 2, 3, 4, 5, 6, 8, 9)
+
+median.default(v1)
+#> [1] 6
+medianC(v1)
+#> [1] 6
+
+median.default(v2)
+#> [1] 4.5
+medianC(v2)
+#> [1] 4.5
+
+# performance benefits?
+bench::mark(
+  median.default(v2),
+  medianC(v2),
+  iterations = 100
+)
+#> # A tibble: 2 x 6
+#>   expression              min   median `itr/sec` mem_alloc
+#>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>
+#> 1 median.default(v2)   30.7us   31.9us    30333.        0B
+#> 2 medianC(v2)           2.4us    2.6us   355745.    2.49KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
