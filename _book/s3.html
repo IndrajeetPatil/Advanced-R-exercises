@@ -19,7 +19,9 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.13/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
+<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
+<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -51,7 +53,8 @@
 <li><a class="active" href="s3.html"><span class="header-section-number">6</span> S3</a></li>
 <li><a class="" href="r6.html"><span class="header-section-number">7</span> R6</a></li>
 <li><a class="" href="big-picture.html"><span class="header-section-number">8</span> Big Picture</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">9</span> Rewriting R code in C++</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">9</span> Measuring performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">10</span> Rewriting R code in C++</a></li>
 </ul>
 
         <div class="book-extra">
@@ -114,22 +117,22 @@ etc.</li>
 <code class="sourceCode R"><span class="va">some_days</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2017-01-31"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="va">some_days</span>
-<span class="co">#&gt; [1] "2017-02-05" "2017-02-09" "2017-02-08" "2017-02-01"</span>
-<span class="co">#&gt; [5] "2017-02-07"</span>
+<span class="co">#&gt; [1] "2017-02-06" "2017-02-04" "2017-02-02" "2017-02-03"</span>
+<span class="co">#&gt; [5] "2017-02-01"</span>
 
 <span class="fu"><a href="https://sloop.r-lib.org/reference/s3_dispatch.html">s3_dispatch</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">some_days</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; =&gt; mean.Date</span>
 <span class="co">#&gt;  * mean.default</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">some_days</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2017-02-06"</span></code></pre></div>
+<span class="co">#&gt; [1] "2017-02-03"</span></code></pre></div>
 <p>After</p>
 <div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">unclass</a></span><span class="op">(</span><span class="va">some_days</span><span class="op">)</span>
-<span class="co">#&gt; [1] 17202 17206 17205 17198 17204</span>
+<span class="co">#&gt; [1] 17203 17201 17199 17200 17198</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html">unclass</a></span><span class="op">(</span><span class="va">some_days</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 17203</span>
+<span class="co">#&gt; [1] 17200.2</span>
 
 <span class="fu"><a href="https://sloop.r-lib.org/reference/s3_dispatch.html">s3_dispatch</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html">unclass</a></span><span class="op">(</span><span class="va">some_days</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;    mean.double</span>
@@ -144,7 +147,7 @@ etc.</li>
 <span class="va">x</span>
 <span class="co">#&gt; Empirical CDF </span>
 <span class="co">#&gt; Call: ecdf(rpois(100, 10))</span>
-<span class="co">#&gt;  x[1:16] =      4,      5,      6,  ...,     18,     19</span>
+<span class="co">#&gt;  x[1:15] =      3,      4,      5,  ...,     16,     17</span>
 
 <span class="fu"><a href="https://sloop.r-lib.org/reference/otype.html">otype</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1] "S3"</span>
@@ -166,19 +169,19 @@ etc.</li>
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="va">x</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;  1  2  3  4  5  6  7  8  9 10 11 </span>
-<span class="co">#&gt;  5  9 11 23 17 12  3  9  7  2  2</span>
+<span class="co">#&gt;  1  2  3  4  5  6  7  8 10 11 </span>
+<span class="co">#&gt;  3  7 18 13 23 18 11  4  2  1</span>
 
 <span class="fu"><a href="https://sloop.r-lib.org/reference/otype.html">otype</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1] "S3"</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; $dim</span>
-<span class="co">#&gt; [1] 11</span>
+<span class="co">#&gt; [1] 10</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $dimnames</span>
 <span class="co">#&gt; $dimnames[[1]]</span>
-<span class="co">#&gt;  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11"</span>
+<span class="co">#&gt;  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "10" "11"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $class</span>

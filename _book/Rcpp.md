@@ -203,12 +203,12 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
-#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     8.2us
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   13.5us
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     6.8us
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   12.6us
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1   8.85us   111508.    15.8KB        0
-#> 2   14.2us    69502.    18.3KB        0
+#> 1    7.7us   123931.    15.8KB        0
+#> 2   13.8us    69551.    18.3KB        0
 ```
 
 - `cumprod()`
@@ -250,8 +250,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                 min   median `itr/sec`
 #>   <bch:expr>            <bch:tm> <bch:tm>     <dbl>
-#> 1 cumprod(v1)              200ns    300ns  3125000.
-#> 2 cumulativeProduct(v1)    2.3us    3.7us   281770.
+#> 1 cumprod(v1)              100ns    200ns  3174603.
+#> 2 cumulativeProduct(v1)    2.2us    3.5us   295159.
 #>   mem_alloc `gc/sec`
 #>   <bch:byt>    <dbl>
 #> 1        0B        0
@@ -306,8 +306,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 var(v1)        10.6us   11.2us    81334.        0B
-#> 2 variance(v1)    2.1us    3.6us   292740.    6.62KB
+#> 1 var(v1)        10.5us   18.3us    51182.        0B
+#> 2 variance(v1)      2us    3.3us   268745.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -370,8 +370,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression              min   median `itr/sec` mem_alloc
 #>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 median.default(v2)   30.7us   31.9us    30333.        0B
-#> 2 medianC(v2)           2.4us    2.6us   355745.    2.49KB
+#> 1 median.default(v2)   39.1us     56us    17438.        0B
+#> 2 medianC(v2)           2.1us    2.6us   313676.    2.49KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
