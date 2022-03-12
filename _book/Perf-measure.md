@@ -18,11 +18,7 @@ First, we try without `torture = TRUE`: it returns no meaningful results.
 
 ```r
 profvis(f())
-```
-
-```{=html}
-<div id="htmlwidget-547d1378f50e12c1d291" style="width:100%;height:600px;" class="profvis html-widget"></div>
-<script type="application/json" data-for="htmlwidget-547d1378f50e12c1d291">{"x":{"message":{"prof":{"time":[1,1,1,1,1,1],"depth":[6,5,4,3,2,1],"label":["tryCatch","profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null,null],"linenum":[null,null,null,null,null,null],"memalloc":[7.66363525390625,7.66363525390625,7.66363525390625,7.66363525390625,7.66363525390625,7.66363525390625],"meminc":[0,0,0,0,0,0],"filename":[null,null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\Rtmp6PM5oo\\file695868d0305c.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script>
+#> Error in parse_rprof(prof_output, expr_source): No parsing data available. Maybe your function was too fast?
 ```
 
 Maybe because the function runs too fast?
@@ -33,7 +29,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           185us    245us     3973.    4.64MB     56.4
+#> 1 f()           187us    231us     4351.    4.64MB     61.8
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -65,7 +61,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x0000000017d71970>
+#> <bytecode: 0x0000000017d3c428>
 #> <environment: namespace:base>
 ```
 
@@ -134,15 +130,15 @@ t_bench_df
 #> # A tibble: 2 x 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)      1.03us
-#> 2 x^0.5        3.54us
+#> 1 sqrt(x)    958.51ns
+#> 2 x^0.5        3.52us
 
 t_systime_df
 #> # A tibble: 2 x 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
 #> 1 sqrt(x)                 0.860                0.640
-#> 2 x^0.5                   3.13                 2.97
+#> 2 x^0.5                   3.31                 3.3
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -166,13 +162,13 @@ bench::mark(
 #> # A tibble: 4 x 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)          4.6us    6.7us   144416.    7.86KB
-#> 2 x^(1/2)         30.8us   33.5us    27647.    7.86KB
-#> 3 x^0.5           29.1us   36.2us    25097.    7.86KB
-#> 4 exp(log(x)/2)   81.7us   88.9us    11108.    7.86KB
+#> 1 sqrt(x)          4.6us    5.3us   168656.    7.86KB
+#> 2 x^0.5           30.2us   33.6us    27575.    7.86KB
+#> 3 x^(1/2)         30.9us   34.9us    27772.    7.86KB
+#> 4 exp(log(x)/2)   74.9us   88.5us    11184.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
-#> 1     145.
+#> 1     169.
 #> 2       0 
 #> 3       0 
 #> 4       0

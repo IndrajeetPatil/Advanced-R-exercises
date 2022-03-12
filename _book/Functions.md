@@ -11,7 +11,7 @@ Given a name, `match.fun()` lets you find a function.
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000018e3bf50>
+#> <bytecode: 0x0000000018d968a8>
 #> <environment: namespace:base>
 ```
 
@@ -267,7 +267,7 @@ All package functions print their environment:
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000018e3bf50>
+#> <bytecode: 0x0000000018d968a8>
 #> <environment: namespace:base>
 
 # other package function
@@ -277,7 +277,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x00000000343443e8>
+#> <bytecode: 0x0000000034344388>
 #> <environment: namespace:purrr>
 ```
 
@@ -405,7 +405,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x34338458" "0x34338458"
+#> [1] "0x34339a48" "0x34339a48"
 ```
 
 ### Q3. Principle behind return {-}

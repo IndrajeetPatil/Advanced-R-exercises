@@ -7,7 +7,7 @@
 <title>Chapter 9 Measuring performance | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
 <meta name="description" content='9.1 Exercise 23.2.4  Q1. Profiling function with torture = TRUE Let’s first source the functions mentioned in exercises. library(profvis) source("profiling-exercises.R") First, we try without...'>
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="generator" content="bookdown 0.24.11 with bs4_book()">
 <meta property="og:title" content="Chapter 9 Measuring performance | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.jpg">
@@ -16,12 +16,14 @@
 <meta name="twitter:title" content="Chapter 9 Measuring performance | Advanced R Exercises">
 <meta name="twitter:description" content='9.1 Exercise 23.2.4  Q1. Profiling function with torture = TRUE Let’s first source the functions mentioned in exercises. library(profvis) source("profiling-exercises.R") First, we try without...'>
 <meta name="twitter:image" content="/cover.jpg">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.13/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
-<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
-<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="bs4_style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -80,15 +82,15 @@
 <span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="st">"profiling-exercises.R"</span><span class="op">)</span></code></pre></div>
 <p>First, we try without <code>torture = TRUE</code>: it returns no meaningful results.</p>
 <div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/profvis/man/profvis.html">profvis</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-547d1378f50e12c1d291" style="width:100%;height:600px;" class="profvis html-widget"></div>
-<script type="application/json" data-for="htmlwidget-547d1378f50e12c1d291">{"x":{"message":{"prof":{"time":[1,1,1,1,1,1],"depth":[6,5,4,3,2,1],"label":["tryCatch","profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null,null],"linenum":[null,null,null,null,null,null],"memalloc":[7.66363525390625,7.66363525390625,7.66363525390625,7.66363525390625,7.66363525390625,7.66363525390625],"meminc":[0,0,0,0,0,0],"filename":[null,null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\Rtmp6PM5oo\\file695868d0305c.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script><p>Maybe because the function runs too fast?</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/profvis/man/profvis.html">profvis</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Error in parse_rprof(prof_output, expr_source): No parsing data available. Maybe your function was too fast?</span></code></pre></div>
+<p>Maybe because the function runs too fast?</p>
 <div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span>, check <span class="op">=</span> <span class="cn">FALSE</span>, iterations <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 f()           185us    245us     3973.    4.64MB     56.4</span></code></pre></div>
+<span class="co">#&gt; 1 f()           187us    231us     4351.    4.64MB     61.8</span></code></pre></div>
 <p>As mentioned in the docs, setting <code>torture = TRUE</code></p>
 <blockquote>
 <p>Triggers garbage collection after every torture memory allocation call.</p>
@@ -112,7 +114,7 @@
 <span class="co">#&gt;     list &lt;- .Primitive("c")(list, names)</span>
 <span class="co">#&gt;     .Internal(remove(list, envir, inherits))</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x0000000017d71970&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x0000000017d3c428&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>I still couldn’t figure out why. I would recommend checking out the <a href="https://advanced-r-solutions.rbind.io/measuring-performance.html#profiling">official answer</a>.</p>
 </div>
@@ -178,15 +180,15 @@
 <span class="co">#&gt; # A tibble: 2 x 2</span>
 <span class="co">#&gt;   expression     mean</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)      1.03us</span>
-<span class="co">#&gt; 2 x^0.5        3.54us</span>
+<span class="co">#&gt; 1 sqrt(x)    958.51ns</span>
+<span class="co">#&gt; 2 x^0.5        3.52us</span>
 
 <span class="va">t_systime_df</span>
 <span class="co">#&gt; # A tibble: 2 x 3</span>
 <span class="co">#&gt;   expression systime_with_gc_us systime_with_nogc_us</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;              &lt;dbl&gt;                &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 sqrt(x)                 0.860                0.640</span>
-<span class="co">#&gt; 2 x^0.5                   3.13                 2.97</span></code></pre></div>
+<span class="co">#&gt; 2 x^0.5                   3.31                 3.3</span></code></pre></div>
 <p>The comparison reveals that these two approaches yield quite similar results.</p>
 </div>
 <div id="q2.-microbenchmarking-ways-to-compute-square-root" class="section level3 unnumbered">
@@ -207,13 +209,13 @@
 <span class="co">#&gt; # A tibble: 4 x 6</span>
 <span class="co">#&gt;   expression         min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;    &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)          4.6us    6.7us   144416.    7.86KB</span>
-<span class="co">#&gt; 2 x^(1/2)         30.8us   33.5us    27647.    7.86KB</span>
-<span class="co">#&gt; 3 x^0.5           29.1us   36.2us    25097.    7.86KB</span>
-<span class="co">#&gt; 4 exp(log(x)/2)   81.7us   88.9us    11108.    7.86KB</span>
+<span class="co">#&gt; 1 sqrt(x)          4.6us    5.3us   168656.    7.86KB</span>
+<span class="co">#&gt; 2 x^0.5           30.2us   33.6us    27575.    7.86KB</span>
+<span class="co">#&gt; 3 x^(1/2)         30.9us   34.9us    27772.    7.86KB</span>
+<span class="co">#&gt; 4 exp(log(x)/2)   74.9us   88.5us    11184.    7.86KB</span>
 <span class="co">#&gt;   `gc/sec`</span>
 <span class="co">#&gt;      &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     145.</span>
+<span class="co">#&gt; 1     169.</span>
 <span class="co">#&gt; 2       0 </span>
 <span class="co">#&gt; 3       0 </span>
 <span class="co">#&gt; 4       0</span></code></pre></div>
