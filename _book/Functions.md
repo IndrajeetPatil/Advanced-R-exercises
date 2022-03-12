@@ -277,7 +277,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x0000000034344388>
+#> <bytecode: 0x0000000034343380>
 #> <environment: namespace:purrr>
 ```
 
@@ -405,7 +405,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x34339a48" "0x34339a48"
+#> [1] "0x34334c80" "0x34334c80"
 ```
 
 ### Q3. Principle behind return {-}
