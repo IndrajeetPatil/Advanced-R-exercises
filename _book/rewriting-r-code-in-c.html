@@ -4,24 +4,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 10 Rewriting R code in C++ | Advanced R Exercises</title>
+<title>Chapter 12 Rewriting R code in C++ | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content="10.1 Exercise 25.2.6  Q1. Figure out base function corresponding to Rccp code library(Rcpp) #include &lt;Rcpp.h&gt; using namespace Rcpp; // [[Rcpp::export]] double f1(NumericVector x) {  int n =...">
+<meta name="description" content="12.1 Exercise 25.2.6  Q1. Figure out base function corresponding to Rccp code library(Rcpp) #include &lt;Rcpp.h&gt; using namespace Rcpp; // [[Rcpp::export]] double f1(NumericVector x) {  int n =...">
 <meta name="generator" content="bookdown 0.24.11 with bs4_book()">
-<meta property="og:title" content="Chapter 10 Rewriting R code in C++ | Advanced R Exercises">
+<meta property="og:title" content="Chapter 12 Rewriting R code in C++ | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.jpg">
-<meta property="og:description" content="10.1 Exercise 25.2.6  Q1. Figure out base function corresponding to Rccp code library(Rcpp) #include &lt;Rcpp.h&gt; using namespace Rcpp; // [[Rcpp::export]] double f1(NumericVector x) {  int n =...">
+<meta property="og:description" content="12.1 Exercise 25.2.6  Q1. Figure out base function corresponding to Rccp code library(Rcpp) #include &lt;Rcpp.h&gt; using namespace Rcpp; // [[Rcpp::export]] double f1(NumericVector x) {  int n =...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 10 Rewriting R code in C++ | Advanced R Exercises">
-<meta name="twitter:description" content="10.1 Exercise 25.2.6  Q1. Figure out base function corresponding to Rccp code library(Rcpp) #include &lt;Rcpp.h&gt; using namespace Rcpp; // [[Rcpp::export]] double f1(NumericVector x) {  int n =...">
+<meta name="twitter:title" content="Chapter 12 Rewriting R code in C++ | Advanced R Exercises">
+<meta name="twitter:description" content="12.1 Exercise 25.2.6  Q1. Figure out base function corresponding to Rccp code library(Rcpp) #include &lt;Rcpp.h&gt; using namespace Rcpp; // [[Rcpp::export]] double f1(NumericVector x) {  int n =...">
 <meta name="twitter:image" content="/cover.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
-<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
-<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -58,7 +56,9 @@
 <li><a class="" href="r6.html"><span class="header-section-number">7</span> R6</a></li>
 <li><a class="" href="big-picture.html"><span class="header-section-number">8</span> Big Picture</a></li>
 <li><a class="" href="measuring-performance.html"><span class="header-section-number">9</span> Measuring performance</a></li>
-<li><a class="active" href="rewriting-r-code-in-c.html"><span class="header-section-number">10</span> Rewriting R code in C++</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">10</span> Debugging</a></li>
+<li><a class="" href="measuring-performance-1.html"><span class="header-section-number">11</span> Measuring performance</a></li>
+<li><a class="active" href="rewriting-r-code-in-c.html"><span class="header-section-number">12</span> Rewriting R code in C++</a></li>
 </ul>
 
         <div class="book-extra">
@@ -66,13 +66,13 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="rewriting-r-code-in-c" class="section level1" number="10">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="rewriting-r-code-in-c" class="section level1" number="12">
 <h1>
-<span class="header-section-number">10</span> Rewriting R code in C++<a class="anchor" aria-label="anchor" href="#rewriting-r-code-in-c"><i class="fas fa-link"></i></a>
+<span class="header-section-number">12</span> Rewriting R code in C++<a class="anchor" aria-label="anchor" href="#rewriting-r-code-in-c"><i class="fas fa-link"></i></a>
 </h1>
-<div id="exercise-25.2.6" class="section level2" number="10.1">
+<div id="exercise-25.2.6" class="section level2" number="12.1">
 <h2>
-<span class="header-section-number">10.1</span> Exercise 25.2.6<a class="anchor" aria-label="anchor" href="#exercise-25.2.6"><i class="fas fa-link"></i></a>
+<span class="header-section-number">12.1</span> Exercise 25.2.6<a class="anchor" aria-label="anchor" href="#exercise-25.2.6"><i class="fas fa-link"></i></a>
 </h2>
 <div id="q1.-figure-out-base-function-corresponding-to-rccp-code" class="section level3 unnumbered">
 <h3>Q1. Figure out base function corresponding to Rccp code<a class="anchor" aria-label="anchor" href="#q1.-figure-out-base-function-corresponding-to-rccp-code"><i class="fas fa-link"></i></a>
@@ -242,12 +242,12 @@
 <span class="co">#&gt; # A tibble: 2 x 6</span>
 <span class="co">#&gt;   expression                                      min</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;                                 &lt;bch:tm&gt;</span>
-<span class="co">#&gt; 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    12.2us</span>
-<span class="co">#&gt; 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   12.4us</span>
+<span class="co">#&gt; 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    10.9us</span>
+<span class="co">#&gt; 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   13.9us</span>
 <span class="co">#&gt;     median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1   13.6us    72015.    15.8KB        0</span>
-<span class="co">#&gt; 2   13.2us    74722.    18.3KB        0</span></code></pre></div>
+<span class="co">#&gt; 1   12.5us    75222.    15.8KB        0</span>
+<span class="co">#&gt; 2   14.8us    60761.    18.3KB        0</span></code></pre></div>
 <ul>
 <li><code><a href="https://rdrr.io/r/base/cumsum.html">cumprod()</a></code></li>
 </ul>
@@ -282,8 +282,8 @@
 <span class="co">#&gt; # A tibble: 2 x 6</span>
 <span class="co">#&gt;   expression                 min   median `itr/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;            &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 cumprod(v1)              200ns    300ns  2564103.</span>
-<span class="co">#&gt; 2 cumulativeProduct(v1)    2.3us    3.8us   280269.</span>
+<span class="co">#&gt; 1 cumprod(v1)              900ns    1.1us   811030.</span>
+<span class="co">#&gt; 2 cumulativeProduct(v1)    8.4us   13.4us    78260.</span>
 <span class="co">#&gt;   mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:byt&gt;    &lt;dbl&gt;</span>
 <span class="co">#&gt; 1        0B        0</span>
@@ -331,22 +331,22 @@
 <span class="co">#&gt; # A tibble: 2 x 6</span>
 <span class="co">#&gt;   expression        min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 var(v1)         9.5us   10.5us    86498.        0B</span>
-<span class="co">#&gt; 2 variance(v1)    2.1us    2.4us   370233.    6.62KB</span>
+<span class="co">#&gt; 1 var(v1)        11.5us   13.3us    68583.        0B</span>
+<span class="co">#&gt; 2 variance(v1)    2.7us      3us   313381.    6.62KB</span>
 <span class="co">#&gt;   `gc/sec`</span>
 <span class="co">#&gt;      &lt;dbl&gt;</span>
-<span class="co">#&gt; 1        0</span>
-<span class="co">#&gt; 2        0</span></code></pre></div>
+<span class="co">#&gt; 1     693.</span>
+<span class="co">#&gt; 2       0</span></code></pre></div>
 </div>
 </div>
-<div id="exercise-25.4.5" class="section level2" number="10.2">
+<div id="exercise-25.4.5" class="section level2" number="12.2">
 <h2>
-<span class="header-section-number">10.2</span> Exercise 25.4.5<a class="anchor" aria-label="anchor" href="#exercise-25.4.5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">12.2</span> Exercise 25.4.5<a class="anchor" aria-label="anchor" href="#exercise-25.4.5"><i class="fas fa-link"></i></a>
 </h2>
 </div>
-<div id="exercise-25.5.7" class="section level2" number="10.3">
+<div id="exercise-25.5.7" class="section level2" number="12.3">
 <h2>
-<span class="header-section-number">10.3</span> Exercise 25.5.7<a class="anchor" aria-label="anchor" href="#exercise-25.5.7"><i class="fas fa-link"></i></a>
+<span class="header-section-number">12.3</span> Exercise 25.5.7<a class="anchor" aria-label="anchor" href="#exercise-25.5.7"><i class="fas fa-link"></i></a>
 </h2>
 <div id="q1.-median.default-using-partial_sort" class="section level3 unnumbered">
 <h3>Q1. <code>median.default()</code> using <code>partial_sort()</code><a class="anchor" aria-label="anchor" href="#q1.-median.default-using-partial_sort"><i class="fas fa-link"></i></a>
@@ -394,8 +394,8 @@
 <span class="co">#&gt; # A tibble: 2 x 6</span>
 <span class="co">#&gt;   expression              min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;         &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 median.default(v2)   28.5us   32.6us    26665.        0B</span>
-<span class="co">#&gt; 2 medianC(v2)             2us    2.3us   387447.    2.49KB</span>
+<span class="co">#&gt; 1 median.default(v2)   48.5us   59.5us    15790.        0B</span>
+<span class="co">#&gt; 2 medianC(v2)           3.8us   4.35us   209336.    2.49KB</span>
 <span class="co">#&gt;   `gc/sec`</span>
 <span class="co">#&gt;      &lt;dbl&gt;</span>
 <span class="co">#&gt; 1        0</span>
@@ -416,21 +416,21 @@
 
 
   <div class="chapter-nav">
-<div class="prev"><a href="measuring-performance.html"><span class="header-section-number">9</span> Measuring performance</a></div>
+<div class="prev"><a href="measuring-performance-1.html"><span class="header-section-number">11</span> Measuring performance</a></div>
 <div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#rewriting-r-code-in-c"><span class="header-section-number">10</span> Rewriting R code in C++</a></li>
+<li><a class="nav-link" href="#rewriting-r-code-in-c"><span class="header-section-number">12</span> Rewriting R code in C++</a></li>
 <li>
-<a class="nav-link" href="#exercise-25.2.6"><span class="header-section-number">10.1</span> Exercise 25.2.6</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#exercise-25.2.6"><span class="header-section-number">12.1</span> Exercise 25.2.6</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#q1.-figure-out-base-function-corresponding-to-rccp-code">Q1. Figure out base function corresponding to Rccp code</a></li>
 <li><a class="nav-link" href="#q2.-converting-base-function-to-rcpp">Q2. Converting base function to Rcpp</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#exercise-25.4.5"><span class="header-section-number">10.2</span> Exercise 25.4.5</a></li>
+<li><a class="nav-link" href="#exercise-25.4.5"><span class="header-section-number">12.2</span> Exercise 25.4.5</a></li>
 <li>
-<a class="nav-link" href="#exercise-25.5.7"><span class="header-section-number">10.3</span> Exercise 25.5.7</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#q1.-median.default-using-partial_sort">Q1. median.default() using partial_sort()</a></li></ul>
+<a class="nav-link" href="#exercise-25.5.7"><span class="header-section-number">12.3</span> Exercise 25.5.7</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#q1.-median.default-using-partial_sort">Q1. median.default() using partial_sort()</a></li></ul>
 </li>
 </ul>
 
@@ -449,7 +449,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-03-12.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-03-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

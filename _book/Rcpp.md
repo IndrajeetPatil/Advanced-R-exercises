@@ -203,12 +203,12 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
-#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    12.2us
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   12.4us
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    10.9us
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   13.9us
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1   13.6us    72015.    15.8KB        0
-#> 2   13.2us    74722.    18.3KB        0
+#> 1   12.5us    75222.    15.8KB        0
+#> 2   14.8us    60761.    18.3KB        0
 ```
 
 - `cumprod()`
@@ -250,8 +250,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                 min   median `itr/sec`
 #>   <bch:expr>            <bch:tm> <bch:tm>     <dbl>
-#> 1 cumprod(v1)              200ns    300ns  2564103.
-#> 2 cumulativeProduct(v1)    2.3us    3.8us   280269.
+#> 1 cumprod(v1)              900ns    1.1us   811030.
+#> 2 cumulativeProduct(v1)    8.4us   13.4us    78260.
 #>   mem_alloc `gc/sec`
 #>   <bch:byt>    <dbl>
 #> 1        0B        0
@@ -306,12 +306,12 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 var(v1)         9.5us   10.5us    86498.        0B
-#> 2 variance(v1)    2.1us    2.4us   370233.    6.62KB
+#> 1 var(v1)        11.5us   13.3us    68583.        0B
+#> 2 variance(v1)    2.7us      3us   313381.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
-#> 1        0
-#> 2        0
+#> 1     693.
+#> 2       0
 ```
 
 ## Exercise 25.4.5
@@ -370,8 +370,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression              min   median `itr/sec` mem_alloc
 #>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 median.default(v2)   28.5us   32.6us    26665.        0B
-#> 2 medianC(v2)             2us    2.3us   387447.    2.49KB
+#> 1 median.default(v2)   48.5us   59.5us    15790.        0B
+#> 2 medianC(v2)           3.8us   4.35us   209336.    2.49KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
