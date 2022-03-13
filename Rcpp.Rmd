@@ -209,6 +209,40 @@ bench::mark(
 
 TODO
 
+- `range()`
+
+```{Rcpp}
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// [[Rcpp::export]]
+std::vector<double> rangeC(std::vector<double> x)
+{
+    std::vector<double> rangeVec{0.0, 0.0};
+
+    rangeVec.at(0) = *std::min_element(x.begin(), x.end());
+    rangeVec.at(1) = *std::max_element(x.begin(), x.end());
+
+    return rangeVec;
+}
+```
+
+```{r}
+v1 <- c(10, 4, 6, 8)
+
+range(v1)
+rangeC(v1)
+
+# performance benefits?
+bench::mark(
+  range(v1),
+  rangeC(v1),
+  iterations = 100
+)
+```
+
 - `var()`
 
 ```{Rcpp}
@@ -250,6 +284,60 @@ bench::mark(
 
 ## Exercise 25.4.5
 
+### Q1. Rewrite functions with original `na.rm` argument {-}
+
+```{Rcpp}
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <math.h>
+#include <Rcpp.h>
+using namespace std;
+
+// [[Rcpp::export]]
+std::vector<double> rangeC_NA(std::vector<double> x, bool removeNA = true)
+{
+    std::vector<double> rangeVec{0.0, 0.0};
+
+    bool naPresent = std::any_of(
+        x.begin(),
+        x.end(),
+        [](double d)
+        { return isnan(d); });
+
+    if (naPresent)
+    {
+        if (removeNA)
+        {
+            std::remove(x.begin(), x.end(), NAN);
+        }
+        else
+        {
+            rangeVec.at(0) = NA_REAL; // NAN;
+            rangeVec.at(1) = NA_REAL; // NAN;
+
+            return rangeVec;
+        }
+    }
+
+    rangeVec.at(0) = *std::min_element(x.begin(), x.end());
+    rangeVec.at(1) = *std::max_element(x.begin(), x.end());
+
+    return rangeVec;
+}
+```
+
+```{r}
+v1 <- c(10, 4, NA, 6, 8)
+
+range(v1, na.rm = FALSE)
+rangeC_NA(v1, FALSE)
+
+range(v1, na.rm = TRUE)
+rangeC_NA(v1, TRUE)
+```
+
+### Q2. Rewrite functions without original `na.rm` argument {-}
 
 ## Exercise 25.5.7
 

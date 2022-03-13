@@ -204,11 +204,11 @@ bench::mark(
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
 #> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    10.9us
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   13.9us
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   16.4us
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1   12.5us    75222.    15.8KB        0
-#> 2   14.8us    60761.    18.3KB        0
+#> 1   12.1us    75415.    15.8KB        0
+#> 2   17.6us    54262.    18.3KB        0
 ```
 
 - `cumprod()`
@@ -250,8 +250,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                 min   median `itr/sec`
 #>   <bch:expr>            <bch:tm> <bch:tm>     <dbl>
-#> 1 cumprod(v1)              900ns    1.1us   811030.
-#> 2 cumulativeProduct(v1)    8.4us   13.4us    78260.
+#> 1 cumprod(v1)              200ns    300ns  2118644.
+#> 2 cumulativeProduct(v1)    4.5us   7.75us   104921.
 #>   mem_alloc `gc/sec`
 #>   <bch:byt>    <dbl>
 #> 1        0B        0
@@ -261,6 +261,49 @@ bench::mark(
 - `diff()`
 
 TODO
+
+- `range()`
+
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// [[Rcpp::export]]
+std::vector<double> rangeC(std::vector<double> x)
+{
+    std::vector<double> rangeVec{0.0, 0.0};
+
+    rangeVec.at(0) = *std::min_element(x.begin(), x.end());
+    rangeVec.at(1) = *std::max_element(x.begin(), x.end());
+
+    return rangeVec;
+}
+```
+
+
+```r
+v1 <- c(10, 4, 6, 8)
+
+range(v1)
+#> [1]  4 10
+rangeC(v1)
+#> [1]  4 10
+
+# performance benefits?
+bench::mark(
+  range(v1),
+  rangeC(v1),
+  iterations = 100
+)
+#> # A tibble: 2 x 6
+#>   expression      min   median `itr/sec` mem_alloc `gc/sec`
+#>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
+#> 1 range(v1)     3.1us    3.4us   268240.        0B        0
+#> 2 rangeC(v1)    2.6us      3us   314861.    6.62KB        0
+```
 
 - `var()`
 
@@ -306,16 +349,76 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 var(v1)        11.5us   13.3us    68583.        0B
-#> 2 variance(v1)    2.7us      3us   313381.    6.62KB
+#> 1 var(v1)        11.3us   13.2us    71388.        0B
+#> 2 variance(v1)      4us    4.5us   205381.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
-#> 1     693.
-#> 2       0
+#> 1        0
+#> 2        0
 ```
 
 ## Exercise 25.4.5
 
+### Q1. Rewrite functions with original `na.rm` argument {-}
+
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <math.h>
+#include <Rcpp.h>
+using namespace std;
+
+// [[Rcpp::export]]
+std::vector<double> rangeC_NA(std::vector<double> x, bool removeNA = true)
+{
+    std::vector<double> rangeVec{0.0, 0.0};
+
+    bool naPresent = std::any_of(
+        x.begin(),
+        x.end(),
+        [](double d)
+        { return isnan(d); });
+
+    if (naPresent)
+    {
+        if (removeNA)
+        {
+            std::remove(x.begin(), x.end(), NAN);
+        }
+        else
+        {
+            rangeVec.at(0) = NA_REAL; // NAN;
+            rangeVec.at(1) = NA_REAL; // NAN;
+
+            return rangeVec;
+        }
+    }
+
+    rangeVec.at(0) = *std::min_element(x.begin(), x.end());
+    rangeVec.at(1) = *std::max_element(x.begin(), x.end());
+
+    return rangeVec;
+}
+```
+
+
+```r
+v1 <- c(10, 4, NA, 6, 8)
+
+range(v1, na.rm = FALSE)
+#> [1] NA NA
+rangeC_NA(v1, FALSE)
+#> [1] NA NA
+
+range(v1, na.rm = TRUE)
+#> [1]  4 10
+rangeC_NA(v1, TRUE)
+#> [1]  4 10
+```
+
+### Q2. Rewrite functions without original `na.rm` argument {-}
 
 ## Exercise 25.5.7
 
@@ -370,8 +473,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression              min   median `itr/sec` mem_alloc
 #>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 median.default(v2)   48.5us   59.5us    15790.        0B
-#> 2 medianC(v2)           3.8us   4.35us   209336.    2.49KB
+#> 1 median.default(v2)   47.8us   65.5us    13722.        0B
+#> 2 medianC(v2)           5.2us      9us    89855.    2.49KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
