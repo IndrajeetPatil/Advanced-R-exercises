@@ -18,11 +18,7 @@ First, we try without `torture = TRUE`: it returns no meaningful results.
 
 ```r
 profvis(f())
-```
-
-```{=html}
-<div id="htmlwidget-db19b6d2e9d8ecfed713" style="width:100%;height:600px;" class="profvis html-widget"></div>
-<script type="application/json" data-for="htmlwidget-db19b6d2e9d8ecfed713">{"x":{"message":{"prof":{"time":[1,1,1,1,1,1],"depth":[6,5,4,3,2,1],"label":["tryCatch","profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null,null],"linenum":[null,null,null,null,null,null],"memalloc":[7.66480255126953,7.66480255126953,7.66480255126953,7.66480255126953,7.66480255126953,7.66480255126953],"meminc":[0,0,0,0,0,0],"filename":[null,null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\RtmpgVg6kA\\file3e50485c6af1.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script>
+#> Error in parse_rprof(prof_output, expr_source): No parsing data available. Maybe your function was too fast?
 ```
 
 Maybe because the function runs too fast?
@@ -33,7 +29,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           263us    280us     3457.    4.64MB     49.1
+#> 1 f()           240us    316us     2907.    4.64MB     41.3
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -65,7 +61,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x0000000017d1f0d8>
+#> <bytecode: 0x000000001541eff8>
 #> <environment: namespace:base>
 ```
 
@@ -134,15 +130,15 @@ t_bench_df
 #> # A tibble: 2 x 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)      1.34us
-#> 2 x^0.5        4.56us
+#> 1 sqrt(x)      1.37us
+#> 2 x^0.5        4.58us
 
 t_systime_df
 #> # A tibble: 2 x 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                  1.11                0.740
-#> 2 x^0.5                    3.92                3.86
+#> 1 sqrt(x)                  1.11                 1.05
+#> 2 x^0.5                    5.22                 6.03
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -166,16 +162,16 @@ bench::mark(
 #> # A tibble: 4 x 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)          5.6us    7.9us   117456.    7.86KB
-#> 2 x^(1/2)         36.7us   37.4us    26504.    7.86KB
-#> 3 x^0.5           37.9us     43us    22728.    7.86KB
-#> 4 exp(log(x)/2)     96us   96.6us    10145.    7.86KB
+#> 1 sqrt(x)          7.5us   11.6us    66676.    7.86KB
+#> 2 x^(1/2)         42.5us     45us    20803.    7.86KB
+#> 3 x^0.5             45us   55.5us    15564.    7.86KB
+#> 4 exp(log(x)/2)  115.1us  130.4us     7351.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
-#> 1     118.
-#> 2       0 
-#> 3       0 
-#> 4       0
+#> 1     66.7
+#> 2      0  
+#> 3      0  
+#> 4      0
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.

@@ -190,3 +190,52 @@ mydeck$draw(4)
 
 # reshuffle
 ```
+
+## Exercise 14.4.4
+
+Q1. Write R6 class to edit file {-}
+
+```{r}
+library(R6)
+
+fileEditor <- R6Class(
+  "fileEditor",
+  public = list(
+    initialize = function(filePath) {
+      private$.connection <- file(filePath, open = "wt")
+    },
+    append_line = function(text) {
+      cat(
+        text,
+        file = private$.connection,
+        sep = "\n",
+        append = TRUE
+      )
+    },
+    finalize = function() {
+      print("Closing the file connection!")
+      close(private$.connection)
+    }
+  ),
+  private = list(
+    .connection = NULL
+  )
+)
+```
+
+Let's check if it works as expected:
+
+```{r}
+f <- tempfile()
+myfileEditor <- fileEditor$new(f)
+
+readLines(f)
+
+myfileEditor$append_line("Hi mom!")
+myfileEditor$append_line("It's a beautiful day!")
+
+readLines(f)
+
+myfileEditor$finalize()
+```
+
