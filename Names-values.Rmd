@@ -191,12 +191,79 @@ x[[1]] <- x
 obj_addr(x[[1]])
 ```
 
-Q2. Why are loops so slow
+Q2. Performance of `for` loops with and without creating copies
 
-<!-- TODO -->
+Let's first microbenchmark functions that does and does not create copies for varying lengths of number of columns.
 
 ```{r}
 library(bench)
+library(tidyverse)
+
+generateDataFrame <- function(ncol) {
+  as.data.frame(matrix(runif(100 * ncol), nrow = 100))
+}
+
+withCopy <- function(ncol) {
+  x <- generateDataFrame(ncol)
+  medians <- vapply(x, median, numeric(1))
+
+  for (i in seq_along(medians)) {
+    x[[i]] <- x[[i]] - medians[[i]]
+  }
+
+  return(x)
+}
+
+withoutCopy <- function(ncol) {
+  x <- generateDataFrame(ncol)
+  medians <- vapply(x, median, numeric(1))
+
+  y <- as.list(x)
+
+  for (i in seq_along(medians)) {
+    y[[i]] <- y[[i]] - medians[[i]]
+  }
+
+  return(y)
+}
+
+benchComparison <- function(ncol) {
+  bench::mark(
+    withCopy(ncol),
+    withoutCopy(ncol),
+    iterations = 100,
+    check = FALSE
+  ) %>%
+    dplyr::select(expression:total_time)
+}
+
+nColList <- list(1, 10, 50, 100, 250, 500, 1000)
+
+names(nColList) <- as.character(nColList)
+
+benchDf <- purrr::map_dfr(
+  .x = nColList,
+  .f = benchComparison,
+  .id = "nColumns"
+)
+```
+
+Plotting these benchmarks reveals how the performance gets increasingly worse as the number of dataframes increases:
+
+```{r}
+ggplot(benchDf,
+       aes(
+         x = as.numeric(nColumns),
+         y = median,
+         group = as.character(expression),
+         color = as.character(expression)
+       )) +
+  geom_line() +
+  labs(
+    x = "Number of Columns",
+    y = "Median Execution Time (ms)",
+    colour = "Type of function"
+  )
 ```
 
 

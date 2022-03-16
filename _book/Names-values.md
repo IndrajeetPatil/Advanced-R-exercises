@@ -19,13 +19,13 @@ All of these variable names are actively bound to the same value.
 library(lobstr)
 
 obj_addr(a)
-#> [1] "0x17380090"
+#> [1] "0x14d3dd40"
 obj_addr(b)
-#> [1] "0x17380090"
+#> [1] "0x14d3dd40"
 obj_addr(c)
-#> [1] "0x17380090"
+#> [1] "0x14d3dd40"
 obj_addr(d)
-#> [1] "0x19340a28"
+#> [1] "0x13012fa0"
 ```
 
 Q2. Function object address
@@ -35,15 +35,15 @@ Following code verifies that indeed these calls all point to the same underlying
 
 ```r
 obj_addr(mean)
-#> [1] "0x18d86dd8"
+#> [1] "0x12956dd0"
 obj_addr(base::mean)
-#> [1] "0x18d86dd8"
+#> [1] "0x12956dd0"
 obj_addr(get("mean"))
-#> [1] "0x18d86dd8"
+#> [1] "0x12956dd0"
 obj_addr(evalq(mean))
-#> [1] "0x18d86dd8"
+#> [1] "0x12956dd0"
 obj_addr(match.fun("mean"))
-#> [1] "0x18d86dd8"
+#> [1] "0x12956dd0"
 ```
 
 Q3. Converting non-syntactic names 
@@ -81,7 +81,7 @@ Q1. Usefulness of `tracemem()`
 
 ```r
 tracemem(1:10)
-#> [1] "<0000000031656B78>"
+#> [1] "<000000002CA14BB0>"
 ```
 
 Q2. Why two copies when you run this code?
@@ -92,11 +92,11 @@ Were it not for `4` being a double - and not an integer (`4L`) - this would have
 ```r
 x <- c(1L, 2L, 3L)
 tracemem(x)
-#> [1] "<000000003184C7A8>"
+#> [1] "<000000002CBC1468>"
 
 x[[3]] <- 4
-#> tracemem[0x000000003184c7a8 -> 0x0000000031905348]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
-#> tracemem[0x0000000031905348 -> 0x00000000318a09d8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x000000002cbc1468 -> 0x000000002cc66748]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
+#> tracemem[0x000000002cc66748 -> 0x000000002cc9f3e8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 ```
 
 Try with integer:
@@ -105,10 +105,10 @@ Try with integer:
 ```r
 x <- c(1L, 2L, 3L)
 tracemem(x)
-#> [1] "<0000000031AC4C18>"
+#> [1] "<000000002CEC59B8>"
 
 x[[3]] <- 4L
-#> tracemem[0x0000000031ac4c18 -> 0x0000000031b43078]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x000000002cec59b8 -> 0x000000002cf63198]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 ```
 
 As for why this still produces a copy, this is from Solutions manual:
@@ -124,20 +124,20 @@ b <- list(a, a)
 c <- list(b, a, 1:10)
 
 ref(a)
-#> [1:0x31eac3e0] <int>
+#> [1:0x2d2684f8] <int>
 
 ref(b)
-#> o [1:0x31e9a9e8] <list> 
-#> +-[2:0x31eac3e0] <int> 
-#> \-[2:0x31eac3e0]
+#> o [1:0x2d2bab08] <list> 
+#> +-[2:0x2d2684f8] <int> 
+#> \-[2:0x2d2684f8]
 
 ref(c)
-#> o [1:0x31f20398] <list> 
-#> +-o [2:0x31e9a9e8] <list> 
-#> | +-[3:0x31eac3e0] <int> 
-#> | \-[3:0x31eac3e0] 
-#> +-[3:0x31eac3e0] 
-#> \-[4:0x31f6e000] <int>
+#> o [1:0x2d31dd58] <list> 
+#> +-o [2:0x2d2bab08] <list> 
+#> | +-[3:0x2d2684f8] <int> 
+#> | \-[3:0x2d2684f8] 
+#> +-[3:0x2d2684f8] 
+#> \-[4:0x2d3262e8] <int>
 ```
 
 Q4. List inside another list
@@ -149,7 +149,7 @@ x
 #> [[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x332e4eb8"
+#> [1] "0x2e6a8788"
 
 x[[2]] <- x
 x
@@ -160,13 +160,13 @@ x
 #> [[2]][[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x33757e40"
+#> [1] "0x2eb12628"
 
 ref(x)
-#> o [1:0x33757e40] <list> 
-#> +-[2:0x32d8cc90] <int> 
-#> \-o [3:0x332e4eb8] <list> 
-#>   \-[2:0x32d8cc90]
+#> o [1:0x2eb12628] <list> 
+#> +-[2:0x2e163f50] <int> 
+#> \-o [3:0x2e6a8788] <list> 
+#>   \-[2:0x2e163f50]
 ```
 
 Figure here:
@@ -253,26 +253,104 @@ Copy-on-modify prevents the creation of a circular list.
 x <- list()
 
 obj_addr(x)
-#> [1] "0x322e7ba0"
+#> [1] "0x2d6b5158"
 
 tracemem(x)
-#> [1] "<00000000322E7BA0>"
+#> [1] "<000000002D6B5158>"
 
 x[[1]] <- x
-#> tracemem[0x00000000322e7ba0 -> 0x000000003241bf10]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x000000002d6b5158 -> 0x000000002d7f4788]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 
 obj_addr(x[[1]])
-#> [1] "0x322e7ba0"
+#> [1] "0x2d6b5158"
 ```
 
-Q2. Why are loops so slow
+Q2. Performance of `for` loops with and without creating copies
 
-<!-- TODO -->
+Let's first microbenchmark functions that does and does not create copies for varying lengths of number of columns.
 
 
 ```r
 library(bench)
+library(tidyverse)
+#> -- Attaching packages ------------------- tidyverse 1.3.1 --
+#> v ggplot2 3.3.5.9000     v purrr   0.3.4     
+#> v tibble  3.1.6          v dplyr   1.0.8     
+#> v tidyr   1.2.0          v stringr 1.4.0     
+#> v readr   2.1.2          v forcats 0.5.1
+#> -- Conflicts ---------------------- tidyverse_conflicts() --
+#> x dplyr::filter() masks stats::filter()
+#> x dplyr::lag()    masks stats::lag()
+
+generateDataFrame <- function(ncol) {
+  as.data.frame(matrix(runif(100 * ncol), nrow = 100))
+}
+
+withCopy <- function(ncol) {
+  x <- generateDataFrame(ncol)
+  medians <- vapply(x, median, numeric(1))
+
+  for (i in seq_along(medians)) {
+    x[[i]] <- x[[i]] - medians[[i]]
+  }
+
+  return(x)
+}
+
+withoutCopy <- function(ncol) {
+  x <- generateDataFrame(ncol)
+  medians <- vapply(x, median, numeric(1))
+
+  y <- as.list(x)
+
+  for (i in seq_along(medians)) {
+    y[[i]] <- y[[i]] - medians[[i]]
+  }
+
+  return(y)
+}
+
+benchComparison <- function(ncol) {
+  bench::mark(
+    withCopy(ncol),
+    withoutCopy(ncol),
+    iterations = 100,
+    check = FALSE
+  ) %>%
+    dplyr::select(expression:total_time)
+}
+
+nColList <- list(1, 10, 50, 100, 250, 500, 1000)
+
+names(nColList) <- as.character(nColList)
+
+benchDf <- purrr::map_dfr(
+  .x = nColList,
+  .f = benchComparison,
+  .id = "nColumns"
+)
 ```
+
+Plotting these benchmarks reveals how the performance gets increasingly worse as the number of dataframes increases:
+
+
+```r
+ggplot(benchDf,
+       aes(
+         x = as.numeric(nColumns),
+         y = median,
+         group = as.character(expression),
+         color = as.character(expression)
+       )) +
+  geom_line() +
+  labs(
+    x = "Number of Columns",
+    y = "Median Execution Time (ms)",
+    colour = "Type of function"
+  )
+```
+
+<img src="Names-values_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
 
 Q3. `tracemem()` on an environment

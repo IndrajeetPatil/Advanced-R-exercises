@@ -19,7 +19,9 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
+<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
+<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -51,12 +53,13 @@
 <li><a class="active" href="control-flow.html"><span class="header-section-number">3</span> Control flow</a></li>
 <li><a class="" href="functions.html"><span class="header-section-number">4</span> Functions</a></li>
 <li><a class="" href="functionals.html"><span class="header-section-number">5</span> Functionals</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">6</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">7</span> R6</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">8</span> Big Picture</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">9</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">10</span> Measuring performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">11</span> Rewriting R code in C++</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">6</span> Base Types</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">7</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">8</span> R6</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">9</span> Big Picture</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">10</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">11</span> Measuring performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">12</span> Rewriting R code in C++</a></li>
 </ul>
 
         <div class="book-extra">
@@ -74,7 +77,7 @@
 </h2>
 <p>Q1. <code><a href="https://rdrr.io/r/base/ifelse.html">ifelse()</a></code> return type</p>
 <p>It’s type unstable, i.e. the type of return will depend on the type of each condition (<code>yes</code> and <code>no</code>, i.e.), and works only for cases where <code>test</code> argument evaluated to a <code>logical</code> type.</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span> <span class="co"># numeric returned</span>
 <span class="co">#&gt; [1] 1</span>
 <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span> <span class="co"># character returned</span>
@@ -82,7 +85,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span>
 <span class="co">#&gt; [1] NA</span></code></pre></div>
 <p>Additionally, if the test doesn’t resolve to <code>logical</code> type, it will try to coerce whatever the resulting type to <code>logical</code>:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># will work</span>
 <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="st">"TRUE"</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1</span>
@@ -96,7 +99,7 @@
 <span class="co">#&gt; [1] NA</span></code></pre></div>
 <p>Q2. Why does the following code work?</p>
 <p>As can be seen, the code works because the tests are successfully coerced to a logical type.</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>
 <span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span>
@@ -115,7 +118,7 @@
 </h2>
 <p>Q1. Why does this work?</p>
 <p>This works because <code>1:length(x)</code> goes both ways; in this case, from 1 to 0. And, since out-of-bound values for atomic vectors is <code>NA</code>, all related operations with it also lead to <code>NA</code>.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
 
@@ -136,7 +139,7 @@
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; [1] NA</span></code></pre></div>
 <p>A way to do avoid this unintended behavior would be:</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
 
@@ -149,7 +152,7 @@
 <span class="co">#&gt; list()</span></code></pre></div>
 <p>Q2. Index vectors</p>
 <p>Surprisingly (at least to me), <code>x</code> takes all values of the vector <code>xs</code>:</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># xs &lt;- c(1, 2, 3)</span>
 <span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">x</span> <span class="kw">in</span> <span class="va">xs</span><span class="op">)</span> <span class="op">{</span>
@@ -164,7 +167,7 @@
 <span class="co">#&gt; [1]  4  5  6  8 10 12</span></code></pre></div>
 <p>Q3. Index increase</p>
 <p>In a <code>for</code> loop - like in a <code>while</code> loop - the index is updated in the beginning of each iteration.</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"before: "</span>, <span class="va">i</span>, <span class="st">"\n"</span><span class="op">)</span>
   <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">*</span> <span class="fl">2</span>
