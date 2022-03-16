@@ -4,24 +4,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 8 R6 | Advanced R Exercises</title>
+<title>Chapter 9 R6 | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content='8.1 Exercise 14.2.6 Q1. R6 class for bank account Create the superclass and make sure it works as expected. library(R6) # define the needed class bankAccount &lt;- R6::R6Class(  "bankAccount", ...'>
+<meta name="description" content='9.1 Exercise 14.2.6 Q1. R6 class for bank account Create the superclass and make sure it works as expected. library(R6) # define the needed class bankAccount &lt;- R6::R6Class(  "bankAccount", ...'>
 <meta name="generator" content="bookdown 0.25 with bs4_book()">
-<meta property="og:title" content="Chapter 8 R6 | Advanced R Exercises">
+<meta property="og:title" content="Chapter 9 R6 | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.jpg">
-<meta property="og:description" content='8.1 Exercise 14.2.6 Q1. R6 class for bank account Create the superclass and make sure it works as expected. library(R6) # define the needed class bankAccount &lt;- R6::R6Class(  "bankAccount", ...'>
+<meta property="og:description" content='9.1 Exercise 14.2.6 Q1. R6 class for bank account Create the superclass and make sure it works as expected. library(R6) # define the needed class bankAccount &lt;- R6::R6Class(  "bankAccount", ...'>
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 8 R6 | Advanced R Exercises">
-<meta name="twitter:description" content='8.1 Exercise 14.2.6 Q1. R6 class for bank account Create the superclass and make sure it works as expected. library(R6) # define the needed class bankAccount &lt;- R6::R6Class(  "bankAccount", ...'>
+<meta name="twitter:title" content="Chapter 9 R6 | Advanced R Exercises">
+<meta name="twitter:description" content='9.1 Exercise 14.2.6 Q1. R6 class for bank account Create the superclass and make sure it works as expected. library(R6) # define the needed class bankAccount &lt;- R6::R6Class(  "bankAccount", ...'>
 <meta name="twitter:image" content="/cover.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
-<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
-<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -48,18 +46,19 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">About</a></li>
-<li><a class="" href="names-and-values.html"><span class="header-section-number">1</span> Names and values</a></li>
-<li><a class="" href="vectors.html"><span class="header-section-number">2</span> Vectors</a></li>
-<li><a class="" href="control-flow.html"><span class="header-section-number">3</span> Control flow</a></li>
-<li><a class="" href="functions.html"><span class="header-section-number">4</span> Functions</a></li>
-<li><a class="" href="functionals.html"><span class="header-section-number">5</span> Functionals</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">6</span> Base Types</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">7</span> S3</a></li>
-<li><a class="active" href="r6.html"><span class="header-section-number">8</span> R6</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">9</span> Big Picture</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">10</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">11</span> Measuring performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">12</span> Rewriting R code in C++</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
+<li><a class="" href="control-flow.html"><span class="header-section-number">4</span> Control flow</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">5</span> Functions</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">6</span> Functionals</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">7</span> Base Types</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">8</span> S3</a></li>
+<li><a class="active" href="r6.html"><span class="header-section-number">9</span> R6</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">10</span> Big Picture</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">11</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">12</span> Measuring performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">13</span> Rewriting R code in C++</a></li>
 </ul>
 
         <div class="book-extra">
@@ -67,13 +66,13 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="r6" class="section level1" number="8">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="r6" class="section level1" number="9">
 <h1>
-<span class="header-section-number">8</span> R6<a class="anchor" aria-label="anchor" href="#r6"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9</span> R6<a class="anchor" aria-label="anchor" href="#r6"><i class="fas fa-link"></i></a>
 </h1>
-<div id="exercise-14.2.6" class="section level2" number="8.1">
+<div id="exercise-14.2.6" class="section level2" number="9.1">
 <h2>
-<span class="header-section-number">8.1</span> Exercise 14.2.6<a class="anchor" aria-label="anchor" href="#exercise-14.2.6"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.1</span> Exercise 14.2.6<a class="anchor" aria-label="anchor" href="#exercise-14.2.6"><i class="fas fa-link"></i></a>
 </h2>
 <p>Q1. R6 class for bank account</p>
 <p>Create the superclass and make sure it works as expected.</p>
@@ -290,9 +289,9 @@
 
 <span class="co"># reshuffle</span></code></pre></div>
 </div>
-<div id="exercise-14.3.3" class="section level2" number="8.2">
+<div id="exercise-14.3.3" class="section level2" number="9.2">
 <h2>
-<span class="header-section-number">8.2</span> Exercise 14.3.3<a class="anchor" aria-label="anchor" href="#exercise-14.3.3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.2</span> Exercise 14.3.3<a class="anchor" aria-label="anchor" href="#exercise-14.3.3"><i class="fas fa-link"></i></a>
 </h2>
 <p>Q2. Class to store and check password</p>
 <div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
@@ -358,9 +357,9 @@
 <span class="va">myMallard</span><span class="op">$</span><span class="fu">quack</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Quack Quack"</span></code></pre></div>
 </div>
-<div id="exercise-14.4.4" class="section level2" number="8.3">
+<div id="exercise-14.4.4" class="section level2" number="9.3">
 <h2>
-<span class="header-section-number">8.3</span> Exercise 14.4.4<a class="anchor" aria-label="anchor" href="#exercise-14.4.4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.3</span> Exercise 14.4.4<a class="anchor" aria-label="anchor" href="#exercise-14.4.4"><i class="fas fa-link"></i></a>
 </h2>
 <p>Q1. Write R6 class to edit file</p>
 <div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
@@ -411,21 +410,21 @@
 <span class="fu"><a href="https://rdrr.io/r/base/gc.html">gc</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Closing the file connection!"</span>
 <span class="co">#&gt;           used (Mb) gc trigger (Mb) max used (Mb)</span>
-<span class="co">#&gt; Ncells  650744 34.8    1301611 69.6  1301611 69.6</span>
-<span class="co">#&gt; Vcells 1175481  9.0    8388608 64.0  2215788 17.0</span></code></pre></div>
+<span class="co">#&gt; Ncells  650745 34.8    1301611 69.6  1301611 69.6</span>
+<span class="co">#&gt; Vcells 1175485  9.0    8388608 64.0  2215792 17.0</span></code></pre></div>
 
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="s3.html"><span class="header-section-number">7</span> S3</a></div>
-<div class="next"><a href="big-picture.html"><span class="header-section-number">9</span> Big Picture</a></div>
+<div class="prev"><a href="s3.html"><span class="header-section-number">8</span> S3</a></div>
+<div class="next"><a href="big-picture.html"><span class="header-section-number">10</span> Big Picture</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#r6"><span class="header-section-number">8</span> R6</a></li>
-<li><a class="nav-link" href="#exercise-14.2.6"><span class="header-section-number">8.1</span> Exercise 14.2.6</a></li>
-<li><a class="nav-link" href="#exercise-14.3.3"><span class="header-section-number">8.2</span> Exercise 14.3.3</a></li>
-<li><a class="nav-link" href="#exercise-14.4.4"><span class="header-section-number">8.3</span> Exercise 14.4.4</a></li>
+<li><a class="nav-link" href="#r6"><span class="header-section-number">9</span> R6</a></li>
+<li><a class="nav-link" href="#exercise-14.2.6"><span class="header-section-number">9.1</span> Exercise 14.2.6</a></li>
+<li><a class="nav-link" href="#exercise-14.3.3"><span class="header-section-number">9.2</span> Exercise 14.3.3</a></li>
+<li><a class="nav-link" href="#exercise-14.4.4"><span class="header-section-number">9.3</span> Exercise 14.4.4</a></li>
 </ul>
 
       <div class="book-extra">

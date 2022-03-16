@@ -196,7 +196,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x00000000179cb5a8>
+#> <bytecode: 0x00000000179ab528>
 #> <environment: namespace:stats>
 
 setNames(c(1, 2), c("a", "b"))
@@ -215,7 +215,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x0000000014a9e738>
+#> <bytecode: 0x0000000014a9e770>
 #> <environment: namespace:base>
 
 A <- provideDimnames(N <- array(1:24, dim = 2:4))
@@ -250,7 +250,7 @@ Q2. 1-dimensional vector
 
 Dimensions for a 1-dimensional vector are `NULL`.
 
-`NROW()` and `NCOL()` are helpful for getting dimensions for 1D vectors by treating them as if they were a data frame vectors.
+`NROW()` and `NCOL()` are helpful for getting dimensions for 1D vectors by treating them as if they were matrices or dataframes.
 
 
 ```r
@@ -272,12 +272,16 @@ NCOL(x)
 
 Q3. Difference between vectors and arrays
 
-`1:5` is a 1D vector without dimensions, while `x1`, `x2`, and `x3` are one-dimensional arrays.
+- `1:5` is a dimensionless **vector** 
+- `x1`, `x2`, and `x3` are one-dimensional **array** 
 
 
 ```r
-1:5
+(x <- 1:5)
 #> [1] 1 2 3 4 5
+dim(x)
+#> NULL
+
 (x1 <- array(1:5, c(1, 1, 5)))
 #> , , 1
 #> 
@@ -317,7 +321,16 @@ Q3. Difference between vectors and arrays
 #> [3,]    3
 #> [4,]    4
 #> [5,]    5
+
+dim(x1)
+#> [1] 1 1 5
+dim(x2)
+#> [1] 1 5 1
+dim(x3)
+#> [1] 5 1 1
 ```
+
+We can look at the dim attribute
 
 Q4. About `structure()`
 

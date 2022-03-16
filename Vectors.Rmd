@@ -166,7 +166,7 @@ Q2. 1-dimensional vector
 
 Dimensions for a 1-dimensional vector are `NULL`.
 
-`NROW()` and `NCOL()` are helpful for getting dimensions for 1D vectors by treating them as if they were a data frame vectors.
+`NROW()` and `NCOL()` are helpful for getting dimensions for 1D vectors by treating them as if they were matrices or dataframes.
 
 ```{r}
 x <- character(0)
@@ -182,14 +182,23 @@ NCOL(x)
 
 Q3. Difference between vectors and arrays
 
-`1:5` is a 1D vector without dimensions, while `x1`, `x2`, and `x3` are one-dimensional arrays.
+- `1:5` is a dimensionless **vector** 
+- `x1`, `x2`, and `x3` are one-dimensional **array** 
 
 ```{r}
-1:5
+(x <- 1:5)
+dim(x)
+
 (x1 <- array(1:5, c(1, 1, 5)))
 (x2 <- array(1:5, c(1, 5, 1)))
 (x3 <- array(1:5, c(5, 1, 1)))
+
+dim(x1)
+dim(x2)
+dim(x3)
 ```
+
+We can look at the dim attribute
 
 Q4. About `structure()`
 

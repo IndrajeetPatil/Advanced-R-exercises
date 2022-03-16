@@ -4,24 +4,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 11 Measuring performance | Advanced R Exercises</title>
+<title>Chapter 12 Measuring performance | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content='11.1 Exercise 23.2.4 Q1. Profiling function with torture = TRUE Let’s first source the functions mentioned in exercises. library(profvis) source("profiling-exercises.R") First, we try without...'>
+<meta name="description" content='12.1 Exercise 23.2.4 Q1. Profiling function with torture = TRUE Let’s first source the functions mentioned in exercises. library(profvis) source("profiling-exercises.R") First, we try without...'>
 <meta name="generator" content="bookdown 0.25 with bs4_book()">
-<meta property="og:title" content="Chapter 11 Measuring performance | Advanced R Exercises">
+<meta property="og:title" content="Chapter 12 Measuring performance | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.jpg">
-<meta property="og:description" content='11.1 Exercise 23.2.4 Q1. Profiling function with torture = TRUE Let’s first source the functions mentioned in exercises. library(profvis) source("profiling-exercises.R") First, we try without...'>
+<meta property="og:description" content='12.1 Exercise 23.2.4 Q1. Profiling function with torture = TRUE Let’s first source the functions mentioned in exercises. library(profvis) source("profiling-exercises.R") First, we try without...'>
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 11 Measuring performance | Advanced R Exercises">
-<meta name="twitter:description" content='11.1 Exercise 23.2.4 Q1. Profiling function with torture = TRUE Let’s first source the functions mentioned in exercises. library(profvis) source("profiling-exercises.R") First, we try without...'>
+<meta name="twitter:title" content="Chapter 12 Measuring performance | Advanced R Exercises">
+<meta name="twitter:description" content='12.1 Exercise 23.2.4 Q1. Profiling function with torture = TRUE Let’s first source the functions mentioned in exercises. library(profvis) source("profiling-exercises.R") First, we try without...'>
 <meta name="twitter:image" content="/cover.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
-<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
-<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -48,18 +46,19 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">About</a></li>
-<li><a class="" href="names-and-values.html"><span class="header-section-number">1</span> Names and values</a></li>
-<li><a class="" href="vectors.html"><span class="header-section-number">2</span> Vectors</a></li>
-<li><a class="" href="control-flow.html"><span class="header-section-number">3</span> Control flow</a></li>
-<li><a class="" href="functions.html"><span class="header-section-number">4</span> Functions</a></li>
-<li><a class="" href="functionals.html"><span class="header-section-number">5</span> Functionals</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">6</span> Base Types</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">7</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">8</span> R6</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">9</span> Big Picture</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">10</span> Debugging</a></li>
-<li><a class="active" href="measuring-performance.html"><span class="header-section-number">11</span> Measuring performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">12</span> Rewriting R code in C++</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
+<li><a class="" href="control-flow.html"><span class="header-section-number">4</span> Control flow</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">5</span> Functions</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">6</span> Functionals</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">7</span> Base Types</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">8</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">9</span> R6</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">10</span> Big Picture</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">11</span> Debugging</a></li>
+<li><a class="active" href="measuring-performance.html"><span class="header-section-number">12</span> Measuring performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">13</span> Rewriting R code in C++</a></li>
 </ul>
 
         <div class="book-extra">
@@ -67,13 +66,13 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="measuring-performance" class="section level1" number="11">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="measuring-performance" class="section level1" number="12">
 <h1>
-<span class="header-section-number">11</span> Measuring performance<a class="anchor" aria-label="anchor" href="#measuring-performance"><i class="fas fa-link"></i></a>
+<span class="header-section-number">12</span> Measuring performance<a class="anchor" aria-label="anchor" href="#measuring-performance"><i class="fas fa-link"></i></a>
 </h1>
-<div id="exercise-23.2.4" class="section level2" number="11.1">
+<div id="exercise-23.2.4" class="section level2" number="12.1">
 <h2>
-<span class="header-section-number">11.1</span> Exercise 23.2.4<a class="anchor" aria-label="anchor" href="#exercise-23.2.4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">12.1</span> Exercise 23.2.4<a class="anchor" aria-label="anchor" href="#exercise-23.2.4"><i class="fas fa-link"></i></a>
 </h2>
 <p>Q1. Profiling function with <code>torture = TRUE</code></p>
 <p>Let’s first source the functions mentioned in exercises.</p>
@@ -83,15 +82,15 @@
 <span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="st">"profiling-exercises.R"</span><span class="op">)</span></code></pre></div>
 <p>First, we try without <code>torture = TRUE</code>: it returns no meaningful results.</p>
 <div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/profvis/man/profvis.html">profvis</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-d85bc5f6d0fbc9827bf8" style="width:100%;height:600px;" class="profvis html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d85bc5f6d0fbc9827bf8">{"x":{"message":{"prof":{"time":[1,1,1,1,1],"depth":[5,4,3,2,1],"label":["profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null],"linenum":[null,null,null,null,null],"memalloc":[7.66439819335938,7.66439819335938,7.66439819335938,7.66439819335938,7.66439819335938],"meminc":[0,0,0,0,0],"filename":[null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\Rtmp8k07GG\\file5c201f255cde.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script><p>Maybe because the function runs too fast?</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/profvis/man/profvis.html">profvis</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Error in parse_rprof(prof_output, expr_source): No parsing data available. Maybe your function was too fast?</span></code></pre></div>
+<p>Maybe because the function runs too fast?</p>
 <div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span>, check <span class="op">=</span> <span class="cn">FALSE</span>, iterations <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 f()           229us    238us     4086.    4.64MB     58.0</span></code></pre></div>
+<span class="co">#&gt; 1 f()           231us    274us     2787.    4.64MB     39.6</span></code></pre></div>
 <p>As mentioned in the docs, setting <code>torture = TRUE</code></p>
 <blockquote>
 <p>Triggers garbage collection after every torture memory allocation call.</p>
@@ -119,9 +118,9 @@
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>I still couldn’t figure out why. I would recommend checking out the <a href="https://advanced-r-solutions.rbind.io/measuring-performance.html#profiling">official answer</a>.</p>
 </div>
-<div id="exercise-23.3.3" class="section level2" number="11.2">
+<div id="exercise-23.3.3" class="section level2" number="12.2">
 <h2>
-<span class="header-section-number">11.2</span> Exercise 23.3.3<a class="anchor" aria-label="anchor" href="#exercise-23.3.3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">12.2</span> Exercise 23.3.3<a class="anchor" aria-label="anchor" href="#exercise-23.3.3"><i class="fas fa-link"></i></a>
 </h2>
 <p>Q1. Differences between <code><a href="https://rdrr.io/r/base/system.time.html">system.time()</a></code> and <code><a href="http://bench.r-lib.org/reference/mark.html">bench::mark()</a></code></p>
 <div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
@@ -178,15 +177,15 @@
 <span class="co">#&gt; # A tibble: 2 x 2</span>
 <span class="co">#&gt;   expression     mean</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)      1.24us</span>
-<span class="co">#&gt; 2 x^0.5        4.61us</span>
+<span class="co">#&gt; 1 sqrt(x)      1.36us</span>
+<span class="co">#&gt; 2 x^0.5        3.98us</span>
 
 <span class="va">t_systime_df</span>
 <span class="co">#&gt; # A tibble: 2 x 3</span>
 <span class="co">#&gt;   expression systime_with_gc_us systime_with_nogc_us</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;              &lt;dbl&gt;                &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)                 0.920                 0.66</span>
-<span class="co">#&gt; 2 x^0.5                   3.78                  4.16</span></code></pre></div>
+<span class="co">#&gt; 1 sqrt(x)                  1.11                0.700</span>
+<span class="co">#&gt; 2 x^0.5                    3.57                3.56</span></code></pre></div>
 <p>The comparison reveals that these two approaches yield quite similar results.</p>
 <p>Q2. Microbenchmarking ways to compute square root</p>
 <p>Microbenchmarking all ways to compute square root of a vector mentioned in this chapter.</p>
@@ -204,13 +203,13 @@
 <span class="co">#&gt; # A tibble: 4 x 6</span>
 <span class="co">#&gt;   expression         min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;    &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)          5.2us    5.4us   134847.    7.86KB</span>
-<span class="co">#&gt; 2 x^(1/2)         31.5us   32.1us    29351.    7.86KB</span>
-<span class="co">#&gt; 3 x^0.5           31.5us   35.1us    25127.    7.86KB</span>
-<span class="co">#&gt; 4 exp(log(x)/2)     83us   85.7us    11572.    7.86KB</span>
+<span class="co">#&gt; 1 sqrt(x)          5.4us    5.9us   160124.    7.86KB</span>
+<span class="co">#&gt; 2 x^(1/2)         31.6us   34.1us    23568.    7.86KB</span>
+<span class="co">#&gt; 3 x^0.5           34.6us   38.6us    20800.    7.86KB</span>
+<span class="co">#&gt; 4 exp(log(x)/2)     83us   85.8us    11096.    7.86KB</span>
 <span class="co">#&gt;   `gc/sec`</span>
 <span class="co">#&gt;      &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     135.</span>
+<span class="co">#&gt; 1     160.</span>
 <span class="co">#&gt; 2       0 </span>
 <span class="co">#&gt; 3       0 </span>
 <span class="co">#&gt; 4       0</span></code></pre></div>
@@ -219,14 +218,14 @@
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="debugging.html"><span class="header-section-number">10</span> Debugging</a></div>
-<div class="next"><a href="rewriting-r-code-in-c.html"><span class="header-section-number">12</span> Rewriting R code in C++</a></div>
+<div class="prev"><a href="debugging.html"><span class="header-section-number">11</span> Debugging</a></div>
+<div class="next"><a href="rewriting-r-code-in-c.html"><span class="header-section-number">13</span> Rewriting R code in C++</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#measuring-performance"><span class="header-section-number">11</span> Measuring performance</a></li>
-<li><a class="nav-link" href="#exercise-23.2.4"><span class="header-section-number">11.1</span> Exercise 23.2.4</a></li>
-<li><a class="nav-link" href="#exercise-23.3.3"><span class="header-section-number">11.2</span> Exercise 23.3.3</a></li>
+<li><a class="nav-link" href="#measuring-performance"><span class="header-section-number">12</span> Measuring performance</a></li>
+<li><a class="nav-link" href="#exercise-23.2.4"><span class="header-section-number">12.1</span> Exercise 23.2.4</a></li>
+<li><a class="nav-link" href="#exercise-23.3.3"><span class="header-section-number">12.2</span> Exercise 23.3.3</a></li>
 </ul>
 
       <div class="book-extra">
