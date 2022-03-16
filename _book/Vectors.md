@@ -2,7 +2,7 @@
 
 ## Exercise 3.2.5 
 
-### Q1. Create raw and complex scalars {-}
+Q1. Create raw and complex scalars
 
 The raw type holds raw bytes. For example,
 
@@ -40,7 +40,7 @@ typeof(x)
 #> [1] "complex"
 ```
 
-### Q2. Vector coercion rules {-}
+Q2. Vector coercion rules
 
 Usually, the more *general* type would take precedence.
 
@@ -70,7 +70,7 @@ c(TRUE, "1.0")
 #> [1] "TRUE" "1.0"
 ```
 
-### Q3. Comparisons between different types {-}
+Q3. Comparisons between different types
 
 The coercion in vectors reveal why some of these comparisons return the results that they do.
 
@@ -104,7 +104,7 @@ sort(c("one", 2))
 #> [1] "2"   "one"
 ```
 
-### Q4. Why `NA` defaults to `"logical"` type {-}
+Q4. Why `NA` defaults to `"logical"` type
 
 The `"logical"` type is the lowest in the coercion hierarchy.
 
@@ -119,7 +119,7 @@ c(FALSE, NA_character_)
 #> [1] "FALSE" NA
 ```
 
-### Q5. Misleading variants of `is.*` functions {-}
+Q5. Misleading variants of `is.*` functions
 
 - `is.atomic()`:
 - `is.numeric()`:
@@ -128,7 +128,7 @@ c(FALSE, NA_character_)
 
 ## Exercise 3.3.4
 
-### Q1. Reading source code {-}
+Q1. Reading source code
 
 
 ```r
@@ -138,7 +138,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x00000000179bb330>
+#> <bytecode: 0x000000001a2ab870>
 #> <environment: namespace:stats>
 
 setNames(c(1, 2), c("a", "b"))
@@ -157,7 +157,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x0000000014a9ec20>
+#> <bytecode: 0x000000001739e830>
 #> <environment: namespace:base>
 
 A <- provideDimnames(N <- array(1:24, dim = 2:4))
@@ -188,7 +188,7 @@ unname(A, force = TRUE)
 #> [2,]   20   22   24
 ```
 
-### Q2. 1-dimensional vector {-}
+Q2. 1-dimensional vector
 
 Dimensions for a 1-dimensional vector are `NULL`.
 
@@ -212,7 +212,7 @@ NCOL(x)
 #> [1] 1
 ```
 
-### Q3. Difference between vectors and arrays {-}
+Q3. Difference between vectors and arrays
 
 `1:5` is a 1D vector without dimensions, while `x1`, `x2`, and `x3` are one-dimensional arrays.
 
@@ -261,7 +261,7 @@ NCOL(x)
 #> [5,]    5
 ```
 
-### Q4. About `structure()` {-}
+Q4. About `structure()`
 
 From `?attributes` (emphasis mine):
 
@@ -280,7 +280,7 @@ structure(1:5, comment = "my attribute")
 
 ## Exercise 3.4.5
 
-### Q1. `table()` function {-}
+Q1. `table()` function
 
 `table()` returns an array with integer type and its dimensions scale with the number of variables present.
 
@@ -371,7 +371,7 @@ purrr::map(list(x, y, z), attributes)
 #> [1] "table"
 ```
 
-### Q2. Factor reversal {-}
+Q2. Factor reversal
 
 Its levels changes but the underlying integer values remain the same.
 
@@ -394,7 +394,7 @@ as.integer(f1)
 #> [19] 19 20 21 22 23 24 25 26
 ```
 
-### Q3. Factor reversal-2 {-}
+Q3. Factor reversal-2
 
 `f2`: Only the underlying integers are reversed, but levels remain unchanged.
 `f3`: Both the levels and the underlying integers are reversed.
@@ -420,7 +420,7 @@ as.integer(f3)
 
 ## Exercise 3.5.4
 
-### Q1. Differences between list and atomic vector {-}
+Q1. Differences between list and atomic vector
 
 feature | atomic vector  | list (aka generic vector)
 ------- | -------------- | --------------
@@ -430,7 +430,7 @@ return for out-of-bounds index | `NA`^[(e.g. `c(1)[2]`)] | `NULL`^[(e.g. `list(1
 memory address | single memory reference^[`lobstr::ref(c(1, 2))`] | reference per list element^[`lobstr::ref(list(1, 2))`]
 
 
-### Q2. Converting a list to an atomic vector {-}
+Q2. Converting a list to an atomic vector
 
 List already *is* a vector, so `as.vector` is not going to change anything, and there is no `as.atomic.vector`. Thus the need to use `unlist()`.
 
@@ -455,7 +455,7 @@ unlist(x)
 #> 1 2
 ```
 
-### Q3. Comparing `c()` and `unlist()` for date and datetime {-}
+Q3. Comparing `c()` and `unlist()` for date and datetime
 
 
 ```r
@@ -513,7 +513,7 @@ unlist(list(datetime, date))
 
 ## Exercise 3.6.8
 
-### Q1. Data frame with 0 dimensions {-}
+Q1. Data frame with 0 dimensions
 
 Data frame with 0 rows is possible. This is basically a list with a vector of length 0.
 
@@ -543,7 +543,7 @@ dim(data.frame())
 #> [1] 0 0
 ```
 
-### Q2. Non-unique rownames {-}
+Q2. Non-unique rownames
 
 If you attempt to set rownames that are not unique, it will not work.
 
@@ -553,7 +553,7 @@ data.frame(row.names = c(1, 1))
 #> Error in data.frame(row.names = c(1, 1)): duplicate row.names: 1
 ```
 
-### Q3. Transposing dataframes {-}
+Q3. Transposing dataframes
 
 Transposing a dataframe transforms it into a matrix and coerces all its elements to be of the same type.
 
@@ -626,7 +626,7 @@ dim(t(t(df)))
 #> [1] 6 5
 ```
 
-### Q4. `as.matrix()` and dataframe {-}
+Q4. `as.matrix()` and dataframe
 
 The return type of `as.matrix()` depends on dataframe column types.
 

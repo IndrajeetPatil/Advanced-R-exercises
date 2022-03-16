@@ -2,7 +2,7 @@
 
 ## Exercise 3.2.5 
 
-### Q1. Create raw and complex scalars {-}
+Q1. Create raw and complex scalars
 
 The raw type holds raw bytes. For example,
 
@@ -31,7 +31,7 @@ Example of a complex scalar:
 typeof(x)
 ```
 
-### Q2. Vector coercion rules {-}
+Q2. Vector coercion rules
 
 Usually, the more *general* type would take precedence.
 
@@ -53,7 +53,7 @@ c(1.0, "1.0")
 c(TRUE, "1.0")
 ```
 
-### Q3. Comparisons between different types {-}
+Q3. Comparisons between different types
 
 The coercion in vectors reveal why some of these comparisons return the results that they do.
 
@@ -77,7 +77,7 @@ c("one", 2)
 sort(c("one", 2))
 ```
 
-### Q4. Why `NA` defaults to `"logical"` type {-}
+Q4. Why `NA` defaults to `"logical"` type
 
 The `"logical"` type is the lowest in the coercion hierarchy.
 
@@ -89,7 +89,7 @@ typeof(NA)
 c(FALSE, NA_character_)
 ```
 
-### Q5. Misleading variants of `is.*` functions {-}
+Q5. Misleading variants of `is.*` functions
 
 - `is.atomic()`:
 - `is.numeric()`:
@@ -98,7 +98,7 @@ c(FALSE, NA_character_)
 
 ## Exercise 3.3.4
 
-### Q1. Reading source code {-}
+Q1. Reading source code
 
 ```{r}
 setNames
@@ -114,7 +114,7 @@ A <- provideDimnames(N <- array(1:24, dim = 2:4))
 unname(A, force = TRUE)
 ```
 
-### Q2. 1-dimensional vector {-}
+Q2. 1-dimensional vector
 
 Dimensions for a 1-dimensional vector are `NULL`.
 
@@ -132,7 +132,7 @@ ncol(x)
 NCOL(x)
 ```
 
-### Q3. Difference between vectors and arrays {-}
+Q3. Difference between vectors and arrays
 
 `1:5` is a 1D vector without dimensions, while `x1`, `x2`, and `x3` are one-dimensional arrays.
 
@@ -143,7 +143,7 @@ NCOL(x)
 (x3 <- array(1:5, c(5, 1, 1)))
 ```
 
-### Q4. About `structure()` {-}
+Q4. About `structure()`
 
 From `?attributes` (emphasis mine):
 
@@ -157,7 +157,7 @@ structure(1:5, comment = "my attribute")
 
 ## Exercise 3.4.5
 
-### Q1. `table()` function {-}
+Q1. `table()` function
 
 `table()` returns an array with integer type and its dimensions scale with the number of variables present.
 
@@ -173,7 +173,7 @@ purrr::map(list(x, y, z), typeof)
 purrr::map(list(x, y, z), attributes)
 ```
 
-### Q2. Factor reversal {-}
+Q2. Factor reversal
 
 Its levels changes but the underlying integer values remain the same.
 
@@ -187,7 +187,7 @@ f1
 as.integer(f1)
 ```
 
-### Q3. Factor reversal-2 {-}
+Q3. Factor reversal-2
 
 `f2`: Only the underlying integers are reversed, but levels remain unchanged.
 `f3`: Both the levels and the underlying integers are reversed.
@@ -204,7 +204,7 @@ as.integer(f3)
 
 ## Exercise 3.5.4
 
-### Q1. Differences between list and atomic vector {-}
+Q1. Differences between list and atomic vector
 
 feature | atomic vector  | list (aka generic vector)
 ------- | -------------- | --------------
@@ -214,7 +214,7 @@ return for out-of-bounds index | `NA`^[(e.g. `c(1)[2]`)] | `NULL`^[(e.g. `list(1
 memory address | single memory reference^[`lobstr::ref(c(1, 2))`] | reference per list element^[`lobstr::ref(list(1, 2))`]
 
 
-### Q2. Converting a list to an atomic vector {-}
+Q2. Converting a list to an atomic vector
 
 List already *is* a vector, so `as.vector` is not going to change anything, and there is no `as.atomic.vector`. Thus the need to use `unlist()`.
 
@@ -229,7 +229,7 @@ as.vector(x)
 unlist(x)
 ```
 
-### Q3. Comparing `c()` and `unlist()` for date and datetime {-}
+Q3. Comparing `c()` and `unlist()` for date and datetime
 
 ```{r}
 # creating a date and datetime
@@ -267,7 +267,7 @@ unlist(list(datetime, date))
 
 ## Exercise 3.6.8
 
-### Q1. Data frame with 0 dimensions {-}
+Q1. Data frame with 0 dimensions
 
 Data frame with 0 rows is possible. This is basically a list with a vector of length 0.
 
@@ -289,7 +289,7 @@ data.frame()
 dim(data.frame())
 ```
 
-### Q2. Non-unique rownames {-}
+Q2. Non-unique rownames
 
 If you attempt to set rownames that are not unique, it will not work.
 
@@ -297,7 +297,7 @@ If you attempt to set rownames that are not unique, it will not work.
 data.frame(row.names = c(1, 1))
 ```
 
-### Q3. Transposing dataframes {-}
+Q3. Transposing dataframes
 
 Transposing a dataframe transforms it into a matrix and coerces all its elements to be of the same type.
 
@@ -327,7 +327,7 @@ dim(t(df))
 dim(t(t(df)))
 ```
 
-### Q4. `as.matrix()` and dataframe {-}
+Q4. `as.matrix()` and dataframe
 
 The return type of `as.matrix()` depends on dataframe column types.
 

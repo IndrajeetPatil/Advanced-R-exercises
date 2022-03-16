@@ -2,7 +2,7 @@
 
 ## Exercise 25.2.6
 
-### Q1. Figure out base function corresponding to Rccp code {-}
+Q1. Figure out base function corresponding to Rccp code
 
 
 ```r
@@ -142,7 +142,7 @@ pmin(v1, v2)
 #> [1] 1 2 4 2 6 1
 ```
 
-### Q2. Converting base function to Rcpp {-}
+Q2. Converting base function to Rcpp
 
 The performance benefits are not going to be observed if the function is primitive since those are already tuned to the max in R for performance. So, expect performance gain only for `diff()` and `var()`.
 
@@ -203,12 +203,12 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
-#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))      10us
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   13.8us
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     7.7us
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   11.8us
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1   10.7us    78939.    15.8KB        0
-#> 2     15us    60961.    18.3KB        0
+#> 1    9.8us    91659.    15.8KB        0
+#> 2   13.2us    73335.    18.3KB        0
 ```
 
 - `cumprod()`
@@ -250,8 +250,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                 min   median `itr/sec`
 #>   <bch:expr>            <bch:tm> <bch:tm>     <dbl>
-#> 1 cumprod(v1)              300ns    400ns  1677852.
-#> 2 cumulativeProduct(v1)    3.5us    5.7us   177620.
+#> 1 cumprod(v1)              100ns    200ns  3424658.
+#> 2 cumulativeProduct(v1)    1.6us    2.7us   293169.
 #>   mem_alloc `gc/sec`
 #>   <bch:byt>    <dbl>
 #> 1        0B        0
@@ -301,8 +301,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 range(v1)     3.1us    3.5us   276549.        0B        0
-#> 2 rangeC(v1)    2.9us    3.6us   177022.    6.62KB        0
+#> 1 range(v1)     2.3us    4.6us   224820.        0B        0
+#> 2 rangeC(v1)    2.1us    2.5us   345304.    6.62KB        0
 ```
 
 - `var()`
@@ -349,8 +349,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 var(v1)        34.2us     37us    23333.        0B
-#> 2 variance(v1)    7.6us   8.45us    98814.    6.62KB
+#> 1 var(v1)         7.5us   8.65us    89767.        0B
+#> 2 variance(v1)    1.6us    1.8us   500751.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -359,7 +359,7 @@ bench::mark(
 
 ## Exercise 25.4.5
 
-### Q1. Rewrite functions with original `na.rm` argument {-}
+Q1. Rewrite functions with original `na.rm` argument
 
 
 ```cpp
@@ -418,11 +418,11 @@ rangeC_NA(v1, TRUE)
 #> [1]  4 10
 ```
 
-### Q2. Rewrite functions without original `na.rm` argument {-}
+Q2. Rewrite functions without original `na.rm` argument
 
 ## Exercise 25.5.7
 
-### Q1. `median.default()` using `partial_sort()` {-}
+Q1. `median.default()` using `partial_sort()`
 
 
 ```cpp
@@ -473,8 +473,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression              min   median `itr/sec` mem_alloc
 #>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 median.default(v2)   51.8us   53.3us    18160.        0B
-#> 2 medianC(v2)           4.2us    4.6us   203417.    2.49KB
+#> 1 median.default(v2)   22.7us  34.15us    30103.        0B
+#> 2 medianC(v2)             2us   2.35us   392311.    2.49KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

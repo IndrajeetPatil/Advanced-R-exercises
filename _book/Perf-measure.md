@@ -2,7 +2,7 @@
 
 ## Exercise 23.2.4
 
-### Q1. Profiling function with `torture = TRUE` {-}
+Q1. Profiling function with `torture = TRUE`
 
 Let's first source the functions mentioned in exercises.
 
@@ -29,7 +29,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           240us    316us     2907.    4.64MB     41.3
+#> 1 f()           178us    239us     4072.    4.64MB     57.8
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -61,7 +61,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x000000001541eff8>
+#> <bytecode: 0x0000000017d1ee38>
 #> <environment: namespace:base>
 ```
 
@@ -69,7 +69,7 @@ I still couldn't figure out why. I would recommend checking out the [official an
 
 ## Exercise 23.3.3
 
-### Q1. Differences between `system.time()` and `bench::mark()` {-}
+Q1. Differences between `system.time()` and `bench::mark()`
 
 
 ```r
@@ -130,20 +130,20 @@ t_bench_df
 #> # A tibble: 2 x 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)      1.37us
-#> 2 x^0.5        4.58us
+#> 1 sqrt(x)      1.07us
+#> 2 x^0.5        3.61us
 
 t_systime_df
 #> # A tibble: 2 x 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                  1.11                 1.05
-#> 2 x^0.5                    5.22                 6.03
+#> 1 sqrt(x)                  0.97                0.630
+#> 2 x^0.5                    3.29                3.33
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
 
-### Q2. Microbenchmarking ways to compute square root {-}
+Q2. Microbenchmarking ways to compute square root
 
 Microbenchmarking all ways to compute square root of a vector mentioned in this chapter.
 
@@ -162,16 +162,16 @@ bench::mark(
 #> # A tibble: 4 x 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)          7.5us   11.6us    66676.    7.86KB
-#> 2 x^(1/2)         42.5us     45us    20803.    7.86KB
-#> 3 x^0.5             45us   55.5us    15564.    7.86KB
-#> 4 exp(log(x)/2)  115.1us  130.4us     7351.    7.86KB
+#> 1 sqrt(x)          3.8us    4.2us   194790.    7.86KB
+#> 2 x^(1/2)         25.1us   28.4us    33481.    7.86KB
+#> 3 x^0.5           26.9us   29.4us    31764.    7.86KB
+#> 4 exp(log(x)/2)   65.3us   68.7us    14357.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
-#> 1     66.7
-#> 2      0  
-#> 3      0  
-#> 4      0
+#> 1     195.
+#> 2       0 
+#> 3       0 
+#> 4       0
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.

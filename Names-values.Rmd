@@ -2,7 +2,7 @@
 
 ## 2.2.2 Exercises 
 
-### Q1. Explain the relationship {-}
+Q1. Explain the relationship
 
 ```{r}
 a <- 1:10
@@ -22,7 +22,7 @@ obj_addr(c)
 obj_addr(d)
 ```
 
-### Q2. Function object address {-}
+Q2. Function object address
 
 Following code verifies that indeed these calls all point to the same underlying function object.
 
@@ -34,13 +34,13 @@ obj_addr(evalq(mean))
 obj_addr(match.fun("mean"))
 ```
 
-### Q3. Converting non-syntactic names  {-}
+Q3. Converting non-syntactic names 
 
 The conversion of non-syntactic names to syntactic ones can sometimes corrupt the data. Some datasets may require non-syntactic names.
 
 To suppress this behavior, one can set `check.names = FALSE`.
 
-### Q4. Behavior of `make.names()`  {-}
+Q4. Behavior of `make.names()` 
 
 It just prepends `X` in non-syntactic names and invalid characters (like `@`) are translated to `.`.
 
@@ -48,7 +48,7 @@ It just prepends `X` in non-syntactic names and invalid characters (like `@`) ar
 make.names(c("123abc", "@me", "_yu", "  gh", "else"))
 ```
 
-### Q5. Why is `.123e1` not a syntactic name?  {-}
+Q5. Why is `.123e1` not a syntactic name? 
 
 Because it is parsed as a number.
 
@@ -58,7 +58,7 @@ Because it is parsed as a number.
 
 ## 2.3.6 Exercises 
 
-### Q1. Usefulness of `tracemem()` {-}
+Q1. Usefulness of `tracemem()`
 
 `tracemem()` traces copying of objects in R, but since the object created here is not assigned a name, there is nothing to trace. 
 
@@ -66,7 +66,7 @@ Because it is parsed as a number.
 tracemem(1:10)
 ```
 
-### Q2. Why two copies when you run this code? {-}
+Q2. Why two copies when you run this code?
 
 Were it not for `4` being a double - and not an integer (`4L`) - this would have been modified in place.
 
@@ -90,7 +90,7 @@ As for why this still produces a copy, this is from Solutions manual:
 
 > Please be aware that running this code in RStudio will result in additional copies because of the reference from the environment pane.
 
-### Q3. Study relationship {-}
+Q3. Study relationship
 
 ```{r}
 a <- 1:10
@@ -104,7 +104,7 @@ ref(b)
 ref(c)
 ```
 
-### Q4. List inside another list {-}
+Q4. List inside another list
 
 ```{r}
 x <- list(1:10)
@@ -123,7 +123,7 @@ Figure here:
 
 ## 2.4.1 Exercises 
 
-### Q1. Object size difference between `{base}` and `{lobstr}` {-}
+Q1. Object size difference between `{base}` and `{lobstr}`
 
 > This function...does not detect if elements of a list are shared.
 
@@ -135,7 +135,7 @@ object.size(y)
 obj_size(y)
 ```
 
-### Q2. Misleading object size {-}
+Q2. Misleading object size
 
 These functions are not externally created objects in R, but are always available, so doesn't make much sense to measure their size.
 
@@ -154,7 +154,7 @@ obj_size(var)
 obj_size(mean) + obj_size(sd) + obj_size(var)
 ```
 
-### Q3. Predict object sizes {-}
+Q3. Predict object sizes
 
 ```{r}
 a <- runif(1e6)
@@ -175,7 +175,7 @@ obj_size(a, b)
 
 ## 2.5.3 Exercises
 
-### Q1. Why not a circular list? {-}
+Q1. Why not a circular list?
 
 Copy-on-modify prevents the creation of a circular list.
 
@@ -191,7 +191,7 @@ x[[1]] <- x
 obj_addr(x[[1]])
 ```
 
-### Q2. Why are loops so slow {-}
+Q2. Why are loops so slow
 
 <!-- TODO -->
 
@@ -200,7 +200,7 @@ library(bench)
 ```
 
 
-### Q3. `tracemem()` on an environment {-}
+Q3. `tracemem()` on an environment
 
 It doesn't work and the documentation makes it clear as to why:
 

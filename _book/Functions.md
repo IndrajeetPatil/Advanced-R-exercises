@@ -2,7 +2,7 @@
 
 ## Exercise 6.2.5
 
-### Q1. Function names {-}
+Q1. Function names
 
 Given a name, `match.fun()` lets you find a function.
 
@@ -11,7 +11,7 @@ Given a name, `match.fun()` lets you find a function.
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x00000000164971f0>
+#> <bytecode: 0x0000000018d86e80>
 #> <environment: namespace:base>
 ```
 
@@ -29,7 +29,7 @@ match.fun("f2")
 #> function(x) mean(x)
 ```
 
-### Q2. Correct way to call anonymous functions {-}
+Q2. Correct way to call anonymous functions
 
 This is not correct since the function will evaluate `3()`, which is syntactically not allowed since literals can't be treated like functions.
 
@@ -47,11 +47,11 @@ This is correct.
 #> [1] 3
 ```
 
-### Q3. Scan code for opportunities to use anonymous function {-}
+Q3. Scan code for opportunities to use anonymous function
 
 Self activity.
 
-### Q4. Detecting functions and primitive functions {-}
+Q4. Detecting functions and primitive functions
 
 Use `is.function()` to check if an object is a function:
 
@@ -88,7 +88,7 @@ is.primitive(read.csv)
 #> [1] FALSE
 ```
 
-### Q5. Detecting functions and primitive functions {-}
+Q5. Detecting functions and primitive functions
 
 
 ```r
@@ -249,7 +249,7 @@ names(primitives)
 #> [203] "while"                "xtfrm"
 ```
 
-### Q6. Important components of a function {-}
+Q6. Important components of a function
 
 Except for primitive functions, all functions have 3 important components:
 
@@ -257,7 +257,7 @@ Except for primitive functions, all functions have 3 important components:
 * `body()`
 * `environment()`
 
-### Q7. Printing of function environment {-}
+Q7. Printing of function environment
 
 All package functions print their environment:
 
@@ -267,7 +267,7 @@ All package functions print their environment:
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x00000000164971f0>
+#> <bytecode: 0x0000000018d86e80>
 #> <environment: namespace:base>
 
 # other package function
@@ -277,7 +277,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x0000000031a92f68>
+#> <bytecode: 0x00000000343897c8>
 #> <environment: namespace:purrr>
 ```
 
@@ -302,7 +302,7 @@ f
 
 ## Exercise 6.4.5
 
-### Q1. All about *c* {-}
+Q1. All about *c*
 
 In `c(c = c)`:
 * first *c* is interpreted as a function `c()`
@@ -317,7 +317,7 @@ c(c = c)
 #> 10
 ```
 
-### Q2. Four principles that govern how R looks for values {-}
+Q2. Four principles that govern how R looks for values
 
 1. Name masking (names defined inside a function mask names defined outside a function)
 
@@ -327,7 +327,7 @@ c(c = c)
 
 4. Dynamic look-up (R looks for values when the function is run, not when the function is created)
 
-### Q3. Predict the return {-}
+Q3. Predict the return
 
 Correctly predicted 😉😉
 
@@ -350,7 +350,7 @@ f(10)
 
 ## Exercise 6.5.4 
 
-### Q1. Property of `&&` {-}
+Q1. Property of `&&`
 
 `&&` evaluates left to right and short-circuit evaluation, i.e., if the first operand is `TRUE`, R will short-circuit and not even look at the second operand.
 
@@ -388,7 +388,7 @@ x_ok(1:3)
 #> [1] FALSE FALSE FALSE
 ```
 
-### Q2. Principle behind return {-}
+Q2. Principle behind return
 
 The function returns `100`, and the principle at work here is lazy evaluation. When function environment encounters `x`, it evaluates argument `x = z` and since the name `z` is already bound to value 100, `x` is also bound to the same value.
 
@@ -405,10 +405,10 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x31acf0c8" "0x31acf0c8"
+#> [1] "0x343e8a70" "0x343e8a70"
 ```
 
-### Q3. Principle behind return {-}
+Q3. Principle behind return
 
 TODO:
 
@@ -434,7 +434,7 @@ y
 
 ## Exercise 6.6.1
 
-### Q1. Explain results {-}
+Q1. Explain results
 
 
 ```r
@@ -465,7 +465,7 @@ As can be seen, `sum()` function doesn't have `na.omit` argument. So, the input 
 
 For `mean()` function, there is only one parameter (`x`) and it's matched by the first argument (`1`). So, the expression evaluates to `mean(1)`.
 
-### Q2. Finding documentation for `plot` arguments {-}
+Q2. Finding documentation for `plot` arguments
 
 First, check documentation for `plot()`:
 
@@ -485,7 +485,7 @@ str(par)
 
 The docs for all parameters of interest [reside there](https://rdrr.io/r/graphics/par.html).
 
-### Q3. Reading source code for `plot.default` {-}
+Q3. Reading source code for `plot.default`
 
 Source code can be found [here](https://github.com/wch/r-source/blob/79e73dba5259b25ec30118d45fea64aeac0f41dc/src/library/graphics/R/plot.R#L51-L84).
 

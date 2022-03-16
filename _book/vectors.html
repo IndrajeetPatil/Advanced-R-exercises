@@ -6,15 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 2 Vectors | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content='2.1 Exercise 3.2.5  Q1. Create raw and complex scalars The raw type holds raw bytes. For example, x &lt;- "A string" (y &lt;- charToRaw(x)) #&gt; [1] 41 20 73 74 72 69 6e 67 typeof(y) #&gt; [1] "raw" You can...'>
-<meta name="generator" content="bookdown 0.24.11 with bs4_book()">
+<meta name="description" content='2.1 Exercise 3.2.5 Q1. Create raw and complex scalars The raw type holds raw bytes. For example, x &lt;- "A string" (y &lt;- charToRaw(x)) #&gt; [1] 41 20 73 74 72 69 6e 67 typeof(y) #&gt; [1] "raw" You can...'>
+<meta name="generator" content="bookdown 0.25 with bs4_book()">
 <meta property="og:title" content="Chapter 2 Vectors | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.jpg">
-<meta property="og:description" content='2.1 Exercise 3.2.5  Q1. Create raw and complex scalars The raw type holds raw bytes. For example, x &lt;- "A string" (y &lt;- charToRaw(x)) #&gt; [1] 41 20 73 74 72 69 6e 67 typeof(y) #&gt; [1] "raw" You can...'>
+<meta property="og:description" content='2.1 Exercise 3.2.5 Q1. Create raw and complex scalars The raw type holds raw bytes. For example, x &lt;- "A string" (y &lt;- charToRaw(x)) #&gt; [1] 41 20 73 74 72 69 6e 67 typeof(y) #&gt; [1] "raw" You can...'>
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 2 Vectors | Advanced R Exercises">
-<meta name="twitter:description" content='2.1 Exercise 3.2.5  Q1. Create raw and complex scalars The raw type holds raw bytes. For example, x &lt;- "A string" (y &lt;- charToRaw(x)) #&gt; [1] 41 20 73 74 72 69 6e 67 typeof(y) #&gt; [1] "raw" You can...'>
+<meta name="twitter:description" content='2.1 Exercise 3.2.5 Q1. Create raw and complex scalars The raw type holds raw bytes. For example, x &lt;- "A string" (y &lt;- charToRaw(x)) #&gt; [1] 41 20 73 74 72 69 6e 67 typeof(y) #&gt; [1] "raw" You can...'>
 <meta name="twitter:image" content="/cover.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -46,7 +46,6 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">About</a></li>
-<li class="book-part">Foundations</li>
 <li><a class="" href="names-and-values.html"><span class="header-section-number">1</span> Names and values</a></li>
 <li><a class="active" href="vectors.html"><span class="header-section-number">2</span> Vectors</a></li>
 <li><a class="" href="control-flow.html"><span class="header-section-number">3</span> Control flow</a></li>
@@ -55,10 +54,9 @@
 <li><a class="" href="s3.html"><span class="header-section-number">6</span> S3</a></li>
 <li><a class="" href="r6.html"><span class="header-section-number">7</span> R6</a></li>
 <li><a class="" href="big-picture.html"><span class="header-section-number">8</span> Big Picture</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">9</span> Measuring performance</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">10</span> Debugging</a></li>
-<li><a class="" href="measuring-performance-1.html"><span class="header-section-number">11</span> Measuring performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">12</span> Rewriting R code in C++</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">9</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">10</span> Measuring performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">11</span> Rewriting R code in C++</a></li>
 </ul>
 
         <div class="book-extra">
@@ -74,9 +72,7 @@
 <h2>
 <span class="header-section-number">2.1</span> Exercise 3.2.5<a class="anchor" aria-label="anchor" href="#exercise-3.2.5"><i class="fas fa-link"></i></a>
 </h2>
-<div id="q1.-create-raw-and-complex-scalars" class="section level3 unnumbered">
-<h3>Q1. Create raw and complex scalars<a class="anchor" aria-label="anchor" href="#q1.-create-raw-and-complex-scalars"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q1. Create raw and complex scalars</p>
 <p>The raw type holds raw bytes. For example,</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="st">"A string"</span>
@@ -100,10 +96,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1] "complex"</span></code></pre></div>
-</div>
-<div id="q2.-vector-coercion-rules" class="section level3 unnumbered">
-<h3>Q2. Vector coercion rules<a class="anchor" aria-label="anchor" href="#q2.-vector-coercion-rules"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q2. Vector coercion rules</p>
 <p>Usually, the more <em>general</em> type would take precedence.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="cn">FALSE</span><span class="op">)</span>
@@ -124,10 +117,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="st">"1.0"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "TRUE" "1.0"</span></code></pre></div>
-</div>
-<div id="q3.-comparisons-between-different-types" class="section level3 unnumbered">
-<h3>Q3. Comparisons between different types<a class="anchor" aria-label="anchor" href="#q3.-comparisons-between-different-types"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q3. Comparisons between different types</p>
 <p>The coercion in vectors reveal why some of these comparisons return the results that they do.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fl">1</span> <span class="op">==</span> <span class="st">"1"</span>
@@ -150,10 +140,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"one"</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] "2"   "one"</span></code></pre></div>
-</div>
-<div id="q4.-why-na-defaults-to-logical-type" class="section level3 unnumbered">
-<h3>Q4. Why <code>NA</code> defaults to <code>"logical"</code> type<a class="anchor" aria-label="anchor" href="#q4.-why-na-defaults-to-logical-type"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q4. Why <code>NA</code> defaults to <code>"logical"</code> type</p>
 <p>The <code>"logical"</code> type is the lowest in the coercion hierarchy.</p>
 <p>So <code>NA</code> defaulting to any other type (e.g. <code>"numeric"</code>) would mean that any time there is a missing element in a vector, rest of the elements would be converted to a type higher in hierarchy, which would be problematic for types lower in hierarchy.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
@@ -162,10 +149,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="cn">NA_character_</span><span class="op">)</span>
 <span class="co">#&gt; [1] "FALSE" NA</span></code></pre></div>
-</div>
-<div id="q5.-misleading-variants-of-is.-functions" class="section level3 unnumbered">
-<h3>Q5. Misleading variants of <code>is.*</code> functions<a class="anchor" aria-label="anchor" href="#q5.-misleading-variants-of-is.-functions"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q5. Misleading variants of <code>is.*</code> functions</p>
 <ul>
 <li>
 <code><a href="https://rdrr.io/r/base/is.recursive.html">is.atomic()</a></code>:</li>
@@ -175,14 +159,11 @@
 <code><a href="https://rdrr.io/r/base/vector.html">is.vector()</a></code>:</li>
 </ul>
 </div>
-</div>
 <div id="exercise-3.3.4" class="section level2" number="2.2">
 <h2>
 <span class="header-section-number">2.2</span> Exercise 3.3.4<a class="anchor" aria-label="anchor" href="#exercise-3.3.4"><i class="fas fa-link"></i></a>
 </h2>
-<div id="q1.-reading-source-code" class="section level3 unnumbered">
-<h3>Q1. Reading source code<a class="anchor" aria-label="anchor" href="#q1.-reading-source-code"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q1. Reading source code</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">setNames</span>
 <span class="co">#&gt; function (object = nm, nm) </span>
@@ -190,7 +171,7 @@
 <span class="co">#&gt;     names(object) &lt;- nm</span>
 <span class="co">#&gt;     object</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x00000000179bb330&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x000000001a2ab870&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:stats&gt;</span>
 
 <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span><span class="op">)</span>
@@ -206,7 +187,7 @@
 <span class="co">#&gt;         dimnames(obj) &lt;- NULL</span>
 <span class="co">#&gt;     obj</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x0000000014a9ec20&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x000000001739e830&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span>
 
 <span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dimnames.html">provideDimnames</a></span><span class="op">(</span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">24</span>, dim <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span>
@@ -235,10 +216,7 @@
 <span class="co">#&gt;      [,1] [,2] [,3]</span>
 <span class="co">#&gt; [1,]   19   21   23</span>
 <span class="co">#&gt; [2,]   20   22   24</span></code></pre></div>
-</div>
-<div id="q2.-1-dimensional-vector" class="section level3 unnumbered">
-<h3>Q2. 1-dimensional vector<a class="anchor" aria-label="anchor" href="#q2.-1-dimensional-vector"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q2. 1-dimensional vector</p>
 <p>Dimensions for a 1-dimensional vector are <code>NULL</code>.</p>
 <p><code><a href="https://rdrr.io/r/base/nrow.html">NROW()</a></code> and <code><a href="https://rdrr.io/r/base/nrow.html">NCOL()</a></code> are helpful for getting dimensions for 1D vectors by treating them as if they were a data frame vectors.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
@@ -256,10 +234,7 @@
 <span class="co">#&gt; NULL</span>
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">NCOL</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1</span></code></pre></div>
-</div>
-<div id="q3.-difference-between-vectors-and-arrays" class="section level3 unnumbered">
-<h3>Q3. Difference between vectors and arrays<a class="anchor" aria-label="anchor" href="#q3.-difference-between-vectors-and-arrays"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q3. Difference between vectors and arrays</p>
 <p><code>1:5</code> is a 1D vector without dimensions, while <code>x1</code>, <code>x2</code>, and <code>x3</code> are one-dimensional arrays.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>
@@ -303,10 +278,7 @@
 <span class="co">#&gt; [3,]    3</span>
 <span class="co">#&gt; [4,]    4</span>
 <span class="co">#&gt; [5,]    5</span></code></pre></div>
-</div>
-<div id="q4.-about-structure" class="section level3 unnumbered">
-<h3>Q4. About <code>structure()</code><a class="anchor" aria-label="anchor" href="#q4.-about-structure"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q4. About <code><a href="https://rdrr.io/r/base/structure.html">structure()</a></code></p>
 <p>From <code><a href="https://rdrr.io/r/base/attributes.html">?attributes</a></code> (emphasis mine):</p>
 <blockquote>
 <p>Note that some attributes (namely class, <strong>comment</strong>, dim, dimnames, names, row.names and tsp) are treated specially and have restrictions on the values which can be set.</p>
@@ -320,14 +292,11 @@
 <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, comment <span class="op">=</span> <span class="st">"my attribute"</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1 2 3 4 5</span></code></pre></div>
 </div>
-</div>
 <div id="exercise-3.4.5" class="section level2" number="2.3">
 <h2>
 <span class="header-section-number">2.3</span> Exercise 3.4.5<a class="anchor" aria-label="anchor" href="#exercise-3.4.5"><i class="fas fa-link"></i></a>
 </h2>
-<div id="q1.-table-function" class="section level3 unnumbered">
-<h3>Q1. <code>table()</code> function<a class="anchor" aria-label="anchor" href="#q1.-table-function"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q1. <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> function</p>
 <p><code><a href="https://rdrr.io/r/base/table.html">table()</a></code> returns an array with integer type and its dimensions scale with the number of variables present.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">am</span><span class="op">)</span><span class="op">)</span>
@@ -413,10 +382,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$class</span>
 <span class="co">#&gt; [1] "table"</span></code></pre></div>
-</div>
-<div id="q2.-factor-reversal" class="section level3 unnumbered">
-<h3>Q2. Factor reversal<a class="anchor" aria-label="anchor" href="#q2.-factor-reversal"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q2. Factor reversal</p>
 <p>Its levels changes but the underlying integer values remain the same.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span>
@@ -434,10 +400,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">f1</span><span class="op">)</span>
 <span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18</span>
 <span class="co">#&gt; [19] 19 20 21 22 23 24 25 26</span></code></pre></div>
-</div>
-<div id="q3.-factor-reversal-2" class="section level3 unnumbered">
-<h3>Q3. Factor reversal-2<a class="anchor" aria-label="anchor" href="#q3.-factor-reversal-2"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q3. Factor reversal-2</p>
 <p><code>f2</code>: Only the underlying integers are reversed, but levels remain unchanged.
 <code>f3</code>: Both the levels and the underlying integers are reversed.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
@@ -457,14 +420,11 @@
 <span class="co">#&gt;  [1] 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10  9</span>
 <span class="co">#&gt; [19]  8  7  6  5  4  3  2  1</span></code></pre></div>
 </div>
-</div>
 <div id="exercise-3.5.4" class="section level2" number="2.4">
 <h2>
 <span class="header-section-number">2.4</span> Exercise 3.5.4<a class="anchor" aria-label="anchor" href="#exercise-3.5.4"><i class="fas fa-link"></i></a>
 </h2>
-<div id="q1.-differences-between-list-and-atomic-vector" class="section level3 unnumbered">
-<h3>Q1. Differences between list and atomic vector<a class="anchor" aria-label="anchor" href="#q1.-differences-between-list-and-atomic-vector"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q1. Differences between list and atomic vector</p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
 <col width="20%">
@@ -507,10 +467,7 @@
 </tr>
 </tbody>
 </table></div>
-</div>
-<div id="q2.-converting-a-list-to-an-atomic-vector" class="section level3 unnumbered">
-<h3>Q2. Converting a list to an atomic vector<a class="anchor" aria-label="anchor" href="#q2.-converting-a-list-to-an-atomic-vector"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q2. Converting a list to an atomic vector</p>
 <p>List already <em>is</em> a vector, so <code>as.vector</code> is not going to change anything, and there is no <code>as.atomic.vector</code>. Thus the need to use <code><a href="https://rdrr.io/r/base/unlist.html">unlist()</a></code>.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
@@ -530,10 +487,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; a b </span>
 <span class="co">#&gt; 1 2</span></code></pre></div>
-</div>
-<div id="q3.-comparing-c-and-unlist-for-date-and-datetime" class="section level3 unnumbered">
-<h3>Q3. Comparing <code>c()</code> and <code>unlist()</code> for date and datetime<a class="anchor" aria-label="anchor" href="#q3.-comparing-c-and-unlist-for-date-and-datetime"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q3. Comparing <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> and <code><a href="https://rdrr.io/r/base/unlist.html">unlist()</a></code> for date and datetime</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># creating a date and datetime</span>
 <span class="va">date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"1947-08-15"</span><span class="op">)</span>
@@ -578,14 +532,11 @@
 <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">datetime</span>, <span class="va">date</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] -628991940      -8175</span></code></pre></div>
 </div>
-</div>
 <div id="exercise-3.6.8" class="section level2" number="2.5">
 <h2>
 <span class="header-section-number">2.5</span> Exercise 3.6.8<a class="anchor" aria-label="anchor" href="#exercise-3.6.8"><i class="fas fa-link"></i></a>
 </h2>
-<div id="q1.-data-frame-with-0-dimensions" class="section level3 unnumbered">
-<h3>Q1. Data frame with 0 dimensions<a class="anchor" aria-label="anchor" href="#q1.-data-frame-with-0-dimensions"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q1. Data frame with 0 dimensions</p>
 <p>Data frame with 0 rows is possible. This is basically a list with a vector of length 0.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span>
@@ -602,18 +553,12 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0 0</span></code></pre></div>
-</div>
-<div id="q2.-non-unique-rownames" class="section level3 unnumbered">
-<h3>Q2. Non-unique rownames<a class="anchor" aria-label="anchor" href="#q2.-non-unique-rownames"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q2. Non-unique rownames</p>
 <p>If you attempt to set rownames that are not unique, it will not work.</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Error in data.frame(row.names = c(1, 1)): duplicate row.names: 1</span></code></pre></div>
-</div>
-<div id="q3.-transposing-dataframes" class="section level3 unnumbered">
-<h3>Q3. Transposing dataframes<a class="anchor" aria-label="anchor" href="#q3.-transposing-dataframes"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q3. Transposing dataframes</p>
 <p>Transposing a dataframe transforms it into a matrix and coerces all its elements to be of the same type.</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># original</span>
@@ -681,10 +626,7 @@
 <span class="co">#&gt; [1] 5 6</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] 6 5</span></code></pre></div>
-</div>
-<div id="q4.-as.matrix-and-dataframe" class="section level3 unnumbered">
-<h3>Q4. <code>as.matrix()</code> and dataframe<a class="anchor" aria-label="anchor" href="#q4.-as.matrix-and-dataframe"><i class="fas fa-link"></i></a>
-</h3>
+<p>Q4. <code><a href="https://rdrr.io/r/base/matrix.html">as.matrix()</a></code> and dataframe</p>
 <p>The return type of <code><a href="https://rdrr.io/r/base/matrix.html">as.matrix()</a></code> depends on dataframe column types.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># example with mixed types (coerced to character)</span>
@@ -760,7 +702,6 @@
 
 </div>
 </div>
-</div>
 
   <div class="chapter-nav">
 <div class="prev"><a href="names-and-values.html"><span class="header-section-number">1</span> Names and values</a></div>
@@ -769,45 +710,11 @@
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#vectors"><span class="header-section-number">2</span> Vectors</a></li>
-<li>
-<a class="nav-link" href="#exercise-3.2.5"><span class="header-section-number">2.1</span> Exercise 3.2.5</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#q1.-create-raw-and-complex-scalars">Q1. Create raw and complex scalars</a></li>
-<li><a class="nav-link" href="#q2.-vector-coercion-rules">Q2. Vector coercion rules</a></li>
-<li><a class="nav-link" href="#q3.-comparisons-between-different-types">Q3. Comparisons between different types</a></li>
-<li><a class="nav-link" href="#q4.-why-na-defaults-to-logical-type">Q4. Why NA defaults to "logical" type</a></li>
-<li><a class="nav-link" href="#q5.-misleading-variants-of-is.-functions">Q5. Misleading variants of is.* functions</a></li>
-</ul>
-</li>
-<li>
-<a class="nav-link" href="#exercise-3.3.4"><span class="header-section-number">2.2</span> Exercise 3.3.4</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#q1.-reading-source-code">Q1. Reading source code</a></li>
-<li><a class="nav-link" href="#q2.-1-dimensional-vector">Q2. 1-dimensional vector</a></li>
-<li><a class="nav-link" href="#q3.-difference-between-vectors-and-arrays">Q3. Difference between vectors and arrays</a></li>
-<li><a class="nav-link" href="#q4.-about-structure">Q4. About structure()</a></li>
-</ul>
-</li>
-<li>
-<a class="nav-link" href="#exercise-3.4.5"><span class="header-section-number">2.3</span> Exercise 3.4.5</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#q1.-table-function">Q1. table() function</a></li>
-<li><a class="nav-link" href="#q2.-factor-reversal">Q2. Factor reversal</a></li>
-<li><a class="nav-link" href="#q3.-factor-reversal-2">Q3. Factor reversal-2</a></li>
-</ul>
-</li>
-<li>
-<a class="nav-link" href="#exercise-3.5.4"><span class="header-section-number">2.4</span> Exercise 3.5.4</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#q1.-differences-between-list-and-atomic-vector">Q1. Differences between list and atomic vector</a></li>
-<li><a class="nav-link" href="#q2.-converting-a-list-to-an-atomic-vector">Q2. Converting a list to an atomic vector</a></li>
-<li><a class="nav-link" href="#q3.-comparing-c-and-unlist-for-date-and-datetime">Q3. Comparing c() and unlist() for date and datetime</a></li>
-</ul>
-</li>
-<li>
-<a class="nav-link" href="#exercise-3.6.8"><span class="header-section-number">2.5</span> Exercise 3.6.8</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#q1.-data-frame-with-0-dimensions">Q1. Data frame with 0 dimensions</a></li>
-<li><a class="nav-link" href="#q2.-non-unique-rownames">Q2. Non-unique rownames</a></li>
-<li><a class="nav-link" href="#q3.-transposing-dataframes">Q3. Transposing dataframes</a></li>
-<li><a class="nav-link" href="#q4.-as.matrix-and-dataframe">Q4. as.matrix() and dataframe</a></li>
-</ul>
-</li>
+<li><a class="nav-link" href="#exercise-3.2.5"><span class="header-section-number">2.1</span> Exercise 3.2.5</a></li>
+<li><a class="nav-link" href="#exercise-3.3.4"><span class="header-section-number">2.2</span> Exercise 3.3.4</a></li>
+<li><a class="nav-link" href="#exercise-3.4.5"><span class="header-section-number">2.3</span> Exercise 3.4.5</a></li>
+<li><a class="nav-link" href="#exercise-3.5.4"><span class="header-section-number">2.4</span> Exercise 3.5.4</a></li>
+<li><a class="nav-link" href="#exercise-3.6.8"><span class="header-section-number">2.5</span> Exercise 3.6.8</a></li>
 </ul>
 
       <div class="book-extra">
@@ -825,7 +732,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-03-15.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-03-16.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

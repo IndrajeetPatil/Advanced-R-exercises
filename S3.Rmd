@@ -2,7 +2,7 @@
 
 ## Exercise 13.2.1 
 
-### Q1. Differences between `t.test` and `t.data.frame` {-}
+Q1. Differences between `t.test` and `t.data.frame`
 
 ```{r}
 library(sloop)
@@ -16,7 +16,7 @@ ftype(t.data.frame)
 
 - `t.data.frame` is a **method** for generic `t()` (a matrix transform function) and will be dispatched for `data.frame` objects that need to be transformed.
 
-### Q2. base-R function with `.` {-}
+Q2. base-R function with `.`
 
 - `all.equal()`
 - Most of `as.*` functions like `as.data.frame()`
@@ -29,13 +29,13 @@ For example,
 ftype(as.data.frame)
 ```
 
-### Q3. What does `as.data.frame.data.frame()` do? {-}
+Q3. What does `as.data.frame.data.frame()` do?
  
 It's a **method** for generic `as.data.frame()`.
 
 Less confusing: `asDataFrame.DataFrame()`.
 
-### Q4. Difference in behavior {-}
+Q4. Difference in behavior
 
 Before unclassing, the S3 dispatches `.Date` method, while after `.numeric` method.
 
@@ -61,7 +61,7 @@ mean(unclass(some_days))
 s3_dispatch(mean(unclass(some_days)))
 ```
 
-### Q5. Object properties {-}
+Q5. Object properties
 
 ```{r}
 x <- ecdf(rpois(100, 10))
@@ -74,7 +74,7 @@ attributes(x)
 s3_class(x)
 ```
 
-### Q6. Object properties {-}
+Q6. Object properties
 
 ```{r}
 x <- table(rpois(100, 5))

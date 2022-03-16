@@ -2,7 +2,7 @@
 
 ## Exercise 14.2.6 
 
-### Q1. R6 class for bank account {-}
+Q1. R6 class for bank account
 
 Create the superclass and make sure it works as expected.
 
@@ -154,7 +154,7 @@ Mangesh$withdraw(-54)
 Mangesh <- bankAccountFee$new(name = "Mangesh", balance = -45)
 ```
 
-### Q2. R6 class for carddeck {-}
+Q2. R6 class for carddeck
 
 ```{r, eval=FALSE}
 suit <- c("SPADE", "HEARTS", "DIAMOND", "CLUB") # sigh, Windows encoding issues
@@ -191,9 +191,81 @@ mydeck$draw(4)
 # reshuffle
 ```
 
+## Exercise 14.3.3
+
+Q2. Class to store and check password
+
+```{r}
+library(R6)
+
+checkCredentials <- R6Class(
+  "checkCredentials",
+  public = list(
+    # setter
+    set_password = function(password) {
+      private$.password <- password
+    },
+
+    # checker
+    check_password = function(password) {
+      if (is.null(private$.password)) {
+        stop("No password set to check against.")
+      }
+
+      identical(password, private$.password)
+    },
+
+    # the default print method prints the private fields as well
+    print = function() {
+      "Password: XXXX"
+      
+      # for method chaining
+      invisible(self)
+    }
+  ),
+  private = list(
+    .password = NULL
+  )
+)
+
+myCheck <- checkCredentials$new()
+myCheck
+
+myCheck$set_password("1234")
+
+myCheck$check_password("abcd")
+myCheck$check_password("1234")
+```
+
+But, of course, everything is possible:
+
+```{r}
+myCheck$.__enclos_env__$private$.password
+```
+
+Q4. Inheriting private fields and methods from superclass
+
+Unlike classical OOP in other languages (e.g. C++), R6 subclasses also have access to the private methods in superclass (or base class).
+
+For instance, in the following example, the `Duck` class has a private method `$quack()`, but its subclass `Mallard` can access it using `super$quack()`.
+
+```{r}
+Duck <- R6Class("Duck",
+  private = list(quack = function() print("Quack Quack"))
+)
+
+Mallard <- R6Class("Mallard",
+  inherit = Duck,
+  public = list(quack = function() super$quack())
+)
+
+myMallard <- Mallard$new()
+myMallard$quack()
+```
+
 ## Exercise 14.4.4
 
-Q1. Write R6 class to edit file {-}
+Q1. Write R6 class to edit file
 
 ```{r}
 library(R6)
@@ -211,14 +283,15 @@ fileEditor <- R6Class(
         sep = "\n",
         append = TRUE
       )
-    },
+    }
+  ),
+  private = list(
+    .connection = NULL,
+    # according to R6 docs, the destructor method should be private
     finalize = function() {
       print("Closing the file connection!")
       close(private$.connection)
     }
-  ),
-  private = list(
-    .connection = NULL
   )
 )
 ```
@@ -226,16 +299,20 @@ fileEditor <- R6Class(
 Let's check if it works as expected:
 
 ```{r}
-f <- tempfile()
-myfileEditor <- fileEditor$new(f)
+greetMom <- function() {
+  f <- tempfile()
+  myfileEditor <- fileEditor$new(f)
 
-readLines(f)
+  readLines(f)
 
-myfileEditor$append_line("Hi mom!")
-myfileEditor$append_line("It's a beautiful day!")
+  myfileEditor$append_line("Hi mom!")
+  myfileEditor$append_line("It's a beautiful day!")
 
-readLines(f)
+  readLines(f)
+}
 
-myfileEditor$finalize()
+greetMom()
+
+# force garbage collection
+gc()
 ```
-

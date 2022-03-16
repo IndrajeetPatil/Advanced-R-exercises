@@ -2,7 +2,7 @@
 
 ## Exercise 9.2.6
 
-### Q1. Study `as_mapper()` {-}
+Q1. Study `as_mapper()`
 
 
 ```r
@@ -21,7 +21,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x0000000017784a48>
+#> <environment: 0x000000001a080308>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -32,7 +32,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x0000000016dfac58>
+#> <environment: 0x00000000196e4cf0>
 
 # mapping by name -----------------------
 
@@ -50,7 +50,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x0000000016b78a68>
+#> <environment: 0x0000000019467188>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -62,7 +62,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x00000000155a5050>
+#> <environment: 0x0000000017e8f890>
 
 # compact functions ----------------------------
 
@@ -88,7 +88,7 @@ pluck(Titanic, attr_getter("class"))
 #> [1] "table"
 ```
 
-### Q2. Properly specifying anonymous functions {-}
+Q2. Properly specifying anonymous functions
 
 As shown by `as_mapper()` outputs below, the second call is not appropriate for generating random numbers because it translates to `pluck()` function where the indices for plucking are taken to be randomly generated numbers.
 
@@ -98,13 +98,13 @@ library(purrr)
 
 map(1:3, ~ runif(2))
 #> [[1]]
-#> [1] 0.3792130 0.6273719
+#> [1] 0.9763123 0.6390427
 #> 
 #> [[2]]
-#> [1] 0.05292654 0.33849527
+#> [1] 0.6724395 0.4886454
 #> 
 #> [[3]]
-#> [1] 0.06189899 0.03119071
+#> [1] 0.11217189 0.09526556
 as_mapper(~ runif(2))
 #> <lambda>
 #> function (..., .x = ..1, .y = ..2, . = ..1) 
@@ -123,11 +123,11 @@ map(1:3, runif(2))
 #> NULL
 as_mapper(runif(2))
 #> function (x, ...) 
-#> pluck(x, 0.878929738420993, 0.72426439775154, .default = NULL)
-#> <environment: 0x000000002f474420>
+#> pluck(x, 0.726509284693748, 0.738272293703631, .default = NULL)
+#> <environment: 0x0000000031d6ebb8>
 ```
 
-### Q3. Use the appropriate `map()` function {-}
+Q3. Use the appropriate `map()` function
 
 Compute the standard deviation of every column in a numeric data frame.
 
@@ -165,7 +165,7 @@ modify_if(dplyr::starwars, is.character, as.factor) %>%
 #>          2         48         37
 ```
 
-### Q4. Statistics and visualization with `{purrr}` {-}
+Q4. Statistics and visualization with `{purrr}`
 
 Extract the *p*-value from each test, then visualise.
 
@@ -180,7 +180,7 @@ plot(p)
 
 <img src="Functionals_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
-### Q5. Fixing non-functioning code {-}
+Q5. Fixing non-functioning code
 
 
 ```r
@@ -210,7 +210,7 @@ map(x, .f = ~ map(., ~ triple(.)))
 #> [1] 12 21 18
 ```
 
-### Q6. Use `map()` to fit linear models to the `mtcars` dataset {-}
+Q6. Use `map()` to fit linear models to the `mtcars` dataset
 
 
 ```r
@@ -262,7 +262,7 @@ map(formulas, ~ lm(formula = ., data = mtcars))
 #>      19.024     1142.560       -1.798
 ```
 
-### Q7. Computing R-squared {-}
+Q7. Computing R-squared
 
 
 ```r
@@ -276,13 +276,13 @@ map_dbl(
   bootstraps,
   ~ summary(lm(formula = mpg ~ disp, data = .))$r.squared
 )
-#>  [1] 0.5817107 0.7453509 0.8000664 0.7073172 0.6992378
-#>  [6] 0.6870930 0.6539486 0.7856253 0.7115981 0.7527416
+#>  [1] 0.5125597 0.7123772 0.6849748 0.7240340 0.7726185
+#>  [6] 0.7845856 0.8503934 0.5948729 0.7460704 0.7263295
 ```
 
 ## Exercise 9.4.6
 
-### Q1. Explain the results {-}
+Q1. Explain the results
 
 `modify()` returns the object of type same as the input. Since the input here is a dataframe of certain dimensions and `.f = 1` translates to plucking the first element in each column, it returns a dataframes with the same dimensions with the plucked element recycled across rows.
 
@@ -305,7 +305,7 @@ head(modify(mtcars, 1))
 #> Valiant              4    4
 ```
 
-### Q2. Use `iwalk()` instead of `walk2()` {-}
+Q2. Use `iwalk()` instead of `walk2()`
 
 
 ```r
@@ -322,7 +322,7 @@ names(cyls) <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
 iwalk(cyls, ~ write.csv(.x, .y))
 ```
 
-### Q3. Explain the code {-}
+Q3. Explain the code
 
 `map2()` supplies the functions defined in `.x = trans` as `f` in the anonymous functions, while the names of the columns defined in  `.y = mtcars[nm]` are picked up by `var` in the anonymous function. Note that the function is iterating over indices for vectors of transformations and column names.
 
@@ -344,7 +344,7 @@ In the `map` approach, the function is iterating over indices for vectors of col
 mtcars[nm] <- map(nm, ~ trans[[.x]](mtcars[[.x]]))
 ```
 
-### Q4. Difference between `map2()` and `walk2()` {-}
+Q4. Difference between `map2()` and `walk2()`
 
 If we use `map2()`, it will work, but it will print `NULL` to the terminal for every element of the list.
 
@@ -357,7 +357,7 @@ map2(bods, nm, write.csv)
 
 ## Exercise 9.6.3
 
-### Q1. Predicate functions {-}
+Q1. Predicate functions
 
 > A predicate is a function that returns a **single** `TRUE` or `FALSE`.
 
@@ -384,7 +384,7 @@ anyNA(c(NA, 1))
 #> [1] TRUE
 ```
 
-### Q2. Fix `simple_reduce` {-}
+Q2. Fix `simple_reduce`
 
 Supplied function:
 
@@ -472,9 +472,9 @@ simple_reduce2(1:3, `%/%`)
 
 ## Exercise 9.7.3
 
-### Q1.  {-}
+Q1. 
 
-### Q2. `eapply()` and `rapply()` {-}
+Q2. `eapply()` and `rapply()`
 
 > `eapply()` applies FUN to the named values from an environment and returns the results as a list.
 
