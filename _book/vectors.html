@@ -85,12 +85,12 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
 <span class="co">#&gt; [1] "raw"</span></code></pre></div>
-<p>You can use it to also figure out some encoding issues (both of these are scalars):</p>
+<p>You can use it to also figure out differences in similar characters:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/rawConversion.html">charToRaw</a></span><span class="op">(</span><span class="st">"\""</span><span class="op">)</span>
-<span class="co">#&gt; [1] 22</span>
-<span class="fu"><a href="https://rdrr.io/r/base/rawConversion.html">charToRaw</a></span><span class="op">(</span><span class="st">"”"</span><span class="op">)</span>
-<span class="co">#&gt; [1] 94</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/rawConversion.html">charToRaw</a></span><span class="op">(</span><span class="st">"–"</span><span class="op">)</span> <span class="co"># en-dash</span>
+<span class="co">#&gt; [1] 96</span>
+<span class="fu"><a href="https://rdrr.io/r/base/rawConversion.html">charToRaw</a></span><span class="op">(</span><span class="st">"—"</span><span class="op">)</span> <span class="co"># em-dash</span>
+<span class="co">#&gt; [1] 97</span></code></pre></div>
 <p>Complex vectors can be used to represent (surprise!) complex numbers.</p>
 <p>Example of a complex scalar:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
@@ -154,33 +154,74 @@
 <span class="co">#&gt; [1] "FALSE" NA</span></code></pre></div>
 <p>Q5. Misleading variants of <code>is.*</code> functions</p>
 <ul>
-<li>
-<code><a href="https://rdrr.io/r/base/is.recursive.html">is.atomic()</a></code>:</li>
-<li>
-<code><a href="https://rdrr.io/r/base/numeric.html">is.numeric()</a></code>:</li>
-<li>
-<code><a href="https://rdrr.io/r/base/vector.html">is.vector()</a></code>:</li>
+<li><code><a href="https://rdrr.io/r/base/is.recursive.html">is.atomic()</a></code></li>
 </ul>
+<p>This functions checks if the object is of atomic <em>type</em> (or <code>NULL</code>), and not if it is an atomic <em>vector</em>.</p>
+<p>Quoting docs:</p>
+<blockquote>
+<p><code>is.atomic</code> is true for the atomic types (“logical”, “integer”, “numeric”, “complex”, “character” and “raw”) and <code>NULL</code>.</p>
+</blockquote>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/is.recursive.html">is.atomic</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/vector.html">is.vector</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>
+<span class="co">#&gt; [1] FALSE</span></code></pre></div>
+<ul>
+<li><code><a href="https://rdrr.io/r/base/numeric.html">is.numeric()</a></code></li>
+</ul>
+<p>Its documentation says:</p>
+<blockquote>
+<p><code>is.numeric</code> should only return true if the base type of the class is <code>double</code> or <code>integer</code> and values can reasonably be regarded as <code>numeric</code></p>
+</blockquote>
+<p>Therefore, this function only checks for <code>double</code> and <code>integer</code> base types and not other types based on top of these types (<code>factor</code>, <code>Date</code>, <code>POSIXt</code>, or <code>difftime</code>).</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">2L</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="co">#&gt; [1] FALSE</span></code></pre></div>
+<ul>
+<li><code><a href="https://rdrr.io/r/base/vector.html">is.vector()</a></code></li>
+</ul>
+<p>As the documentation for this function reveals:</p>
+<blockquote>
+<p><code>is.vector</code> returns <code>TRUE</code> if <code>x</code> is a vector of the specified mode having no attributes <em>other than names</em>. It returns <code>FALSE</code> otherwise.</p>
+</blockquote>
+<p>Thus, the function can be incorrect in presence if the object has attributes other than <code>names</code>.</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/vector.html">is.vector</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"m"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"abcdef"</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/vector.html">is.vector</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="co">#&gt; [1] FALSE</span></code></pre></div>
+<p>A better way to check for a vector:</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
 </div>
 <div id="exercise-3.3.4" class="section level2" number="2.2">
 <h2>
 <span class="header-section-number">2.2</span> Exercise 3.3.4<a class="anchor" aria-label="anchor" href="#exercise-3.3.4"><i class="fas fa-link"></i></a>
 </h2>
 <p>Q1. Reading source code</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">setNames</span>
 <span class="co">#&gt; function (object = nm, nm) </span>
 <span class="co">#&gt; {</span>
 <span class="co">#&gt;     names(object) &lt;- nm</span>
 <span class="co">#&gt;     object</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x00000000179bb528&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x00000000179cb5a8&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:stats&gt;</span>
 
 <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; a b </span>
 <span class="co">#&gt; 1 2</span></code></pre></div>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">unname</span>
 <span class="co">#&gt; function (obj, force = FALSE) </span>
 <span class="co">#&gt; {</span>
@@ -190,7 +231,7 @@
 <span class="co">#&gt;         dimnames(obj) &lt;- NULL</span>
 <span class="co">#&gt;     obj</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x0000000014a9e770&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x0000000014a9e738&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span>
 
 <span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dimnames.html">provideDimnames</a></span><span class="op">(</span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">24</span>, dim <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span>
@@ -222,7 +263,7 @@
 <p>Q2. 1-dimensional vector</p>
 <p>Dimensions for a 1-dimensional vector are <code>NULL</code>.</p>
 <p><code><a href="https://rdrr.io/r/base/nrow.html">NROW()</a></code> and <code><a href="https://rdrr.io/r/base/nrow.html">NCOL()</a></code> are helpful for getting dimensions for 1D vectors by treating them as if they were a data frame vectors.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
@@ -239,7 +280,7 @@
 <span class="co">#&gt; [1] 1</span></code></pre></div>
 <p>Q3. Difference between vectors and arrays</p>
 <p><code>1:5</code> is a 1D vector without dimensions, while <code>x1</code>, <code>x2</code>, and <code>x3</code> are one-dimensional arrays.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>
 <span class="co">#&gt; [1] 1 2 3 4 5</span>
 <span class="op">(</span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -286,7 +327,7 @@
 <blockquote>
 <p>Note that some attributes (namely class, <strong>comment</strong>, dim, dimnames, names, row.names and tsp) are treated specially and have restrictions on the values which can be set.</p>
 </blockquote>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, x <span class="op">=</span> <span class="st">"my attribute"</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1 2 3 4 5</span>
 <span class="co">#&gt; attr(,"x")</span>
@@ -301,7 +342,7 @@
 </h2>
 <p>Q1. <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> function</p>
 <p><code><a href="https://rdrr.io/r/base/table.html">table()</a></code> returns an array with integer type and its dimensions scale with the number of variables present.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">am</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  0  1 </span>
@@ -387,7 +428,7 @@
 <span class="co">#&gt; [1] "table"</span></code></pre></div>
 <p>Q2. Factor reversal</p>
 <p>Its levels changes but the underlying integer values remain the same.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span>
 <span class="va">f1</span>
 <span class="co">#&gt;  [1] a b c d e f g h i j k l m n o p q r s t u v w x y z</span>
@@ -406,7 +447,7 @@
 <p>Q3. Factor reversal-2</p>
 <p><code>f2</code>: Only the underlying integers are reversed, but levels remain unchanged.
 <code>f3</code>: Both the levels and the underlying integers are reversed.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span><span class="op">)</span>
 <span class="va">f2</span>
 <span class="co">#&gt;  [1] z y x w v u t s r q p o n m l k j i h g f e d c b a</span>
@@ -472,7 +513,7 @@
 </table></div>
 <p>Q2. Converting a list to an atomic vector</p>
 <p>List already <em>is</em> a vector, so <code>as.vector</code> is not going to change anything, and there is no <code>as.atomic.vector</code>. Thus the need to use <code><a href="https://rdrr.io/r/base/unlist.html">unlist()</a></code>.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/vector.html">is.vector</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
@@ -491,7 +532,7 @@
 <span class="co">#&gt; a b </span>
 <span class="co">#&gt; 1 2</span></code></pre></div>
 <p>Q3. Comparing <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> and <code><a href="https://rdrr.io/r/base/unlist.html">unlist()</a></code> for date and datetime</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># creating a date and datetime</span>
 <span class="va">date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"1947-08-15"</span><span class="op">)</span>
 <span class="va">datetime</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span><span class="op">(</span><span class="st">"1950-01-26 00:01"</span>, tz <span class="op">=</span> <span class="st">"UTC"</span><span class="op">)</span>
@@ -513,7 +554,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span> <span class="co"># number of seconds since then</span>
 <span class="co">#&gt; [1] -628991940</span></code></pre></div>
 <p>Behavior with <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>: Works as expected. Only odd thing is that it strips the <code>tzone</code> attribute.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">datetime</span><span class="op">)</span>
 <span class="co">#&gt; [1] "1947-08-15" "1950-01-26"</span>
 
@@ -528,7 +569,7 @@
 <span class="co">#&gt; $class</span>
 <span class="co">#&gt; [1] "POSIXct" "POSIXt"</span></code></pre></div>
 <p>Behavior with <code><a href="https://rdrr.io/r/base/unlist.html">unlist()</a></code>: Removes all attributes and we are left only with the underlying double representations of these objects.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">datetime</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1]      -8175 -628991940</span>
 
@@ -541,16 +582,16 @@
 </h2>
 <p>Q1. Data frame with 0 dimensions</p>
 <p>Data frame with 0 rows is possible. This is basically a list with a vector of length 0.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] x</span>
 <span class="co">#&gt; &lt;0 rows&gt; (or 0-length row.names)</span></code></pre></div>
 <p>Data frame with 0 columns is possible. This will be an empty list.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt; data frame with 0 columns and 1 row</span></code></pre></div>
 <p>Both in one go:</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; data frame with 0 columns and 0 rows</span>
 
@@ -558,12 +599,12 @@
 <span class="co">#&gt; [1] 0 0</span></code></pre></div>
 <p>Q2. Non-unique rownames</p>
 <p>If you attempt to set rownames that are not unique, it will not work.</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Error in data.frame(row.names = c(1, 1)): duplicate row.names: 1</span></code></pre></div>
 <p>Q3. Transposing dataframes</p>
 <p>Transposing a dataframe transforms it into a matrix and coerces all its elements to be of the same type.</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># original</span>
 <span class="op">(</span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
@@ -631,7 +672,7 @@
 <span class="co">#&gt; [1] 6 5</span></code></pre></div>
 <p>Q4. <code><a href="https://rdrr.io/r/base/matrix.html">as.matrix()</a></code> and dataframe</p>
 <p>The return type of <code><a href="https://rdrr.io/r/base/matrix.html">as.matrix()</a></code> depends on dataframe column types.</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># example with mixed types (coerced to character)</span>
 <span class="op">(</span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
@@ -687,7 +728,7 @@
 <p>Return the matrix obtained by converting all the variables in a data frame to numeric mode and then binding them together as the columns of a matrix.</p>
 </blockquote>
 <p>So <code><a href="https://rdrr.io/r/base/data.matrix.html">data.matrix()</a></code> always returns a numeric matrix:</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/data.matrix.html">data.matrix</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
 <span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="co">#&gt; 1          5.1         3.5          1.4         0.2       1</span>

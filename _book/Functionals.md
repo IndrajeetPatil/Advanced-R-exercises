@@ -21,7 +21,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x0000000017780140>
+#> <environment: 0x0000000017780040>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -32,7 +32,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x0000000016df4330>
+#> <environment: 0x0000000016df4bf8>
 
 # mapping by name -----------------------
 
@@ -50,7 +50,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x0000000016b769e0>
+#> <environment: 0x0000000016b76f18>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -62,7 +62,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x0000000015593448>
+#> <environment: 0x0000000015593460>
 
 # compact functions ----------------------------
 
@@ -98,13 +98,13 @@ library(purrr)
 
 map(1:3, ~ runif(2))
 #> [[1]]
-#> [1] 0.4785314 0.0348130
+#> [1] 0.5660079 0.8423736
 #> 
 #> [[2]]
-#> [1] 0.1303502 0.6297144
+#> [1] 0.1425411 0.1792858
 #> 
 #> [[3]]
-#> [1] 0.5892365 0.9678203
+#> [1] 0.9450095 0.6661278
 as_mapper(~ runif(2))
 #> <lambda>
 #> function (..., .x = ..1, .y = ..2, . = ..1) 
@@ -123,8 +123,8 @@ map(1:3, runif(2))
 #> NULL
 as_mapper(runif(2))
 #> function (x, ...) 
-#> pluck(x, 0.825817621080205, 0.0559990582987666, .default = NULL)
-#> <environment: 0x000000002f46d0d0>
+#> pluck(x, 0.358742753975093, 0.285151875345036, .default = NULL)
+#> <environment: 0x000000002f46dc10>
 ```
 
 Q3. Use the appropriate `map()` function
@@ -276,8 +276,8 @@ map_dbl(
   bootstraps,
   ~ summary(lm(formula = mpg ~ disp, data = .))$r.squared
 )
-#>  [1] 0.8071078 0.7412700 0.7327471 0.6448319 0.7478885
-#>  [6] 0.7479167 0.7860233 0.7921265 0.5937794 0.7112333
+#>  [1] 0.7557158 0.6274341 0.7974015 0.6579941 0.6640653
+#>  [6] 0.6402111 0.7863574 0.8047195 0.8281164 0.7024609
 ```
 
 ## Exercise 9.4.6

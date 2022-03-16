@@ -77,7 +77,7 @@
 </h2>
 <p>Q1. <code><a href="https://rdrr.io/r/base/ifelse.html">ifelse()</a></code> return type</p>
 <p>It’s type unstable, i.e. the type of return will depend on the type of each condition (<code>yes</code> and <code>no</code>, i.e.), and works only for cases where <code>test</code> argument evaluated to a <code>logical</code> type.</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span> <span class="co"># numeric returned</span>
 <span class="co">#&gt; [1] 1</span>
 <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span> <span class="co"># character returned</span>
@@ -85,7 +85,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span>
 <span class="co">#&gt; [1] NA</span></code></pre></div>
 <p>Additionally, if the test doesn’t resolve to <code>logical</code> type, it will try to coerce whatever the resulting type to <code>logical</code>:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># will work</span>
 <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="st">"TRUE"</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1</span>
@@ -99,7 +99,7 @@
 <span class="co">#&gt; [1] NA</span></code></pre></div>
 <p>Q2. Why does the following code work?</p>
 <p>As can be seen, the code works because the tests are successfully coerced to a logical type.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>
 <span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span>
@@ -118,7 +118,7 @@
 </h2>
 <p>Q1. Why does this work?</p>
 <p>This works because <code>1:length(x)</code> goes both ways; in this case, from 1 to 0. And, since out-of-bound values for atomic vectors is <code>NA</code>, all related operations with it also lead to <code>NA</code>.</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
 
@@ -139,7 +139,7 @@
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; [1] NA</span></code></pre></div>
 <p>A way to do avoid this unintended behavior would be:</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
 
@@ -152,7 +152,7 @@
 <span class="co">#&gt; list()</span></code></pre></div>
 <p>Q2. Index vectors</p>
 <p>Surprisingly (at least to me), <code>x</code> takes all values of the vector <code>xs</code>:</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># xs &lt;- c(1, 2, 3)</span>
 <span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">x</span> <span class="kw">in</span> <span class="va">xs</span><span class="op">)</span> <span class="op">{</span>
@@ -167,7 +167,7 @@
 <span class="co">#&gt; [1]  4  5  6  8 10 12</span></code></pre></div>
 <p>Q3. Index increase</p>
 <p>In a <code>for</code> loop - like in a <code>while</code> loop - the index is updated in the beginning of each iteration.</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"before: "</span>, <span class="va">i</span>, <span class="st">"\n"</span><span class="op">)</span>
   <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">*</span> <span class="fl">2</span>

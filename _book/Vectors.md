@@ -17,14 +17,14 @@ typeof(y)
 #> [1] "raw"
 ```
 
-You can use it to also figure out some encoding issues (both of these are scalars):
+You can use it to also figure out differences in similar characters:
 
 
 ```r
-charToRaw("\"")
-#> [1] 22
-charToRaw("”")
-#> [1] 94
+charToRaw("–") # en-dash
+#> [1] 96
+charToRaw("—") # em-dash
+#> [1] 97
 ```
 
 Complex vectors can be used to represent (surprise!) complex numbers.
@@ -121,10 +121,68 @@ c(FALSE, NA_character_)
 
 Q5. Misleading variants of `is.*` functions
 
-- `is.atomic()`:
-- `is.numeric()`:
-- `is.vector()`:
+- `is.atomic()`
 
+This functions checks if the object is of atomic *type* (or `NULL`), and not if it is an atomic *vector*.
+
+Quoting docs:
+
+> `is.atomic` is true for the atomic types ("logical", "integer", "numeric", "complex", "character" and "raw") and `NULL`.
+
+
+```r
+is.atomic(NULL)
+#> [1] TRUE
+
+is.vector(NULL)
+#> [1] FALSE
+```
+
+- `is.numeric()`
+
+Its documentation says:
+
+> `is.numeric` should only return true if the base type of the class is `double` or `integer` and values can reasonably be regarded as `numeric`
+
+Therefore, this function only checks for `double` and `integer` base types and not other types based on top of these types (`factor`, `Date`, `POSIXt`, or `difftime`).
+
+
+```r
+x <- factor(c(1L, 2L))
+
+is.numeric(x)
+#> [1] FALSE
+```
+
+
+- `is.vector()`
+
+As the documentation for this function reveals:
+
+> `is.vector` returns `TRUE` if `x` is a vector of the specified mode having no attributes *other than names*. It returns `FALSE` otherwise.
+
+Thus, the function can be incorrect in presence if the object has attributes other than `names`.
+
+
+```r
+x <- c("x" = 1, "y" = 2)
+
+is.vector(x)
+#> [1] TRUE
+
+attr(x, "m") <- "abcdef"
+
+is.vector(x)
+#> [1] FALSE
+```
+
+A better way to check for a vector:
+
+
+```r
+is.null(dim(x))
+#> [1] TRUE
+```
 
 ## Exercise 3.3.4
 
@@ -138,7 +196,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x00000000179bb528>
+#> <bytecode: 0x00000000179cb5a8>
 #> <environment: namespace:stats>
 
 setNames(c(1, 2), c("a", "b"))
@@ -157,7 +215,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x0000000014a9e770>
+#> <bytecode: 0x0000000014a9e738>
 #> <environment: namespace:base>
 
 A <- provideDimnames(N <- array(1:24, dim = 2:4))
