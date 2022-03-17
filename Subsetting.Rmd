@@ -107,5 +107,53 @@ is.na(df)
 class(is.na(df))
 ```
 
+## Exercise 4.3.5
 
+**Q1.** Brainstorm as many ways as possible to extract the third value from the `cyl` variable in the `mtcars` dataset.
 
+**A1.** Possible ways to do this:
+
+```{r}
+mtcars$cyl[[3]]
+mtcars[, "cyl"][[3]]
+mtcars[["cyl"]][[3]]
+
+mtcars[3, ]$cyl
+mtcars[3, "cyl"]
+mtcars[3, ][["cyl"]]
+
+mtcars[[c(2, 3)]]
+mtcars[3, 2]
+```
+
+**Q2.** Given a linear model, e.g., `mod <- lm(mpg ~ wt, data = mtcars)`, extract the residual degrees of freedom. Then extract the R squared from the model summary (`summary(mod)`)
+
+**A2.** Specified linear model:
+
+```{r}
+mod <- lm(mpg ~ wt, data = mtcars)
+```
+
+- extracting the residual degrees of freedom
+
+```{r}
+mod$df.residual 
+
+# or 
+
+mod[["df.residual"]]
+```
+
+- extracting the R squared from the model summary
+
+```{r}
+summary(mod)$r.squared
+```
+
+## Exercise 4.5.9
+
+**Q1.**  How would you randomly permute the columns of a data frame? (This is an important technique in random forests.) Can you simultaneously permute the rows and columns in one step?
+
+**Q2.** How would you select a random sample of `m` rows from a data frame?  What if the sample had to be contiguous (i.e., with an initial row, a final row, and every row in between)?
+    
+**Q3.** How could you put the columns in a data frame in alphabetical order?

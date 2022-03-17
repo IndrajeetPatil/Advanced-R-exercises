@@ -15,9 +15,15 @@ mtcars[mtcars$cyl == 4 | 6, ]
 **A1.** Fixed versions of these commands:
 
 
+```r
+mtcars[mtcars$cyl == 4, ]
+mtcars[-(1:4), ]
+mtcars[mtcars$cyl <= 5, ]
+mtcars[mtcars$cyl == 4 | mtcars$cyl == 6, ]
+```
 
 **Q2.** Why does the following code yield five missing values?
-    
+
 
 ```r
 x <- 1:5
@@ -150,5 +156,61 @@ class(is.na(df))
 #> [1] "matrix" "array"
 ```
 
+## Exercise 4.3.5
 
+**Q1.** Brainstorm as many ways as possible to extract the third value from the `cyl` variable in the `mtcars` dataset.
+
+**A1.** Possible ways to do this:
+
+
+```r
+mtcars$cyl[[3]]
+#> [1] 4
+mtcars[, "cyl"][[3]]
+#> [1] 4
+mtcars[["cyl"]][[3]]
+#> [1] 4
+
+mtcars[3, ]$cyl
+#> [1] 4
+mtcars[3, "cyl"]
+#> [1] 4
+mtcars[3, ][["cyl"]]
+#> [1] 4
+
+mtcars[[c(2, 3)]]
+#> [1] 4
+mtcars[3, 2]
+#> [1] 4
+```
+
+**Q2.** Given a linear model, e.g., `mod <- lm(mpg ~ wt, data = mtcars)`, extract the residual degrees of freedom. Then extract the R squared from the model summary (`summary(mod)`)
+
+**A2.** Specified linear model:
+
+
+```r
+mod <- lm(mpg ~ wt, data = mtcars)
+```
+
+- extracting the residual degrees of freedom
+
+
+```r
+mod$df.residual 
+#> [1] 30
+
+# or 
+
+mod[["df.residual"]]
+#> [1] 30
+```
+
+- extracting the R squared from the model summary
+
+
+```r
+summary(mod)$r.squared
+#> [1] 0.7528328
+```
 
