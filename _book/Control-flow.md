@@ -2,7 +2,7 @@
 
 ## Exercise 5.2.4
 
-Q1. `ifelse()` return type
+**Q1.** `ifelse()` return type
 
 It's type unstable, i.e. the type of return will depend on the type of each condition (`yes` and `no`, i.e.), and works only for cases where `test` argument evaluated to a `logical` type.
 
@@ -33,7 +33,7 @@ ifelse(NaN, 1, "no")
 #> [1] NA
 ```
 
-Q2. Why does the following code work?
+**Q2.** Why does the following code work?
 
 As can be seen, the code works because the tests are successfully coerced to a logical type.
 
@@ -54,7 +54,7 @@ if (length(x)) "not empty" else "empty"
 
 ## Exercise 5.3.3
 
-Q1. Why does this work?
+**Q1.** Why does this work?
 
 This works because `1:length(x)` goes both ways; in this case, from 1 to 0. And, since out-of-bound values for atomic vectors is `NA`, all related operations with it also lead to `NA`.
 
@@ -97,7 +97,7 @@ out
 #> list()
 ```
 
-Q2. Index vectors
+**Q2.** Index vectors
 
 Surprisingly (at least to me), `x` takes all values of the vector `xs`:
 
@@ -117,7 +117,7 @@ xs
 #> [1]  4  5  6  8 10 12
 ```
 
-Q3. Index increase
+**Q3.** Index increase
 
 In a `for` loop - like in a `while` loop - the index is updated in the beginning of each iteration.
 

@@ -2,7 +2,7 @@
 
 ## Exercise 23.2.4
 
-Q1. Profiling function with `torture = TRUE`
+**Q1.** Profiling function with `torture = TRUE`
 
 Let's first source the functions mentioned in exercises.
 
@@ -29,7 +29,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           231us    274us     2787.    4.64MB     39.6
+#> 1 f()           230us    280us     2801.     792KB     42.6
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -61,7 +61,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x000000001541ee38>
+#> <bytecode: 0x000000001592bba0>
 #> <environment: namespace:base>
 ```
 
@@ -69,19 +69,11 @@ I still couldn't figure out why. I would recommend checking out the [official an
 
 ## Exercise 23.3.3
 
-Q1. Differences between `system.time()` and `bench::mark()`
+**Q1.** Differences between `system.time()` and `bench::mark()`
 
 
 ```r
 library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 
 n <- 1e6
 x <- runif(100)
@@ -130,20 +122,20 @@ t_bench_df
 #> # A tibble: 2 x 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)      1.36us
-#> 2 x^0.5        3.98us
+#> 1 sqrt(x)      1.64us
+#> 2 x^0.5        4.85us
 
 t_systime_df
 #> # A tibble: 2 x 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                  1.11                0.700
-#> 2 x^0.5                    3.57                3.56
+#> 1 sqrt(x)                  1.21                0.920
+#> 2 x^0.5                    4.4                 4.35
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
 
-Q2. Microbenchmarking ways to compute square root
+**Q2.** Microbenchmarking ways to compute square root
 
 Microbenchmarking all ways to compute square root of a vector mentioned in this chapter.
 
@@ -162,16 +154,16 @@ bench::mark(
 #> # A tibble: 4 x 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)          5.4us    5.9us   160124.    7.86KB
-#> 2 x^(1/2)         31.6us   34.1us    23568.    7.86KB
-#> 3 x^0.5           34.6us   38.6us    20800.    7.86KB
-#> 4 exp(log(x)/2)     83us   85.8us    11096.    7.86KB
+#> 1 sqrt(x)          5.3us    6.2us   106068.    7.86KB
+#> 2 x^(1/2)         59.6us   63.6us    15657.    7.86KB
+#> 3 x^0.5           41.4us   64.2us    13677.    7.86KB
+#> 4 exp(log(x)/2)   93.9us  100.6us     8337.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
-#> 1     160.
-#> 2       0 
-#> 3       0 
-#> 4       0
+#> 1        0
+#> 2        0
+#> 3        0
+#> 4        0
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.

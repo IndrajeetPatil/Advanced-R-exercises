@@ -7,3 +7,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   strip.white = FALSE
 )
+
+# needed libraries
+library(tidyverse)

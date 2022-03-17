@@ -2,7 +2,7 @@
 
 ## 2.2.2 Exercises 
 
-Q1. Explain the relationship
+**Q1.** Explain the relationship
 
 
 ```r
@@ -19,40 +19,40 @@ All of these variable names are actively bound to the same value.
 library(lobstr)
 
 obj_addr(a)
-#> [1] "0x14b1d800"
+#> [1] "0x176def18"
 obj_addr(b)
-#> [1] "0x14b1d800"
+#> [1] "0x176def18"
 obj_addr(c)
-#> [1] "0x14b1d800"
+#> [1] "0x176def18"
 obj_addr(d)
-#> [1] "0x16b32ec0"
+#> [1] "0x16a7ca98"
 ```
 
-Q2. Function object address
+**Q2.** Function object address
 
 Following code verifies that indeed these calls all point to the same underlying function object.
 
 
 ```r
 obj_addr(mean)
-#> [1] "0x16486ea8"
+#> [1] "0x17da5828"
 obj_addr(base::mean)
-#> [1] "0x16486ea8"
+#> [1] "0x17da5828"
 obj_addr(get("mean"))
-#> [1] "0x16486ea8"
+#> [1] "0x17da5828"
 obj_addr(evalq(mean))
-#> [1] "0x16486ea8"
+#> [1] "0x17da5828"
 obj_addr(match.fun("mean"))
-#> [1] "0x16486ea8"
+#> [1] "0x17da5828"
 ```
 
-Q3. Converting non-syntactic names 
+**Q3.** Converting non-syntactic names 
 
 The conversion of non-syntactic names to syntactic ones can sometimes corrupt the data. Some datasets may require non-syntactic names.
 
 To suppress this behavior, one can set `check.names = FALSE`.
 
-Q4. Behavior of `make.names()` 
+**Q4.** Behavior of `make.names()` 
 
 It just prepends `X` in non-syntactic names and invalid characters (like `@`) are translated to `.`.
 
@@ -62,7 +62,7 @@ make.names(c("123abc", "@me", "_yu", "  gh", "else"))
 #> [1] "X123abc" "X.me"    "X_yu"    "X..gh"   "else."
 ```
 
-Q5. Why is `.123e1` not a syntactic name? 
+**Q5.** Why is `.123e1` not a syntactic name? 
 
 Because it is parsed as a number.
 
@@ -74,17 +74,17 @@ Because it is parsed as a number.
 
 ## 2.3.6 Exercises 
 
-Q1. Usefulness of `tracemem()`
+**Q1.** Usefulness of `tracemem()`
 
 `tracemem()` traces copying of objects in R, but since the object created here is not assigned a name, there is nothing to trace. 
 
 
 ```r
 tracemem(1:10)
-#> [1] "<0000000013273C90>"
+#> [1] "<0000000015AB0CA0>"
 ```
 
-Q2. Why two copies when you run this code?
+**Q2.** Why two copies when you run this code?
 
 Were it not for `4` being a double - and not an integer (`4L`) - this would have been modified in place.
 
@@ -92,11 +92,11 @@ Were it not for `4` being a double - and not an integer (`4L`) - this would have
 ```r
 x <- c(1L, 2L, 3L)
 tracemem(x)
-#> [1] "<0000000013420548>"
+#> [1] "<000000001F5AA318>"
 
 x[[3]] <- 4
-#> tracemem[0x0000000013420548 -> 0x00000000134c5828]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
-#> tracemem[0x00000000134c5828 -> 0x00000000134fc558]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x000000001f5aa318 -> 0x000000001f63c570]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
+#> tracemem[0x000000001f63c570 -> 0x0000000031a3a420]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 ```
 
 Try with integer:
@@ -105,17 +105,17 @@ Try with integer:
 ```r
 x <- c(1L, 2L, 3L)
 tracemem(x)
-#> [1] "<0000000013724A98>"
+#> [1] "<000000001F53F2C0>"
 
 x[[3]] <- 4L
-#> tracemem[0x0000000013724a98 -> 0x00000000137c2278]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x000000001f53f2c0 -> 0x000000001f9016d8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 ```
 
 As for why this still produces a copy, this is from Solutions manual:
 
 > Please be aware that running this code in RStudio will result in additional copies because of the reference from the environment pane.
 
-Q3. Study relationship
+**Q3.** Study relationship
 
 
 ```r
@@ -124,23 +124,23 @@ b <- list(a, a)
 c <- list(b, a, 1:10)
 
 ref(a)
-#> [1:0x13ac75d8] <int>
+#> [1:0x1d8c1968] <int>
 
 ref(b)
-#> o [1:0x13b19be8] <list> 
-#> +-[2:0x13ac75d8] <int> 
-#> \-[2:0x13ac75d8]
+#> o [1:0x31a2dfb0] <list> 
+#> +-[2:0x1d8c1968] <int> 
+#> \-[2:0x1d8c1968]
 
 ref(c)
-#> o [1:0x13b78fa8] <list> 
-#> +-o [2:0x13b19be8] <list> 
-#> | +-[3:0x13ac75d8] <int> 
-#> | \-[3:0x13ac75d8] 
-#> +-[3:0x13ac75d8] 
-#> \-[4:0x13b853c8] <int>
+#> o [1:0x31a836d8] <list> 
+#> +-o [2:0x31a2dfb0] <list> 
+#> | +-[3:0x1d8c1968] <int> 
+#> | \-[3:0x1d8c1968] 
+#> +-[3:0x1d8c1968] 
+#> \-[4:0x1d991730] <int>
 ```
 
-Q4. List inside another list
+**Q4.** List inside another list
 
 
 ```r
@@ -149,7 +149,7 @@ x
 #> [[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x2e699cd8"
+#> [1] "0x1f91e030"
 
 x[[2]] <- x
 x
@@ -160,13 +160,13 @@ x
 #> [[2]][[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x2eb02cb8"
+#> [1] "0x1f5deea0"
 
 ref(x)
-#> o [1:0x2eb02cb8] <list> 
-#> +-[2:0x2e155468] <int> 
-#> \-o [3:0x2e699cd8] <list> 
-#>   \-[2:0x2e155468]
+#> o [1:0x1f5deea0] <list> 
+#> +-[2:0x1db71110] <int> 
+#> \-o [3:0x1f91e030] <list> 
+#>   \-[2:0x1db71110]
 ```
 
 Figure here:
@@ -174,7 +174,7 @@ Figure here:
 
 ## 2.4.1 Exercises 
 
-Q1. Object size difference between `{base}` and `{lobstr}`
+**Q1.** Object size difference between `{base}` and `{lobstr}`
 
 > This function...does not detect if elements of a list are shared.
 
@@ -189,7 +189,7 @@ obj_size(y)
 #> 80,896 B
 ```
 
-Q2. Misleading object size
+**Q2.** Misleading object size
 
 These functions are not externally created objects in R, but are always available, so doesn't make much sense to measure their size.
 
@@ -215,7 +215,7 @@ obj_size(mean) + obj_size(sd) + obj_size(var)
 #> 18,136 B
 ```
 
-Q3. Predict object sizes
+**Q3.** Predict object sizes
 
 
 ```r
@@ -244,7 +244,7 @@ obj_size(a, b)
 
 ## 2.5.3 Exercises
 
-Q1. Why not a circular list?
+**Q1.** Why not a circular list?
 
 Copy-on-modify prevents the creation of a circular list.
 
@@ -253,19 +253,19 @@ Copy-on-modify prevents the creation of a circular list.
 x <- list()
 
 obj_addr(x)
-#> [1] "0x13f06b78"
+#> [1] "0x326a4b10"
 
 tracemem(x)
-#> [1] "<0000000013F06B78>"
+#> [1] "<00000000326A4B10>"
 
 x[[1]] <- x
-#> tracemem[0x0000000013f06b78 -> 0x00000000140460e0]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x00000000326a4b10 -> 0x00000000327d7cc8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 
 obj_addr(x[[1]])
-#> [1] "0x13f06b78"
+#> [1] "0x326a4b10"
 ```
 
-Q2. Performance of `for` loops with and without creating copies
+**Q2.** Performance of `for` loops with and without creating copies
 
 Let's first microbenchmark functions that does and does not create copies for varying lengths of number of columns.
 
@@ -273,14 +273,6 @@ Let's first microbenchmark functions that does and does not create copies for va
 ```r
 library(bench)
 library(tidyverse)
-#> -- Attaching packages ------------------- tidyverse 1.3.1 --
-#> v ggplot2 3.3.5.9000     v purrr   0.3.4     
-#> v tibble  3.1.6          v dplyr   1.0.8     
-#> v tidyr   1.2.0          v stringr 1.4.0     
-#> v readr   2.1.2          v forcats 0.5.1
-#> -- Conflicts ---------------------- tidyverse_conflicts() --
-#> x dplyr::filter() masks stats::filter()
-#> x dplyr::lag()    masks stats::lag()
 
 generateDataFrame <- function(ncol) {
   as.data.frame(matrix(runif(100 * ncol), nrow = 100))
@@ -353,7 +345,7 @@ ggplot(benchDf,
 <img src="Names-values_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
 
-Q3. `tracemem()` on an environment
+**Q3.** `tracemem()` on an environment
 
 It doesn't work and the documentation makes it clear as to why:
 
