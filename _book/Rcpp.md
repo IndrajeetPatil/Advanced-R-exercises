@@ -1,5 +1,7 @@
 # Rewriting R code in C++
 
+
+
 ## Exercise 25.2.6
 
 **Q1.** Figure out base function corresponding to Rccp code
@@ -203,12 +205,12 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
-#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     9.2us
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   16.3us
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    21.3us
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   34.3us
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1   11.7us    79847.    15.8KB        0
-#> 2   52.9us    19399.    18.3KB        0
+#> 1   25.8us    37557.    15.8KB        0
+#> 2   37.8us    25280.    18.3KB        0
 ```
 
 - `cumprod()`
@@ -250,8 +252,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                 min   median `itr/sec`
 #>   <bch:expr>            <bch:tm> <bch:tm>     <dbl>
-#> 1 cumprod(v1)              100ns    200ns  3875969.
-#> 2 cumulativeProduct(v1)      2us    3.2us   315657.
+#> 1 cumprod(v1)              200ns    300ns  2252252.
+#> 2 cumulativeProduct(v1)    2.3us    3.7us   272628.
 #>   mem_alloc `gc/sec`
 #>   <bch:byt>    <dbl>
 #> 1        0B        0
@@ -301,8 +303,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 range(v1)     2.9us    3.1us   236183.        0B        0
-#> 2 rangeC(v1)    2.1us    3.5us   278319.    7.02KB        0
+#> 1 range(v1)     7.7us    8.5us    84118.        0B        0
+#> 2 rangeC(v1)    6.7us     11us    88842.    7.02KB        0
 ```
 
 - `var()`
@@ -349,8 +351,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 var(v1)        12.4us   13.1us    75148.        0B
-#> 2 variance(v1)    2.9us    3.1us   305623.    7.02KB
+#> 1 var(v1)        11.7us   12.3us    77869.        0B
+#> 2 variance(v1)    3.2us    3.5us   262674.    7.02KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -473,8 +475,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression              min   median `itr/sec` mem_alloc
 #>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 median.default(v2)   31.3us   33.1us    19140.        0B
-#> 2 medianC(v2)           2.4us    2.8us   321440.    2.49KB
+#> 1 median.default(v2)   28.9us   50.1us    17223.        0B
+#> 2 medianC(v2)           3.4us    4.1us   224165.    2.49KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

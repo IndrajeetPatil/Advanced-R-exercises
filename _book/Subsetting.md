@@ -1,5 +1,7 @@
 # Subsetting
 
+
+
 ## Exercise 4.2.6
 
 **Q1.** Fix each of the following common data frame subsetting errors:

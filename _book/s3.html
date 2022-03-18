@@ -105,7 +105,7 @@ etc.</li>
 <div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">base_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-reflect.html">getNamespaceExports</a></span><span class="op">(</span><span class="st">"base"</span><span class="op">)</span>
 
-<span class="va">base_functions</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"\\."</span>, <span class="va">base_functions</span><span class="op">)</span><span class="op">]</span></code></pre></div>
+<span class="va">base_functions</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"(\\w+)(\\.)(\\w+)"</span>, <span class="va">base_functions</span><span class="op">)</span><span class="op">]</span></code></pre></div>
 <p>For example,</p>
 <div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://sloop.r-lib.org/reference/ftype.html">ftype</a></span><span class="op">(</span><span class="va">as.data.frame</span><span class="op">)</span>
@@ -225,6 +225,29 @@ etc.</li>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $class</span>
 <span class="co">#&gt; [1] "table"</span></code></pre></div>
+</div>
+<div id="exercise-13.3.4" class="section level2" number="9.2">
+<h2>
+<span class="header-section-number">9.2</span> Exercise 13.3.4<a class="anchor" aria-label="anchor" href="#exercise-13.3.4"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>Q1.</strong> Write a constructor for <code>data.frame</code> objects. What base type is a data frame built on? What attributes does it use? What are the restrictions placed on the individual elements? What about the names?</p>
+<p><strong>A1.</strong></p>
+<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_data_frame</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>,
+                          <span class="va">row.names</span> <span class="op">=</span> <span class="cn">NULL</span>,
+                          <span class="va">check.rows</span> <span class="op">=</span> <span class="cn">FALSE</span>,
+                          <span class="va">check.names</span> <span class="op">=</span> <span class="cn">TRUE</span>,
+                          <span class="va">fix.empty.names</span> <span class="op">=</span> <span class="cn">TRUE</span>,
+                          <span class="va">stringsAsFactors</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span>
+    <span class="va">df</span>,
+    class <span class="op">=</span> <span class="st">"data.frame"</span>
+  <span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<p><strong>Q2.</strong> Enhance my <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code> helper to have better behaviour when one or more <code>values</code> is not found in <code>levels</code>. What does <code><a href="https://rdrr.io/r/base/factor.html">base::factor()</a></code> do in this situation?</p>
+<p><strong>Q3.</strong> Carefully read the source code of <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code>. What does it do that my constructor does not?</p>
+<p><strong>Q4.</strong> Factors have an optional “contrasts” attribute. Read the help for <code><a href="https://rdrr.io/r/stats/zC.html">C()</a></code>, and briefly describe the purpose of the attribute. What type should it have? Rewrite the <code>new_factor()</code> constructor to include this attribute.</p>
+<p><strong>Q5.</strong> Read the documentation for <code><a href="https://rdrr.io/r/utils/roman.html">utils::as.roman()</a></code>. How would you write a constructor for this class? Does it need a validator? What might a helper do?</p>
 
 </div>
 </div>
@@ -237,6 +260,7 @@ etc.</li>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#s3"><span class="header-section-number">9</span> S3</a></li>
 <li><a class="nav-link" href="#exercise-13.2.1"><span class="header-section-number">9.1</span> Exercise 13.2.1</a></li>
+<li><a class="nav-link" href="#exercise-13.3.4"><span class="header-section-number">9.2</span> Exercise 13.3.4</a></li>
 </ul>
 
       <div class="book-extra">

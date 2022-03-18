@@ -1,5 +1,7 @@
 # Functionals
 
+
+
 ## Exercise 9.2.6
 
 **Q1.** Study `as_mapper()`
@@ -21,7 +23,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x000000001c5d48b0>
+#> <environment: 0x000000001cbd2fd8>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -32,7 +34,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x000000001c8204a8>
+#> <environment: 0x000000001cdbb390>
 
 # mapping by name -----------------------
 
@@ -50,7 +52,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x000000001ca65be8>
+#> <environment: 0x000000001d303920>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -62,7 +64,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x000000001cc13b28>
+#> <environment: 0x000000001d4ce080>
 
 # compact functions ----------------------------
 
@@ -98,13 +100,13 @@ library(purrr)
 
 map(1:3, ~ runif(2))
 #> [[1]]
-#> [1] 0.1519602 0.6465046
+#> [1] 0.35162272 0.06778738
 #> 
 #> [[2]]
-#> [1] 0.7029888 0.4704635
+#> [1] 0.7675073 0.2453589
 #> 
 #> [[3]]
-#> [1] 0.9618174 0.8078527
+#> [1] 0.44181325 0.06571741
 as_mapper(~ runif(2))
 #> <lambda>
 #> function (..., .x = ..1, .y = ..2, . = ..1) 
@@ -123,8 +125,8 @@ map(1:3, runif(2))
 #> NULL
 as_mapper(runif(2))
 #> function (x, ...) 
-#> pluck(x, 0.64544543181546, 0.579066525446251, .default = NULL)
-#> <environment: 0x00000000151f0c58>
+#> pluck(x, 0.446574843255803, 0.415739302523434, .default = NULL)
+#> <environment: 0x000000001c9ee280>
 ```
 
 **Q3.** Use the appropriate `map()` function
@@ -178,7 +180,7 @@ p <- map_dbl(trials, "p.value")
 plot(p)
 ```
 
-<img src="Functionals_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="Functionals_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 **Q5.** Fixing non-functioning code
 
@@ -276,8 +278,8 @@ map_dbl(
   bootstraps,
   ~ summary(lm(formula = mpg ~ disp, data = .))$r.squared
 )
-#>  [1] 0.7896215 0.8117399 0.7856083 0.6876205 0.7899286
-#>  [6] 0.6001065 0.6982836 0.8479701 0.7043121 0.5854762
+#>  [1] 0.5122148 0.7074105 0.6914321 0.7938487 0.7180118
+#>  [6] 0.7012060 0.7009423 0.6186063 0.7385945 0.7152824
 ```
 
 ## Exercise 9.4.6

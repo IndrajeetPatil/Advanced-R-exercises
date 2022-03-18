@@ -1,5 +1,7 @@
 # Measuring performance
 
+
+
 ## Exercise 23.2.4
 
 **Q1.** Profiling function with `torture = TRUE`
@@ -21,8 +23,8 @@ profvis(f())
 ```
 
 ```{=html}
-<div id="htmlwidget-3218b98965313c231a28" style="width:100%;height:600px;" class="profvis html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3218b98965313c231a28">{"x":{"message":{"prof":{"time":[1,1,1,1,1,1,2,2,2,2,2,2],"depth":[6,5,4,3,2,1,6,5,4,3,2,1],"label":["Rprof","profvis","eval","eval","eval.parent","local","Rprof","profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null,null,null,null,null,null,null,null],"linenum":[null,null,null,null,null,null,null,null,null,null,null,null],"memalloc":[14.3215637207031,14.3215637207031,14.3215637207031,14.3215637207031,14.3215637207031,14.3215637207031,14.3215637207031,14.3215637207031,14.3215637207031,14.3215637207031,14.3215637207031,14.3215637207031],"meminc":[0,0,0,0,0,0,0,0,0,0,0,0],"filename":[null,null,null,null,null,null,null,null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\RtmpEfCUqF\\file7c342d78ac4.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f214464947baf87b6292" style="width:100%;height:600px;" class="profvis html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f214464947baf87b6292">{"x":{"message":{"prof":{"time":[1,1,1,1,1],"depth":[5,4,3,2,1],"label":["profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null],"linenum":[null,null,null,null,null],"memalloc":[14.3230743408203,14.3230743408203,14.3230743408203,14.3230743408203,14.3230743408203],"meminc":[0,0,0,0,0],"filename":[null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\Rtmpa2Aokn\\file568c5f43179b.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script>
 ```
 
 Maybe because the function runs too fast?
@@ -33,7 +35,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           230us    251us     3856.     792KB     58.7
+#> 1 f()           228us    245us     3722.     792KB     56.7
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -65,7 +67,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x000000001594bad8>
+#> <bytecode: 0x000000001593bba0>
 #> <environment: namespace:base>
 ```
 
@@ -126,15 +128,15 @@ t_bench_df
 #> # A tibble: 2 x 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)      1.12us
-#> 2 x^0.5        4.12us
+#> 1 sqrt(x)      1.15us
+#> 2 x^0.5         5.1us
 
 t_systime_df
 #> # A tibble: 2 x 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
 #> 1 sqrt(x)                  1.01                0.720
-#> 2 x^0.5                    3.43                3.47
+#> 2 x^0.5                    3.75                3.73
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -158,10 +160,10 @@ bench::mark(
 #> # A tibble: 4 x 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)          4.7us    6.1us   123890.    7.86KB
-#> 2 x^(1/2)         31.5us   32.2us    29747.    7.86KB
-#> 3 x^0.5           32.4us   35.2us    24978.    7.86KB
-#> 4 exp(log(x)/2)   85.3us   85.9us    10970.    7.86KB
+#> 1 sqrt(x)          5.2us    5.4us   186296.    7.86KB
+#> 2 x^(1/2)           36us   45.1us    19810.    7.86KB
+#> 3 x^0.5           35.5us   53.1us    16993.    7.86KB
+#> 4 exp(log(x)/2)   94.5us   98.1us    10250.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

@@ -1,5 +1,7 @@
 # Vectors
 
+
+
 ## Exercise 3.2.5 
 
 **Q1.** Create raw and complex scalars
@@ -196,7 +198,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x00000000179ab528>
+#> <bytecode: 0x00000000179cb338>
 #> <environment: namespace:stats>
 
 setNames(c(1, 2), c("a", "b"))
@@ -215,7 +217,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x00000000156137e0>
+#> <bytecode: 0x00000000156237e0>
 #> <environment: namespace:base>
 
 A <- provideDimnames(N <- array(1:24, dim = 2:4))
