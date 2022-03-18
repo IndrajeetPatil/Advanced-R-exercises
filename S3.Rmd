@@ -2,7 +2,13 @@
 
 ## Exercise 13.2.1 
 
-**Q1.** Differences between `t.test` and `t.data.frame`
+**Q1.** Describe the difference between `t.test()` and `t.data.frame()`. When is each function called?
+
+**A1.** 
+
+- `t.test()` is a **generic** function to perform a *t*-test.
+
+- `t.data.frame` is a **method** for generic `t()` (a matrix transform function) and will be dispatched for `data.frame` class objects/instances that need to be transformed.
 
 ```{r}
 library(sloop)
@@ -12,34 +18,59 @@ ftype(t.test)
 ftype(t.data.frame)
 ```
 
-- `t.test()` is a **generic** function to perform t-test.
+**Q2.** Make a list of commonly used base R functions that contain `.` in their name but are not `S3` methods.
 
-- `t.data.frame` is a **method** for generic `t()` (a matrix transform function) and will be dispatched for `data.frame` objects that need to be transformed.
-
-**Q2.** base-R function with `.`
+**A2.** Here are a few common R functions with `.` but that are not `S3` methods:
 
 - `all.equal()`
-- Most of `as.*` functions like `as.data.frame()`
+- Most of `as.*` functions (like `as.data.frame()`, `as.numeric()`, etc.)
 - `install.packages()`
+- `on.exit()`
 etc.
+
+For full list, you could do:
+
+```{r, eval=FALSE}
+base_functions <- getNamespaceExports("base")
+
+base_functions[grepl("\\.", base_functions)]
+```
 
 For example,
 
 ```{r}
 ftype(as.data.frame)
+ftype(on.exit)
 ```
 
-**Q3.** What does `as.data.frame.data.frame()` do?
+**Q3.** What does the `as.data.frame.data.frame()` method do? Why is it confusing? How could you avoid this confusion in your own code?
  
-It's a **method** for generic `as.data.frame()`.
+**A3.** It's an `S3` **method** for **generic** `as.data.frame()`.
 
-Less confusing: `asDataFrame.DataFrame()`.
+```{r}
+ftype(as.data.frame.data.frame)
+```
 
-**Q4.** Difference in behavior
+It can be seen in all methods supported by this generic:
 
-Before unclassing, the S3 dispatches `.Date` method, while after `.numeric` method.
+```{r}
+s3_methods_generic("as.data.frame") %>%
+  dplyr::filter(class == "data.frame")
+```
 
-Before
+
+**Q4.** Describe the difference in behaviour in these two calls.
+
+```{r}
+set.seed(1014)
+some_days <- as.Date("2017-01-31") + sample(10, 5)
+mean(some_days)
+mean(unclass(some_days))
+```
+
+**A4.** 
+
+- Before unclassing, the `mean` generic dispatches `.Date` method:
 
 ```{r}
 some_days <- as.Date("2017-01-31") + sample(10, 5)
@@ -51,7 +82,7 @@ s3_dispatch(mean(some_days))
 mean(some_days)
 ```
 
-After
+- After unclassing, the `mean` generic dispatches `.numeric` method:
 
 ```{r}
 unclass(some_days)
@@ -61,28 +92,60 @@ mean(unclass(some_days))
 s3_dispatch(mean(unclass(some_days)))
 ```
 
-**Q5.** Object properties
+**Q5.** What class of object does the following code return? What base type is it built on? What attributes does it use?
+
+```{r, eval=FALSE}
+x <- ecdf(rpois(100, 10))
+x
+```
+
+**A5.** The object is based on base type `closure`^[of "object of type 'closure' is not subsettable" fame], which is a type of function.
 
 ```{r}
 x <- ecdf(rpois(100, 10))
 x
 
 otype(x)
+typeof(x)
+```
 
-attributes(x)
+Its class is `ecdf`, which has other superclasses.
 
+```{r}
 s3_class(x)
 ```
 
-**Q6.** Object properties
+Apart from `class`, it has the following attributes:
+
+```{r}
+attributes(x)
+```
+
+**Q6.** What class of object does the following code return? What base type is it built on? What attributes does it use?
+
+```{r, eval = FALSE}
+x <- table(rpois(100, 5))
+x
+```
+
+**A6.** The object is based on base type `integer`.
 
 ```{r}
 x <- table(rpois(100, 5))
 x
 
 otype(x)
+typeof(x)
+```
 
-attributes(x)
+Its class is `table`.
 
+```{r}
 s3_class(x)
+```
+
+Apart from `class`, it has the following attributes:
+
+```{r}
+attributes(x)
 ```

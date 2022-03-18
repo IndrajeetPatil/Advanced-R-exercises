@@ -251,13 +251,15 @@ benchDf <- purrr::map_dfr(
 Plotting these benchmarks reveals how the performance gets increasingly worse as the number of dataframes increases:
 
 ```{r}
-ggplot(benchDf,
-       aes(
-         x = as.numeric(nColumns),
-         y = median,
-         group = as.character(expression),
-         color = as.character(expression)
-       )) +
+ggplot(
+  benchDf,
+  aes(
+    x = as.numeric(nColumns),
+    y = median,
+    group = as.character(expression),
+    color = as.character(expression)
+  )
+) +
   geom_line() +
   labs(
     x = "Number of Columns",

@@ -214,3 +214,10 @@ summary(mod)$r.squared
 #> [1] 0.7528328
 ```
 
+## Exercise 4.5.9
+
+**Q1.**  How would you randomly permute the columns of a data frame? (This is an important technique in random forests.) Can you simultaneously permute the rows and columns in one step?
+
+**Q2.** How would you select a random sample of `m` rows from a data frame?  What if the sample had to be contiguous (i.e., with an initial row, a final row, and every row in between)?
+    
+**Q3.** How could you put the columns in a data frame in alphabetical order?
