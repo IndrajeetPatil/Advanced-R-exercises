@@ -4,7 +4,17 @@
 
 ## Exercise 23.2.4
 
-**Q1.** Profiling function with `torture = TRUE`
+**Q1.** Profile the following function with `torture = TRUE`. What is surprising? Read the source code of `rm()` to figure out what's going on.
+
+
+```r
+f <- function(n = 1e5) {
+  x <- rep(1, n)
+  rm(x)
+}
+```
+
+**A1.** 
 
 Let's first source the functions mentioned in exercises.
 
@@ -20,11 +30,7 @@ First, we try without `torture = TRUE`: it returns no meaningful results.
 
 ```r
 profvis(f())
-```
-
-```{=html}
-<div id="htmlwidget-f214464947baf87b6292" style="width:100%;height:600px;" class="profvis html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f214464947baf87b6292">{"x":{"message":{"prof":{"time":[1,1,1,1,1],"depth":[5,4,3,2,1],"label":["profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null],"linenum":[null,null,null,null,null],"memalloc":[14.3230743408203,14.3230743408203,14.3230743408203,14.3230743408203,14.3230743408203],"meminc":[0,0,0,0,0],"filename":[null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\Rtmpa2Aokn\\file568c5f43179b.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script>
+#> Error in parse_rprof(prof_output, expr_source): No parsing data available. Maybe your function was too fast?
 ```
 
 Maybe because the function runs too fast?
@@ -35,7 +41,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           228us    245us     3722.     792KB     56.7
+#> 1 f()           218us    264us     3695.     792KB     56.3
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -67,7 +73,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x000000001593bba0>
+#> <bytecode: 0x000000001822bc60>
 #> <environment: namespace:base>
 ```
 
@@ -75,7 +81,18 @@ I still couldn't figure out why. I would recommend checking out the [official an
 
 ## Exercise 23.3.3
 
-**Q1.** Differences between `system.time()` and `bench::mark()`
+**Q1.** Instead of using `bench::mark()`, you could use the built-in function `system.time()`. But `system.time()` is much less precise, so you'll need to repeat each operation many times with a loop, and then divide to find the average time of each operation, as in the code below.
+
+
+```r
+n <- 1e6
+system.time(for (i in 1:n) sqrt(x)) / n
+system.time(for (i in 1:n) x^0.5) / n
+```
+    
+How do the estimates from `system.time()` compare to those from `bench::mark()`? Why are they different?
+
+**A1.** 
 
 
 ```r
@@ -128,20 +145,30 @@ t_bench_df
 #> # A tibble: 2 x 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)      1.15us
-#> 2 x^0.5         5.1us
+#> 1 sqrt(x)      1.01us
+#> 2 x^0.5        3.85us
 
 t_systime_df
 #> # A tibble: 2 x 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                  1.01                0.720
-#> 2 x^0.5                    3.75                3.73
+#> 1 sqrt(x)                  1.00                 0.68
+#> 2 x^0.5                    3.34                 3.32
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
 
-**Q2.** Microbenchmarking ways to compute square root
+**Q2.** Here are two other ways to compute the square root of a vector. Which
+    do you think will be fastest? Which will be slowest? Use microbenchmarking
+    to test your answers.
+
+
+```r
+x^(1 / 2)
+exp(log(x) / 2)
+```
+
+**A2.**
 
 Microbenchmarking all ways to compute square root of a vector mentioned in this chapter.
 
@@ -160,10 +187,10 @@ bench::mark(
 #> # A tibble: 4 x 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)          5.2us    5.4us   186296.    7.86KB
-#> 2 x^(1/2)           36us   45.1us    19810.    7.86KB
-#> 3 x^0.5           35.5us   53.1us    16993.    7.86KB
-#> 4 exp(log(x)/2)   94.5us   98.1us    10250.    7.86KB
+#> 1 sqrt(x)          4.5us      5us   174721.    7.86KB
+#> 2 x^(1/2)         30.7us     34us    28198.    7.86KB
+#> 3 x^0.5           30.8us     42us    23520.    7.86KB
+#> 4 exp(log(x)/2)     81us   86.5us    11116.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

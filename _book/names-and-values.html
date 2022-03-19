@@ -6,22 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 2 Names and values | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content='2.1 2.2.2 Exercises Q1. Explain the relationship a &lt;- 1:10 b &lt;- a c &lt;- b d &lt;- 1:10 All of these variable names are actively bound to the same value. library(lobstr) obj_addr(a) #&gt; [1] "0x1c2772e0"...'>
+<meta name="description" content="2.1 2.2.2 Exercises Q1. Explain the relationship between a, b, c and d in the following code: a &lt;- 1:10 b &lt;- a c &lt;- b d &lt;- 1:10 A1. a &lt;- 1:10 b &lt;- a c &lt;- b d &lt;- 1:10 The names (a, b, and c) are...">
 <meta name="generator" content="bookdown 0.25 with bs4_book()">
 <meta property="og:title" content="Chapter 2 Names and values | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.jpg">
-<meta property="og:description" content='2.1 2.2.2 Exercises Q1. Explain the relationship a &lt;- 1:10 b &lt;- a c &lt;- b d &lt;- 1:10 All of these variable names are actively bound to the same value. library(lobstr) obj_addr(a) #&gt; [1] "0x1c2772e0"...'>
+<meta property="og:description" content="2.1 2.2.2 Exercises Q1. Explain the relationship between a, b, c and d in the following code: a &lt;- 1:10 b &lt;- a c &lt;- b d &lt;- 1:10 A1. a &lt;- 1:10 b &lt;- a c &lt;- b d &lt;- 1:10 The names (a, b, and c) are...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 2 Names and values | Advanced R Exercises">
-<meta name="twitter:description" content='2.1 2.2.2 Exercises Q1. Explain the relationship a &lt;- 1:10 b &lt;- a c &lt;- b d &lt;- 1:10 All of these variable names are actively bound to the same value. library(lobstr) obj_addr(a) #&gt; [1] "0x1c2772e0"...'>
+<meta name="twitter:description" content="2.1 2.2.2 Exercises Q1. Explain the relationship between a, b, c and d in the following code: a &lt;- 1:10 b &lt;- a c &lt;- b d &lt;- 1:10 A1. a &lt;- 1:10 b &lt;- a c &lt;- b d &lt;- 1:10 The names (a, b, and c) are...">
 <meta name="twitter:image" content="/cover.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
-<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
-<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -77,111 +75,151 @@
 <h2>
 <span class="header-section-number">2.1</span> 2.2.2 Exercises<a class="anchor" aria-label="anchor" href="#exercises"><i class="fas fa-link"></i></a>
 </h2>
-<p><strong>Q1.</strong> Explain the relationship</p>
+<p><strong>Q1.</strong> Explain the relationship between <code>a</code>, <code>b</code>, <code>c</code> and <code>d</code> in the following
+code:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>
 <span class="va">b</span> <span class="op">&lt;-</span> <span class="va">a</span>
 <span class="va">c</span> <span class="op">&lt;-</span> <span class="va">b</span>
 <span class="va">d</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span></code></pre></div>
-<p>All of these variable names are actively bound to the same value.</p>
+<p><strong>A1.</strong></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>
+<span class="va">b</span> <span class="op">&lt;-</span> <span class="va">a</span>
+<span class="va">c</span> <span class="op">&lt;-</span> <span class="va">b</span>
+<span class="va">d</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span></code></pre></div>
+<p>The names (<code>a</code>, <code>b</code>, and <code>c</code>) are references to the same object in memory, as can be seen by the identical memory address:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lobstr.r-lib.org/">lobstr</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x1c2772e0"</span>
-<span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x1c2772e0"</span>
-<span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x1c2772e0"</span>
-<span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x1c51b6e8"</span></code></pre></div>
-<p><strong>Q2.</strong> Function object address</p>
+<span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] "0x1f522b40" "0x1f522b40" "0x1f522b40"</span></code></pre></div>
+<p>Except <code>d</code>, which is a different object, even if it has the same value:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>
+<span class="co">#&gt; [1] "0x1f8d2e10"</span></code></pre></div>
+<p><strong>Q2.</strong> The following code accesses the mean function in multiple ways. Do they all point to the same underlying function object? Verify this with <code><a href="https://lobstr.r-lib.org/reference/obj_addr.html">lobstr::obj_addr()</a></code>.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mean</span>
+<span class="fu">base</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>
+<span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/eval.html">evalq</a></span><span class="op">(</span><span class="va">mean</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span></code></pre></div>
+<p><strong>A2.</strong></p>
 <p>Following code verifies that indeed these calls all point to the same underlying function object.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">mean</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x17da53d0"</span>
+<span class="co">#&gt; [1] "0x1a695770"</span>
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="fu">base</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x17da53d0"</span>
+<span class="co">#&gt; [1] "0x1a695770"</span>
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x17da53d0"</span>
+<span class="co">#&gt; [1] "0x1a695770"</span>
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">evalq</a></span><span class="op">(</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x17da53d0"</span>
+<span class="co">#&gt; [1] "0x1a695770"</span>
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x17da53d0"</span></code></pre></div>
-<p><strong>Q3.</strong> Converting non-syntactic names</p>
+<span class="co">#&gt; [1] "0x1a695770"</span></code></pre></div>
+<p><strong>Q3.</strong> By default, base R data import functions, like <code><a href="https://rdrr.io/r/utils/read.table.html">read.csv()</a></code>, will automatically convert non-syntactic names to syntactic ones. Why might this be problematic? What option allows you to suppress this behaviour?</p>
+<p><strong>A3.</strong></p>
 <p>The conversion of non-syntactic names to syntactic ones can sometimes corrupt the data. Some datasets may require non-syntactic names.</p>
 <p>To suppress this behavior, one can set <code>check.names = FALSE</code>.</p>
-<p><strong>Q4.</strong> Behavior of <code><a href="https://rdrr.io/r/base/make.names.html">make.names()</a></code></p>
+<p><strong>Q4.</strong> What rules does <code><a href="https://rdrr.io/r/base/make.names.html">make.names()</a></code> use to convert non-syntactic names into syntactic ones?</p>
+<p><strong>A4.</strong></p>
 <p>It just prepends <code>X</code> in non-syntactic names and invalid characters (like <code>@</code>) are translated to <code>.</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/make.names.html">make.names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"123abc"</span>, <span class="st">"@me"</span>, <span class="st">"_yu"</span>, <span class="st">"  gh"</span>, <span class="st">"else"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] "X123abc" "X.me"    "X_yu"    "X..gh"   "else."</span></code></pre></div>
-<p><strong>Q5.</strong> Why is <code>.123e1</code> not a syntactic name?</p>
+<p><strong>Q5.</strong> I slightly simplified the rules that govern syntactic names. Why is <code>.123e1</code> not a syntactic name? Read <code><a href="https://rdrr.io/r/base/make.names.html">?make.names</a></code> for the full details.</p>
+<p><strong>A5.</strong></p>
 <p>Because it is parsed as a number.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fl">.123e1</span> <span class="op">&lt;</span> <span class="fl">1</span>
-<span class="co">#&gt; [1] FALSE</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="fl">.123e1</span><span class="op">)</span>
+<span class="co">#&gt; [1] "double"</span></code></pre></div>
+<p>And as the docs mention (emphasis mine):</p>
+<blockquote>
+<p>A syntactically valid name consists of letters, numbers and the dot or underline characters and starts with a letter or <strong>the dot not followed by a number</strong>.</p>
+</blockquote>
+<p>Here is how <code><a href="https://rdrr.io/r/base/make.names.html">make.names()</a></code> will make it syntactic:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/make.names.html">make.names</a></span><span class="op">(</span><span class="fl">.123e1</span><span class="op">)</span>
+<span class="co">#&gt; [1] "X1.23"</span></code></pre></div>
 </div>
 <div id="exercises-1" class="section level2" number="2.2">
 <h2>
 <span class="header-section-number">2.2</span> 2.3.6 Exercises<a class="anchor" aria-label="anchor" href="#exercises-1"><i class="fas fa-link"></i></a>
 </h2>
-<p><strong>Q1.</strong> Usefulness of <code><a href="https://rdrr.io/r/base/tracemem.html">tracemem()</a></code></p>
+<p><strong>Q1.</strong> Why is <code>tracemem(1:10)</code> not useful?</p>
+<p><strong>A1.</strong></p>
 <p><code><a href="https://rdrr.io/r/base/tracemem.html">tracemem()</a></code> traces copying of objects in R, but since the object created here is not assigned a name, there is nothing to trace.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/tracemem.html">tracemem</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
-<span class="co">#&gt; [1] "&lt;000000001C958F18&gt;"</span></code></pre></div>
-<p><strong>Q2.</strong> Why two copies when you run this code?</p>
-<p>Were it not for <code>4</code> being a double - and not an integer (<code>4L</code>) - this would have been modified in place.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<span class="co">#&gt; [1] "&lt;000000002186AE20&gt;"</span></code></pre></div>
+<p><strong>Q2.</strong> Explain why <code><a href="https://rdrr.io/r/base/tracemem.html">tracemem()</a></code> shows two copies when you run this code. Hint: carefully look at the difference between this code and the code shown earlier in the section.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">2L</span>, <span class="fl">3L</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/tracemem.html">tracemem</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; [1] "&lt;00000000257DE328&gt;"</span>
+
+<span class="va">x</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">4</span></code></pre></div>
+<p><strong>A2.</strong></p>
+<p>Were it not for <code>4</code> being a double - and not an integer (<code>4L</code>) - this would have been modified in place.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">2L</span>, <span class="fl">3L</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/tracemem.html">tracemem</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="co">#&gt; [1] "&lt;00000000344CD618&gt;"</span>
 
 <span class="va">x</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">4</span>
-<span class="co">#&gt; tracemem[0x00000000257de328 -&gt; 0x000000001f938558]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; do.call eval eval eval eval eval.parent local </span>
-<span class="co">#&gt; tracemem[0x000000001f938558 -&gt; 0x0000000031b675f0]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; do.call eval eval eval eval eval.parent local</span></code></pre></div>
+<span class="co">#&gt; tracemem[0x00000000344cd618 -&gt; 0x0000000034357c88]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; do.call eval eval eval eval eval.parent local </span>
+<span class="co">#&gt; tracemem[0x0000000034357c88 -&gt; 0x00000000344c7638]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; do.call eval eval eval eval eval.parent local</span></code></pre></div>
 <p>Try with integer:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">2L</span>, <span class="fl">3L</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/tracemem.html">tracemem</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; [1] "&lt;0000000031A27D58&gt;"</span>
+<span class="co">#&gt; [1] "&lt;000000003430A980&gt;"</span>
 
 <span class="va">x</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">4L</span>
-<span class="co">#&gt; tracemem[0x0000000031a27d58 -&gt; 0x0000000031a364b8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; do.call eval eval eval eval eval.parent local</span></code></pre></div>
+<span class="co">#&gt; tracemem[0x000000003430a980 -&gt; 0x00000000342f2e28]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; do.call eval eval eval eval eval.parent local</span></code></pre></div>
 <p>As for why this still produces a copy, this is from Solutions manual:</p>
 <blockquote>
 <p>Please be aware that running this code in RStudio will result in additional copies because of the reference from the environment pane.</p>
 </blockquote>
-<p><strong>Q3.</strong> Study relationship</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p><strong>Q3.</strong> Sketch out the relationship between the following objects:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>
+<span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">a</span><span class="op">)</span>
+<span class="va">c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">b</span>, <span class="va">a</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></code></pre></div>
+<p><strong>A3.</strong></p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>
 <span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">a</span><span class="op">)</span>
 <span class="va">c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">b</span>, <span class="va">a</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
 
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/ref.html">ref</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>
-<span class="co">#&gt; [1:0x1ecdbdc0] &lt;int&gt;</span>
+<span class="co">#&gt; [1:0x1f24de60] &lt;int&gt;</span>
 
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/ref.html">ref</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>
-<span class="co">#&gt; o [1:0x31bb6ec8] &lt;list&gt; </span>
-<span class="co">#&gt; +-[2:0x1ecdbdc0] &lt;int&gt; </span>
-<span class="co">#&gt; \-[2:0x1ecdbdc0]</span>
+<span class="co">#&gt; o [1:0x21fdb5b8] &lt;list&gt; </span>
+<span class="co">#&gt; +-[2:0x1f24de60] &lt;int&gt; </span>
+<span class="co">#&gt; \-[2:0x1f24de60]</span>
 
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/ref.html">ref</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>
-<span class="co">#&gt; o [1:0x31b7a9c0] &lt;list&gt; </span>
-<span class="co">#&gt; +-o [2:0x31bb6ec8] &lt;list&gt; </span>
-<span class="co">#&gt; | +-[3:0x1ecdbdc0] &lt;int&gt; </span>
-<span class="co">#&gt; | \-[3:0x1ecdbdc0] </span>
-<span class="co">#&gt; +-[3:0x1ecdbdc0] </span>
-<span class="co">#&gt; \-[4:0x1eb8af08] &lt;int&gt;</span></code></pre></div>
-<p><strong>Q4.</strong> List inside another list</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<span class="co">#&gt; o [1:0x1a317498] &lt;list&gt; </span>
+<span class="co">#&gt; +-o [2:0x21fdb5b8] &lt;list&gt; </span>
+<span class="co">#&gt; | +-[3:0x1f24de60] &lt;int&gt; </span>
+<span class="co">#&gt; | \-[3:0x1f24de60] </span>
+<span class="co">#&gt; +-[3:0x1f24de60] </span>
+<span class="co">#&gt; \-[4:0x1f1076a0] &lt;int&gt;</span></code></pre></div>
+<p><strong>Q4.</strong> What happens when you run this code?</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
+<span class="va">x</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">x</span></code></pre></div>
+<p>Draw a picture.</p>
+<p><strong>A4.</strong></p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
 <span class="va">x</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span>
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x1d95db70"</span>
+<span class="co">#&gt; [1] "0x34790878"</span>
 
 <span class="va">x</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">x</span>
 <span class="va">x</span>
@@ -192,25 +230,31 @@
 <span class="co">#&gt; [[2]][[1]]</span>
 <span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span>
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x1f0be2d0"</span>
+<span class="co">#&gt; [1] "0x3481d390"</span>
 
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/ref.html">ref</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; o [1:0x1f0be2d0] &lt;list&gt; </span>
-<span class="co">#&gt; +-[2:0x1d32e7f8] &lt;int&gt; </span>
-<span class="co">#&gt; \-o [3:0x1d95db70] &lt;list&gt; </span>
-<span class="co">#&gt;   \-[2:0x1d32e7f8]</span></code></pre></div>
-<p>Figure here:
+<span class="co">#&gt; o [1:0x3481d390] &lt;list&gt; </span>
+<span class="co">#&gt; +-[2:0x34791ce0] &lt;int&gt; </span>
+<span class="co">#&gt; \-o [3:0x34790878] &lt;list&gt; </span>
+<span class="co">#&gt;   \-[2:0x34791ce0]</span></code></pre></div>
+<p>Figure from the official solution manual can be found here:
 <a href="https://advanced-r-solutions.rbind.io/images/names_values/copy_on_modify_fig2.png" class="uri">https://advanced-r-solutions.rbind.io/images/names_values/copy_on_modify_fig2.png</a></p>
 </div>
 <div id="exercises-2" class="section level2" number="2.3">
 <h2>
 <span class="header-section-number">2.3</span> 2.4.1 Exercises<a class="anchor" aria-label="anchor" href="#exercises-2"><i class="fas fa-link"></i></a>
 </h2>
-<p><strong>Q1.</strong> Object size difference between <code>{base}</code> and <a href="https://lobstr.r-lib.org/">lobstr</a></p>
+<p><strong>Q1.</strong> In the following example, why are <code>object.size(y)</code> and <code>obj_size(y)</code> so radically different? Consult the documentation of <code><a href="https://rdrr.io/r/utils/object.size.html">object.size()</a></code>.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e4</span><span class="op">)</span><span class="op">)</span>, <span class="fl">100</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/object.size.html">object.size</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
+<span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></code></pre></div>
+<p><strong>A1.</strong></p>
 <blockquote>
 <p>This function…does not detect if elements of a list are shared.</p>
 </blockquote>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e4</span><span class="op">)</span><span class="op">)</span>, <span class="fl">100</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/object.size.html">object.size</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
@@ -218,14 +262,18 @@
 
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
 <span class="co">#&gt; 80,896 B</span></code></pre></div>
-<p><strong>Q2.</strong> Misleading object size</p>
+<p><strong>Q2.</strong> Take the following list. Why is its size somewhat misleading?</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">funs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mean</span>, <span class="va">sd</span>, <span class="va">var</span><span class="op">)</span>
+<span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">funs</span><span class="op">)</span></code></pre></div>
+<p><strong>A2.</strong></p>
 <p>These functions are not externally created objects in R, but are always available, so doesn’t make much sense to measure their size.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">funs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mean</span>, <span class="va">sd</span>, <span class="va">var</span><span class="op">)</span>
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">funs</span><span class="op">)</span>
 <span class="co">#&gt; 17,608 B</span></code></pre></div>
 <p>Nevertheless, it’s still interesting that the addition is not the same as size of list of those objects.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">mean</span><span class="op">)</span>
 <span class="co">#&gt; 1,184 B</span>
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">sd</span><span class="op">)</span>
@@ -235,8 +283,24 @@
 
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">mean</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">sd</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span>
 <span class="co">#&gt; 18,136 B</span></code></pre></div>
-<p><strong>Q3.</strong> Predict object sizes</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<p><strong>Q3.</strong> Predict the output of the following code:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span>
+<span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>
+
+<span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">a</span><span class="op">)</span>
+<span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>
+<span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span>
+
+<span class="va">b</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">10</span>
+<span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>
+<span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span>
+
+<span class="va">b</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">10</span>
+<span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>
+<span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span></code></pre></div>
+<p><strong>A3.</strong> Correctly predicted 😉</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span>
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_size.html">obj_size</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>
 <span class="co">#&gt; 8,000,048 B</span>
@@ -263,25 +327,30 @@
 <h2>
 <span class="header-section-number">2.4</span> 2.5.3 Exercises<a class="anchor" aria-label="anchor" href="#exercises-3"><i class="fas fa-link"></i></a>
 </h2>
-<p><strong>Q1.</strong> Why not a circular list?</p>
+<p><strong>Q1.</strong> Explain why the following code doesn’t create a circular list.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">x</span></code></pre></div>
+<p><strong>A1.</strong></p>
 <p>Copy-on-modify prevents the creation of a circular list.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x32ab6938"</span>
+<span class="co">#&gt; [1] "0x363606d0"</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/tracemem.html">tracemem</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; [1] "&lt;0000000032AB6938&gt;"</span>
+<span class="co">#&gt; [1] "&lt;00000000363606D0&gt;"</span>
 
 <span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">x</span>
-<span class="co">#&gt; tracemem[0x0000000032ab6938 -&gt; 0x0000000032be7bd0]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; do.call eval eval eval eval eval.parent local</span>
+<span class="co">#&gt; tracemem[0x00000000363606d0 -&gt; 0x00000000364976b8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; do.call eval eval eval eval eval.parent local</span>
 
 <span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x32ab6938"</span></code></pre></div>
-<p><strong>Q2.</strong> Performance of <code>for</code> loops with and without creating copies</p>
-<p>Let’s first microbenchmark functions that does and does not create copies for varying lengths of number of columns.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<span class="co">#&gt; [1] "0x363606d0"</span></code></pre></div>
+<p><strong>Q2.</strong> Wrap the two methods for subtracting medians into two functions, then use the ‘bench’ package to carefully compare their speeds. How does performance change as the number of columns increase?</p>
+<p><strong>A2.</strong></p>
+<p>Let’s first microbenchmark functions that do and do not create copies for varying lengths of number of columns.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bench.r-lib.org/">bench</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 
@@ -333,7 +402,7 @@
   .id <span class="op">=</span> <span class="st">"nColumns"</span>
 <span class="op">)</span></code></pre></div>
 <p>Plotting these benchmarks reveals how the performance gets increasingly worse as the number of dataframes increases:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
   <span class="va">benchDf</span>,
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
@@ -349,13 +418,14 @@
     y <span class="op">=</span> <span class="st">"Median Execution Time (ms)"</span>,
     colour <span class="op">=</span> <span class="st">"Type of function"</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="Names-values_files/figure-html/unnamed-chunk-18-1.png" width="672"></div>
-<p><strong>Q3.</strong> <code><a href="https://rdrr.io/r/base/tracemem.html">tracemem()</a></code> on an environment</p>
+<div class="inline-figure"><img src="Names-values_files/figure-html/unnamed-chunk-29-1.png" width="672"></div>
+<p><strong>Q3.</strong> What happens if you attempt to use <code><a href="https://rdrr.io/r/base/tracemem.html">tracemem()</a></code> on an environment?</p>
+<p><strong>A3.</strong></p>
 <p>It doesn’t work and the documentation makes it clear as to why:</p>
 <blockquote>
 <p>It is not useful to trace NULL, environments, promises, weak references, or external pointer objects, as these are not duplicated</p>
 </blockquote>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="st">"3"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/tracemem.html">tracemem</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>
 <span class="co">#&gt; Error in tracemem(e): 'tracemem' is not useful for promise and environment objects</span></code></pre></div>
@@ -390,7 +460,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-03-18.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-03-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

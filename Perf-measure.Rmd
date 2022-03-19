@@ -6,7 +6,16 @@ source("common.R")
 
 ## Exercise 23.2.4
 
-**Q1.** Profiling function with `torture = TRUE`
+**Q1.** Profile the following function with `torture = TRUE`. What is surprising? Read the source code of `rm()` to figure out what's going on.
+
+```{r, eval = FALSE}
+f <- function(n = 1e5) {
+  x <- rep(1, n)
+  rm(x)
+}
+```
+
+**A1.** 
 
 Let's first source the functions mentioned in exercises.
 
@@ -48,7 +57,17 @@ I still couldn't figure out why. I would recommend checking out the [official an
 
 ## Exercise 23.3.3
 
-**Q1.** Differences between `system.time()` and `bench::mark()`
+**Q1.** Instead of using `bench::mark()`, you could use the built-in function `system.time()`. But `system.time()` is much less precise, so you'll need to repeat each operation many times with a loop, and then divide to find the average time of each operation, as in the code below.
+
+```{r, eval = FALSE}
+n <- 1e6
+system.time(for (i in 1:n) sqrt(x)) / n
+system.time(for (i in 1:n) x^0.5) / n
+```
+    
+How do the estimates from `system.time()` compare to those from `bench::mark()`? Why are they different?
+
+**A1.** 
 
 ```{r}
 library(dplyr)
@@ -102,7 +121,16 @@ t_systime_df
 
 The comparison reveals that these two approaches yield quite similar results.
 
-**Q2.** Microbenchmarking ways to compute square root
+**Q2.** Here are two other ways to compute the square root of a vector. Which
+    do you think will be fastest? Which will be slowest? Use microbenchmarking
+    to test your answers.
+
+```{r, eval = FALSE}
+x^(1 / 2)
+exp(log(x) / 2)
+```
+
+**A2.**
 
 Microbenchmarking all ways to compute square root of a vector mentioned in this chapter.
 
