@@ -9,4 +9,4 @@ knitr::opts_chunk$set(
 )
 
 # needed libraries
-library(tidyverse)
+library(tidyverse, warn.conflicts = FALSE)

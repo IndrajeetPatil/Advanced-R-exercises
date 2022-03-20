@@ -77,7 +77,7 @@
 </h2>
 <p><strong>Q1.</strong> R6 class for bank account</p>
 <p>Create the superclass and make sure it works as expected.</p>
-<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r6.r-lib.org">R6</a></span><span class="op">)</span>
 
 <span class="co"># define the needed class</span>
@@ -150,7 +150,7 @@
 <span class="va">Anne</span> <span class="op">&lt;-</span> <span class="va">bankAccount</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Anne"</span>, balance <span class="op">=</span> <span class="op">-</span><span class="fl">45</span><span class="op">)</span>
 <span class="co">#&gt; Error in self$validate(balance): amount &gt;= 0 is not TRUE</span></code></pre></div>
 <p>Create a subclass that errors if you attempt to overdraw</p>
-<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bankAccountStrict</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span>
   <span class="st">"bankAccountStrict"</span>,
   inherit <span class="op">=</span> <span class="va">bankAccount</span>,
@@ -206,7 +206,7 @@
 <span class="va">Pritesh</span> <span class="op">&lt;-</span> <span class="va">bankAccountStrict</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Pritesh"</span>, balance <span class="op">=</span> <span class="op">-</span><span class="fl">45</span><span class="op">)</span>
 <span class="co">#&gt; Error in self$validate(balance): amount &gt;= 0 is not TRUE</span></code></pre></div>
 <p>Create a subclass that charges a fee if overdraw</p>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bankAccountFee</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span>
   <span class="st">"bankAccountFee"</span>,
   inherit <span class="op">=</span> <span class="va">bankAccount</span>,
@@ -257,7 +257,7 @@
 <span class="va">Mangesh</span> <span class="op">&lt;-</span> <span class="va">bankAccountFee</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Mangesh"</span>, balance <span class="op">=</span> <span class="op">-</span><span class="fl">45</span><span class="op">)</span>
 <span class="co">#&gt; Error in self$validate(balance): amount &gt;= 0 is not TRUE</span></code></pre></div>
 <p><strong>Q2.</strong> R6 class for carddeck</p>
-<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">suit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SPADE"</span>, <span class="st">"HEARTS"</span>, <span class="st">"DIAMOND"</span>, <span class="st">"CLUB"</span><span class="op">)</span> <span class="co"># sigh, Windows encoding issues</span>
 <span class="va">value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">10</span>, <span class="st">"J"</span>, <span class="st">"Q"</span>, <span class="st">"K"</span><span class="op">)</span>
 <span class="va">cards</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">value</span>, <span class="fl">4</span><span class="op">)</span>, <span class="va">suit</span><span class="op">)</span>
@@ -295,7 +295,7 @@
 <span class="header-section-number">10.2</span> Exercise 14.3.3<a class="anchor" aria-label="anchor" href="#exercise-14.3.3"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q2.</strong> Class to store and check password</p>
-<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r6.r-lib.org">R6</a></span><span class="op">)</span>
 
 <span class="va">checkCredentials</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span>
@@ -338,13 +338,13 @@
 <span class="va">myCheck</span><span class="op">$</span><span class="fu">check_password</span><span class="op">(</span><span class="st">"1234"</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>But, of course, everything is possible:</p>
-<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">myCheck</span><span class="op">$</span><span class="va">.__enclos_env__</span><span class="op">$</span><span class="va">private</span><span class="op">$</span><span class="va">.password</span>
 <span class="co">#&gt; [1] "1234"</span></code></pre></div>
 <p><strong>Q4.</strong> Inheriting private fields and methods from superclass</p>
 <p>Unlike classical OOP in other languages (e.g. C++), R6 subclasses also have access to the private methods in superclass (or base class).</p>
 <p>For instance, in the following example, the <code>Duck</code> class has a private method <code>$quack()</code>, but its subclass <code>Mallard</code> can access it using <code>super$quack()</code>.</p>
-<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Duck</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span><span class="st">"Duck"</span>,
   private <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>quack <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"Quack Quack"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span>
@@ -363,7 +363,7 @@
 <span class="header-section-number">10.3</span> Exercise 14.4.4<a class="anchor" aria-label="anchor" href="#exercise-14.4.4"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Write R6 class to edit file</p>
-<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r6.r-lib.org">R6</a></span><span class="op">)</span>
 
 <span class="va">fileEditor</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span>
@@ -391,7 +391,7 @@
   <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p>Let’s check if it works as expected:</p>
-<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">greetMom</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span><span class="op">)</span>
   <span class="va">myfileEditor</span> <span class="op">&lt;-</span> <span class="va">fileEditor</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">f</span><span class="op">)</span>
@@ -410,9 +410,12 @@
 <span class="co"># force garbage collection</span>
 <span class="fu"><a href="https://rdrr.io/r/base/gc.html">gc</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Closing the file connection!"</span>
-<span class="co">#&gt;           used (Mb) gc trigger  (Mb) max used  (Mb)</span>
-<span class="co">#&gt; Ncells 1135036 60.7    2405118 128.5  2131562 113.9</span>
-<span class="co">#&gt; Vcells 1912530 14.6    8388608  64.0  2734098  20.9</span></code></pre></div>
+<span class="co">#&gt;           used (Mb) gc trigger  (Mb) limit (Mb) max used</span>
+<span class="co">#&gt; Ncells 1142785 61.1    2384818 127.4         NA  1828811</span>
+<span class="co">#&gt; Vcells 1988474 15.2    8388608  64.0      16384  2748050</span>
+<span class="co">#&gt;        (Mb)</span>
+<span class="co">#&gt; Ncells 97.7</span>
+<span class="co">#&gt; Vcells 21.0</span></code></pre></div>
 
 </div>
 </div>
@@ -443,7 +446,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-03-19.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-03-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -38,10 +38,10 @@ Maybe because the function runs too fast?
 
 ```r
 bench::mark(f(), check = FALSE, iterations = 1000)
-#> # A tibble: 1 x 6
+#> # A tibble: 1 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           218us    264us     3695.     792KB     56.3
+#> 1 f()          99.5µs    145µs     6176.     792KB     94.1
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -73,7 +73,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x000000001822bc60>
+#> <bytecode: 0x15780eba8>
 #> <environment: namespace:base>
 ```
 
@@ -142,18 +142,18 @@ Compare results from these alternatives:
 
 ```r
 t_bench_df
-#> # A tibble: 2 x 2
+#> # A tibble: 2 × 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)      1.01us
-#> 2 x^0.5        3.85us
+#> 1 sqrt(x)    406.19ns
+#> 2 x^0.5        1.32µs
 
 t_systime_df
-#> # A tibble: 2 x 3
+#> # A tibble: 2 × 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                  1.00                 0.68
-#> 2 x^0.5                    3.34                 3.32
+#> 1 sqrt(x)                 0.411                0.411
+#> 2 x^0.5                   1.22                 1.25
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -184,13 +184,13 @@ bench::mark(
   iterations = 1000
 ) %>%
   dplyr::arrange(median)
-#> # A tibble: 4 x 6
+#> # A tibble: 4 × 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)          4.5us      5us   174721.    7.86KB
-#> 2 x^(1/2)         30.7us     34us    28198.    7.86KB
-#> 3 x^0.5           30.8us     42us    23520.    7.86KB
-#> 4 exp(log(x)/2)     81us   86.5us    11116.    7.86KB
+#> 1 sqrt(x)         1.02µs    1.5µs   556004.    7.86KB
+#> 2 exp(log(x)/2)    6.4µs   7.46µs   137062.    7.86KB
+#> 3 x^0.5           9.27µs  10.25µs    99353.    7.86KB
+#> 4 x^(1/2)         9.35µs  10.33µs    98269.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

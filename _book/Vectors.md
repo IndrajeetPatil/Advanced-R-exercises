@@ -24,9 +24,9 @@ You can use it to also figure out differences in similar characters:
 
 ```r
 charToRaw("–") # en-dash
-#> [1] 96
+#> [1] e2 80 93
 charToRaw("—") # em-dash
-#> [1] 97
+#> [1] e2 80 94
 ```
 
 Complex vectors can be used to represent (surprise!) complex numbers.
@@ -198,7 +198,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x000000001a2ab218>
+#> <bytecode: 0x106d64d50>
 #> <environment: namespace:stats>
 
 setNames(c(1, 2), c("a", "b"))
@@ -217,7 +217,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x0000000017f237e0>
+#> <bytecode: 0x124fd2838>
 #> <environment: namespace:base>
 
 A <- provideDimnames(N <- array(1:24, dim = 2:4))
