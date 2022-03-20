@@ -6,17 +6,25 @@ source("common.R")
 
 ## Exercise 5.2.4
 
-**Q1.** `ifelse()` return type
+**Q1.** What type of vector does each of the following calls to `ifelse()` return?
 
-It's type unstable, i.e. the type of return will depend on the type of each condition (`yes` and `no`, i.e.), and works only for cases where `test` argument evaluated to a `logical` type.
-
-```{r}
-ifelse(TRUE, 1, "no") # numeric returned
-ifelse(FALSE, 1, "no") # character returned
+```{r, eval = FALSE}
+ifelse(TRUE, 1, "no")
+ifelse(FALSE, 1, "no")
 ifelse(NA, 1, "no")
 ```
 
-Additionally, if the test doesn't resolve to `logical` type, it will try to coerce whatever the resulting type to `logical`:
+Read the documentation and write down the rules in your own words.
+
+**A1.**  It's type unstable, i.e. the type of return will depend on the type of each condition (`yes` and `no`, i.e.), and works only for cases where `test` argument evaluated to a `logical` type.
+
+```{r}
+ifelse(TRUE, 1, "no") # `numeric` returned
+ifelse(FALSE, 1, "no") # `character` returned
+ifelse(NA, 1, "no")
+```
+
+Additionally, if the test doesn't resolve to `logical` type, it will try to coerce the output to `logical` type:
 
 ```{r}
 # will work
@@ -30,7 +38,15 @@ ifelse(NaN, 1, "no")
 
 **Q2.** Why does the following code work?
 
-As can be seen, the code works because the tests are successfully coerced to a logical type.
+```{r}
+x <- 1:10
+if (length(x)) "not empty" else "empty"
+
+x <- numeric()
+if (length(x)) "not empty" else "empty"
+```
+
+**A2.** As can be seen, the code works because the tests are successfully coerced to a logical type.
 
 ```{r}
 x <- 1:10
