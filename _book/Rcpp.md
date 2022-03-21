@@ -172,7 +172,7 @@ is.primitive(var)
 // [[Rcpp::export]]
 bool allC(std::vector<bool> x)
 {
-    for (auto xElement : x)
+    for (const auto& xElement : x)
     {
         if (!xElement) return false;
     }
@@ -202,15 +202,15 @@ bench::mark(
   allC(c(rep(TRUE, 1000), rep(FALSE, 1000))),
   iterations = 100
 )
-#> # A tibble: 2 × 6
+#> # A tibble: 2 x 6
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
-#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    5.54µs
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))  11.19µs
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    14.4us
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   15.9us
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1   6.52µs   151220.    15.8KB        0
-#> 2  11.75µs    84556.    18.3KB        0
+#> 1   19.9us    47344.    15.8KB        0
+#> 2   20.3us    46136.    18.3KB        0
 ```
 
 - `cumprod()`
@@ -249,11 +249,11 @@ bench::mark(
   cumulativeProduct(v1),
   iterations = 100
 )
-#> # A tibble: 2 × 6
+#> # A tibble: 2 x 6
 #>   expression                 min   median `itr/sec`
 #>   <bch:expr>            <bch:tm> <bch:tm>     <dbl>
-#> 1 cumprod(v1)               41ns     41ns 17421594.
-#> 2 cumulativeProduct(v1)    984ns   1.19µs   786275.
+#> 1 cumprod(v1)              100ns    200ns  2865329.
+#> 2 cumulativeProduct(v1)      2us   4.05us   221582.
 #>   mem_alloc `gc/sec`
 #>   <bch:byt>    <dbl>
 #> 1        0B        0
@@ -300,11 +300,11 @@ bench::mark(
   rangeC(v1),
   iterations = 100
 )
-#> # A tibble: 2 × 6
+#> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 range(v1)    1.07µs   1.15µs   665854.        0B        0
-#> 2 rangeC(v1)   1.02µs   1.23µs   740220.    7.02KB        0
+#> 1 range(v1)     2.4us    2.8us   339098.        0B        0
+#> 2 rangeC(v1)    2.2us    2.7us   334896.    7.02KB        0
 ```
 
 - `var()`
@@ -323,7 +323,7 @@ double variance(std::vector<double> x)
 
     double mean = std::accumulate(x.begin(), x.end(), 0.0) / x.size();
 
-    for (auto xElement : x)
+    for (const auto& xElement : x)
     {
         sumSquared += pow(xElement - mean, 2.0);
     }
@@ -348,11 +348,11 @@ bench::mark(
   variance(v1),
   iterations = 100
 )
-#> # A tibble: 2 × 6
+#> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 var(v1)        4.51µs   5.25µs   170275.        0B
-#> 2 variance(v1)    861ns    943ns   693102.    7.02KB
+#> 1 var(v1)          11us   12.1us    77839.        0B
+#> 2 variance(v1)    2.3us    3.1us   287936.    7.02KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -472,11 +472,11 @@ bench::mark(
   medianC(v2),
   iterations = 100
 )
-#> # A tibble: 2 × 6
+#> # A tibble: 2 x 6
 #>   expression              min   median `itr/sec` mem_alloc
 #>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 median.default(v2)   9.88µs   10.8µs    87899.        0B
-#> 2 medianC(v2)           820ns    943ns   923173.    2.49KB
+#> 1 median.default(v2)   27.9us   30.8us    31085.        0B
+#> 2 medianC(v2)           2.1us    3.2us   267738.    2.49KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

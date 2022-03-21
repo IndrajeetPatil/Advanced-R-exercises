@@ -148,7 +148,7 @@ is.primitive(var)
 // [[Rcpp::export]]
 bool allC(std::vector<bool> x)
 {
-    for (auto xElement : x)
+    for (const auto& xElement : x)
     {
         if (!xElement) return false;
     }
@@ -262,7 +262,7 @@ double variance(std::vector<double> x)
 
     double mean = std::accumulate(x.begin(), x.end(), 0.0) / x.size();
 
-    for (auto xElement : x)
+    for (const auto& xElement : x)
     {
         sumSquared += pow(xElement - mean, 2.0);
     }
