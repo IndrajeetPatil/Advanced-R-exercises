@@ -13,7 +13,7 @@ Given a name, `match.fun()` lets you find a function.
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x000000001a695500>
+#> <bytecode: 0x11db8c290>
 #> <environment: namespace:base>
 ```
 
@@ -122,20 +122,20 @@ At the time of writing, 253 base functions have no arguments. Most of these are 
 
 ```r
 dplyr::filter(df_formals, argumentCount == 0)
-#> # A tibble: 253 x 2
+#> # A tibble: 251 × 2
 #>    `function` argumentCount
 #>    <chr>              <int>
 #>  1 -                      0
-#>  2 !                      0
-#>  3 !=                     0
-#>  4 $                      0
-#>  5 $<-                    0
-#>  6 %%                     0
-#>  7 %*%                    0
-#>  8 %/%                    0
-#>  9 &                      0
-#> 10 &&                     0
-#> # ... with 243 more rows
+#>  2 :                      0
+#>  3 ::                     0
+#>  4 :::                    0
+#>  5 !                      0
+#>  6 !=                     0
+#>  7 ...elt                 0
+#>  8 ...length              0
+#>  9 ...names               0
+#> 10 .C                     0
+#> # … with 241 more rows
 ```
 
 > How could you adapt the code to find all primitive functions?
@@ -147,34 +147,34 @@ funs <- Filter(is.function, objs)
 primitives <- Filter(is.primitive, funs)
 
 names(primitives)
-#>   [1] "-"                    "!"                   
-#>   [3] "!="                   "$"                   
-#>   [5] "$<-"                  "%%"                  
-#>   [7] "%*%"                  "%/%"                 
-#>   [9] "&"                    "&&"                  
-#>  [11] "("                    "*"                   
-#>  [13] "...elt"               "...length"           
-#>  [15] "...names"             ".C"                  
-#>  [17] ".cache_class"         ".Call"               
-#>  [19] ".Call.graphics"       ".class2"             
-#>  [21] ".External"            ".External.graphics"  
-#>  [23] ".External2"           ".Fortran"            
-#>  [25] ".Internal"            ".isMethodsDispatchOn"
-#>  [27] ".Primitive"           ".primTrace"          
-#>  [29] ".primUntrace"         ".subset"             
-#>  [31] ".subset2"             "/"                   
-#>  [33] ":"                    "::"                  
-#>  [35] ":::"                  "@"                   
-#>  [37] "@<-"                  "["                   
-#>  [39] "[["                   "[[<-"                
-#>  [41] "[<-"                  "^"                   
-#>  [43] "{"                    "|"                   
-#>  [45] "||"                   "~"                   
-#>  [47] "+"                    "<"                   
-#>  [49] "<-"                   "<<-"                 
-#>  [51] "<="                   "="                   
-#>  [53] "=="                   ">"                   
-#>  [55] ">="                   "abs"                 
+#>   [1] "-"                    ":"                   
+#>   [3] "::"                   ":::"                 
+#>   [5] "!"                    "!="                  
+#>   [7] "...elt"               "...length"           
+#>   [9] "...names"             ".C"                  
+#>  [11] ".cache_class"         ".Call"               
+#>  [13] ".Call.graphics"       ".class2"             
+#>  [15] ".External"            ".External.graphics"  
+#>  [17] ".External2"           ".Fortran"            
+#>  [19] ".Internal"            ".isMethodsDispatchOn"
+#>  [21] ".Primitive"           ".primTrace"          
+#>  [23] ".primUntrace"         ".subset"             
+#>  [25] ".subset2"             "("                   
+#>  [27] "["                    "[["                  
+#>  [29] "[[<-"                 "[<-"                 
+#>  [31] "{"                    "@"                   
+#>  [33] "@<-"                  "*"                   
+#>  [35] "/"                    "&"                   
+#>  [37] "&&"                   "%*%"                 
+#>  [39] "%/%"                  "%%"                  
+#>  [41] "^"                    "+"                   
+#>  [43] "<"                    "<-"                  
+#>  [45] "<<-"                  "<="                  
+#>  [47] "="                    "=="                  
+#>  [49] ">"                    ">="                  
+#>  [51] "|"                    "||"                  
+#>  [53] "~"                    "$"                   
+#>  [55] "$<-"                  "abs"                 
 #>  [57] "acos"                 "acosh"               
 #>  [59] "all"                  "any"                 
 #>  [61] "anyNA"                "Arg"                 
@@ -236,8 +236,8 @@ names(primitives)
 #> [173] "range"                "Re"                  
 #> [175] "rep"                  "repeat"              
 #> [177] "retracemem"           "return"              
-#> [179] "round"                "seq.int"             
-#> [181] "seq_along"            "seq_len"             
+#> [179] "round"                "seq_along"           
+#> [181] "seq_len"              "seq.int"             
 #> [183] "sign"                 "signif"              
 #> [185] "sin"                  "sinh"                
 #> [187] "sinpi"                "sqrt"                
@@ -269,7 +269,7 @@ All package functions print their environment:
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x000000001a695500>
+#> <bytecode: 0x11db8c290>
 #> <environment: namespace:base>
 
 # other package function
@@ -279,7 +279,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x000000001f0e3520>
+#> <bytecode: 0x128401f50>
 #> <environment: namespace:purrr>
 ```
 
@@ -407,7 +407,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x280b4918" "0x280b4918"
+#> [1] "0x10e4ba780" "0x10e4ba780"
 ```
 
 **Q3.** Principle behind return

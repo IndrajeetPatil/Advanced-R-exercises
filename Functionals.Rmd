@@ -6,7 +6,11 @@ source("common.R")
 
 ## Exercise 9.2.6
 
-**Q1.** Study `as_mapper()`
+**Q1.** Use `as_mapper()` to explore how `{purrr}` generates anonymous functions for the integer, character, and list helpers. What helper allows you to extract attributes? Read the documentation to find out.
+
+**A1.**
+
+- Experiments with `{purrr}`:
 
 ```{r}
 library(purrr)
@@ -41,13 +45,15 @@ map(y, ~ length(.x))
 as_mapper(~ length(.x))
 ```
 
-You can extract attributes using `purrr::attr_getter()`:
+- You can extract attributes using `purrr::attr_getter()`:
 
 ```{r}
 pluck(Titanic, attr_getter("class"))
 ```
 
-**Q2.** Properly specifying anonymous functions
+**Q2.** `map(1:3, ~ runif(2))` is a useful pattern for generating random numbers, but `map(1:3, runif(2))` is not. Why not? Can you explain why it returns the result that it does?
+
+**A2.** 
 
 As shown by `as_mapper()` outputs below, the second call is not appropriate for generating random numbers because it translates to `pluck()` function where the indices for plucking are taken to be randomly generated numbers.
 
@@ -61,22 +67,30 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 ```
 
-**Q3.** Use the appropriate `map()` function
+**Q3.** Use the appropriate `map()` function to:
+    
+    a) Compute the standard deviation of every column in a numeric data frame.
 
-Compute the standard deviation of every column in a numeric data frame.
+    a) Compute the standard deviation of every numeric column in a mixed data frame. (Hint: you'll need to do it in two steps.)
+
+    a) Compute the number of levels for every factor in a data frame.
+
+**A3.**
+
+- Compute the standard deviation of every column in a numeric data frame:
 
 ```{r}
 map_dbl(mtcars, sd)
 ```
 
-Compute the standard deviation of every numeric column in a mixed data frame. 
+- Compute the standard deviation of every numeric column in a mixed data frame:
 
 ```{r}
 keep(iris, is.numeric) %>%
   map_dbl(sd)
 ```
 
-Compute the number of levels for every factor in a data frame.
+- Compute the number of levels for every factor in a data frame:
 
 ```{r}
 modify_if(dplyr::starwars, is.character, as.factor) %>%
@@ -84,19 +98,41 @@ modify_if(dplyr::starwars, is.character, as.factor) %>%
   map_int(~ length(levels(.)))
 ```
 
-**Q4.** Statistics and visualization with `{purrr}`
+**Q4.** The following code simulates the performance of a *t*-test for non-normal data. Extract the *p*-value from each test, then visualise.
 
-Extract the *p*-value from each test, then visualise.
+```{r}
+trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(7, 10)))
+```
+
+**A4.**
+
+- Extract the *p*-value from each test:
 
 ```{r}
 trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(7, 10)))
 
-p <- map_dbl(trials, "p.value")
+(p <- map_dbl(trials, "p.value"))
+```
 
+- Visualise the extracted *p*-values:
+
+```{r}
 plot(p)
 ```
 
-**Q5.** Fixing non-functioning code
+**Q5.** The following code uses a map nested inside another map to apply a function to every element of a nested list. Why does it fail, and  what do you need to do to make it work?
+
+```{r, error = TRUE}
+x <- list(
+  list(1, c(3, 9)),
+  list(c(3, 6), 7, c(4, 7, 6))
+)
+
+triple <- function(x) x * 3
+map(x, map, .f = triple)
+```
+
+**A5.** Here is the fixed version:
 
 ```{r}
 x <- list(
@@ -108,7 +144,18 @@ triple <- function(x) x * 3
 map(x, .f = ~ map(., ~ triple(.)))
 ```
 
-**Q6.** Use `map()` to fit linear models to the `mtcars` dataset
+**Q6.** Use `map()` to fit linear models to the `mtcars` dataset using the formulas stored in this list:
+
+```{r}
+formulas <- list(
+  mpg ~ disp,
+  mpg ~ I(1 / disp),
+  mpg ~ disp + wt,
+  mpg ~ I(1 / disp) + wt
+)
+```
+
+**A6.** Fitting linear models to the `mtcars` dataset using the provided formulas:
 
 ```{r}
 formulas <- list(
@@ -121,7 +168,17 @@ formulas <- list(
 map(formulas, ~ lm(formula = ., data = mtcars))
 ```
 
-**Q7.** Computing R-squared
+**Q7.** Fit the model `mpg ~ disp` to each of the bootstrap replicates of `mtcars` in the list below, then extract the $R^2$ of the model fit (Hint: you can compute the $R^2$ with `summary()`.)
+
+```{r, eval=FALSE}
+bootstrap <- function(df) {
+  df[sample(nrow(df), replace = TRUE), , drop = FALSE]
+}
+
+bootstraps <- map(1:10, ~ bootstrap(mtcars))
+```
+
+**A7.** This can be done using `map_dbl()`:
 
 ```{r}
 bootstrap <- function(df) {
@@ -138,33 +195,59 @@ map_dbl(
 
 ## Exercise 9.4.6
 
-**Q1.** Explain the results
+**Q1.** Explain the results of `modify(mtcars, 1)`.
 
-`modify()` returns the object of type same as the input. Since the input here is a dataframe of certain dimensions and `.f = 1` translates to plucking the first element in each column, it returns a dataframes with the same dimensions with the plucked element recycled across rows.
+**A1.** `modify()` returns the object of type same as the input. Since the input here is a data frame of certain dimensions and `.f = 1` translates to plucking the first element in each column, it returns a data frames with the same dimensions with the plucked element recycled across rows.
 
 ```{r}
 head(modify(mtcars, 1))
 ```
 
-**Q2.** Use `iwalk()` instead of `walk2()`
+**Q2.** Rewrite the following code to use `iwalk()` instead of `walk2()`. What are the advantages and disadvantages?
+
+```{r, eval = FALSE}
+cyls <- split(mtcars, mtcars$cyl)
+paths <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
+walk2(cyls, paths, write.csv)
+```
+
+**A2.** Rewritten versions are below:
+
+- with `walk2()`
 
 ```{r, eval=FALSE}
-# with walk2() -----------------------
-
 cyls <- split(mtcars, mtcars$cyl)
 paths <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
 walk2(.x = cyls, .y = paths, .f = write.csv)
+```
 
-# with iwalk --------------------------
+- with `iwalk()`
 
+```{r, eval=FALSE}
 cyls <- split(mtcars, mtcars$cyl)
 names(cyls) <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
 iwalk(cyls, ~ write.csv(.x, .y))
 ```
 
-**Q3.** Explain the code
+**Q3.** Explain how the following code transforms a data frame using functions stored in a list.
 
-`map2()` supplies the functions defined in `.x = trans` as `f` in the anonymous functions, while the names of the columns defined in  `.y = mtcars[nm]` are picked up by `var` in the anonymous function. Note that the function is iterating over indices for vectors of transformations and column names.
+```{r}
+trans <- list(
+  disp = function(x) x * 0.0163871,
+  am = function(x) factor(x, labels = c("auto", "manual"))
+)
+
+nm <- names(trans)
+mtcars[nm] <- map2(trans, mtcars[nm], function(f, var) f(var))
+```
+    
+Compare and contrast the `map2()` approach to this `map()` approach:
+    
+```{r, eval = FALSE}
+mtcars[nm] <- map(nm, ~ trans[[.x]](mtcars[[.x]]))
+```
+
+**A3.** `map2()` supplies the functions defined in `.x = trans` as `f` in the anonymous functions, while the names of the columns defined in  `.y = mtcars[nm]` are picked up by `var` in the anonymous function. Note that the function is iterating over indices for vectors of transformations and column names.
 
 ```{r, eval=FALSE}
 trans <- list(
@@ -176,15 +259,15 @@ nm <- names(trans)
 mtcars[nm] <- map2(trans, mtcars[nm], function(f, var) f(var))
 ```
 
-In the `map` approach, the function is iterating over indices for vectors of column names.
+In the `map()` approach, the function is iterating over indices for vectors of column names.
 
 ```{r, eval=FALSE}
 mtcars[nm] <- map(nm, ~ trans[[.x]](mtcars[[.x]]))
 ```
 
-**Q4.** Difference between `map2()` and `walk2()`
+**Q4.** What does `write.csv()` return, i.e. what happens if you use it with `map2()` instead of `walk2()`?
 
-If we use `map2()`, it will work, but it will print `NULL` to the terminal for every element of the list.
+**A4.** If we use `map2()`, it will work, but it will print `NULL`s to the terminal for every list element.
 
 ```{r, eval=FALSE}
 bods <- split(BOD, BOD$Time)
@@ -194,11 +277,13 @@ map2(bods, nm, write.csv)
 
 ## Exercise 9.6.3
 
-**Q1.** Predicate functions
+**Q1.** Why isn't `is.na()` a predicate function? What base R function is closest to being a predicate version of `is.na()`?
+
+**A1.** As mentioned in the docs:
 
 > A predicate is a function that returns a **single** `TRUE` or `FALSE`.
 
-The `is.na()` function does not return a single value, but instead returns a vector and thus isn't a predicate function.
+The `is.na()` function does not return a `logical` scalar, but instead returns a vector and thus isn't a predicate function.
 
 ```{r}
 # contrast the following behavior of predicate functions
@@ -215,9 +300,19 @@ The closest equivalent of a predicate function in base-R is `anyNA()` function.
 anyNA(c(NA, 1))
 ```
 
-**Q2.** Fix `simple_reduce`
+**Q2.** `simple_reduce()` has a problem when `x` is length 0 or length 1. Describe the source of the problem and how you might go about fixing it.
 
-Supplied function:
+```{r, eval=FALSE}
+simple_reduce <- function(x, f) {
+  out <- x[[1]]
+  for (i in seq(2, length(x))) {
+    out <- f(out, x[[i]])
+  }
+  out
+}
+```
+
+**A2.**  Supplied function:
 
 ```{r}
 simple_reduce <- function(x, f) {
@@ -229,7 +324,7 @@ simple_reduce <- function(x, f) {
 }
 ```
 
-Struggles with inputs of length 0 and 1 because function tries to access out-of-bound values.
+This function struggles with inputs of length 0 and 1 because function tries to access out-of-bound values.
 
 ```{r, error=TRUE}
 simple_reduce(numeric(), sum)
@@ -245,6 +340,7 @@ simple_reduce2 <- function(x, f, init = 0) {
   if (length(x) == 0L) {
     return(init)
   }
+
   if (length(x) == 1L) {
     return(x[[1L]])
   }
@@ -282,13 +378,62 @@ simple_reduce2(1, `%/%`)
 simple_reduce2(1:3, `%/%`)
 ```
 
+**Q3.** Implement the `span()` function from Haskell: given a list `x` and a predicate function `f`, `span(x, f)` returns the location of the longest sequential run of elements where the predicate is true. (Hint: you might find `rle()` helpful.)
+
+**Q4.**  Implement `arg_max()`. It should take a function and a vector of inputs, and return the elements of the input where the function returns the highest value. For example, `arg_max(-10:5, function(x) x ^ 2)` should return -10. `arg_max(-5:5, function(x) x ^ 2)` should return `c(-5, 5)`. Also implement the matching `arg_min()` function.
+
+**Q5.**  The function below scales a vector so it falls in the range [0, 1]. How would you apply it to every column of a data frame? How would you apply it to every numeric column in a data frame?
+
+```{r}
+scale01 <- function(x) {
+  rng <- range(x, na.rm = TRUE)
+  (x - rng[1]) / (rng[2] - rng[1])
+}
+```
 
 ## Exercise 9.7.3
 
-**Q1.** 
+**Q1.** How does `apply()` arrange the output? Read the documentation and perform some experiments.
 
-**Q2.** `eapply()` and `rapply()`
+**Q2.** What do `eapply()` and `rapply()` do? Does purrr have equivalents?
+
+**A2.** As mentioned in the documentation:
+
+- `eapply()` 
 
 > `eapply()` applies FUN to the named values from an environment and returns the results as a list.
 
+Here is an example:
+
+```{r}
+library(rlang)
+
+e <- env("x" = 1, "y" = 2)
+rlang::env_print(e)
+
+eapply(e, as.character)
+```
+
+`{purrr}` doesn't have any function to iterate over environments.
+
+- `rapply()` 
+
 > `rapply()` is a recursive version of lapply with flexibility in how the result is structured (how = "..").
+
+Here is an example:
+
+```{r}
+X <- list(list(a = TRUE, b = list(c = c(4L, 3.2))), d = 9.0)
+
+rapply(X, as.character, classes = "numeric", how = "replace")
+```
+
+`{purrr}` has something similar in `modify_depth()`.
+
+```{r}
+X <- list(list(a = TRUE, b = list(c = c(4L, 3.2))), d = 9.0)
+
+purrr::modify_depth(X, .depth = 2L, .f = length)
+```
+
+**Q3.**  Challenge: read about the [fixed point algorithm](https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-12.html#%25_idx_1096). Complete the exercises using R.

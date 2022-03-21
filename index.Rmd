@@ -6,7 +6,7 @@ site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
 # url: your book url like https://bookdown.org/yihui/bookdown
-cover-image: cover.jpg
+cover-image: cover.png
 description: |
   My solutions to exercises in *Advanced R* book.
 biblio-style: apalike
