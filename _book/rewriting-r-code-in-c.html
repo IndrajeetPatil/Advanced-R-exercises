@@ -6,22 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 15 Rewriting R code in C++ | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content="15.1 Exercise 25.2.6 Q1. Figure out base function corresponding to Rccp code library(Rcpp) #include &lt;Rcpp.h&gt; using namespace Rcpp; // [[Rcpp::export]] double f1(NumericVector x) {  int n =...">
+<meta name="description" content="15.1 Exercise 25.2.6 Q1. With the basics of C++ in hand, it’s now a great time to practice by reading and writing some simple C++ functions. For each ofthe following functions, read the code and...">
 <meta name="generator" content="bookdown 0.25 with bs4_book()">
 <meta property="og:title" content="Chapter 15 Rewriting R code in C++ | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.png">
-<meta property="og:description" content="15.1 Exercise 25.2.6 Q1. Figure out base function corresponding to Rccp code library(Rcpp) #include &lt;Rcpp.h&gt; using namespace Rcpp; // [[Rcpp::export]] double f1(NumericVector x) {  int n =...">
+<meta property="og:description" content="15.1 Exercise 25.2.6 Q1. With the basics of C++ in hand, it’s now a great time to practice by reading and writing some simple C++ functions. For each ofthe following functions, read the code and...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 15 Rewriting R code in C++ | Advanced R Exercises">
-<meta name="twitter:description" content="15.1 Exercise 25.2.6 Q1. Figure out base function corresponding to Rccp code library(Rcpp) #include &lt;Rcpp.h&gt; using namespace Rcpp; // [[Rcpp::export]] double f1(NumericVector x) {  int n =...">
+<meta name="twitter:description" content="15.1 Exercise 25.2.6 Q1. With the basics of C++ in hand, it’s now a great time to practice by reading and writing some simple C++ functions. For each ofthe following functions, read the code and...">
 <meta name="twitter:image" content="/cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
-<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
-<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -78,72 +76,73 @@
 <h2>
 <span class="header-section-number">15.1</span> Exercise 25.2.6<a class="anchor" aria-label="anchor" href="#exercise-25.2.6"><i class="fas fa-link"></i></a>
 </h2>
-<p><strong>Q1.</strong> Figure out base function corresponding to Rccp code</p>
-<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
+<p><strong>Q1.</strong> With the basics of C++ in hand, it’s now a great time to practice by reading and writing some simple C++ functions. For each ofthe following functions, read the code and figure out what the corresponding base R function is. You might not understand every part of the code yet, but you should be able to figure out the basics of what the function does.</p>
+<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rcpp.org">Rcpp</a></span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb204"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb204-1"><a href="rewriting-r-code-in-c.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Rcpp.h&gt;</span></span>
-<span id="cb204-2"><a href="rewriting-r-code-in-c.html#cb204-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> Rcpp<span class="op">;</span></span>
-<span id="cb204-3"><a href="rewriting-r-code-in-c.html#cb204-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-4"><a href="rewriting-r-code-in-c.html#cb204-4" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb204-5"><a href="rewriting-r-code-in-c.html#cb204-5" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> f1<span class="op">(</span>NumericVector x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb204-6"><a href="rewriting-r-code-in-c.html#cb204-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> n <span class="op">=</span> x<span class="op">.</span>size<span class="op">();</span></span>
-<span id="cb204-7"><a href="rewriting-r-code-in-c.html#cb204-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">double</span> y <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb204-8"><a href="rewriting-r-code-in-c.html#cb204-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-9"><a href="rewriting-r-code-in-c.html#cb204-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb204-10"><a href="rewriting-r-code-in-c.html#cb204-10" aria-hidden="true" tabindex="-1"></a>    y <span class="op">+=</span> x<span class="op">[</span>i<span class="op">]</span> <span class="op">/</span> n<span class="op">;</span></span>
-<span id="cb204-11"><a href="rewriting-r-code-in-c.html#cb204-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb204-12"><a href="rewriting-r-code-in-c.html#cb204-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> y<span class="op">;</span></span>
-<span id="cb204-13"><a href="rewriting-r-code-in-c.html#cb204-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb204-14"><a href="rewriting-r-code-in-c.html#cb204-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-15"><a href="rewriting-r-code-in-c.html#cb204-15" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb204-16"><a href="rewriting-r-code-in-c.html#cb204-16" aria-hidden="true" tabindex="-1"></a>NumericVector f2<span class="op">(</span>NumericVector x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb204-17"><a href="rewriting-r-code-in-c.html#cb204-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> n <span class="op">=</span> x<span class="op">.</span>size<span class="op">();</span></span>
-<span id="cb204-18"><a href="rewriting-r-code-in-c.html#cb204-18" aria-hidden="true" tabindex="-1"></a>  NumericVector out<span class="op">(</span>n<span class="op">);</span></span>
-<span id="cb204-19"><a href="rewriting-r-code-in-c.html#cb204-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-20"><a href="rewriting-r-code-in-c.html#cb204-20" aria-hidden="true" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> x<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
-<span id="cb204-21"><a href="rewriting-r-code-in-c.html#cb204-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb204-22"><a href="rewriting-r-code-in-c.html#cb204-22" aria-hidden="true" tabindex="-1"></a>    out<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> out<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">+</span> x<span class="op">[</span>i<span class="op">];</span></span>
-<span id="cb204-23"><a href="rewriting-r-code-in-c.html#cb204-23" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb204-24"><a href="rewriting-r-code-in-c.html#cb204-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
-<span id="cb204-25"><a href="rewriting-r-code-in-c.html#cb204-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb204-26"><a href="rewriting-r-code-in-c.html#cb204-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-27"><a href="rewriting-r-code-in-c.html#cb204-27" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb204-28"><a href="rewriting-r-code-in-c.html#cb204-28" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> f3<span class="op">(</span>LogicalVector x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb204-29"><a href="rewriting-r-code-in-c.html#cb204-29" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> n <span class="op">=</span> x<span class="op">.</span>size<span class="op">();</span></span>
-<span id="cb204-30"><a href="rewriting-r-code-in-c.html#cb204-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-31"><a href="rewriting-r-code-in-c.html#cb204-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb204-32"><a href="rewriting-r-code-in-c.html#cb204-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>x<span class="op">[</span>i<span class="op">])</span> <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
-<span id="cb204-33"><a href="rewriting-r-code-in-c.html#cb204-33" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb204-34"><a href="rewriting-r-code-in-c.html#cb204-34" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
-<span id="cb204-35"><a href="rewriting-r-code-in-c.html#cb204-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb204-36"><a href="rewriting-r-code-in-c.html#cb204-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-37"><a href="rewriting-r-code-in-c.html#cb204-37" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb204-38"><a href="rewriting-r-code-in-c.html#cb204-38" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> f4<span class="op">(</span>Function pred<span class="op">,</span> List x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb204-39"><a href="rewriting-r-code-in-c.html#cb204-39" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> n <span class="op">=</span> x<span class="op">.</span>size<span class="op">();</span></span>
-<span id="cb204-40"><a href="rewriting-r-code-in-c.html#cb204-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-41"><a href="rewriting-r-code-in-c.html#cb204-41" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb204-42"><a href="rewriting-r-code-in-c.html#cb204-42" aria-hidden="true" tabindex="-1"></a>    LogicalVector res <span class="op">=</span> pred<span class="op">(</span>x<span class="op">[</span>i<span class="op">]);</span></span>
-<span id="cb204-43"><a href="rewriting-r-code-in-c.html#cb204-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>res<span class="op">[</span><span class="dv">0</span><span class="op">])</span> <span class="cf">return</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb204-44"><a href="rewriting-r-code-in-c.html#cb204-44" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb204-45"><a href="rewriting-r-code-in-c.html#cb204-45" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb204-46"><a href="rewriting-r-code-in-c.html#cb204-46" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb204-47"><a href="rewriting-r-code-in-c.html#cb204-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-48"><a href="rewriting-r-code-in-c.html#cb204-48" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb204-49"><a href="rewriting-r-code-in-c.html#cb204-49" aria-hidden="true" tabindex="-1"></a>NumericVector f5<span class="op">(</span>NumericVector x<span class="op">,</span> NumericVector y<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb204-50"><a href="rewriting-r-code-in-c.html#cb204-50" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> n <span class="op">=</span> <span class="bu">std::</span>max<span class="op">(</span>x<span class="op">.</span>size<span class="op">(),</span> y<span class="op">.</span>size<span class="op">());</span></span>
-<span id="cb204-51"><a href="rewriting-r-code-in-c.html#cb204-51" aria-hidden="true" tabindex="-1"></a>  NumericVector x1 <span class="op">=</span> rep_len<span class="op">(</span>x<span class="op">,</span> n<span class="op">);</span></span>
-<span id="cb204-52"><a href="rewriting-r-code-in-c.html#cb204-52" aria-hidden="true" tabindex="-1"></a>  NumericVector y1 <span class="op">=</span> rep_len<span class="op">(</span>y<span class="op">,</span> n<span class="op">);</span></span>
-<span id="cb204-53"><a href="rewriting-r-code-in-c.html#cb204-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-54"><a href="rewriting-r-code-in-c.html#cb204-54" aria-hidden="true" tabindex="-1"></a>  NumericVector out<span class="op">(</span>n<span class="op">);</span></span>
-<span id="cb204-55"><a href="rewriting-r-code-in-c.html#cb204-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-56"><a href="rewriting-r-code-in-c.html#cb204-56" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb204-57"><a href="rewriting-r-code-in-c.html#cb204-57" aria-hidden="true" tabindex="-1"></a>    out<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="bu">std::</span>min<span class="op">(</span>x1<span class="op">[</span>i<span class="op">],</span> y1<span class="op">[</span>i<span class="op">]);</span></span>
-<span id="cb204-58"><a href="rewriting-r-code-in-c.html#cb204-58" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb204-59"><a href="rewriting-r-code-in-c.html#cb204-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-60"><a href="rewriting-r-code-in-c.html#cb204-60" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
-<span id="cb204-61"><a href="rewriting-r-code-in-c.html#cb204-61" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb210-1"><a href="rewriting-r-code-in-c.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Rcpp.h&gt;</span></span>
+<span id="cb210-2"><a href="rewriting-r-code-in-c.html#cb210-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> Rcpp<span class="op">;</span></span>
+<span id="cb210-3"><a href="rewriting-r-code-in-c.html#cb210-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-4"><a href="rewriting-r-code-in-c.html#cb210-4" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb210-5"><a href="rewriting-r-code-in-c.html#cb210-5" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> f1<span class="op">(</span>NumericVector x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb210-6"><a href="rewriting-r-code-in-c.html#cb210-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> n <span class="op">=</span> x<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb210-7"><a href="rewriting-r-code-in-c.html#cb210-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">double</span> y <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb210-8"><a href="rewriting-r-code-in-c.html#cb210-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-9"><a href="rewriting-r-code-in-c.html#cb210-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb210-10"><a href="rewriting-r-code-in-c.html#cb210-10" aria-hidden="true" tabindex="-1"></a>    y <span class="op">+=</span> x<span class="op">[</span>i<span class="op">]</span> <span class="op">/</span> n<span class="op">;</span></span>
+<span id="cb210-11"><a href="rewriting-r-code-in-c.html#cb210-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb210-12"><a href="rewriting-r-code-in-c.html#cb210-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> y<span class="op">;</span></span>
+<span id="cb210-13"><a href="rewriting-r-code-in-c.html#cb210-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb210-14"><a href="rewriting-r-code-in-c.html#cb210-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-15"><a href="rewriting-r-code-in-c.html#cb210-15" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb210-16"><a href="rewriting-r-code-in-c.html#cb210-16" aria-hidden="true" tabindex="-1"></a>NumericVector f2<span class="op">(</span>NumericVector x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb210-17"><a href="rewriting-r-code-in-c.html#cb210-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> n <span class="op">=</span> x<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb210-18"><a href="rewriting-r-code-in-c.html#cb210-18" aria-hidden="true" tabindex="-1"></a>  NumericVector out<span class="op">(</span>n<span class="op">);</span></span>
+<span id="cb210-19"><a href="rewriting-r-code-in-c.html#cb210-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-20"><a href="rewriting-r-code-in-c.html#cb210-20" aria-hidden="true" tabindex="-1"></a>  out<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> x<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb210-21"><a href="rewriting-r-code-in-c.html#cb210-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb210-22"><a href="rewriting-r-code-in-c.html#cb210-22" aria-hidden="true" tabindex="-1"></a>    out<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> out<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">+</span> x<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb210-23"><a href="rewriting-r-code-in-c.html#cb210-23" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb210-24"><a href="rewriting-r-code-in-c.html#cb210-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb210-25"><a href="rewriting-r-code-in-c.html#cb210-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb210-26"><a href="rewriting-r-code-in-c.html#cb210-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-27"><a href="rewriting-r-code-in-c.html#cb210-27" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb210-28"><a href="rewriting-r-code-in-c.html#cb210-28" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> f3<span class="op">(</span>LogicalVector x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb210-29"><a href="rewriting-r-code-in-c.html#cb210-29" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> n <span class="op">=</span> x<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb210-30"><a href="rewriting-r-code-in-c.html#cb210-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-31"><a href="rewriting-r-code-in-c.html#cb210-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb210-32"><a href="rewriting-r-code-in-c.html#cb210-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>x<span class="op">[</span>i<span class="op">])</span> <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb210-33"><a href="rewriting-r-code-in-c.html#cb210-33" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb210-34"><a href="rewriting-r-code-in-c.html#cb210-34" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb210-35"><a href="rewriting-r-code-in-c.html#cb210-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb210-36"><a href="rewriting-r-code-in-c.html#cb210-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-37"><a href="rewriting-r-code-in-c.html#cb210-37" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb210-38"><a href="rewriting-r-code-in-c.html#cb210-38" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> f4<span class="op">(</span>Function pred<span class="op">,</span> List x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb210-39"><a href="rewriting-r-code-in-c.html#cb210-39" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> n <span class="op">=</span> x<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb210-40"><a href="rewriting-r-code-in-c.html#cb210-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-41"><a href="rewriting-r-code-in-c.html#cb210-41" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb210-42"><a href="rewriting-r-code-in-c.html#cb210-42" aria-hidden="true" tabindex="-1"></a>    LogicalVector res <span class="op">=</span> pred<span class="op">(</span>x<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb210-43"><a href="rewriting-r-code-in-c.html#cb210-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>res<span class="op">[</span><span class="dv">0</span><span class="op">])</span> <span class="cf">return</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb210-44"><a href="rewriting-r-code-in-c.html#cb210-44" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb210-45"><a href="rewriting-r-code-in-c.html#cb210-45" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb210-46"><a href="rewriting-r-code-in-c.html#cb210-46" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb210-47"><a href="rewriting-r-code-in-c.html#cb210-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-48"><a href="rewriting-r-code-in-c.html#cb210-48" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb210-49"><a href="rewriting-r-code-in-c.html#cb210-49" aria-hidden="true" tabindex="-1"></a>NumericVector f5<span class="op">(</span>NumericVector x<span class="op">,</span> NumericVector y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb210-50"><a href="rewriting-r-code-in-c.html#cb210-50" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> n <span class="op">=</span> <span class="bu">std::</span>max<span class="op">(</span>x<span class="op">.</span>size<span class="op">(),</span> y<span class="op">.</span>size<span class="op">());</span></span>
+<span id="cb210-51"><a href="rewriting-r-code-in-c.html#cb210-51" aria-hidden="true" tabindex="-1"></a>  NumericVector x1 <span class="op">=</span> rep_len<span class="op">(</span>x<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb210-52"><a href="rewriting-r-code-in-c.html#cb210-52" aria-hidden="true" tabindex="-1"></a>  NumericVector y1 <span class="op">=</span> rep_len<span class="op">(</span>y<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb210-53"><a href="rewriting-r-code-in-c.html#cb210-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-54"><a href="rewriting-r-code-in-c.html#cb210-54" aria-hidden="true" tabindex="-1"></a>  NumericVector out<span class="op">(</span>n<span class="op">);</span></span>
+<span id="cb210-55"><a href="rewriting-r-code-in-c.html#cb210-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-56"><a href="rewriting-r-code-in-c.html#cb210-56" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb210-57"><a href="rewriting-r-code-in-c.html#cb210-57" aria-hidden="true" tabindex="-1"></a>    out<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="bu">std::</span>min<span class="op">(</span>x1<span class="op">[</span>i<span class="op">],</span> y1<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb210-58"><a href="rewriting-r-code-in-c.html#cb210-58" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb210-59"><a href="rewriting-r-code-in-c.html#cb210-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-60"><a href="rewriting-r-code-in-c.html#cb210-60" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb210-61"><a href="rewriting-r-code-in-c.html#cb210-61" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p><strong>A1.</strong></p>
 <p><code>f1()</code> is the same as <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>:</p>
-<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span>
 
 <span class="fu">f1</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
@@ -151,7 +150,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1] 3.5</span></code></pre></div>
 <p><code>f2()</code> is the same as <code><a href="https://rdrr.io/r/base/cumsum.html">cumsum()</a></code>:</p>
-<div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb212"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span>
 
 <span class="fu">f2</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
@@ -159,7 +158,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1]  1  4  9 15</span></code></pre></div>
 <p><code>f3()</code> is the same as <code><a href="https://rdrr.io/r/base/any.html">any()</a></code>:</p>
-<div class="sourceCode" id="cb207"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="cn">FALSE</span><span class="op">)</span>
 
@@ -173,7 +172,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="va">x2</span><span class="op">)</span>
 <span class="co">#&gt; [1] FALSE</span></code></pre></div>
 <p><code>f4()</code> is the same as <code><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html">Position()</a></code>:</p>
-<div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="cn">TRUE</span>, <span class="st">"m"</span>, <span class="fl">2</span><span class="op">)</span>
 
 <span class="fu">f4</span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">x</span><span class="op">)</span>
@@ -181,7 +180,7 @@
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html">Position</a></span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1] 4</span></code></pre></div>
 <p><code>f5()</code> is the same as <code><a href="https://rdrr.io/r/base/Extremes.html">pmin()</a></code>:</p>
-<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">7</span><span class="op">)</span>
 <span class="va">v2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">7</span>, <span class="fl">2</span>, <span class="fl">8</span>, <span class="fl">1</span><span class="op">)</span>
 
@@ -189,9 +188,21 @@
 <span class="co">#&gt; [1] 1 2 4 2 6 1</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmin</a></span><span class="op">(</span><span class="va">v1</span>, <span class="va">v2</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1 2 4 2 6 1</span></code></pre></div>
-<p><strong>Q2.</strong> Converting base function to Rcpp</p>
-<p>The performance benefits are not going to be observed if the function is primitive since those are already tuned to the max in R for performance. So, expect performance gain only for <code><a href="https://rdrr.io/r/base/diff.html">diff()</a></code> and <code><a href="https://rdrr.io/r/stats/cor.html">var()</a></code>.</p>
-<div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
+<p><strong>Q2.</strong> To practice your function writing skills, convert the following functions into C++. For now, assume the inputs have no missing values.</p>
+<pre><code>1. `all()`.
+
+2. `cumprod()`, `cummin()`, `cummax()`.
+
+3. `diff()`. Start by assuming lag 1, and then generalise for lag `n`.
+
+4. `range()`.
+
+5. `var()`. Read about the approaches you can take on 
+   [Wikipedia](http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance).
+   Whenever implementing a numerical algorithm, it's always good to check 
+   what is already known about the problem.</code></pre>
+<p><strong>A2.</strong> The performance benefits are not going to be observed if the function is primitive since those are already tuned to the max in R for performance. So, expect performance gain only for <code><a href="https://rdrr.io/r/base/diff.html">diff()</a></code> and <code><a href="https://rdrr.io/r/stats/cor.html">var()</a></code>.</p>
+<div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/is.function.html">is.primitive</a></span><span class="op">(</span><span class="va">all</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span>
 <span class="fu"><a href="https://rdrr.io/r/base/is.function.html">is.primitive</a></span><span class="op">(</span><span class="va">cumprod</span><span class="op">)</span>
@@ -205,20 +216,20 @@
 <ul>
 <li><code><a href="https://rdrr.io/r/base/all.html">all()</a></code></li>
 </ul>
-<div class="sourceCode" id="cb211"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb211-1"><a href="rewriting-r-code-in-c.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb211-2"><a href="rewriting-r-code-in-c.html#cb211-2" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::plugins(cpp11)]]</span></span>
-<span id="cb211-3"><a href="rewriting-r-code-in-c.html#cb211-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb211-4"><a href="rewriting-r-code-in-c.html#cb211-4" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb211-5"><a href="rewriting-r-code-in-c.html#cb211-5" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> allC<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;</span> x<span class="op">)</span></span>
-<span id="cb211-6"><a href="rewriting-r-code-in-c.html#cb211-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb211-7"><a href="rewriting-r-code-in-c.html#cb211-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> xElement <span class="op">:</span> x<span class="op">)</span></span>
-<span id="cb211-8"><a href="rewriting-r-code-in-c.html#cb211-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb211-9"><a href="rewriting-r-code-in-c.html#cb211-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>xElement<span class="op">)</span> <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
-<span id="cb211-10"><a href="rewriting-r-code-in-c.html#cb211-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb211-11"><a href="rewriting-r-code-in-c.html#cb211-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb211-12"><a href="rewriting-r-code-in-c.html#cb211-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
-<span id="cb211-13"><a href="rewriting-r-code-in-c.html#cb211-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb212"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb218"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb218-1"><a href="rewriting-r-code-in-c.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb218-2"><a href="rewriting-r-code-in-c.html#cb218-2" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::plugins(cpp11)]]</span></span>
+<span id="cb218-3"><a href="rewriting-r-code-in-c.html#cb218-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb218-4"><a href="rewriting-r-code-in-c.html#cb218-4" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb218-5"><a href="rewriting-r-code-in-c.html#cb218-5" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> allC<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;</span> x<span class="op">)</span></span>
+<span id="cb218-6"><a href="rewriting-r-code-in-c.html#cb218-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb218-7"><a href="rewriting-r-code-in-c.html#cb218-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> xElement <span class="op">:</span> x<span class="op">)</span></span>
+<span id="cb218-8"><a href="rewriting-r-code-in-c.html#cb218-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb218-9"><a href="rewriting-r-code-in-c.html#cb218-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>xElement<span class="op">)</span> <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb218-10"><a href="rewriting-r-code-in-c.html#cb218-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb218-11"><a href="rewriting-r-code-in-c.html#cb218-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb218-12"><a href="rewriting-r-code-in-c.html#cb218-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb218-13"><a href="rewriting-r-code-in-c.html#cb218-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">10</span><span class="op">)</span>
 <span class="va">v2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 
@@ -238,33 +249,33 @@
   <span class="fu">allC</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">1000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
   iterations <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2 x 6</span>
+<span class="co">#&gt; # A tibble: 2 × 6</span>
 <span class="co">#&gt;   expression                                      min</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;                                 &lt;bch:tm&gt;</span>
-<span class="co">#&gt; 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))      11us</span>
-<span class="co">#&gt; 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   15.5us</span>
+<span class="co">#&gt; 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    5.29µs</span>
+<span class="co">#&gt; 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))  10.09µs</span>
 <span class="co">#&gt;     median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1   18.4us    52762.    15.8KB        0</span>
-<span class="co">#&gt; 2   19.2us    48466.    18.3KB        0</span></code></pre></div>
+<span class="co">#&gt; 1   6.01µs   152926.    15.8KB        0</span>
+<span class="co">#&gt; 2   10.7µs    84311.    18.3KB        0</span></code></pre></div>
 <ul>
 <li><code><a href="https://rdrr.io/r/base/cumsum.html">cumprod()</a></code></li>
 </ul>
-<div class="sourceCode" id="cb213"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb213-1"><a href="rewriting-r-code-in-c.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb213-2"><a href="rewriting-r-code-in-c.html#cb213-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb213-3"><a href="rewriting-r-code-in-c.html#cb213-3" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb213-4"><a href="rewriting-r-code-in-c.html#cb213-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> cumulativeProduct<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> x<span class="op">)</span></span>
-<span id="cb213-5"><a href="rewriting-r-code-in-c.html#cb213-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb213-6"><a href="rewriting-r-code-in-c.html#cb213-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> out <span class="op">=</span> x<span class="op">;</span></span>
-<span id="cb213-7"><a href="rewriting-r-code-in-c.html#cb213-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb213-8"><a href="rewriting-r-code-in-c.html#cb213-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">size_t</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> x<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb213-9"><a href="rewriting-r-code-in-c.html#cb213-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb213-10"><a href="rewriting-r-code-in-c.html#cb213-10" aria-hidden="true" tabindex="-1"></a>        out<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> out<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">*</span> x<span class="op">[</span>i<span class="op">];</span></span>
-<span id="cb213-11"><a href="rewriting-r-code-in-c.html#cb213-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb213-12"><a href="rewriting-r-code-in-c.html#cb213-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb213-13"><a href="rewriting-r-code-in-c.html#cb213-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out<span class="op">;</span></span>
-<span id="cb213-14"><a href="rewriting-r-code-in-c.html#cb213-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb220"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb220-1"><a href="rewriting-r-code-in-c.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb220-2"><a href="rewriting-r-code-in-c.html#cb220-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb220-3"><a href="rewriting-r-code-in-c.html#cb220-3" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb220-4"><a href="rewriting-r-code-in-c.html#cb220-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> cumulativeProduct<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> x<span class="op">)</span></span>
+<span id="cb220-5"><a href="rewriting-r-code-in-c.html#cb220-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb220-6"><a href="rewriting-r-code-in-c.html#cb220-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> out <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb220-7"><a href="rewriting-r-code-in-c.html#cb220-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb220-8"><a href="rewriting-r-code-in-c.html#cb220-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">size_t</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> x<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
+<span id="cb220-9"><a href="rewriting-r-code-in-c.html#cb220-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb220-10"><a href="rewriting-r-code-in-c.html#cb220-10" aria-hidden="true" tabindex="-1"></a>        out<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> out<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">*</span> x<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb220-11"><a href="rewriting-r-code-in-c.html#cb220-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb220-12"><a href="rewriting-r-code-in-c.html#cb220-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb220-13"><a href="rewriting-r-code-in-c.html#cb220-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb220-14"><a href="rewriting-r-code-in-c.html#cb220-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumprod</a></span><span class="op">(</span><span class="va">v1</span><span class="op">)</span>
@@ -278,11 +289,11 @@
   <span class="fu">cumulativeProduct</span><span class="op">(</span><span class="va">v1</span><span class="op">)</span>,
   iterations <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2 x 6</span>
+<span class="co">#&gt; # A tibble: 2 × 6</span>
 <span class="co">#&gt;   expression                 min   median `itr/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;            &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 cumprod(v1)              100ns    200ns  3184713.</span>
-<span class="co">#&gt; 2 cumulativeProduct(v1)    2.3us    3.7us   264201.</span>
+<span class="co">#&gt; 1 cumprod(v1)            41.01ns     82ns 10204443.</span>
+<span class="co">#&gt; 2 cumulativeProduct(v1)   1.11µs   1.19µs   652841.</span>
 <span class="co">#&gt;   mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:byt&gt;    &lt;dbl&gt;</span>
 <span class="co">#&gt; 1        0B        0</span>
@@ -294,22 +305,22 @@
 <ul>
 <li><code><a href="https://rdrr.io/r/base/range.html">range()</a></code></li>
 </ul>
-<div class="sourceCode" id="cb215"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb215-1"><a href="rewriting-r-code-in-c.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb215-2"><a href="rewriting-r-code-in-c.html#cb215-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb215-3"><a href="rewriting-r-code-in-c.html#cb215-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
-<span id="cb215-4"><a href="rewriting-r-code-in-c.html#cb215-4" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb215-5"><a href="rewriting-r-code-in-c.html#cb215-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb215-6"><a href="rewriting-r-code-in-c.html#cb215-6" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb215-7"><a href="rewriting-r-code-in-c.html#cb215-7" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> rangeC<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> x<span class="op">)</span></span>
-<span id="cb215-8"><a href="rewriting-r-code-in-c.html#cb215-8" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb215-9"><a href="rewriting-r-code-in-c.html#cb215-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> rangeVec<span class="op">{</span><span class="fl">0.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">};</span></span>
-<span id="cb215-10"><a href="rewriting-r-code-in-c.html#cb215-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb215-11"><a href="rewriting-r-code-in-c.html#cb215-11" aria-hidden="true" tabindex="-1"></a>    rangeVec<span class="op">.</span>at<span class="op">(</span><span class="dv">0</span><span class="op">)</span> <span class="op">=</span> <span class="op">*</span><span class="bu">std::</span>min_element<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>end<span class="op">());</span></span>
-<span id="cb215-12"><a href="rewriting-r-code-in-c.html#cb215-12" aria-hidden="true" tabindex="-1"></a>    rangeVec<span class="op">.</span>at<span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">=</span> <span class="op">*</span><span class="bu">std::</span>max_element<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>end<span class="op">());</span></span>
-<span id="cb215-13"><a href="rewriting-r-code-in-c.html#cb215-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb215-14"><a href="rewriting-r-code-in-c.html#cb215-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rangeVec<span class="op">;</span></span>
-<span id="cb215-15"><a href="rewriting-r-code-in-c.html#cb215-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb222"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb222-1"><a href="rewriting-r-code-in-c.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb222-2"><a href="rewriting-r-code-in-c.html#cb222-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb222-3"><a href="rewriting-r-code-in-c.html#cb222-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span id="cb222-4"><a href="rewriting-r-code-in-c.html#cb222-4" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb222-5"><a href="rewriting-r-code-in-c.html#cb222-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb222-6"><a href="rewriting-r-code-in-c.html#cb222-6" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb222-7"><a href="rewriting-r-code-in-c.html#cb222-7" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> rangeC<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> x<span class="op">)</span></span>
+<span id="cb222-8"><a href="rewriting-r-code-in-c.html#cb222-8" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb222-9"><a href="rewriting-r-code-in-c.html#cb222-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> rangeVec<span class="op">{</span><span class="fl">0.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">};</span></span>
+<span id="cb222-10"><a href="rewriting-r-code-in-c.html#cb222-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb222-11"><a href="rewriting-r-code-in-c.html#cb222-11" aria-hidden="true" tabindex="-1"></a>    rangeVec<span class="op">.</span>at<span class="op">(</span><span class="dv">0</span><span class="op">)</span> <span class="op">=</span> <span class="op">*</span><span class="bu">std::</span>min_element<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>end<span class="op">());</span></span>
+<span id="cb222-12"><a href="rewriting-r-code-in-c.html#cb222-12" aria-hidden="true" tabindex="-1"></a>    rangeVec<span class="op">.</span>at<span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">=</span> <span class="op">*</span><span class="bu">std::</span>max_element<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>end<span class="op">());</span></span>
+<span id="cb222-13"><a href="rewriting-r-code-in-c.html#cb222-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb222-14"><a href="rewriting-r-code-in-c.html#cb222-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rangeVec<span class="op">;</span></span>
+<span id="cb222-15"><a href="rewriting-r-code-in-c.html#cb222-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">v1</span><span class="op">)</span>
@@ -323,34 +334,34 @@
   <span class="fu">rangeC</span><span class="op">(</span><span class="va">v1</span><span class="op">)</span>,
   iterations <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2 x 6</span>
+<span class="co">#&gt; # A tibble: 2 × 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 range(v1)     3.2us    3.5us   269469.        0B        0</span>
-<span class="co">#&gt; 2 rangeC(v1)    2.5us    2.8us   323311.    7.02KB        0</span></code></pre></div>
+<span class="co">#&gt; 1 range(v1)     1.6µs   1.72µs   449671.        0B        0</span>
+<span class="co">#&gt; 2 rangeC(v1)   1.48µs   1.74µs   458203.    7.02KB        0</span></code></pre></div>
 <ul>
 <li><code><a href="https://rdrr.io/r/stats/cor.html">var()</a></code></li>
 </ul>
-<div class="sourceCode" id="cb217"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb217-1"><a href="rewriting-r-code-in-c.html#cb217-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb217-2"><a href="rewriting-r-code-in-c.html#cb217-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
-<span id="cb217-3"><a href="rewriting-r-code-in-c.html#cb217-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;numeric&gt;</span></span>
-<span id="cb217-4"><a href="rewriting-r-code-in-c.html#cb217-4" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb217-5"><a href="rewriting-r-code-in-c.html#cb217-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb217-6"><a href="rewriting-r-code-in-c.html#cb217-6" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb217-7"><a href="rewriting-r-code-in-c.html#cb217-7" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> variance<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> x<span class="op">)</span></span>
-<span id="cb217-8"><a href="rewriting-r-code-in-c.html#cb217-8" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb217-9"><a href="rewriting-r-code-in-c.html#cb217-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> sumSquared<span class="op">{</span><span class="dv">0</span><span class="op">};</span></span>
-<span id="cb217-10"><a href="rewriting-r-code-in-c.html#cb217-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb217-11"><a href="rewriting-r-code-in-c.html#cb217-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> mean <span class="op">=</span> <span class="bu">std::</span>accumulate<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>end<span class="op">(),</span> <span class="fl">0.0</span><span class="op">)</span> <span class="op">/</span> x<span class="op">.</span>size<span class="op">();</span></span>
-<span id="cb217-12"><a href="rewriting-r-code-in-c.html#cb217-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb217-13"><a href="rewriting-r-code-in-c.html#cb217-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> xElement <span class="op">:</span> x<span class="op">)</span></span>
-<span id="cb217-14"><a href="rewriting-r-code-in-c.html#cb217-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb217-15"><a href="rewriting-r-code-in-c.html#cb217-15" aria-hidden="true" tabindex="-1"></a>        sumSquared <span class="op">+=</span> pow<span class="op">(</span>xElement <span class="op">-</span> mean<span class="op">,</span> <span class="fl">2.0</span><span class="op">);</span></span>
-<span id="cb217-16"><a href="rewriting-r-code-in-c.html#cb217-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb217-17"><a href="rewriting-r-code-in-c.html#cb217-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb217-18"><a href="rewriting-r-code-in-c.html#cb217-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sumSquared <span class="op">/</span> <span class="op">(</span>x<span class="op">.</span>size<span class="op">()</span> <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb217-19"><a href="rewriting-r-code-in-c.html#cb217-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb224"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb224-1"><a href="rewriting-r-code-in-c.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb224-2"><a href="rewriting-r-code-in-c.html#cb224-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
+<span id="cb224-3"><a href="rewriting-r-code-in-c.html#cb224-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;numeric&gt;</span></span>
+<span id="cb224-4"><a href="rewriting-r-code-in-c.html#cb224-4" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb224-5"><a href="rewriting-r-code-in-c.html#cb224-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb224-6"><a href="rewriting-r-code-in-c.html#cb224-6" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb224-7"><a href="rewriting-r-code-in-c.html#cb224-7" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> variance<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> x<span class="op">)</span></span>
+<span id="cb224-8"><a href="rewriting-r-code-in-c.html#cb224-8" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb224-9"><a href="rewriting-r-code-in-c.html#cb224-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> sumSquared<span class="op">{</span><span class="dv">0</span><span class="op">};</span></span>
+<span id="cb224-10"><a href="rewriting-r-code-in-c.html#cb224-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb224-11"><a href="rewriting-r-code-in-c.html#cb224-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> mean <span class="op">=</span> <span class="bu">std::</span>accumulate<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>end<span class="op">(),</span> <span class="fl">0.0</span><span class="op">)</span> <span class="op">/</span> x<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb224-12"><a href="rewriting-r-code-in-c.html#cb224-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb224-13"><a href="rewriting-r-code-in-c.html#cb224-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> xElement <span class="op">:</span> x<span class="op">)</span></span>
+<span id="cb224-14"><a href="rewriting-r-code-in-c.html#cb224-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb224-15"><a href="rewriting-r-code-in-c.html#cb224-15" aria-hidden="true" tabindex="-1"></a>        sumSquared <span class="op">+=</span> pow<span class="op">(</span>xElement <span class="op">-</span> mean<span class="op">,</span> <span class="fl">2.0</span><span class="op">);</span></span>
+<span id="cb224-16"><a href="rewriting-r-code-in-c.html#cb224-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb224-17"><a href="rewriting-r-code-in-c.html#cb224-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb224-18"><a href="rewriting-r-code-in-c.html#cb224-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sumSquared <span class="op">/</span> <span class="op">(</span>x<span class="op">.</span>size<span class="op">()</span> <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb224-19"><a href="rewriting-r-code-in-c.html#cb224-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">7</span>, <span class="fl">8</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">v1</span><span class="op">)</span>
@@ -364,11 +375,11 @@
   <span class="fu">variance</span><span class="op">(</span><span class="va">v1</span><span class="op">)</span>,
   iterations <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2 x 6</span>
+<span class="co">#&gt; # A tibble: 2 × 6</span>
 <span class="co">#&gt;   expression        min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 var(v1)        10.2us   10.9us    87078.        0B</span>
-<span class="co">#&gt; 2 variance(v1)    2.2us    3.9us   251256.    7.02KB</span>
+<span class="co">#&gt; 1 var(v1)        4.92µs   6.31µs   152211.        0B</span>
+<span class="co">#&gt; 2 variance(v1) 943.01ns   1.02µs   718837.    7.02KB</span>
 <span class="co">#&gt;   `gc/sec`</span>
 <span class="co">#&gt;      &lt;dbl&gt;</span>
 <span class="co">#&gt; 1        0</span>
@@ -378,46 +389,47 @@
 <h2>
 <span class="header-section-number">15.2</span> Exercise 25.4.5<a class="anchor" aria-label="anchor" href="#exercise-25.4.5"><i class="fas fa-link"></i></a>
 </h2>
-<p><strong>Q1.</strong> Rewrite functions with original <code>na.rm</code> argument</p>
-<div class="sourceCode" id="cb219"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb219-1"><a href="rewriting-r-code-in-c.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb219-2"><a href="rewriting-r-code-in-c.html#cb219-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb219-3"><a href="rewriting-r-code-in-c.html#cb219-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
-<span id="cb219-4"><a href="rewriting-r-code-in-c.html#cb219-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;math.h&gt;</span></span>
-<span id="cb219-5"><a href="rewriting-r-code-in-c.html#cb219-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Rcpp.h&gt;</span></span>
-<span id="cb219-6"><a href="rewriting-r-code-in-c.html#cb219-6" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb219-7"><a href="rewriting-r-code-in-c.html#cb219-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb219-8"><a href="rewriting-r-code-in-c.html#cb219-8" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb219-9"><a href="rewriting-r-code-in-c.html#cb219-9" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> rangeC_NA<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> x<span class="op">,</span> <span class="dt">bool</span> removeNA <span class="op">=</span> <span class="kw">true</span><span class="op">)</span></span>
-<span id="cb219-10"><a href="rewriting-r-code-in-c.html#cb219-10" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb219-11"><a href="rewriting-r-code-in-c.html#cb219-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> rangeVec<span class="op">{</span><span class="fl">0.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">};</span></span>
-<span id="cb219-12"><a href="rewriting-r-code-in-c.html#cb219-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb219-13"><a href="rewriting-r-code-in-c.html#cb219-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> naPresent <span class="op">=</span> <span class="bu">std::</span>any_of<span class="op">(</span></span>
-<span id="cb219-14"><a href="rewriting-r-code-in-c.html#cb219-14" aria-hidden="true" tabindex="-1"></a>        x<span class="op">.</span>begin<span class="op">(),</span></span>
-<span id="cb219-15"><a href="rewriting-r-code-in-c.html#cb219-15" aria-hidden="true" tabindex="-1"></a>        x<span class="op">.</span>end<span class="op">(),</span></span>
-<span id="cb219-16"><a href="rewriting-r-code-in-c.html#cb219-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">[](</span><span class="dt">double</span> d<span class="op">)</span></span>
-<span id="cb219-17"><a href="rewriting-r-code-in-c.html#cb219-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span> <span class="cf">return</span> isnan<span class="op">(</span>d<span class="op">);</span> <span class="op">});</span></span>
-<span id="cb219-18"><a href="rewriting-r-code-in-c.html#cb219-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb219-19"><a href="rewriting-r-code-in-c.html#cb219-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>naPresent<span class="op">)</span></span>
-<span id="cb219-20"><a href="rewriting-r-code-in-c.html#cb219-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb219-21"><a href="rewriting-r-code-in-c.html#cb219-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>removeNA<span class="op">)</span></span>
-<span id="cb219-22"><a href="rewriting-r-code-in-c.html#cb219-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
-<span id="cb219-23"><a href="rewriting-r-code-in-c.html#cb219-23" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>remove<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>end<span class="op">(),</span> NAN<span class="op">);</span></span>
-<span id="cb219-24"><a href="rewriting-r-code-in-c.html#cb219-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
-<span id="cb219-25"><a href="rewriting-r-code-in-c.html#cb219-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
-<span id="cb219-26"><a href="rewriting-r-code-in-c.html#cb219-26" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
-<span id="cb219-27"><a href="rewriting-r-code-in-c.html#cb219-27" aria-hidden="true" tabindex="-1"></a>            rangeVec<span class="op">.</span>at<span class="op">(</span><span class="dv">0</span><span class="op">)</span> <span class="op">=</span> NA_REAL<span class="op">;</span> <span class="co">// NAN;</span></span>
-<span id="cb219-28"><a href="rewriting-r-code-in-c.html#cb219-28" aria-hidden="true" tabindex="-1"></a>            rangeVec<span class="op">.</span>at<span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">=</span> NA_REAL<span class="op">;</span> <span class="co">// NAN;</span></span>
-<span id="cb219-29"><a href="rewriting-r-code-in-c.html#cb219-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb219-30"><a href="rewriting-r-code-in-c.html#cb219-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> rangeVec<span class="op">;</span></span>
-<span id="cb219-31"><a href="rewriting-r-code-in-c.html#cb219-31" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
-<span id="cb219-32"><a href="rewriting-r-code-in-c.html#cb219-32" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb219-33"><a href="rewriting-r-code-in-c.html#cb219-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb219-34"><a href="rewriting-r-code-in-c.html#cb219-34" aria-hidden="true" tabindex="-1"></a>    rangeVec<span class="op">.</span>at<span class="op">(</span><span class="dv">0</span><span class="op">)</span> <span class="op">=</span> <span class="op">*</span><span class="bu">std::</span>min_element<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>end<span class="op">());</span></span>
-<span id="cb219-35"><a href="rewriting-r-code-in-c.html#cb219-35" aria-hidden="true" tabindex="-1"></a>    rangeVec<span class="op">.</span>at<span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">=</span> <span class="op">*</span><span class="bu">std::</span>max_element<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>end<span class="op">());</span></span>
-<span id="cb219-36"><a href="rewriting-r-code-in-c.html#cb219-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb219-37"><a href="rewriting-r-code-in-c.html#cb219-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rangeVec<span class="op">;</span></span>
-<span id="cb219-38"><a href="rewriting-r-code-in-c.html#cb219-38" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
+<p><strong>Q1.</strong> Rewrite any of the functions from Exercise 25.2.6 to deal with missing values. If <code>na.rm</code> is true, ignore the missing values. If <code>na.rm</code> is false, return a missing value if the input contains any missing values. Some good functions to practice with are <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>, <code><a href="https://rdrr.io/r/base/range.html">range()</a></code>, <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>, and <code><a href="https://rdrr.io/r/stats/cor.html">var()</a></code>.</p>
+<p><strong>A1.</strong></p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb226-1"><a href="rewriting-r-code-in-c.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb226-2"><a href="rewriting-r-code-in-c.html#cb226-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb226-3"><a href="rewriting-r-code-in-c.html#cb226-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span id="cb226-4"><a href="rewriting-r-code-in-c.html#cb226-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;math.h&gt;</span></span>
+<span id="cb226-5"><a href="rewriting-r-code-in-c.html#cb226-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Rcpp.h&gt;</span></span>
+<span id="cb226-6"><a href="rewriting-r-code-in-c.html#cb226-6" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb226-7"><a href="rewriting-r-code-in-c.html#cb226-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb226-8"><a href="rewriting-r-code-in-c.html#cb226-8" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb226-9"><a href="rewriting-r-code-in-c.html#cb226-9" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> rangeC_NA<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> x<span class="op">,</span> <span class="dt">bool</span> removeNA <span class="op">=</span> <span class="kw">true</span><span class="op">)</span></span>
+<span id="cb226-10"><a href="rewriting-r-code-in-c.html#cb226-10" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb226-11"><a href="rewriting-r-code-in-c.html#cb226-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> rangeVec<span class="op">{</span><span class="fl">0.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">};</span></span>
+<span id="cb226-12"><a href="rewriting-r-code-in-c.html#cb226-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb226-13"><a href="rewriting-r-code-in-c.html#cb226-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> naPresent <span class="op">=</span> <span class="bu">std::</span>any_of<span class="op">(</span></span>
+<span id="cb226-14"><a href="rewriting-r-code-in-c.html#cb226-14" aria-hidden="true" tabindex="-1"></a>        x<span class="op">.</span>begin<span class="op">(),</span></span>
+<span id="cb226-15"><a href="rewriting-r-code-in-c.html#cb226-15" aria-hidden="true" tabindex="-1"></a>        x<span class="op">.</span>end<span class="op">(),</span></span>
+<span id="cb226-16"><a href="rewriting-r-code-in-c.html#cb226-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">[](</span><span class="dt">double</span> d<span class="op">)</span></span>
+<span id="cb226-17"><a href="rewriting-r-code-in-c.html#cb226-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span> <span class="cf">return</span> isnan<span class="op">(</span>d<span class="op">);</span> <span class="op">});</span></span>
+<span id="cb226-18"><a href="rewriting-r-code-in-c.html#cb226-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb226-19"><a href="rewriting-r-code-in-c.html#cb226-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>naPresent<span class="op">)</span></span>
+<span id="cb226-20"><a href="rewriting-r-code-in-c.html#cb226-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb226-21"><a href="rewriting-r-code-in-c.html#cb226-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>removeNA<span class="op">)</span></span>
+<span id="cb226-22"><a href="rewriting-r-code-in-c.html#cb226-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb226-23"><a href="rewriting-r-code-in-c.html#cb226-23" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>remove<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>end<span class="op">(),</span> NAN<span class="op">);</span></span>
+<span id="cb226-24"><a href="rewriting-r-code-in-c.html#cb226-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb226-25"><a href="rewriting-r-code-in-c.html#cb226-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
+<span id="cb226-26"><a href="rewriting-r-code-in-c.html#cb226-26" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb226-27"><a href="rewriting-r-code-in-c.html#cb226-27" aria-hidden="true" tabindex="-1"></a>            rangeVec<span class="op">.</span>at<span class="op">(</span><span class="dv">0</span><span class="op">)</span> <span class="op">=</span> NA_REAL<span class="op">;</span> <span class="co">// NAN;</span></span>
+<span id="cb226-28"><a href="rewriting-r-code-in-c.html#cb226-28" aria-hidden="true" tabindex="-1"></a>            rangeVec<span class="op">.</span>at<span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">=</span> NA_REAL<span class="op">;</span> <span class="co">// NAN;</span></span>
+<span id="cb226-29"><a href="rewriting-r-code-in-c.html#cb226-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb226-30"><a href="rewriting-r-code-in-c.html#cb226-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> rangeVec<span class="op">;</span></span>
+<span id="cb226-31"><a href="rewriting-r-code-in-c.html#cb226-31" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb226-32"><a href="rewriting-r-code-in-c.html#cb226-32" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb226-33"><a href="rewriting-r-code-in-c.html#cb226-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb226-34"><a href="rewriting-r-code-in-c.html#cb226-34" aria-hidden="true" tabindex="-1"></a>    rangeVec<span class="op">.</span>at<span class="op">(</span><span class="dv">0</span><span class="op">)</span> <span class="op">=</span> <span class="op">*</span><span class="bu">std::</span>min_element<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>end<span class="op">());</span></span>
+<span id="cb226-35"><a href="rewriting-r-code-in-c.html#cb226-35" aria-hidden="true" tabindex="-1"></a>    rangeVec<span class="op">.</span>at<span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">=</span> <span class="op">*</span><span class="bu">std::</span>max_element<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>end<span class="op">());</span></span>
+<span id="cb226-36"><a href="rewriting-r-code-in-c.html#cb226-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb226-37"><a href="rewriting-r-code-in-c.html#cb226-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rangeVec<span class="op">;</span></span>
+<span id="cb226-38"><a href="rewriting-r-code-in-c.html#cb226-38" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">4</span>, <span class="cn">NA</span>, <span class="fl">6</span>, <span class="fl">8</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">v1</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -429,34 +441,48 @@
 <span class="co">#&gt; [1]  4 10</span>
 <span class="fu">rangeC_NA</span><span class="op">(</span><span class="va">v1</span>, <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; [1]  4 10</span></code></pre></div>
-<p><strong>Q2.</strong> Rewrite functions without original <code>na.rm</code> argument</p>
+<p><strong>Q2.</strong> Rewrite <code><a href="https://rdrr.io/r/base/cumsum.html">cumsum()</a></code> and <code><a href="https://rdrr.io/r/base/diff.html">diff()</a></code> so they can handle missing values. Note that these functions have slightly more complicated behaviour.</p>
 </div>
 <div id="exercise-25.5.7" class="section level2" number="15.3">
 <h2>
 <span class="header-section-number">15.3</span> Exercise 25.5.7<a class="anchor" aria-label="anchor" href="#exercise-25.5.7"><i class="fas fa-link"></i></a>
 </h2>
-<p><strong>Q1.</strong> <code><a href="https://rdrr.io/r/stats/median.html">median.default()</a></code> using <code>partial_sort()</code></p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb221-1"><a href="rewriting-r-code-in-c.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb221-2"><a href="rewriting-r-code-in-c.html#cb221-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb221-3"><a href="rewriting-r-code-in-c.html#cb221-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
-<span id="cb221-4"><a href="rewriting-r-code-in-c.html#cb221-4" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb221-5"><a href="rewriting-r-code-in-c.html#cb221-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb221-6"><a href="rewriting-r-code-in-c.html#cb221-6" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb221-7"><a href="rewriting-r-code-in-c.html#cb221-7" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> medianC<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> x<span class="op">)</span></span>
-<span id="cb221-8"><a href="rewriting-r-code-in-c.html#cb221-8" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb221-9"><a href="rewriting-r-code-in-c.html#cb221-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> middleIndex <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>x<span class="op">.</span>size<span class="op">()</span> <span class="op">/</span> <span class="dv">2</span><span class="op">);</span></span>
-<span id="cb221-10"><a href="rewriting-r-code-in-c.html#cb221-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb221-11"><a href="rewriting-r-code-in-c.html#cb221-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>partial_sort<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>begin<span class="op">()</span> <span class="op">+</span> middleIndex<span class="op">,</span> x<span class="op">.</span>end<span class="op">());</span></span>
-<span id="cb221-12"><a href="rewriting-r-code-in-c.html#cb221-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb221-13"><a href="rewriting-r-code-in-c.html#cb221-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// for even number of observations</span></span>
-<span id="cb221-14"><a href="rewriting-r-code-in-c.html#cb221-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>x<span class="op">.</span>size<span class="op">()</span> <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb221-15"><a href="rewriting-r-code-in-c.html#cb221-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb221-16"><a href="rewriting-r-code-in-c.html#cb221-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">(</span>x<span class="op">[</span>middleIndex <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">+</span> x<span class="op">[</span>middleIndex<span class="op">])</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb221-17"><a href="rewriting-r-code-in-c.html#cb221-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb221-18"><a href="rewriting-r-code-in-c.html#cb221-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb221-19"><a href="rewriting-r-code-in-c.html#cb221-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x<span class="op">[</span>middleIndex<span class="op">];</span></span>
-<span id="cb221-20"><a href="rewriting-r-code-in-c.html#cb221-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
+<p><strong>Q1.</strong> To practice using the STL algorithms and data structures, implement the following using R functions in C++, using the hints provided:</p>
+<ol style="list-style-type: decimal">
+<li><p><code><a href="https://rdrr.io/r/stats/median.html">median.default()</a></code> using <code>partial_sort</code>.</p></li>
+<li><p><code>%in%</code> using <code>unordered_set</code> and the <code><a href="https://rdrr.io/r/utils/apropos.html">find()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> methods.</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/unique.html">unique()</a></code> using an <code>unordered_set</code> (challenge: do it in one line!).</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code> using <code>std::min()</code>, or <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code> using <code>std::max()</code>.</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/which.min.html">which.min()</a></code> using <code>min_element</code>, or <code><a href="https://rdrr.io/r/base/which.min.html">which.max()</a></code> using <code>max_element</code>.</p></li>
+<li><p><code><a href="https://generics.r-lib.org/reference/setops.html">setdiff()</a></code>, <code><a href="https://generics.r-lib.org/reference/setops.html">union()</a></code>, and <code><a href="https://generics.r-lib.org/reference/setops.html">intersect()</a></code> for integers using sorted ranges and <code>set_union</code>, <code>set_intersection</code> and <code>set_difference</code>.</p></li>
+</ol>
+<p><strong>A1.</strong></p>
+<ul>
+<li>
+<code><a href="https://rdrr.io/r/stats/median.html">median.default()</a></code> using <code>partial_sort</code>
+</li>
+</ul>
+<div class="sourceCode" id="cb228"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb228-1"><a href="rewriting-r-code-in-c.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb228-2"><a href="rewriting-r-code-in-c.html#cb228-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb228-3"><a href="rewriting-r-code-in-c.html#cb228-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span id="cb228-4"><a href="rewriting-r-code-in-c.html#cb228-4" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb228-5"><a href="rewriting-r-code-in-c.html#cb228-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb228-6"><a href="rewriting-r-code-in-c.html#cb228-6" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb228-7"><a href="rewriting-r-code-in-c.html#cb228-7" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> medianC<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> x<span class="op">)</span></span>
+<span id="cb228-8"><a href="rewriting-r-code-in-c.html#cb228-8" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb228-9"><a href="rewriting-r-code-in-c.html#cb228-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> middleIndex <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>x<span class="op">.</span>size<span class="op">()</span> <span class="op">/</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb228-10"><a href="rewriting-r-code-in-c.html#cb228-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb228-11"><a href="rewriting-r-code-in-c.html#cb228-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>partial_sort<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>begin<span class="op">()</span> <span class="op">+</span> middleIndex<span class="op">,</span> x<span class="op">.</span>end<span class="op">());</span></span>
+<span id="cb228-12"><a href="rewriting-r-code-in-c.html#cb228-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb228-13"><a href="rewriting-r-code-in-c.html#cb228-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// for even number of observations</span></span>
+<span id="cb228-14"><a href="rewriting-r-code-in-c.html#cb228-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>x<span class="op">.</span>size<span class="op">()</span> <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb228-15"><a href="rewriting-r-code-in-c.html#cb228-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb228-16"><a href="rewriting-r-code-in-c.html#cb228-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">(</span>x<span class="op">[</span>middleIndex <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">+</span> x<span class="op">[</span>middleIndex<span class="op">])</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb228-17"><a href="rewriting-r-code-in-c.html#cb228-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb228-18"><a href="rewriting-r-code-in-c.html#cb228-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb228-19"><a href="rewriting-r-code-in-c.html#cb228-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x<span class="op">[</span>middleIndex<span class="op">];</span></span>
+<span id="cb228-20"><a href="rewriting-r-code-in-c.html#cb228-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span><span class="op">)</span>
 <span class="va">v2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">9</span><span class="op">)</span>
 
@@ -476,11 +502,11 @@
   <span class="fu">medianC</span><span class="op">(</span><span class="va">v2</span><span class="op">)</span>,
   iterations <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2 x 6</span>
+<span class="co">#&gt; # A tibble: 2 × 6</span>
 <span class="co">#&gt;   expression              min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;         &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 median.default(v2)   28.1us   29.7us    32116.        0B</span>
-<span class="co">#&gt; 2 medianC(v2)           2.3us    2.5us   364830.    2.49KB</span>
+<span class="co">#&gt; 1 median.default(v2)  20.05µs  21.79µs    42355.        0B</span>
+<span class="co">#&gt; 2 medianC(v2)          1.52µs   1.72µs   544788.    2.49KB</span>
 <span class="co">#&gt;   `gc/sec`</span>
 <span class="co">#&gt;      &lt;dbl&gt;</span>
 <span class="co">#&gt; 1        0</span>

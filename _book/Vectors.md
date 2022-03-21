@@ -4,7 +4,11 @@
 
 ## Exercise 3.2.5 
 
-**Q1.** Create raw and complex scalars
+**Q1.** How do you create raw and complex scalars? (See `?raw` and `?complex`.)
+
+**A1.** 
+
+- raw vectors
 
 The raw type holds raw bytes. For example,
 
@@ -19,15 +23,17 @@ typeof(y)
 #> [1] "raw"
 ```
 
-You can use it to also figure out differences in similar characters:
+You can use it to also figure out differences between characters that might look quite similar:
 
 
 ```r
 charToRaw("–") # en-dash
-#> [1] 96
+#> [1] e2 80 93
 charToRaw("—") # em-dash
-#> [1] 97
+#> [1] e2 80 94
 ```
+
+- complex vectors
 
 Complex vectors can be used to represent (surprise!) complex numbers.
 
@@ -42,9 +48,16 @@ typeof(x)
 #> [1] "complex"
 ```
 
-**Q2.** Vector coercion rules
+**Q2.** Test your knowledge of the vector coercion rules by predicting the output of the following uses of `c()`:
 
-Usually, the more *general* type would take precedence.
+
+```r
+c(1, FALSE)
+c("a", 1)
+c(TRUE, 1L)
+```
+
+**A2.** Usually, the more *general* type would take precedence.
 
 
 ```r
@@ -72,9 +85,9 @@ c(TRUE, "1.0")
 #> [1] "TRUE" "1.0"
 ```
 
-**Q3.** Comparisons between different types
+**Q3.** Why is `1 == "1"` true? Why is `-1 < FALSE` true? Why is `"one" < 2` false?
 
-The coercion in vectors reveal why some of these comparisons return the results that they do.
+**A3.** The coercion rules for vectors reveal why some of these comparisons return the results that they do.
 
 
 ```r
@@ -106,9 +119,9 @@ sort(c("one", 2))
 #> [1] "2"   "one"
 ```
 
-**Q4.** Why `NA` defaults to `"logical"` type
+**Q4.** Why is the default missing value, `NA`, a logical vector? What's special about logical vectors? (Hint: think about `c(FALSE, NA_character_)`.)
 
-The `"logical"` type is the lowest in the coercion hierarchy.
+**A4.** The `"logical"` type is the lowest in the coercion hierarchy.
 
 So `NA` defaulting to any other type (e.g. `"numeric"`) would mean that any time there is a missing element in a vector, rest of the elements would be converted to a type higher in hierarchy, which would be problematic for types lower in hierarchy.
 
@@ -121,7 +134,9 @@ c(FALSE, NA_character_)
 #> [1] "FALSE" NA
 ```
 
-**Q5.** Misleading variants of `is.*` functions
+**Q5.** Precisely what do `is.atomic()`, `is.numeric()`, and `is.vector()` test for?
+
+**A5.** 
 
 - `is.atomic()`
 
@@ -156,7 +171,6 @@ is.numeric(x)
 #> [1] FALSE
 ```
 
-
 - `is.vector()`
 
 As the documentation for this function reveals:
@@ -188,7 +202,9 @@ is.null(dim(x))
 
 ## Exercise 3.3.4
 
-**Q1.** Reading source code
+**Q1.** How is `setNames()` implemented? How is `unname()` implemented? Read the source code.
+
+**A1.**
 
 
 ```r
@@ -198,7 +214,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x000000001a2bb640>
+#> <bytecode: 0x12023cef8>
 #> <environment: namespace:stats>
 
 setNames(c(1, 2), c("a", "b"))
@@ -217,7 +233,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x0000000017f13850>
+#> <bytecode: 0x1375b28f0>
 #> <environment: namespace:base>
 
 A <- provideDimnames(N <- array(1:24, dim = 2:4))
@@ -248,9 +264,9 @@ unname(A, force = TRUE)
 #> [2,]   20   22   24
 ```
 
-**Q2.** 1-dimensional vector
+**Q2.** What does `dim()` return when applied to a 1-dimensional vector? When might you use `NROW()` or `NCOL()`?
 
-Dimensions for a 1-dimensional vector are `NULL`.
+**A2.** Dimensions for a 1-dimensional vector are `NULL`.
 
 `NROW()` and `NCOL()` are helpful for getting dimensions for 1D vectors by treating them as if they were matrices or dataframes.
 
@@ -272,7 +288,16 @@ NCOL(x)
 #> [1] 1
 ```
 
-**Q3.** Difference between vectors and arrays
+**Q3.** How would you describe the following three objects? What makes them different from `1:5`?
+
+
+```r
+x1 <- array(1:5, c(1, 1, 5))
+x2 <- array(1:5, c(1, 5, 1))
+x3 <- array(1:5, c(5, 1, 1))
+```
+
+**A3.**
 
 - `1:5` is a dimensionless **vector** 
 - `x1`, `x2`, and `x3` are one-dimensional **array** 
@@ -332,11 +357,17 @@ dim(x3)
 #> [1] 5 1 1
 ```
 
-We can look at the dim attribute
+**Q4.** An early draft used this code to illustrate `structure()`:
 
-**Q4.** About `structure()`
 
-From `?attributes` (emphasis mine):
+```r
+structure(1:5, comment = "my attribute")
+#> [1] 1 2 3 4 5
+```
+
+But when you print that object you don't see the comment attribute. Why? Is the attribute missing, or is there something else special about it? (Hint: try using help.)
+
+**A4.** From `?attributes` (emphasis mine):
 
 > Note that some attributes (namely class, **comment**, dim, dimnames, names, row.names and tsp) are treated specially and have restrictions on the values which can be set.
 
@@ -353,9 +384,9 @@ structure(1:5, comment = "my attribute")
 
 ## Exercise 3.4.5
 
-**Q1.** `table()` function
+**Q1.** What sort of object does `table()` return? What is its type? What attributes does it have? How does the dimensionality change as you tabulate more variables?
 
-`table()` returns an array with integer type and its dimensions scale with the number of variables present.
+**A1.** `table()` returns an array with integer type and its dimensions scale with the number of variables present.
 
 
 ```r
@@ -444,9 +475,15 @@ purrr::map(list(x, y, z), attributes)
 #> [1] "table"
 ```
 
-**Q2.** Factor reversal
+**Q2.** What happens to a factor when you modify its levels? 
 
-Its levels changes but the underlying integer values remain the same.
+
+```r
+f1 <- factor(letters)
+levels(f1) <- rev(levels(f1))
+```
+
+**A2.** Its levels changes but the underlying integer values remain the same.
 
 
 ```r
@@ -467,7 +504,15 @@ as.integer(f1)
 #> [19] 19 20 21 22 23 24 25 26
 ```
 
-**Q3.** Factor reversal-2
+**Q3.** What does this code do? How do `f2` and `f3` differ from `f1`?
+
+
+```r
+f2 <- rev(factor(letters))
+f3 <- factor(letters, levels = rev(letters))
+```
+
+**A3.** In this code:
 
 `f2`: Only the underlying integers are reversed, but levels remain unchanged.
 `f3`: Both the levels and the underlying integers are reversed.
@@ -493,7 +538,9 @@ as.integer(f3)
 
 ## Exercise 3.5.4
 
-**Q1.** Differences between list and atomic vector
+**Q1.** List all the ways that a list differs from an atomic vector.
+
+**A1.** 
 
 feature | atomic vector  | list (aka generic vector)
 ------- | -------------- | --------------
@@ -502,10 +549,9 @@ recursive? | no | yes^[(a list can contain itself)]
 return for out-of-bounds index | `NA`^[(e.g. `c(1)[2]`)] | `NULL`^[(e.g. `list(1)[2]`)]
 memory address | single memory reference^[`lobstr::ref(c(1, 2))`] | reference per list element^[`lobstr::ref(list(1, 2))`]
 
+**Q2.** Why do you need to use `unlist()` to convert a list to an atomic vector? Why doesn't `as.vector()` work? 
 
-**Q2.** Converting a list to an atomic vector
-
-List already *is* a vector, so `as.vector` is not going to change anything, and there is no `as.atomic.vector`. Thus the need to use `unlist()`.
+**A2.** List already *is* a (generic) vector, so `as.vector` is not going to change anything, and there is no `as.atomic.vector`. Thus the need to use `unlist()`.
 
 
 ```r
@@ -528,7 +574,9 @@ unlist(x)
 #> 1 2
 ```
 
-**Q3.** Comparing `c()` and `unlist()` for date and datetime
+**Q3.** Compare and contrast `c()` and `unlist()` when combining a date and date-time into a single vector.
+
+**A3.** 
 
 
 ```r
@@ -589,9 +637,9 @@ unlist(list(datetime, date))
 
 ## Exercise 3.6.8
 
-**Q1.** Data frame with 0 dimensions
+**Q1.** Can you have a data frame with zero rows? What about zero columns?
 
-Data frame with 0 rows is possible. This is basically a list with a vector of length 0.
+**A1.** Data frame with 0 rows is possible. This is basically a list with a vector of length 0.
 
 
 ```r
@@ -619,9 +667,9 @@ dim(data.frame())
 #> [1] 0 0
 ```
 
-**Q2.** Non-unique rownames
+**Q2.** What happens if you attempt to set rownames that are not unique?
 
-If you attempt to set rownames that are not unique, it will not work.
+**A2.** If you attempt to set rownames that are not unique, it will not work.
 
 
 ```r
@@ -629,9 +677,9 @@ data.frame(row.names = c(1, 1))
 #> Error in data.frame(row.names = c(1, 1)): duplicate row.names: 1
 ```
 
-**Q3.** Transposing dataframes
+**Q3.** If `df` is a data frame, what can you say about `t(df)`, and `t(t(df))`? Perform some experiments, making sure to try different column types.
 
-Transposing a dataframe transforms it into a matrix and coerces all its elements to be of the same type.
+**A3.** Transposing a dataframe transforms it into a matrix and coerces all its elements to be of the same type.
 
 
 ```r
@@ -702,9 +750,9 @@ dim(t(t(df)))
 #> [1] 6 5
 ```
 
-**Q4.** `as.matrix()` and dataframe
+**Q4.** What does `as.matrix()` do when applied to a data frame with columns of different types? How does it differ from `data.matrix()`?
 
-The return type of `as.matrix()` depends on dataframe column types.
+**A4.** The return type of `as.matrix()` depends on dataframe column types.
 
 
 ```r
@@ -783,4 +831,3 @@ str(data.matrix(df))
 #>   ..$ : chr [1:6] "1" "2" "3" "4" ...
 #>   ..$ : chr [1:5] "Sepal.Length" "Sepal.Width" "Petal.Length" "Petal.Width" ...
 ```
-

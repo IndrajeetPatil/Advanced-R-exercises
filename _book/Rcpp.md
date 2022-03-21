@@ -4,13 +4,12 @@
 
 ## Exercise 25.2.6
 
-**Q1.** Figure out base function corresponding to Rccp code
-
+**Q1.** With the basics of C++ in hand, it's now a great time to practice by reading and writing some simple C++ functions. For each ofthe following functions, read the code and figure out what the corresponding base R function is. You might not understand every part of the code yet, but you should be able to figure out the basics of what the function does.
+ 
 
 ```r
 library(Rcpp)
 ```
-
 
 
 ```cpp
@@ -76,6 +75,8 @@ NumericVector f5(NumericVector x, NumericVector y) {
   return out;
 }
 ```
+
+**A1.** 
 
 `f1()` is the same as `mean()`:
 
@@ -144,9 +145,22 @@ pmin(v1, v2)
 #> [1] 1 2 4 2 6 1
 ```
 
-**Q2.** Converting base function to Rcpp
+**Q2.** To practice your function writing skills, convert the following functions into C++. For now, assume the inputs have no missing values.
+  
+    1. `all()`.
+    
+    2. `cumprod()`, `cummin()`, `cummax()`.
+    
+    3. `diff()`. Start by assuming lag 1, and then generalise for lag `n`.
+    
+    4. `range()`.
+    
+    5. `var()`. Read about the approaches you can take on 
+       [Wikipedia](http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance).
+       Whenever implementing a numerical algorithm, it's always good to check 
+       what is already known about the problem.
 
-The performance benefits are not going to be observed if the function is primitive since those are already tuned to the max in R for performance. So, expect performance gain only for `diff()` and `var()`.
+**A2.** The performance benefits are not going to be observed if the function is primitive since those are already tuned to the max in R for performance. So, expect performance gain only for `diff()` and `var()`.
 
 
 ```r
@@ -202,15 +216,15 @@ bench::mark(
   allC(c(rep(TRUE, 1000), rep(FALSE, 1000))),
   iterations = 100
 )
-#> # A tibble: 2 x 6
+#> # A tibble: 2 × 6
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
-#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))      11us
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   15.5us
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    5.29µs
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))  10.09µs
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1   18.4us    52762.    15.8KB        0
-#> 2   19.2us    48466.    18.3KB        0
+#> 1   6.01µs   152926.    15.8KB        0
+#> 2   10.7µs    84311.    18.3KB        0
 ```
 
 - `cumprod()`
@@ -249,11 +263,11 @@ bench::mark(
   cumulativeProduct(v1),
   iterations = 100
 )
-#> # A tibble: 2 x 6
+#> # A tibble: 2 × 6
 #>   expression                 min   median `itr/sec`
 #>   <bch:expr>            <bch:tm> <bch:tm>     <dbl>
-#> 1 cumprod(v1)              100ns    200ns  3184713.
-#> 2 cumulativeProduct(v1)    2.3us    3.7us   264201.
+#> 1 cumprod(v1)            41.01ns     82ns 10204443.
+#> 2 cumulativeProduct(v1)   1.11µs   1.19µs   652841.
 #>   mem_alloc `gc/sec`
 #>   <bch:byt>    <dbl>
 #> 1        0B        0
@@ -300,11 +314,11 @@ bench::mark(
   rangeC(v1),
   iterations = 100
 )
-#> # A tibble: 2 x 6
+#> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 range(v1)     3.2us    3.5us   269469.        0B        0
-#> 2 rangeC(v1)    2.5us    2.8us   323311.    7.02KB        0
+#> 1 range(v1)     1.6µs   1.72µs   449671.        0B        0
+#> 2 rangeC(v1)   1.48µs   1.74µs   458203.    7.02KB        0
 ```
 
 - `var()`
@@ -348,11 +362,11 @@ bench::mark(
   variance(v1),
   iterations = 100
 )
-#> # A tibble: 2 x 6
+#> # A tibble: 2 × 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 var(v1)        10.2us   10.9us    87078.        0B
-#> 2 variance(v1)    2.2us    3.9us   251256.    7.02KB
+#> 1 var(v1)        4.92µs   6.31µs   152211.        0B
+#> 2 variance(v1) 943.01ns   1.02µs   718837.    7.02KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -361,7 +375,9 @@ bench::mark(
 
 ## Exercise 25.4.5
 
-**Q1.** Rewrite functions with original `na.rm` argument
+**Q1.** Rewrite any of the functions from Exercise 25.2.6 to deal with missing values. If `na.rm` is true, ignore the missing values. If `na.rm` is false,  return a missing value if the input contains any missing values. Some good functions to practice with are `min()`, `max()`, `range()`, `mean()`, and `var()`.
+
+**A1.**
 
 
 ```cpp
@@ -420,11 +436,27 @@ rangeC_NA(v1, TRUE)
 #> [1]  4 10
 ```
 
-**Q2.** Rewrite functions without original `na.rm` argument
+**Q2.** Rewrite `cumsum()` and `diff()` so they can handle missing values. Note that these functions have slightly more complicated behaviour.
 
 ## Exercise 25.5.7
 
-**Q1.** `median.default()` using `partial_sort()`
+**Q1.** To practice using the STL algorithms and data structures, implement the following using R functions in C++, using the hints provided:
+
+1. `median.default()` using `partial_sort`.
+
+1. `%in%` using `unordered_set` and the `find()` or `count()` methods.
+
+1. `unique()` using an `unordered_set` (challenge: do it in one line!).
+
+1. `min()` using `std::min()`, or `max()` using `std::max()`.
+
+1. `which.min()` using `min_element`, or `which.max()` using `max_element`.
+
+1. `setdiff()`, `union()`, and `intersect()` for integers using sorted ranges and `set_union`, `set_intersection` and `set_difference`.
+
+**A1.** 
+
+- `median.default()` using `partial_sort`
 
 
 ```cpp
@@ -472,11 +504,11 @@ bench::mark(
   medianC(v2),
   iterations = 100
 )
-#> # A tibble: 2 x 6
+#> # A tibble: 2 × 6
 #>   expression              min   median `itr/sec` mem_alloc
 #>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 median.default(v2)   28.1us   29.7us    32116.        0B
-#> 2 medianC(v2)           2.3us    2.5us   364830.    2.49KB
+#> 1 median.default(v2)  20.05µs  21.79µs    42355.        0B
+#> 2 medianC(v2)          1.52µs   1.72µs   544788.    2.49KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

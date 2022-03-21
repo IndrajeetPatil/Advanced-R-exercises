@@ -6,9 +6,9 @@ source("common.R")
 
 ## Exercise 14.2.6 
 
-**Q1.** R6 class for bank account
+**Q1.** Create a bank account R6 class that stores a balance and allows you to deposit and withdraw money. Create a subclass that throws an error if you attempt to go into overdraft. Create another subclass that allows you to go into overdraft, but charges you a fee. Create the superclass and make sure it works as expected.
 
-Create the superclass and make sure it works as expected.
+**A1.** 
 
 ```{r, error=TRUE}
 library(R6)
@@ -158,7 +158,15 @@ Mangesh$withdraw(-54)
 Mangesh <- bankAccountFee$new(name = "Mangesh", balance = -45)
 ```
 
-**Q2.** R6 class for carddeck
+**Q2.** Create an R6 class that represents a shuffled deck of cards. You should be able to draw cards from the deck with `$draw(n)`, and return all cards to the deck and reshuffle with `$reshuffle()`. Use the following code to make a vector of cards.
+    
+```{r}
+suit <- c("♠", "♥", "♦", "♣")
+value <- c("A", 2:10, "J", "Q", "K")
+cards <- paste0(rep(value, 4), suit)
+```
+
+**A2.** 
 
 ```{r, eval=FALSE}
 suit <- c("SPADE", "HEARTS", "DIAMOND", "CLUB") # sigh, Windows encoding issues
@@ -195,9 +203,23 @@ mydeck$draw(4)
 # reshuffle
 ```
 
+**Q3.** Why can't you model a bank account or a deck of cards with an S3 class?
+
+**Q4.** Create an R6 class that allows you to get and set the current time zone. You can access the current time zone with `Sys.timezone()` and set it with `Sys.setenv(TZ = "newtimezone")`. When setting the time zone, make sure the new time zone is in the list provided by `OlsonNames()`.
+
+**Q5.** Create an R6 class that manages the current working directory. It should have `$get()` and `$set()` methods.
+
+**Q6.**  Why can't you model the time zone or current working directory with an S3 class?
+
+**Q7.** What base type are R6 objects built on top of? What attributes do they have?
+
 ## Exercise 14.3.3
 
-**Q2.** Class to store and check password
+**Q1.** Create a bank account class that prevents you from directly setting the  account balance, but you can still withdraw from and deposit to. Throw an error if you attempt to go into overdraft.
+
+**Q2.** Create a class with a write-only `$password` field. It should have `$check_password(password)` method that returns `TRUE` or `FALSE`, but there should be no way to view the complete password.
+
+**A2.**
 
 ```{r}
 library(R6)
@@ -247,9 +269,11 @@ But, of course, everything is possible:
 myCheck$.__enclos_env__$private$.password
 ```
 
-**Q4.** Inheriting private fields and methods from superclass
+**Q3.** Extend the `Rando` class with another active binding that allows you to access the previous random value. Ensure that active binding is the only way to access the value.
 
-Unlike classical OOP in other languages (e.g. C++), R6 subclasses also have access to the private methods in superclass (or base class).
+**Q4.** Can subclasses access private fields/methods from their parent? Perform an experiment to find out.
+
+**A4.** Unlike classical OOP in other languages (e.g. C++), R6 subclasses also have access to the private methods in superclass (or base class).
 
 For instance, in the following example, the `Duck` class has a private method `$quack()`, but its subclass `Mallard` can access it using `super$quack()`.
 
@@ -269,7 +293,7 @@ myMallard$quack()
 
 ## Exercise 14.4.4
 
-**Q1.** Write R6 class to edit file
+**Q1.** Create a class that allows you to write a line to a specified file. You should open a connection to the file in `$initialize()`, append a line using `cat()` in `$append_line()`, and close the connection in `$finalize()`.
 
 ```{r}
 library(R6)
