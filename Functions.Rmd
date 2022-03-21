@@ -6,9 +6,9 @@ source("common.R")
 
 ## Exercise 6.2.5
 
-**Q1.** Function names
+**Q1.** Given a name, like `"mean"`, `match.fun()` lets you find a function. Given a function, can you find its name? Why doesn't that make sense in R?
 
-Given a name, `match.fun()` lets you find a function.
+**A1.** Given a name, `match.fun()` lets you find a function.
 
 ```{r}
 match.fun("mean")
@@ -25,9 +25,14 @@ match.fun("f1")
 match.fun("f2")
 ```
 
-**Q2.** Correct way to call anonymous functions
+**Q2.** It's possible (although typically not useful) to call an anonymous function. Which of the two approaches below is correct? Why?
 
-This is not correct since the function will evaluate `3()`, which is syntactically not allowed since literals can't be treated like functions.
+```{r, result = "hide"}
+function(x) 3()
+(function(x) 3)()
+```
+
+**A2.** This is not correct since the function will evaluate `3()`, which is syntactically not allowed since literals can't be treated like functions.
 
 ```{r, error=TRUE}
 (function(x) 3())()
@@ -39,13 +44,13 @@ This is correct.
 (function(x) 3)()
 ```
 
-**Q3.** Scan code for opportunities to use anonymous function
+**Q3.** A good rule of thumb is that an anonymous function should fit on one line and shouldn't need to use `{}`. Review your code. Where could you have used an anonymous function instead of a named function? Where should you have used a named function instead of an anonymous function?
 
-Self activity.
+**A3.** Self activity.
 
-**Q4.** Detecting functions and primitive functions
+**Q4.** What function allows you to tell if an object is a function? What function allows you to tell if a function is a primitive function?
 
-Use `is.function()` to check if an object is a function:
+**A4.** Use `is.function()` to check if an object is a function:
 
 ```{r}
 # these are functions
@@ -70,14 +75,30 @@ is.primitive(mean)
 is.primitive(read.csv)
 ```
 
-**Q5.** Detecting functions and primitive functions
+**Q5.** This code makes a list of all functions in the base package. 
+
+```{r, eval = FALSE}
+objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
+funs <- Filter(is.function, objs)
+```
+
+    Use it to answer the following questions:
+
+    a. Which base function has the most arguments?
+    
+    a. How many base functions have no arguments? What's special about those
+       functions?
+       
+    a. How could you adapt the code to find all primitive functions?
+
+**A5.** The provided code is the following:
 
 ```{r}
 objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
 funs <- Filter(is.function, objs)
 ```
 
-> Which base function has the most arguments?
+- Which base function has the most arguments?
 
 `scan()` function has the most arguments.
 
@@ -93,7 +114,7 @@ df_formals <- purrr::map_df(funs, ~ length(formals(.))) %>%
   dplyr::arrange(desc(argumentCount))
 ```
 
-> How many base functions have no arguments? What’s special about those functions?
+- How many base functions have no arguments? What’s special about those functions?
 
 At the time of writing, 253 base functions have no arguments. Most of these are primitive functions
 
@@ -101,7 +122,7 @@ At the time of writing, 253 base functions have no arguments. Most of these are 
 dplyr::filter(df_formals, argumentCount == 0)
 ```
 
-> How could you adapt the code to find all primitive functions?
+- How could you adapt the code to find all primitive functions?
 
 ```{r}
 objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
@@ -111,17 +132,17 @@ primitives <- Filter(is.primitive, funs)
 names(primitives)
 ```
 
-**Q6.** Important components of a function
+**Q6.** What are the three important components of a function?
 
-Except for primitive functions, all functions have 3 important components:
+**A6.** Except for primitive functions, all functions have 3 important components:
 
 * `formals()`
 * `body()`
 * `environment()`
 
-**Q7.** Printing of function environment
+**Q7.** When does printing a function not show the environment it was created in?
 
-All package functions print their environment:
+**A7.** All package functions print their environment:
 
 ```{r}
 # base
@@ -133,13 +154,13 @@ purrr::map
 
 There are two exceptions to this rule:
 
-* primitive functions:
+- primitive functions
 
 ```{r}
 sum
 ```
 
-* functions created in the global environment:
+- functions created in the global environment
 
 ```{r}
 f <- function(x) mean(x)
@@ -148,9 +169,15 @@ f
 
 ## Exercise 6.4.5
 
-**Q1.** All about *c*
+**Q1.** What does the following code return? Why? Describe how each of the three `c`'s is interpreted.
 
-In `c(c = c)`:
+```{r, eval = FALSE}
+c <- 10
+c(c = c)
+```
+
+**A1.** In `c(c = c)`:
+
 * first *c* is interpreted as a function `c()`
 * second *c* as a name for the vector element
 * third *c* as a variable with value `10`
@@ -160,7 +187,9 @@ c <- 10
 c(c = c)
 ```
 
-**Q2.** Four principles that govern how R looks for values
+**Q2.** What are the four principles that govern how R looks for values?
+
+**A2.** Here are the four principles:
 
 1. Name masking (names defined inside a function mask names defined outside a function)
 
@@ -170,7 +199,21 @@ c(c = c)
 
 4. Dynamic look-up (R looks for values when the function is run, not when the function is created)
 
-**Q3.** Predict the return
+**Q3.** What does the following function return? Make a prediction before 
+   running the code yourself.
+
+```{r, results = "hide"}
+f <- function(x) {
+  f <- function(x) {
+    f <- function() {
+      x^2
+    }
+    f() + 1
+  }
+  f(x) * 2
+}
+f(10)
+```
 
 Correctly predicted 😉😉
 
@@ -188,12 +231,33 @@ f <- function(x) {
 f(10)
 ```
 
-
 ## Exercise 6.5.4 
 
-**Q1.** Property of `&&`
+**Q1.** What important property of `&&` makes `x_ok()` work?
 
-`&&` evaluates left to right and short-circuit evaluation, i.e., if the first operand is `TRUE`, R will short-circuit and not even look at the second operand.
+```{r, eval = FALSE}
+x_ok <- function(x) {
+  !is.null(x) && length(x) == 1 && x > 0
+}
+
+x_ok(NULL)
+x_ok(1)
+x_ok(1:3)
+```
+
+What is different with this code? Why is this behaviour undesirable here?
+    
+```{r, eval = FALSE}
+x_ok <- function(x) {
+  !is.null(x) & length(x) == 1 & x > 0
+}
+
+x_ok(NULL)
+x_ok(1)
+x_ok(1:3)
+```
+
+**A1.** `&&` evaluates left to right and short-circuit evaluation, i.e., if the first operand is `TRUE`, R will short-circuit and not even look at the second operand.
 
 ```{r}
 x_ok <- function(x) {
@@ -221,9 +285,17 @@ x_ok(1)
 x_ok(1:3)
 ```
 
-**Q2.** Principle behind return
+**Q2.** What does this function return? Why? Which principle does it illustrate?
 
-The function returns `100`, and the principle at work here is lazy evaluation. When function environment encounters `x`, it evaluates argument `x = z` and since the name `z` is already bound to value 100, `x` is also bound to the same value.
+```{r, results = "hide"}
+f2 <- function(x = z) {
+  z <- 100
+  x
+}
+f2()
+```
+
+**A2.** The function returns `100`, and the principle at work here is lazy evaluation. When function environment encounters `x`, it evaluates argument `x = z` and since the name `z` is already bound to value 100, `x` is also bound to the same value.
 
 We can check this by looking at the memory addresses:
 
@@ -238,9 +310,24 @@ f2 <- function(x = z) {
 f2()
 ```
 
-**Q3.** Principle behind return
+**Q3.** What does this function return? Why? Which principle does it illustrate?
+  
+```{r, results = "hide"}
+y <- 10
+f1 <- function(x =
+                 {
+                   y <- 1
+                   2
+                 },
+               y = 0)
+{
+  c(x, y)
+}
+f1()
+y
+```
 
-TODO:
+**A3.** TODO:
 
 ```{r}
 y <- 10
@@ -253,27 +340,43 @@ f1 <- function(x =
 {
   c(x, y)
 }
-
 f1()
-
 y
 ```
 
+**Q4.** In `hist()`, the default value of `xlim` is `range(breaks)`, the default value for `breaks` is `"Sturges"`, and
+
+```{r}
+range("Sturges")
+```
+
+Explain how `hist()` works to get a correct `xlim` value.
+
+**Q5.** Explain why this function works. Why is it confusing?
+
+```{r}
+show_time <- function(x = stop("Error!")) {
+  stop <- function(...) Sys.time()
+  print(x)
+}
+show_time()
+```
+
+**Q6.** How many arguments are required when calling `library()`?
+
 ## Exercise 6.6.1
 
-**Q1.** Explain results
+**Q1.** Explain the following results:
 
 ```{r}
 sum(1, 2, 3)
-
 mean(1, 2, 3)
 
 sum(1, 2, 3, na.omit = TRUE)
-
 mean(1, 2, 3, na.omit = TRUE)
 ```
 
-Let's look at arguments for these functions:
+**A1.** Let's look at arguments for these functions:
 
 ```{r}
 str(sum)
@@ -284,9 +387,13 @@ As can be seen, `sum()` function doesn't have `na.omit` argument. So, the input 
 
 For `mean()` function, there is only one parameter (`x`) and it's matched by the first argument (`1`). So, the expression evaluates to `mean(1)`.
 
-**Q2.** Finding documentation for `plot` arguments
+**Q2.** Explain how to find the documentation for the named arguments in the following function call:
 
-First, check documentation for `plot()`:
+    ```{r, fig.asp = 1, small_mar = TRUE, fig.width = 3}
+plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
+    ```
+
+**A2.** First, check documentation for `plot()`:
 
 ```{r}
 str(plot)
@@ -300,9 +407,9 @@ str(par)
 
 The docs for all parameters of interest [reside there](https://rdrr.io/r/graphics/par.html).
 
-**Q3.** Reading source code for `plot.default`
+**Q3.** Why does `plot(1:10, col = "red")` only colour the points, not the axes or labels? Read the source code of `plot.default()` to find out.
 
-Source code can be found [here](https://github.com/wch/r-source/blob/79e73dba5259b25ec30118d45fea64aeac0f41dc/src/library/graphics/R/plot.R#L51-L84).
+**A3.** Source code can be found [here](https://github.com/wch/r-source/blob/79e73dba5259b25ec30118d45fea64aeac0f41dc/src/library/graphics/R/plot.R#L51-L84).
 
 `plot.default()` passes `...` to `localTitle()`, which passes it to `title()`.
 

@@ -19,7 +19,9 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
+<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
+<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -81,7 +83,7 @@
 <ul>
 <li>Experiments with <a href="http://purrr.tidyverse.org">purrr</a>:</li>
 </ul>
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
 
 <span class="co"># mapping by position -----------------------</span>
@@ -97,7 +99,7 @@
 <span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; pluck(x, 1, .default = NULL)</span>
-<span class="co">#&gt; &lt;environment: 0x11045fe18&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001fcfdfb8&gt;</span>
 
 <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [[1]]</span>
@@ -108,7 +110,7 @@
 <span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; pluck(x, 2, 1, .default = NULL)</span>
-<span class="co">#&gt; &lt;environment: 0x110777078&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001ff73848&gt;</span>
 
 <span class="co"># mapping by name -----------------------</span>
 
@@ -126,7 +128,7 @@
 <span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; pluck(x, "m", .default = NULL)</span>
-<span class="co">#&gt; &lt;environment: 0x127085710&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x00000000202abce8&gt;</span>
 
 <span class="co"># mixing position and name</span>
 <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"m"</span><span class="op">)</span><span class="op">)</span>
@@ -138,7 +140,7 @@
 <span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"m"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; pluck(x, 2, "m", .default = NULL)</span>
-<span class="co">#&gt; &lt;environment: 0x116ca5fd0&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000002178f940&gt;</span>
 
 <span class="co"># compact functions ----------------------------</span>
 
@@ -157,24 +159,24 @@
 <ul>
 <li>You can extract attributes using <code><a href="https://purrr.tidyverse.org/reference/attr_getter.html">purrr::attr_getter()</a></code>:</li>
 </ul>
-<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck</a></span><span class="op">(</span><span class="va">Titanic</span>, <span class="fu"><a href="https://purrr.tidyverse.org/reference/attr_getter.html">attr_getter</a></span><span class="op">(</span><span class="st">"class"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] "table"</span></code></pre></div>
 <p><strong>Q2.</strong> <code>map(1:3, ~ runif(2))</code> is a useful pattern for generating random numbers, but <code>map(1:3, runif(2))</code> is not. Why not? Can you explain why it returns the result that it does?</p>
 <p><strong>A2.</strong></p>
 <p>As shown by <code><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper()</a></code> outputs below, the second call is not appropriate for generating random numbers because it translates to <code><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck()</a></code> function where the indices for plucking are taken to be randomly generated numbers.</p>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] 0.6277615 0.4313805</span>
+<span class="co">#&gt; [1] 0.647805351 0.002043792</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 0.1084888 0.5113445</span>
+<span class="co">#&gt; [1] 0.5644884 0.6899378</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1] 0.51703876 0.08056122</span>
+<span class="co">#&gt; [1] 0.8824353 0.7136257</span>
 <span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; &lt;lambda&gt;</span>
 <span class="co">#&gt; function (..., .x = ..1, .y = ..2, . = ..1) </span>
@@ -193,8 +195,8 @@
 <span class="co">#&gt; NULL</span>
 <span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
-<span class="co">#&gt; pluck(x, 0.682691152673215, 0.0716494258958846, .default = NULL)</span>
-<span class="co">#&gt; &lt;environment: 0x111ebee78&gt;</span></code></pre></div>
+<span class="co">#&gt; pluck(x, 0.488565234933048, 0.282590016024187, .default = NULL)</span>
+<span class="co">#&gt; &lt;environment: 0x000000001fdf9830&gt;</span></code></pre></div>
 <p><strong>Q3.</strong> Use the appropriate <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> function to:</p>
 <pre><code>a) Compute the standard deviation of every column in a numeric data frame.
 
@@ -205,7 +207,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <ul>
 <li>Compute the standard deviation of every column in a numeric data frame:</li>
 </ul>
-<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">sd</span><span class="op">)</span>
 <span class="co">#&gt;         mpg         cyl        disp          hp        drat </span>
 <span class="co">#&gt;   6.0269481   1.7859216 123.9386938  68.5628685   0.5346787 </span>
@@ -216,7 +218,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <ul>
 <li>Compute the standard deviation of every numeric column in a mixed data frame:</li>
 </ul>
-<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">keep</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">is.numeric</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">sd</span><span class="op">)</span>
 <span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span>
@@ -224,7 +226,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <ul>
 <li>Compute the number of levels for every factor in a data frame:</li>
 </ul>
-<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html">modify_if</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/starwars.html">starwars</a></span>, <span class="va">is.character</span>, <span class="va">as.factor</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">keep</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_int</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -233,49 +235,49 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span class="co">#&gt;     gender  homeworld    species </span>
 <span class="co">#&gt;          2         48         37</span></code></pre></div>
 <p><strong>Q4.</strong> The following code simulates the performance of a <em>t</em>-test for non-normal data. Extract the <em>p</em>-value from each test, then visualise.</p>
-<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">trials</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><strong>A4.</strong></p>
 <ul>
 <li>Extract the <em>p</em>-value from each test:</li>
 </ul>
-<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">trials</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="op">(</span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">trials</span>, <span class="st">"p.value"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;   [1] 0.779410096 0.445772533 0.222037181 0.351846106</span>
-<span class="co">#&gt;   [5] 0.411964994 0.632365002 0.238391597 0.158819627</span>
-<span class="co">#&gt;   [9] 0.285589361 0.796668665 0.510254678 0.857594760</span>
-<span class="co">#&gt;  [13] 0.416832733 0.913848566 0.664457949 0.693363992</span>
-<span class="co">#&gt;  [17] 0.789640776 0.398959812 0.692253082 0.858075498</span>
-<span class="co">#&gt;  [21] 0.883383146 0.572848702 0.882408544 0.009025363</span>
-<span class="co">#&gt;  [25] 0.835560523 0.618998353 0.840616553 0.599671575</span>
-<span class="co">#&gt;  [29] 0.733998568 0.284895256 0.898504294 0.300158668</span>
-<span class="co">#&gt;  [33] 0.666903023 0.212655738 0.840343474 0.490730855</span>
-<span class="co">#&gt;  [37] 0.243254363 0.974372397 0.827244132 0.011693621</span>
-<span class="co">#&gt;  [41] 0.268330492 0.603715227 0.368345905 0.646795917</span>
-<span class="co">#&gt;  [45] 0.430731974 0.517887717 0.142088378 0.164216677</span>
-<span class="co">#&gt;  [49] 0.877072206 0.205865973 0.569587412 0.129420727</span>
-<span class="co">#&gt;  [53] 0.222097066 0.815273271 0.079778669 0.207479788</span>
-<span class="co">#&gt;  [57] 0.061417296 0.865578925 0.992002824 0.598461457</span>
-<span class="co">#&gt;  [61] 0.901329668 0.354239043 0.617541989 0.350898718</span>
-<span class="co">#&gt;  [65] 0.494387280 0.056110878 0.078574727 0.227098916</span>
-<span class="co">#&gt;  [69] 0.271689787 0.876676496 0.606498860 0.925981339</span>
-<span class="co">#&gt;  [73] 0.613563568 0.317955421 0.992933039 0.712489420</span>
-<span class="co">#&gt;  [77] 0.968311375 0.663656879 0.943207991 0.706898104</span>
-<span class="co">#&gt;  [81] 0.540226132 0.183804547 0.109898494 0.346080051</span>
-<span class="co">#&gt;  [85] 0.577988820 0.540329179 0.498333390 0.696524005</span>
-<span class="co">#&gt;  [89] 0.384366362 0.144725836 0.927575299 0.162976091</span>
-<span class="co">#&gt;  [93] 0.658033635 0.455432720 0.628840488 0.969749363</span>
-<span class="co">#&gt;  [97] 0.484617272 0.113677388 0.284841608 0.214548682</span></code></pre></div>
+<span class="co">#&gt;   [1] 0.299971153 0.885656132 0.849705357 0.056676494</span>
+<span class="co">#&gt;   [5] 0.394393273 0.736525502 0.804828295 0.468948769</span>
+<span class="co">#&gt;   [9] 0.686015596 0.650053777 0.582390831 0.188410000</span>
+<span class="co">#&gt;  [13] 0.900950044 0.273012054 0.970938031 0.304920193</span>
+<span class="co">#&gt;  [17] 0.449001964 0.102450967 0.390957835 0.136883431</span>
+<span class="co">#&gt;  [21] 0.660982014 0.122439418 0.093133656 0.727661904</span>
+<span class="co">#&gt;  [25] 0.895080471 0.624895785 0.341671914 0.264785332</span>
+<span class="co">#&gt;  [29] 0.735707127 0.112312893 0.441039382 1.000000000</span>
+<span class="co">#&gt;  [33] 0.355426907 0.062549822 0.555917289 0.639464413</span>
+<span class="co">#&gt;  [37] 0.006586251 0.633031198 0.647561764 0.537467178</span>
+<span class="co">#&gt;  [41] 0.017158046 0.878423188 0.152574471 0.721141701</span>
+<span class="co">#&gt;  [45] 0.208566128 0.040833492 0.007831456 0.797020213</span>
+<span class="co">#&gt;  [49] 0.183921578 0.295253529 0.329881756 0.200029884</span>
+<span class="co">#&gt;  [53] 0.268305809 0.424194863 0.274296962 0.729878485</span>
+<span class="co">#&gt;  [57] 0.248290452 0.945859015 0.724685301 0.990775490</span>
+<span class="co">#&gt;  [61] 0.227645554 0.397439640 0.227937355 0.451196286</span>
+<span class="co">#&gt;  [65] 0.333827185 0.503555294 0.255475325 0.290271808</span>
+<span class="co">#&gt;  [69] 0.624050855 0.469870344 0.758396401 0.410772925</span>
+<span class="co">#&gt;  [73] 0.704272993 0.368755022 0.315412900 0.755285111</span>
+<span class="co">#&gt;  [77] 0.073533607 0.855924386 0.948269115 0.049645144</span>
+<span class="co">#&gt;  [81] 0.307038145 0.762683261 0.814836229 0.916515873</span>
+<span class="co">#&gt;  [85] 0.604217643 0.252319342 0.501053478 0.031713667</span>
+<span class="co">#&gt;  [89] 0.689218330 0.459138440 0.377097209 0.127690414</span>
+<span class="co">#&gt;  [93] 0.361896716 0.294063220 0.850895113 0.060363348</span>
+<span class="co">#&gt;  [97] 0.523671875 0.973473735 0.124535781 0.396329470</span></code></pre></div>
 <ul>
 <li>Visualise the extracted <em>p</em>-values:</li>
 </ul>
-<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="Functionals_files/figure-html/unnamed-chunk-10-1.png" width="672"></div>
 <p><strong>Q5.</strong> The following code uses a map nested inside another map to apply a function to every element of a nested list. Why does it fail, and what do you need to do to make it work?</p>
-<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span>,
   <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">6</span><span class="op">)</span>, <span class="fl">7</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">7</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span>
@@ -289,7 +291,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span class="co">#&gt;     .Call(map_impl, environment(), ".x", ".f", "list")</span>
 <span class="co">#&gt; })</span></code></pre></div>
 <p><strong>A5.</strong> Here is the fixed version:</p>
-<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span>,
   <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">6</span><span class="op">)</span>, <span class="fl">7</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">7</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span>
@@ -315,7 +317,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span class="co">#&gt; [[2]][[3]]</span>
 <span class="co">#&gt; [1] 12 21 18</span></code></pre></div>
 <p><strong>Q6.</strong> Use <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> to fit linear models to the <code>mtcars</code> dataset using the formulas stored in this list:</p>
-<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">formulas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   <span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>,
   <span class="va">mpg</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">disp</span><span class="op">)</span>,
@@ -323,7 +325,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
   <span class="va">mpg</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">disp</span><span class="op">)</span> <span class="op">+</span> <span class="va">wt</span>
 <span class="op">)</span></code></pre></div>
 <p><strong>A6.</strong> Fitting linear models to the <code>mtcars</code> dataset using the provided formulas:</p>
-<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">formulas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   <span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>,
   <span class="va">mpg</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">disp</span><span class="op">)</span>,
@@ -371,14 +373,14 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span class="co">#&gt; (Intercept)    I(1/disp)           wt  </span>
 <span class="co">#&gt;      19.024     1142.560       -1.798</span></code></pre></div>
 <p><strong>Q7.</strong> Fit the model <code>mpg ~ disp</code> to each of the bootstrap replicates of <code>mtcars</code> in the list below, then extract the <span class="math inline">\(R^2\)</span> of the model fit (Hint: you can compute the <span class="math inline">\(R^2\)</span> with <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>.)</p>
-<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bootstrap</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
 <span class="op">}</span>
 
 <span class="va">bootstraps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">~</span> <span class="fu">bootstrap</span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><strong>A7.</strong> This can be done using <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code>:</p>
-<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bootstrap</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
 <span class="op">}</span>
@@ -389,8 +391,8 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
   <span class="va">bootstraps</span>,
   <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>, data <span class="op">=</span> <span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">r.squared</span>
 <span class="op">)</span>
-<span class="co">#&gt;  [1] 0.8210157 0.7347668 0.6487774 0.6204520 0.6923921</span>
-<span class="co">#&gt;  [6] 0.7270393 0.6479225 0.8196893 0.8019566 0.6358129</span></code></pre></div>
+<span class="co">#&gt;  [1] 0.7398167 0.8035412 0.7980222 0.7626201 0.6347321</span>
+<span class="co">#&gt;  [6] 0.7136730 0.7773232 0.6105269 0.7117854 0.7412714</span></code></pre></div>
 </div>
 <div id="exercise-9.4.6" class="section level2" number="7.2">
 <h2>
@@ -398,7 +400,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 </h2>
 <p><strong>Q1.</strong> Explain the results of <code>modify(mtcars, 1)</code>.</p>
 <p><strong>A1.</strong> <code><a href="https://purrr.tidyverse.org/reference/modify.html">modify()</a></code> returns the object of type same as the input. Since the input here is a data frame of certain dimensions and <code>.f = 1</code> translates to plucking the first element in each column, it returns a data frames with the same dimensions with the plucked element recycled across rows.</p>
-<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html">modify</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;                   mpg cyl disp  hp drat   wt  qsec vs am</span>
 <span class="co">#&gt; Mazda RX4          21   6  160 110  3.9 2.62 16.46  0  1</span>
@@ -415,7 +417,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span class="co">#&gt; Hornet Sportabout    4    4</span>
 <span class="co">#&gt; Valiant              4    4</span></code></pre></div>
 <p><strong>Q2.</strong> Rewrite the following code to use <code><a href="https://purrr.tidyverse.org/reference/imap.html">iwalk()</a></code> instead of <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></code>. What are the advantages and disadvantages?</p>
-<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cyls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span>
 <span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"cyl-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">cyls</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">walk2</a></span><span class="op">(</span><span class="va">cyls</span>, <span class="va">paths</span>, <span class="va">write.csv</span><span class="op">)</span></code></pre></div>
@@ -424,7 +426,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <li>with <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></code>
 </li>
 </ul>
-<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cyls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span>
 <span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"cyl-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">cyls</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">walk2</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">cyls</span>, .y <span class="op">=</span> <span class="va">paths</span>, .f <span class="op">=</span> <span class="va">write.csv</span><span class="op">)</span></code></pre></div>
@@ -432,12 +434,12 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <li>with <code><a href="https://purrr.tidyverse.org/reference/imap.html">iwalk()</a></code>
 </li>
 </ul>
-<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cyls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">cyls</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"cyl-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">cyls</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://purrr.tidyverse.org/reference/imap.html">iwalk</a></span><span class="op">(</span><span class="va">cyls</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><strong>Q3.</strong> Explain how the following code transforms a data frame using functions stored in a list.</p>
-<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   disp <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">0.0163871</span>,
   am <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">x</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"auto"</span>, <span class="st">"manual"</span><span class="op">)</span><span class="op">)</span>
@@ -446,10 +448,10 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span class="va">nm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">trans</span><span class="op">)</span>
 <span class="va">mtcars</span><span class="op">[</span><span class="va">nm</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span><span class="va">trans</span>, <span class="va">mtcars</span><span class="op">[</span><span class="va">nm</span><span class="op">]</span>, <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">var</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Compare and contrast the <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> approach to this <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> approach:</p>
-<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mtcars</span><span class="op">[</span><span class="va">nm</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">nm</span>, <span class="op">~</span> <span class="va">trans</span><span class="op">[[</span><span class="va">.x</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[[</span><span class="va">.x</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><strong>A3.</strong> <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> supplies the functions defined in <code>.x = trans</code> as <code>f</code> in the anonymous functions, while the names of the columns defined in <code>.y = mtcars[nm]</code> are picked up by <code>var</code> in the anonymous function. Note that the function is iterating over indices for vectors of transformations and column names.</p>
-<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   disp <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">0.0163871</span>,
   am <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">x</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"auto"</span>, <span class="st">"manual"</span><span class="op">)</span><span class="op">)</span>
@@ -458,11 +460,11 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span class="va">nm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">trans</span><span class="op">)</span>
 <span class="va">mtcars</span><span class="op">[</span><span class="va">nm</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span><span class="va">trans</span>, <span class="va">mtcars</span><span class="op">[</span><span class="va">nm</span><span class="op">]</span>, <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">var</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>In the <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> approach, the function is iterating over indices for vectors of column names.</p>
-<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mtcars</span><span class="op">[</span><span class="va">nm</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">nm</span>, <span class="op">~</span> <span class="va">trans</span><span class="op">[[</span><span class="va">.x</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[[</span><span class="va">.x</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><strong>Q4.</strong> What does <code><a href="https://rdrr.io/r/utils/write.table.html">write.csv()</a></code> return, i.e. what happens if you use it with <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> instead of <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></code>?</p>
 <p><strong>A4.</strong> If we use <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code>, it will work, but it will print <code>NULL</code>s to the terminal for every list element.</p>
-<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">BOD</span>, <span class="va">BOD</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span>
 <span class="va">nm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">bods</span><span class="op">)</span>
 <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span><span class="va">bods</span>, <span class="va">nm</span>, <span class="va">write.csv</span><span class="op">)</span></code></pre></div>
@@ -477,7 +479,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <p>A predicate is a function that returns a <strong>single</strong> <code>TRUE</code> or <code>FALSE</code>.</p>
 </blockquote>
 <p>The <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code> function does not return a <code>logical</code> scalar, but instead returns a vector and thus isn’t a predicate function.</p>
-<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># contrast the following behavior of predicate functions</span>
 <span class="fu"><a href="https://rdrr.io/r/base/character.html">is.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span>
@@ -488,11 +490,11 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1]  TRUE FALSE</span></code></pre></div>
 <p>The closest equivalent of a predicate function in base-R is <code><a href="https://rdrr.io/r/base/NA.html">anyNA()</a></code> function.</p>
-<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/NA.html">anyNA</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p><strong>Q2.</strong> <code>simple_reduce()</code> has a problem when <code>x</code> is length 0 or length 1. Describe the source of the problem and how you might go about fixing it.</p>
-<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">simple_reduce</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">out</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
   <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -501,7 +503,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
   <span class="va">out</span>
 <span class="op">}</span></code></pre></div>
 <p><strong>A2.</strong> Supplied function:</p>
-<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">simple_reduce</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">out</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
   <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -510,7 +512,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
   <span class="va">out</span>
 <span class="op">}</span></code></pre></div>
 <p>This function struggles with inputs of length 0 and 1 because function tries to access out-of-bound values.</p>
-<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">simple_reduce</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">sum</span><span class="op">)</span>
 <span class="co">#&gt; Error in x[[1]]: subscript out of bounds</span>
 <span class="fu">simple_reduce</span><span class="op">(</span><span class="fl">1</span>, <span class="va">sum</span><span class="op">)</span>
@@ -518,7 +520,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span class="fu">simple_reduce</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sum</span><span class="op">)</span>
 <span class="co">#&gt; [1] 6</span></code></pre></div>
 <p>This problem can be solved by adding <code>init</code> argument, which supplies the default or initial value for the function to operate on:</p>
-<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">simple_reduce2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span>, <span class="va">init</span> <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
   <span class="co"># initializer will become the first value</span>
   <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0L</span><span class="op">)</span> <span class="op">{</span>
@@ -537,7 +539,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
   <span class="va">out</span>
 <span class="op">}</span></code></pre></div>
 <p>Let’s try it out:</p>
-<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">simple_reduce2</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">sum</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0</span>
 <span class="fu">simple_reduce2</span><span class="op">(</span><span class="fl">1</span>, <span class="va">sum</span><span class="op">)</span>
@@ -545,7 +547,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span class="fu">simple_reduce2</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sum</span><span class="op">)</span>
 <span class="co">#&gt; [1] 6</span></code></pre></div>
 <p>With a different kind of function:</p>
-<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">simple_reduce2</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">`*`</span>, init <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1</span>
 <span class="fu">simple_reduce2</span><span class="op">(</span><span class="fl">1</span>, <span class="va">`*`</span>, init <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
@@ -553,7 +555,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span class="fu">simple_reduce2</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">`*`</span>, init <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt; [1] 6</span></code></pre></div>
 <p>And another one:</p>
-<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">simple_reduce2</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">`%/%`</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0</span>
 <span class="fu">simple_reduce2</span><span class="op">(</span><span class="fl">1</span>, <span class="va">`%/%`</span><span class="op">)</span>
@@ -563,7 +565,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <p><strong>Q3.</strong> Implement the <code>span()</code> function from Haskell: given a list <code>x</code> and a predicate function <code>f</code>, <code>span(x, f)</code> returns the location of the longest sequential run of elements where the predicate is true. (Hint: you might find <code><a href="https://rdrr.io/r/base/rle.html">rle()</a></code> helpful.)</p>
 <p><strong>Q4.</strong> Implement <code>arg_max()</code>. It should take a function and a vector of inputs, and return the elements of the input where the function returns the highest value. For example, <code>arg_max(-10:5, function(x) x ^ 2)</code> should return -10. <code>arg_max(-5:5, function(x) x ^ 2)</code> should return <code>c(-5, 5)</code>. Also implement the matching <code>arg_min()</code> function.</p>
 <p><strong>Q5.</strong> The function below scales a vector so it falls in the range [0, 1]. How would you apply it to every column of a data frame? How would you apply it to every numeric column in a data frame?</p>
-<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">scale01</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
   <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">rng</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">rng</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">rng</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
@@ -583,7 +585,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <p><code><a href="https://rdrr.io/r/base/eapply.html">eapply()</a></code> applies FUN to the named values from an environment and returns the results as a list.</p>
 </blockquote>
 <p>Here is an example:</p>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'rlang'</span>
@@ -595,11 +597,11 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 
 <span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_print.html">env_print</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>
-<span class="co">#&gt; &lt;environment: 0x11299e5a8&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x0000000034f26868&gt;</span>
 <span class="co">#&gt; Parent: &lt;environment: global&gt;</span>
 <span class="co">#&gt; Bindings:</span>
-<span class="co">#&gt; • x: &lt;dbl&gt;</span>
-<span class="co">#&gt; • y: &lt;dbl&gt;</span>
+<span class="co">#&gt; * x: &lt;dbl&gt;</span>
+<span class="co">#&gt; * y: &lt;dbl&gt;</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/eapply.html">eapply</a></span><span class="op">(</span><span class="va">e</span>, <span class="va">as.character</span><span class="op">)</span>
 <span class="co">#&gt; $x</span>
@@ -615,7 +617,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <p><code><a href="https://rdrr.io/r/base/rapply.html">rapply()</a></code> is a recursive version of lapply with flexibility in how the result is structured (how = “..”).</p>
 </blockquote>
 <p>Here is an example:</p>
-<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="cn">TRUE</span>, b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4L</span>, <span class="fl">3.2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, d <span class="op">=</span> <span class="fl">9.0</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/rapply.html">rapply</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">as.character</span>, classes <span class="op">=</span> <span class="st">"numeric"</span>, how <span class="op">=</span> <span class="st">"replace"</span><span class="op">)</span>
@@ -632,7 +634,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span class="co">#&gt; $d</span>
 <span class="co">#&gt; [1] "9"</span></code></pre></div>
 <p><a href="http://purrr.tidyverse.org">purrr</a> has something similar in <code><a href="https://purrr.tidyverse.org/reference/modify.html">modify_depth()</a></code>.</p>
-<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="cn">TRUE</span>, b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4L</span>, <span class="fl">3.2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, d <span class="op">=</span> <span class="fl">9.0</span><span class="op">)</span>
 
 <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html">modify_depth</a></span><span class="op">(</span><span class="va">X</span>, .depth <span class="op">=</span> <span class="fl">2L</span>, .f <span class="op">=</span> <span class="va">length</span><span class="op">)</span>
