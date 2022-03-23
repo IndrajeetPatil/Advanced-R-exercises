@@ -10,3 +10,6 @@ knitr::opts_chunk$set(
 
 # needed libraries
 library(tidyverse, warn.conflicts = FALSE)
+library(lobstr, warn.conflicts = FALSE)
+library(sloop, warn.conflicts = FALSE)
+library(rlang, warn.conflicts = FALSE)

@@ -52,15 +52,16 @@
 <li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
 <li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
 <li><a class="active" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
-<li><a class="" href="functionals.html"><span class="header-section-number">7</span> Functionals</a></li>
-<li><a class="" href="function-factories.html"><span class="header-section-number">8</span> Function factories</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">9</span> Base Types</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">10</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">11</span> R6</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">12</span> Big Picture</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">13</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">14</span> Measuring performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">15</span> Rewriting R code in C++</a></li>
+<li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">8</span> Functionals</a></li>
+<li><a class="" href="function-factories.html"><span class="header-section-number">9</span> Function factories</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">10</span> Base Types</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">11</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">12</span> R6</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">13</span> Big Picture</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">14</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">15</span> Measuring performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">16</span> Rewriting R code in C++</a></li>
 </ul>
 
         <div class="book-extra">
@@ -82,7 +83,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x11ef7fc90&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x0000000013e65c08&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>But, given a function, it doesn’t make sense to find its name in R because there can be multiple names bound to the same function.</p>
 <div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
@@ -174,20 +175,20 @@ a. How could you adapt the code to find all primitive functions?</code></pre>
 <p>At the time of writing, 253 base functions have no arguments. Most of these are primitive functions</p>
 <div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">df_formals</span>, <span class="va">argumentCount</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 251 × 2</span>
+<span class="co">#&gt; # A tibble: 253 x 2</span>
 <span class="co">#&gt;    `function` argumentCount</span>
 <span class="co">#&gt;    &lt;chr&gt;              &lt;int&gt;</span>
 <span class="co">#&gt;  1 -                      0</span>
-<span class="co">#&gt;  2 :                      0</span>
-<span class="co">#&gt;  3 ::                     0</span>
-<span class="co">#&gt;  4 :::                    0</span>
-<span class="co">#&gt;  5 !                      0</span>
-<span class="co">#&gt;  6 !=                     0</span>
-<span class="co">#&gt;  7 ...elt                 0</span>
-<span class="co">#&gt;  8 ...length              0</span>
-<span class="co">#&gt;  9 ...names               0</span>
-<span class="co">#&gt; 10 .C                     0</span>
-<span class="co">#&gt; # … with 241 more rows</span></code></pre></div>
+<span class="co">#&gt;  2 !                      0</span>
+<span class="co">#&gt;  3 !=                     0</span>
+<span class="co">#&gt;  4 $                      0</span>
+<span class="co">#&gt;  5 $&lt;-                    0</span>
+<span class="co">#&gt;  6 %%                     0</span>
+<span class="co">#&gt;  7 %*%                    0</span>
+<span class="co">#&gt;  8 %/%                    0</span>
+<span class="co">#&gt;  9 &amp;                      0</span>
+<span class="co">#&gt; 10 &amp;&amp;                     0</span>
+<span class="co">#&gt; # ... with 243 more rows</span></code></pre></div>
 <ul>
 <li>How could you adapt the code to find all primitive functions?</li>
 </ul>
@@ -197,34 +198,34 @@ a. How could you adapt the code to find all primitive functions?</code></pre>
 <span class="va">primitives</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Filter</a></span><span class="op">(</span><span class="va">is.primitive</span>, <span class="va">funs</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">primitives</span><span class="op">)</span>
-<span class="co">#&gt;   [1] "-"                    ":"                   </span>
-<span class="co">#&gt;   [3] "::"                   ":::"                 </span>
-<span class="co">#&gt;   [5] "!"                    "!="                  </span>
-<span class="co">#&gt;   [7] "...elt"               "...length"           </span>
-<span class="co">#&gt;   [9] "...names"             ".C"                  </span>
-<span class="co">#&gt;  [11] ".cache_class"         ".Call"               </span>
-<span class="co">#&gt;  [13] ".Call.graphics"       ".class2"             </span>
-<span class="co">#&gt;  [15] ".External"            ".External.graphics"  </span>
-<span class="co">#&gt;  [17] ".External2"           ".Fortran"            </span>
-<span class="co">#&gt;  [19] ".Internal"            ".isMethodsDispatchOn"</span>
-<span class="co">#&gt;  [21] ".Primitive"           ".primTrace"          </span>
-<span class="co">#&gt;  [23] ".primUntrace"         ".subset"             </span>
-<span class="co">#&gt;  [25] ".subset2"             "("                   </span>
-<span class="co">#&gt;  [27] "["                    "[["                  </span>
-<span class="co">#&gt;  [29] "[[&lt;-"                 "[&lt;-"                 </span>
-<span class="co">#&gt;  [31] "{"                    "@"                   </span>
-<span class="co">#&gt;  [33] "@&lt;-"                  "*"                   </span>
-<span class="co">#&gt;  [35] "/"                    "&amp;"                   </span>
-<span class="co">#&gt;  [37] "&amp;&amp;"                   "%*%"                 </span>
-<span class="co">#&gt;  [39] "%/%"                  "%%"                  </span>
-<span class="co">#&gt;  [41] "^"                    "+"                   </span>
-<span class="co">#&gt;  [43] "&lt;"                    "&lt;-"                  </span>
-<span class="co">#&gt;  [45] "&lt;&lt;-"                  "&lt;="                  </span>
-<span class="co">#&gt;  [47] "="                    "=="                  </span>
-<span class="co">#&gt;  [49] "&gt;"                    "&gt;="                  </span>
-<span class="co">#&gt;  [51] "|"                    "||"                  </span>
-<span class="co">#&gt;  [53] "~"                    "$"                   </span>
-<span class="co">#&gt;  [55] "$&lt;-"                  "abs"                 </span>
+<span class="co">#&gt;   [1] "-"                    "!"                   </span>
+<span class="co">#&gt;   [3] "!="                   "$"                   </span>
+<span class="co">#&gt;   [5] "$&lt;-"                  "%%"                  </span>
+<span class="co">#&gt;   [7] "%*%"                  "%/%"                 </span>
+<span class="co">#&gt;   [9] "&amp;"                    "&amp;&amp;"                  </span>
+<span class="co">#&gt;  [11] "("                    "*"                   </span>
+<span class="co">#&gt;  [13] "...elt"               "...length"           </span>
+<span class="co">#&gt;  [15] "...names"             ".C"                  </span>
+<span class="co">#&gt;  [17] ".cache_class"         ".Call"               </span>
+<span class="co">#&gt;  [19] ".Call.graphics"       ".class2"             </span>
+<span class="co">#&gt;  [21] ".External"            ".External.graphics"  </span>
+<span class="co">#&gt;  [23] ".External2"           ".Fortran"            </span>
+<span class="co">#&gt;  [25] ".Internal"            ".isMethodsDispatchOn"</span>
+<span class="co">#&gt;  [27] ".Primitive"           ".primTrace"          </span>
+<span class="co">#&gt;  [29] ".primUntrace"         ".subset"             </span>
+<span class="co">#&gt;  [31] ".subset2"             "/"                   </span>
+<span class="co">#&gt;  [33] ":"                    "::"                  </span>
+<span class="co">#&gt;  [35] ":::"                  "@"                   </span>
+<span class="co">#&gt;  [37] "@&lt;-"                  "["                   </span>
+<span class="co">#&gt;  [39] "[["                   "[[&lt;-"                </span>
+<span class="co">#&gt;  [41] "[&lt;-"                  "^"                   </span>
+<span class="co">#&gt;  [43] "{"                    "|"                   </span>
+<span class="co">#&gt;  [45] "||"                   "~"                   </span>
+<span class="co">#&gt;  [47] "+"                    "&lt;"                   </span>
+<span class="co">#&gt;  [49] "&lt;-"                   "&lt;&lt;-"                 </span>
+<span class="co">#&gt;  [51] "&lt;="                   "="                   </span>
+<span class="co">#&gt;  [53] "=="                   "&gt;"                   </span>
+<span class="co">#&gt;  [55] "&gt;="                   "abs"                 </span>
 <span class="co">#&gt;  [57] "acos"                 "acosh"               </span>
 <span class="co">#&gt;  [59] "all"                  "any"                 </span>
 <span class="co">#&gt;  [61] "anyNA"                "Arg"                 </span>
@@ -286,8 +287,8 @@ a. How could you adapt the code to find all primitive functions?</code></pre>
 <span class="co">#&gt; [173] "range"                "Re"                  </span>
 <span class="co">#&gt; [175] "rep"                  "repeat"              </span>
 <span class="co">#&gt; [177] "retracemem"           "return"              </span>
-<span class="co">#&gt; [179] "round"                "seq_along"           </span>
-<span class="co">#&gt; [181] "seq_len"              "seq.int"             </span>
+<span class="co">#&gt; [179] "round"                "seq.int"             </span>
+<span class="co">#&gt; [181] "seq_along"            "seq_len"             </span>
 <span class="co">#&gt; [183] "sign"                 "signif"              </span>
 <span class="co">#&gt; [185] "sin"                  "sinh"                </span>
 <span class="co">#&gt; [187] "sinpi"                "sqrt"                </span>
@@ -313,7 +314,7 @@ a. How could you adapt the code to find all primitive functions?</code></pre>
 <span class="va">mean</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x11ef7fc90&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x0000000013e65c08&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span>
 
 <span class="co"># other package function</span>
@@ -323,7 +324,7 @@ a. How could you adapt the code to find all primitive functions?</code></pre>
 <span class="co">#&gt;     .f &lt;- as_mapper(.f, ...)</span>
 <span class="co">#&gt;     .Call(map_impl, environment(), ".x", ".f", "list")</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x1059dd550&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x00000000148bbae0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></code></pre></div>
 <p>There are two exceptions to this rule:</p>
 <ul>
@@ -461,12 +462,12 @@ running the code yourself.</p>
   <span class="va">z</span> <span class="op">&lt;-</span> <span class="fl">100</span>
   <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 
-  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">z</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">z</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span>
 
 <span class="fu">f2</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] 100</span>
-<span class="co">#&gt; [1] "0x106e2a350" "0x106e2a350"</span></code></pre></div>
+<span class="co">#&gt; [1] "0x31b89448" "0x31b89448"</span></code></pre></div>
 <p><strong>Q3.</strong> What does this function return? Why? Which principle does it illustrate?</p>
 <div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">10</span>
@@ -509,7 +510,7 @@ running the code yourself.</p>
   <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="op">}</span>
 <span class="fu">show_time</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2022-03-21 21:34:39 CET"</span></code></pre></div>
+<span class="co">#&gt; [1] "2022-03-23 15:13:21 CET"</span></code></pre></div>
 <p><strong>Q6.</strong> How many arguments are required when calling <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>?</p>
 </div>
 <div id="exercise-6.6.1" class="section level2" number="6.4">
@@ -572,7 +573,7 @@ plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></div>
-<div class="next"><a href="functionals.html"><span class="header-section-number">7</span> Functionals</a></div>
+<div class="next"><a href="environments.html"><span class="header-section-number">7</span> Environments</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -598,7 +599,7 @@ plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-03-21.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-03-23.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

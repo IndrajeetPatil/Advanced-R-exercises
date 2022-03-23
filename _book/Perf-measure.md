@@ -38,10 +38,10 @@ Maybe because the function runs too fast?
 
 ```r
 bench::mark(f(), check = FALSE, iterations = 1000)
-#> # A tibble: 1 × 6
+#> # A tibble: 1 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()          99.6µs    148µs     6545.     792KB     99.7
+#> 1 f()           218us    328us     2531.     792KB     38.5
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -73,7 +73,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x104927548>
+#> <bytecode: 0x0000000018222b88>
 #> <environment: namespace:base>
 ```
 
@@ -142,25 +142,23 @@ Compare results from these alternatives:
 
 ```r
 t_bench_df
-#> # A tibble: 2 × 2
+#> # A tibble: 2 x 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)    442.56ns
-#> 2 x^0.5        1.32µs
+#> 1 sqrt(x)      1.47us
+#> 2 x^0.5        4.31us
 
 t_systime_df
-#> # A tibble: 2 × 3
+#> # A tibble: 2 x 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                 0.394                0.402
-#> 2 x^0.5                   1.25                 1.25
+#> 1 sqrt(x)                  1.03                0.960
+#> 2 x^0.5                    3.63                3.75
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
 
-**Q2.** Here are two other ways to compute the square root of a vector. Which
-    do you think will be fastest? Which will be slowest? Use microbenchmarking
-    to test your answers.
+**Q2.** Here are two other ways to compute the square root of a vector. Which do you think will be fastest? Which will be slowest? Use microbenchmarking to test your answers.
 
 
 ```r
@@ -184,13 +182,13 @@ bench::mark(
   iterations = 1000
 ) %>%
   dplyr::arrange(median)
-#> # A tibble: 4 × 6
+#> # A tibble: 4 x 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)         1.02µs   1.48µs   534637.    7.86KB
-#> 2 exp(log(x)/2)    6.4µs   7.58µs   123520.    7.86KB
-#> 3 x^(1/2)         9.35µs  10.29µs    86846.    7.86KB
-#> 4 x^0.5           9.31µs  10.41µs    95704.    7.86KB
+#> 1 sqrt(x)            5us    7.2us   114382.    7.86KB
+#> 2 x^(1/2)         28.9us   34.2us    26040.    7.86KB
+#> 3 x^0.5           31.5us     36us    25539.    7.86KB
+#> 4 exp(log(x)/2)   80.7us   88.8us    10920.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

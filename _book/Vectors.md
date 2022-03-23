@@ -28,9 +28,9 @@ You can use it to also figure out differences between characters that might look
 
 ```r
 charToRaw("–") # en-dash
-#> [1] e2 80 93
+#> [1] 96
 charToRaw("—") # em-dash
-#> [1] e2 80 94
+#> [1] 97
 ```
 
 - complex vectors
@@ -214,7 +214,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x12023cef8>
+#> <bytecode: 0x000000001a2b9850>
 #> <environment: namespace:stats>
 
 setNames(c(1, 2), c("a", "b"))
@@ -233,7 +233,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x1375b28f0>
+#> <bytecode: 0x0000000017f0b480>
 #> <environment: namespace:base>
 
 A <- provideDimnames(N <- array(1:24, dim = 2:4))
