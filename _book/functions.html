@@ -55,13 +55,16 @@
 <li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
 <li><a class="" href="functionals.html"><span class="header-section-number">8</span> Functionals</a></li>
 <li><a class="" href="function-factories.html"><span class="header-section-number">9</span> Function factories</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">10</span> Base Types</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">11</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">12</span> R6</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">13</span> Big Picture</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">14</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">15</span> Measuring performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">16</span> Rewriting R code in C++</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">10</span> Function operators</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">11</span> Base Types</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">12</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">13</span> R6</a></li>
+<li><a class="" href="trade-offs.html"><span class="header-section-number">14</span> Trade-offs</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">15</span> Big Picture</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">16</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">17</span> Measuring performance</a></li>
+<li><a class="" href="improving-performance.html"><span class="header-section-number">18</span> Improving performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">19</span> Rewriting R code in C++</a></li>
 </ul>
 
         <div class="book-extra">
@@ -83,7 +86,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x0000000013e65c08&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x0000000014545c28&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>But, given a function, it doesn’t make sense to find its name in R because there can be multiple names bound to the same function.</p>
 <div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
@@ -314,7 +317,7 @@ a. How could you adapt the code to find all primitive functions?</code></pre>
 <span class="va">mean</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x0000000013e65c08&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x0000000014545c28&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span>
 
 <span class="co"># other package function</span>
@@ -324,7 +327,7 @@ a. How could you adapt the code to find all primitive functions?</code></pre>
 <span class="co">#&gt;     .f &lt;- as_mapper(.f, ...)</span>
 <span class="co">#&gt;     .Call(map_impl, environment(), ".x", ".f", "list")</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x00000000148bbae0&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x0000000014f9fd80&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></code></pre></div>
 <p>There are two exceptions to this rule:</p>
 <ul>
@@ -467,7 +470,7 @@ running the code yourself.</p>
 
 <span class="fu">f2</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] 100</span>
-<span class="co">#&gt; [1] "0x31b89448" "0x31b89448"</span></code></pre></div>
+<span class="co">#&gt; [1] "0x31b77230" "0x31b77230"</span></code></pre></div>
 <p><strong>Q3.</strong> What does this function return? Why? Which principle does it illustrate?</p>
 <div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">10</span>
@@ -510,7 +513,7 @@ running the code yourself.</p>
   <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="op">}</span>
 <span class="fu">show_time</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2022-03-23 15:13:21 CET"</span></code></pre></div>
+<span class="co">#&gt; [1] "2022-03-23 15:30:01 CET"</span></code></pre></div>
 <p><strong>Q6.</strong> How many arguments are required when calling <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>?</p>
 </div>
 <div id="exercise-6.6.1" class="section level2" number="6.4">

@@ -4,17 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 12 R6 | Advanced R Exercises</title>
+<title>Chapter 13 R6 | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content="12.1 Exercise 14.2.6 Q1. Create a bank account R6 class that stores a balance and allows you to deposit and withdraw money. Create a subclass that throws an error if you attempt to go into...">
+<meta name="description" content="13.1 Exercise 14.2.6 Q1. Create a bank account R6 class that stores a balance and allows you to deposit and withdraw money. Create a subclass that throws an error if you attempt to go into...">
 <meta name="generator" content="bookdown 0.25 with bs4_book()">
-<meta property="og:title" content="Chapter 12 R6 | Advanced R Exercises">
+<meta property="og:title" content="Chapter 13 R6 | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.png">
-<meta property="og:description" content="12.1 Exercise 14.2.6 Q1. Create a bank account R6 class that stores a balance and allows you to deposit and withdraw money. Create a subclass that throws an error if you attempt to go into...">
+<meta property="og:description" content="13.1 Exercise 14.2.6 Q1. Create a bank account R6 class that stores a balance and allows you to deposit and withdraw money. Create a subclass that throws an error if you attempt to go into...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 12 R6 | Advanced R Exercises">
-<meta name="twitter:description" content="12.1 Exercise 14.2.6 Q1. Create a bank account R6 class that stores a balance and allows you to deposit and withdraw money. Create a subclass that throws an error if you attempt to go into...">
+<meta name="twitter:title" content="Chapter 13 R6 | Advanced R Exercises">
+<meta name="twitter:description" content="13.1 Exercise 14.2.6 Q1. Create a bank account R6 class that stores a balance and allows you to deposit and withdraw money. Create a subclass that throws an error if you attempt to go into...">
 <meta name="twitter:image" content="/cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -55,13 +55,16 @@
 <li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
 <li><a class="" href="functionals.html"><span class="header-section-number">8</span> Functionals</a></li>
 <li><a class="" href="function-factories.html"><span class="header-section-number">9</span> Function factories</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">10</span> Base Types</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">11</span> S3</a></li>
-<li><a class="active" href="r6.html"><span class="header-section-number">12</span> R6</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">13</span> Big Picture</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">14</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">15</span> Measuring performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">16</span> Rewriting R code in C++</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">10</span> Function operators</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">11</span> Base Types</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">12</span> S3</a></li>
+<li><a class="active" href="r6.html"><span class="header-section-number">13</span> R6</a></li>
+<li><a class="" href="trade-offs.html"><span class="header-section-number">14</span> Trade-offs</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">15</span> Big Picture</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">16</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">17</span> Measuring performance</a></li>
+<li><a class="" href="improving-performance.html"><span class="header-section-number">18</span> Improving performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">19</span> Rewriting R code in C++</a></li>
 </ul>
 
         <div class="book-extra">
@@ -69,13 +72,13 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="r6" class="section level1" number="12">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="r6" class="section level1" number="13">
 <h1>
-<span class="header-section-number">12</span> R6<a class="anchor" aria-label="anchor" href="#r6"><i class="fas fa-link"></i></a>
+<span class="header-section-number">13</span> R6<a class="anchor" aria-label="anchor" href="#r6"><i class="fas fa-link"></i></a>
 </h1>
-<div id="exercise-14.2.6" class="section level2" number="12.1">
+<div id="exercise-14.2.6" class="section level2" number="13.1">
 <h2>
-<span class="header-section-number">12.1</span> Exercise 14.2.6<a class="anchor" aria-label="anchor" href="#exercise-14.2.6"><i class="fas fa-link"></i></a>
+<span class="header-section-number">13.1</span> Exercise 14.2.6<a class="anchor" aria-label="anchor" href="#exercise-14.2.6"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Create a bank account R6 class that stores a balance and allows you to deposit and withdraw money. Create a subclass that throws an error if you attempt to go into overdraft. Create another subclass that allows you to go into overdraft, but charges you a fee. Create the superclass and make sure it works as expected.</p>
 <p><strong>A1.</strong></p>
@@ -302,9 +305,9 @@
 <p><strong>Q6.</strong> Why can’t you model the time zone or current working directory with an S3 class?</p>
 <p><strong>Q7.</strong> What base type are R6 objects built on top of? What attributes do they have?</p>
 </div>
-<div id="exercise-14.3.3" class="section level2" number="12.2">
+<div id="exercise-14.3.3" class="section level2" number="13.2">
 <h2>
-<span class="header-section-number">12.2</span> Exercise 14.3.3<a class="anchor" aria-label="anchor" href="#exercise-14.3.3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">13.2</span> Exercise 14.3.3<a class="anchor" aria-label="anchor" href="#exercise-14.3.3"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Create a bank account class that prevents you from directly setting the account balance, but you can still withdraw from and deposit to. Throw an error if you attempt to go into overdraft.</p>
 <p><strong>Q2.</strong> Create a class with a write-only <code>$password</code> field. It should have <code>$check_password(password)</code> method that returns <code>TRUE</code> or <code>FALSE</code>, but there should be no way to view the complete password.</p>
@@ -373,9 +376,9 @@
 <span class="va">myMallard</span><span class="op">$</span><span class="fu">quack</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Quack Quack"</span></code></pre></div>
 </div>
-<div id="exercise-14.4.4" class="section level2" number="12.3">
+<div id="exercise-14.4.4" class="section level2" number="13.3">
 <h2>
-<span class="header-section-number">12.3</span> Exercise 14.4.4<a class="anchor" aria-label="anchor" href="#exercise-14.4.4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">13.3</span> Exercise 14.4.4<a class="anchor" aria-label="anchor" href="#exercise-14.4.4"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Create a class that allows you to write a line to a specified file. You should open a connection to the file in <code>$initialize()</code>, append a line using <code><a href="https://rdrr.io/r/base/cat.html">cat()</a></code> in <code>$append_line()</code>, and close the connection in <code>$finalize()</code>.</p>
 <div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
@@ -426,21 +429,21 @@
 <span class="fu"><a href="https://rdrr.io/r/base/gc.html">gc</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Closing the file connection!"</span>
 <span class="co">#&gt;           used (Mb) gc trigger  (Mb) max used  (Mb)</span>
-<span class="co">#&gt; Ncells 1138001 60.8    2257622 120.6  2257622 120.6</span>
-<span class="co">#&gt; Vcells 1917132 14.7    8388608  64.0  3129044  23.9</span></code></pre></div>
+<span class="co">#&gt; Ncells 1138004 60.8    2257617 120.6  2257617 120.6</span>
+<span class="co">#&gt; Vcells 1917155 14.7    8388608  64.0  3129029  23.9</span></code></pre></div>
 
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="s3.html"><span class="header-section-number">11</span> S3</a></div>
-<div class="next"><a href="big-picture.html"><span class="header-section-number">13</span> Big Picture</a></div>
+<div class="prev"><a href="s3.html"><span class="header-section-number">12</span> S3</a></div>
+<div class="next"><a href="trade-offs.html"><span class="header-section-number">14</span> Trade-offs</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#r6"><span class="header-section-number">12</span> R6</a></li>
-<li><a class="nav-link" href="#exercise-14.2.6"><span class="header-section-number">12.1</span> Exercise 14.2.6</a></li>
-<li><a class="nav-link" href="#exercise-14.3.3"><span class="header-section-number">12.2</span> Exercise 14.3.3</a></li>
-<li><a class="nav-link" href="#exercise-14.4.4"><span class="header-section-number">12.3</span> Exercise 14.4.4</a></li>
+<li><a class="nav-link" href="#r6"><span class="header-section-number">13</span> R6</a></li>
+<li><a class="nav-link" href="#exercise-14.2.6"><span class="header-section-number">13.1</span> Exercise 14.2.6</a></li>
+<li><a class="nav-link" href="#exercise-14.3.3"><span class="header-section-number">13.2</span> Exercise 14.3.3</a></li>
+<li><a class="nav-link" href="#exercise-14.4.4"><span class="header-section-number">13.3</span> Exercise 14.4.4</a></li>
 </ul>
 
       <div class="book-extra">

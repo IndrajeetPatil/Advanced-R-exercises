@@ -4,17 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 15 Measuring performance | Advanced R Exercises</title>
+<title>Chapter 17 Measuring performance | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content="15.1 Exercise 23.2.4 Q1. Profile the following function with torture = TRUE. What is surprising? Read the source code of rm() to figure out what’s going on. f &lt;- function(n = 1e5) {  x &lt;- rep(1,...">
+<meta name="description" content="17.1 Exercise 23.2.4 Q1. Profile the following function with torture = TRUE. What is surprising? Read the source code of rm() to figure out what’s going on. f &lt;- function(n = 1e5) {  x &lt;- rep(1,...">
 <meta name="generator" content="bookdown 0.25 with bs4_book()">
-<meta property="og:title" content="Chapter 15 Measuring performance | Advanced R Exercises">
+<meta property="og:title" content="Chapter 17 Measuring performance | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.png">
-<meta property="og:description" content="15.1 Exercise 23.2.4 Q1. Profile the following function with torture = TRUE. What is surprising? Read the source code of rm() to figure out what’s going on. f &lt;- function(n = 1e5) {  x &lt;- rep(1,...">
+<meta property="og:description" content="17.1 Exercise 23.2.4 Q1. Profile the following function with torture = TRUE. What is surprising? Read the source code of rm() to figure out what’s going on. f &lt;- function(n = 1e5) {  x &lt;- rep(1,...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 15 Measuring performance | Advanced R Exercises">
-<meta name="twitter:description" content="15.1 Exercise 23.2.4 Q1. Profile the following function with torture = TRUE. What is surprising? Read the source code of rm() to figure out what’s going on. f &lt;- function(n = 1e5) {  x &lt;- rep(1,...">
+<meta name="twitter:title" content="Chapter 17 Measuring performance | Advanced R Exercises">
+<meta name="twitter:description" content="17.1 Exercise 23.2.4 Q1. Profile the following function with torture = TRUE. What is surprising? Read the source code of rm() to figure out what’s going on. f &lt;- function(n = 1e5) {  x &lt;- rep(1,...">
 <meta name="twitter:image" content="/cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -55,13 +55,16 @@
 <li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
 <li><a class="" href="functionals.html"><span class="header-section-number">8</span> Functionals</a></li>
 <li><a class="" href="function-factories.html"><span class="header-section-number">9</span> Function factories</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">10</span> Base Types</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">11</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">12</span> R6</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">13</span> Big Picture</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">14</span> Debugging</a></li>
-<li><a class="active" href="measuring-performance.html"><span class="header-section-number">15</span> Measuring performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">16</span> Rewriting R code in C++</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">10</span> Function operators</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">11</span> Base Types</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">12</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">13</span> R6</a></li>
+<li><a class="" href="trade-offs.html"><span class="header-section-number">14</span> Trade-offs</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">15</span> Big Picture</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">16</span> Debugging</a></li>
+<li><a class="active" href="measuring-performance.html"><span class="header-section-number">17</span> Measuring performance</a></li>
+<li><a class="" href="improving-performance.html"><span class="header-section-number">18</span> Improving performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">19</span> Rewriting R code in C++</a></li>
 </ul>
 
         <div class="book-extra">
@@ -69,13 +72,13 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="measuring-performance" class="section level1" number="15">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="measuring-performance" class="section level1" number="17">
 <h1>
-<span class="header-section-number">15</span> Measuring performance<a class="anchor" aria-label="anchor" href="#measuring-performance"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17</span> Measuring performance<a class="anchor" aria-label="anchor" href="#measuring-performance"><i class="fas fa-link"></i></a>
 </h1>
-<div id="exercise-23.2.4" class="section level2" number="15.1">
+<div id="exercise-23.2.4" class="section level2" number="17.1">
 <h2>
-<span class="header-section-number">15.1</span> Exercise 23.2.4<a class="anchor" aria-label="anchor" href="#exercise-23.2.4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.1</span> Exercise 23.2.4<a class="anchor" aria-label="anchor" href="#exercise-23.2.4"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Profile the following function with <code>torture = TRUE</code>. What is surprising? Read the source code of <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code> to figure out what’s going on.</p>
 <div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
@@ -99,7 +102,7 @@
 <span class="co">#&gt; # A tibble: 1 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 f()           218us    328us     2531.     792KB     38.5</span></code></pre></div>
+<span class="co">#&gt; 1 f()           188us    306us     2859.     792KB     43.5</span></code></pre></div>
 <p>As mentioned in the docs, setting <code>torture = TRUE</code></p>
 <blockquote>
 <p>Triggers garbage collection after every torture memory allocation call.</p>
@@ -127,9 +130,9 @@
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>I still couldn’t figure out why. I would recommend checking out the <a href="https://advanced-r-solutions.rbind.io/measuring-performance.html#profiling">official answer</a>.</p>
 </div>
-<div id="exercise-23.3.3" class="section level2" number="15.2">
+<div id="exercise-23.3.3" class="section level2" number="17.2">
 <h2>
-<span class="header-section-number">15.2</span> Exercise 23.3.3<a class="anchor" aria-label="anchor" href="#exercise-23.3.3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.2</span> Exercise 23.3.3<a class="anchor" aria-label="anchor" href="#exercise-23.3.3"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Instead of using <code><a href="http://bench.r-lib.org/reference/mark.html">bench::mark()</a></code>, you could use the built-in function <code><a href="https://rdrr.io/r/base/system.time.html">system.time()</a></code>. But <code><a href="https://rdrr.io/r/base/system.time.html">system.time()</a></code> is much less precise, so you’ll need to repeat each operation many times with a loop, and then divide to find the average time of each operation, as in the code below.</p>
 <div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
@@ -184,15 +187,15 @@
 <span class="co">#&gt; # A tibble: 2 x 2</span>
 <span class="co">#&gt;   expression     mean</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)      1.47us</span>
+<span class="co">#&gt; 1 sqrt(x)      1.35us</span>
 <span class="co">#&gt; 2 x^0.5        4.31us</span>
 
 <span class="va">t_systime_df</span>
 <span class="co">#&gt; # A tibble: 2 x 3</span>
 <span class="co">#&gt;   expression systime_with_gc_us systime_with_nogc_us</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;              &lt;dbl&gt;                &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)                  1.03                0.960</span>
-<span class="co">#&gt; 2 x^0.5                    3.63                3.75</span></code></pre></div>
+<span class="co">#&gt; 1 sqrt(x)                  1.01                 0.75</span>
+<span class="co">#&gt; 2 x^0.5                    3.52                 3.51</span></code></pre></div>
 <p>The comparison reveals that these two approaches yield quite similar results.</p>
 <p><strong>Q2.</strong> Here are two other ways to compute the square root of a vector. Which do you think will be fastest? Which will be slowest? Use microbenchmarking to test your answers.</p>
 <div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
@@ -214,10 +217,10 @@
 <span class="co">#&gt; # A tibble: 4 x 6</span>
 <span class="co">#&gt;   expression         min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;    &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)            5us    7.2us   114382.    7.86KB</span>
-<span class="co">#&gt; 2 x^(1/2)         28.9us   34.2us    26040.    7.86KB</span>
-<span class="co">#&gt; 3 x^0.5           31.5us     36us    25539.    7.86KB</span>
-<span class="co">#&gt; 4 exp(log(x)/2)   80.7us   88.8us    10920.    7.86KB</span>
+<span class="co">#&gt; 1 sqrt(x)          4.8us   9.65us    95200.    7.86KB</span>
+<span class="co">#&gt; 2 x^(1/2)         32.7us   37.6us    23922.    7.86KB</span>
+<span class="co">#&gt; 3 x^0.5           32.8us   50.1us    19765.    7.86KB</span>
+<span class="co">#&gt; 4 exp(log(x)/2)   91.8us  104.8us     9439.    7.86KB</span>
 <span class="co">#&gt;   `gc/sec`</span>
 <span class="co">#&gt;      &lt;dbl&gt;</span>
 <span class="co">#&gt; 1        0</span>
@@ -229,14 +232,14 @@
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="debugging.html"><span class="header-section-number">14</span> Debugging</a></div>
-<div class="next"><a href="rewriting-r-code-in-c.html"><span class="header-section-number">16</span> Rewriting R code in C++</a></div>
+<div class="prev"><a href="debugging.html"><span class="header-section-number">16</span> Debugging</a></div>
+<div class="next"><a href="improving-performance.html"><span class="header-section-number">18</span> Improving performance</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#measuring-performance"><span class="header-section-number">15</span> Measuring performance</a></li>
-<li><a class="nav-link" href="#exercise-23.2.4"><span class="header-section-number">15.1</span> Exercise 23.2.4</a></li>
-<li><a class="nav-link" href="#exercise-23.3.3"><span class="header-section-number">15.2</span> Exercise 23.3.3</a></li>
+<li><a class="nav-link" href="#measuring-performance"><span class="header-section-number">17</span> Measuring performance</a></li>
+<li><a class="nav-link" href="#exercise-23.2.4"><span class="header-section-number">17.1</span> Exercise 23.2.4</a></li>
+<li><a class="nav-link" href="#exercise-23.3.3"><span class="header-section-number">17.2</span> Exercise 23.3.3</a></li>
 </ul>
 
       <div class="book-extra">

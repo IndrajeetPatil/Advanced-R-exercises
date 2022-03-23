@@ -4,17 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>About | Advanced R Exercises</title>
+<title>Chapter 10 Function operators | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content="My solutions to exercises in Advanced R book.">
+<meta name="description" content="10.0.1 Exercises 11.2.3 Q1. Base R provides a function operator in the form of Vectorize(). What does it do? When might you use it? Q2. Read the source code for possibly(). How does it work? Q3....">
 <meta name="generator" content="bookdown 0.25 with bs4_book()">
-<meta property="og:title" content="About | Advanced R Exercises">
+<meta property="og:title" content="Chapter 10 Function operators | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.png">
-<meta property="og:description" content="My solutions to exercises in Advanced R book.">
+<meta property="og:description" content="10.0.1 Exercises 11.2.3 Q1. Base R provides a function operator in the form of Vectorize(). What does it do? When might you use it? Q2. Read the source code for possibly(). How does it work? Q3....">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="About | Advanced R Exercises">
-<meta name="twitter:description" content="My solutions to exercises in Advanced R book.">
+<meta name="twitter:title" content="Chapter 10 Function operators | Advanced R Exercises">
+<meta name="twitter:description" content="10.0.1 Exercises 11.2.3 Q1. Base R provides a function operator in the form of Vectorize(). What does it do? When might you use it? Q2. Read the source code for possibly(). How does it work? Q3....">
 <meta name="twitter:image" content="/cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -45,7 +45,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="active" href="index.html">About</a></li>
+<li><a class="" href="index.html">About</a></li>
 <li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
 <li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
 <li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
@@ -55,7 +55,7 @@
 <li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
 <li><a class="" href="functionals.html"><span class="header-section-number">8</span> Functionals</a></li>
 <li><a class="" href="function-factories.html"><span class="header-section-number">9</span> Function factories</a></li>
-<li><a class="" href="function-operators.html"><span class="header-section-number">10</span> Function operators</a></li>
+<li><a class="active" href="function-operators.html"><span class="header-section-number">10</span> Function operators</a></li>
 <li><a class="" href="base-types.html"><span class="header-section-number">11</span> Base Types</a></li>
 <li><a class="" href="s3.html"><span class="header-section-number">12</span> S3</a></li>
 <li><a class="" href="r6.html"><span class="header-section-number">13</span> R6</a></li>
@@ -72,28 +72,46 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><!--bookdown:title:end--><!--bookdown:title:start--><div id="about" class="section level1 unnumbered">
-<h1>About<a class="anchor" aria-label="anchor" href="#about"><i class="fas fa-link"></i></a>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="function-operators" class="section level1" number="10">
+<h1>
+<span class="header-section-number">10</span> Function operators<a class="anchor" aria-label="anchor" href="#function-operators"><i class="fas fa-link"></i></a>
 </h1>
-<p>My solutions to exercises from the <em>Advanced R</em> (2nd Edition) <a href="https://adv-r.hadley.nz/">book</a>.</p>
-<p>Note that you <strong>should be</strong> reading the <a href="https://advanced-r-solutions.rbind.io/index.html">official solutions manual</a>, which has more detailed explanations and are guaranteed to have correct solutions as the original author was also involved in writing them. I provide no such guarantees. 😬</p>
-<div class="inline-figure"><img src="assets/combined.jpg" width="80%"></div>
-<ul>
-<li><p><a href="https://github.com/IndrajeetPatil/Advanced-R-exercises">My solutions</a></p></li>
-<li><p><a href="https://advanced-r-solutions.rbind.io/index.html">Official solutions</a></p></li>
-</ul>
+<div id="exercises-11.2.3" class="section level3" number="10.0.1">
+<h3>
+<span class="header-section-number">10.0.1</span> Exercises 11.2.3<a class="anchor" aria-label="anchor" href="#exercises-11.2.3"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Q1.</strong> Base R provides a function operator in the form of <code><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize()</a></code>. What does it do? When might you use it?</p>
+<p><strong>Q2.</strong> Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">possibly()</a></code>. How does it work?</p>
+<p><strong>Q3.</strong> Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code>. How does it work?</p>
+</div>
+<div id="exercises-11.3.1" class="section level3" number="10.0.2">
+<h3>
+<span class="header-section-number">10.0.2</span> Exercises 11.3.1<a class="anchor" aria-label="anchor" href="#exercises-11.3.1"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Q1.</strong> Weigh the pros and cons of <code>download.file %&gt;% dot_every(10) %&gt;% delay_by(0.1)</code> versus <code>download.file %&gt;% delay_by(0.1) %&gt;% dot_every(10)</code>.</p>
+<p><strong>Q2.</strong> Should you memoise <code>file.download()</code>? Why or why not?</p>
+<p><strong>Q3.</strong> Create a function operator that reports whenever a file is created or deleted in the working directory, using <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code> and <code><a href="https://generics.r-lib.org/reference/setops.html">setdiff()</a></code>. What other global function effects might you want to track?</p>
+<p><strong>Q4.</strong> Write a function operator that logs a timestamp and message to a file every time a function is run.</p>
+<p><strong>Q5.</strong> Modify <code>delay_by()</code> so that instead of delaying by a fixed amount of time, it ensures that a certain amount of time has elapsed since the function was last called. That is, if you called <code>g &lt;- delay_by(1, f); g(); Sys.sleep(2); g()</code> there shouldn’t be an extra delay.</p>
+
+</div>
 </div>
   <div class="chapter-nav">
-<div class="empty"></div>
-<div class="next"><a href="introduction.html"><span class="header-section-number">1</span> Introduction</a></div>
+<div class="prev"><a href="function-factories.html"><span class="header-section-number">9</span> Function factories</a></div>
+<div class="next"><a href="base-types.html"><span class="header-section-number">11</span> Base Types</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#about">About</a></li></ul>
+      <ul class="nav navbar-nav"><li>
+<a class="nav-link" href="#function-operators"><span class="header-section-number">10</span> Function operators</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#exercises-11.2.3"><span class="header-section-number">10.0.1</span> Exercises 11.2.3</a></li>
+<li><a class="nav-link" href="#exercises-11.3.1"><span class="header-section-number">10.0.2</span> Exercises 11.3.1</a></li>
+</ul>
+</li></ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/index.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/index.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Function-operators.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Function-operators.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>

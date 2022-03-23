@@ -4,17 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 11 S3 | Advanced R Exercises</title>
+<title>Chapter 12 S3 | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content="11.1 Exercise 13.2.1 Q1. Describe the difference between t.test() and t.data.frame(). When is each function called? A1. t.test() is a generic function to perform a t-test. t.data.frame is a method...">
+<meta name="description" content="12.1 Exercise 13.2.1 Q1. Describe the difference between t.test() and t.data.frame(). When is each function called? A1. t.test() is a generic function to perform a t-test. t.data.frame is a method...">
 <meta name="generator" content="bookdown 0.25 with bs4_book()">
-<meta property="og:title" content="Chapter 11 S3 | Advanced R Exercises">
+<meta property="og:title" content="Chapter 12 S3 | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.png">
-<meta property="og:description" content="11.1 Exercise 13.2.1 Q1. Describe the difference between t.test() and t.data.frame(). When is each function called? A1. t.test() is a generic function to perform a t-test. t.data.frame is a method...">
+<meta property="og:description" content="12.1 Exercise 13.2.1 Q1. Describe the difference between t.test() and t.data.frame(). When is each function called? A1. t.test() is a generic function to perform a t-test. t.data.frame is a method...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 11 S3 | Advanced R Exercises">
-<meta name="twitter:description" content="11.1 Exercise 13.2.1 Q1. Describe the difference between t.test() and t.data.frame(). When is each function called? A1. t.test() is a generic function to perform a t-test. t.data.frame is a method...">
+<meta name="twitter:title" content="Chapter 12 S3 | Advanced R Exercises">
+<meta name="twitter:description" content="12.1 Exercise 13.2.1 Q1. Describe the difference between t.test() and t.data.frame(). When is each function called? A1. t.test() is a generic function to perform a t-test. t.data.frame is a method...">
 <meta name="twitter:image" content="/cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -55,13 +55,16 @@
 <li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
 <li><a class="" href="functionals.html"><span class="header-section-number">8</span> Functionals</a></li>
 <li><a class="" href="function-factories.html"><span class="header-section-number">9</span> Function factories</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">10</span> Base Types</a></li>
-<li><a class="active" href="s3.html"><span class="header-section-number">11</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">12</span> R6</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">13</span> Big Picture</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">14</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">15</span> Measuring performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">16</span> Rewriting R code in C++</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">10</span> Function operators</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">11</span> Base Types</a></li>
+<li><a class="active" href="s3.html"><span class="header-section-number">12</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">13</span> R6</a></li>
+<li><a class="" href="trade-offs.html"><span class="header-section-number">14</span> Trade-offs</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">15</span> Big Picture</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">16</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">17</span> Measuring performance</a></li>
+<li><a class="" href="improving-performance.html"><span class="header-section-number">18</span> Improving performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">19</span> Rewriting R code in C++</a></li>
 </ul>
 
         <div class="book-extra">
@@ -69,13 +72,13 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="s3" class="section level1" number="11">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="s3" class="section level1" number="12">
 <h1>
-<span class="header-section-number">11</span> S3<a class="anchor" aria-label="anchor" href="#s3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">12</span> S3<a class="anchor" aria-label="anchor" href="#s3"><i class="fas fa-link"></i></a>
 </h1>
-<div id="exercise-13.2.1" class="section level2" number="11.1">
+<div id="exercise-13.2.1" class="section level2" number="12.1">
 <h2>
-<span class="header-section-number">11.1</span> Exercise 13.2.1<a class="anchor" aria-label="anchor" href="#exercise-13.2.1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">12.1</span> Exercise 13.2.1<a class="anchor" aria-label="anchor" href="#exercise-13.2.1"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Describe the difference between <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> and <code><a href="https://rdrr.io/r/base/t.html">t.data.frame()</a></code>. When is each function called?</p>
 <p><strong>A1.</strong></p>
@@ -226,9 +229,9 @@ etc.</li>
 <span class="co">#&gt; $class</span>
 <span class="co">#&gt; [1] "table"</span></code></pre></div>
 </div>
-<div id="exercise-13.3.4" class="section level2" number="11.2">
+<div id="exercise-13.3.4" class="section level2" number="12.2">
 <h2>
-<span class="header-section-number">11.2</span> Exercise 13.3.4<a class="anchor" aria-label="anchor" href="#exercise-13.3.4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">12.2</span> Exercise 13.3.4<a class="anchor" aria-label="anchor" href="#exercise-13.3.4"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Write a constructor for <code>data.frame</code> objects. What base type is a data frame built on? What attributes does it use? What are the restrictions placed on the individual elements? What about the names?</p>
 <p><strong>A1.</strong></p>
@@ -253,14 +256,14 @@ etc.</li>
 </div>
 
   <div class="chapter-nav">
-<div class="prev"><a href="base-types.html"><span class="header-section-number">10</span> Base Types</a></div>
-<div class="next"><a href="r6.html"><span class="header-section-number">12</span> R6</a></div>
+<div class="prev"><a href="base-types.html"><span class="header-section-number">11</span> Base Types</a></div>
+<div class="next"><a href="r6.html"><span class="header-section-number">13</span> R6</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#s3"><span class="header-section-number">11</span> S3</a></li>
-<li><a class="nav-link" href="#exercise-13.2.1"><span class="header-section-number">11.1</span> Exercise 13.2.1</a></li>
-<li><a class="nav-link" href="#exercise-13.3.4"><span class="header-section-number">11.2</span> Exercise 13.3.4</a></li>
+<li><a class="nav-link" href="#s3"><span class="header-section-number">12</span> S3</a></li>
+<li><a class="nav-link" href="#exercise-13.2.1"><span class="header-section-number">12.1</span> Exercise 13.2.1</a></li>
+<li><a class="nav-link" href="#exercise-13.3.4"><span class="header-section-number">12.2</span> Exercise 13.3.4</a></li>
 </ul>
 
       <div class="book-extra">
