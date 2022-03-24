@@ -141,7 +141,7 @@ diag(x)
 
 ```r
 (df <- tibble(x = c(1, 2, NA), y = c(NA, 5, NA)))
-#> # A tibble: 3 x 2
+#> # A tibble: 3 × 2
 #>       x     y
 #>   <dbl> <dbl>
 #> 1     1    NA
