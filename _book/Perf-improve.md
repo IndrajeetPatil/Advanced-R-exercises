@@ -53,10 +53,10 @@ bench::mark(
 #> # A tibble: 4 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 lm            569µs    603µs     1588.    1.25MB
-#> 2 speedglm      586µs    626µs     1566.   61.51MB
-#> 3 biglm         466µs    503µs     1970.  934.81KB
-#> 4 fastLm        535µs    587µs     1687.  982.41KB
+#> 1 lm            566µs    597µs     1633.    1.25MB
+#> 2 speedglm      580µs    598µs     1669.   61.51MB
+#> 3 biglm         449µs    489µs     2045.  934.81KB
+#> 4 fastLm        531µs    551µs     1804.  982.41KB
 ```
 
 The results might change depending on the size of the dataset, so you will have to experiment with different algorithms and find the one that fits the needs of your dataset the best.
@@ -75,12 +75,7 @@ With a small vector, `fmatch()` is only slightly faster, but of the same order o
 
 
 ```r
-library(fastmatch)
-#> 
-#> Attaching package: 'fastmatch'
-#> The following object is masked from 'package:dplyr':
-#> 
-#>     coalesce
+library(fastmatch, warn.conflicts = FALSE)
 
 small_vec <- c("a", "b", "x", "m", "n", "y")
 
@@ -94,8 +89,8 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          451ns    533ns  1651310.    2.77KB
-#> 2 fastmatch     369ns    451ns  2029792.    2.66KB
+#> 1 base          451ns    533ns  1683045.    2.77KB
+#> 2 fastmatch     369ns    451ns  2029912.    2.66KB
 ```
 
 But, with a larger vector, `fmatch()` is only orders of magnitude faster! ⚡
@@ -114,8 +109,8 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base         14.3ms   14.4ms      68.5    31.4MB
-#> 2 fastmatch     369ns    451ns 2052027.         0B
+#> 1 base         14.1ms   14.2ms      66.9    31.4MB
+#> 2 fastmatch     369ns    451ns 1973173.         0B
 ```
 
 We can also look at the hash table:
@@ -193,7 +188,7 @@ rowSums
 #>     else names(z) <- dimnames(x)[[1L]]
 #>     z
 #> }
-#> <bytecode: 0x114d54fd8>
+#> <bytecode: 0x11cff3800>
 #> <environment: namespace:base>
 ```
 
@@ -204,7 +199,7 @@ rowSums
 .rowSums
 #> function (x, m, n, na.rm = FALSE) 
 #> .Internal(rowSums(x, m, n, na.rm))
-#> <bytecode: 0x1243c87a8>
+#> <bytecode: 0x12da011f8>
 #> <environment: namespace:base>
 ```
 
@@ -221,12 +216,12 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression                                 min   median
 #>   <bch:expr>                            <bch:tm> <bch:tm>
-#> 1 rowSums(x)                              94.6µs    134µs
-#> 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])   93.4µs    133µs
+#> 1 rowSums(x)                              94.4µs    129µs
+#> 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])   93.5µs    130µs
 #>   `itr/sec` mem_alloc
 #>       <dbl> <bch:byt>
-#> 1     6903.     859KB
-#> 2     7290.     859KB
+#> 1     7456.     859KB
+#> 2     7341.     859KB
 ```
 
 **Q2.** Make a faster version of `chisq.test()` that only computes the chi-square test statistic when the input is two numeric vectors with no missing values. You can try simplifying `chisq.test()` or by coding from the [mathematical definition](http://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test).
@@ -242,17 +237,9 @@ This leaves us with a much simpler, bare bones implementation:
 
 
 ```r
-
 my_chisq_test <- function(x, y) {
-  if ((nlevels(x) < 2L) || (nlevels(y) < 2L)) {
-    stop("'x' and 'y' must have at least 2 levels")
-  }
-
   x <- table(x, y)
-
-  if ((n <- sum(x)) == 0) {
-    stop("at least one entry of 'x' must be positive")
-  }
+  n <- sum(x)
 
   nr <- as.integer(nrow(x))
   nc <- as.integer(ncol(x))
@@ -287,12 +274,12 @@ my_chisq_test <- function(x, y) {
 }
 ```
 
-And, indeed, this custom function performs much better than its base equivalent:
+And, indeed, this custom function performs much better^[Deliberately choosing a larger dataset to stress test the new function.] than its base equivalent:
 
 
 ```r
-m <- as.factor(mtcars$am)
-n <- as.factor(mtcars$cyl)
+m <- c(rep("a", 1000), rep("b", 9000))
+n <- c(rep(c("x", "y"), 5000))
 
 bench::mark(
   "base" = chisq.test(m, n)$statistic[[1]],
@@ -301,11 +288,122 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base        158.8µs  164.9µs     5979.     180KB
-#> 2 custom       40.3µs   42.3µs    23295.     259KB
+#> 1 base          613µs    675µs     1440.    1.47MB
+#> 2 custom        463µs    531µs     1841.    1.12MB
 ```
 
 **Q3.** Can you make a faster version of `table()` for the case of an input of two integer vectors with no missing values? Can you use it to speed up your chi-square test?
+
+**A3.** In order to make a leaner version of `table()`, we can take a similar approach and trim the unnecessary fat in light of our new API of accepting just two vectors without missing values. We can remove the following components from the code:
+
+- extracting data from objects entered in `...` argument
+- dealing with missing values
+- other input validation checks
+
+In addition to this removal, we can also use `fastmatch::fmatch()` instead of `match()`:
+
+
+```r
+my_table <- function(x, y) {
+  x_sorted <- sort(unique(x))
+  y_sorted <- sort(unique(y))
+
+  x_length <- length(x_sorted)
+  y_length <- length(y_sorted)
+
+  bin <- fastmatch::fmatch(x, x_sorted) + x_length * fastmatch::fmatch(y, y_sorted) - x_length
+
+  y <- tabulate(bin, x_length * y_length)
+
+  y <- array(
+    y,
+    dim = c(x_length, y_length),
+    dimnames = list(x = x_sorted, y = y_sorted)
+  )
+
+  class(y) <- "table"
+  y
+}
+```
+
+The custom does perform slightly better:
+
+
+```r
+x <- c(rep("a", 1000), rep("b", 9000))
+y <- c(rep(c("x", "y"), 5000))
+
+# check is set to FALSE because the custom function has an additional attribute: `'.match.hash'`
+bench::mark(
+  "base" = table(x, y),
+  "custom" = my_table(x, y),
+  check = FALSE
+)[1:5]
+#> # A tibble: 2 × 5
+#>   expression      min   median `itr/sec` mem_alloc
+#>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
+#> 1 base          447µs    493µs     2003.     960KB
+#> 2 custom        251µs    277µs     3534.     475KB
+```
+
+We can also use this function in our custom chi-squared test function and see if the performance improves any further:
+
+
+```r
+my_chisq_test2 <- function(x, y) {
+  x <- my_table(x, y)
+  n <- sum(x)
+
+  nr <- as.integer(nrow(x))
+  nc <- as.integer(ncol(x))
+
+  sr <- rowSums(x)
+  sc <- colSums(x)
+  E <- outer(sr, sc, "*") / n
+  v <- function(r, c, n) c * r * (n - r) * (n - c) / n^3
+  V <- outer(sr, sc, v, n)
+  dimnames(E) <- dimnames(x)
+
+  STATISTIC <- sum((abs(x - E))^2 / E)
+  PARAMETER <- (nr - 1L) * (nc - 1L)
+  PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
+
+  names(STATISTIC) <- "X-squared"
+  names(PARAMETER) <- "df"
+
+  structure(
+    list(
+      statistic = STATISTIC,
+      parameter = PARAMETER,
+      p.value = PVAL,
+      method = "Pearson's Chi-squared test",
+      observed = x,
+      expected = E,
+      residuals = (x - E) / sqrt(E),
+      stdres = (x - E) / sqrt(V)
+    ),
+    class = "htest"
+  )
+}
+```
+
+And, indeed, this new version of the custom function performs even better than it previously did:
+
+
+```r
+m <- c(rep("a", 1000), rep("b", 9000))
+n <- c(rep(c("x", "y"), 5000))
+
+bench::mark(
+  "base" = chisq.test(m, n)$statistic[[1]],
+  "custom" = my_chisq_test2(m, n)$statistic[[1]]
+)[1:5]
+#> # A tibble: 2 × 5
+#>   expression      min   median `itr/sec` mem_alloc
+#>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
+#> 1 base          614µs    685µs     1448.    1.28MB
+#> 2 custom        275µs    300µs     3264.  594.98KB
+```
 
 ### Exercises 24.5.1
 

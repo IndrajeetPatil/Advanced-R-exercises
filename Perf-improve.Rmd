@@ -157,17 +157,9 @@ bench::mark(
 This leaves us with a much simpler, bare bones implementation:
 
 ```{r}
-
 my_chisq_test <- function(x, y) {
-  if ((nlevels(x) < 2L) || (nlevels(y) < 2L)) {
-    stop("'x' and 'y' must have at least 2 levels")
-  }
-
   x <- table(x, y)
-
-  if ((n <- sum(x)) == 0) {
-    stop("at least one entry of 'x' must be positive")
-  }
+  n <- sum(x)
 
   nr <- as.integer(nrow(x))
   nc <- as.integer(ncol(x))
@@ -202,11 +194,11 @@ my_chisq_test <- function(x, y) {
 }
 ```
 
-And, indeed, this custom function performs much better than its base equivalent:
+And, indeed, this custom function performs slightly better^[Deliberately choosing a larger dataset to stress test the new function.] than its base equivalent:
 
 ```{r, warning=FALSE}
-m <- as.factor(mtcars$am)
-n <- as.factor(mtcars$cyl)
+m <- c(rep("a", 1000), rep("b", 9000))
+n <- c(rep(c("x", "y"), 5000))
 
 bench::mark(
   "base" = chisq.test(m, n)$statistic[[1]],
@@ -215,6 +207,103 @@ bench::mark(
 ```
 
 **Q3.** Can you make a faster version of `table()` for the case of an input of two integer vectors with no missing values? Can you use it to speed up your chi-square test?
+
+**A3.** In order to make a leaner version of `table()`, we can take a similar approach and trim the unnecessary fat in light of our new API of accepting just two vectors without missing values. We can remove the following components from the code:
+
+- extracting data from objects entered in `...` argument
+- dealing with missing values
+- other input validation checks
+
+In addition to this removal, we can also use `fastmatch::fmatch()` instead of `match()`:
+
+```{r}
+my_table <- function(x, y) {
+  x_sorted <- sort(unique(x))
+  y_sorted <- sort(unique(y))
+
+  x_length <- length(x_sorted)
+  y_length <- length(y_sorted)
+
+  bin <- fastmatch::fmatch(x, x_sorted) + x_length * fastmatch::fmatch(y, y_sorted) - x_length
+
+  y <- tabulate(bin, x_length * y_length)
+
+  y <- array(
+    y,
+    dim = c(x_length, y_length),
+    dimnames = list(x = x_sorted, y = y_sorted)
+  )
+
+  class(y) <- "table"
+  y
+}
+```
+
+The custom does perform slightly better:
+
+```{r}
+x <- c(rep("a", 1000), rep("b", 9000))
+y <- c(rep(c("x", "y"), 5000))
+
+# check is set to FALSE because the custom function has an additional attribute: `'.match.hash'`
+bench::mark(
+  "base" = table(x, y),
+  "custom" = my_table(x, y),
+  check = FALSE
+)[1:5]
+```
+
+We can also use this function in our custom chi-squared test function and see if the performance improves any further:
+
+```{r}
+my_chisq_test2 <- function(x, y) {
+  x <- my_table(x, y)
+  n <- sum(x)
+
+  nr <- as.integer(nrow(x))
+  nc <- as.integer(ncol(x))
+
+  sr <- rowSums(x)
+  sc <- colSums(x)
+  E <- outer(sr, sc, "*") / n
+  v <- function(r, c, n) c * r * (n - r) * (n - c) / n^3
+  V <- outer(sr, sc, v, n)
+  dimnames(E) <- dimnames(x)
+
+  STATISTIC <- sum((abs(x - E))^2 / E)
+  PARAMETER <- (nr - 1L) * (nc - 1L)
+  PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
+
+  names(STATISTIC) <- "X-squared"
+  names(PARAMETER) <- "df"
+
+  structure(
+    list(
+      statistic = STATISTIC,
+      parameter = PARAMETER,
+      p.value = PVAL,
+      method = "Pearson's Chi-squared test",
+      observed = x,
+      expected = E,
+      residuals = (x - E) / sqrt(E),
+      stdres = (x - E) / sqrt(V)
+    ),
+    class = "htest"
+  )
+}
+```
+
+And, indeed, this new version of the custom function performs even better than it previously did:
+
+```{r, warning=FALSE}
+m <- c(rep("a", 1000), rep("b", 9000))
+n <- c(rep(c("x", "y"), 5000))
+
+bench::mark(
+  "base" = chisq.test(m, n)$statistic[[1]],
+  "custom" = my_chisq_test2(m, n)$statistic[[1]]
+)[1:5]
+```
 
 ### Exercises 24.5.1
 

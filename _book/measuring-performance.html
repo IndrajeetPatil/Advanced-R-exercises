@@ -102,7 +102,7 @@
 <span class="co">#&gt; # A tibble: 1 × 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 f()          99.5µs    142µs     6716.     792KB     102.</span></code></pre></div>
+<span class="co">#&gt; 1 f()          99.5µs    135µs     7045.     792KB     107.</span></code></pre></div>
 <p>As mentioned in the docs, setting <code>torture = TRUE</code></p>
 <blockquote>
 <p>Triggers garbage collection after every torture memory allocation call.</p>
@@ -126,7 +126,7 @@
 <span class="co">#&gt;     list &lt;- .Primitive("c")(list, names)</span>
 <span class="co">#&gt;     .Internal(remove(list, envir, inherits))</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x132a586f0&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x11fe676f0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>I still couldn’t figure out why. I would recommend checking out the <a href="https://advanced-r-solutions.rbind.io/measuring-performance.html#profiling">official answer</a>.</p>
 </div>
@@ -187,15 +187,15 @@
 <span class="co">#&gt; # A tibble: 2 × 2</span>
 <span class="co">#&gt;   expression     mean</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)    431.15ns</span>
-<span class="co">#&gt; 2 x^0.5        1.36µs</span>
+<span class="co">#&gt; 1 sqrt(x)    405.47ns</span>
+<span class="co">#&gt; 2 x^0.5        1.28µs</span>
 
 <span class="va">t_systime_df</span>
 <span class="co">#&gt; # A tibble: 2 × 3</span>
 <span class="co">#&gt;   expression systime_with_gc_us systime_with_nogc_us</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;              &lt;dbl&gt;                &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)                 0.398                0.540</span>
-<span class="co">#&gt; 2 x^0.5                   1.35                 1.38</span></code></pre></div>
+<span class="co">#&gt; 1 sqrt(x)                 0.395                0.400</span>
+<span class="co">#&gt; 2 x^0.5                   1.22                 1.24</span></code></pre></div>
 <p>The comparison reveals that these two approaches yield quite similar results.</p>
 <p><strong>Q2.</strong> Here are two other ways to compute the square root of a vector. Which do you think will be fastest? Which will be slowest? Use microbenchmarking to test your answers.</p>
 <div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
@@ -217,10 +217,10 @@
 <span class="co">#&gt; # A tibble: 4 × 6</span>
 <span class="co">#&gt;   expression         min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;    &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)         1.07µs   2.28µs   217635.    7.86KB</span>
-<span class="co">#&gt; 2 exp(log(x)/2)   6.56µs   7.79µs    93696.    7.86KB</span>
-<span class="co">#&gt; 3 x^0.5           9.68µs  10.93µs    86188.    7.86KB</span>
-<span class="co">#&gt; 4 x^(1/2)         9.76µs  11.17µs    64728.    7.86KB</span>
+<span class="co">#&gt; 1 sqrt(x)         1.02µs   1.44µs   552005.    7.86KB</span>
+<span class="co">#&gt; 2 exp(log(x)/2)   6.07µs   7.05µs   142764.    7.86KB</span>
+<span class="co">#&gt; 3 x^0.5           9.31µs  10.29µs    97052.    7.86KB</span>
+<span class="co">#&gt; 4 x^(1/2)         9.39µs  10.37µs    95868.    7.86KB</span>
 <span class="co">#&gt;   `gc/sec`</span>
 <span class="co">#&gt;      &lt;dbl&gt;</span>
 <span class="co">#&gt; 1        0</span>
