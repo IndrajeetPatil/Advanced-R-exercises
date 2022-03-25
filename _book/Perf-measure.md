@@ -38,10 +38,10 @@ Maybe because the function runs too fast?
 
 ```r
 bench::mark(f(), check = FALSE, iterations = 1000)
-#> # A tibble: 1 × 6
+#> # A tibble: 1 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()          99.5µs    135µs     7045.     792KB     107.
+#> 1 f()           212us    252us     3895.     792KB     59.3
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -73,7 +73,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x11fe676f0>
+#> <bytecode: 0x0000000018222c68>
 #> <environment: namespace:base>
 ```
 
@@ -142,18 +142,18 @@ Compare results from these alternatives:
 
 ```r
 t_bench_df
-#> # A tibble: 2 × 2
+#> # A tibble: 2 x 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)    405.47ns
-#> 2 x^0.5        1.28µs
+#> 1 sqrt(x)    946.16ns
+#> 2 x^0.5        3.85us
 
 t_systime_df
-#> # A tibble: 2 × 3
+#> # A tibble: 2 x 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                 0.395                0.400
-#> 2 x^0.5                   1.22                 1.24
+#> 1 sqrt(x)                  0.97                0.690
+#> 2 x^0.5                    3.34                3.36
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -182,13 +182,13 @@ bench::mark(
   iterations = 1000
 ) %>%
   dplyr::arrange(median)
-#> # A tibble: 4 × 6
+#> # A tibble: 4 x 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)         1.02µs   1.44µs   552005.    7.86KB
-#> 2 exp(log(x)/2)   6.07µs   7.05µs   142764.    7.86KB
-#> 3 x^0.5           9.31µs  10.29µs    97052.    7.86KB
-#> 4 x^(1/2)         9.39µs  10.37µs    95868.    7.86KB
+#> 1 sqrt(x)          4.7us   9.45us   107370.    7.86KB
+#> 2 x^(1/2)         29.3us   34.3us    28488.    7.86KB
+#> 3 x^0.5           30.7us  34.55us    27791.    7.86KB
+#> 4 exp(log(x)/2)   78.9us   85.1us    11507.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

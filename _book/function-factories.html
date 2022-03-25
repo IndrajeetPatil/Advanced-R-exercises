@@ -4,17 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 9 Function factories | Advanced R Exercises</title>
+<title>Chapter 10 Function factories | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content="9.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function (x) #&gt; x #&gt; &lt;bytecode: 0x132144a70&gt; #&gt; &lt;environment: namespace:base&gt; Why is it better to force(x) instead of just...">
+<meta name="description" content="10.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function (x) #&gt; x #&gt; &lt;bytecode: 0x00000000172671f0&gt; #&gt; &lt;environment: namespace:base&gt; Why is it better to force(x) instead...">
 <meta name="generator" content="bookdown 0.25 with bs4_book()">
-<meta property="og:title" content="Chapter 9 Function factories | Advanced R Exercises">
+<meta property="og:title" content="Chapter 10 Function factories | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.png">
-<meta property="og:description" content="9.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function (x) #&gt; x #&gt; &lt;bytecode: 0x132144a70&gt; #&gt; &lt;environment: namespace:base&gt; Why is it better to force(x) instead of just...">
+<meta property="og:description" content="10.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function (x) #&gt; x #&gt; &lt;bytecode: 0x00000000172671f0&gt; #&gt; &lt;environment: namespace:base&gt; Why is it better to force(x) instead...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 9 Function factories | Advanced R Exercises">
-<meta name="twitter:description" content="9.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function (x) #&gt; x #&gt; &lt;bytecode: 0x132144a70&gt; #&gt; &lt;environment: namespace:base&gt; Why is it better to force(x) instead of just...">
+<meta name="twitter:title" content="Chapter 10 Function factories | Advanced R Exercises">
+<meta name="twitter:description" content="10.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function (x) #&gt; x #&gt; &lt;bytecode: 0x00000000172671f0&gt; #&gt; &lt;environment: namespace:base&gt; Why is it better to force(x) instead...">
 <meta name="twitter:image" content="/cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -53,18 +53,22 @@
 <li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
 <li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
 <li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
-<li><a class="" href="functionals.html"><span class="header-section-number">8</span> Functionals</a></li>
-<li><a class="active" href="function-factories.html"><span class="header-section-number">9</span> Function factories</a></li>
-<li><a class="" href="function-operators.html"><span class="header-section-number">10</span> Function operators</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">11</span> Base Types</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">12</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">13</span> R6</a></li>
-<li><a class="" href="trade-offs.html"><span class="header-section-number">14</span> Trade-offs</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">15</span> Big Picture</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">16</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">17</span> Measuring performance</a></li>
-<li><a class="" href="improving-performance.html"><span class="header-section-number">18</span> Improving performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">19</span> Rewriting R code in C++</a></li>
+<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
+<li><a class="active" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
+<li><a class="" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
+<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
+<li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
+<li><a class="" href="quotation.html"><span class="header-section-number">19</span> Quotation</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">20</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">21</span> Measuring performance</a></li>
+<li><a class="" href="improving-performance.html"><span class="header-section-number">22</span> Improving performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">23</span> Rewriting R code in C++</a></li>
 </ul>
 
         <div class="book-extra">
@@ -72,25 +76,25 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="function-factories" class="section level1" number="9">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="function-factories" class="section level1" number="10">
 <h1>
-<span class="header-section-number">9</span> Function factories<a class="anchor" aria-label="anchor" href="#function-factories"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10</span> Function factories<a class="anchor" aria-label="anchor" href="#function-factories"><i class="fas fa-link"></i></a>
 </h1>
-<div id="exercises-10.2.6" class="section level3" number="9.0.1">
+<div id="exercises-10.2.6" class="section level3" number="10.0.1">
 <h3>
-<span class="header-section-number">9.0.1</span> Exercises 10.2.6<a class="anchor" aria-label="anchor" href="#exercises-10.2.6"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.0.1</span> Exercises 10.2.6<a class="anchor" aria-label="anchor" href="#exercises-10.2.6"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> The definition of <code><a href="https://rdrr.io/r/base/force.html">force()</a></code> is simple:</p>
-<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">force</span>
 <span class="co">#&gt; function (x) </span>
 <span class="co">#&gt; x</span>
-<span class="co">#&gt; &lt;bytecode: 0x132144a70&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x00000000172671f0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>Why is it better to <code>force(x)</code> instead of just <code>x</code>?</p>
 <p><strong>Q2.</strong> Base R contains two function factories, <code><a href="https://rdrr.io/r/stats/approxfun.html">approxfun()</a></code> and <code><a href="https://rdrr.io/r/stats/ecdf.html">ecdf()</a></code>. Read their documentation and experiment to figure out what the functions do and what they return.</p>
 <p><strong>Q3.</strong> Create a function <code>pick()</code> that takes an index, <code>i</code>, as an argument and returns a function with an argument <code>x</code> that subsets <code>x</code> with <code>i</code>.</p>
-<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pick</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co"># should be equivalent to</span>
 <span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
@@ -99,21 +103,21 @@
 <span class="co"># should be equivalent to</span>
 <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <p><strong>Q4.</strong> Create a function that creates functions that compute the i<sup>th</sup><a href="http://en.wikipedia.org/wiki/Central_moment">central moment</a> of a numeric vector. You can test it by running the following code:</p>
-<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu">moment</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
 <span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu">moment</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="fu">m1</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="fu">m2</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">*</span> <span class="fl">99</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><strong>Q5.</strong> What happens if you don’t use a closure? Make predictions, then verify with the code below.</p>
-<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">0</span>
 <span class="va">new_counter2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">i</span> <span class="op">&lt;&lt;-</span> <span class="va">i</span> <span class="op">+</span> <span class="fl">1</span>
   <span class="va">i</span>
 <span class="op">}</span></code></pre></div>
 <p><strong>Q6.</strong> What happens if you use <code>&lt;-</code> instead of <code>&lt;&lt;-</code>? Make predictions, then verify with the code below.</p>
-<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">new_counter3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">0</span>
   <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
@@ -122,19 +126,19 @@
   <span class="op">}</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="exercises-10.3.4" class="section level3" number="9.0.2">
+<div id="exercises-10.3.4" class="section level3" number="10.0.2">
 <h3>
-<span class="header-section-number">9.0.2</span> Exercises 10.3.4<a class="anchor" aria-label="anchor" href="#exercises-10.3.4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.0.2</span> Exercises 10.3.4<a class="anchor" aria-label="anchor" href="#exercises-10.3.4"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> Compare and contrast <code><a href="https://ggplot2.tidyverse.org/reference/label_bquote.html">ggplot2::label_bquote()</a></code> with <code><a href="https://scales.r-lib.org/reference/label_number.html">scales::number_format()</a></code>.</p>
 </div>
-<div id="exercises-10.4.4" class="section level3" number="9.0.3">
+<div id="exercises-10.4.4" class="section level3" number="10.0.3">
 <h3>
-<span class="header-section-number">9.0.3</span> Exercises 10.4.4<a class="anchor" aria-label="anchor" href="#exercises-10.4.4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.0.3</span> Exercises 10.4.4<a class="anchor" aria-label="anchor" href="#exercises-10.4.4"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> In <code>boot_model()</code>, why don’t I need to force the evaluation of <code>df</code> or <code>model</code>?</p>
 <p><strong>Q2.</strong> Why might you formulate the Box-Cox transformation like this?</p>
-<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">boxcox3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
   <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span>
     <span class="kw">if</span> <span class="op">(</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
@@ -147,9 +151,9 @@
 <p><strong>Q3.</strong> Why don’t you need to worry that <code>boot_permute()</code> stores a copy of the data inside the function that it generates?</p>
 <p><strong>Q4.</strong> How much time does <code>ll_poisson2()</code> save compared to <code>ll_poisson1()</code>? Use <code><a href="http://bench.r-lib.org/reference/mark.html">bench::mark()</a></code> to see how much faster the optimisation occurs. How does changing the length of <code>x</code> change the results?</p>
 </div>
-<div id="exercises-10.5.1" class="section level3" number="9.0.4">
+<div id="exercises-10.5.1" class="section level3" number="10.0.4">
 <h3>
-<span class="header-section-number">9.0.4</span> Exercises 10.5.1<a class="anchor" aria-label="anchor" href="#exercises-10.5.1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.0.4</span> Exercises 10.5.1<a class="anchor" aria-label="anchor" href="#exercises-10.5.1"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> Which of the following commands is equivalent to <code>with(x, f(z))</code>?</p>
 <pre><code>(a) `x$f(x$z)`.
@@ -159,7 +163,7 @@
 (e) It depends.</code></pre>
 <p><strong>Q2.</strong> Compare and contrast the effects of <code><a href="https://rlang.r-lib.org/reference/env_bind.html">env_bind()</a></code> vs. <code><a href="https://rdrr.io/r/base/attach.html">attach()</a></code> for the
 following code.</p>
-<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">funs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   mean <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
   sum <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
@@ -179,16 +183,16 @@ following code.</p>
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="functionals.html"><span class="header-section-number">8</span> Functionals</a></div>
-<div class="next"><a href="function-operators.html"><span class="header-section-number">10</span> Function operators</a></div>
+<div class="prev"><a href="functionals.html"><span class="header-section-number">9</span> Functionals</a></div>
+<div class="next"><a href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav"><li>
-<a class="nav-link" href="#function-factories"><span class="header-section-number">9</span> Function factories</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#exercises-10.2.6"><span class="header-section-number">9.0.1</span> Exercises 10.2.6</a></li>
-<li><a class="nav-link" href="#exercises-10.3.4"><span class="header-section-number">9.0.2</span> Exercises 10.3.4</a></li>
-<li><a class="nav-link" href="#exercises-10.4.4"><span class="header-section-number">9.0.3</span> Exercises 10.4.4</a></li>
-<li><a class="nav-link" href="#exercises-10.5.1"><span class="header-section-number">9.0.4</span> Exercises 10.5.1</a></li>
+<a class="nav-link" href="#function-factories"><span class="header-section-number">10</span> Function factories</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#exercises-10.2.6"><span class="header-section-number">10.0.1</span> Exercises 10.2.6</a></li>
+<li><a class="nav-link" href="#exercises-10.3.4"><span class="header-section-number">10.0.2</span> Exercises 10.3.4</a></li>
+<li><a class="nav-link" href="#exercises-10.4.4"><span class="header-section-number">10.0.3</span> Exercises 10.4.4</a></li>
+<li><a class="nav-link" href="#exercises-10.5.1"><span class="header-section-number">10.0.4</span> Exercises 10.5.1</a></li>
 </ul>
 </li></ul>
 
@@ -207,7 +211,7 @@ following code.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-03-24.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-03-25.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

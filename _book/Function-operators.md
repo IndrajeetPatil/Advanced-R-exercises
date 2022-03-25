@@ -1,5 +1,7 @@
 # Function operators
 
+
+
 ### Exercises 11.2.3
 
 **Q1.** Base R provides a function operator in the form of `Vectorize()`. What does it do? When might you use it?

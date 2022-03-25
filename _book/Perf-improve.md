@@ -22,7 +22,7 @@ sessInfo <- sessionInfo()
 sessInfo$matprod
 #> [1] "default"
 sessInfo$LAPACK
-#> [1] "/Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/lib/libRlapack.dylib"
+#> [1] ""
 ```
 
 Comparing performance of different alternatives:
@@ -35,12 +35,12 @@ library(gapminder)
 dplyr::glimpse(gapminder)
 #> Rows: 1,704
 #> Columns: 6
-#> $ country   <fct> "Afghanistan", "Afghanistan", "Afghanist…
-#> $ continent <fct> Asia, Asia, Asia, Asia, Asia, Asia, Asia…
-#> $ year      <int> 1952, 1957, 1962, 1967, 1972, 1977, 1982…
-#> $ lifeExp   <dbl> 28.801, 30.332, 31.997, 34.020, 36.088, …
-#> $ pop       <int> 8425333, 9240934, 10267083, 11537966, 13…
-#> $ gdpPercap <dbl> 779.4453, 820.8530, 853.1007, 836.1971, …
+#> $ country   <fct> "Afghanistan", "Afghanistan", "Afghanist~
+#> $ continent <fct> Asia, Asia, Asia, Asia, Asia, Asia, Asia~
+#> $ year      <int> 1952, 1957, 1962, 1967, 1972, 1977, 1982~
+#> $ lifeExp   <dbl> 28.801, 30.332, 31.997, 34.020, 36.088, ~
+#> $ pop       <int> 8425333, 9240934, 10267083, 11537966, 13~
+#> $ gdpPercap <dbl> 779.4453, 820.8530, 853.1007, 836.1971, ~
 
 bench::mark(
   "lm"       = stats::lm(lifeExp ~ continent * gdpPercap, gapminder),
@@ -50,13 +50,13 @@ bench::mark(
   check      = FALSE,
   iterations = 1000
 )[1:5]
-#> # A tibble: 4 × 5
+#> # A tibble: 4 x 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 lm            566µs    597µs     1633.    1.25MB
-#> 2 speedglm      580µs    598µs     1669.   61.51MB
-#> 3 biglm         449µs    489µs     2045.  934.81KB
-#> 4 fastLm        531µs    551µs     1804.  982.41KB
+#> 1 lm           1.01ms    1.3ms      707.    1.25MB
+#> 2 speedglm     1.23ms   1.38ms      692.   61.29MB
+#> 3 biglm       847.8us   1.01ms      946.  944.81KB
+#> 4 fastLm        1.2ms   1.49ms      649.  992.86KB
 ```
 
 The results might change depending on the size of the dataset, so you will have to experiment with different algorithms and find the one that fits the needs of your dataset the best.
@@ -86,11 +86,11 @@ bench::mark(
   "base" = match(c("x", "y"), small_vec),
   "fastmatch" = fmatch(c("x", "y"), small_vec)
 )[1:5]
-#> # A tibble: 2 × 5
+#> # A tibble: 2 x 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          451ns    533ns  1683045.    2.77KB
-#> 2 fastmatch     369ns    451ns  2029912.    2.66KB
+#> 1 base            1us    2.1us   450651.        0B
+#> 2 fastmatch     900ns    1.8us   500293.    2.66KB
 ```
 
 But, with a larger vector, `fmatch()` is only orders of magnitude faster! ⚡
@@ -106,11 +106,11 @@ bench::mark(
   "base" = match(c("x", "y"), large_vec),
   "fastmatch" = fmatch(c("x", "y"), large_vec)
 )[1:5]
-#> # A tibble: 2 × 5
+#> # A tibble: 2 x 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base         14.1ms   14.2ms      66.9    31.4MB
-#> 2 fastmatch     369ns    451ns 1973173.         0B
+#> 1 base         26.5ms   32.8ms      30.5    31.4MB
+#> 2 fastmatch     1.5us      2us  480095.         0B
 ```
 
 We can also look at the hash table:
@@ -188,7 +188,7 @@ rowSums
 #>     else names(z) <- dimnames(x)[[1L]]
 #>     z
 #> }
-#> <bytecode: 0x11cff3800>
+#> <bytecode: 0x0000000034f10ee8>
 #> <environment: namespace:base>
 ```
 
@@ -199,7 +199,7 @@ rowSums
 .rowSums
 #> function (x, m, n, na.rm = FALSE) 
 #> .Internal(rowSums(x, m, n, na.rm))
-#> <bytecode: 0x12da011f8>
+#> <bytecode: 0x0000000034e05270>
 #> <environment: namespace:base>
 ```
 
@@ -213,15 +213,15 @@ bench::mark(
   rowSums(x),
   .rowSums(x, dim(x)[[1]], dim(x)[[2]])
 )[1:5]
-#> # A tibble: 2 × 5
+#> # A tibble: 2 x 5
 #>   expression                                 min   median
 #>   <bch:expr>                            <bch:tm> <bch:tm>
-#> 1 rowSums(x)                              94.4µs    129µs
-#> 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])   93.5µs    130µs
+#> 1 rowSums(x)                               833us   1.05ms
+#> 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])    914us   1.14ms
 #>   `itr/sec` mem_alloc
 #>       <dbl> <bch:byt>
-#> 1     7456.     859KB
-#> 2     7341.     859KB
+#> 1      919.     859KB
+#> 2      829.     859KB
 ```
 
 **Q2.** Make a faster version of `chisq.test()` that only computes the chi-square test statistic when the input is two numeric vectors with no missing values. You can try simplifying `chisq.test()` or by coding from the [mathematical definition](http://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test).
@@ -274,7 +274,7 @@ my_chisq_test <- function(x, y) {
 }
 ```
 
-And, indeed, this custom function performs much better^[Deliberately choosing a larger dataset to stress test the new function.] than its base equivalent:
+And, indeed, this custom function performs slightly better^[Deliberately choosing a larger dataset to stress test the new function.] than its base equivalent:
 
 
 ```r
@@ -285,11 +285,11 @@ bench::mark(
   "base" = chisq.test(m, n)$statistic[[1]],
   "custom" = my_chisq_test(m, n)$statistic[[1]]
 )[1:5]
-#> # A tibble: 2 × 5
+#> # A tibble: 2 x 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          613µs    675µs     1440.    1.47MB
-#> 2 custom        463µs    531µs     1841.    1.12MB
+#> 1 base          808us   1.29ms      776.    1.57MB
+#> 2 custom        663us   1.11ms      986.    1.12MB
 ```
 
 **Q3.** Can you make a faster version of `table()` for the case of an input of two integer vectors with no missing values? Can you use it to speed up your chi-square test?
@@ -339,11 +339,11 @@ bench::mark(
   "custom" = my_table(x, y),
   check = FALSE
 )[1:5]
-#> # A tibble: 2 × 5
+#> # A tibble: 2 x 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          447µs    493µs     2003.     960KB
-#> 2 custom        251µs    277µs     3534.     475KB
+#> 1 base          554us   1.05ms     1053.     960KB
+#> 2 custom        313us  525.6us     1983.     475KB
 ```
 
 We can also use this function in our custom chi-squared test function and see if the performance improves any further:
@@ -398,11 +398,11 @@ bench::mark(
   "base" = chisq.test(m, n)$statistic[[1]],
   "custom" = my_chisq_test2(m, n)$statistic[[1]]
 )[1:5]
-#> # A tibble: 2 × 5
+#> # A tibble: 2 x 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          614µs    685µs     1448.    1.28MB
-#> 2 custom        275µs    300µs     3264.  594.98KB
+#> 1 base          789us   1.59ms      677.    1.28MB
+#> 2 custom        389us  686.2us     1583.  594.98KB
 ```
 
 ### Exercises 24.5.1
