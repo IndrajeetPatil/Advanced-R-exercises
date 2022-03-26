@@ -10,6 +10,10 @@ force
 
 Why is it better to `force(x)` instead of just `x`?
 
+**A1.** Because of lazy evaluation, argument to a function won't be evaluated until its value is needed, but sometimes we may want to have eager evaluation.
+
+Using `force()` makes this intent clearer.
+
 **Q2.** Base R contains two function factories, `approxfun()` and `ecdf()`. Read their documentation and experiment to figure out what the functions do and what they return.
 
 **Q3.** Create a function `pick()` that takes an index, `i`, as an argument and returns a function with an argument `x` that subsets `x` with `i`.
