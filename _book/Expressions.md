@@ -6,20 +6,20 @@
 
 
 ```
-#> o-f 
-#> \-o-g 
-#>   \-o-h
-#> o-`+` 
-#> +-o-`+` 
-#> | +-1 
-#> | \-2 
-#> \-3
-#> o-`*` 
-#> +-o-`(` 
-#> | \-o-`+` 
-#> |   +-x 
-#> |   \-y 
-#> \-z
+#> █─f 
+#> └─█─g 
+#>   └─█─h
+#> █─`+` 
+#> ├─█─`+` 
+#> │ ├─1 
+#> │ └─2 
+#> └─3
+#> █─`*` 
+#> ├─█─`(` 
+#> │ └─█─`+` 
+#> │   ├─x 
+#> │   └─y 
+#> └─z
 ```
 
 **Q2.** Draw the following trees by hand and then check your answers with `lobstr::ast()`.
@@ -36,17 +36,17 @@ f(g(1, 2), h(3, i(4, 5)))
 
 ```r
 lobstr::ast(`x` + `y`)
-#> o-`+` 
-#> +-x 
-#> \-y
+#> █─`+` 
+#> ├─x 
+#> └─y
 lobstr::ast(x**y)
-#> o-`^` 
-#> +-x 
-#> \-y
+#> █─`^` 
+#> ├─x 
+#> └─y
 lobstr::ast(1 -> x)
-#> o-`<-` 
-#> +-x 
-#> \-1
+#> █─`<-` 
+#> ├─x 
+#> └─1
 ```
 
 **Q4.** What is special about the AST below? 
@@ -54,11 +54,11 @@ lobstr::ast(1 -> x)
 
 ```r
 lobstr::ast(function(x = 1, y = 2) {})
-#> o-`function` 
-#> +-o-x = 1 
-#> | \-y = 2 
-#> +-o-`{` 
-#> \-<inline srcref>
+#> █─`function` 
+#> ├─█─x = 1 
+#> │ └─y = 2 
+#> ├─█─`{` 
+#> └─<inline srcref>
 ```
 
 **Q5.** What does the call tree of an `if` statement with multiple `else if` conditions look like? Why?
@@ -141,7 +141,7 @@ What does `expr_text()` do instead?
 
 **Q10.** `pairwise.t.test()` assumes that `deparse()` always returns a length one character vector. Can you construct an input that violates this expectation? What happens?
 
-### Exercises
+### Exercises 18.5.3
 
 **Q1.** `logical_abbr()` returns `TRUE` for `T(1, 2, 3)`. How could you modify `logical_abbr_rec()` so that it ignores function calls that use `T` or `F`?
 

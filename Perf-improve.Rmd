@@ -309,6 +309,102 @@ bench::mark(
 
 **Q1.** The density functions, e.g., `dnorm()`, have a common interface. Which arguments are vectorised over? What does `rnorm(10, mean = 10:1)` do?
 
+**A1.** The density function family has the following interface:
+
+```{r, eval=FALSE}
+dnorm(x, mean = 0, sd = 1, log = FALSE)
+pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+rnorm(n, mean = 0, sd = 1)
+```
+
+Reading the documentation reveals that the following parameters are vectorized:
+`x`, `q`, `p`, `mean`, `sd`.
+
+This means that something like the following will work:
+
+```{r}
+rnorm(c(1, 2, 3), mean = c(0, -1, 5))
+```
+
+But, for functions that don't have multiple vectorized parameters, it won't. For example,
+
+```{r, error=TRUE}
+trimws(c("  a ", " bc", "  abc  "), which = c("left", "right"))
+```
+
+The following function call generates 10 random numbers (since `n = 10`) with 10 different distributions with means supplied by the vector `10:1`.
+
+```{r}
+rnorm(n = 10, mean = 10:1)
+```
+
 **Q2.** Compare the speed of `apply(x, 1, sum)` with `rowSums(x)` for varying sizes of `x`.
 
+**A2.** We can write a custom function to vary number of rows in a matrix and extract a data frame comparing performance of these two functions.
+
+```{r}
+benchPerform <- function(nRow, nCol = 100) {
+  x <- matrix(data = rnorm(nRow * nCol), nrow = nRow, ncol = nCol)
+
+  bench::mark(
+    rowSums(x),
+    apply(x, 1, sum)
+  )[1:5]
+}
+
+nRowList <- list(10, 100, 500, 1000, 5000, 10000, 50000, 100000)
+
+names(nRowList) <- as.character(nRowList)
+
+benchDF <- purrr::map_dfr(
+  .x = nRowList,
+  .f = ~ benchPerform(.x),
+  .id = "nRows"
+) %>%
+  dplyr::mutate(nRows = as.numeric(nRows))
+```
+
+Plotting this data reveals that `rowSums(x)` has *O*(1) behavior, while *O*(n) (?) behavior.
+
+```{r}
+ggplot(
+  benchDF,
+  aes(
+    x = as.numeric(nRows),
+    y = median,
+    group = as.character(expression),
+    color = as.character(expression)
+  )
+) +
+  geom_point() +
+  geom_line() +
+  labs(
+    x = "Number of Rows",
+    y = "Median Execution Time",
+    colour = "Function used"
+  )
+```
+
 **Q3.** How can you use `crossprod()` to compute a weighted sum? How much faster is it than the naive `sum(x * w)`?
+
+**A3.** Both of these functions provide a way to compute a weighted sum:
+
+```{r}
+x <- c(1:6, 2,3)
+w <- rnorm(length(x))
+
+crossprod(x, w)[[1]]
+sum(x * w)[[1]]
+```
+
+But benchmarking their performance reveals that the latter is almost twice as fast as the former!
+
+```{r}
+bench::mark(
+  crossprod(x, w)[[1]],
+  sum(x * w)[[1]],
+  iterations = 1e6
+)[1:5]
+```
+
