@@ -268,6 +268,7 @@ bench::mark(
 #include <cmath>
 #include <numeric>
 using namespace std;
+// [[Rcpp::plugins(cpp11)]]
 
 // [[Rcpp::export]]
 double variance(std::vector<double> x)
@@ -313,6 +314,7 @@ bench::mark(
 #include <math.h>
 #include <Rcpp.h>
 using namespace std;
+// [[Rcpp::plugins(cpp11)]]
 
 // [[Rcpp::export]]
 std::vector<double> rangeC_NA(std::vector<double> x, bool removeNA = true)
@@ -363,30 +365,23 @@ rangeC_NA(v1, TRUE)
 
 **Q1.** To practice using the STL algorithms and data structures, implement the following using R functions in C++, using the hints provided:
 
+**A1.** As much as possible, following functions are templated, i.e., the function is agnostic to the data type that might be entered. For example, `uniqueC` function can work with integers, doubles, strings, floats, etc.
+
+Unfortunately, R doesn't understand the concept of templates, and so there is no way to make them work out of the box^[Well, there is a way to make this work, but it is quite convoluted and reduces the elegance and the parsimony of the C++ code: https://mpadge.github.io/blog/blog002.html]. 
+
+I would recommend running this code directly in C++ instead.
+
 1. `median.default()` using `partial_sort`.
-
-1. `%in%` using `unordered_set` and the `find()` or `count()` methods.
-
-1. `unique()` using an `unordered_set` (challenge: do it in one line!).
-
-1. `min()` using `std::min()`, or `max()` using `std::max()`.
-
-1. `which.min()` using `min_element`, or `which.max()` using `max_element`.
-
-1. `setdiff()`, `union()`, and `intersect()` for integers using sorted ranges and `set_union`, `set_intersection` and `set_difference`.
-
-**A1.** 
-
-- `median.default()` using `partial_sort`
 
 ```{Rcpp}
 #include <iostream>
 #include <vector>
 #include <algorithm>
 using namespace std;
+// [[Rcpp::plugins(cpp11)]]
 
 // [[Rcpp::export]]
-double medianC(std::vector<double> x)
+double medianC(std::vector<double> &x)
 {
     int middleIndex = static_cast<int>(x.size() / 2);
 
@@ -420,3 +415,49 @@ bench::mark(
   iterations = 100
 )
 ```
+
+1. `%in%` using `unordered_set` and the `find()` or `count()` methods.
+
+1. `unique()` using an `unordered_set` (challenge: do it in one line!).
+
+```{Rcpp, eval=FALSE}
+#include <unordered_set>
+#include <vector>
+#include <iostream>
+using namespace std;
+
+template <typename T>
+std::vector<T> uniqueC(const std::vector<T> &x)
+{
+    std::unordered_set<T> xSet(x.begin(), x.end());
+    std::vector<T> xUnique;
+    xUnique.insert(xUnique.end(), xSet.begin(), xSet.end());
+
+    return xUnique;
+}
+```
+
+1. `min()` using `std::min()`, or `max()` using `std::max()`.
+
+```{Rcpp, eval=FALSE}
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+template <typename T>
+T minC(const std::vector<T> &x)
+{
+     return *std::min_element(x.begin(), x.end());
+}
+
+template <typename T>
+T maxC(std::vector<T> x)
+{
+     return *std::max_element(x.begin(), x.end());
+}
+```
+
+1. `which.min()` using `min_element`, or `which.max()` using `max_element`.
+
+1. `setdiff()`, `union()`, and `intersect()` for integers using sorted ranges and `set_union`, `set_intersection` and `set_difference`.

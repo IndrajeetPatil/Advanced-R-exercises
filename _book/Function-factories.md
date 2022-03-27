@@ -9,11 +9,15 @@
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x139144a70>
+#> <bytecode: 0x128144470>
 #> <environment: namespace:base>
 ```
 
 Why is it better to `force(x)` instead of just `x`?
+
+**A1.** Because of lazy evaluation, argument to a function won't be evaluated until its value is needed, but sometimes we may want to have eager evaluation.
+
+Using `force()` makes this intent clearer.
 
 **Q2.** Base R contains two function factories, `approxfun()` and `ecdf()`. Read their documentation and experiment to figure out what the functions do and what they return.
 

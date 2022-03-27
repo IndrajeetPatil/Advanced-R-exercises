@@ -219,12 +219,12 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
-#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    5.49µs
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))  10.46µs
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    5.58µs
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))  11.15µs
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1   5.78µs   164788.    15.8KB        0
-#> 2   11.4µs    85355.    18.3KB        0
+#> 1   6.56µs   151765.    15.8KB        0
+#> 2   11.6µs    85676.    18.3KB        0
 ```
 
 - `cumprod()`
@@ -266,8 +266,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression                 min   median `itr/sec`
 #>   <bch:expr>            <bch:tm> <bch:tm>     <dbl>
-#> 1 cumprod(v1)            41.01ns  82.02ns  9714978.
-#> 2 cumulativeProduct(v1)   1.11µs   1.19µs   528035.
+#> 1 cumprod(v1)            40.98ns  82.02ns  9793061.
+#> 2 cumulativeProduct(v1)   1.07µs   1.15µs   712332.
 #>   mem_alloc `gc/sec`
 #>   <bch:byt>    <dbl>
 #> 1        0B        0
@@ -317,8 +317,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 range(v1)     1.6µs   1.68µs   452001.        0B        0
-#> 2 rangeC(v1)   1.27µs   1.48µs   525646.    7.07KB        0
+#> 1 range(v1)    1.39µs   1.48µs   518383.        0B        0
+#> 2 rangeC(v1)   1.27µs   1.35µs   539363.    7.07KB        0
 ```
 
 - `var()`
@@ -329,6 +329,7 @@ bench::mark(
 #include <cmath>
 #include <numeric>
 using namespace std;
+// [[Rcpp::plugins(cpp11)]]
 
 // [[Rcpp::export]]
 double variance(std::vector<double> x)
@@ -365,8 +366,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 var(v1)        5.45µs   6.58µs   140077.        0B
-#> 2 variance(v1)   1.07µs   1.15µs   670051.    7.07KB
+#> 1 var(v1)        5.45µs   6.21µs   139476.        0B
+#> 2 variance(v1) 943.02ns 984.06ns   765529.    7.07KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -387,6 +388,7 @@ bench::mark(
 #include <math.h>
 #include <Rcpp.h>
 using namespace std;
+// [[Rcpp::plugins(cpp11)]]
 
 // [[Rcpp::export]]
 std::vector<double> rangeC_NA(std::vector<double> x, bool removeNA = true)
@@ -442,21 +444,13 @@ rangeC_NA(v1, TRUE)
 
 **Q1.** To practice using the STL algorithms and data structures, implement the following using R functions in C++, using the hints provided:
 
+**A1.** As much as possible, following functions are templated, i.e., the function is agnostic to the data type that might be entered. For example, `uniqueC` function can work with integers, doubles, strings, floats, etc.
+
+Unfortunately, R doesn't understand the concept of templates, and so there is no way to make them work out of the box^[Well, there is a way to make this work, but it is quite convoluted and reduces the elegance and the parsimony of the C++ code: https://mpadge.github.io/blog/blog002.html]. 
+
+I would recommend running this code directly in C++ instead.
+
 1. `median.default()` using `partial_sort`.
-
-1. `%in%` using `unordered_set` and the `find()` or `count()` methods.
-
-1. `unique()` using an `unordered_set` (challenge: do it in one line!).
-
-1. `min()` using `std::min()`, or `max()` using `std::max()`.
-
-1. `which.min()` using `min_element`, or `which.max()` using `max_element`.
-
-1. `setdiff()`, `union()`, and `intersect()` for integers using sorted ranges and `set_union`, `set_intersection` and `set_difference`.
-
-**A1.** 
-
-- `median.default()` using `partial_sort`
 
 
 ```cpp
@@ -464,9 +458,10 @@ rangeC_NA(v1, TRUE)
 #include <vector>
 #include <algorithm>
 using namespace std;
+// [[Rcpp::plugins(cpp11)]]
 
 // [[Rcpp::export]]
-double medianC(std::vector<double> x)
+double medianC(std::vector<double> &x)
 {
     int middleIndex = static_cast<int>(x.size() / 2);
 
@@ -507,10 +502,58 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression              min   median `itr/sec` mem_alloc
 #>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 median.default(v2)   23.7µs  29.32µs    32128.        0B
-#> 2 medianC(v2)          1.89µs   2.42µs   410814.    2.49KB
+#> 1 median.default(v2)  17.34µs     19µs    51027.        0B
+#> 2 medianC(v2)          1.44µs    1.8µs   537223.    2.49KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
 #> 2        0
 ```
+
+1. `%in%` using `unordered_set` and the `find()` or `count()` methods.
+
+1. `unique()` using an `unordered_set` (challenge: do it in one line!).
+
+
+```cpp
+#include <unordered_set>
+#include <vector>
+#include <iostream>
+using namespace std;
+
+template <typename T>
+std::vector<T> uniqueC(const std::vector<T> &x)
+{
+    std::unordered_set<T> xSet(x.begin(), x.end());
+    std::vector<T> xUnique;
+    xUnique.insert(xUnique.end(), xSet.begin(), xSet.end());
+
+    return xUnique;
+}
+```
+
+1. `min()` using `std::min()`, or `max()` using `std::max()`.
+
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+template <typename T>
+T minC(const std::vector<T> &x)
+{
+     return *std::min_element(x.begin(), x.end());
+}
+
+template <typename T>
+T maxC(std::vector<T> x)
+{
+     return *std::max_element(x.begin(), x.end());
+}
+```
+
+1. `which.min()` using `min_element`, or `which.max()` using `max_element`.
+
+1. `setdiff()`, `union()`, and `intersect()` for integers using sorted ranges and `set_union`, `set_intersection` and `set_difference`.

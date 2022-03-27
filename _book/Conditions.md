@@ -6,6 +6,52 @@
 
 **Q1.** Write a wrapper around `file.remove()` that throws an error if the file to be deleted does not exist.
 
+**A1.** Let's first create a wrapper function around `file.remove()` that throws an error if the file to be deleted does not exist.
+
+
+```r
+fileRemove <- function(...) {
+  existing_files <- fs::file_exists(...)
+
+  if (!all(existing_files)) {
+    stop(
+      cat(
+        "The following files to be deleted don't exist:",
+        names(existing_files[!existing_files]),
+        sep = "\n"
+      )
+    )
+  }
+
+  file.remove(...)
+}
+```
+
+Let's first create a file that we can delete immediately.
+
+
+```r
+fs::file_create("random.R")
+```
+
+The function should fail if there are any other files provided that don't exist:
+
+
+```r
+fileRemove(c("random.R", "XYZ.csv"))
+#> The following files to be deleted don't exist:
+#> XYZ.csv
+#> Error in fileRemove(c("random.R", "XYZ.csv")):
+```
+
+But does work as expected when the file exists:
+
+
+```r
+fileRemove("random.R")
+#> [1] TRUE
+```
+
 **Q2.** What does the `appendLF` argument to `message()` do? How is it related to `cat()`?
 
 ### Exercises 8.4.5
