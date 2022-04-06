@@ -9,7 +9,7 @@
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x138144a70>
+#> <bytecode: 0x12a072870>
 #> <environment: namespace:base>
 ```
 
@@ -20,6 +20,54 @@ Why is it better to `force(x)` instead of just `x`?
 Using `force()` makes this intent clearer.
 
 **Q2.** Base R contains two function factories, `approxfun()` and `ecdf()`. Read their documentation and experiment to figure out what the functions do and what they return.
+
+**A2.** About the two function factories-
+
+- `approxfun()`
+
+This function factory returns a function performing the linear (or constant) interpolation.
+
+
+```r
+x <- 1:10
+y <- rnorm(10)
+f <- approxfun(x, y)
+f
+#> function (v) 
+#> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
+#> <bytecode: 0x104f6f120>
+#> <environment: 0x104f6e7f0>
+f(x)
+#>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
+#>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
+curve(f(x), 0, 11)
+```
+
+<img src="Function-factories_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+
+- `ecdf()`
+
+This function factory computes an empirical cumulative distribution function.
+
+
+```r
+x <- rnorm(12)
+f <- ecdf(x)
+f
+#> Empirical CDF 
+#> Call: ecdf(x)
+#>  x[1:12] = -1.8793, -1.3221, -1.2392,  ..., 1.1604, 1.7956
+f(seq(-2, 2, by = 0.1))
+#>  [1] 0.00000000 0.00000000 0.08333333 0.08333333 0.08333333
+#>  [6] 0.08333333 0.08333333 0.16666667 0.25000000 0.25000000
+#> [11] 0.33333333 0.33333333 0.33333333 0.41666667 0.41666667
+#> [16] 0.41666667 0.41666667 0.50000000 0.58333333 0.58333333
+#> [21] 0.66666667 0.75000000 0.75000000 0.75000000 0.75000000
+#> [26] 0.75000000 0.75000000 0.75000000 0.75000000 0.83333333
+#> [31] 0.83333333 0.83333333 0.91666667 0.91666667 0.91666667
+#> [36] 0.91666667 0.91666667 0.91666667 1.00000000 1.00000000
+#> [41] 1.00000000
+```
 
 **Q3.** Create a function `pick()` that takes an index, `i`, as an argument and returns a function with an argument `x` that subsets `x` with `i`.
 
@@ -33,8 +81,55 @@ lapply(mtcars, pick(5))
 # should be equivalent to
 lapply(mtcars, function(x) x[[5]])
 ```
-    
+
+**A3.** The desired function:
+
+
+```r
+pick <- function(i) {
+  force(i)
+  function(x) x[[i]]
+}
+```
+
+Testing it with specified test cases:
+
+
+```r
+x <- list("a", "b", "c")
+identical(x[[1]], pick(1)(x))
+#> [1] TRUE
+
+identical(
+  lapply(mtcars, pick(5)),
+  lapply(mtcars, function(x) x[[5]])
+)
+#> [1] TRUE
+```
+
 **Q4.** Create a function that creates functions that compute the i^th^ [central moment](http://en.wikipedia.org/wiki/Central_moment) of a numeric vector. You can test it by running the following code:
+
+
+```r
+m1 <- moment(1)
+m2 <- moment(2)
+x <- runif(100)
+stopifnot(all.equal(m1(x), 0))
+stopifnot(all.equal(m2(x), var(x) * 99 / 100))
+```
+
+**A4.** The desired function:
+
+
+```r
+moment <- function(k) {
+  force(k)
+  
+  function(x) (sum((x - mean(x)) ^ k)) / length(x)
+}
+```
+
+Testing it with specified test cases:
 
 
 ```r
@@ -67,6 +162,26 @@ new_counter3 <- function() {
     i
   }
 }
+```
+
+**A6.**  In this case, the function will always return 1.
+
+
+```r
+new_counter3()
+#> function() {
+#>     i <- i + 1
+#>     i
+#>   }
+#> <environment: 0x1049f6278>
+
+new_counter3()
+#> function() {
+#>     i <- i + 1
+#>     i
+#>   }
+#> <bytecode: 0x104d1ab38>
+#> <environment: 0x104ae8438>
 ```
 
 ### Exercises 10.3.4

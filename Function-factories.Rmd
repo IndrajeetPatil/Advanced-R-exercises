@@ -16,6 +16,32 @@ Using `force()` makes this intent clearer.
 
 **Q2.** Base R contains two function factories, `approxfun()` and `ecdf()`. Read their documentation and experiment to figure out what the functions do and what they return.
 
+**A2.** About the two function factories-
+
+- `approxfun()`
+
+This function factory returns a function performing the linear (or constant) interpolation.
+
+```{r}
+x <- 1:10
+y <- rnorm(10)
+f <- approxfun(x, y)
+f
+f(x)
+curve(f(x), 0, 11)
+```
+
+- `ecdf()`
+
+This function factory computes an empirical cumulative distribution function.
+
+```{r}
+x <- rnorm(12)
+f <- ecdf(x)
+f
+f(seq(-2, 2, by = 0.1))
+```
+
 **Q3.** Create a function `pick()` that takes an index, `i`, as an argument and returns a function with an argument `x` that subsets `x` with `i`.
 
 ```{r, eval = FALSE}
@@ -27,10 +53,51 @@ lapply(mtcars, pick(5))
 # should be equivalent to
 lapply(mtcars, function(x) x[[5]])
 ```
-    
+
+**A3.** The desired function:
+
+```{r}
+pick <- function(i) {
+  force(i)
+  function(x) x[[i]]
+}
+```
+
+Testing it with specified test cases:
+
+```{r}
+x <- list("a", "b", "c")
+identical(x[[1]], pick(1)(x))
+
+identical(
+  lapply(mtcars, pick(5)),
+  lapply(mtcars, function(x) x[[5]])
+)
+```
+
 **Q4.** Create a function that creates functions that compute the i^th^ [central moment](http://en.wikipedia.org/wiki/Central_moment) of a numeric vector. You can test it by running the following code:
 
 ```{r, eval = FALSE}
+m1 <- moment(1)
+m2 <- moment(2)
+x <- runif(100)
+stopifnot(all.equal(m1(x), 0))
+stopifnot(all.equal(m2(x), var(x) * 99 / 100))
+```
+
+**A4.** The desired function:
+
+```{r}
+moment <- function(k) {
+  force(k)
+  
+  function(x) (sum((x - mean(x)) ^ k)) / length(x)
+}
+```
+
+Testing it with specified test cases:
+
+```{r}
 m1 <- moment(1)
 m2 <- moment(2)
 x <- runif(100)
@@ -58,6 +125,14 @@ new_counter3 <- function() {
     i
   }
 }
+```
+
+**A6.**  In this case, the function will always return 1.
+
+```{r}
+new_counter3()
+
+new_counter3()
 ```
 
 ### Exercises 10.3.4
