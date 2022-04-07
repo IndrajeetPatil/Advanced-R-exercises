@@ -158,6 +158,74 @@ summary(mod)$r.squared
 
 **Q1.**  How would you randomly permute the columns of a data frame? (This is an important technique in random forests.) Can you simultaneously permute the rows and columns in one step?
 
+**A1.** Let's select a small data frame to work with.
+
+```{r}
+df <- head(mtcars)
+
+# original
+df
+```
+
+- randomly permute columns
+
+```{r}
+df[sample.int(ncol(df))]
+```
+
+- randomly permute rows
+
+```{r}
+df[sample.int(nrow(df)), ]
+```
+
+- randomly permute columns and rows
+
+```{r}
+df[sample.int(nrow(df)), sample.int(ncol(df))]
+```
+
 **Q2.** How would you select a random sample of `m` rows from a data frame?  What if the sample had to be contiguous (i.e., with an initial row, a final row, and every row in between)?
-    
+
+**A2.**  Let's select a small data frame to work with.
+
+```{r}
+df <- head(mtcars)
+
+# original
+df
+
+# number of rows to sample
+m <- 2L
+```
+
+- random and non-contiguous sample of `m` rows from a data frame
+
+```{r}
+df[sample(nrow(df), m), ]
+```
+
+- random and contiguous sample of `m` rows from a data frame
+
+```{r}
+# select a random starting position from available number of rows
+start_row <- sample(nrow(df) - m + 1, size = 1)
+
+# adjust ending position while avoiding off-by-one error
+end_row <- start_row + m - 1
+
+df[start_row:end_row, ]
+```
+
 **Q3.** How could you put the columns in a data frame in alphabetical order?
+
+**A3.** Sorting columns in a data frame in the alphabetical order:
+
+```{r}
+# columns in original order
+names(mtcars)
+
+# columns in alphabetical order
+names(mtcars[order(names(mtcars))])
+```
+

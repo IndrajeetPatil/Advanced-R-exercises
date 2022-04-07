@@ -9,7 +9,7 @@
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x154944a70>
+#> <bytecode: 0x11d944a70>
 #> <environment: namespace:base>
 ```
 
@@ -35,8 +35,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x1255e1120>
-#> <environment: 0x1255e07f0>
+#> <bytecode: 0x10a5e1120>
+#> <environment: 0x10a5e07f0>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -173,15 +173,15 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x1250e5778>
+#> <environment: 0x10a0697b0>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x12538a7b8>
-#> <environment: 0x1251d7900>
+#> <bytecode: 0x10a38a7f0>
+#> <environment: 0x10a15b938>
 ```
 
 ### Exercises 10.3.4

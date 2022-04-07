@@ -220,6 +220,168 @@ summary(mod)$r.squared
 
 **Q1.**  How would you randomly permute the columns of a data frame? (This is an important technique in random forests.) Can you simultaneously permute the rows and columns in one step?
 
+**A1.** Let's select a small data frame to work with.
+
+
+```r
+df <- head(mtcars)
+
+# original
+df
+#>                    mpg cyl disp  hp drat    wt  qsec vs am
+#> Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1
+#> Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1
+#> Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1
+#> Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0
+#> Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0
+#> Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0
+#>                   gear carb
+#> Mazda RX4            4    4
+#> Mazda RX4 Wag        4    4
+#> Datsun 710           4    1
+#> Hornet 4 Drive       3    1
+#> Hornet Sportabout    3    2
+#> Valiant              3    1
+```
+
+- randomly permute columns
+
+
+```r
+df[sample.int(ncol(df))]
+#>                   drat    wt carb am  qsec vs  hp  mpg disp
+#> Mazda RX4         3.90 2.620    4  1 16.46  0 110 21.0  160
+#> Mazda RX4 Wag     3.90 2.875    4  1 17.02  0 110 21.0  160
+#> Datsun 710        3.85 2.320    1  1 18.61  1  93 22.8  108
+#> Hornet 4 Drive    3.08 3.215    1  0 19.44  1 110 21.4  258
+#> Hornet Sportabout 3.15 3.440    2  0 17.02  0 175 18.7  360
+#> Valiant           2.76 3.460    1  0 20.22  1 105 18.1  225
+#>                   cyl gear
+#> Mazda RX4           6    4
+#> Mazda RX4 Wag       6    4
+#> Datsun 710          4    4
+#> Hornet 4 Drive      6    3
+#> Hornet Sportabout   8    3
+#> Valiant             6    3
+```
+
+- randomly permute rows
+
+
+```r
+df[sample.int(nrow(df)), ]
+#>                    mpg cyl disp  hp drat    wt  qsec vs am
+#> Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1
+#> Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1
+#> Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1
+#> Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0
+#> Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0
+#> Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0
+#>                   gear carb
+#> Datsun 710           4    1
+#> Mazda RX4 Wag        4    4
+#> Mazda RX4            4    4
+#> Hornet Sportabout    3    2
+#> Hornet 4 Drive       3    1
+#> Valiant              3    1
+```
+
+- randomly permute columns and rows
+
+
+```r
+df[sample.int(nrow(df)), sample.int(ncol(df))]
+#>                    qsec vs gear am    wt drat carb disp  hp
+#> Mazda RX4         16.46  0    4  1 2.620 3.90    4  160 110
+#> Hornet 4 Drive    19.44  1    3  0 3.215 3.08    1  258 110
+#> Datsun 710        18.61  1    4  1 2.320 3.85    1  108  93
+#> Mazda RX4 Wag     17.02  0    4  1 2.875 3.90    4  160 110
+#> Valiant           20.22  1    3  0 3.460 2.76    1  225 105
+#> Hornet Sportabout 17.02  0    3  0 3.440 3.15    2  360 175
+#>                    mpg cyl
+#> Mazda RX4         21.0   6
+#> Hornet 4 Drive    21.4   6
+#> Datsun 710        22.8   4
+#> Mazda RX4 Wag     21.0   6
+#> Valiant           18.1   6
+#> Hornet Sportabout 18.7   8
+```
+
 **Q2.** How would you select a random sample of `m` rows from a data frame?  What if the sample had to be contiguous (i.e., with an initial row, a final row, and every row in between)?
-    
+
+**A2.**  Let's select a small data frame to work with.
+
+
+```r
+df <- head(mtcars)
+
+# original
+df
+#>                    mpg cyl disp  hp drat    wt  qsec vs am
+#> Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1
+#> Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1
+#> Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1
+#> Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0
+#> Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0
+#> Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0
+#>                   gear carb
+#> Mazda RX4            4    4
+#> Mazda RX4 Wag        4    4
+#> Datsun 710           4    1
+#> Hornet 4 Drive       3    1
+#> Hornet Sportabout    3    2
+#> Valiant              3    1
+
+# number of rows to sample
+m <- 2L
+```
+
+- random and non-contiguous sample of `m` rows from a data frame
+
+
+```r
+df[sample(nrow(df), m), ]
+#>                mpg cyl disp  hp drat    wt  qsec vs am gear
+#> Valiant       18.1   6  225 105 2.76 3.460 20.22  1  0    3
+#> Mazda RX4 Wag 21.0   6  160 110 3.90 2.875 17.02  0  1    4
+#>               carb
+#> Valiant          1
+#> Mazda RX4 Wag    4
+```
+
+- random and contiguous sample of `m` rows from a data frame
+
+
+```r
+# select a random starting position from available number of rows
+start_row <- sample(nrow(df) - m + 1, size = 1)
+
+# adjust ending position while avoiding off-by-one error
+end_row <- start_row + m - 1
+
+df[start_row:end_row, ]
+#>               mpg cyl disp  hp drat    wt  qsec vs am gear
+#> Mazda RX4      21   6  160 110  3.9 2.620 16.46  0  1    4
+#> Mazda RX4 Wag  21   6  160 110  3.9 2.875 17.02  0  1    4
+#>               carb
+#> Mazda RX4        4
+#> Mazda RX4 Wag    4
+```
+
 **Q3.** How could you put the columns in a data frame in alphabetical order?
+
+**A3.** Sorting columns in a data frame in the alphabetical order:
+
+
+```r
+# columns in original order
+names(mtcars)
+#>  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"  
+#>  [9] "am"   "gear" "carb"
+
+# columns in alphabetical order
+names(mtcars[order(names(mtcars))])
+#>  [1] "am"   "carb" "cyl"  "disp" "drat" "gear" "hp"   "mpg" 
+#>  [9] "qsec" "vs"   "wt"
+```
+

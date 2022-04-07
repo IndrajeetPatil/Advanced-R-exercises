@@ -240,8 +240,147 @@
 <span class="header-section-number">4.3</span> Exercise 4.5.9<a class="anchor" aria-label="anchor" href="#exercise-4.5.9"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> How would you randomly permute the columns of a data frame? (This is an important technique in random forests.) Can you simultaneously permute the rows and columns in one step?</p>
+<p><strong>A1.</strong> Let’s select a small data frame to work with.</p>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>
+
+<span class="co"># original</span>
+<span class="va">df</span>
+<span class="co">#&gt;                    mpg cyl disp  hp drat    wt  qsec vs am</span>
+<span class="co">#&gt; Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1</span>
+<span class="co">#&gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1</span>
+<span class="co">#&gt; Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1</span>
+<span class="co">#&gt; Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0</span>
+<span class="co">#&gt; Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0</span>
+<span class="co">#&gt; Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0</span>
+<span class="co">#&gt;                   gear carb</span>
+<span class="co">#&gt; Mazda RX4            4    4</span>
+<span class="co">#&gt; Mazda RX4 Wag        4    4</span>
+<span class="co">#&gt; Datsun 710           4    1</span>
+<span class="co">#&gt; Hornet 4 Drive       3    1</span>
+<span class="co">#&gt; Hornet Sportabout    3    2</span>
+<span class="co">#&gt; Valiant              3    1</span></code></pre></div>
+<ul>
+<li>randomly permute columns</li>
+</ul>
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+<span class="co">#&gt;                   drat    wt carb am  qsec vs  hp  mpg disp</span>
+<span class="co">#&gt; Mazda RX4         3.90 2.620    4  1 16.46  0 110 21.0  160</span>
+<span class="co">#&gt; Mazda RX4 Wag     3.90 2.875    4  1 17.02  0 110 21.0  160</span>
+<span class="co">#&gt; Datsun 710        3.85 2.320    1  1 18.61  1  93 22.8  108</span>
+<span class="co">#&gt; Hornet 4 Drive    3.08 3.215    1  0 19.44  1 110 21.4  258</span>
+<span class="co">#&gt; Hornet Sportabout 3.15 3.440    2  0 17.02  0 175 18.7  360</span>
+<span class="co">#&gt; Valiant           2.76 3.460    1  0 20.22  1 105 18.1  225</span>
+<span class="co">#&gt;                   cyl gear</span>
+<span class="co">#&gt; Mazda RX4           6    4</span>
+<span class="co">#&gt; Mazda RX4 Wag       6    4</span>
+<span class="co">#&gt; Datsun 710          4    4</span>
+<span class="co">#&gt; Hornet 4 Drive      6    3</span>
+<span class="co">#&gt; Hornet Sportabout   8    3</span>
+<span class="co">#&gt; Valiant             6    3</span></code></pre></div>
+<ul>
+<li>randomly permute rows</li>
+</ul>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span>
+<span class="co">#&gt;                    mpg cyl disp  hp drat    wt  qsec vs am</span>
+<span class="co">#&gt; Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1</span>
+<span class="co">#&gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1</span>
+<span class="co">#&gt; Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1</span>
+<span class="co">#&gt; Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0</span>
+<span class="co">#&gt; Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0</span>
+<span class="co">#&gt; Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0</span>
+<span class="co">#&gt;                   gear carb</span>
+<span class="co">#&gt; Datsun 710           4    1</span>
+<span class="co">#&gt; Mazda RX4 Wag        4    4</span>
+<span class="co">#&gt; Mazda RX4            4    4</span>
+<span class="co">#&gt; Hornet Sportabout    3    2</span>
+<span class="co">#&gt; Hornet 4 Drive       3    1</span>
+<span class="co">#&gt; Valiant              3    1</span></code></pre></div>
+<ul>
+<li>randomly permute columns and rows</li>
+</ul>
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+<span class="co">#&gt;                    qsec vs gear am    wt drat carb disp  hp</span>
+<span class="co">#&gt; Mazda RX4         16.46  0    4  1 2.620 3.90    4  160 110</span>
+<span class="co">#&gt; Hornet 4 Drive    19.44  1    3  0 3.215 3.08    1  258 110</span>
+<span class="co">#&gt; Datsun 710        18.61  1    4  1 2.320 3.85    1  108  93</span>
+<span class="co">#&gt; Mazda RX4 Wag     17.02  0    4  1 2.875 3.90    4  160 110</span>
+<span class="co">#&gt; Valiant           20.22  1    3  0 3.460 2.76    1  225 105</span>
+<span class="co">#&gt; Hornet Sportabout 17.02  0    3  0 3.440 3.15    2  360 175</span>
+<span class="co">#&gt;                    mpg cyl</span>
+<span class="co">#&gt; Mazda RX4         21.0   6</span>
+<span class="co">#&gt; Hornet 4 Drive    21.4   6</span>
+<span class="co">#&gt; Datsun 710        22.8   4</span>
+<span class="co">#&gt; Mazda RX4 Wag     21.0   6</span>
+<span class="co">#&gt; Valiant           18.1   6</span>
+<span class="co">#&gt; Hornet Sportabout 18.7   8</span></code></pre></div>
 <p><strong>Q2.</strong> How would you select a random sample of <code>m</code> rows from a data frame? What if the sample had to be contiguous (i.e., with an initial row, a final row, and every row in between)?</p>
+<p><strong>A2.</strong> Let’s select a small data frame to work with.</p>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>
+
+<span class="co"># original</span>
+<span class="va">df</span>
+<span class="co">#&gt;                    mpg cyl disp  hp drat    wt  qsec vs am</span>
+<span class="co">#&gt; Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1</span>
+<span class="co">#&gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1</span>
+<span class="co">#&gt; Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1</span>
+<span class="co">#&gt; Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0</span>
+<span class="co">#&gt; Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0</span>
+<span class="co">#&gt; Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0</span>
+<span class="co">#&gt;                   gear carb</span>
+<span class="co">#&gt; Mazda RX4            4    4</span>
+<span class="co">#&gt; Mazda RX4 Wag        4    4</span>
+<span class="co">#&gt; Datsun 710           4    1</span>
+<span class="co">#&gt; Hornet 4 Drive       3    1</span>
+<span class="co">#&gt; Hornet Sportabout    3    2</span>
+<span class="co">#&gt; Valiant              3    1</span>
+
+<span class="co"># number of rows to sample</span>
+<span class="va">m</span> <span class="op">&lt;-</span> <span class="fl">2L</span></code></pre></div>
+<ul>
+<li>random and non-contiguous sample of <code>m</code> rows from a data frame</li>
+</ul>
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="va">m</span><span class="op">)</span>, <span class="op">]</span>
+<span class="co">#&gt;                mpg cyl disp  hp drat    wt  qsec vs am gear</span>
+<span class="co">#&gt; Valiant       18.1   6  225 105 2.76 3.460 20.22  1  0    3</span>
+<span class="co">#&gt; Mazda RX4 Wag 21.0   6  160 110 3.90 2.875 17.02  0  1    4</span>
+<span class="co">#&gt;               carb</span>
+<span class="co">#&gt; Valiant          1</span>
+<span class="co">#&gt; Mazda RX4 Wag    4</span></code></pre></div>
+<ul>
+<li>random and contiguous sample of <code>m</code> rows from a data frame</li>
+</ul>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># select a random starting position from available number of rows</span>
+<span class="va">start_row</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">-</span> <span class="va">m</span> <span class="op">+</span> <span class="fl">1</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+
+<span class="co"># adjust ending position while avoiding off-by-one error</span>
+<span class="va">end_row</span> <span class="op">&lt;-</span> <span class="va">start_row</span> <span class="op">+</span> <span class="va">m</span> <span class="op">-</span> <span class="fl">1</span>
+
+<span class="va">df</span><span class="op">[</span><span class="va">start_row</span><span class="op">:</span><span class="va">end_row</span>, <span class="op">]</span>
+<span class="co">#&gt;               mpg cyl disp  hp drat    wt  qsec vs am gear</span>
+<span class="co">#&gt; Mazda RX4      21   6  160 110  3.9 2.620 16.46  0  1    4</span>
+<span class="co">#&gt; Mazda RX4 Wag  21   6  160 110  3.9 2.875 17.02  0  1    4</span>
+<span class="co">#&gt;               carb</span>
+<span class="co">#&gt; Mazda RX4        4</span>
+<span class="co">#&gt; Mazda RX4 Wag    4</span></code></pre></div>
 <p><strong>Q3.</strong> How could you put the columns in a data frame in alphabetical order?</p>
+<p><strong>A3.</strong> Sorting columns in a data frame in the alphabetical order:</p>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># columns in original order</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>
+<span class="co">#&gt;  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"  </span>
+<span class="co">#&gt;  [9] "am"   "gear" "carb"</span>
+
+<span class="co"># columns in alphabetical order</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
+<span class="co">#&gt;  [1] "am"   "carb" "cyl"  "disp" "drat" "gear" "hp"   "mpg" </span>
+<span class="co">#&gt;  [9] "qsec" "vs"   "wt"</span></code></pre></div>
 
 </div>
 </div>
