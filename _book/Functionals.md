@@ -27,7 +27,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x12c689c70>
+#> <environment: 0x121b4f6f0>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -38,7 +38,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x12a5592a0>
+#> <environment: 0x1219036d8>
 
 # mapping by name -----------------------
 
@@ -56,7 +56,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x12a1f7a70>
+#> <environment: 0x144a5f520>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -68,7 +68,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x13a4f4418>
+#> <environment: 0x111a5d6b0>
 
 # compact functions ----------------------------
 
@@ -132,7 +132,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck(x, 0.597890264587477, 0.587997315218672, .default = NULL)
-#> <environment: 0x12c0ad338>
+#> <environment: 0x1132c4000>
 ```
 
 **Q3.** Use the appropriate `map()` function to:
@@ -562,6 +562,7 @@ simple_reduce2 <- function(x, f, init = 0) {
   for (i in seq(2, length(x))) {
     out <- f(out, x[[i]])
   }
+  
   out
 }
 ```
@@ -604,9 +605,108 @@ simple_reduce2(1:3, `%/%`)
 
 **Q3.** Implement the `span()` function from Haskell: given a list `x` and a predicate function `f`, `span(x, f)` returns the location of the longest sequential run of elements where the predicate is true. (Hint: you might find `rle()` helpful.)
 
-**Q4.**  Implement `arg_max()`. It should take a function and a vector of inputs, and return the elements of the input where the function returns the highest value. For example, `arg_max(-10:5, function(x) x ^ 2)` should return -10. `arg_max(-5:5, function(x) x ^ 2)` should return `c(-5, 5)`. Also implement the matching `arg_min()` function.
+**A3.** Implementation of `span()`:
 
-**Q5.**  The function below scales a vector so it falls in the range [0, 1]. How would you apply it to every column of a data frame? How would you apply it to every numeric column in a data frame?
+
+```r
+library(purrr)
+
+span <- function(x, f) {
+  running_lengths <- purrr::map_lgl(x, ~ f(.x)) %>% rle()
+
+  df <- dplyr::tibble("lengths" = running_lengths$lengths, "values" = running_lengths$values) %>%
+    dplyr::mutate(rowid = dplyr::row_number()) %>%
+    dplyr::filter(values)
+
+  # no sequence where condition is `TRUE`
+  if (nrow(df) == 0L) {
+    return(integer())
+  }
+
+  # only single sequence where condition is `TRUE`
+  if (nrow(df) == 1L) {
+    return((df$rowid):(df$lengths - 1 + df$rowid))
+  }
+
+  # multiple sequences where condition is `TRUE`; select max one
+  if (nrow(df) > 1L) {
+    df <- dplyr::filter(df, lengths == max(lengths))
+    return((df$rowid):(df$lengths - 1 + df$rowid))
+  }
+}
+```
+
+Testing it once:
+
+
+```r
+span(c(0, 0, 0, 0, 0), is.na)
+#> integer(0)
+span(c(NA, 0, NA, NA, NA), is.na)
+#> [1] 3 4 5
+span(c(NA, 0, 0, 0, 0), is.na)
+#> [1] 1
+span(c(NA, NA, 0, 0, 0), is.na)
+#> [1] 1 2
+```
+
+Testing it twice:
+
+
+```r
+span(c(3, 1, 2, 4, 5, 6), function(x) x > 3)
+#> [1] 2 3 4
+span(c(3, 1, 2, 4, 5, 6), function(x) x > 9)
+#> integer(0)
+span(c(3, 1, 2, 4, 5, 6), function(x) x == 3)
+#> [1] 1
+span(c(3, 1, 2, 4, 5, 6), function(x) x %in% c(2, 4))
+#> [1] 2 3
+```
+
+**Q4.** Implement `arg_max()`. It should take a function and a vector of inputs, and return the elements of the input where the function returns the highest value. For example, `arg_max(-10:5, function(x) x ^ 2)` should return -10. `arg_max(-5:5, function(x) x ^ 2)` should return `c(-5, 5)`. Also implement the matching `arg_min()` function.
+
+**A4.**
+
+- Implementing `arg_max()`
+
+
+```r
+arg_max <- function(.x, .f) {
+  df <- dplyr::tibble(
+    original = .x,
+    transformed = purrr::map_dbl(.x, .f)
+  )
+  
+  dplyr::filter(df, transformed == max(transformed))[["original"]]
+}
+
+arg_max(-10:5, function(x) x ^ 2)
+#> [1] -10
+arg_max(-5:5, function(x) x ^ 2)
+#> [1] -5  5
+```
+
+- Implementing `arg_min()`
+
+
+```r
+arg_min <- function(.x, .f) {
+  df <- dplyr::tibble(
+    original = .x,
+    transformed = purrr::map_dbl(.x, .f)
+  )
+  
+  dplyr::filter(df, transformed == min(transformed))[["original"]]
+}
+
+arg_min(-10:5, function(x) x ^ 2)
+#> [1] 0
+arg_min(-5:5, function(x) x ^ 2)
+#> [1] 0
+```
+
+**Q5.** The function below scales a vector so it falls in the range [0, 1]. How would you apply it to every column of a data frame? How would you apply it to every numeric column in a data frame?
 
 
 ```r
@@ -614,6 +714,38 @@ scale01 <- function(x) {
   rng <- range(x, na.rm = TRUE)
   (x - rng[1]) / (rng[2] - rng[1])
 }
+```
+
+**A5.** We will use `{purrr}` package to apply this function. Key thing to keep in mind is that a data frame is a list of atomic vectors of equal length.
+
+- Applying function to every column in a data frame: We will use `anscombe` as example since it has all numeric columns.
+
+
+```r
+purrr::map_df(.x = head(anscombe), .f = scale01)
+#> # A tibble: 6 × 8
+#>      x1    x2    x3    x4    y1     y2     y3    y4
+#>   <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>  <dbl> <dbl>
+#> 1 0.333 0.333 0.333   NaN 0.362 0.897  0.116  0.266
+#> 2 0     0     0       NaN 0     0.0345 0      0    
+#> 3 0.833 0.833 0.833   NaN 0.209 0.552  1      0.633
+#> 4 0.167 0.167 0.167   NaN 0.618 0.578  0.0570 1    
+#> 5 0.5   0.5   0.5     NaN 0.458 1      0.174  0.880
+#> 6 1     1     1       NaN 1     0      0.347  0.416
+```
+
+- Applying function to every numeric column in a data frame: We will use `iris` as example since all of its columns are not of numeric type.
+
+
+```r
+purrr::modify_if(head(iris), .p = is.numeric, .f = scale01)
+#>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+#> 1        0.625   0.5555556         0.25           0  setosa
+#> 2        0.375   0.0000000         0.25           0  setosa
+#> 3        0.125   0.2222222         0.00           0  setosa
+#> 4        0.000   0.1111111         0.50           0  setosa
+#> 5        0.500   0.6666667         0.25           0  setosa
+#> 6        1.000   1.0000000         1.00           1  setosa
 ```
 
 ## Exercise 9.7.3
@@ -636,7 +768,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x11cb31f90>
+#> <environment: 0x112578478>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>

@@ -350,6 +350,7 @@ simple_reduce2 <- function(x, f, init = 0) {
   for (i in seq(2, length(x))) {
     out <- f(out, x[[i]])
   }
+  
   out
 }
 ```
@@ -380,15 +381,111 @@ simple_reduce2(1:3, `%/%`)
 
 **Q3.** Implement the `span()` function from Haskell: given a list `x` and a predicate function `f`, `span(x, f)` returns the location of the longest sequential run of elements where the predicate is true. (Hint: you might find `rle()` helpful.)
 
-**Q4.**  Implement `arg_max()`. It should take a function and a vector of inputs, and return the elements of the input where the function returns the highest value. For example, `arg_max(-10:5, function(x) x ^ 2)` should return -10. `arg_max(-5:5, function(x) x ^ 2)` should return `c(-5, 5)`. Also implement the matching `arg_min()` function.
+**A3.** Implementation of `span()`:
 
-**Q5.**  The function below scales a vector so it falls in the range [0, 1]. How would you apply it to every column of a data frame? How would you apply it to every numeric column in a data frame?
+```{r}
+library(purrr)
+
+span <- function(x, f) {
+  running_lengths <- purrr::map_lgl(x, ~ f(.x)) %>% rle()
+
+  df <- dplyr::tibble("lengths" = running_lengths$lengths, "values" = running_lengths$values) %>%
+    dplyr::mutate(rowid = dplyr::row_number()) %>%
+    dplyr::filter(values)
+
+  # no sequence where condition is `TRUE`
+  if (nrow(df) == 0L) {
+    return(integer())
+  }
+
+  # only single sequence where condition is `TRUE`
+  if (nrow(df) == 1L) {
+    return((df$rowid):(df$lengths - 1 + df$rowid))
+  }
+
+  # multiple sequences where condition is `TRUE`; select max one
+  if (nrow(df) > 1L) {
+    df <- dplyr::filter(df, lengths == max(lengths))
+    return((df$rowid):(df$lengths - 1 + df$rowid))
+  }
+}
+```
+
+Testing it once:
+
+```{r}
+span(c(0, 0, 0, 0, 0), is.na)
+span(c(NA, 0, NA, NA, NA), is.na)
+span(c(NA, 0, 0, 0, 0), is.na)
+span(c(NA, NA, 0, 0, 0), is.na)
+```
+
+Testing it twice:
+
+```{r}
+span(c(3, 1, 2, 4, 5, 6), function(x) x > 3)
+span(c(3, 1, 2, 4, 5, 6), function(x) x > 9)
+span(c(3, 1, 2, 4, 5, 6), function(x) x == 3)
+span(c(3, 1, 2, 4, 5, 6), function(x) x %in% c(2, 4))
+```
+
+**Q4.** Implement `arg_max()`. It should take a function and a vector of inputs, and return the elements of the input where the function returns the highest value. For example, `arg_max(-10:5, function(x) x ^ 2)` should return -10. `arg_max(-5:5, function(x) x ^ 2)` should return `c(-5, 5)`. Also implement the matching `arg_min()` function.
+
+**A4.**
+
+- Implementing `arg_max()`
+
+```{r}
+arg_max <- function(.x, .f) {
+  df <- dplyr::tibble(
+    original = .x,
+    transformed = purrr::map_dbl(.x, .f)
+  )
+  
+  dplyr::filter(df, transformed == max(transformed))[["original"]]
+}
+
+arg_max(-10:5, function(x) x ^ 2)
+arg_max(-5:5, function(x) x ^ 2)
+```
+
+- Implementing `arg_min()`
+
+```{r}
+arg_min <- function(.x, .f) {
+  df <- dplyr::tibble(
+    original = .x,
+    transformed = purrr::map_dbl(.x, .f)
+  )
+  
+  dplyr::filter(df, transformed == min(transformed))[["original"]]
+}
+
+arg_min(-10:5, function(x) x ^ 2)
+arg_min(-5:5, function(x) x ^ 2)
+```
+
+**Q5.** The function below scales a vector so it falls in the range [0, 1]. How would you apply it to every column of a data frame? How would you apply it to every numeric column in a data frame?
 
 ```{r}
 scale01 <- function(x) {
   rng <- range(x, na.rm = TRUE)
   (x - rng[1]) / (rng[2] - rng[1])
 }
+```
+
+**A5.** We will use `{purrr}` package to apply this function. Key thing to keep in mind is that a data frame is a list of atomic vectors of equal length.
+
+- Applying function to every column in a data frame: We will use `anscombe` as example since it has all numeric columns.
+
+```{r}
+purrr::map_df(.x = head(anscombe), .f = scale01)
+```
+
+- Applying function to every numeric column in a data frame: We will use `iris` as example since all of its columns are not of numeric type.
+
+```{r}
+purrr::modify_if(head(iris), .p = is.numeric, .f = scale01)
 ```
 
 ## Exercise 9.7.3
