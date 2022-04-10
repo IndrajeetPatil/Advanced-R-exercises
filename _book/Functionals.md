@@ -2,7 +2,7 @@
 
 
 
-## Exercise 9.2.6
+## Exercises 9.2.6
 
 **Q1.** Use `as_mapper()` to explore how `{purrr}` generates anonymous functions for the integer, character, and list helpers. What helper allows you to extract attributes? Read the documentation to find out.
 
@@ -27,7 +27,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x121b4f6f0>
+#> <environment: 0x113cdb3a8>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -38,7 +38,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x1219036d8>
+#> <environment: 0x113aae668>
 
 # mapping by name -----------------------
 
@@ -56,7 +56,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x144a5f520>
+#> <environment: 0x122ef11d0>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -68,7 +68,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x111a5d6b0>
+#> <environment: 0x1234f7438>
 
 # compact functions ----------------------------
 
@@ -132,7 +132,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck(x, 0.597890264587477, 0.587997315218672, .default = NULL)
-#> <environment: 0x1132c4000>
+#> <environment: 0x115c45b90>
 ```
 
 **Q3.** Use the appropriate `map()` function to:
@@ -369,7 +369,7 @@ map_dbl(
 #>  [6] 0.7364226 0.7203027 0.6653252 0.7732780 0.6753329
 ```
 
-## Exercise 9.4.6
+## Exercises 9.4.6
 
 **Q1.** Explain the results of `modify(mtcars, 1)`.
 
@@ -474,7 +474,7 @@ nm <- names(bods)
 map2(bods, nm, write.csv)
 ```
 
-## Exercise 9.6.3
+## Exercises 9.6.3
 
 **Q1.** Why isn't `is.na()` a predicate function? What base R function is closest to being a predicate version of `is.na()`?
 
@@ -748,9 +748,69 @@ purrr::modify_if(head(iris), .p = is.numeric, .f = scale01)
 #> 6        1.000   1.0000000         1.00           1  setosa
 ```
 
-## Exercise 9.7.3
+## Exercises 9.7.3
 
 **Q1.** How does `apply()` arrange the output? Read the documentation and perform some experiments.
+
+**A1.** Let's prepare an array and apply a function over different margins:
+
+
+```r
+(m <- as.array(table(mtcars$cyl, mtcars$am, mtcars$vs)))
+#> , ,  = 0
+#> 
+#>    
+#>     auto manual
+#>   4    0      1
+#>   6    0      3
+#>   8   12      2
+#> 
+#> , ,  = 1
+#> 
+#>    
+#>     auto manual
+#>   4    3      7
+#>   6    4      0
+#>   8    0      0
+
+# rows
+apply(m, 1, function(x) x ^ 2)
+#>       
+#>         4  6   8
+#>   [1,]  0  0 144
+#>   [2,]  1  9   4
+#>   [3,]  9 16   0
+#>   [4,] 49  0   0
+
+# columns
+apply(m, 2, function(x) x ^ 2)
+#>       
+#>        auto manual
+#>   [1,]    0      1
+#>   [2,]    0      9
+#>   [3,]  144      4
+#>   [4,]    9     49
+#>   [5,]   16      0
+#>   [6,]    0      0
+
+# rows and columns
+apply(m, c(1, 2), function(x) x ^ 2)
+#> , ,  = auto
+#> 
+#>    
+#>     4  6   8
+#>   0 0  0 144
+#>   1 9 16   0
+#> 
+#> , ,  = manual
+#> 
+#>    
+#>      4 6 8
+#>   0  1 9 4
+#>   1 49 0 0
+```
+
+As can be seen, `apply()` returns outputs organised first by the margins being operated over, and only then the results. 
 
 **Q2.** What do `eapply()` and `rapply()` do? Does purrr have equivalents?
 
@@ -768,7 +828,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x112578478>
+#> <environment: 0x132eff628>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>

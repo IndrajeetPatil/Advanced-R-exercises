@@ -2,7 +2,7 @@
 
 
 
-## Exercise 4.2.6
+## Exercises 4.2.6
 
 **Q1.** Fix each of the following common data frame subsetting errors:
 
@@ -158,7 +158,7 @@ class(is.na(df))
 #> [1] "matrix" "array"
 ```
 
-## Exercise 4.3.5
+## Exercises 4.3.5
 
 **Q1.** Brainstorm as many ways as possible to extract the third value from the `cyl` variable in the `mtcars` dataset.
 
@@ -216,7 +216,7 @@ summary(mod)$r.squared
 #> [1] 0.7528328
 ```
 
-## Exercise 4.5.9
+## Exercises 4.5.9
 
 **Q1.**  How would you randomly permute the columns of a data frame? (This is an important technique in random forests.) Can you simultaneously permute the rows and columns in one step?
 

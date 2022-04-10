@@ -2,7 +2,7 @@
 
 
 
-## Exercise 23.2.4
+## Exercises 23.2.4
 
 **Q1.** Profile the following function with `torture = TRUE`. What is surprising? Read the source code of `rm()` to figure out what's going on.
 
@@ -41,7 +41,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()          99.7µs    133µs     7173.     792KB     109.
+#> 1 f()           101µs    135µs     7268.     792KB     111.
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -73,13 +73,13 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x1547b5b70>
+#> <bytecode: 0x1327ecb38>
 #> <environment: namespace:base>
 ```
 
 I still couldn't figure out why. I would recommend checking out the [official answer](https://advanced-r-solutions.rbind.io/measuring-performance.html#profiling).
 
-## Exercise 23.3.3
+## Exercises 23.3.3
 
 **Q1.** Instead of using `bench::mark()`, you could use the built-in function `system.time()`. But `system.time()` is much less precise, so you'll need to repeat each operation many times with a loop, and then divide to find the average time of each operation, as in the code below.
 
@@ -145,15 +145,15 @@ t_bench_df
 #> # A tibble: 2 × 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)    395.19ns
-#> 2 x^0.5        1.28µs
+#> 1 sqrt(x)    468.85ns
+#> 2 x^0.5        1.33µs
 
 t_systime_df
 #> # A tibble: 2 × 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                 0.390                0.398
-#> 2 x^0.5                   1.21                 1.23
+#> 1 sqrt(x)                 0.403                0.412
+#> 2 x^0.5                   1.22                 1.24
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -185,10 +185,10 @@ bench::mark(
 #> # A tibble: 4 × 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)          984ns   1.91µs   566575.    7.86KB
-#> 2 exp(log(x)/2)   6.19µs   6.97µs   135382.    7.86KB
-#> 3 x^0.5           8.98µs   9.96µs   100667.    7.86KB
-#> 4 x^(1/2)         9.22µs  10.25µs    97429.    7.86KB
+#> 1 sqrt(x)         1.02µs   1.44µs   560631.    7.86KB
+#> 2 exp(log(x)/2)   6.11µs   7.09µs   142615.    7.86KB
+#> 3 x^0.5           9.27µs  10.35µs    96712.    7.86KB
+#> 4 x^(1/2)         9.27µs  10.41µs    96749.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

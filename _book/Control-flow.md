@@ -2,7 +2,7 @@
 
 
 
-## Exercise 5.2.4
+## Exercises 5.2.4
 
 **Q1.** What type of vector does each of the following calls to `ifelse()` return?
 
@@ -82,7 +82,7 @@ as.logical(length(numeric()))
 #> [1] FALSE
 ```
 
-## Exercise 5.3.3
+## Exercises 5.3.3
 
 **Q1.** Why does this code succeed without errors or warnings? 
     

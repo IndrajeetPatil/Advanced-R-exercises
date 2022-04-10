@@ -2,7 +2,7 @@
 
 
 
-## Exercise 25.2.6
+## Exercises 25.2.6
 
 **Q1.** With the basics of C++ in hand, it's now a great time to practice by reading and writing some simple C++ functions. For each ofthe following functions, read the code and figure out what the corresponding base R function is. You might not understand every part of the code yet, but you should be able to figure out the basics of what the function does.
  
@@ -219,12 +219,12 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
-#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    5.33µs
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))  10.58µs
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    5.25µs
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))  11.03µs
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1   5.82µs   165840.    15.8KB        0
-#> 2  11.38µs    85782.    18.3KB        0
+#> 1   5.62µs   172895.    15.8KB        0
+#> 2  11.48µs    85622.    18.3KB        0
 ```
 
 - `cumprod()`
@@ -266,8 +266,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression                 min   median `itr/sec`
 #>   <bch:expr>            <bch:tm> <bch:tm>     <dbl>
-#> 1 cumprod(v1)            40.98ns  82.02ns 10555922.
-#> 2 cumulativeProduct(v1)   1.15µs   1.21µs   575779.
+#> 1 cumprod(v1)               41ns     82ns  8049588.
+#> 2 cumulativeProduct(v1)   1.11µs   1.44µs   573888.
 #>   mem_alloc `gc/sec`
 #>   <bch:byt>    <dbl>
 #> 1        0B        0
@@ -317,8 +317,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 range(v1)    1.35µs   1.48µs   504655.        0B        0
-#> 2 rangeC(v1)   1.11µs   1.31µs   546861.    7.07KB        0
+#> 1 range(v1)    1.39µs   1.48µs   378026.        0B        0
+#> 2 rangeC(v1)   1.23µs   1.31µs   446626.    7.07KB        0
 ```
 
 - `var()`
@@ -366,15 +366,15 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 var(v1)        6.15µs    7.5µs   124713.        0B
-#> 2 variance(v1)   1.23µs   1.56µs   530793.    7.07KB
+#> 1 var(v1)        6.19µs   7.65µs   117765.        0B
+#> 2 variance(v1)   1.07µs   1.19µs   527699.    7.07KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
 #> 2        0
 ```
 
-## Exercise 25.4.5
+## Exercises 25.4.5
 
 **Q1.** Rewrite any of the functions from Exercise 25.2.6 to deal with missing values. If `na.rm` is true, ignore the missing values. If `na.rm` is false,  return a missing value if the input contains any missing values. Some good functions to practice with are `min()`, `max()`, `range()`, `mean()`, and `var()`.
 
@@ -440,7 +440,7 @@ rangeC_NA(v1, TRUE)
 
 **Q2.** Rewrite `cumsum()` and `diff()` so they can handle missing values. Note that these functions have slightly more complicated behaviour.
 
-## Exercise 25.5.7
+## Exercises 25.5.7
 
 **Q1.** To practice using the STL algorithms and data structures, implement the following using R functions in C++, using the hints provided:
 
@@ -502,8 +502,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression              min   median `itr/sec` mem_alloc
 #>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 median.default(v2)  20.38µs   21.9µs    42250.        0B
-#> 2 medianC(v2)          1.48µs    1.8µs   518385.    2.49KB
+#> 1 median.default(v2)  13.57µs  15.17µs    63742.        0B
+#> 2 medianC(v2)          1.02µs   1.31µs   737088.    2.49KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

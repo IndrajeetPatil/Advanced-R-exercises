@@ -2,7 +2,7 @@
 
 
 
-## Exercise 3.2.5 
+## Exercises 3.2.5 
 
 **Q1.** How do you create raw and complex scalars? (See `?raw` and `?complex`.)
 
@@ -200,7 +200,7 @@ is.null(dim(x))
 #> [1] TRUE
 ```
 
-## Exercise 3.3.4
+## Exercises 3.3.4
 
 **Q1.** How is `setNames()` implemented? How is `unname()` implemented? Read the source code.
 
@@ -214,7 +214,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x116416c78>
+#> <bytecode: 0x13135d590>
 #> <environment: namespace:stats>
 
 setNames(c(1, 2), c("a", "b"))
@@ -233,7 +233,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x126c383e0>
+#> <bytecode: 0x1325e5de0>
 #> <environment: namespace:base>
 
 A <- provideDimnames(N <- array(1:24, dim = 2:4))
@@ -382,7 +382,7 @@ structure(1:5, comment = "my attribute")
 #> [1] 1 2 3 4 5
 ```
 
-## Exercise 3.4.5
+## Exercises 3.4.5
 
 **Q1.** What sort of object does `table()` return? What is its type? What attributes does it have? How does the dimensionality change as you tabulate more variables?
 
@@ -536,7 +536,7 @@ as.integer(f3)
 #> [19]  8  7  6  5  4  3  2  1
 ```
 
-## Exercise 3.5.4
+## Exercises 3.5.4
 
 **Q1.** List all the ways that a list differs from an atomic vector.
 
@@ -635,7 +635,7 @@ unlist(list(datetime, date))
 #> [1] -628991940      -8175
 ```
 
-## Exercise 3.6.8
+## Exercises 3.6.8
 
 **Q1.** Can you have a data frame with zero rows? What about zero columns?
 

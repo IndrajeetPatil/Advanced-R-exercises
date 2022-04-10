@@ -6,15 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 6 Functions | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content='6.1 Exercise 6.2.5 Q1. Given a name, like "mean", match.fun() lets you find a function. Given a function, can you find its name? Why doesn’t that make sense in R? A1. Given a name, match.fun()...'>
+<meta name="description" content='6.1 Exercises 6.2.5 Q1. Given a name, like "mean", match.fun() lets you find a function. Given a function, can you find its name? Why doesn’t that make sense in R? A1. Given a name, match.fun()...'>
 <meta name="generator" content="bookdown 0.25 with bs4_book()">
 <meta property="og:title" content="Chapter 6 Functions | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.png">
-<meta property="og:description" content='6.1 Exercise 6.2.5 Q1. Given a name, like "mean", match.fun() lets you find a function. Given a function, can you find its name? Why doesn’t that make sense in R? A1. Given a name, match.fun()...'>
+<meta property="og:description" content='6.1 Exercises 6.2.5 Q1. Given a name, like "mean", match.fun() lets you find a function. Given a function, can you find its name? Why doesn’t that make sense in R? A1. Given a name, match.fun()...'>
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 6 Functions | Advanced R Exercises">
-<meta name="twitter:description" content='6.1 Exercise 6.2.5 Q1. Given a name, like "mean", match.fun() lets you find a function. Given a function, can you find its name? Why doesn’t that make sense in R? A1. Given a name, match.fun()...'>
+<meta name="twitter:description" content='6.1 Exercises 6.2.5 Q1. Given a name, like "mean", match.fun() lets you find a function. Given a function, can you find its name? Why doesn’t that make sense in R? A1. Given a name, match.fun()...'>
 <meta name="twitter:image" content="/cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -80,9 +80,9 @@
 <h1>
 <span class="header-section-number">6</span> Functions<a class="anchor" aria-label="anchor" href="#functions"><i class="fas fa-link"></i></a>
 </h1>
-<div id="exercise-6.2.5" class="section level2" number="6.1">
+<div id="exercises-6.2.5" class="section level2" number="6.1">
 <h2>
-<span class="header-section-number">6.1</span> Exercise 6.2.5<a class="anchor" aria-label="anchor" href="#exercise-6.2.5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.1</span> Exercises 6.2.5<a class="anchor" aria-label="anchor" href="#exercises-6.2.5"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Given a name, like <code>"mean"</code>, <code><a href="https://rdrr.io/r/base/match.fun.html">match.fun()</a></code> lets you find a function. Given a function, can you find its name? Why doesn’t that make sense in R?</p>
 <p><strong>A1.</strong> Given a name, <code><a href="https://rdrr.io/r/base/match.fun.html">match.fun()</a></code> lets you find a function.</p>
@@ -90,7 +90,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x105603c30&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x10494a838&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>But, given a function, it doesn’t make sense to find its name in R because there can be multiple names bound to the same function.</p>
 <div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
@@ -321,7 +321,7 @@ a. How could you adapt the code to find all primitive functions?</code></pre>
 <span class="va">mean</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x105603c30&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x10494a838&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span>
 
 <span class="co"># other package function</span>
@@ -331,7 +331,7 @@ a. How could you adapt the code to find all primitive functions?</code></pre>
 <span class="co">#&gt;     .f &lt;- as_mapper(.f, ...)</span>
 <span class="co">#&gt;     .Call(map_impl, environment(), ".x", ".f", "list")</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x10aab5540&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x111d14070&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></code></pre></div>
 <p>There are two exceptions to this rule:</p>
 <ul>
@@ -348,9 +348,9 @@ a. How could you adapt the code to find all primitive functions?</code></pre>
 <span class="va">f</span>
 <span class="co">#&gt; function(x) mean(x)</span></code></pre></div>
 </div>
-<div id="exercise-6.4.5" class="section level2" number="6.2">
+<div id="exercises-6.4.5" class="section level2" number="6.2">
 <h2>
-<span class="header-section-number">6.2</span> Exercise 6.4.5<a class="anchor" aria-label="anchor" href="#exercise-6.4.5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.2</span> Exercises 6.4.5<a class="anchor" aria-label="anchor" href="#exercises-6.4.5"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> What does the following code return? Why? Describe how each of the three <code>c</code>’s is interpreted.</p>
 <div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
@@ -405,9 +405,9 @@ running the code yourself.</p>
 <span class="fu">f</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
 <span class="co">#&gt; [1] 202</span></code></pre></div>
 </div>
-<div id="exercise-6.5.4" class="section level2" number="6.3">
+<div id="exercises-6.5.4" class="section level2" number="6.3">
 <h2>
-<span class="header-section-number">6.3</span> Exercise 6.5.4<a class="anchor" aria-label="anchor" href="#exercise-6.5.4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.3</span> Exercises 6.5.4<a class="anchor" aria-label="anchor" href="#exercises-6.5.4"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> What important property of <code>&amp;&amp;</code> makes <code>x_ok()</code> work?</p>
 <div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
@@ -474,7 +474,7 @@ running the code yourself.</p>
 
 <span class="fu">f2</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] 100</span>
-<span class="co">#&gt; [1] "0x10a611e00" "0x10a611e00"</span></code></pre></div>
+<span class="co">#&gt; [1] "0x12387c470" "0x12387c470"</span></code></pre></div>
 <p><strong>Q3.</strong> What does this function return? Why? Which principle does it illustrate?</p>
 <div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">10</span>
@@ -517,12 +517,12 @@ running the code yourself.</p>
   <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="op">}</span>
 <span class="fu">show_time</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2022-04-09 15:42:55 CEST"</span></code></pre></div>
+<span class="co">#&gt; [1] "2022-04-10 18:48:11 CEST"</span></code></pre></div>
 <p><strong>Q6.</strong> How many arguments are required when calling <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>?</p>
 </div>
-<div id="exercise-6.6.1" class="section level2" number="6.4">
+<div id="exercises-6.6.1" class="section level2" number="6.4">
 <h2>
-<span class="header-section-number">6.4</span> Exercise 6.6.1<a class="anchor" aria-label="anchor" href="#exercise-6.6.1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.4</span> Exercises 6.6.1<a class="anchor" aria-label="anchor" href="#exercises-6.6.1"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Explain the following results:</p>
 <div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
@@ -585,10 +585,10 @@ plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#functions"><span class="header-section-number">6</span> Functions</a></li>
-<li><a class="nav-link" href="#exercise-6.2.5"><span class="header-section-number">6.1</span> Exercise 6.2.5</a></li>
-<li><a class="nav-link" href="#exercise-6.4.5"><span class="header-section-number">6.2</span> Exercise 6.4.5</a></li>
-<li><a class="nav-link" href="#exercise-6.5.4"><span class="header-section-number">6.3</span> Exercise 6.5.4</a></li>
-<li><a class="nav-link" href="#exercise-6.6.1"><span class="header-section-number">6.4</span> Exercise 6.6.1</a></li>
+<li><a class="nav-link" href="#exercises-6.2.5"><span class="header-section-number">6.1</span> Exercises 6.2.5</a></li>
+<li><a class="nav-link" href="#exercises-6.4.5"><span class="header-section-number">6.2</span> Exercises 6.4.5</a></li>
+<li><a class="nav-link" href="#exercises-6.5.4"><span class="header-section-number">6.3</span> Exercises 6.5.4</a></li>
+<li><a class="nav-link" href="#exercises-6.6.1"><span class="header-section-number">6.4</span> Exercises 6.6.1</a></li>
 </ul>
 
       <div class="book-extra">
@@ -606,7 +606,7 @@ plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-04-09.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-04-10.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

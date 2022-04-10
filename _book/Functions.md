@@ -2,7 +2,7 @@
 
 
 
-## Exercise 6.2.5
+## Exercises 6.2.5
 
 **Q1.** Given a name, like `"mean"`, `match.fun()` lets you find a function. Given a function, can you find its name? Why doesn't that make sense in R?
 
@@ -13,7 +13,7 @@
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x105603c30>
+#> <bytecode: 0x10494a838>
 #> <environment: namespace:base>
 ```
 
@@ -294,7 +294,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x105603c30>
+#> <bytecode: 0x10494a838>
 #> <environment: namespace:base>
 
 # other package function
@@ -304,7 +304,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x10aab5540>
+#> <bytecode: 0x111d14070>
 #> <environment: namespace:purrr>
 ```
 
@@ -327,7 +327,7 @@ f
 #> function(x) mean(x)
 ```
 
-## Exercise 6.4.5
+## Exercises 6.4.5
 
 **Q1.** What does the following code return? Why? Describe how each of the three `c`'s is interpreted.
 
@@ -398,7 +398,7 @@ f(10)
 #> [1] 202
 ```
 
-## Exercise 6.5.4 
+## Exercises 6.5.4 
 
 **Q1.** What important property of `&&` makes `x_ok()` work?
 
@@ -488,7 +488,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x10a611e00" "0x10a611e00"
+#> [1] "0x12387c470" "0x12387c470"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -548,12 +548,12 @@ show_time <- function(x = stop("Error!")) {
   print(x)
 }
 show_time()
-#> [1] "2022-04-09 15:42:55 CEST"
+#> [1] "2022-04-10 18:48:11 CEST"
 ```
 
 **Q6.** How many arguments are required when calling `library()`?
 
-## Exercise 6.6.1
+## Exercises 6.6.1
 
 **Q1.** Explain the following results:
 

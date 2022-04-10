@@ -4,7 +4,7 @@
 source("common.R")
 ```
 
-## Exercise 13.2.1 
+## Exercises 13.2.1 
 
 **Q1.** Describe the difference between `t.test()` and `t.data.frame()`. When is each function called?
 
@@ -154,7 +154,7 @@ Apart from `class`, it has the following attributes:
 attributes(x)
 ```
 
-## Exercise 13.3.4
+## Exercises 13.3.4
 
 **Q1.** Write a constructor for `data.frame` objects. What base type is a data frame built on? What attributes does it use? What are the restrictions placed on the individual elements? What about the names?
 
@@ -182,3 +182,145 @@ my_data_frame <- function(...,
 **Q4.** Factors have an optional "contrasts" attribute. Read the help for `C()`, and briefly describe the purpose of the attribute. What type should it have? Rewrite the `new_factor()` constructor to include this attribute.
 
 **Q5.** Read the documentation for `utils::as.roman()`. How would you write a constructor for this class? Does it need a validator? What might a helper do?
+
+
+## Exercises 13.4.4
+
+**Q1.** Read the source code for `t()` and `t.test()` and confirm that `t.test()` is an S3 generic and not an S3 method. What happens if you create an object with class `test` and call `t()` with it? Why?
+
+```{r, results = FALSE}
+x <- structure(1:10, class = "test")
+t(x)
+```
+
+**A1.** Looking at source code of these functions, we can see that both of these are generic, and we can confirm the same using `{sloop}`:
+
+```{r}
+t
+sloop::is_s3_generic("t")
+
+t.test
+sloop::is_s3_generic("t.test")
+```
+
+Looking at the `S3` dispatch, we can see that since R can't find `S3` method for `test` class for generic function `t()`, it dispatches the default method, which converts the structure to a matrix:
+
+```{r}
+x <- structure(1:10, class = "test")
+t(x)
+s3_dispatch(t(x))
+```
+
+The same behaviour can be observed with a vector:
+
+```{r}
+t(1:10)
+```
+
+**Q2.** What generics does the `table` class have methods for?
+
+**A2.** The `table` class have methods for the following generics:
+
+```{r}
+s3_methods_class("table")
+```
+
+**Q3.** What generics does the `ecdf` class have methods for?
+
+**A3.** The `ecdf` class have methods for the following generics:
+
+```{r}
+s3_methods_class("ecdf")
+```
+
+**Q4.** Which base generic has the greatest number of defined methods?
+
+**A4.** To answer this question, first, let's list all functions base has and only retain the generics.
+
+```{r}
+library(purrr)
+library(dplyr)
+
+# getting all functions names
+objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
+funs <- Filter(is.function, objs)
+
+# extracting only generics
+genFuns <- names(funs) %>%
+  purrr::keep(~ sloop::is_s3_generic(.x))
+```
+
+Now it's a simple matter of counting number of methods per generic and ordering the data frame in descending order of this count:
+
+```{r}
+purrr::map_dfr(
+  genFuns,
+  ~ s3_methods_generic(.)
+) %>%
+  dplyr::group_by(generic) %>%
+  dplyr::tally() %>%
+  dplyr::arrange(desc(n))
+```
+
+This reveals that the base generic function with most methods is `print()`.
+
+**Q5.** Carefully read the documentation for `UseMethod()` and explain why the following code returns the results that it does. What two usual rules of function evaluation does `UseMethod()` violate?
+
+```{r}
+g <- function(x) {
+  x <- 10
+  y <- 10
+  UseMethod("g")
+}
+g.default <- function(x) c(x = x, y = y)
+x <- 1
+y <- 1
+g(x)
+```
+
+**Q6.** What are the arguments to `[`? Why is this a hard question to answer?
+
+## Exercises 13.5.1
+
+**Q1.** Categorise the objects returned by `lm()`, `factor()`, `table()`, `as.Date()`, `as.POSIXct()` `ecdf()`, `ordered()`, `I()` into the styles described above.
+
+**Q2.** What would a constructor function for `lm` objects, `new_lm()`, look like? Use `?lm` and experimentation to figure out the required fields and their types.
+
+## Exercises 13.6.3
+
+**Q1.** How does `[.Date` support subclasses? How does it fail to support subclasses?
+
+**Q2.** R has two classes for representing date time data, `POSIXct` and `POSIXlt`, which both inherit from `POSIXt`. Which generics have different behaviours for the two classes? Which generics share the same behaviour?
+
+**Q3.** What do you expect this code to return? What does it actually return? Why?
+
+```{r, eval = FALSE}
+generic2 <- function(x) UseMethod("generic2")
+generic2.a1 <- function(x) "a1"
+generic2.a2 <- function(x) "a2"
+generic2.b <- function(x) {
+  class(x) <- "a1"
+  NextMethod()
+}
+generic2(structure(list(), class = c("b", "a2")))
+```
+
+## Exercises 13.7.5
+
+**Q1.** Explain the differences in dispatch below:
+
+```{r}
+length.integer <- function(x) 10
+
+x1 <- 1:5
+class(x1)
+s3_dispatch(length(x1))
+
+x2 <- structure(x1, class = "integer")
+class(x2)
+s3_dispatch(length(x2))
+```
+
+**Q2.** What classes have a method for the `Math` group generic in base R? Read the source code. How do the methods work?
+
+**Q3.** `Math.difftime()` is more complicated than I described. Why?

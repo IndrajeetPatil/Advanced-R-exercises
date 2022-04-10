@@ -93,14 +93,14 @@
 <li><p><code><a href="https://rdrr.io/pkg/RcppEigen/man/fastLm.html">RcppEigen::fastLm()</a></code> (using the <code>Eigen</code> linear algebra library)</p></li>
 </ul>
 <p>High performances can be obtained with these packages especially if R is linked against an optimized BLAS, such as ATLAS. You can check this information using <code><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo()</a></code>:</p>
-<div class="sourceCode" id="cb284"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb296"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sessInfo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">sessInfo</span><span class="op">$</span><span class="va">matprod</span>
 <span class="co">#&gt; [1] "default"</span>
 <span class="va">sessInfo</span><span class="op">$</span><span class="va">LAPACK</span>
 <span class="co">#&gt; [1] "/Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/lib/libRlapack.dylib"</span></code></pre></div>
 <p>Comparing performance of different alternatives:</p>
-<div class="sourceCode" id="cb285"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb297"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jennybc/gapminder">gapminder</a></span><span class="op">)</span>
 
 <span class="co"># having a look at the data</span>
@@ -125,10 +125,10 @@
 <span class="co">#&gt; # A tibble: 4 × 5</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 lm            577µs    608µs     1602.    1.25MB</span>
-<span class="co">#&gt; 2 speedglm      592µs    610µs     1638.   62.39MB</span>
-<span class="co">#&gt; 3 biglm         463µs    496µs     2016.  934.81KB</span>
-<span class="co">#&gt; 4 fastLm        536µs    592µs     1586.  982.48KB</span></code></pre></div>
+<span class="co">#&gt; 1 lm            577µs    612µs     1574.    1.25MB</span>
+<span class="co">#&gt; 2 speedglm      592µs    610µs     1629.   62.39MB</span>
+<span class="co">#&gt; 3 biglm         464µs    508µs     1956.  934.81KB</span>
+<span class="co">#&gt; 4 fastLm        543µs    590µs     1697.  982.48KB</span></code></pre></div>
 <p>The results might change depending on the size of the dataset, so you will have to experiment with different algorithms and find the one that fits the needs of your dataset the best.</p>
 <p><strong>Q2.</strong> What package implements a version of <code><a href="https://rdrr.io/r/base/match.html">match()</a></code> that’s faster for repeated look ups? How much faster is it?</p>
 <p><strong>A2.</strong> The package (and the respective function) is <code><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fastmatch::fmatch()</a></code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;In addition to Google search, you can also try &lt;a href="https://www.zuckarelli.de/packagefinder/tutorial.html"&gt;packagefinder&lt;/a&gt; to search for CRAN packages.&lt;/p&gt;'><sup>8</sup></a>.</p>
@@ -138,7 +138,7 @@
 </blockquote>
 <p>Let’s try.</p>
 <p>With a small vector, <code><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fmatch()</a></code> is only slightly faster, but of the same order of magnitude.</p>
-<div class="sourceCode" id="cb286"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb298"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rforge.net/fastmatch">fastmatch</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="va">small_vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"x"</span>, <span class="st">"m"</span>, <span class="st">"n"</span>, <span class="st">"y"</span><span class="op">)</span>
@@ -153,10 +153,10 @@
 <span class="co">#&gt; # A tibble: 2 × 5</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 base          451ns    533ns  1712639.    2.77KB</span>
-<span class="co">#&gt; 2 fastmatch     369ns    451ns  2087413.    2.66KB</span></code></pre></div>
+<span class="co">#&gt; 1 base          451ns    533ns  1714339.    2.77KB</span>
+<span class="co">#&gt; 2 fastmatch     369ns    451ns  2117466.    2.66KB</span></code></pre></div>
 <p>But, with a larger vector, <code><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fmatch()</a></code> is only orders of magnitude faster! ⚡</p>
-<div class="sourceCode" id="cb287"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb299"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">large_vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span>, <span class="fl">1e4</span><span class="op">)</span>, <span class="st">"x"</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"m"</span>, <span class="st">"n"</span><span class="op">)</span>, <span class="fl">1e6</span><span class="op">)</span>, <span class="st">"y"</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">large_vec</span><span class="op">)</span>
@@ -169,16 +169,16 @@
 <span class="co">#&gt; # A tibble: 2 × 5</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 base         14.1ms   14.4ms      69.6    31.4MB</span>
-<span class="co">#&gt; 2 fastmatch     369ns  451.1ns 2118122.         0B</span></code></pre></div>
+<span class="co">#&gt; 1 base         14.2ms   14.3ms      68.8    31.4MB</span>
+<span class="co">#&gt; 2 fastmatch     369ns    451ns 2076366.         0B</span></code></pre></div>
 <p>We can also look at the hash table:</p>
-<div class="sourceCode" id="cb288"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb300"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fmatch.hash</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, <span class="va">small_vec</span><span class="op">)</span>
 <span class="co">#&gt; [1] "a" "b" "x" "m" "n" "y"</span>
 <span class="co">#&gt; attr(,".match.hash")</span>
 <span class="co">#&gt; &lt;hash table&gt;</span></code></pre></div>
 <p>Additionally, <a href="http://www.rforge.net/fastmatch">fastmatch</a> also provides a similar infix operator:</p>
-<div class="sourceCode" id="cb289"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb301"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rforge.net/fastmatch">fastmatch</a></span><span class="op">)</span>
 
 <span class="va">small_vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"x"</span>, <span class="st">"m"</span>, <span class="st">"n"</span>, <span class="st">"y"</span><span class="op">)</span>
@@ -214,7 +214,7 @@
 <li>
 <code><a href="https://rdrr.io/r/base/colSums.html">rowSums()</a></code> function does a number of checks to validate if the arguments are acceptable</li>
 </ul>
-<div class="sourceCode" id="cb290"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb302"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rowSums</span>
 <span class="co">#&gt; function (x, na.rm = FALSE, dims = 1L) </span>
 <span class="co">#&gt; {</span>
@@ -237,20 +237,20 @@
 <span class="co">#&gt;     else names(z) &lt;- dimnames(x)[[1L]]</span>
 <span class="co">#&gt;     z</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x10d5803d0&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x106b880e8&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <ul>
 <li>
 <code><a href="https://rdrr.io/r/base/colSums.html">.rowSums()</a></code> directly proceeds to computation using an internal code which is built in to the R interpreter</li>
 </ul>
-<div class="sourceCode" id="cb291"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb303"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">.rowSums</span>
 <span class="co">#&gt; function (x, m, n, na.rm = FALSE) </span>
 <span class="co">#&gt; .Internal(rowSums(x, m, n, na.rm))</span>
-<span class="co">#&gt; &lt;bytecode: 0x11ddf2ba8&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x10cc53cd0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>But they have comparable performance:</p>
-<div class="sourceCode" id="cb292"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb304"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">3</span>, x2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">1e4</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">1e5</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span>
@@ -260,12 +260,12 @@
 <span class="co">#&gt; # A tibble: 2 × 5</span>
 <span class="co">#&gt;   expression                                 min   median</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;                            &lt;bch:tm&gt; &lt;bch:tm&gt;</span>
-<span class="co">#&gt; 1 rowSums(x)                              94.8µs    140µs</span>
-<span class="co">#&gt; 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])   93.6µs    135µs</span>
+<span class="co">#&gt; 1 rowSums(x)                                96µs    135µs</span>
+<span class="co">#&gt; 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])   93.8µs    135µs</span>
 <span class="co">#&gt;   `itr/sec` mem_alloc</span>
 <span class="co">#&gt;       &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1     6376.     859KB</span>
-<span class="co">#&gt; 2     7117.     859KB</span></code></pre></div>
+<span class="co">#&gt; 1     6945.     859KB</span>
+<span class="co">#&gt; 2     7320.     859KB</span></code></pre></div>
 <p><strong>Q2.</strong> Make a faster version of <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code> that only computes the chi-square test statistic when the input is two numeric vectors with no missing values. You can try simplifying <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code> or by coding from the <a href="http://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test">mathematical definition</a>.</p>
 <p><strong>A2.</strong> If the function is supposed to accept only two numeric vectors without missing values, then we can make <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code> do less work by removing code corresponding to the following :</p>
 <ul>
@@ -275,7 +275,7 @@
 <li>checking for missing values</li>
 </ul>
 <p>This leaves us with a much simpler, bare bones implementation:</p>
-<div class="sourceCode" id="cb293"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb305"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_chisq_test</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>
   <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
@@ -312,7 +312,7 @@
   <span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>And, indeed, this custom function performs slightly better<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Deliberately choosing a larger dataset to stress test the new function.&lt;/p&gt;"><sup>9</sup></a> than its base equivalent:</p>
-<div class="sourceCode" id="cb294"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb306"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">1000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="fl">9000</span><span class="op">)</span><span class="op">)</span>
 <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, <span class="fl">5000</span><span class="op">)</span><span class="op">)</span>
 
@@ -323,8 +323,8 @@
 <span class="co">#&gt; # A tibble: 2 × 5</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 base          605µs    701µs     1387.    1.47MB</span>
-<span class="co">#&gt; 2 custom        465µs    539µs     1827.    1.12MB</span></code></pre></div>
+<span class="co">#&gt; 1 base          633µs    766µs     1110.    1.47MB</span>
+<span class="co">#&gt; 2 custom        477µs    540µs     1802.    1.12MB</span></code></pre></div>
 <p><strong>Q3.</strong> Can you make a faster version of <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> for the case of an input of two integer vectors with no missing values? Can you use it to speed up your chi-square test?</p>
 <p><strong>A3.</strong> In order to make a leaner version of <code><a href="https://rdrr.io/r/base/table.html">table()</a></code>, we can take a similar approach and trim the unnecessary fat in light of our new API of accepting just two vectors without missing values. We can remove the following components from the code:</p>
 <ul>
@@ -333,7 +333,7 @@
 <li>other input validation checks</li>
 </ul>
 <p>In addition to this removal, we can also use <code><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fastmatch::fmatch()</a></code> instead of <code><a href="https://rdrr.io/r/base/match.html">match()</a></code>:</p>
-<div class="sourceCode" id="cb295"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb307"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_table</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">x_sorted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
   <span class="va">y_sorted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>
@@ -355,7 +355,7 @@
   <span class="va">y</span>
 <span class="op">}</span></code></pre></div>
 <p>The custom does perform slightly better:</p>
-<div class="sourceCode" id="cb296"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb308"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">1000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="fl">9000</span><span class="op">)</span><span class="op">)</span>
 <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, <span class="fl">5000</span><span class="op">)</span><span class="op">)</span>
 
@@ -368,10 +368,10 @@
 <span class="co">#&gt; # A tibble: 2 × 5</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 base          440µs    509µs     1949.     960KB</span>
-<span class="co">#&gt; 2 custom        256µs    289µs     3429.     475KB</span></code></pre></div>
+<span class="co">#&gt; 1 base          451µs    512µs     1855.     960KB</span>
+<span class="co">#&gt; 2 custom        263µs    297µs     3064.     475KB</span></code></pre></div>
 <p>We can also use this function in our custom chi-squared test function and see if the performance improves any further:</p>
-<div class="sourceCode" id="cb297"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb309"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_chisq_test2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">my_table</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>
   <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
@@ -408,7 +408,7 @@
   <span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>And, indeed, this new version of the custom function performs even better than it previously did:</p>
-<div class="sourceCode" id="cb298"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb310"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">1000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="fl">9000</span><span class="op">)</span><span class="op">)</span>
 <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, <span class="fl">5000</span><span class="op">)</span><span class="op">)</span>
 
@@ -419,8 +419,8 @@
 <span class="co">#&gt; # A tibble: 2 × 5</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 base          611µs    702µs     1418.    1.28MB</span>
-<span class="co">#&gt; 2 custom        275µs    311µs     3166.  594.98KB</span></code></pre></div>
+<span class="co">#&gt; 1 base          634µs    723µs     1343.    1.28MB</span>
+<span class="co">#&gt; 2 custom        282µs    308µs     3203.  594.98KB</span></code></pre></div>
 </div>
 <div id="exercises-24.5.1" class="section level3" number="22.0.3">
 <h3>
@@ -428,7 +428,7 @@
 </h3>
 <p><strong>Q1.</strong> The density functions, e.g., <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm()</a></code>, have a common interface. Which arguments are vectorised over? What does <code>rnorm(10, mean = 10:1)</code> do?</p>
 <p><strong>A1.</strong> The density function family has the following interface:</p>
-<div class="sourceCode" id="cb299"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb311"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span>, log <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">q</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="va">p</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -436,21 +436,21 @@
 <p>Reading the documentation reveals that the following parameters are vectorized:
 <code>x</code>, <code>q</code>, <code>p</code>, <code>mean</code>, <code>sd</code>.</p>
 <p>This means that something like the following will work:</p>
-<div class="sourceCode" id="cb300"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb312"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1.124335 0.930398 3.844935</span></code></pre></div>
 <p>But, for functions that don’t have multiple vectorized parameters, it won’t. For example,</p>
-<div class="sourceCode" id="cb301"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb313"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/trimws.html">trimws</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"  a "</span>, <span class="st">" bc"</span>, <span class="st">"  abc  "</span><span class="op">)</span>, which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"right"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Error in match.arg(which): 'arg' must be of length 1</span></code></pre></div>
 <p>The following function call generates 10 random numbers (since <code>n = 10</code>) with 10 different distributions with means supplied by the vector <code>10:1</code>.</p>
-<div class="sourceCode" id="cb302"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb314"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">10</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt;  [1]  8.2421770  9.3920474  7.1362118  7.5789906  5.2551688</span>
 <span class="co">#&gt;  [6]  6.0143714  4.6147891  1.1096247  2.8759129 -0.6756857</span></code></pre></div>
 <p><strong>Q2.</strong> Compare the speed of <code>apply(x, 1, sum)</code> with <code>rowSums(x)</code> for varying sizes of <code>x</code>.</p>
 <p><strong>A2.</strong> We can write a custom function to vary number of rows in a matrix and extract a data frame comparing performance of these two functions.</p>
-<div class="sourceCode" id="cb303"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb315"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">benchPerform</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">nRow</span>, <span class="va">nCol</span> <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">nRow</span> <span class="op">*</span> <span class="va">nCol</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="va">nRow</span>, ncol <span class="op">=</span> <span class="va">nCol</span><span class="op">)</span>
 
@@ -476,7 +476,7 @@
 <span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so</span>
 <span class="co">#&gt; filtering is disabled.</span></code></pre></div>
 <p>Plotting this data reveals that <code>rowSums(x)</code> has <em>O</em>(1) behavior, while <em>O</em>(n) (?) behavior.</p>
-<div class="sourceCode" id="cb304"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb316"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
   <span class="va">benchDF</span>,
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
@@ -496,7 +496,7 @@
 <div class="inline-figure"><img src="Perf-improve_files/figure-html/unnamed-chunk-21-1.png" width="672"></div>
 <p><strong>Q3.</strong> How can you use <code><a href="https://rdrr.io/r/base/crossprod.html">crossprod()</a></code> to compute a weighted sum? How much faster is it than the naive <code>sum(x * w)</code>?</p>
 <p><strong>A3.</strong> Both of these functions provide a way to compute a weighted sum:</p>
-<div class="sourceCode" id="cb305"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb317"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
 
@@ -505,7 +505,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span> <span class="op">*</span> <span class="va">w</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="co">#&gt; [1] 15.94691</span></code></pre></div>
 <p>But benchmarking their performance reveals that the latter is almost twice as fast as the former!</p>
-<div class="sourceCode" id="cb306"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb318"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/crossprod.html">crossprod</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">w</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,
   <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span> <span class="op">*</span> <span class="va">w</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,
@@ -514,8 +514,8 @@
 <span class="co">#&gt; # A tibble: 2 × 5</span>
 <span class="co">#&gt;   expression                min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;           &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 crossprod(x, w)[[1]]    246ns    410ns  1953246.        0B</span>
-<span class="co">#&gt; 2 sum(x * w)[[1]]          82ns    205ns  3471582.        0B</span></code></pre></div>
+<span class="co">#&gt; 1 crossprod(x, w)[[1]]    246ns    369ns  2263856.        0B</span>
+<span class="co">#&gt; 2 sum(x * w)[[1]]          82ns    205ns  4326234.        0B</span></code></pre></div>
 
 </div>
 </div>
@@ -548,7 +548,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-04-09.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-04-10.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
