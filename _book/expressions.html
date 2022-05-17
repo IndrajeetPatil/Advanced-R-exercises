@@ -7,7 +7,7 @@
 <title>Chapter 18 Expressions | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
 <meta name="description" content="18.0.1 Exercises 18.2.4 Q1. Reconstruct the code represented by the trees below: #&gt; █─f #&gt; └─█─g #&gt;  └─█─h #&gt; █─`+` #&gt; ├─█─`+` #&gt; │ ├─1 #&gt; │ └─2 #&gt; └─3 #&gt; █─`*` #&gt; ├─█─`(` #&gt; │ └─█─`+` #&gt; │  ├─x...">
-<meta name="generator" content="bookdown 0.25 with bs4_book()">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
 <meta property="og:title" content="Chapter 18 Expressions | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.png">
@@ -44,32 +44,7 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">About</a></li>
-<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
-<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
-<li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
-<li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
-<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
-<li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
-<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
-<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
-<li><a class="" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
-<li><a class="" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
-<li><a class="" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
-<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
-<li><a class="active" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
-<li><a class="" href="quotation.html"><span class="header-section-number">19</span> Quotation</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">20</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">21</span> Measuring performance</a></li>
-<li><a class="" href="improving-performance.html"><span class="header-section-number">22</span> Improving performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">23</span> Rewriting R code in C++</a></li>
-</ul>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 18</span> Expressions</a></li></ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
@@ -85,27 +60,54 @@
 <span class="header-section-number">18.0.1</span> Exercises 18.2.4<a class="anchor" aria-label="anchor" href="#exercises-18.2.4"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> Reconstruct the code represented by the trees below:</p>
-<pre><code>#&gt; █─f 
-#&gt; └─█─g 
-#&gt;   └─█─h
-#&gt; █─`+` 
-#&gt; ├─█─`+` 
-#&gt; │ ├─1 
-#&gt; │ └─2 
-#&gt; └─3
-#&gt; █─`*` 
-#&gt; ├─█─`(` 
-#&gt; │ └─█─`+` 
-#&gt; │   ├─x 
-#&gt; │   └─y 
-#&gt; └─z</code></pre>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#&gt; █─f</span>
+<span class="co">#&gt; └─█─g</span>
+<span class="co">#&gt;   └─█─h</span>
+<span class="co">#&gt; █─`+`</span>
+<span class="co">#&gt; ├─█─`+`</span>
+<span class="co">#&gt; │ ├─1</span>
+<span class="co">#&gt; │ └─2</span>
+<span class="co">#&gt; └─3</span>
+<span class="co">#&gt; █─`*`</span>
+<span class="co">#&gt; ├─█─`(`</span>
+<span class="co">#&gt; │ └─█─`+`</span>
+<span class="co">#&gt; │   ├─x</span>
+<span class="co">#&gt; │   └─y</span>
+<span class="co">#&gt; └─z</span></code></pre></div>
+<p><strong>A1.</strong> Below is the reconstructed code.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fu">h</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="fl">1</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">3</span>
+<span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span> <span class="op">*</span> <span class="va">z</span></code></pre></div>
+<p>We can confirm it by drawing ASTs for them:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fu">h</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; █─f </span>
+<span class="co">#&gt; └─█─g </span>
+<span class="co">#&gt;   └─█─h</span>
+
+<span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span>
+<span class="co">#&gt; █─`+` </span>
+<span class="co">#&gt; ├─█─`+` </span>
+<span class="co">#&gt; │ ├─1 </span>
+<span class="co">#&gt; │ └─2 </span>
+<span class="co">#&gt; └─3</span>
+
+<span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span> <span class="op">*</span> <span class="va">z</span><span class="op">)</span>
+<span class="co">#&gt; █─`*` </span>
+<span class="co">#&gt; ├─█─`(` </span>
+<span class="co">#&gt; │ └─█─`+` </span>
+<span class="co">#&gt; │   ├─x </span>
+<span class="co">#&gt; │   └─y </span>
+<span class="co">#&gt; └─z</span></code></pre></div>
 <p><strong>Q2.</strong> Draw the following trees by hand and then check your answers with <code><a href="https://rdrr.io/pkg/lobstr/man/ast.html">lobstr::ast()</a></code>.</p>
-<div class="sourceCode" id="cb265"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fu">h</span><span class="op">(</span><span class="fu">i</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu">f</span><span class="op">(</span><span class="fl">1</span>, <span class="fu">g</span><span class="op">(</span><span class="fl">2</span>, <span class="fu">h</span><span class="op">(</span><span class="fl">3</span>, <span class="fu">i</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu">h</span><span class="op">(</span><span class="fl">3</span>, <span class="fu">i</span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><strong>Q3.</strong> What’s happening with the ASTs below? (Hint: carefully read <code><a href="https://rdrr.io/r/base/Arithmetic.html">?"^"</a></code>.)</p>
-<div class="sourceCode" id="cb266"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="va">`x`</span> <span class="op">+</span> <span class="va">`y`</span><span class="op">)</span>
 <span class="co">#&gt; █─`+` </span>
 <span class="co">#&gt; ├─x </span>
@@ -119,7 +121,7 @@
 <span class="co">#&gt; ├─x </span>
 <span class="co">#&gt; └─1</span></code></pre></div>
 <p><strong>Q4.</strong> What is special about the AST below?</p>
-<div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span> <span class="op">=</span> <span class="fl">1</span>, <span class="va">y</span> <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span><span class="op">)</span>
 <span class="co">#&gt; █─`function` </span>
 <span class="co">#&gt; ├─█─x = 1 </span>
@@ -135,14 +137,14 @@
 <p><strong>Q1.</strong> Which two of the six types of atomic vector can’t appear in an expression? Why? Similarly, why can’t you create an expression that contains an atomic vector of length greater than one?</p>
 <p><strong>Q2.</strong> What happens when you subset a call object to remove the first element? e.g. <code>expr(read.csv("foo.csv", header = TRUE))[-1]</code>. Why?</p>
 <p><strong>Q3.</strong> Describe the differences between the following call objects.</p>
-<div class="sourceCode" id="cb268"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>
 <span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="va">median</span>, <span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">median</span><span class="op">)</span>, <span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="va">median</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">median</span><span class="op">)</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><strong>Q4.</strong> <code><a href="https://rlang.r-lib.org/reference/call_standardise.html">rlang::call_standardise()</a></code> doesn’t work so well for the following calls. Why? What makes <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> special?</p>
-<div class="sourceCode" id="cb269"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rlang.r-lib.org/reference/call_standardise.html">call_standardise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; mean(x = 1:10, na.rm = TRUE)</span>
 <span class="fu"><a href="https://rlang.r-lib.org/reference/call_standardise.html">call_standardise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span>n <span class="op">=</span> <span class="cn">T</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -150,7 +152,7 @@
 <span class="fu"><a href="https://rlang.r-lib.org/reference/call_standardise.html">call_standardise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, , <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; mean(x = 1:10, , TRUE)</span></code></pre></div>
 <p><strong>Q5.</strong> Why does this code not make sense?</p>
-<div class="sourceCode" id="cb270"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="fu">foo</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span></code></pre></div>
 <p><strong>Q6.</strong> Construct the expression <code>if(x &gt; 1) "a" else "b"</code> using multiple calls to <code><a href="https://rlang.r-lib.org/reference/call2.html">call2()</a></code>. How does the code structure reflect the structure of the AST?</p>
@@ -160,7 +162,7 @@
 <span class="header-section-number">18.0.3</span> Exercises 18.4.4<a class="anchor" aria-label="anchor" href="#exercises-18.4.4"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> R uses parentheses in two slightly different ways as illustrated by these two calls:</p>
-<div class="sourceCode" id="cb271"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">f</span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="fu">`(`</span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p>Compare and contrast the two uses by referencing the AST.</p>
@@ -172,7 +174,7 @@
 <p><strong>Q7.</strong> What happens if you call <code><a href="https://rlang.r-lib.org/reference/parse_expr.html">parse_expr()</a></code> with a string that generates multiple expressions? e.g. <code>parse_expr("x + 1; y + 1")</code></p>
 <p><strong>Q8.</strong> What happens if you attempt to parse an invalid expression? e.g. <code>"a +"</code> or <code>"f())"</code>.</p>
 <p><strong>Q9.</strong> <code><a href="https://rdrr.io/r/base/deparse.html">deparse()</a></code> produces vectors when the input is long. For example, the following call produces a vector of length two:</p>
-<div class="sourceCode" id="cb272"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span> <span class="op">+</span> <span class="va">c</span> <span class="op">+</span> <span class="va">d</span> <span class="op">+</span> <span class="va">e</span> <span class="op">+</span> <span class="va">f</span> <span class="op">+</span> <span class="va">g</span> <span class="op">+</span> <span class="va">h</span> <span class="op">+</span> <span class="va">i</span> <span class="op">+</span> <span class="va">j</span> <span class="op">+</span> <span class="va">k</span> <span class="op">+</span> <span class="va">l</span> <span class="op">+</span>
   <span class="va">m</span> <span class="op">+</span> <span class="va">n</span> <span class="op">+</span> <span class="va">o</span> <span class="op">+</span> <span class="va">p</span> <span class="op">+</span> <span class="va">q</span> <span class="op">+</span> <span class="va">r</span> <span class="op">+</span> <span class="va">s</span> <span class="op">+</span> <span class="va">t</span> <span class="op">+</span> <span class="va">u</span> <span class="op">+</span> <span class="va">v</span> <span class="op">+</span> <span class="va">w</span> <span class="op">+</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/deparse.html">deparse</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span></code></pre></div>
@@ -185,7 +187,7 @@
 </h3>
 <p><strong>Q1.</strong> <code>logical_abbr()</code> returns <code>TRUE</code> for <code>T(1, 2, 3)</code>. How could you modify <code>logical_abbr_rec()</code> so that it ignores function calls that use <code>T</code> or <code>F</code>?</p>
 <p><strong>Q2.</strong> <code>logical_abbr()</code> works with expressions. It currently fails when you give it a function. Why? How could you modify <code>logical_abbr()</code> to make it work? What components of a function will you need to recurse over?</p>
-<div class="sourceCode" id="cb273"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">logical_abbr</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu">g</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="cn">T</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span></code></pre></div>
@@ -195,23 +197,15 @@
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></div>
-<div class="next"><a href="quotation.html"><span class="header-section-number">19</span> Quotation</a></div>
+<div class="empty"></div>
+<div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li>
-<a class="nav-link" href="#expressions"><span class="header-section-number">18</span> Expressions</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#exercises-18.2.4"><span class="header-section-number">18.0.1</span> Exercises 18.2.4</a></li>
-<li><a class="nav-link" href="#exercises-18.3.5"><span class="header-section-number">18.0.2</span> Exercises 18.3.5</a></li>
-<li><a class="nav-link" href="#exercises-18.4.4"><span class="header-section-number">18.0.3</span> Exercises 18.4.4</a></li>
-<li><a class="nav-link" href="#exercises-18.5.3"><span class="header-section-number">18.0.4</span> Exercises 18.5.3</a></li>
-</ul>
-</li></ul>
+      <div id="book-on-this-page"></div>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Expressions.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Expressions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+          
         </ul>
 </div>
     </nav>
@@ -223,7 +217,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-04-10.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-05-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -231,34 +225,6 @@
   </div>
 
 </div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-for (let popover of popovers) {
-  const div = document.createElement('div');
-  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-  div.innerHTML = popover.getAttribute('data-content');
-
-  var has_math = div.querySelector("span.math");
-  if (has_math) {
-    document.body.appendChild(div);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    MathJax.Hub.Queue(function() {
-      popover.setAttribute('data-content', div.innerHTML);
-      document.body.removeChild(div);
-    })
-  }
-}
-</script>
+</footer>
 </body>
 </html>

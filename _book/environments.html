@@ -7,7 +7,7 @@
 <title>Chapter 7 Environments | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
 <meta name="description" content="7.0.1 Exercises 7.2.7 Q1. List three ways in which an environment differs from a list. A1. As mentioned in the book, here are three ways in which environments differ from lists: Property List...">
-<meta name="generator" content="bookdown 0.25 with bs4_book()">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
 <meta property="og:title" content="Chapter 7 Environments | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.png">
@@ -124,14 +124,14 @@
 <span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">e</span><span class="op">$</span><span class="va">loop</span> <span class="op">&lt;-</span> <span class="va">e</span>
 <span class="fu"><a href="https://rlang.r-lib.org/reference/env_print.html">env_print</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>
-<span class="co">#&gt; &lt;environment: 0x12c1b5bc0&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x11cfd2c50&gt;</span>
 <span class="co">#&gt; Parent: &lt;environment: global&gt;</span>
 <span class="co">#&gt; Bindings:</span>
 <span class="co">#&gt; • loop: &lt;env&gt;</span>
 
 <span class="co"># should be the same as the `e` memory address</span>
 <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">e</span><span class="op">$</span><span class="va">loop</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x12c1b5bc0"</span></code></pre></div>
+<span class="co">#&gt; [1] "0x11cfd2c50"</span></code></pre></div>
 <p><strong>Q3.</strong> Create a pair of environments as illustrated by this picture.</p>
 <div class="inline-figure"><img src="diagrams/environments/recursive-2.png" width="307"></div>
 <p><strong>A3.</strong> Creating the specified environment:</p>
@@ -144,9 +144,9 @@
 
 <span class="co"># following should be the same</span>
 <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span><span class="op">$</span><span class="va">deloop</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x12c593ad8" "0x12c593ad8"</span>
+<span class="co">#&gt; [1] "0x11f5d0a18" "0x11f5d0a18"</span>
 <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">e2</span>, <span class="va">e1</span><span class="op">$</span><span class="va">loop</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x12c5fe4c0" "0x12c5fe4c0"</span></code></pre></div>
+<span class="co">#&gt; [1] "0x11f629dc8" "0x11f629dc8"</span></code></pre></div>
 <p><strong>Q4.</strong> Explain why <code>e[[1]]</code> and <code>e[c("a", "b")]</code> don’t make sense when <code>e</code> is an environment.</p>
 <p><strong>A4.</strong></p>
 <p>An environment is a non-linear data structure, and has no concept of ordered elements. Therefore, indexing it (e.g. <code>e[[1]]</code>) doesn’t make sense.</p>
@@ -307,7 +307,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-04-10.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-05-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

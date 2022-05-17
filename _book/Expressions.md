@@ -5,15 +5,49 @@
 **Q1.** Reconstruct the code represented by the trees below:
 
 
+```r
+#> █─f
+#> └─█─g
+#>   └─█─h
+#> █─`+`
+#> ├─█─`+`
+#> │ ├─1
+#> │ └─2
+#> └─3
+#> █─`*`
+#> ├─█─`(`
+#> │ └─█─`+`
+#> │   ├─x
+#> │   └─y
+#> └─z
 ```
+
+**A1.** Below is the reconstructed code. 
+
+
+```r
+f(g(h()))
+1 + 2 + 3
+(x + y) * z
+```
+
+We can confirm it by drawing ASTs for them:
+
+
+```r
+lobstr::ast(f(g(h())))
 #> █─f 
 #> └─█─g 
 #>   └─█─h
+
+lobstr::ast(1 + 2 + 3)
 #> █─`+` 
 #> ├─█─`+` 
 #> │ ├─1 
 #> │ └─2 
 #> └─3
+
+lobstr::ast((x + y) * z)
 #> █─`*` 
 #> ├─█─`(` 
 #> │ └─█─`+` 
@@ -21,6 +55,7 @@
 #> │   └─y 
 #> └─z
 ```
+
 
 **Q2.** Draw the following trees by hand and then check your answers with `lobstr::ast()`.
 

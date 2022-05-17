@@ -41,7 +41,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           101µs    135µs     7268.     792KB     111.
+#> 1 f()           101µs    136µs     7002.     792KB     107.
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -73,7 +73,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x1327ecb38>
+#> <bytecode: 0x12d1edcb8>
 #> <environment: namespace:base>
 ```
 
@@ -145,15 +145,15 @@ t_bench_df
 #> # A tibble: 2 × 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)    468.85ns
-#> 2 x^0.5        1.33µs
+#> 1 sqrt(x)     447.6ns
+#> 2 x^0.5         1.3µs
 
 t_systime_df
 #> # A tibble: 2 × 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                 0.403                0.412
-#> 2 x^0.5                   1.22                 1.24
+#> 1 sqrt(x)                 0.397                0.406
+#> 2 x^0.5                   1.21                 1.23
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -185,10 +185,10 @@ bench::mark(
 #> # A tibble: 4 × 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)         1.02µs   1.44µs   560631.    7.86KB
-#> 2 exp(log(x)/2)   6.11µs   7.09µs   142615.    7.86KB
-#> 3 x^0.5           9.27µs  10.35µs    96712.    7.86KB
-#> 4 x^(1/2)         9.27µs  10.41µs    96749.    7.86KB
+#> 1 sqrt(x)         1.02µs   1.97µs   553831.    7.86KB
+#> 2 exp(log(x)/2)   6.15µs   7.13µs   143020.    7.86KB
+#> 3 x^0.5           9.22µs   9.76µs   100177.    7.86KB
+#> 4 x^(1/2)         9.31µs  10.19µs    99472.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
