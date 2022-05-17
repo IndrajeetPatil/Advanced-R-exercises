@@ -84,6 +84,34 @@ lobstr::ast(1 -> x)
 #> └─1
 ```
 
+**A3.** The `str2expression()` helps make sense of these ASTs.
+
+The non-syntactic names are parsed to names. Thus, backticks have been removed in the AST.
+
+
+```r
+str2expression("`x` + `y`")
+#> expression(x + y)
+```
+
+As mentioned in the docs for `^`:
+
+> ** is translated in the parser to ^
+
+
+```r
+str2expression("x**y")
+#> expression(x^y)
+```
+
+The rightward assignment is parsed to leftward assignment:
+
+
+```r
+str2expression("1 -> x")
+#> expression(x <- 1)
+```
+
 **Q4.** What is special about the AST below? 
 
 
@@ -97,6 +125,24 @@ lobstr::ast(function(x = 1, y = 2) {})
 ```
 
 **Q5.** What does the call tree of an `if` statement with multiple `else if` conditions look like? Why?
+
+**A5.** 
+
+
+```r
+lobstr::ast(if (FALSE) 1 else if (FALSE) 2 else if (FALSE) 3 else 4)
+#> █─`if` 
+#> ├─FALSE 
+#> ├─1 
+#> └─█─`if` 
+#>   ├─FALSE 
+#>   ├─2 
+#>   └─█─`if` 
+#>     ├─FALSE 
+#>     ├─3 
+#>     └─4
+```
+
 
 ### Exercises 18.3.5
 
