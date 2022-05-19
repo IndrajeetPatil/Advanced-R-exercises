@@ -22,7 +22,7 @@
 #> └─z
 ```
 
-**A1.** Below is the reconstructed code. 
+**A1.** Below is the reconstructed code.
 
 
 ```r
@@ -56,7 +56,6 @@ lobstr::ast((x + y) * z)
 #> └─z
 ```
 
-
 **Q2.** Draw the following trees by hand and then check your answers with `lobstr::ast()`.
 
 
@@ -64,6 +63,40 @@ lobstr::ast((x + y) * z)
 f(g(h(i(1, 2, 3))))
 f(1, g(2, h(3, i())))
 f(g(1, 2), h(3, i(4, 5)))
+```
+
+**A2.** Successfully drawn by hand. Checking using `lobstr::ast()`:
+
+
+```r
+lobstr::ast(f(g(h(i(1, 2, 3)))))
+#> █─f 
+#> └─█─g 
+#>   └─█─h 
+#>     └─█─i 
+#>       ├─1 
+#>       ├─2 
+#>       └─3
+
+lobstr::ast(f(1, g(2, h(3, i()))))
+#> █─f 
+#> ├─1 
+#> └─█─g 
+#>   ├─2 
+#>   └─█─h 
+#>     ├─3 
+#>     └─█─i
+
+lobstr::ast(f(g(1, 2), h(3, i(4, 5))))
+#> █─f 
+#> ├─█─g 
+#> │ ├─1 
+#> │ └─2 
+#> └─█─h 
+#>   ├─3 
+#>   └─█─i 
+#>     ├─4 
+#>     └─5
 ```
 
 **Q3.** What's happening with the ASTs below? (Hint: carefully read `?"^"`.)
@@ -96,7 +129,7 @@ str2expression("`x` + `y`")
 
 As mentioned in the docs for `^`:
 
-> ** is translated in the parser to ^
+> \*\* is translated in the parser to \^
 
 
 ```r
@@ -112,7 +145,7 @@ str2expression("1 -> x")
 #> expression(x <- 1)
 ```
 
-**Q4.** What is special about the AST below? 
+**Q4.** What is special about the AST below?
 
 
 ```r
@@ -124,9 +157,15 @@ lobstr::ast(function(x = 1, y = 2) {})
 #> └─<inline srcref>
 ```
 
+**A4.** As mentioned in [this](https://adv-r.hadley.nz/functions.html#fun-components) section:
+
+> Like all objects in R, functions can also possess any number of additional `attributes()`. One attribute used by base R is `srcref`, short for source reference. It points to the source code used to create the function. The `srcref` is used for printing because, unlike `body()`, it contains code comments and other formatting.
+
+Therefore, the last leaf in this AST, although not specified in the function call, represents source reference attribute.
+
 **Q5.** What does the call tree of an `if` statement with multiple `else if` conditions look like? Why?
 
-**A5.** 
+**A5.** There is nothing special about this tree. It just shows the nested loop structure inherent to code with `if` and multiple `else if` statements.
 
 
 ```r
@@ -143,12 +182,89 @@ lobstr::ast(if (FALSE) 1 else if (FALSE) 2 else if (FALSE) 3 else 4)
 #>     └─4
 ```
 
-
 ### Exercises 18.3.5
 
 **Q1.** Which two of the six types of atomic vector can't appear in an expression? Why? Similarly, why can't you create an expression that contains an atomic vector of length greater than one?
 
+**A1.** Out of the six types of atomic vectors, the two that can't appear in an expression are: complex and raw.
+
+Complex numbers are created via a **function call** (using `+`), as can be seen by its AST:
+
+
+```r
+x_complex <- rlang::expr(1 + 1i)
+typeof(x_complex)
+#> [1] "language"
+
+lobstr::ast(1 + 1i)
+#> █─`+` 
+#> ├─1 
+#> └─1i
+```
+
+Similarly, for raw vectors (using `raw()`):
+
+
+```r
+x_raw <- rlang::expr(raw(2))
+typeof(x_raw)
+#> [1] "language"
+
+lobstr::ast(raw(2))
+#> █─raw 
+#> └─2
+```
+
+Contrast this with other atomic vectors:
+
+
+```r
+x_int <- rlang::expr(2L)
+typeof(x_int)
+#> [1] "integer"
+
+lobstr::ast(2L)
+#> 2L
+```
+
+For the same reason, you can't you create an expression that contains an atomic vector of length greater than one since that itself is a function call that uses `c()` function:
+
+
+```r
+x_vec <- rlang::expr(c(1, 2))
+typeof(x_vec)
+#> [1] "language"
+
+lobstr::ast(c(1, 2))
+#> █─c 
+#> ├─1 
+#> └─2
+```
+
 **Q2.** What happens when you subset a call object to remove the first element? e.g. `expr(read.csv("foo.csv", header = TRUE))[-1]`. Why?
+
+**A2.** A captured function call like the following creates a call object:
+
+
+```r
+expr(read.csv("foo.csv", header = TRUE))
+#> read.csv("foo.csv", header = TRUE)
+
+typeof(expr(read.csv("foo.csv", header = TRUE)))
+#> [1] "language"
+```
+
+As mentioned in the [respective section](https://adv-r.hadley.nz/expressions.html#function-position):
+
+> The first element of the call object is the function position.
+
+Therefore, when the first element in the call object is removed, the next one moves in the function position, and we get the observed output:
+
+
+```r
+expr(read.csv("foo.csv", header = TRUE))[-1]
+#> "foo.csv"(header = TRUE)
+```
 
 **Q3.** Describe the differences between the following call objects.
 
@@ -181,7 +297,7 @@ x <- expr(foo(x = 1))
 names(x) <- c("x", "y")
 ```
 
-**Q6.**  Construct the expression `if(x > 1) "a" else "b"` using multiple calls to `call2()`. How does the code structure reflect the structure of the AST?
+**Q6.** Construct the expression `if(x > 1) "a" else "b"` using multiple calls to `call2()`. How does the code structure reflect the structure of the AST?
 
 ### Exercises 18.4.4
 

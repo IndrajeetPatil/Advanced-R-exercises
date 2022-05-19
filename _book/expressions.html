@@ -106,8 +106,38 @@
 <code class="sourceCode R"><span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fu">h</span><span class="op">(</span><span class="fu">i</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu">f</span><span class="op">(</span><span class="fl">1</span>, <span class="fu">g</span><span class="op">(</span><span class="fl">2</span>, <span class="fu">h</span><span class="op">(</span><span class="fl">3</span>, <span class="fu">i</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu">h</span><span class="op">(</span><span class="fl">3</span>, <span class="fu">i</span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><strong>Q3.</strong> What’s happening with the ASTs below? (Hint: carefully read <code><a href="https://rdrr.io/r/base/Arithmetic.html">?"^"</a></code>.)</p>
+<p><strong>A2.</strong> Successfully drawn by hand. Checking using <code><a href="https://rdrr.io/pkg/lobstr/man/ast.html">lobstr::ast()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fu">h</span><span class="op">(</span><span class="fu">i</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; █─f </span>
+<span class="co">#&gt; └─█─g </span>
+<span class="co">#&gt;   └─█─h </span>
+<span class="co">#&gt;     └─█─i </span>
+<span class="co">#&gt;       ├─1 </span>
+<span class="co">#&gt;       ├─2 </span>
+<span class="co">#&gt;       └─3</span>
+
+<span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="fl">1</span>, <span class="fu">g</span><span class="op">(</span><span class="fl">2</span>, <span class="fu">h</span><span class="op">(</span><span class="fl">3</span>, <span class="fu">i</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; █─f </span>
+<span class="co">#&gt; ├─1 </span>
+<span class="co">#&gt; └─█─g </span>
+<span class="co">#&gt;   ├─2 </span>
+<span class="co">#&gt;   └─█─h </span>
+<span class="co">#&gt;     ├─3 </span>
+<span class="co">#&gt;     └─█─i</span>
+
+<span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu">h</span><span class="op">(</span><span class="fl">3</span>, <span class="fu">i</span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; █─f </span>
+<span class="co">#&gt; ├─█─g </span>
+<span class="co">#&gt; │ ├─1 </span>
+<span class="co">#&gt; │ └─2 </span>
+<span class="co">#&gt; └─█─h </span>
+<span class="co">#&gt;   ├─3 </span>
+<span class="co">#&gt;   └─█─i </span>
+<span class="co">#&gt;     ├─4 </span>
+<span class="co">#&gt;     └─5</span></code></pre></div>
+<p><strong>Q3.</strong> What’s happening with the ASTs below? (Hint: carefully read <code><a href="https://rdrr.io/r/base/Arithmetic.html">?"^"</a></code>.)</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="va">`x`</span> <span class="op">+</span> <span class="va">`y`</span><span class="op">)</span>
 <span class="co">#&gt; █─`+` </span>
 <span class="co">#&gt; ├─x </span>
@@ -122,31 +152,36 @@
 <span class="co">#&gt; └─1</span></code></pre></div>
 <p><strong>A3.</strong> The <code><a href="https://rdrr.io/r/base/parse.html">str2expression()</a></code> helps make sense of these ASTs.</p>
 <p>The non-syntactic names are parsed to names. Thus, backticks have been removed in the AST.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/parse.html">str2expression</a></span><span class="op">(</span><span class="st">"`x` + `y`"</span><span class="op">)</span>
 <span class="co">#&gt; expression(x + y)</span></code></pre></div>
 <p>As mentioned in the docs for <code>^</code>:</p>
 <blockquote>
 <p>** is translated in the parser to ^</p>
 </blockquote>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/parse.html">str2expression</a></span><span class="op">(</span><span class="st">"x**y"</span><span class="op">)</span>
 <span class="co">#&gt; expression(x^y)</span></code></pre></div>
 <p>The rightward assignment is parsed to leftward assignment:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/parse.html">str2expression</a></span><span class="op">(</span><span class="st">"1 -&gt; x"</span><span class="op">)</span>
 <span class="co">#&gt; expression(x &lt;- 1)</span></code></pre></div>
 <p><strong>Q4.</strong> What is special about the AST below?</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span> <span class="op">=</span> <span class="fl">1</span>, <span class="va">y</span> <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span><span class="op">)</span>
 <span class="co">#&gt; █─`function` </span>
 <span class="co">#&gt; ├─█─x = 1 </span>
 <span class="co">#&gt; │ └─y = 2 </span>
 <span class="co">#&gt; ├─█─`{` </span>
 <span class="co">#&gt; └─&lt;inline srcref&gt;</span></code></pre></div>
+<p><strong>A4.</strong> As mentioned in <a href="https://adv-r.hadley.nz/functions.html#fun-components">this</a> section:</p>
+<blockquote>
+<p>Like all objects in R, functions can also possess any number of additional <code><a href="https://rdrr.io/r/base/attributes.html">attributes()</a></code>. One attribute used by base R is <code>srcref</code>, short for source reference. It points to the source code used to create the function. The <code>srcref</code> is used for printing because, unlike <code><a href="https://rdrr.io/r/base/body.html">body()</a></code>, it contains code comments and other formatting.</p>
+</blockquote>
+<p>Therefore, the last leaf in this AST, although not specified in the function call, represents source reference attribute.</p>
 <p><strong>Q5.</strong> What does the call tree of an <code>if</code> statement with multiple <code>else if</code> conditions look like? Why?</p>
-<p><strong>A5.</strong></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<p><strong>A5.</strong> There is nothing special about this tree. It just shows the nested loop structure inherent to code with <code>if</code> and multiple <code>else if</code> statements.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fl">1</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fl">2</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fl">3</span> <span class="kw">else</span> <span class="fl">4</span><span class="op">)</span>
 <span class="co">#&gt; █─`if` </span>
 <span class="co">#&gt; ├─FALSE </span>
@@ -164,16 +199,69 @@
 <span class="header-section-number">18.0.2</span> Exercises 18.3.5<a class="anchor" aria-label="anchor" href="#exercises-18.3.5"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> Which two of the six types of atomic vector can’t appear in an expression? Why? Similarly, why can’t you create an expression that contains an atomic vector of length greater than one?</p>
+<p><strong>A1.</strong> Out of the six types of atomic vectors, the two that can’t appear in an expression are: complex and raw.</p>
+<p>Complex numbers are created via a <strong>function call</strong> (using <code>+</code>), as can be seen by its AST:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x_complex</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">1i</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">x_complex</span><span class="op">)</span>
+<span class="co">#&gt; [1] "language"</span>
+
+<span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">1i</span><span class="op">)</span>
+<span class="co">#&gt; █─`+` </span>
+<span class="co">#&gt; ├─1 </span>
+<span class="co">#&gt; └─1i</span></code></pre></div>
+<p>Similarly, for raw vectors (using <code><a href="https://rdrr.io/r/base/raw.html">raw()</a></code>):</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x_raw</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/raw.html">raw</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">x_raw</span><span class="op">)</span>
+<span class="co">#&gt; [1] "language"</span>
+
+<span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/raw.html">raw</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; █─raw </span>
+<span class="co">#&gt; └─2</span></code></pre></div>
+<p>Contrast this with other atomic vectors:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x_int</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fl">2L</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">x_int</span><span class="op">)</span>
+<span class="co">#&gt; [1] "integer"</span>
+
+<span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fl">2L</span><span class="op">)</span>
+<span class="co">#&gt; 2L</span></code></pre></div>
+<p>For the same reason, you can’t you create an expression that contains an atomic vector of length greater than one since that itself is a function call that uses <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> function:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x_vec</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">x_vec</span><span class="op">)</span>
+<span class="co">#&gt; [1] "language"</span>
+
+<span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; █─c </span>
+<span class="co">#&gt; ├─1 </span>
+<span class="co">#&gt; └─2</span></code></pre></div>
 <p><strong>Q2.</strong> What happens when you subset a call object to remove the first element? e.g. <code>expr(read.csv("foo.csv", header = TRUE))[-1]</code>. Why?</p>
+<p><strong>A2.</strong> A captured function call like the following creates a call object:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"foo.csv"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; read.csv("foo.csv", header = TRUE)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"foo.csv"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] "language"</span></code></pre></div>
+<p>As mentioned in the <a href="https://adv-r.hadley.nz/expressions.html#function-position">respective section</a>:</p>
+<blockquote>
+<p>The first element of the call object is the function position.</p>
+</blockquote>
+<p>Therefore, when the first element in the call object is removed, the next one moves in the function position, and we get the observed output:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"foo.csv"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>
+<span class="co">#&gt; "foo.csv"(header = TRUE)</span></code></pre></div>
 <p><strong>Q3.</strong> Describe the differences between the following call objects.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>
 <span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="va">median</span>, <span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">median</span><span class="op">)</span>, <span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="va">median</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">median</span><span class="op">)</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><strong>Q4.</strong> <code><a href="https://rlang.r-lib.org/reference/call_standardise.html">rlang::call_standardise()</a></code> doesn’t work so well for the following calls. Why? What makes <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> special?</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rlang.r-lib.org/reference/call_standardise.html">call_standardise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; mean(x = 1:10, na.rm = TRUE)</span>
 <span class="fu"><a href="https://rlang.r-lib.org/reference/call_standardise.html">call_standardise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span>n <span class="op">=</span> <span class="cn">T</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -181,7 +269,7 @@
 <span class="fu"><a href="https://rlang.r-lib.org/reference/call_standardise.html">call_standardise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, , <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; mean(x = 1:10, , TRUE)</span></code></pre></div>
 <p><strong>Q5.</strong> Why does this code not make sense?</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="fu">foo</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span></code></pre></div>
 <p><strong>Q6.</strong> Construct the expression <code>if(x &gt; 1) "a" else "b"</code> using multiple calls to <code><a href="https://rlang.r-lib.org/reference/call2.html">call2()</a></code>. How does the code structure reflect the structure of the AST?</p>
@@ -191,7 +279,7 @@
 <span class="header-section-number">18.0.3</span> Exercises 18.4.4<a class="anchor" aria-label="anchor" href="#exercises-18.4.4"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> R uses parentheses in two slightly different ways as illustrated by these two calls:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">f</span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="fu">`(`</span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p>Compare and contrast the two uses by referencing the AST.</p>
@@ -203,7 +291,7 @@
 <p><strong>Q7.</strong> What happens if you call <code><a href="https://rlang.r-lib.org/reference/parse_expr.html">parse_expr()</a></code> with a string that generates multiple expressions? e.g. <code>parse_expr("x + 1; y + 1")</code></p>
 <p><strong>Q8.</strong> What happens if you attempt to parse an invalid expression? e.g. <code>"a +"</code> or <code>"f())"</code>.</p>
 <p><strong>Q9.</strong> <code><a href="https://rdrr.io/r/base/deparse.html">deparse()</a></code> produces vectors when the input is long. For example, the following call produces a vector of length two:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span> <span class="op">+</span> <span class="va">c</span> <span class="op">+</span> <span class="va">d</span> <span class="op">+</span> <span class="va">e</span> <span class="op">+</span> <span class="va">f</span> <span class="op">+</span> <span class="va">g</span> <span class="op">+</span> <span class="va">h</span> <span class="op">+</span> <span class="va">i</span> <span class="op">+</span> <span class="va">j</span> <span class="op">+</span> <span class="va">k</span> <span class="op">+</span> <span class="va">l</span> <span class="op">+</span>
   <span class="va">m</span> <span class="op">+</span> <span class="va">n</span> <span class="op">+</span> <span class="va">o</span> <span class="op">+</span> <span class="va">p</span> <span class="op">+</span> <span class="va">q</span> <span class="op">+</span> <span class="va">r</span> <span class="op">+</span> <span class="va">s</span> <span class="op">+</span> <span class="va">t</span> <span class="op">+</span> <span class="va">u</span> <span class="op">+</span> <span class="va">v</span> <span class="op">+</span> <span class="va">w</span> <span class="op">+</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/deparse.html">deparse</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span></code></pre></div>
@@ -216,7 +304,7 @@
 </h3>
 <p><strong>Q1.</strong> <code>logical_abbr()</code> returns <code>TRUE</code> for <code>T(1, 2, 3)</code>. How could you modify <code>logical_abbr_rec()</code> so that it ignores function calls that use <code>T</code> or <code>F</code>?</p>
 <p><strong>Q2.</strong> <code>logical_abbr()</code> works with expressions. It currently fails when you give it a function. Why? How could you modify <code>logical_abbr()</code> to make it work? What components of a function will you need to recurse over?</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">logical_abbr</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu">g</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="cn">T</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span></code></pre></div>
@@ -246,7 +334,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-05-17.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-05-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
