@@ -277,6 +277,69 @@ call2(median, expr(x), na.rm = TRUE)
 call2(expr(median), expr(x), na.rm = TRUE)
 ```
 
+**A4.** The differences in the constructed call objects are due to the different *type* of arguments supplied to first two parameters in the `call2()` function.
+
+In terms of provided `.fn`:
+
+
+```r
+typeof(median)
+#> [1] "closure"
+typeof(expr(median))
+#> [1] "symbol"
+```
+
+And, in terms of arguments provided to dynamic dots:
+
+
+```r
+x <- 1:10
+typeof(x)
+#> [1] "integer"
+typeof(expr(x))
+#> [1] "symbol"
+```
+
+When `.fn` argument is a `closure`, that function is inlined in the constructed function call, while when `x` is not a symbol, its value is passed to the function call:
+
+
+```r
+x <- 1:10
+
+call2(median, x, na.rm = TRUE)
+#> (function (x, na.rm = FALSE, ...) 
+#> UseMethod("median"))(1:10, na.rm = TRUE)
+
+call2(expr(median), x, na.rm = TRUE)
+#> median(1:10, na.rm = TRUE)
+
+call2(median, expr(x), na.rm = TRUE)
+#> (function (x, na.rm = FALSE, ...) 
+#> UseMethod("median"))(x, na.rm = TRUE)
+
+call2(expr(median), expr(x), na.rm = TRUE)
+#> median(x, na.rm = TRUE)
+```
+
+Importantly, all of the constructed call objects evaluate to give the same result:
+
+
+```r
+x <- 1:10
+
+eval(call2(median, x, na.rm = TRUE))
+#> [1] 5.5
+
+eval(call2(expr(median), x, na.rm = TRUE))
+#> [1] 5.5
+
+eval(call2(median, expr(x), na.rm = TRUE))
+#> [1] 5.5
+
+eval(call2(expr(median), expr(x), na.rm = TRUE))
+#> [1] 5.5
+```
+
 **Q4.** `rlang::call_standardise()` doesn't work so well for the following calls. Why? What makes `mean()` special?
 
 
@@ -289,6 +352,31 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 #> mean(x = 1:10, , TRUE)
 ```
 
+**A4.** This is because of the ellipsis in `mean()` function signature:
+
+
+```r
+mean
+#> function (x, ...) 
+#> UseMethod("mean")
+#> <bytecode: 0x132163e38>
+#> <environment: namespace:base>
+```
+
+As mentioned in the respective [section](If the function uses ... it’s not possible to standardise all arguments.):
+
+> If the function uses `...` it’s not possible to standardise all arguments.
+
+`mean()` is an S3 generic and the dots are passed to underlying S3 methods.
+
+So, the output can be improved using a specific method. For example:
+
+
+```r
+rlang::call_standardise(quote(mean.default(n = T, 1:10)))
+#> mean.default(x = 1:10, na.rm = T)
+```
+
 **Q5.** Why does this code not make sense?
 
 
@@ -297,7 +385,47 @@ x <- expr(foo(x = 1))
 names(x) <- c("x", "y")
 ```
 
+**A5.** This doesn't make sense because the first position in a call object is reserved for function (function position), and so assigning names to this element will just be ignored by R:
+
+
+```r
+x <- expr(foo(x = 1))
+x
+#> foo(x = 1)
+
+names(x) <- c("x", "y")
+x
+#> foo(y = 1)
+```
+
 **Q6.** Construct the expression `if(x > 1) "a" else "b"` using multiple calls to `call2()`. How does the code structure reflect the structure of the AST?
+
+**A6.** Using multiple calls to construct the required expression:
+
+
+```r
+x <- 5
+call_obj1 <- rlang::call2(">", expr(x), 1)
+call_obj1
+#> x > 1
+
+call_obj2 <- rlang::call2("if", cond = call_obj1, cons.expr = "a", alt.expr = "b")
+call_obj2
+#> if (x > 1) "a" else "b"
+```
+
+This construction follows from the prefix form of this expression, revealed by its AST:
+
+
+```r
+lobstr::ast(if(x > 1) "a" else "b")
+#> █─`if` 
+#> ├─█─`>` 
+#> │ ├─x 
+#> │ └─1 
+#> ├─"a" 
+#> └─"b"
+```
 
 ### Exercises 18.4.4
 
