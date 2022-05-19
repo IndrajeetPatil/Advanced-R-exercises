@@ -100,6 +100,48 @@ c("x", "y") %fin% small_vec
 
 **Q3.** List four functions (not just those in base R) that convert a string into a date time object. What are their strengths and weaknesses?
 
+**A3.** Here are four functions that convert a string into a date time object:
+
+- `base::as.POSIXct()`
+
+```{r}
+base::as.POSIXct("2022-05-05 09:23:22")
+```
+
+- `base::as.POSIXlt()`
+
+```{r}
+base::as.POSIXlt("2022-05-05 09:23:22")
+```
+
+- `lubridate::ymd_hms()`
+
+```{r}
+lubridate::ymd_hms("2022-05-05-09-23-22")
+```
+
+- `fasttime::fastPOSIXct()`
+
+```{r}
+fasttime::fastPOSIXct("2022-05-05 09:23:22")
+```
+
+Comparing them, we can see that `fasttime::fastPOSIXct()` has the best performance:
+
+```{r}
+bench::mark(
+  "as.POSIXct"  = base::as.POSIXct("2022-05-05 09:23:22"),
+  "as.POSIXlt"  = base::as.POSIXlt("2022-05-05 09:23:22"),
+  "ymd_hms"     = lubridate::ymd_hms("2022-05-05-09-23-22"),
+  "fastPOSIXct" = fasttime::fastPOSIXct("2022-05-05 09:23:22"),
+  check = FALSE,
+  iterations = 1000
+)
+```
+
+
+There are many more packages that implement a way to convert from string to a date time object. For more, see [CRAN Task View: Time Series Analysis](https://cran.r-project.org/web/views/TimeSeries.html)
+
 **Q4.** Which packages provide the ability to compute a rolling mean?
 
 **A4.** Here are a few packages and respective functions that provide a way to compute a rolling mean:
@@ -111,6 +153,14 @@ c("x", "y") %fin% small_vec
 - `slider::slide_dbl()`
 
 **Q5.** What are the alternatives to `optim()`?
+
+**A5.** The `optim()` function provides general-purpose optimization. As noted in its docs:
+
+> General-purpose optimization based on Nelder–Mead, quasi-Newton and conjugate-gradient algorithms. It includes an option for box-constrained optimization and simulated annealing.
+
+There are many alternatives and the exact one you would want to choose would depend on the type of optimization you would like to do.
+
+Most available options can be seen at [CRAN Task View: Optimization and Mathematical Programming](https://cran.r-project.org/web/views/Optimization.html).
 
 ### Exercises 24.4.3
 
@@ -407,4 +457,3 @@ bench::mark(
   iterations = 1e6
 )[1:5]
 ```
-

@@ -53,10 +53,10 @@ bench::mark(
 #> # A tibble: 4 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 lm            563µs    608µs     1573.    1.25MB
-#> 2 speedglm      592µs    628µs     1576.   62.44MB
-#> 3 biglm         474µs    504µs     1965.  936.41KB
-#> 4 fastLm        537µs    589µs     1676.  982.54KB
+#> 1 lm            745µs    785µs     1239.    1.25MB
+#> 2 speedglm      783µs    820µs     1198.   62.44MB
+#> 3 biglm         631µs    719µs     1364.  936.43KB
+#> 4 fastLm        712µs    803µs     1248.  982.55KB
 ```
 
 The results might change depending on the size of the dataset, so you will have to experiment with different algorithms and find the one that fits the needs of your dataset the best.
@@ -89,8 +89,8 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          492ns    574ns  1601639.    2.77KB
-#> 2 fastmatch     410ns    492ns  1991089.    2.66KB
+#> 1 base          656ns    820ns  1128061.    2.77KB
+#> 2 fastmatch     615ns    697ns  1379119.    2.66KB
 ```
 
 But, with a larger vector, `fmatch()` is only orders of magnitude faster! ⚡
@@ -109,8 +109,8 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base         14.4ms   14.6ms      67.0    31.4MB
-#> 2 fastmatch     369ns    451ns 2055889.         0B
+#> 1 base         20.5ms   20.6ms      48.2    31.4MB
+#> 2 fastmatch     574ns    697ns 1449835.         0B
 ```
 
 We can also look at the hash table:
@@ -140,6 +140,64 @@ c("x", "y") %fin% small_vec
 
 **Q3.** List four functions (not just those in base R) that convert a string into a date time object. What are their strengths and weaknesses?
 
+**A3.** Here are four functions that convert a string into a date time object:
+
+- `base::as.POSIXct()`
+
+
+```r
+base::as.POSIXct("2022-05-05 09:23:22")
+#> [1] "2022-05-05 09:23:22 CEST"
+```
+
+- `base::as.POSIXlt()`
+
+
+```r
+base::as.POSIXlt("2022-05-05 09:23:22")
+#> [1] "2022-05-05 09:23:22 CEST"
+```
+
+- `lubridate::ymd_hms()`
+
+
+```r
+lubridate::ymd_hms("2022-05-05-09-23-22")
+#> [1] "2022-05-05 09:23:22 UTC"
+```
+
+- `fasttime::fastPOSIXct()`
+
+
+```r
+fasttime::fastPOSIXct("2022-05-05 09:23:22")
+#> [1] "2022-05-05 11:23:22 CEST"
+```
+
+Comparing them, we can see that `fasttime::fastPOSIXct()` has the best performance:
+
+
+```r
+bench::mark(
+  "as.POSIXct"  = base::as.POSIXct("2022-05-05 09:23:22"),
+  "as.POSIXlt"  = base::as.POSIXlt("2022-05-05 09:23:22"),
+  "ymd_hms"     = lubridate::ymd_hms("2022-05-05-09-23-22"),
+  "fastPOSIXct" = fasttime::fastPOSIXct("2022-05-05 09:23:22"),
+  check = FALSE,
+  iterations = 1000
+)
+#> # A tibble: 4 × 6
+#>   expression       min   median `itr/sec` mem_alloc `gc/sec`
+#>   <bch:expr>  <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
+#> 1 as.POSIXct   43.75µs  45.47µs    21634.        0B     0   
+#> 2 as.POSIXlt   34.03µs  39.98µs    25155.        0B     0   
+#> 3 ymd_hms       1.63ms   1.81ms      505.    23.6KB     4.59
+#> 4 fastPOSIXct    738ns 779.01ns  1222925.        0B     0
+```
+
+
+There are many more packages that implement a way to convert from string to a date time object. For more, see [CRAN Task View: Time Series Analysis](https://cran.r-project.org/web/views/TimeSeries.html)
+
 **Q4.** Which packages provide the ability to compute a rolling mean?
 
 **A4.** Here are a few packages and respective functions that provide a way to compute a rolling mean:
@@ -151,6 +209,14 @@ c("x", "y") %fin% small_vec
 - `slider::slide_dbl()`
 
 **Q5.** What are the alternatives to `optim()`?
+
+**A5.** The `optim()` function provides general-purpose optimization. As noted in its docs:
+
+> General-purpose optimization based on Nelder–Mead, quasi-Newton and conjugate-gradient algorithms. It includes an option for box-constrained optimization and simulated annealing.
+
+There are many alternatives and the exact one you would want to choose would depend on the type of optimization you would like to do.
+
+Most available options can be seen at [CRAN Task View: Optimization and Mathematical Programming](https://cran.r-project.org/web/views/Optimization.html).
 
 ### Exercises 24.4.3
 
@@ -188,7 +254,7 @@ rowSums
 #>     else names(z) <- dimnames(x)[[1L]]
 #>     z
 #> }
-#> <bytecode: 0x12707fae0>
+#> <bytecode: 0x1277a6fe8>
 #> <environment: namespace:base>
 ```
 
@@ -199,7 +265,7 @@ rowSums
 .rowSums
 #> function (x, m, n, na.rm = FALSE) 
 #> .Internal(rowSums(x, m, n, na.rm))
-#> <bytecode: 0x1244d0880>
+#> <bytecode: 0x1245bf608>
 #> <environment: namespace:base>
 ```
 
@@ -216,12 +282,12 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression                                 min   median
 #>   <bch:expr>                            <bch:tm> <bch:tm>
-#> 1 rowSums(x)                              94.7µs    139µs
-#> 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])   93.4µs    133µs
+#> 1 rowSums(x)                               136µs    206µs
+#> 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])    124µs    185µs
 #>   `itr/sec` mem_alloc
 #>       <dbl> <bch:byt>
-#> 1     6893.     859KB
-#> 2     7323.     859KB
+#> 1     4751.     859KB
+#> 2     5480.     859KB
 ```
 
 **Q2.** Make a faster version of `chisq.test()` that only computes the chi-square test statistic when the input is two numeric vectors with no missing values. You can try simplifying `chisq.test()` or by coding from the [mathematical definition](http://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test).
@@ -288,8 +354,8 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          638µs    726µs     1369.    1.47MB
-#> 2 custom        504µs    579µs     1715.    1.12MB
+#> 1 base          923µs   1.12ms      913.    1.47MB
+#> 2 custom        654µs 772.24µs     1327.    1.12MB
 ```
 
 **Q3.** Can you make a faster version of `table()` for the case of an input of two integer vectors with no missing values? Can you use it to speed up your chi-square test?
@@ -342,8 +408,8 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          498µs    557µs     1779.     960KB
-#> 2 custom        264µs    287µs     3449.     475KB
+#> 1 base          623µs    753µs     1311.     960KB
+#> 2 custom        346µs    387µs     2561.     475KB
 ```
 
 We can also use this function in our custom chi-squared test function and see if the performance improves any further:
@@ -401,8 +467,8 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          641µs    731µs     1361.    1.28MB
-#> 2 custom        287µs    315µs     3142.  594.98KB
+#> 1 base          917µs   1.12ms      898.    1.28MB
+#> 2 custom        377µs 438.58µs     2331.     595KB
 ```
 
 ### Exercises 24.5.1
@@ -501,7 +567,7 @@ ggplot(
   )
 ```
 
-<img src="Perf-improve_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<img src="Perf-improve_files/figure-html/unnamed-chunk-26-1.png" width="672" />
 
 **Q3.** How can you use `crossprod()` to compute a weighted sum? How much faster is it than the naive `sum(x * w)`?
 
@@ -530,7 +596,6 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression                min   median `itr/sec` mem_alloc
 #>   <bch:expr>           <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 crossprod(x, w)[[1]]    246ns    369ns  2422772.        0B
-#> 2 sum(x * w)[[1]]          82ns    205ns  4109239.        0B
+#> 1 crossprod(x, w)[[1]]    369ns    533ns  1623947.        0B
+#> 2 sum(x * w)[[1]]         164ns    328ns  2845212.        0B
 ```
-
