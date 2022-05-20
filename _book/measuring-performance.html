@@ -106,7 +106,7 @@
 <span class="co">#&gt; # A tibble: 1 × 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 f()           107µs    160µs     6169.     792KB     93.9</span></code></pre></div>
+<span class="co">#&gt; 1 f()           123µs    190µs     4719.     792KB     71.9</span></code></pre></div>
 <p>As mentioned in the docs, setting <code>torture = TRUE</code></p>
 <blockquote>
 <p>Triggers garbage collection after every torture memory allocation call.</p>
@@ -130,7 +130,7 @@
 <span class="co">#&gt;     list &lt;- .Primitive("c")(list, names)</span>
 <span class="co">#&gt;     .Internal(remove(list, envir, inherits))</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x121e8cf58&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x12928d930&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>I still couldn’t figure out why. I would recommend checking out the <a href="https://advanced-r-solutions.rbind.io/measuring-performance.html#profiling">official answer</a>.</p>
 </div>
@@ -191,15 +191,15 @@
 <span class="co">#&gt; # A tibble: 2 × 2</span>
 <span class="co">#&gt;   expression     mean</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)    449.38ns</span>
-<span class="co">#&gt; 2 x^0.5        1.43µs</span>
+<span class="co">#&gt; 1 sqrt(x)     549.1ns</span>
+<span class="co">#&gt; 2 x^0.5        1.59µs</span>
 
 <span class="va">t_systime_df</span>
 <span class="co">#&gt; # A tibble: 2 × 3</span>
 <span class="co">#&gt;   expression systime_with_gc_us systime_with_nogc_us</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;              &lt;dbl&gt;                &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)                 0.417                0.437</span>
-<span class="co">#&gt; 2 x^0.5                   1.37                 1.38</span></code></pre></div>
+<span class="co">#&gt; 1 sqrt(x)                 0.458                0.489</span>
+<span class="co">#&gt; 2 x^0.5                   1.52                 1.60</span></code></pre></div>
 <p>The comparison reveals that these two approaches yield quite similar results.</p>
 <p><strong>Q2.</strong> Here are two other ways to compute the square root of a vector. Which do you think will be fastest? Which will be slowest? Use microbenchmarking to test your answers.</p>
 <div class="sourceCode" id="cb316"><pre class="downlit sourceCode r">
@@ -221,10 +221,10 @@
 <span class="co">#&gt; # A tibble: 4 × 6</span>
 <span class="co">#&gt;   expression         min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;    &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)         1.19µs   2.25µs   476715.    7.86KB</span>
-<span class="co">#&gt; 2 exp(log(x)/2)   6.93µs   8.16µs   118812.    7.86KB</span>
-<span class="co">#&gt; 3 x^0.5          10.33µs  11.32µs    85241.    7.86KB</span>
-<span class="co">#&gt; 4 x^(1/2)        10.41µs   11.5µs    85427.    7.86KB</span>
+<span class="co">#&gt; 1 sqrt(x)         1.35µs   1.84µs   423316.    7.86KB</span>
+<span class="co">#&gt; 2 exp(log(x)/2)   8.04µs   9.31µs   106721.    7.86KB</span>
+<span class="co">#&gt; 3 x^0.5          11.11µs  12.44µs    77431.    7.86KB</span>
+<span class="co">#&gt; 4 x^(1/2)        12.05µs  13.24µs    76310.    7.86KB</span>
 <span class="co">#&gt;   `gc/sec`</span>
 <span class="co">#&gt;      &lt;dbl&gt;</span>
 <span class="co">#&gt; 1        0</span>
@@ -261,7 +261,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-05-19.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-05-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

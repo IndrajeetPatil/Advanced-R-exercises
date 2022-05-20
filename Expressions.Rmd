@@ -283,7 +283,7 @@ call_obj2
 This construction follows from the prefix form of this expression, revealed by its AST:
 
 ```{r}
-lobstr::ast(if(x > 1) "a" else "b")
+lobstr::ast(if (x > 1) "a" else "b")
 ```
 
 ### Exercises 18.4.4
@@ -297,19 +297,149 @@ f((1))
 
 Compare and contrast the two uses by referencing the AST.
 
+**A1.** Let's first have a look at the AST:
+
+```{r}
+lobstr::ast(f((1)))
+lobstr::ast(`(`(1 + 1))
+```
+
+As, you can see `(` is being used in two separate ways:
+
+- As a function in its own right ``"`(`"``
+- As part of the prefix syntax (`f()`)
+
+This is why, in the AST for `f((1))`, we see only one ``"`(`"`` (the first use case), and not for `f()`, which is part of the function syntax (the second use case).
+
 **Q2.** `=` can also be used in two ways. Construct a simple example that shows both uses.
+
+**A2.** Here is a simple example illustrating how `=` can also be used in two ways:
+
+- for assignment
+- for named arguments in function calls
+
+```{r}
+m = mean(x = 1)
+```
+
+We can also have a look at its AST:
+
+```{r}
+lobstr::ast({m = mean(x = 1)})
+```
 
 **Q3.** Does `-2^2` yield 4 or -4? Why?
 
+**A3.** The expression `-2^2` evaluates to `r -2^2` because the operator `^` has higher precedence than the unary `-` operator:
+
+```{r}
+-2^2
+```
+
+The same can also be seen by its AST:
+
+```{r}
+lobstr::ast(-2^2)
+```
+
+A less confusing way to write this would be:
+
+```{r}
+-(2^2)
+```
+
 **Q4.** What does `!1 + !1` return? Why?
+
+**A3.** The expression `!1 + !1` evaluates to `r !1 + !1`.
+
+This is because the `!` operator has higher precedence than the unary `+` operator. Thus, `!1` evaluates to `FALSE`, which is added to `1 + FALSE`, which evaluates to `1`, and then logically negated to `!1`, or `FALSE`.
+
+This can be easily seen by its AST:
+
+```{r}
+lobstr::ast(!1 + !1)
+```
 
 **Q5.** Why does `x1 <- x2 <- x3 <- 0` work? Describe the two reasons.
 
+**A5.** There are two reasons why the following works as expected:
+
+```{r}
+x1 <- x2 <- x3 <- 0
+```
+
+- The `<-` operator is right associative.
+
+Therefore, the order of assignment here is:
+
+```r
+(x3 <- 0)
+(x2 <- x3)
+(x1 <- x2)
+```
+
+- The `<-` operator invisibly returns the assigned value.
+
+```{r}
+(x <- 1)
+```
+
+This is easy to surmise from its AST:
+
+```{r}
+lobstr::ast(x1 <- x2 <- x3 <- 0)
+```
+
 **Q6.** Compare the ASTs of `x + y %+% z` and `x ^ y %+% z`. What have you learned about the precedence of custom infix functions?
+
+**A6.** Looking at the ASTs for these expressions,
+
+```{r}
+lobstr::ast(x + y %+% z)
+
+lobstr::ast(x ^ y %+% z)
+```
+
+we can say that the custom infix operator `%+%` has:
+
+- higher precedence than the `+` operator
+- lower precedence than the `^` operator
 
 **Q7.** What happens if you call `parse_expr()` with a string that generates multiple expressions? e.g. `parse_expr("x + 1; y + 1")`
 
+**A7.** It produced an error:
+
+```{r, error=TRUE}
+rlang::parse_expr("x + 1; y + 1")
+```
+
+This is expected based on the docs:
+
+> parse_expr() returns one expression. If the text contains more than one expression (separated by semicolons or new lines), an error is issued. 
+
+We instead need to use `rlang::parse_exprs()`:
+
+```{r}
+rlang::parse_exprs("x + 1; y + 1")
+```
+
 **Q8.** What happens if you attempt to parse an invalid expression? e.g. `"a +"` or `"f())"`.
+
+**A8.** An invalid expression produces an error:
+
+```{r, error=TRUE}
+rlang::parse_expr("a +")
+
+rlang::parse_expr("f())")
+```
+
+Since the underlying `parse()` function produces an error:
+
+```{r, error=TRUE}
+parse(text = "a +")
+
+parse(text = "f())")
+```
 
 **Q9.** `deparse()` produces vectors when the input is long. For example, the following call produces a vector of length two:
 
@@ -321,7 +451,22 @@ deparse(expr)
 
 What does `expr_text()` do instead?
 
+**A9.** The only difference between `deparse()` and `expr_text()` is that the latter turns the (possibly multi-line) expression into a single string. 
+
+```{r}
+expr <- rlang::expr(g(a + b + c + d + e + f + g + h + i + j + k + l +
+  m + n + o + p + q + r + s + t + u + v + w + x + y + z))
+
+deparse(expr)
+
+rlang::expr_text(expr)
+```
+
 **Q10.** `pairwise.t.test()` assumes that `deparse()` always returns a length one character vector. Can you construct an input that violates this expectation? What happens?
+
+**A10** Since R 4.0, it is not possible to violate this expectation since the new implementation produces a single string no matter the input:
+
+> New function `deparse1()` produces one string, wrapping `deparse()`, to be used typically in `deparse1(substitute(*))`
 
 ### Exercises 18.5.3
 
