@@ -65,10 +65,12 @@
 <li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
 <li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
 <li><a class="" href="quotation.html"><span class="header-section-number">19</span> Quotation</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">20</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">21</span> Measuring performance</a></li>
-<li><a class="" href="improving-performance.html"><span class="header-section-number">22</span> Improving performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">23</span> Rewriting R code in C++</a></li>
+<li><a class="" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
+<li><a class="" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></li>
+<li><a class="" href="improving-performance.html"><span class="header-section-number">24</span> Improving performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></li>
 </ul>
 
         <div class="book-extra">
@@ -90,9 +92,9 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x133a34a40&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x15b3c3638&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
-<p>But, given a function, it doesn’t make sense to find its name in R because there can be multiple names bound to the same function.</p>
+<p>But, given a function, it doesn’t make sense to find its name because there can be multiple names bound to the same function.</p>
 <div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="va">f2</span> <span class="op">&lt;-</span> <span class="va">f1</span>
@@ -321,7 +323,7 @@ a. How could you adapt the code to find all primitive functions?</code></pre>
 <span class="va">mean</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x133a34a40&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x15b3c3638&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span>
 
 <span class="co"># other package function</span>
@@ -331,7 +333,7 @@ a. How could you adapt the code to find all primitive functions?</code></pre>
 <span class="co">#&gt;     .f &lt;- as_mapper(.f, ...)</span>
 <span class="co">#&gt;     .Call(map_impl, environment(), ".x", ".f", "list")</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x117c94378&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x13eff31a0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></code></pre></div>
 <p>There are two exceptions to this rule:</p>
 <ul>
@@ -474,7 +476,7 @@ running the code yourself.</p>
 
 <span class="fu">f2</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] 100</span>
-<span class="co">#&gt; [1] "0x1104878a8" "0x1104878a8"</span></code></pre></div>
+<span class="co">#&gt; [1] "0x13f7a0698" "0x13f7a0698"</span></code></pre></div>
 <p><strong>Q3.</strong> What does this function return? Why? Which principle does it illustrate?</p>
 <div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">10</span>
@@ -517,7 +519,7 @@ running the code yourself.</p>
   <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="op">}</span>
 <span class="fu">show_time</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2022-05-20 11:35:07 CEST"</span></code></pre></div>
+<span class="co">#&gt; [1] "2022-05-20 19:03:15 CEST"</span></code></pre></div>
 <p><strong>Q6.</strong> How many arguments are required when calling <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>?</p>
 </div>
 <div id="exercises-6.6.1" class="section level2" number="6.4">

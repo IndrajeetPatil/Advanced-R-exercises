@@ -13,11 +13,11 @@
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x133a34a40>
+#> <bytecode: 0x15b3c3638>
 #> <environment: namespace:base>
 ```
 
-But, given a function, it doesn't make sense to find its name in R because there can be multiple names bound to the same function.
+But, given a function, it doesn't make sense to find its name because there can be multiple names bound to the same function.
 
 
 ```r
@@ -294,7 +294,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x133a34a40>
+#> <bytecode: 0x15b3c3638>
 #> <environment: namespace:base>
 
 # other package function
@@ -304,7 +304,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x117c94378>
+#> <bytecode: 0x13eff31a0>
 #> <environment: namespace:purrr>
 ```
 
@@ -488,7 +488,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x1104878a8" "0x1104878a8"
+#> [1] "0x13f7a0698" "0x13f7a0698"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -548,7 +548,7 @@ show_time <- function(x = stop("Error!")) {
   print(x)
 }
 show_time()
-#> [1] "2022-05-20 11:35:07 CEST"
+#> [1] "2022-05-20 19:03:15 CEST"
 ```
 
 **Q6.** How many arguments are required when calling `library()`?
