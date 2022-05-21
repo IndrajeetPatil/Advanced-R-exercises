@@ -17,7 +17,7 @@ csl: chicago-fullnote-bibliography.csl
 
 My solutions to exercises from the _Advanced R_ (2nd Edition) [book](https://adv-r.hadley.nz/).
 
-Note that you **should be** reading the [official solutions manual](https://advanced-r-solutions.rbind.io/index.html), which has more detailed explanations and are guaranteed to have correct solutions as the original author was also involved in writing them. I provide no such guarantees. 😬
+I've tried my best to make sure that I have not included any incorrect solutions by consulting the [official solutions manual](https://advanced-r-solutions.rbind.io/index.html) which is co-authored by the original author. That said, I provide no guarantees that all solutions are correct. Additionally, when I disagreed with the proposed official solutions, I've stuck with my own solutions.
 
 <img src="assets/combined.jpg" width="80%" />
 

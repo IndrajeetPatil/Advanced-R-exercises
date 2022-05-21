@@ -359,7 +359,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x13ec5e238>
+#> <bytecode: 0x135cdae38>
 #> <environment: namespace:base>
 ```
 
@@ -470,16 +470,18 @@ This is why, in the AST for `f((1))`, we see only one ``"`(`"`` (the first use c
 
 
 ```r
-m = mean(x = 1)
+m <- mean(x = 1)
 ```
 
 We can also have a look at its AST:
 
 
 ```r
-lobstr::ast({m = mean(x = 1)})
+lobstr::ast({
+  m <- mean(x = 1)
+})
 #> █─`{` 
-#> └─█─`=` 
+#> └─█─`<-` 
 #>   ├─m 
 #>   └─█─mean 
 #>     └─x = 1
@@ -586,7 +588,7 @@ lobstr::ast(x + y %+% z)
 #>   ├─y 
 #>   └─z
 
-lobstr::ast(x ^ y %+% z)
+lobstr::ast(x^y %+% z)
 #> █─`%+%` 
 #> ├─█─`^` 
 #> │ ├─x 

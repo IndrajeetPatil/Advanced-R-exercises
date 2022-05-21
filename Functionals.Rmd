@@ -350,7 +350,7 @@ simple_reduce2 <- function(x, f, init = 0) {
   for (i in seq(2, length(x))) {
     out <- f(out, x[[i]])
   }
-  
+
   out
 }
 ```
@@ -441,12 +441,12 @@ arg_max <- function(.x, .f) {
     original = .x,
     transformed = purrr::map_dbl(.x, .f)
   )
-  
+
   dplyr::filter(df, transformed == max(transformed))[["original"]]
 }
 
-arg_max(-10:5, function(x) x ^ 2)
-arg_max(-5:5, function(x) x ^ 2)
+arg_max(-10:5, function(x) x^2)
+arg_max(-5:5, function(x) x^2)
 ```
 
 - Implementing `arg_min()`
@@ -457,12 +457,12 @@ arg_min <- function(.x, .f) {
     original = .x,
     transformed = purrr::map_dbl(.x, .f)
   )
-  
+
   dplyr::filter(df, transformed == min(transformed))[["original"]]
 }
 
-arg_min(-10:5, function(x) x ^ 2)
-arg_min(-5:5, function(x) x ^ 2)
+arg_min(-10:5, function(x) x^2)
+arg_min(-5:5, function(x) x^2)
 ```
 
 **Q5.** The function below scales a vector so it falls in the range [0, 1]. How would you apply it to every column of a data frame? How would you apply it to every numeric column in a data frame?
@@ -498,13 +498,13 @@ purrr::modify_if(head(iris), .p = is.numeric, .f = scale01)
 (m <- as.array(table(mtcars$cyl, mtcars$am, mtcars$vs)))
 
 # rows
-apply(m, 1, function(x) x ^ 2)
+apply(m, 1, function(x) x^2)
 
 # columns
-apply(m, 2, function(x) x ^ 2)
+apply(m, 2, function(x) x^2)
 
 # rows and columns
-apply(m, c(1, 2), function(x) x ^ 2)
+apply(m, c(1, 2), function(x) x^2)
 ```
 
 As can be seen, `apply()` returns outputs organised first by the margins being operated over, and only then the results. 
@@ -568,9 +568,9 @@ close_enough <- function(x1, x2, tolerance = 0.001) {
 }
 
 find_fixed_point <- function(.f, .guess, tolerance = 0.001) {
-  .next = .f(.guess) 
-  is_close_enough = close_enough(.next, .guess, tol = tolerance)
-  
+  .next <- .f(.guess)
+  is_close_enough <- close_enough(.next, .guess, tol = tolerance)
+
   if (is_close_enough) {
     return(.next)
   } else {

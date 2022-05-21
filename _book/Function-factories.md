@@ -9,7 +9,7 @@
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x135861908>
+#> <bytecode: 0x1548f2708>
 #> <environment: namespace:base>
 ```
 
@@ -35,8 +35,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x1151177b0>
-#> <environment: 0x1151180e0>
+#> <bytecode: 0x1254741b0>
+#> <environment: 0x125474ae0>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -124,8 +124,8 @@ stopifnot(all.equal(m2(x), var(x) * 99 / 100))
 ```r
 moment <- function(k) {
   force(k)
-  
-  function(x) (sum((x - mean(x)) ^ k)) / length(x)
+
+  function(x) (sum((x - mean(x))^k)) / length(x)
 }
 ```
 
@@ -173,15 +173,15 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x116e1fa80>
+#> <environment: 0x113bc2e80>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x115f1fe00>
-#> <environment: 0x115e193b8>
+#> <bytecode: 0x1265d6c00>
+#> <environment: 0x13057c1b8>
 ```
 
 ### Exercises 10.3.4

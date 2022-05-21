@@ -27,7 +27,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x1102eaf38>
+#> <environment: 0x14018ca90>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -38,7 +38,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x111bbd848>
+#> <environment: 0x14000b9a8>
 
 # mapping by name -----------------------
 
@@ -56,7 +56,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x111b3b500>
+#> <environment: 0x1279e0fe8>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -68,7 +68,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x111a5bdc0>
+#> <environment: 0x1278a58a8>
 
 # compact functions ----------------------------
 
@@ -132,7 +132,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck(x, 0.597890264587477, 0.587997315218672, .default = NULL)
-#> <environment: 0x116826940>
+#> <environment: 0x142316fa8>
 ```
 
 **Q3.** Use the appropriate `map()` function to:
@@ -562,7 +562,7 @@ simple_reduce2 <- function(x, f, init = 0) {
   for (i in seq(2, length(x))) {
     out <- f(out, x[[i]])
   }
-  
+
   out
 }
 ```
@@ -677,13 +677,13 @@ arg_max <- function(.x, .f) {
     original = .x,
     transformed = purrr::map_dbl(.x, .f)
   )
-  
+
   dplyr::filter(df, transformed == max(transformed))[["original"]]
 }
 
-arg_max(-10:5, function(x) x ^ 2)
+arg_max(-10:5, function(x) x^2)
 #> [1] -10
-arg_max(-5:5, function(x) x ^ 2)
+arg_max(-5:5, function(x) x^2)
 #> [1] -5  5
 ```
 
@@ -696,13 +696,13 @@ arg_min <- function(.x, .f) {
     original = .x,
     transformed = purrr::map_dbl(.x, .f)
   )
-  
+
   dplyr::filter(df, transformed == min(transformed))[["original"]]
 }
 
-arg_min(-10:5, function(x) x ^ 2)
+arg_min(-10:5, function(x) x^2)
 #> [1] 0
-arg_min(-5:5, function(x) x ^ 2)
+arg_min(-5:5, function(x) x^2)
 #> [1] 0
 ```
 
@@ -774,7 +774,7 @@ purrr::modify_if(head(iris), .p = is.numeric, .f = scale01)
 #>   8    0      0
 
 # rows
-apply(m, 1, function(x) x ^ 2)
+apply(m, 1, function(x) x^2)
 #>       
 #>         4  6   8
 #>   [1,]  0  0 144
@@ -783,7 +783,7 @@ apply(m, 1, function(x) x ^ 2)
 #>   [4,] 49  0   0
 
 # columns
-apply(m, 2, function(x) x ^ 2)
+apply(m, 2, function(x) x^2)
 #>       
 #>        auto manual
 #>   [1,]    0      1
@@ -794,7 +794,7 @@ apply(m, 2, function(x) x ^ 2)
 #>   [6,]    0      0
 
 # rows and columns
-apply(m, c(1, 2), function(x) x ^ 2)
+apply(m, c(1, 2), function(x) x^2)
 #> , ,  = auto
 #> 
 #>    
@@ -828,7 +828,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x1135ce190>
+#> <environment: 0x142294ad8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>
@@ -907,9 +907,9 @@ close_enough <- function(x1, x2, tolerance = 0.001) {
 }
 
 find_fixed_point <- function(.f, .guess, tolerance = 0.001) {
-  .next = .f(.guess) 
-  is_close_enough = close_enough(.next, .guess, tol = tolerance)
-  
+  .next <- .f(.guess)
+  is_close_enough <- close_enough(.next, .guess, tol = tolerance)
+
   if (is_close_enough) {
     return(.next)
   } else {

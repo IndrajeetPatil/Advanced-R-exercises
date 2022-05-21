@@ -13,7 +13,7 @@
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x14e1dda38>
+#> <bytecode: 0x12baa2838>
 #> <environment: namespace:base>
 ```
 
@@ -294,7 +294,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x14e1dda38>
+#> <bytecode: 0x12baa2838>
 #> <environment: namespace:base>
 
 # other package function
@@ -304,7 +304,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x12ab8eda0>
+#> <bytecode: 0x11d578da0>
 #> <environment: namespace:purrr>
 ```
 
@@ -488,7 +488,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x109f3fd20" "0x109f3fd20"
+#> [1] "0x10c26a018" "0x10c26a018"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -546,7 +546,7 @@ show_time <- function(x = stop("Error!")) {
   print(x)
 }
 show_time()
-#> [1] "2022-05-21 19:13:35 CEST"
+#> [1] "2022-05-21 22:44:58 CEST"
 ```
 
 **Q6.** How many arguments are required when calling `library()`?
@@ -633,6 +633,34 @@ title <- function(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   invisible()
 }
 ```
+
+### Exercises 6.7.5
+
+**Q1.** What does `load()` return? Why don't you normally see these values?
+
+**Q2.** What does `write.table()` return? What would be more useful?
+
+**Q3.** How does the `chdir` parameter of `source()` compare to `with_dir()`? Why might you prefer one to the other?
+
+**Q4.** Write a function that opens a graphics device, runs the supplied code, and  closes the graphics device (always, regardless of whether or not the plotting code works).
+
+**Q5.** We can use `on.exit()` to implement a simple version of `capture.output()`.
+
+
+```r
+capture.output2 <- function(code) {
+  temp <- tempfile()
+  on.exit(file.remove(temp), add = TRUE, after = TRUE)
+  sink(temp)
+  on.exit(sink(), add = TRUE, after = TRUE)
+  force(code)
+  readLines(temp)
+}
+capture.output2(cat("a", "b", "c", sep = "\n"))
+#> [1] "a" "b" "c"
+```
+
+Compare `capture.output()` to `capture.output2()`. How do the functions differ? What features have I removed to make the key ideas easier to see? How have I rewritten the key ideas so they're easier to understand?
 
 ## Exercises 6.8.6
 
@@ -862,7 +890,7 @@ We can create infix operator for exclusive OR like so:
 
 ```r
 `%xor%` <- function(x, y) {
- !((x & y) | !(x | y)) 
+  !((x & y) | !(x | y))
 }
 
 lv1 %xor% lv2
