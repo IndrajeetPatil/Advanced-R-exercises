@@ -27,7 +27,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x116797a90>
+#> <environment: 0x1102eaf38>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -38,7 +38,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x1166378d0>
+#> <environment: 0x111bbd848>
 
 # mapping by name -----------------------
 
@@ -56,7 +56,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x1165d9b70>
+#> <environment: 0x111b3b500>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -68,7 +68,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x121087ee8>
+#> <environment: 0x111a5bdc0>
 
 # compact functions ----------------------------
 
@@ -132,7 +132,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck(x, 0.597890264587477, 0.587997315218672, .default = NULL)
-#> <environment: 0x1249cbe78>
+#> <environment: 0x116826940>
 ```
 
 **Q3.** Use the appropriate `map()` function to:
@@ -828,7 +828,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x122d6de80>
+#> <environment: 0x1135ce190>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>
@@ -930,6 +930,15 @@ cos(find_fixed_point(cos, 1.0))
 #> [1] 0.7393039
 ```
 
-Following are solution to exercises in the source material:
+We will solve only one exercise from the reading material. Rest are beyond the scope of this solution manual.
 
-- Show that the golden ratio $\phi$ is a fixed point of the transformation $x \mapsto 1 + 1/x$, and use this fact to compute $\phi$ by means of the fixed-point procedure.
+> Show that the golden ratio $\phi$ is a fixed point of the transformation $x \mapsto 1 + 1/x$, and use this fact to compute $\phi$ by means of the fixed-point procedure.
+
+
+```r
+golden_ratio_f <- function(x) 1 + (1 / x)
+
+find_fixed_point(golden_ratio_f, 1.0)
+#> [1] 1.618182
+```
+
