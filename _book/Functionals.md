@@ -27,7 +27,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x11eea3ed8>
+#> <environment: 0x116797a90>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -38,7 +38,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x11ed722c8>
+#> <environment: 0x1166378d0>
 
 # mapping by name -----------------------
 
@@ -56,7 +56,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x11ebd6d90>
+#> <environment: 0x1165d9b70>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -68,7 +68,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x11ea353b0>
+#> <environment: 0x121087ee8>
 
 # compact functions ----------------------------
 
@@ -132,7 +132,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck(x, 0.597890264587477, 0.587997315218672, .default = NULL)
-#> <environment: 0x10c9db5f0>
+#> <environment: 0x1249cbe78>
 ```
 
 **Q3.** Use the appropriate `map()` function to:
@@ -828,7 +828,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x11f7e7718>
+#> <environment: 0x122d6de80>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>
@@ -893,6 +893,42 @@ purrr::modify_depth(X, .depth = 2L, .f = length)
 **A3.** As mentioned in the suggested reading material:
 
 > A number $x$ is called a fixed point of a function $f$ if $x$ satisfies the equation $f(x) = x$. For some functions $f$ we can locate a fixed point by beginning with an initial guess and applying $f$ repeatedly, $f(x), f(f(x)), f(f(f(x))), ...$ until the value does not change very much. Using this idea, we can devise a procedure fixed-point that takes as inputs a function and an initial guess and produces an approximation to a fixed point of the function. 
+
+Let's first implement a fixed-point algorithm:
+
+
+```r
+close_enough <- function(x1, x2, tolerance = 0.001) {
+  if (abs(x1 - x2) < tolerance) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
+find_fixed_point <- function(.f, .guess, tolerance = 0.001) {
+  .next = .f(.guess) 
+  is_close_enough = close_enough(.next, .guess, tol = tolerance)
+  
+  if (is_close_enough) {
+    return(.next)
+  } else {
+    find_fixed_point(.f, .next, tolerance)
+  }
+}
+```
+
+Let's check if it works as expected:
+
+
+```r
+find_fixed_point(cos, 1.0)
+#> [1] 0.7387603
+
+# cos(x) = x
+cos(find_fixed_point(cos, 1.0))
+#> [1] 0.7393039
+```
 
 Following are solution to exercises in the source material:
 
