@@ -13,7 +13,7 @@
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x1308b4840>
+#> <bytecode: 0x147a6c440>
 #> <environment: namespace:base>
 ```
 
@@ -294,7 +294,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x1308b4840>
+#> <bytecode: 0x147a6c440>
 #> <environment: namespace:base>
 
 # other package function
@@ -304,7 +304,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x106008978>
+#> <bytecode: 0x107bfa978>
 #> <environment: namespace:purrr>
 ```
 
@@ -488,7 +488,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x114914600" "0x114914600"
+#> [1] "0x1270776f0" "0x1270776f0"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -546,7 +546,7 @@ show_time <- function(x = stop("Error!")) {
   print(x)
 }
 show_time()
-#> [1] "2022-05-21 12:35:29 CEST"
+#> [1] "2022-05-21 18:46:02 CEST"
 ```
 
 **Q6.** How many arguments are required when calling `library()`?
@@ -721,7 +721,43 @@ And there is no `get<-` function in R.
 
 **Q4.** Create a replacement function that modifies a random location in a vector.
 
-**Q5.** Write your own version of `+` that pastes its inputs together if they are  character vectors but behaves as usual otherwise. In other words, make this code work:
+**A4.** A replacement function that modifies a random location in a vector:
+
+
+```r
+`random_modify<-` <- function(x, value) {
+  random_index <- sample(seq_along(x), size = 1)
+  x[random_index] <- value
+  return(x)
+}
+```
+
+Let's try it out:
+
+
+```r
+x1 <- rep("a", 10)
+random_modify(x1) <- "X"
+x1
+#>  [1] "a" "a" "a" "a" "X" "a" "a" "a" "a" "a"
+
+x2 <- rep("a", 10)
+random_modify(x2) <- "Y"
+x2
+#>  [1] "a" "a" "a" "a" "a" "Y" "a" "a" "a" "a"
+
+x3 <- rep(0, 15)
+random_modify(x3) <- -4
+x3
+#>  [1]  0  0  0  0 -4  0  0  0  0  0  0  0  0  0  0
+
+x4 <- rep(0, 15)
+random_modify(x4) <- -1
+x4
+#>  [1]  0  0  0  0  0  0  0  0  0  0  0  0 -1  0  0
+```
+
+**Q5.** Write your own version of `+` that pastes its inputs together if they are character vectors but behaves as usual otherwise. In other words, make this code work:
 
 
 ```r
@@ -732,10 +768,146 @@ And there is no `get<-` function in R.
 #> [1] "ab"
 ```
 
+**A5.** Infix operator to re-create the desired output:
+
+
+```r
+`+` <- function(x, y) {
+  if (is.character(x) || is.character(y)) {
+    paste0(x, y)
+  } else {
+    base::`+`(x, y)
+  }
+}
+
+1 + 2
+#> [1] 3
+
+"a" + "b"
+#> [1] "ab"
+
+rm("+", envir = .GlobalEnv)
+```
+
 **Q6.** Create a list of all the replacement functions found in the base package. Which ones are primitive functions? (Hint: use `apropos()`.)
+
+**A6.** Replacement functions always have `<-` at the end of their names.
+
+So, using `apropos()`, we can find all replacement functions in search paths and the filter out the ones that don't belong to `{base}` package:
+
+
+```r
+ls_replacement <- apropos("<-$", where = TRUE, mode = "function")
+
+base_index <- which(grepl("base", searchpaths()))
+
+ls_replacement <- ls_replacement[which(names(ls_replacement) == as.character(base_index))]
+
+unname(ls_replacement)
+#>  [1] ".rowNamesDF<-"    "[[<-"            
+#>  [3] "[<-"              "@<-"             
+#>  [5] "<-"               "<<-"             
+#>  [7] "$<-"              "attr<-"          
+#>  [9] "attributes<-"     "body<-"          
+#> [11] "class<-"          "colnames<-"      
+#> [13] "comment<-"        "diag<-"          
+#> [15] "dim<-"            "dimnames<-"      
+#> [17] "Encoding<-"       "environment<-"   
+#> [19] "formals<-"        "is.na<-"         
+#> [21] "length<-"         "levels<-"        
+#> [23] "mode<-"           "mostattributes<-"
+#> [25] "names<-"          "oldClass<-"      
+#> [27] "parent.env<-"     "regmatches<-"    
+#> [29] "row.names<-"      "rownames<-"      
+#> [31] "split<-"          "storage.mode<-"  
+#> [33] "substr<-"         "substring<-"     
+#> [35] "units<-"
+```
+
+The primitive replacement functions can be listed using `is.primitive()`:
+
+
+```r
+mget(ls_replacement, envir = baseenv()) %>%
+  purrr::keep(is.primitive) %>%
+  names()
+#>  [1] "[[<-"           "[<-"            "@<-"           
+#>  [4] "<-"             "<<-"            "$<-"           
+#>  [7] "attr<-"         "attributes<-"   "class<-"       
+#> [10] "dim<-"          "dimnames<-"     "environment<-" 
+#> [13] "length<-"       "levels<-"       "names<-"       
+#> [16] "oldClass<-"     "storage.mode<-"
+```
 
 **Q7.** What are valid names for user-created infix functions?
 
+**A7.**  As mentioned in the respective [section](https://adv-r.hadley.nz/functions.html#infix-functions) of the book:
+
+> The names of infix functions are more flexible than regular R functions: they can contain any sequence of characters except for `%`.
+
 **Q8.** Create an infix `xor()` operator.
 
+**A8.** Exclusive OR  is a logical operation that is `TRUE` if and only if its arguments differ (one is `TRUE`, the other is `FALSE`).
+
+
+```r
+lv1 <- c(TRUE, FALSE, TRUE, FALSE)
+lv2 <- c(TRUE, TRUE, FALSE, FALSE)
+
+xor(lv1, lv2)
+#> [1] FALSE  TRUE  TRUE FALSE
+```
+
+We can create infix operator for exclusive OR like so:
+
+
+```r
+`%xor%` <- function(x, y) {
+ !((x & y) | !(x | y)) 
+}
+
+lv1 %xor% lv2
+#> [1] FALSE  TRUE  TRUE FALSE
+
+TRUE %xor% TRUE
+#> [1] FALSE
+```
+
+The function is vectorized over its inputs because the underlying logical operators themselves are vectorized.
+
 **Q9.** Create infix versions of the set functions `intersect()`, `union()`, and `setdiff()`. You might call them `%n%`, `%u%`, and `%/%` to match conventions from mathematics.
+
+**A9.** The required infix operators can be created as following:
+
+
+```r
+`%n%` <- function(x, y) {
+  intersect(x, y)
+}
+
+`%u%` <- function(x, y) {
+  union(x, y)
+}
+
+`%/%` <- function(x, y) {
+  setdiff(x, y)
+}
+```
+
+We can check that the outputs agree with the underlying functions:
+
+
+```r
+(x <- c(sort(sample(1:20, 9)), NA))
+#>  [1]  4  7  8  9 11 13 15 16 20 NA
+(y <- c(sort(sample(3:23, 7)), NA))
+#> [1]  9 10 13 15 17 19 20 NA
+
+identical(intersect(x, y), x %n% y)
+#> [1] TRUE
+identical(union(x, y), x %u% y)
+#> [1] TRUE
+identical(setdiff(x, y), x %/% y)
+#> [1] TRUE
+```
+

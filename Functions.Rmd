@@ -506,7 +506,37 @@ And there is no `get<-` function in R.
 
 **Q4.** Create a replacement function that modifies a random location in a vector.
 
-**Q5.** Write your own version of `+` that pastes its inputs together if they are  character vectors but behaves as usual otherwise. In other words, make this code work:
+**A4.** A replacement function that modifies a random location in a vector:
+
+```{r}
+`random_modify<-` <- function(x, value) {
+  random_index <- sample(seq_along(x), size = 1)
+  x[random_index] <- value
+  return(x)
+}
+```
+
+Let's try it out:
+
+```{r}
+x1 <- rep("a", 10)
+random_modify(x1) <- "X"
+x1
+
+x2 <- rep("a", 10)
+random_modify(x2) <- "Y"
+x2
+
+x3 <- rep(0, 15)
+random_modify(x3) <- -4
+x3
+
+x4 <- rep(0, 15)
+random_modify(x4) <- -1
+x4
+```
+
+**Q5.** Write your own version of `+` that pastes its inputs together if they are character vectors but behaves as usual otherwise. In other words, make this code work:
 
 ```{r, eval = FALSE}
 1 + 2
@@ -516,10 +546,105 @@ And there is no `get<-` function in R.
 #> [1] "ab"
 ```
 
+**A5.** Infix operator to re-create the desired output:
+
+```{r}
+`+` <- function(x, y) {
+  if (is.character(x) || is.character(y)) {
+    paste0(x, y)
+  } else {
+    base::`+`(x, y)
+  }
+}
+
+1 + 2
+
+"a" + "b"
+
+rm("+", envir = .GlobalEnv)
+```
+
 **Q6.** Create a list of all the replacement functions found in the base package. Which ones are primitive functions? (Hint: use `apropos()`.)
+
+**A6.** Replacement functions always have `<-` at the end of their names.
+
+So, using `apropos()`, we can find all replacement functions in search paths and the filter out the ones that don't belong to `{base}` package:
+
+```{r}
+ls_replacement <- apropos("<-$", where = TRUE, mode = "function")
+
+base_index <- which(grepl("base", searchpaths()))
+
+ls_replacement <- ls_replacement[which(names(ls_replacement) == as.character(base_index))]
+
+unname(ls_replacement)
+```
+
+The primitive replacement functions can be listed using `is.primitive()`:
+
+```{r}
+mget(ls_replacement, envir = baseenv()) %>%
+  purrr::keep(is.primitive) %>%
+  names()
+```
 
 **Q7.** What are valid names for user-created infix functions?
 
+**A7.**  As mentioned in the respective [section](https://adv-r.hadley.nz/functions.html#infix-functions) of the book:
+
+> The names of infix functions are more flexible than regular R functions: they can contain any sequence of characters except for `%`.
+
 **Q8.** Create an infix `xor()` operator.
 
+**A8.** Exclusive OR  is a logical operation that is `TRUE` if and only if its arguments differ (one is `TRUE`, the other is `FALSE`).
+
+```{r}
+lv1 <- c(TRUE, FALSE, TRUE, FALSE)
+lv2 <- c(TRUE, TRUE, FALSE, FALSE)
+
+xor(lv1, lv2)
+```
+
+We can create infix operator for exclusive OR like so:
+
+```{r}
+`%xor%` <- function(x, y) {
+ !((x & y) | !(x | y)) 
+}
+
+lv1 %xor% lv2
+
+TRUE %xor% TRUE
+```
+
+The function is vectorized over its inputs because the underlying logical operators themselves are vectorized.
+
 **Q9.** Create infix versions of the set functions `intersect()`, `union()`, and `setdiff()`. You might call them `%n%`, `%u%`, and `%/%` to match conventions from mathematics.
+
+**A9.** The required infix operators can be created as following:
+
+```{r}
+`%n%` <- function(x, y) {
+  intersect(x, y)
+}
+
+`%u%` <- function(x, y) {
+  union(x, y)
+}
+
+`%/%` <- function(x, y) {
+  setdiff(x, y)
+}
+```
+
+We can check that the outputs agree with the underlying functions:
+
+```{r}
+(x <- c(sort(sample(1:20, 9)), NA))
+(y <- c(sort(sample(3:23, 7)), NA))
+
+identical(intersect(x, y), x %n% y)
+identical(union(x, y), x %u% y)
+identical(setdiff(x, y), x %/% y)
+```
+
