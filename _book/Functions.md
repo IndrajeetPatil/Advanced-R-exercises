@@ -13,7 +13,7 @@
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x15b3c3638>
+#> <bytecode: 0x1308b4840>
 #> <environment: namespace:base>
 ```
 
@@ -294,7 +294,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x15b3c3638>
+#> <bytecode: 0x1308b4840>
 #> <environment: namespace:base>
 
 # other package function
@@ -304,7 +304,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x13eff31a0>
+#> <bytecode: 0x106008978>
 #> <environment: namespace:purrr>
 ```
 
@@ -488,7 +488,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x13f7a0698" "0x13f7a0698"
+#> [1] "0x114914600" "0x114914600"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -501,8 +501,7 @@ f1 <- function(x =
                    y <- 1
                    2
                  },
-               y = 0)
-{
+               y = 0) {
   c(x, y)
 }
 f1()
@@ -519,8 +518,7 @@ f1 <- function(x =
                    y <- 1
                    2
                  },
-               y = 0)
-{
+               y = 0) {
   c(x, y)
 }
 f1()
@@ -548,7 +546,7 @@ show_time <- function(x = stop("Error!")) {
   print(x)
 }
 show_time()
-#> [1] "2022-05-20 19:03:15 CEST"
+#> [1] "2022-05-21 12:35:29 CEST"
 ```
 
 **Q6.** How many arguments are required when calling `library()`?
@@ -586,12 +584,12 @@ For `mean()` function, there is only one parameter (`x`) and it's matched by the
 
 **Q2.** Explain how to find the documentation for the named arguments in the following function call:
 
-    
-    ```r
-    plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
-    ```
-    
-    <img src="Functions_files/figure-html/unnamed-chunk-33-1.png" width="288" />
+
+```r
+plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
+```
+
+<img src="Functions_files/figure-html/unnamed-chunk-33-1.png" width="288" />
 
 **A2.** First, check documentation for `plot()`:
 
@@ -635,3 +633,109 @@ title <- function(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   invisible()
 }
 ```
+
+
+## Exercises 6.8.6
+
+**Q1.** Rewrite the following code snippets into prefix form:
+
+
+```r
+1 + 2 + 3
+
+1 + (2 + 3)
+
+if (length(x) <= 5) x[[5]] else x[[n]]
+```
+
+**A1.** Prefix forms for code snippets:
+
+
+```r
+# The binary `+`  operator has left to right associative property.
+`+`(`+`(1, 2), 3)
+
+`+`(1, `(`(`+`(2, 3)))
+
+`if`(cond = `<=`(length(x), 5), cons.expr = `[[`(x, 5), alt.expr = `[[`(x, n))
+```
+
+**Q2.**  Clarify the following list of odd function calls:
+
+
+```r
+x <- sample(replace = TRUE, 20, x = c(1:10, NA))
+y <- runif(min = 0, max = 1, 20)
+cor(m = "k", y = y, u = "p", x = x)
+```
+
+**A2.** These functions don't have dots (`...`) as parameters, so the argument matching takes place in the following steps:
+
+- exact matching for named arguments
+- partial matching
+- position-based
+
+**Q3.** Explain why the following code fails:
+
+
+```r
+modify(get("x"), 1) <- 10
+#> Error: target of assignment expands to non-language object
+```
+
+**A3.** As provided in the book, the replacement function is defined as:
+
+
+```r
+`modify<-` <- function(x, position, value) {
+  x[position] <- value
+  x
+}
+```
+
+Let's re-write the provided code in prefix format to understand why it doesn't work:
+
+
+```r
+get("x") <- `modify<-`(x = get("x"), position = 1, value = 10)
+```
+
+Although this works:
+
+
+```r
+x <- 5
+`modify<-`(x = get("x"), position = 1, value = 10)
+#> [1] 10
+```
+
+The following doesn't because the code above evaluates to:
+
+
+```r
+`get<-`("x", 10)
+#> Error in `get<-`("x", 10): could not find function "get<-"
+```
+
+And there is no `get<-` function in R.
+
+**Q4.** Create a replacement function that modifies a random location in a vector.
+
+**Q5.** Write your own version of `+` that pastes its inputs together if they are  character vectors but behaves as usual otherwise. In other words, make this code work:
+
+
+```r
+1 + 2
+#> [1] 3
+
+"a" + "b"
+#> [1] "ab"
+```
+
+**Q6.** Create a list of all the replacement functions found in the base package. Which ones are primitive functions? (Hint: use `apropos()`.)
+
+**Q7.** What are valid names for user-created infix functions?
+
+**Q8.** Create an infix `xor()` operator.
+
+**Q9.** Create infix versions of the set functions `intersect()`, `union()`, and `setdiff()`. You might call them `%n%`, `%u%`, and `%/%` to match conventions from mathematics.
