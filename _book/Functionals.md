@@ -27,7 +27,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x130557730>
+#> <environment: 0x11eea3ed8>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -38,7 +38,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x130419228>
+#> <environment: 0x11ed722c8>
 
 # mapping by name -----------------------
 
@@ -56,7 +56,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x130289f58>
+#> <environment: 0x11ebd6d90>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -68,7 +68,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x1300e88f8>
+#> <environment: 0x11ea353b0>
 
 # compact functions ----------------------------
 
@@ -132,7 +132,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck(x, 0.597890264587477, 0.587997315218672, .default = NULL)
-#> <environment: 0x132ca7608>
+#> <environment: 0x10c9db5f0>
 ```
 
 **Q3.** Use the appropriate `map()` function to:
@@ -828,7 +828,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x1277f6048>
+#> <environment: 0x11f7e7718>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>
@@ -888,4 +888,12 @@ purrr::modify_depth(X, .depth = 2L, .f = length)
 #> [1] 1
 ```
 
-**Q3.**  Challenge: read about the [fixed point algorithm](https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-12.html#%25_idx_1096). Complete the exercises using R.
+**Q3.** Challenge: read about the [fixed point algorithm](https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-12.html#%25_idx_1096). Complete the exercises using R.
+
+**A3.** As mentioned in the suggested reading material:
+
+> A number $x$ is called a fixed point of a function $f$ if $x$ satisfies the equation $f(x) = x$. For some functions $f$ we can locate a fixed point by beginning with an initial guess and applying $f$ repeatedly, $f(x), f(f(x)), f(f(f(x))), ...$ until the value does not change very much. Using this idea, we can devise a procedure fixed-point that takes as inputs a function and an initial guess and produces an approximation to a fixed point of the function. 
+
+Following are solution to exercises in the source material:
+
+- Show that the golden ratio $\phi$ is a fixed point of the transformation $x \mapsto 1 + 1/x$, and use this fact to compute $\phi$ by means of the fixed-point procedure.
