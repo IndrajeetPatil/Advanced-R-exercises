@@ -13,7 +13,7 @@
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x10fa91040>
+#> <bytecode: 0x142ac1638>
 #> <environment: namespace:base>
 ```
 
@@ -294,7 +294,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x10fa91040>
+#> <bytecode: 0x142ac1638>
 #> <environment: namespace:base>
 
 # other package function
@@ -304,7 +304,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x105fd0b78>
+#> <bytecode: 0x116aa8da0>
 #> <environment: namespace:purrr>
 ```
 
@@ -488,7 +488,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x10a485cb0" "0x10a485cb0"
+#> [1] "0x107e0cdd0" "0x107e0cdd0"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -546,7 +546,7 @@ show_time <- function(x = stop("Error!")) {
   print(x)
 }
 show_time()
-#> [1] "2022-05-22 12:46:53 CEST"
+#> [1] "2022-05-22 13:59:49 CEST"
 ```
 
 **Q6.** How many arguments are required when calling `library()`?
@@ -696,7 +696,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x10f932048>
+#> <bytecode: 0x142a6fe38>
 #> <environment: namespace:withr>
 ```
 

@@ -6,15 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 10 Function factories | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content="10.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function (x) #&gt; x #&gt; &lt;bytecode: 0x1338ef708&gt; #&gt; &lt;environment: namespace:base&gt; Why is it better to force(x) instead of just...">
+<meta name="description" content="10.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function (x) #&gt; x #&gt; &lt;bytecode: 0x13f0e7308&gt; #&gt; &lt;environment: namespace:base&gt; Why is it better to force(x) instead of just...">
 <meta name="generator" content="bookdown 0.26 with bs4_book()">
 <meta property="og:title" content="Chapter 10 Function factories | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.png">
-<meta property="og:description" content="10.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function (x) #&gt; x #&gt; &lt;bytecode: 0x1338ef708&gt; #&gt; &lt;environment: namespace:base&gt; Why is it better to force(x) instead of just...">
+<meta property="og:description" content="10.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function (x) #&gt; x #&gt; &lt;bytecode: 0x13f0e7308&gt; #&gt; &lt;environment: namespace:base&gt; Why is it better to force(x) instead of just...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 10 Function factories | Advanced R Exercises">
-<meta name="twitter:description" content="10.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function (x) #&gt; x #&gt; &lt;bytecode: 0x1338ef708&gt; #&gt; &lt;environment: namespace:base&gt; Why is it better to force(x) instead of just...">
+<meta name="twitter:description" content="10.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function (x) #&gt; x #&gt; &lt;bytecode: 0x13f0e7308&gt; #&gt; &lt;environment: namespace:base&gt; Why is it better to force(x) instead of just...">
 <meta name="twitter:image" content="/cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -91,7 +91,7 @@
 <code class="sourceCode R"><span class="va">force</span>
 <span class="co">#&gt; function (x) </span>
 <span class="co">#&gt; x</span>
-<span class="co">#&gt; &lt;bytecode: 0x1338ef708&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x13f0e7308&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>Why is it better to <code>force(x)</code> instead of just <code>x</code>?</p>
 <p><strong>A1.</strong> Because of lazy evaluation, argument to a function won’t be evaluated until its value is needed, but sometimes we may want to have eager evaluation.</p>
@@ -109,8 +109,8 @@
 <span class="va">f</span>
 <span class="co">#&gt; function (v) </span>
 <span class="co">#&gt; .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="co">#&gt; &lt;bytecode: 0x104f00310&gt;</span>
-<span class="co">#&gt; &lt;environment: 0x104f03848&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x105c955b0&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x105c95ee0&gt;</span>
 <span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt;  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901</span>
 <span class="co">#&gt;  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142</span>
@@ -207,15 +207,15 @@
 <span class="co">#&gt;     i &lt;- i + 1</span>
 <span class="co">#&gt;     i</span>
 <span class="co">#&gt;   }</span>
-<span class="co">#&gt; &lt;environment: 0x105e81e78&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x107ee9c80&gt;</span>
 
 <span class="fu">new_counter3</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; function() {</span>
 <span class="co">#&gt;     i &lt;- i + 1</span>
 <span class="co">#&gt;     i</span>
 <span class="co">#&gt;   }</span>
-<span class="co">#&gt; &lt;bytecode: 0x1059f6b70&gt;</span>
-<span class="co">#&gt; &lt;environment: 0x105df0e48&gt;</span></code></pre></div>
+<span class="co">#&gt; &lt;bytecode: 0x11c8e5200&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x107f6c1b8&gt;</span></code></pre></div>
 </div>
 <div id="exercises-10.3.4" class="section level3" number="10.0.2">
 <h3>

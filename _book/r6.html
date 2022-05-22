@@ -44,7 +44,34 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 14</span> R6</a></li></ul>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
+<li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
+<li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
+<li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
+<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
+<li><a class="" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
+<li><a class="active" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
+<li><a class="" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
+<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
+<li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
+<li><a class="" href="quotation.html"><span class="header-section-number">19</span> Quotation</a></li>
+<li><a class="" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
+<li><a class="" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></li>
+<li><a class="" href="improving-performance.html"><span class="header-section-number">24</span> Improving performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></li>
+</ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
@@ -61,7 +88,7 @@
 </h2>
 <p><strong>Q1.</strong> Create a bank account R6 class that stores a balance and allows you to deposit and withdraw money. Create a subclass that throws an error if you attempt to go into overdraft. Create another subclass that allows you to go into overdraft, but charges you a fee. Create the superclass and make sure it works as expected.</p>
 <p><strong>A1.</strong></p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb281"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r6.r-lib.org">R6</a></span><span class="op">)</span>
 
 <span class="co"># define the needed class</span>
@@ -134,7 +161,7 @@
 <span class="va">Anne</span> <span class="op">&lt;-</span> <span class="va">bankAccount</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Anne"</span>, balance <span class="op">=</span> <span class="op">-</span><span class="fl">45</span><span class="op">)</span>
 <span class="co">#&gt; Error in self$validate(balance): amount &gt;= 0 is not TRUE</span></code></pre></div>
 <p>Create a subclass that errors if you attempt to overdraw</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb282"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bankAccountStrict</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span>
   <span class="st">"bankAccountStrict"</span>,
   inherit <span class="op">=</span> <span class="va">bankAccount</span>,
@@ -190,7 +217,7 @@
 <span class="va">Pritesh</span> <span class="op">&lt;-</span> <span class="va">bankAccountStrict</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Pritesh"</span>, balance <span class="op">=</span> <span class="op">-</span><span class="fl">45</span><span class="op">)</span>
 <span class="co">#&gt; Error in self$validate(balance): amount &gt;= 0 is not TRUE</span></code></pre></div>
 <p>Create a subclass that charges a fee if overdraw</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb283"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bankAccountFee</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span>
   <span class="st">"bankAccountFee"</span>,
   inherit <span class="op">=</span> <span class="va">bankAccount</span>,
@@ -241,12 +268,12 @@
 <span class="va">Mangesh</span> <span class="op">&lt;-</span> <span class="va">bankAccountFee</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Mangesh"</span>, balance <span class="op">=</span> <span class="op">-</span><span class="fl">45</span><span class="op">)</span>
 <span class="co">#&gt; Error in self$validate(balance): amount &gt;= 0 is not TRUE</span></code></pre></div>
 <p><strong>Q2.</strong> Create an R6 class that represents a shuffled deck of cards. You should be able to draw cards from the deck with <code>$draw(n)</code>, and return all cards to the deck and reshuffle with <code>$reshuffle()</code>. Use the following code to make a vector of cards.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb284"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">suit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"♠"</span>, <span class="st">"♥"</span>, <span class="st">"♦"</span>, <span class="st">"♣"</span><span class="op">)</span>
 <span class="va">value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">10</span>, <span class="st">"J"</span>, <span class="st">"Q"</span>, <span class="st">"K"</span><span class="op">)</span>
 <span class="va">cards</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">value</span>, <span class="fl">4</span><span class="op">)</span>, <span class="va">suit</span><span class="op">)</span></code></pre></div>
 <p><strong>A2.</strong></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb285"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">suit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SPADE"</span>, <span class="st">"HEARTS"</span>, <span class="st">"DIAMOND"</span>, <span class="st">"CLUB"</span><span class="op">)</span> <span class="co"># sigh, Windows encoding issues</span>
 <span class="va">value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">10</span>, <span class="st">"J"</span>, <span class="st">"Q"</span>, <span class="st">"K"</span><span class="op">)</span>
 <span class="va">cards</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">value</span>, <span class="fl">4</span><span class="op">)</span>, <span class="va">suit</span><span class="op">)</span>
@@ -280,10 +307,35 @@
 <span class="co"># reshuffle</span></code></pre></div>
 <p><strong>Q3.</strong> Why can’t you model a bank account or a deck of cards with an S3 class?</p>
 <p><strong>Q4.</strong> Create an R6 class that allows you to get and set the current time zone. You can access the current time zone with <code><a href="https://rdrr.io/r/base/timezones.html">Sys.timezone()</a></code> and set it with <code>Sys.setenv(TZ = "newtimezone")</code>. When setting the time zone, make sure the new time zone is in the list provided by <code><a href="https://rdrr.io/r/base/timezones.html">OlsonNames()</a></code>.</p>
+<p><strong>A4.</strong> Here is an R6 class that manages the current time zone:</p>
+<div class="sourceCode" id="cb286"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">CurrentTimeZone</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span><span class="st">"CurrentTimeZone"</span>,
+  public <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    setTimeZone <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">tz</span><span class="op">)</span> <span class="op">{</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="va">tz</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/timezones.html">OlsonNames</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html">Sys.setenv</a></span><span class="op">(</span>TZ <span class="op">=</span> <span class="va">tz</span><span class="op">)</span>
+    <span class="op">}</span>,
+    getTimeZone <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/timezones.html">Sys.timezone</a></span><span class="op">(</span><span class="op">)</span>
+    <span class="op">}</span>
+  <span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>Let’s try it out:</p>
+<div class="sourceCode" id="cb287"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">myCurrentTimeZone</span> <span class="op">&lt;-</span> <span class="va">CurrentTimeZone</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">myCurrentTimeZone</span><span class="op">$</span><span class="fu">getTimeZone</span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; [1] "Europe/Berlin"</span>
+
+<span class="va">myCurrentTimeZone</span><span class="op">$</span><span class="fu">setTimeZone</span><span class="op">(</span><span class="st">"Asia/Kolkata"</span><span class="op">)</span>
+<span class="va">myCurrentTimeZone</span><span class="op">$</span><span class="fu">getTimeZone</span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; [1] "Europe/Berlin"</span>
+
+<span class="va">myCurrentTimeZone</span><span class="op">$</span><span class="fu">setTimeZone</span><span class="op">(</span><span class="st">"Europe/Berlin"</span><span class="op">)</span></code></pre></div>
 <p><strong>Q5.</strong> Create an R6 class that manages the current working directory. It should have <code>$get()</code> and <code>$set()</code> methods.</p>
 <p><strong>A5.</strong> Here is an R6 class that manages the current working directory:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">manageDirectory</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span><span class="st">"manageDirectory"</span>,
+<div class="sourceCode" id="cb288"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ManageDirectory</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span><span class="st">"ManageDirectory"</span>,
   public <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
     setWorkingDirectory <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">dir</span><span class="op">)</span> <span class="op">{</span>
       <span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span>
@@ -294,8 +346,8 @@
   <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p>Let’s create an instance of this class and check if the methods work as expected:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">myDirManager</span> <span class="op">&lt;-</span> <span class="va">manageDirectory</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
+<div class="sourceCode" id="cb289"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">myDirManager</span> <span class="op">&lt;-</span> <span class="va">ManageDirectory</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># current working directory</span>
 <span class="va">myDirManager</span><span class="op">$</span><span class="fu">getWorkingDirectory</span><span class="op">(</span><span class="op">)</span>
@@ -309,23 +361,23 @@
 <p><strong>Q6.</strong> Why can’t you model the time zone or current working directory with an S3 class?</p>
 <p><strong>Q7.</strong> What base type are R6 objects built on top of? What attributes do they have?</p>
 <p><strong>A7.</strong> Let’s create an example class and create instance of that class:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb290"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Example</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span><span class="st">"Example"</span><span class="op">)</span>
 <span class="va">myExample</span> <span class="op">&lt;-</span> <span class="va">Example</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>The <code>R6</code> objects are built on top of environment:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb291"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">myExample</span><span class="op">)</span>
 <span class="co">#&gt; [1] "environment"</span>
 
 <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_print.html">env_print</a></span><span class="op">(</span><span class="va">myExample</span><span class="op">)</span>
-<span class="co">#&gt; &lt;environment: 0x11a05d040&gt; [L]</span>
+<span class="co">#&gt; &lt;environment: 0x10b2fb5b8&gt; [L]</span>
 <span class="co">#&gt; Parent: &lt;environment: empty&gt;</span>
 <span class="co">#&gt; Class: Example, R6</span>
 <span class="co">#&gt; Bindings:</span>
 <span class="co">#&gt; • .__enclos_env__: &lt;env&gt;</span>
 <span class="co">#&gt; • clone: &lt;fn&gt; [L]</span></code></pre></div>
 <p>And it has only <code>class</code> attribute, which is a character vector with the <code>"R6"</code> being the last element and the superclasses being other elements:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb292"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">myExample</span><span class="op">)</span>
 <span class="co">#&gt; $class</span>
 <span class="co">#&gt; [1] "Example" "R6"</span></code></pre></div>
@@ -335,9 +387,47 @@
 <span class="header-section-number">14.2</span> Exercises 14.3.3<a class="anchor" aria-label="anchor" href="#exercises-14.3.3"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Create a bank account class that prevents you from directly setting the account balance, but you can still withdraw from and deposit to. Throw an error if you attempt to go into overdraft.</p>
+<p><strong>A1.</strong> Here is a bank account class that satisfied the specified requirements:</p>
+<div class="sourceCode" id="cb293"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">SafeBankAccount</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span>
+  classname <span class="op">=</span> <span class="st">"SafeBankAccount"</span>,
+  public <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    deposit <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">deposit_amount</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">private</span><span class="op">$</span><span class="va">.balance</span> <span class="op">&lt;-</span> <span class="va">private</span><span class="op">$</span><span class="va">.balance</span> <span class="op">+</span> <span class="va">deposit_amount</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Current balance:"</span>, <span class="va">private</span><span class="op">$</span><span class="va">.balance</span><span class="op">)</span><span class="op">)</span>
+      
+      <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span>
+    <span class="op">}</span>,
+    withdraw <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">withdrawal_amount</span><span class="op">)</span> <span class="op">{</span>
+      <span class="kw">if</span> <span class="op">(</span><span class="va">withdrawal_amount</span> <span class="op">&gt;</span> <span class="va">private</span><span class="op">$</span><span class="va">.balance</span><span class="op">)</span> <span class="op">{</span>
+        <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"You can't withdraw more than your current balance."</span>, call. <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+      <span class="op">}</span>
+
+      <span class="va">private</span><span class="op">$</span><span class="va">.balance</span> <span class="op">&lt;-</span> <span class="va">private</span><span class="op">$</span><span class="va">.balance</span> <span class="op">-</span> <span class="va">withdrawal_amount</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Current balance:"</span>, <span class="va">private</span><span class="op">$</span><span class="va">.balance</span><span class="op">)</span><span class="op">)</span>
+      
+      <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span>
+    <span class="op">}</span>
+  <span class="op">)</span>,
+  private <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    .balance <span class="op">=</span> <span class="fl">0</span>
+  <span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>Let’s check if it works as expected:</p>
+<div class="sourceCode" id="cb294"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mySafeBankAccount</span> <span class="op">&lt;-</span> <span class="va">SafeBankAccount</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">mySafeBankAccount</span><span class="op">$</span><span class="fu">deposit</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="co">#&gt; [1] "Current balance: 100"</span>
+
+<span class="va">mySafeBankAccount</span><span class="op">$</span><span class="fu">withdraw</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>
+<span class="co">#&gt; [1] "Current balance: 50"</span>
+
+<span class="va">mySafeBankAccount</span><span class="op">$</span><span class="fu">withdraw</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="co">#&gt; Error: You can't withdraw more than your current balance.</span></code></pre></div>
 <p><strong>Q2.</strong> Create a class with a write-only <code>$password</code> field. It should have <code>$check_password(password)</code> method that returns <code>TRUE</code> or <code>FALSE</code>, but there should be no way to view the complete password.</p>
 <p><strong>A2.</strong> Here is an implementation of the class with the needed properties:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb295"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r6.r-lib.org">R6</a></span><span class="op">)</span>
 
 <span class="va">checkCredentials</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span>
@@ -380,12 +470,12 @@
 <span class="va">myCheck</span><span class="op">$</span><span class="fu">check_password</span><span class="op">(</span><span class="st">"1234"</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>But, of course, everything is possible:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb296"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">myCheck</span><span class="op">$</span><span class="va">.__enclos_env__</span><span class="op">$</span><span class="va">private</span><span class="op">$</span><span class="va">.password</span>
 <span class="co">#&gt; [1] "1234"</span></code></pre></div>
 <p><strong>Q3.</strong> Extend the <code>Rando</code> class with another active binding that allows you to access the previous random value. Ensure that active binding is the only way to access the value.</p>
 <p><strong>A3.</strong> Here is a modified version of the <code>Rando</code> class to meet the specified requirements:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb297"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Rando</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span><span class="st">"Rando"</span>,
   active <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
     random <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">value</span><span class="op">)</span> <span class="op">{</span>
@@ -416,7 +506,7 @@
   <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p>Let’s try it out:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb298"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">myRando</span> <span class="op">&lt;-</span> <span class="va">Rando</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># first time</span>
@@ -440,7 +530,7 @@
 <p><strong>Q4.</strong> Can subclasses access private fields/methods from their parent? Perform an experiment to find out.</p>
 <p><strong>A4.</strong> Unlike classical OOP in other languages (e.g. C++), R6 subclasses (or derived classes) also have access to the private methods in superclass (or base class).</p>
 <p>For instance, in the following example, the <code>Duck</code> class has a private method <code>$quack()</code>, but its subclass <code>Mallard</code> can access it using <code>super$quack()</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb299"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Duck</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span><span class="st">"Duck"</span>,
   private <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>quack <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"Quack Quack"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span>
@@ -460,7 +550,7 @@
 </h2>
 <p><strong>Q1.</strong> Create a class that allows you to write a line to a specified file. You should open a connection to the file in <code>$initialize()</code>, append a line using <code><a href="https://rdrr.io/r/base/cat.html">cat()</a></code> in <code>$append_line()</code>, and close the connection in <code>$finalize()</code>.</p>
 <p><strong>A1.</strong> Here is a class that allows you to write a line to a specified file:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb300"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r6.r-lib.org">R6</a></span><span class="op">)</span>
 
 <span class="va">fileEditor</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span>
@@ -488,7 +578,7 @@
   <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p>Let’s check if it works as expected:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb301"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">greetMom</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span><span class="op">)</span>
   <span class="va">myfileEditor</span> <span class="op">&lt;-</span> <span class="va">fileEditor</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">f</span><span class="op">)</span>
@@ -508,24 +598,30 @@
 <span class="fu"><a href="https://rdrr.io/r/base/gc.html">gc</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Closing the file connection!"</span>
 <span class="co">#&gt;           used (Mb) gc trigger  (Mb) limit (Mb) max used</span>
-<span class="co">#&gt; Ncells 1185967 63.4    2271562 121.4         NA  2271562</span>
-<span class="co">#&gt; Vcells 2074248 15.9    8388608  64.0      16384  3308718</span>
+<span class="co">#&gt; Ncells 1187140 63.5    2270901 121.3         NA  2270901</span>
+<span class="co">#&gt; Vcells 2078222 15.9    8388608  64.0      16384  3318597</span>
 <span class="co">#&gt;         (Mb)</span>
-<span class="co">#&gt; Ncells 121.4</span>
-<span class="co">#&gt; Vcells  25.3</span></code></pre></div>
+<span class="co">#&gt; Ncells 121.3</span>
+<span class="co">#&gt; Vcells  25.4</span></code></pre></div>
 
 </div>
 </div>
   <div class="chapter-nav">
-<div class="empty"></div>
-<div class="empty"></div>
+<div class="prev"><a href="s3.html"><span class="header-section-number">13</span> S3</a></div>
+<div class="next"><a href="s4.html"><span class="header-section-number">15</span> S4</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <div id="book-on-this-page"></div>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#r6"><span class="header-section-number">14</span> R6</a></li>
+<li><a class="nav-link" href="#exercises-14.2.6"><span class="header-section-number">14.1</span> Exercises 14.2.6</a></li>
+<li><a class="nav-link" href="#exercises-14.3.3"><span class="header-section-number">14.2</span> Exercises 14.3.3</a></li>
+<li><a class="nav-link" href="#exercises-14.4.4"><span class="header-section-number">14.3</span> Exercises 14.4.4</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/R6.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/R6.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -545,6 +641,34 @@
   </div>
 
 </div></div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
 </body>
 </html>

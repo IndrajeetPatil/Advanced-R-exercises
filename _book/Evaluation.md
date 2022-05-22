@@ -48,17 +48,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x115e3aa70
+#> env:  0x10bfe6000
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x1136570f8
+#> env:  0x10a9fc440
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x115a7a990
+#> env:  0x10e97dac0
 ```
 
 **Q2.** Write an `enenv()` function that captures the environment associated with an argument. (Hint: this should only require two function calls.)
