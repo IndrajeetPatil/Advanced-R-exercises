@@ -474,11 +474,105 @@ rlang::expr_text(expr)
 
 **Q1.** `logical_abbr()` returns `TRUE` for `T(1, 2, 3)`. How could you modify `logical_abbr_rec()` so that it ignores function calls that use `T` or `F`?
 
+**A1.** To avoid function calls that use `T` or `F`, we just need to ignore the function position in call objects:
+
+```{r echo=FALSE}
+expr_type <- function(x) {
+  if (rlang::is_syntactic_literal(x)) {
+    "constant"
+  } else if (is.symbol(x)) {
+    "symbol"
+  } else if (is.call(x)) {
+    "call"
+  } else if (is.pairlist(x)) {
+    "pairlist"
+  } else {
+    typeof(x)
+  }
+}
+
+switch_expr <- function(x, ...) {
+  switch(expr_type(x),
+    ...,
+    stop("Don't know how to handle type ", typeof(x), call. = FALSE)
+  )
+}
+```
+
+
+```{r}
+logical_abbr_rec <- function(x) {
+ switch_expr(x,
+    # Base cases
+    constant = FALSE,
+    symbol = rlang::as_string(x) %in% c("F", "T"),
+
+    # Recursive cases
+    pairlist = purrr::some(x, logical_abbr_rec),
+    call = {
+      if (rlang::is_call(x, "T") || rlang::is_call(x, "F"))  x <- as.list(x)[-1]
+      purrr::some(x, logical_abbr_rec)
+    }
+  )
+}
+```
+
+Let's try it out:
+
+```{r}
+logical_abbr_rec(expr(T(1, 2, 3)))
+
+logical_abbr_rec(expr(F(1, 2, 3)))
+
+logical_abbr_rec(expr(T))
+
+logical_abbr_rec(expr(F))
+```
+
 **Q2.** `logical_abbr()` works with expressions. It currently fails when you give it a function. Why? How could you modify `logical_abbr()` to make it work? What components of a function will you need to recurse over?
 
 ```{r, eval = FALSE}
 logical_abbr(function(x = TRUE) {
   g(x + T)
+})
+```
+
+**A2.** Surprisingly, `logical_abbr()` currently doesn't fail with closures:
+
+```{r, echo=FALSE}
+logical_abbr <- function(x) {
+  logical_abbr_rec(rlang::enexpr(x))
+}
+```
+
+To see why, let's see what type of object is produced when we capture user provided closure:
+
+```{r}
+print_enexpr <- function(.f) {
+  print(typeof(rlang::enexpr(.f)))
+  print(is.call(rlang::enexpr(.f)))
+}
+
+print_enexpr(function(x = TRUE) {
+  g(x + T)
+})
+```
+
+Given that closures are converted to `call` objects, it is not a surprise that the function works:
+
+```{r}
+logical_abbr(function(x = TRUE) {
+  g(x + T)
+})
+```
+
+The function only fails if it can't find any negative case. For example, instead of returning `FALSE`, this produces an error for reasons that remain (as of yet) elusive to me:
+
+<!-- TODO -->
+
+```{r, error=TRUE}
+logical_abbr(function(x = TRUE) {
+  g(x + TRUE)
 })
 ```
 

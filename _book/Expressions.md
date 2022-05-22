@@ -359,7 +359,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x135cdae38>
+#> <bytecode: 0x12328fc40>
 #> <environment: namespace:base>
 ```
 
@@ -696,6 +696,46 @@ rlang::expr_text(expr)
 
 **Q1.** `logical_abbr()` returns `TRUE` for `T(1, 2, 3)`. How could you modify `logical_abbr_rec()` so that it ignores function calls that use `T` or `F`?
 
+**A1.** To avoid function calls that use `T` or `F`, we just need to ignore the function position in call objects:
+
+
+
+
+
+```r
+logical_abbr_rec <- function(x) {
+ switch_expr(x,
+    # Base cases
+    constant = FALSE,
+    symbol = rlang::as_string(x) %in% c("F", "T"),
+
+    # Recursive cases
+    pairlist = purrr::some(x, logical_abbr_rec),
+    call = {
+      if (rlang::is_call(x, "T") || rlang::is_call(x, "F"))  x <- as.list(x)[-1]
+      purrr::some(x, logical_abbr_rec)
+    }
+  )
+}
+```
+
+Let's try it out:
+
+
+```r
+logical_abbr_rec(expr(T(1, 2, 3)))
+#> [1] FALSE
+
+logical_abbr_rec(expr(F(1, 2, 3)))
+#> [1] FALSE
+
+logical_abbr_rec(expr(T))
+#> [1] TRUE
+
+logical_abbr_rec(expr(F))
+#> [1] TRUE
+```
+
 **Q2.** `logical_abbr()` works with expressions. It currently fails when you give it a function. Why? How could you modify `logical_abbr()` to make it work? What components of a function will you need to recurse over?
 
 
@@ -703,6 +743,48 @@ rlang::expr_text(expr)
 logical_abbr(function(x = TRUE) {
   g(x + T)
 })
+```
+
+**A2.** Surprisingly, `logical_abbr()` currently doesn't fail with closures:
+
+
+
+To see why, let's see what type of object is produced when we capture user provided closure:
+
+
+```r
+print_enexpr <- function(.f) {
+  print(typeof(rlang::enexpr(.f)))
+  print(is.call(rlang::enexpr(.f)))
+}
+
+print_enexpr(function(x = TRUE) {
+  g(x + T)
+})
+#> [1] "language"
+#> [1] TRUE
+```
+
+Given that closures are converted to `call` objects, it is not a surprise that the function works:
+
+
+```r
+logical_abbr(function(x = TRUE) {
+  g(x + T)
+})
+#> [1] TRUE
+```
+
+The function only fails if it can't find any negative case. For example, instead of returning `FALSE`, this produces an error for reasons that remain (as of yet) elusive to me:
+
+<!-- TODO -->
+
+
+```r
+logical_abbr(function(x = TRUE) {
+  g(x + TRUE)
+})
+#> Error: Don't know how to handle type integer
 ```
 
 **Q3.** Modify `find_assign` to also detect assignment using replacement functions, i.e. `names(x) <- y`.

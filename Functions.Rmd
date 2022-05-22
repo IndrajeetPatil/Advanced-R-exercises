@@ -429,13 +429,58 @@ title <- function(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
 }
 ```
 
-### Exercises 6.7.5
+## Exercises 6.7.5
 
 **Q1.** What does `load()` return? Why don't you normally see these values?
 
+**A1.** The `load()` function reloads datasets that were saved using the `save()` function:
+
+```{r}
+save(iris, file = "my_iris.rda")
+load("my_iris.rda")
+```
+
+We normally don't see any value because the function loads the datasets invisibly.
+
+We can change this by setting `verbose = TRUE`:
+
+```{r}
+load("my_iris.rda", verbose = TRUE)
+
+# cleanup
+unlink("my_iris.rda")
+```
+
 **Q2.** What does `write.table()` return? What would be more useful?
 
+**A2.** The `write.table()` writes a data frame to a file and returns a `NULL` invisibly.
+
+```{r}
+write.table(BOD, file = "BOD.csv")
+```
+
+It would have been more helpful if the function invisibly returned the actual object being written to the file, which could then be further used.
+
+```{r}
+# cleanup
+unlink("BOD.csv")
+```
+
 **Q3.** How does the `chdir` parameter of `source()` compare to `with_dir()`? Why might you prefer one to the other?
+
+**A3.** The `chdir` parameter of `source()` is described as:
+
+> if `TRUE` and `file` is a pathname, the `R` working directory is temporarily changed to the directory containing file for evaluating
+
+That is, `chdir` allows changing working directory temporarily but *only* to the directory containing file being sourced:
+
+While `withr::with_dir()` temporarily changes the current working directory:
+
+```{r}
+withr::with_dir
+```
+
+More importantly, its parameters `dir` allows temporarily changing working directory to *any* directory.
 
 **Q4.** Write a function that opens a graphics device, runs the supplied code, and  closes the graphics device (always, regardless of whether or not the plotting code works).
 
@@ -450,6 +495,7 @@ capture.output2 <- function(code) {
   force(code)
   readLines(temp)
 }
+
 capture.output2(cat("a", "b", "c", sep = "\n"))
 ```
 

@@ -13,7 +13,7 @@
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x12baa2838>
+#> <bytecode: 0x1483f7c38>
 #> <environment: namespace:base>
 ```
 
@@ -294,7 +294,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x12baa2838>
+#> <bytecode: 0x1483f7c38>
 #> <environment: namespace:base>
 
 # other package function
@@ -304,7 +304,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x11d578da0>
+#> <bytecode: 0x119dfa3a0>
 #> <environment: namespace:purrr>
 ```
 
@@ -488,7 +488,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x10c26a018" "0x10c26a018"
+#> [1] "0x1092957d0" "0x1092957d0"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -546,7 +546,7 @@ show_time <- function(x = stop("Error!")) {
   print(x)
 }
 show_time()
-#> [1] "2022-05-21 22:44:58 CEST"
+#> [1] "2022-05-22 11:20:06 CEST"
 ```
 
 **Q6.** How many arguments are required when calling `library()`?
@@ -634,13 +634,73 @@ title <- function(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
 }
 ```
 
-### Exercises 6.7.5
+## Exercises 6.7.5
 
 **Q1.** What does `load()` return? Why don't you normally see these values?
 
+**A1.** The `load()` function reloads datasets that were saved using the `save()` function:
+
+
+```r
+save(iris, file = "my_iris.rda")
+load("my_iris.rda")
+```
+
+We normally don't see any value because the function loads the datasets invisibly.
+
+We can change this by setting `verbose = TRUE`:
+
+
+```r
+load("my_iris.rda", verbose = TRUE)
+#> Loading objects:
+#>   iris
+
+# cleanup
+unlink("my_iris.rda")
+```
+
 **Q2.** What does `write.table()` return? What would be more useful?
 
+**A2.** The `write.table()` writes a data frame to a file and returns a `NULL` invisibly.
+
+
+```r
+write.table(BOD, file = "BOD.csv")
+```
+
+It would have been more helpful if the function invisibly returned the actual object being written to the file, which could then be further used.
+
+
+```r
+# cleanup
+unlink("BOD.csv")
+```
+
 **Q3.** How does the `chdir` parameter of `source()` compare to `with_dir()`? Why might you prefer one to the other?
+
+**A3.** The `chdir` parameter of `source()` is described as:
+
+> if `TRUE` and `file` is a pathname, the `R` working directory is temporarily changed to the directory containing file for evaluating
+
+That is, `chdir` allows changing working directory temporarily but *only* to the directory containing file being sourced:
+
+While `withr::with_dir()` temporarily changes the current working directory:
+
+
+```r
+withr::with_dir
+#> function (new, code) 
+#> {
+#>     old <- setwd(dir = new)
+#>     on.exit(setwd(old))
+#>     force(code)
+#> }
+#> <bytecode: 0x1482674a8>
+#> <environment: namespace:withr>
+```
+
+More importantly, its parameters `dir` allows temporarily changing working directory to *any* directory.
 
 **Q4.** Write a function that opens a graphics device, runs the supplied code, and  closes the graphics device (always, regardless of whether or not the plotting code works).
 
@@ -656,6 +716,7 @@ capture.output2 <- function(code) {
   force(code)
   readLines(temp)
 }
+
 capture.output2(cat("a", "b", "c", sep = "\n"))
 #> [1] "a" "b" "c"
 ```
