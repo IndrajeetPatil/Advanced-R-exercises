@@ -359,7 +359,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x1207b9838>
+#> <bytecode: 0x14dd66c40>
 #> <environment: namespace:base>
 ```
 
@@ -788,5 +788,10 @@ logical_abbr(function(x = TRUE) {
 ```
 
 **Q3.** Modify `find_assign` to also detect assignment using replacement functions, i.e. `names(x) <- y`.
+
+**A3.** 
+
+
+
 
 **Q4.** Write a function that extracts all calls to a specified function.

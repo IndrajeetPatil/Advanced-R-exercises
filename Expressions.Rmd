@@ -578,4 +578,33 @@ logical_abbr(function(x = TRUE) {
 
 **Q3.** Modify `find_assign` to also detect assignment using replacement functions, i.e. `names(x) <- y`.
 
+**A3.** 
+
+```{r, echo=FALSE}
+flat_map_chr <- function(.x, .f, ...) {
+  purrr::flatten_chr(purrr::map(.x, .f, ...))
+}
+
+find_assign_rec <- function(x) {
+  switch_expr(x,
+    # Base cases
+    constant = ,
+    symbol = character(),
+
+    # Recursive cases
+    pairlist = flat_map_chr(as.list(x), find_assign_rec),
+    call = {
+      if (is_call(x, "<-")) {
+        as_string(x[[2]])
+      } else {
+        flat_map_chr(as.list(x), find_assign_rec)
+      }
+    }
+  )
+}
+
+find_assign <- function(x) find_assign_rec(enexpr(x))
+```
+
+
 **Q4.** Write a function that extracts all calls to a specified function.
