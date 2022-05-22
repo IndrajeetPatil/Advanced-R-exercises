@@ -209,9 +209,61 @@ mydeck$draw(4)
 
 **Q5.** Create an R6 class that manages the current working directory. It should have `$get()` and `$set()` methods.
 
+**A5.** Here is an R6 class that manages the current working directory:
+
+```{r}
+manageDirectory <- R6::R6Class("manageDirectory",
+  public = list(
+    setWorkingDirectory = function(dir) {
+      setwd(dir)
+    },
+    getWorkingDirectory = function() {
+      getwd()
+    }
+  )
+)
+```
+
+Let's create an instance of this class and check if the methods work as expected:
+
+```{r, eval=FALSE}
+myDirManager <- manageDirectory$new()
+
+# current working directory
+myDirManager$getWorkingDirectory()
+
+# change and check if that worked
+myDirManager$setWorkingDirectory("..")
+myDirManager$getWorkingDirectory()
+
+# revert this change
+myDirManager$setWorkingDirectory("/Advanced-R-exercises")
+```
+
 **Q6.**  Why can't you model the time zone or current working directory with an S3 class?
 
 **Q7.** What base type are R6 objects built on top of? What attributes do they have?
+
+**A7.** Let's create an example class and create instance of that class:
+
+```{r}
+Example <- R6::R6Class("Example")
+myExample <- Example$new()
+```
+
+The `R6` objects are built on top of environment:
+
+```{r}
+typeof(myExample)
+
+rlang::env_print(myExample)
+```
+
+And it has only `class` attribute, which is a character vector with the `"R6"` being the last element and the superclasses being other elements:
+
+```{r}
+attributes(myExample)
+```
 
 ## Exercises 14.3.3
 
@@ -219,7 +271,7 @@ mydeck$draw(4)
 
 **Q2.** Create a class with a write-only `$password` field. It should have `$check_password(password)` method that returns `TRUE` or `FALSE`, but there should be no way to view the complete password.
 
-**A2.**
+**A2.** Here is an implementation of the class with the needed properties:
 
 ```{r}
 library(R6)
@@ -271,9 +323,61 @@ myCheck$.__enclos_env__$private$.password
 
 **Q3.** Extend the `Rando` class with another active binding that allows you to access the previous random value. Ensure that active binding is the only way to access the value.
 
+**A3.** Here is a modified version of the `Rando` class to meet the specified requirements:
+
+```{r}
+Rando <- R6::R6Class("Rando",
+  active = list(
+    random = function(value) {
+      if (missing(value)) {
+        newValue <- runif(1)
+        private$.previousRandom <- private$.currentRandom
+        private$.currentRandom <- newValue
+        return(private$.currentRandom)
+      } else {
+        stop("Can't set `$random`", call. = FALSE)
+      }
+    },
+    previousRandom = function(value) {
+      if (missing(value)) {
+        if (is.null(private$.previousRandom)) {
+          message("No random value has been generated yet.")
+        } else {
+          return(private$.previousRandom)
+        }
+      } else {
+        stop("Can't set `$previousRandom`", call. = FALSE)
+      }
+    }
+  ),
+  private = list(
+    .currentRandom = NULL,
+    .previousRandom = NULL
+  )
+)
+```
+
+Let's try it out:
+
+```{r}
+myRando <- Rando$new()
+
+# first time
+myRando$random
+myRando$previousRandom
+
+# second time
+myRando$random
+myRando$previousRandom
+
+# third time
+myRando$random
+myRando$previousRandom
+```
+
 **Q4.** Can subclasses access private fields/methods from their parent? Perform an experiment to find out.
 
-**A4.** Unlike classical OOP in other languages (e.g. C++), R6 subclasses also have access to the private methods in superclass (or base class).
+**A4.** Unlike classical OOP in other languages (e.g. C++), R6 subclasses (or derived classes) also have access to the private methods in superclass (or base class).
 
 For instance, in the following example, the `Duck` class has a private method `$quack()`, but its subclass `Mallard` can access it using `super$quack()`.
 
@@ -294,6 +398,8 @@ myMallard$quack()
 ## Exercises 14.4.4
 
 **Q1.** Create a class that allows you to write a line to a specified file. You should open a connection to the file in `$initialize()`, append a line using `cat()` in `$append_line()`, and close the connection in `$finalize()`.
+
+**A1.** Here is a class that allows you to write a line to a specified file:
 
 ```{r}
 library(R6)
