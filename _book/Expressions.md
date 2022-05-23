@@ -359,7 +359,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x14dd66c40>
+#> <bytecode: 0x138c3e640>
 #> <environment: namespace:base>
 ```
 
@@ -704,7 +704,7 @@ rlang::expr_text(expr)
 
 ```r
 logical_abbr_rec <- function(x) {
- switch_expr(x,
+  switch_expr(x,
     # Base cases
     constant = FALSE,
     symbol = rlang::as_string(x) %in% c("F", "T"),
@@ -712,7 +712,7 @@ logical_abbr_rec <- function(x) {
     # Recursive cases
     pairlist = purrr::some(x, logical_abbr_rec),
     call = {
-      if (rlang::is_call(x, "T") || rlang::is_call(x, "F"))  x <- as.list(x)[-1]
+      if (rlang::is_call(x, "T") || rlang::is_call(x, "F")) x <- as.list(x)[-1]
       purrr::some(x, logical_abbr_rec)
     }
   )

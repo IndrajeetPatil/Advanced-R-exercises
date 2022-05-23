@@ -502,7 +502,7 @@ switch_expr <- function(x, ...) {
 
 ```{r}
 logical_abbr_rec <- function(x) {
- switch_expr(x,
+  switch_expr(x,
     # Base cases
     constant = FALSE,
     symbol = rlang::as_string(x) %in% c("F", "T"),
@@ -510,7 +510,7 @@ logical_abbr_rec <- function(x) {
     # Recursive cases
     pairlist = purrr::some(x, logical_abbr_rec),
     call = {
-      if (rlang::is_call(x, "T") || rlang::is_call(x, "F"))  x <- as.list(x)[-1]
+      if (rlang::is_call(x, "T") || rlang::is_call(x, "F")) x <- as.list(x)[-1]
       purrr::some(x, logical_abbr_rec)
     }
   )
