@@ -280,6 +280,28 @@ g(x)
 
 **Q6.** What are the arguments to `[`? Why is this a hard question to answer?
 
+**A6.** It is difficult to say how many formal arguments the subsetting `[` operator has because it is a generic function with methods for vectors, matrices, arrays, lists, etc., and these different methods have different number of arguments:
+
+```{r}
+s3_methods_generic("[") %>%
+  dplyr::filter(source == "base")
+```
+
+We can sample a few of them to see the diversity in the number of formal arguments:
+
+```{r}
+# table
+names(formals(`[.table`))
+
+# Date
+names(formals(`[.Date`))
+
+# data frame
+names(formals(`[.data.frame`))
+
+# etc.
+```
+
 ## Exercises 13.5.1
 
 **Q1.** Categorise the objects returned by `lm()`, `factor()`, `table()`, `as.Date()`, `as.POSIXct()` `ecdf()`, `ordered()`, `I()` into the styles described above.

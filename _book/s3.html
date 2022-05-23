@@ -44,34 +44,7 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">About</a></li>
-<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
-<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
-<li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
-<li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
-<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
-<li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
-<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
-<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
-<li><a class="" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
-<li><a class="" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
-<li><a class="active" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
-<li><a class="" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
-<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
-<li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
-<li><a class="" href="quotation.html"><span class="header-section-number">19</span> Quotation</a></li>
-<li><a class="" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
-<li><a class="" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></li>
-<li><a class="" href="improving-performance.html"><span class="header-section-number">24</span> Improving performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></li>
-</ul>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 13</span> S3</a></li></ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
@@ -92,7 +65,7 @@
 <li><p><code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> is a <strong>generic</strong> function to perform a <em>t</em>-test.</p></li>
 <li><p><code>t.data.frame</code> is a <strong>method</strong> for generic <code><a href="https://rdrr.io/r/base/t.html">t()</a></code> (a matrix transform function) and will be dispatched for <code>data.frame</code> class objects/instances that need to be transformed.</p></li>
 </ul>
-<div class="sourceCode" id="cb253"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-lib/sloop">sloop</a></span><span class="op">)</span>
 
 <span class="co"># function type</span>
@@ -111,23 +84,23 @@
 etc.</li>
 </ul>
 <p>For full list, you could do:</p>
-<div class="sourceCode" id="cb254"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">base_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-reflect.html">getNamespaceExports</a></span><span class="op">(</span><span class="st">"base"</span><span class="op">)</span>
 
 <span class="va">base_functions</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"(\\w+)(\\.)(\\w+)"</span>, <span class="va">base_functions</span><span class="op">)</span><span class="op">]</span></code></pre></div>
 <p>For example,</p>
-<div class="sourceCode" id="cb255"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://sloop.r-lib.org/reference/ftype.html">ftype</a></span><span class="op">(</span><span class="va">as.data.frame</span><span class="op">)</span>
 <span class="co">#&gt; [1] "S3"      "generic"</span>
 <span class="fu"><a href="https://sloop.r-lib.org/reference/ftype.html">ftype</a></span><span class="op">(</span><span class="va">on.exit</span><span class="op">)</span>
 <span class="co">#&gt; [1] "primitive"</span></code></pre></div>
 <p><strong>Q3.</strong> What does the <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame.data.frame()</a></code> method do? Why is it confusing? How could you avoid this confusion in your own code?</p>
 <p><strong>A3.</strong> It’s an <code>S3</code> <strong>method</strong> for <strong>generic</strong> <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code>.</p>
-<div class="sourceCode" id="cb256"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://sloop.r-lib.org/reference/ftype.html">ftype</a></span><span class="op">(</span><span class="va">as.data.frame.data.frame</span><span class="op">)</span>
 <span class="co">#&gt; [1] "S3"     "method"</span></code></pre></div>
 <p>It can be seen in all methods supported by this generic:</p>
-<div class="sourceCode" id="cb257"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://sloop.r-lib.org/reference/s3_methods_class.html">s3_methods_generic</a></span><span class="op">(</span><span class="st">"as.data.frame"</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">class</span> <span class="op">==</span> <span class="st">"data.frame"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1 × 4</span>
@@ -135,7 +108,7 @@ etc.</li>
 <span class="co">#&gt;   &lt;chr&gt;         &lt;chr&gt;      &lt;lgl&gt;   &lt;chr&gt; </span>
 <span class="co">#&gt; 1 as.data.frame data.frame TRUE    base</span></code></pre></div>
 <p><strong>Q4.</strong> Describe the difference in behaviour in these two calls.</p>
-<div class="sourceCode" id="cb258"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1014</span><span class="op">)</span>
 <span class="va">some_days</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2017-01-31"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">some_days</span><span class="op">)</span>
@@ -146,7 +119,7 @@ etc.</li>
 <ul>
 <li>Before unclassing, the <code>mean</code> generic dispatches <code>.Date</code> method:</li>
 </ul>
-<div class="sourceCode" id="cb259"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">some_days</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2017-01-31"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="va">some_days</span>
@@ -162,7 +135,7 @@ etc.</li>
 <ul>
 <li>After unclassing, the <code>mean</code> generic dispatches <code>.numeric</code> method:</li>
 </ul>
-<div class="sourceCode" id="cb260"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">unclass</a></span><span class="op">(</span><span class="va">some_days</span><span class="op">)</span>
 <span class="co">#&gt; [1] 17203 17206 17202 17205 17204</span>
 
@@ -174,11 +147,11 @@ etc.</li>
 <span class="co">#&gt;    mean.numeric</span>
 <span class="co">#&gt; =&gt; mean.default</span></code></pre></div>
 <p><strong>Q5.</strong> What class of object does the following code return? What base type is it built on? What attributes does it use?</p>
-<div class="sourceCode" id="cb261"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ecdf.html">ecdf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>
 <span class="va">x</span></code></pre></div>
-<p><strong>A5.</strong> The object is based on base type <code>closure</code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;of “object of type ‘closure’ is not subsettable” fame&lt;/p&gt;"><sup>7</sup></a>, which is a type of function.</p>
-<div class="sourceCode" id="cb262"><pre class="downlit sourceCode r">
+<p><strong>A5.</strong> The object is based on base type <code>closure</code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;of “object of type ‘closure’ is not subsettable” fame&lt;/p&gt;"><sup>1</sup></a>, which is a type of function.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ecdf.html">ecdf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>
 <span class="va">x</span>
 <span class="co">#&gt; Empirical CDF </span>
@@ -190,11 +163,11 @@ etc.</li>
 <span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1] "closure"</span></code></pre></div>
 <p>Its class is <code>ecdf</code>, which has other superclasses.</p>
-<div class="sourceCode" id="cb263"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://sloop.r-lib.org/reference/s3_class.html">s3_class</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1] "ecdf"     "stepfun"  "function"</span></code></pre></div>
 <p>Apart from <code>class</code>, it has the following attributes:</p>
-<div class="sourceCode" id="cb264"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; $class</span>
 <span class="co">#&gt; [1] "ecdf"     "stepfun"  "function"</span>
@@ -202,11 +175,11 @@ etc.</li>
 <span class="co">#&gt; $call</span>
 <span class="co">#&gt; ecdf(rpois(100, 10))</span></code></pre></div>
 <p><strong>Q6.</strong> What class of object does the following code return? What base type is it built on? What attributes does it use?</p>
-<div class="sourceCode" id="cb265"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="va">x</span></code></pre></div>
 <p><strong>A6.</strong> The object is based on base type <code>integer</code>.</p>
-<div class="sourceCode" id="cb266"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="va">x</span>
 <span class="co">#&gt; </span>
@@ -218,11 +191,11 @@ etc.</li>
 <span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1] "integer"</span></code></pre></div>
 <p>Its class is <code>table</code>.</p>
-<div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://sloop.r-lib.org/reference/s3_class.html">s3_class</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; [1] "table"</span></code></pre></div>
 <p>Apart from <code>class</code>, it has the following attributes:</p>
-<div class="sourceCode" id="cb268"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; $dim</span>
 <span class="co">#&gt; [1] 10</span>
@@ -241,7 +214,7 @@ etc.</li>
 </h2>
 <p><strong>Q1.</strong> Write a constructor for <code>data.frame</code> objects. What base type is a data frame built on? What attributes does it use? What are the restrictions placed on the individual elements? What about the names?</p>
 <p><strong>A1.</strong></p>
-<div class="sourceCode" id="cb269"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_data_frame</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>,
                           <span class="va">row.names</span> <span class="op">=</span> <span class="cn">NULL</span>,
                           <span class="va">check.rows</span> <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -263,15 +236,15 @@ etc.</li>
 <span class="header-section-number">13.3</span> Exercises 13.4.4<a class="anchor" aria-label="anchor" href="#exercises-13.4.4"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Read the source code for <code><a href="https://rdrr.io/r/base/t.html">t()</a></code> and <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> and confirm that <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> is an S3 generic and not an S3 method. What happens if you create an object with class <code>test</code> and call <code><a href="https://rdrr.io/r/base/t.html">t()</a></code> with it? Why?</p>
-<div class="sourceCode" id="cb270"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, class <span class="op">=</span> <span class="st">"test"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
 <p><strong>A1.</strong> Looking at source code of these functions, we can see that both of these are generic, and we can confirm the same using <a href="https://github.com/r-lib/sloop">sloop</a>:</p>
-<div class="sourceCode" id="cb271"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">t</span>
 <span class="co">#&gt; function (x) </span>
 <span class="co">#&gt; UseMethod("t")</span>
-<span class="co">#&gt; &lt;bytecode: 0x110dbc6f0&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x126b9ba88&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span>
 <span class="fu">sloop</span><span class="fu">::</span><span class="fu"><a href="https://sloop.r-lib.org/reference/is_s3_generic.html">is_s3_generic</a></span><span class="op">(</span><span class="st">"t"</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span>
@@ -279,12 +252,12 @@ etc.</li>
 <span class="va">t.test</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("t.test")</span>
-<span class="co">#&gt; &lt;bytecode: 0x114da9f38&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x123d5b138&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:stats&gt;</span>
 <span class="fu">sloop</span><span class="fu">::</span><span class="fu"><a href="https://sloop.r-lib.org/reference/is_s3_generic.html">is_s3_generic</a></span><span class="op">(</span><span class="st">"t.test"</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>Looking at the <code>S3</code> dispatch, we can see that since R can’t find <code>S3</code> method for <code>test</code> class for generic function <code><a href="https://rdrr.io/r/base/t.html">t()</a></code>, it dispatches the default method, which converts the structure to a matrix:</p>
-<div class="sourceCode" id="cb272"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, class <span class="op">=</span> <span class="st">"test"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
@@ -295,13 +268,13 @@ etc.</li>
 <span class="co">#&gt; =&gt; t.test</span>
 <span class="co">#&gt;  * t.default</span></code></pre></div>
 <p>The same behaviour can be observed with a vector:</p>
-<div class="sourceCode" id="cb273"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
 <span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
 <span class="co">#&gt; [1,]    1    2    3    4    5    6    7    8    9    10</span></code></pre></div>
 <p><strong>Q2.</strong> What generics does the <code>table</code> class have methods for?</p>
 <p><strong>A2.</strong> The <code>table</code> class have methods for the following generics:</p>
-<div class="sourceCode" id="cb274"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://sloop.r-lib.org/reference/s3_methods_class.html">s3_methods_class</a></span><span class="op">(</span><span class="st">"table"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 11 × 4</span>
 <span class="co">#&gt;    generic       class visible source             </span>
@@ -319,7 +292,7 @@ etc.</li>
 <span class="co">#&gt; 11 tail          table FALSE   registered S3method</span></code></pre></div>
 <p><strong>Q3.</strong> What generics does the <code>ecdf</code> class have methods for?</p>
 <p><strong>A3.</strong> The <code>ecdf</code> class have methods for the following generics:</p>
-<div class="sourceCode" id="cb275"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://sloop.r-lib.org/reference/s3_methods_class.html">s3_methods_class</a></span><span class="op">(</span><span class="st">"ecdf"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 4 × 4</span>
 <span class="co">#&gt;   generic  class visible source             </span>
@@ -330,7 +303,7 @@ etc.</li>
 <span class="co">#&gt; 4 summary  ecdf  FALSE   registered S3method</span></code></pre></div>
 <p><strong>Q4.</strong> Which base generic has the greatest number of defined methods?</p>
 <p><strong>A4.</strong> To answer this question, first, let’s list all functions base has and only retain the generics.</p>
-<div class="sourceCode" id="cb276"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
@@ -342,7 +315,7 @@ etc.</li>
 <span class="va">genFuns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">funs</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">keep</a></span><span class="op">(</span><span class="op">~</span> <span class="fu">sloop</span><span class="fu">::</span><span class="fu"><a href="https://sloop.r-lib.org/reference/is_s3_generic.html">is_s3_generic</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Now it’s a simple matter of counting number of methods per generic and ordering the data frame in descending order of this count:</p>
-<div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span><span class="op">(</span>
   <span class="va">genFuns</span>,
   <span class="op">~</span> <span class="fu"><a href="https://sloop.r-lib.org/reference/s3_methods_class.html">s3_methods_generic</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>
@@ -366,7 +339,7 @@ etc.</li>
 <span class="co">#&gt; # … with 112 more rows</span></code></pre></div>
 <p>This reveals that the base generic function with most methods is <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>.</p>
 <p><strong>Q5.</strong> Carefully read the documentation for <code><a href="https://rdrr.io/r/base/UseMethod.html">UseMethod()</a></code> and explain why the following code returns the results that it does. What two usual rules of function evaluation does <code><a href="https://rdrr.io/r/base/UseMethod.html">UseMethod()</a></code> violate?</p>
-<div class="sourceCode" id="cb278"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">10</span>
   <span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">10</span>
@@ -379,6 +352,45 @@ etc.</li>
 <span class="co">#&gt;  x  y </span>
 <span class="co">#&gt;  1 10</span></code></pre></div>
 <p><strong>Q6.</strong> What are the arguments to <code>[</code>? Why is this a hard question to answer?</p>
+<p><strong>A6.</strong> It is difficult to say how many formal arguments the subsetting <code>[</code> operator has because it is a generic function with methods for vectors, matrices, arrays, lists, etc., and these different methods have different number of arguments:</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://sloop.r-lib.org/reference/s3_methods_class.html">s3_methods_generic</a></span><span class="op">(</span><span class="st">"["</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">source</span> <span class="op">==</span> <span class="st">"base"</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 17 × 4</span>
+<span class="co">#&gt;    generic class           visible source</span>
+<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;           &lt;lgl&gt;   &lt;chr&gt; </span>
+<span class="co">#&gt;  1 [       AsIs            TRUE    base  </span>
+<span class="co">#&gt;  2 [       data.frame      TRUE    base  </span>
+<span class="co">#&gt;  3 [       Date            TRUE    base  </span>
+<span class="co">#&gt;  4 [       difftime        TRUE    base  </span>
+<span class="co">#&gt;  5 [       Dlist           TRUE    base  </span>
+<span class="co">#&gt;  6 [       DLLInfoList     TRUE    base  </span>
+<span class="co">#&gt;  7 [       factor          TRUE    base  </span>
+<span class="co">#&gt;  8 [       hexmode         TRUE    base  </span>
+<span class="co">#&gt;  9 [       listof          TRUE    base  </span>
+<span class="co">#&gt; 10 [       noquote         TRUE    base  </span>
+<span class="co">#&gt; 11 [       numeric_version TRUE    base  </span>
+<span class="co">#&gt; 12 [       octmode         TRUE    base  </span>
+<span class="co">#&gt; 13 [       POSIXct         TRUE    base  </span>
+<span class="co">#&gt; 14 [       POSIXlt         TRUE    base  </span>
+<span class="co">#&gt; 15 [       simple.list     TRUE    base  </span>
+<span class="co">#&gt; 16 [       table           TRUE    base  </span>
+<span class="co">#&gt; 17 [       warnings        TRUE    base</span></code></pre></div>
+<p>We can sample a few of them to see the diversity in the number of formal arguments:</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># table</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span><span class="op">(</span><span class="va">`[.table`</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] "x"    "i"    "j"    "..."  "drop"</span>
+
+<span class="co"># Date</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span><span class="op">(</span><span class="va">`[.Date`</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] "x"    "..."  "drop"</span>
+
+<span class="co"># data frame</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span><span class="op">(</span><span class="va">`[.data.frame`</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] "x"    "i"    "j"    "drop"</span>
+
+<span class="co"># etc.</span></code></pre></div>
 </div>
 <div id="exercises-13.5.1" class="section level2" number="13.4">
 <h2>
@@ -394,7 +406,7 @@ etc.</li>
 <p><strong>Q1.</strong> How does <code>[.Date</code> support subclasses? How does it fail to support subclasses?</p>
 <p><strong>Q2.</strong> R has two classes for representing date time data, <code>POSIXct</code> and <code>POSIXlt</code>, which both inherit from <code>POSIXt</code>. Which generics have different behaviours for the two classes? Which generics share the same behaviour?</p>
 <p><strong>Q3.</strong> What do you expect this code to return? What does it actually return? Why?</p>
-<div class="sourceCode" id="cb279"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">generic2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/UseMethod.html">UseMethod</a></span><span class="op">(</span><span class="st">"generic2"</span><span class="op">)</span>
 <span class="va">generic2.a1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="st">"a1"</span>
 <span class="va">generic2.a2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="st">"a2"</span>
@@ -409,7 +421,7 @@ etc.</li>
 <span class="header-section-number">13.6</span> Exercises 13.7.5<a class="anchor" aria-label="anchor" href="#exercises-13.7.5"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Explain the differences in dispatch below:</p>
-<div class="sourceCode" id="cb280"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">length.integer</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">10</span>
 
 <span class="va">x1</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>
@@ -435,24 +447,15 @@ etc.</li>
 </div>
 
   <div class="chapter-nav">
-<div class="prev"><a href="base-types.html"><span class="header-section-number">12</span> Base Types</a></div>
-<div class="next"><a href="r6.html"><span class="header-section-number">14</span> R6</a></div>
+<div class="empty"></div>
+<div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#s3"><span class="header-section-number">13</span> S3</a></li>
-<li><a class="nav-link" href="#exercises-13.2.1"><span class="header-section-number">13.1</span> Exercises 13.2.1</a></li>
-<li><a class="nav-link" href="#exercises-13.3.4"><span class="header-section-number">13.2</span> Exercises 13.3.4</a></li>
-<li><a class="nav-link" href="#exercises-13.4.4"><span class="header-section-number">13.3</span> Exercises 13.4.4</a></li>
-<li><a class="nav-link" href="#exercises-13.5.1"><span class="header-section-number">13.4</span> Exercises 13.5.1</a></li>
-<li><a class="nav-link" href="#exercises-13.6.3"><span class="header-section-number">13.5</span> Exercises 13.6.3</a></li>
-<li><a class="nav-link" href="#exercises-13.7.5"><span class="header-section-number">13.6</span> Exercises 13.7.5</a></li>
-</ul>
+      <div id="book-on-this-page"></div>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/S3.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/S3.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+          
         </ul>
 </div>
     </nav>
@@ -472,34 +475,6 @@ etc.</li>
   </div>
 
 </div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-for (let popover of popovers) {
-  const div = document.createElement('div');
-  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-  div.innerHTML = popover.getAttribute('data-content');
-
-  var has_math = div.querySelector("span.math");
-  if (has_math) {
-    document.body.appendChild(div);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    MathJax.Hub.Queue(function() {
-      popover.setAttribute('data-content', div.innerHTML);
-      document.body.removeChild(div);
-    })
-  }
-}
-</script>
+</footer>
 </body>
 </html>
