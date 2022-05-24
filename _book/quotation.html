@@ -87,7 +87,7 @@
 <span class="header-section-number">19.0.1</span> Exercises 19.2.2<a class="anchor" aria-label="anchor" href="#exercises-19.2.2"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> For each function in the following base R code, identify which arguments are quoted and which are evaluated.</p>
-<div class="sourceCode" id="cb358"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb367"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'MASS'</span>
@@ -102,7 +102,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">)</span></code></pre></div>
 <p><strong>Q2.</strong> For each function in the following tidyverse code, identify which arguments are quoted and which are evaluated.</p>
-<div class="sourceCode" id="cb359"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb368"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
@@ -119,7 +119,7 @@
 </h3>
 <p><strong>Q1.</strong> How is <code><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr()</a></code> implemented? Look at its source code.</p>
 <p><strong>Q2.</strong> Compare and contrast the following two functions. Can you predict the output before running them?</p>
-<div class="sourceCode" id="cb360"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb369"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span>
 <span class="op">}</span>
@@ -147,13 +147,13 @@
 <span class="header-section-number">19.0.3</span> Exercises 19.4.8<a class="anchor" aria-label="anchor" href="#exercises-19.4.8"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> Given the following components:</p>
-<div class="sourceCode" id="cb362"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb371"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">xy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span>
 <span class="va">xz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span>
 <span class="va">yz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span>
 <span class="va">abc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span></code></pre></div>
 <p>Use quasiquotation to construct the following calls:</p>
-<div class="sourceCode" id="cb363"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb372"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span>
 <span class="op">-</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span>
 <span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span> <span class="op">-</span> <span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span>
@@ -163,7 +163,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu">foo</span><span class="op">(</span>a <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, b <span class="op">=</span> <span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></code></pre></div>
 <p><strong>Q2.</strong> The following two calls print the same, but are actually different:</p>
-<div class="sourceCode" id="cb364"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb373"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; mean(1:10)</span>
 <span class="op">(</span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -177,14 +177,14 @@
 <span class="header-section-number">19.0.4</span> Exercises 19.6.5<a class="anchor" aria-label="anchor" href="#exercises-19.6.5"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> One way to implement <code><a href="https://purrr.tidyverse.org/reference/exec.html">exec()</a></code> is shown below. Describe how it works. What are the key ideas?</p>
-<div class="sourceCode" id="cb365"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb374"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">...</span>, <span class="va">.env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">args</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">f</span>, <span class="va">args</span>, envir <span class="op">=</span> <span class="va">.env</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p><strong>Q2.</strong> Carefully read the source code for <code><a href="https://rdrr.io/r/base/interaction.html">interaction()</a></code>, <code><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid()</a></code>, and <code><a href="https://rdrr.io/r/graphics/par.html">par()</a></code>. Compare and contrast the techniques they use for switching between dots and list behaviour.</p>
 <p><strong>Q3.</strong> Explain the problem with this definition of <code>set_attr()</code></p>
-<div class="sourceCode" id="cb366"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb375"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">set_attr</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">attr</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">attr</span>
@@ -199,7 +199,7 @@
 </h3>
 <p><strong>Q1.</strong> In the linear-model example, we could replace the <code><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr()</a></code> in <code>reduce(summands, ~ expr(!!.x + !!.y))</code> with <code><a href="https://rlang.r-lib.org/reference/call2.html">call2()</a></code>: <code>reduce(summands, call2, "+")</code>. Compare and contrast the two approaches. Which do you think is easier to read?</p>
 <p><strong>Q2.</strong> Re-implement the Box-Cox transform defined below using unquoting and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
-<div class="sourceCode" id="cb367"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb376"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bc</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span>
   <span class="kw">if</span> <span class="op">(</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
     <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
@@ -208,7 +208,7 @@
   <span class="op">}</span>
 <span class="op">}</span></code></pre></div>
 <p><strong>Q3.</strong> Re-implement the simple <code><a href="https://purrr.tidyverse.org/reference/compose.html">compose()</a></code> defined below using quasiquotation and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
-<div class="sourceCode" id="cb368"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb377"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">compose</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">g</span><span class="op">)</span> <span class="op">{</span>
   <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
@@ -245,7 +245,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-05-23.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by Indrajeet Patil. It was last built on 2022-05-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
