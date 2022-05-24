@@ -499,6 +499,87 @@ names(formals(`[.data.frame`))
 
 **Q1.** Categorise the objects returned by `lm()`, `factor()`, `table()`, `as.Date()`, `as.POSIXct()` `ecdf()`, `ordered()`, `I()` into the styles described above.
 
+**A1.** Objects returned by these functions can be categorized as follows:
+
+- Vector style objects (`length` represents no. of observations)
+
+`factor()`
+
+```{r}
+factor_obj <- factor(c("a", "b"))
+length(factor_obj)
+length(unclass(factor_obj))
+```
+
+`table()`
+
+```{r}
+tab_object <- table(mtcars$am)
+length(tab_object)
+length(unlist(tab_object))
+```
+
+`as.Date()`
+
+```{r}
+date_obj <- as.Date("02/27/92", "%m/%d/%y")
+length(date_obj)
+length(unclass(date_obj))
+```
+
+`as.POSIXct()`
+
+```{r}
+posix_obj <- as.POSIXct(1472562988, origin = "1960-01-01") 
+length(posix_obj)
+length(unclass(posix_obj))
+```
+
+`ordered()`
+
+```{r}
+ordered_obj <- ordered(factor(c("a", "b")))
+length(ordered_obj)
+length(unclass(ordered_obj))
+```
+
+- Record style objects (equi-length vectors to represent object components)
+
+None.
+
+- Dataframe style objects (Record style but two-dimensions)
+
+None.
+
+- Scalar objects (a list to represent a single thing)
+
+`lm()` (represent one regression model)
+
+```{r}
+lm_obj <- lm(wt ~ mpg, mtcars)
+length(lm_obj)
+length(unclass(lm_obj))
+```
+
+`ecdf()` (represents one distribution)
+
+```{r}
+ecdf_obj <- ecdf(rnorm(12))
+length(ecdf_obj)
+length(unclass(ecdf_obj))
+```
+
+`I()` is special: 
+It just adds a new class to the object to indicate that it should be treated *as is*.
+
+```{r}
+x <- ecdf(rnorm(12))
+class(x)
+class(I(x))
+```
+
+Therefore, the object style would be the same as the superclass' object style.
+
 **Q2.** What would a constructor function for `lm` objects, `new_lm()`, look like? Use `?lm` and experimentation to figure out the required fields and their types.
 
 ## Exercises 13.6.3
