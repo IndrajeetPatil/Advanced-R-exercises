@@ -328,7 +328,7 @@ Therefore, we can create a simple constructor to create instance of this class:
 ```{r}
 new_roman <- function(x = integer()) {
   stopifnot(is.integer(x))
-  
+
   structure(x, class = "roman")
 }
 ```
@@ -346,14 +346,14 @@ Therefore, we can warn the user and then return `NA` in a validator function:
 ```{r}
 validate_new_roman <- function(x) {
   int_values <- unclass(x)
-  
+
   if (any(int_values < 1L | int_values > 3899L)) {
     warning(
       "Integer should be between 1 and 3899. Returning `NA` otherwise.",
       call. = FALSE
     )
   }
-  
+
   x
 }
 ```
@@ -362,8 +362,8 @@ The helper function can coerce the entered input to integer type for convenience
 
 ```{r}
 roman <- function(x = integer()) {
-    x <- as.integer(x)
-  
+  x <- as.integer(x)
+
   validate_new_roman(new_roman(x))
 }
 ```
@@ -530,7 +530,7 @@ length(unclass(date_obj))
 `as.POSIXct()`
 
 ```{r}
-posix_obj <- as.POSIXct(1472562988, origin = "1960-01-01") 
+posix_obj <- as.POSIXct(1472562988, origin = "1960-01-01")
 length(posix_obj)
 length(unclass(posix_obj))
 ```
@@ -625,20 +625,20 @@ new_lm <- function(coefficients,
     is.language(terms),
     is.list(model)
   )
-  
+
   structure(
     list(
       coefficients  = coefficients,
       residuals     = residuals,
       effects       = effects,
-      rank          = rank, 
+      rank          = rank,
       fitted.values = fitted.values,
       assign        = assign,
       qr            = qr,
       df.residual   = df.residual,
       xlevels       = xlevels,
       call          = call,
-      terms         = terms, 
+      terms         = terms,
       model         = model
     ),
     class = "lm"
@@ -670,6 +670,8 @@ class(dt_ct)
 dt_t <- structure(dt_ct, class = "POSIXt")
 class(dt_t)
 ```
+
+Remember that the way `S3` method dispatch works, if a generic has a method for superclass, then that method is also inherited by the subclass.
 
 We can extract a vector of all generics supported by both sub- and super-classes:
 
@@ -708,11 +710,11 @@ setdiff(t_generics, union(lt_generics, ct_generics))
 Let's see one example generic:
 
 ```{r}
-s3_dispatch(dt_lt - dt_lt)
+s3_dispatch(is.numeric(dt_lt))
 
-s3_dispatch(dt_ct - dt_ct)
+s3_dispatch(is.numeric(dt_ct))
 
-s3_dispatch(dt_t - dt_t)
+s3_dispatch(is.numeric(dt_t))
 ```
 
 
@@ -765,7 +767,7 @@ generic2.b <- function(x) {
   message(paste0("before: ", paste0(.Class, collapse = ", ")))
   class(x) <- "a1"
   message(paste0("after: ", paste0(.Class, collapse = ", ")))
-  
+
   NextMethod()
 }
 
@@ -790,4 +792,92 @@ s3_dispatch(length(x2))
 
 **Q2.** What classes have a method for the `Math` group generic in base R? Read the source code. How do the methods work?
 
+**A2.** The following classes have a method for the `Math` group generic in base R:
+
+```{r}
+s3_methods_generic("Math") %>%
+  dplyr::filter(source == "base")
+```
+
+Reading source code for a few of the methods:
+
+[`Math.factor()`](https://github.com/r-devel/r-svn/blob/master/src/library/base/R/factor.R) and [`Math.Date()`](https://github.com/r-devel/r-svn/blob/master/src/library/base/R/dates.R) provide only error message:
+
+```{r, eval=FALSE}
+Math.factor <- function(x, ...) {
+  stop(gettextf("%s not meaningful for factors", sQuote(.Generic)))
+}
+
+Math.Date <- function(x, ...) {
+  stop(gettextf("%s not defined for \"Date\" objects", .Generic),
+    domain = NA
+  )
+}
+```
+
+[`Math.data.frame()`](https://github.com/r-devel/r-svn/blob/master/src/library/base/R/factor.R) is defined as follows (except the first line of code, which I have deliberately added):
+
+```{r}
+Math.data.frame <- function(x, ...) {
+  message(paste0("Environment variable `.Generic` set to: ", .Generic))
+
+  mode.ok <- vapply(x, function(x) {
+    is.numeric(x) || is.logical(x) || is.complex(x)
+  }, NA)
+
+  if (all(mode.ok)) {
+    x[] <- lapply(X = x, FUN = .Generic, ...)
+    return(x)
+  } else {
+    vnames <- names(x)
+    if (is.null(vnames)) vnames <- seq_along(x)
+    stop(
+      "non-numeric-alike variable(s) in data frame: ",
+      paste(vnames[!mode.ok], collapse = ", ")
+    )
+  }
+}
+```
+
+As can be surmised from the code: the method checks that all elements are of the same and expected type. 
+
+If so, it applies the generic (tracked via the environment variable `.Generic`) to each element of the list of atomic vectors that makes up a data frame:
+
+```{r}
+df1 <- data.frame(x = 1:2, y = 3:4)
+sqrt(df1)
+```
+
+If not, it produces an error:
+
+```{r, error=TRUE}
+df2 <- data.frame(x = c(TRUE, FALSE), y = c("a", "b"))
+abs(df2)
+```
+
 **Q3.** `Math.difftime()` is more complicated than I described. Why?
+
+**A3.** [`Math.difftime()`](https://github.com/r-devel/r-svn/blob/master/src/library/base/R/datetime.R) source code looks like the following:
+
+```{r}
+Math.difftime <- function(x, ...) {
+  switch(.Generic,
+    "abs" = ,
+    "sign" = ,
+    "floor" = ,
+    "ceiling" = ,
+    "trunc" = ,
+    "round" = ,
+    "signif" = {
+      units <- attr(x, "units")
+      .difftime(NextMethod(), units)
+    },
+    ### otherwise :
+    stop(gettextf("'%s' not defined for \"difftime\" objects", .Generic),
+      domain = NA
+    )
+  )
+}
+```
+
+This group generic is a bit more complicated because it produces an error for some generics, while it works for others.
