@@ -1,7 +1,7 @@
 --- 
 title: "Advanced R Exercises"
-author: "Indrajeet Patil"
-date: "2022-05-24"
+author: '<a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>'
+date: "2022-05-25"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]

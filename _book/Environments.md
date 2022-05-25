@@ -26,14 +26,14 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x1068f4da0>
+#> <environment: 0x1276e5c10>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
 
 # should be the same as the `e` memory address
 lobstr::obj_addr(e$loop)
-#> [1] "0x1068f4da0"
+#> [1] "0x1276e5c10"
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -52,9 +52,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x107e82cb0" "0x107e82cb0"
+#> [1] "0x131668c20" "0x131668c20"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x107eda060" "0x107eda060"
+#> [1] "0x1316be0c0" "0x1316be0c0"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.

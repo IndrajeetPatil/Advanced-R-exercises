@@ -582,11 +582,139 @@ Therefore, the object style would be the same as the superclass' object style.
 
 **Q2.** What would a constructor function for `lm` objects, `new_lm()`, look like? Use `?lm` and experimentation to figure out the required fields and their types.
 
+**A2.** The `lm` object is a scalar object, i.e. this object contains a named list of atomic vectors of varying lengths and types to represent a single thing (a regression model).
+
+```{r}
+mod <- lm(wt ~ mpg, mtcars)
+
+typeof(mod)
+
+attributes(mod)
+
+purrr::map_chr(unclass(mod), typeof)
+
+purrr::map_int(unclass(mod), length)
+```
+
+Based on this information, we can write a new constructor for this object:
+
+```{r}
+new_lm <- function(coefficients,
+                   residuals,
+                   effects,
+                   rank,
+                   fitted.values,
+                   assign,
+                   qr,
+                   df.residual,
+                   xlevels,
+                   call,
+                   terms,
+                   model) {
+  stopifnot(
+    is.double(coefficients),
+    is.double(residuals),
+    is.double(effects),
+    is.integer(rank),
+    is.double(fitted.values),
+    is.integer(assign),
+    is.list(qr),
+    is.integer(df.residual),
+    is.list(xlevels),
+    is.language(call),
+    is.language(terms),
+    is.list(model)
+  )
+  
+  structure(
+    list(
+      coefficients  = coefficients,
+      residuals     = residuals,
+      effects       = effects,
+      rank          = rank, 
+      fitted.values = fitted.values,
+      assign        = assign,
+      qr            = qr,
+      df.residual   = df.residual,
+      xlevels       = xlevels,
+      call          = call,
+      terms         = terms, 
+      model         = model
+    ),
+    class = "lm"
+  )
+}
+```
+
 ## Exercises 13.6.3
 
 **Q1.** How does `[.Date` support subclasses? How does it fail to support subclasses?
 
+**A1.** 
+
+```{r}
+sloop::s3_get_method("[.Date")
+```
+
 **Q2.** R has two classes for representing date time data, `POSIXct` and `POSIXlt`, which both inherit from `POSIXt`. Which generics have different behaviours for the two classes? Which generics share the same behaviour?
+
+**A2.** First, let's demonstrate that `POSIXct` and `POSIXlt` are indeed subclasses and `POSIXt` is the superclass.
+
+```{r}
+dt_lt <- as.POSIXlt(Sys.time(), "GMT")
+class(dt_lt)
+
+dt_ct <- as.POSIXct(Sys.time(), "GMT")
+class(dt_ct)
+
+dt_t <- structure(dt_ct, class = "POSIXt")
+class(dt_t)
+```
+
+We can extract a vector of all generics supported by both sub- and super-classes:
+
+```{r}
+library(sloop)
+
+(t_generics <- s3_methods_class("POSIXt")$generic)
+
+(lt_generics <- s3_methods_class("POSIXlt")$generic)
+
+(ct_generics <- s3_methods_class("POSIXct")$generic)
+```
+
+Methods which are specific to the subclasses:
+
+```{r}
+union(lt_generics, ct_generics)
+```
+
+Let's see an example:
+
+```{r}
+s3_dispatch(is.na(dt_lt))
+
+s3_dispatch(is.na(dt_ct))
+
+s3_dispatch(is.na(dt_t))
+```
+
+Methods which are inherited by subclasses from superclass:
+
+```{r}
+setdiff(t_generics, union(lt_generics, ct_generics))
+```
+
+Let's see one example generic:
+
+```{r}
+s3_dispatch(dt_lt - dt_lt)
+
+s3_dispatch(dt_ct - dt_ct)
+
+s3_dispatch(dt_t - dt_t)
+```
+
 
 **Q3.** What do you expect this code to return? What does it actually return? Why?
 
@@ -598,7 +726,50 @@ generic2.b <- function(x) {
   class(x) <- "a1"
   NextMethod()
 }
+
 generic2(structure(list(), class = c("b", "a2")))
+```
+
+**A3.** Naively, we would expect for this code to return `"a1"`, but it actually returns `"a2"`:
+
+```{r}
+generic2 <- function(x) UseMethod("generic2")
+generic2.a1 <- function(x) "a1"
+generic2.a2 <- function(x) "a2"
+generic2.b <- function(x) {
+  class(x) <- "a1"
+  NextMethod()
+}
+
+generic2(structure(list(), class = c("b", "a2")))
+```
+
+Looking at the dispatches explains why:
+
+```{r}
+sloop::s3_dispatch(generic2(structure(list(), class = c("b", "a2"))))
+```
+
+As mentioned in the book, the `UseMethod()` function
+
+> tracks the list of potential next methods with a special variable, which means that modifying the object that’s being dispatched upon will have no impact on which method gets called next.
+
+This special variable is `.Class`:
+
+> `.Class` is a character vector of classes used to find the next method. `NextMethod` adds an attribute "previous" to `.Class` giving the `.Class` last used for dispatch, and shifts `.Class` along to that used for dispatch.
+
+So, we can print `.Class` in method environment to confirm that adding a new class to `x` indeed doesn't change `.Class`, and therefore dispatch occurs on `"a2"` class:
+
+```{r}
+generic2.b <- function(x) {
+  message(paste0("before: ", paste0(.Class, collapse = ", ")))
+  class(x) <- "a1"
+  message(paste0("after: ", paste0(.Class, collapse = ", ")))
+  
+  NextMethod()
+}
+
+invisible(generic2(structure(list(), class = c("b", "a2"))))
 ```
 
 ## Exercises 13.7.5
