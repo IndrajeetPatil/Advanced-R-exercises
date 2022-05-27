@@ -13,7 +13,7 @@
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x140036238>
+#> <bytecode: 0x13077c640>
 #> <environment: namespace:base>
 ```
 
@@ -106,14 +106,13 @@ objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
 funs <- Filter(is.function, objs)
 ```
 
-    Use it to answer the following questions:
+Use it to answer the following questions:
 
-    a. Which base function has the most arguments?
-    
-    a. How many base functions have no arguments? What's special about those
-       functions?
-       
-    a. How could you adapt the code to find all primitive functions?
+a. Which base function has the most arguments?
+
+b. How many base functions have no arguments? What's special about those functions?
+
+c. How could you adapt the code to find all primitive functions?
 
 **A5.** The provided code is the following:
 
@@ -123,7 +122,7 @@ objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
 funs <- Filter(is.function, objs)
 ```
 
-- Which base function has the most arguments?
+a. Which base function has the most arguments?
 
 `scan()` function has the most arguments.
 
@@ -140,7 +139,7 @@ df_formals <- purrr::map_df(funs, ~ length(formals(.))) %>%
   dplyr::arrange(desc(argumentCount))
 ```
 
-- How many base functions have no arguments? What’s special about those functions?
+b. How many base functions have no arguments? What’s special about those functions?
 
 At the time of writing, 253 base functions have no arguments. Most of these are primitive functions
 
@@ -163,7 +162,7 @@ dplyr::filter(df_formals, argumentCount == 0)
 #> # … with 241 more rows
 ```
 
-- How could you adapt the code to find all primitive functions?
+c. How could you adapt the code to find all primitive functions?
 
 
 ```r
@@ -294,7 +293,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x140036238>
+#> <bytecode: 0x13077c640>
 #> <environment: namespace:base>
 
 # other package function
@@ -304,7 +303,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x133380da0>
+#> <bytecode: 0x11b683190>
 #> <environment: namespace:purrr>
 ```
 
@@ -488,7 +487,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x123281fd0" "0x123281fd0"
+#> [1] "0x10a3eee18" "0x10a3eee18"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -508,7 +507,7 @@ f1()
 y
 ```
 
-**A3.** TODO:
+**A3.** Note that in the function call `f1()`, the `x` and `y` arguments are missing. That means, the default arguments are evaluated in the function environment, and not in the environment in which the function is defined. 
 
 
 ```r
@@ -519,13 +518,22 @@ f1 <- function(x =
                    2
                  },
                y = 0) {
+  print(missing(x))
+  print(missing(y))
+
   c(x, y)
 }
+
 f1()
+#> [1] TRUE
+#> [1] TRUE
 #> [1] 2 1
+
 y
 #> [1] 10
 ```
+
+This is why `x` and `y` in function environment are assigned the values we see returned, and the `y` in the global environment remains unchanged.
 
 **Q4.** In `hist()`, the default value of `xlim` is `range(breaks)`, the default value for `breaks` is `"Sturges"`, and
 
@@ -537,6 +545,25 @@ range("Sturges")
 
 Explain how `hist()` works to get a correct `xlim` value.
 
+**A4.** The `xlim` defines the range of axes breaks for the histogram.
+
+
+```r
+hist(mtcars$wt, xlim = c(1, 6))
+```
+
+<img src="Functions_files/figure-html/unnamed-chunk-30-1.png" width="672" />
+
+The default `c("Sturges", "Sturges")` uses Sturges' algorithm to compute the number of breaks, and thus, the range for axes breaks.
+
+
+```r
+nclass.Sturges(mtcars$wt)
+#> [1] 6
+```
+
+To see the implementation, run `sloop::s3_get_method("hist.default")`.
+
 **Q5.** Explain why this function works. Why is it confusing?
 
 
@@ -545,11 +572,82 @@ show_time <- function(x = stop("Error!")) {
   stop <- function(...) Sys.time()
   print(x)
 }
+
 show_time()
-#> [1] "2022-05-25 20:49:12 CEST"
+#> [1] "2022-05-27 16:27:59 CEST"
 ```
 
+**A5.** Let's take this step-by-step.
+
+The function argument `x` is missing in the function call. This means that `stop("Error!")` is evaluated in the function environment, and not global environment.
+
+But `stop("Error!")` evaluated only when `x` is evaluated, and due to lazy evaluation, this happens only when `print(x)` is called.
+
+`print(x)` leads to `x` being evaluated, which evaluates `stop` in the function environment. But in function environment, the `base::stop()` is masked by a locally defined `stop` function, which returns `Sys.time()` output.
+
 **Q6.** How many arguments are required when calling `library()`?
+
+**A6.** Going solely by its signature, 
+
+
+```r
+formals(library)
+#> $package
+#> 
+#> 
+#> $help
+#> 
+#> 
+#> $pos
+#> [1] 2
+#> 
+#> $lib.loc
+#> NULL
+#> 
+#> $character.only
+#> [1] FALSE
+#> 
+#> $logical.return
+#> [1] FALSE
+#> 
+#> $warn.conflicts
+#> 
+#> 
+#> $quietly
+#> [1] FALSE
+#> 
+#> $verbose
+#> getOption("verbose")
+#> 
+#> $mask.ok
+#> 
+#> 
+#> $exclude
+#> 
+#> 
+#> $include.only
+#> 
+#> 
+#> $attach.required
+#> missing(include.only)
+```
+
+it looks like the following arguments are required:
+
+
+```r
+formals(library) %>%
+  purrr::discard(is.null) %>%
+  purrr::map_lgl(~ .x == "") %>%
+  purrr::keep(~ isTRUE(.x)) %>%
+  names()
+#> [1] "package"        "help"           "warn.conflicts"
+#> [4] "mask.ok"        "exclude"        "include.only"
+```
+
+But, in reality, only one argument is required: `package`. The function internally checks if the other arguments are missing and internally chooses necessary defaults.
+
+It would have been better if there arguments were `NULL` instead of missing; that would avoid this confusion.
 
 ## Exercises 6.6.1
 
@@ -589,7 +687,7 @@ For `mean()` function, there is only one parameter (`x`) and it's matched by the
 plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
 ```
 
-<img src="Functions_files/figure-html/unnamed-chunk-33-1.png" width="288" />
+<img src="Functions_files/figure-html/unnamed-chunk-37-1.png" width="288" />
 
 **A2.** First, check documentation for `plot()`:
 
@@ -696,13 +794,25 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x15069d8a8>
+#> <bytecode: 0x10848c070>
 #> <environment: namespace:withr>
 ```
 
 More importantly, its parameters `dir` allows temporarily changing working directory to *any* directory.
 
 **Q4.** Write a function that opens a graphics device, runs the supplied code, and  closes the graphics device (always, regardless of whether or not the plotting code works).
+
+**A4.** Here is a function that opens a graphics device, runs the supplied code, and  closes the graphics device:
+
+
+```r
+with_png_device <- function(filename, code, ...) {
+  grDevices::png(filename = filename, ...)
+  on.exit(grDevices::dev.off(), add = TRUE)
+  
+  force(code)
+}
+```
 
 **Q5.** We can use `on.exit()` to implement a simple version of `capture.output()`.
 
@@ -722,6 +832,84 @@ capture.output2(cat("a", "b", "c", sep = "\n"))
 ```
 
 Compare `capture.output()` to `capture.output2()`. How do the functions differ? What features have I removed to make the key ideas easier to see? How have I rewritten the key ideas so they're easier to understand?
+
+**A5.** The `capture.output()` is significantly more complex, as can be seen by its definition:
+
+
+```r
+capture.output
+#> function (..., file = NULL, append = FALSE, type = c("output", 
+#>     "message"), split = FALSE) 
+#> {
+#>     type <- match.arg(type)
+#>     rval <- NULL
+#>     closeit <- TRUE
+#>     if (is.null(file)) 
+#>         file <- textConnection("rval", "w", local = TRUE)
+#>     else if (is.character(file)) 
+#>         file <- file(file, if (append) 
+#>             "a"
+#>         else "w")
+#>     else if (inherits(file, "connection")) {
+#>         if (!isOpen(file)) 
+#>             open(file, if (append) 
+#>                 "a"
+#>             else "w")
+#>         else closeit <- FALSE
+#>     }
+#>     else stop("'file' must be NULL, a character string or a connection")
+#>     sink(file, type = type, split = split)
+#>     on.exit({
+#>         sink(type = type, split = split)
+#>         if (closeit) close(file)
+#>     })
+#>     for (i in seq_len(...length())) {
+#>         out <- withVisible(...elt(i))
+#>         if (out$visible) 
+#>             print(out$value)
+#>     }
+#>     on.exit()
+#>     sink(type = type, split = split)
+#>     if (closeit) 
+#>         close(file)
+#>     if (is.null(rval)) 
+#>         invisible(NULL)
+#>     else rval
+#> }
+#> <bytecode: 0x10980dd28>
+#> <environment: namespace:utils>
+```
+
+Here are few key differences:
+
+- `capture.output()` uses `print()` function to print to console:
+
+
+```r
+capture.output(1)
+#> [1] "[1] 1"
+
+capture.output2(1)
+#> character(0)
+```
+
+- `capture.output()` can capture messages as well:
+
+
+```r
+capture.output(message("Hi there!"), "a", type = "message")
+#> Hi there!
+#> [1] "a"
+#> character(0)
+```
+
+- `capture.output()` takes into account visibility of the expression:
+
+
+```r
+capture.output(1, invisible(2), 3)
+#> [1] "[1] 1" "[1] 3"
+```
 
 ## Exercises 6.8.6
 
@@ -998,4 +1186,3 @@ identical(union(x, y), x %u% y)
 identical(setdiff(x, y), x %/% y)
 #> [1] TRUE
 ```
-

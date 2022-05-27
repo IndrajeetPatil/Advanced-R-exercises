@@ -120,52 +120,52 @@
 <p><strong>Q2.</strong> Create an environment as illustrated by this picture.</p>
 <div class="inline-figure"><img src="diagrams/environments/recursive-1.png" width="177"></div>
 <p><strong>A2.</strong> Creating the specified environment:</p>
-<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span><span class="op">)</span>
 
-<span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env.html">env</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">e</span><span class="op">$</span><span class="va">loop</span> <span class="op">&lt;-</span> <span class="va">e</span>
-<span class="fu"><a href="https://rlang.r-lib.org/reference/env_print.html">env_print</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>
-<span class="co">#&gt; &lt;environment: 0x1276e5c10&gt;</span>
+<span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env_print.html">env_print</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>
+<span class="co">#&gt; &lt;environment: 0x115879d98&gt;</span>
 <span class="co">#&gt; Parent: &lt;environment: global&gt;</span>
 <span class="co">#&gt; Bindings:</span>
 <span class="co">#&gt; • loop: &lt;env&gt;</span>
 
 <span class="co"># should be the same as the `e` memory address</span>
 <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">e</span><span class="op">$</span><span class="va">loop</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x1276e5c10"</span></code></pre></div>
+<span class="co">#&gt; [1] "0x115879d98"</span></code></pre></div>
 <p><strong>Q3.</strong> Create a pair of environments as illustrated by this picture.</p>
 <div class="inline-figure"><img src="diagrams/environments/recursive-2.png" width="307"></div>
 <p><strong>A3.</strong> Creating the specified environment:</p>
-<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">e1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">e2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span><span class="op">)</span>
+<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">e1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env.html">env</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">e2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env.html">env</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">e1</span><span class="op">$</span><span class="va">loop</span> <span class="op">&lt;-</span> <span class="va">e2</span>
 <span class="va">e2</span><span class="op">$</span><span class="va">deloop</span> <span class="op">&lt;-</span> <span class="va">e1</span>
 
 <span class="co"># following should be the same</span>
 <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span><span class="op">$</span><span class="va">deloop</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x131668c20" "0x131668c20"</span>
+<span class="co">#&gt; [1] "0x116fdae20" "0x116fdae20"</span>
 <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">e2</span>, <span class="va">e1</span><span class="op">$</span><span class="va">loop</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x1316be0c0" "0x1316be0c0"</span></code></pre></div>
+<span class="co">#&gt; [1] "0x108838cc0" "0x108838cc0"</span></code></pre></div>
 <p><strong>Q4.</strong> Explain why <code>e[[1]]</code> and <code>e[c("a", "b")]</code> don’t make sense when <code>e</code> is an environment.</p>
 <p><strong>A4.</strong></p>
 <p>An environment is a non-linear data structure, and has no concept of ordered elements. Therefore, indexing it (e.g. <code>e[[1]]</code>) doesn’t make sense.</p>
 <p>Subsetting a list or a vector returns a subset of the underlying data structure. So, subsetting a vector returns another vector. But it’s unclear what subsetting an environment (e.g. <code>e[c("a", "b")]</code>) should return because there is no data structure to contain its returns. It can’t be another environment since environments have reference semantics.</p>
-<p><strong>Q5.</strong> Create a version of <code><a href="https://rlang.r-lib.org/reference/env_poke.html">env_poke()</a></code> that will only bind new names, never re-bind old names. Some programming languages only do this, and are known as [single assignment languages][<a href="https://en.wikipedia.org/wiki/Assignment_(computer_science)#Single_assignment" class="uri">https://en.wikipedia.org/wiki/Assignment_(computer_science)#Single_assignment</a>].</p>
-<p><strong>A5.</strong> Create a version of <code><a href="https://rlang.r-lib.org/reference/env_poke.html">env_poke()</a></code> that doesn’t allow re-binding old names:</p>
-<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
+<p><strong>Q5.</strong> Create a version of <code><a href="https://rdrr.io/pkg/rlang/man/env_poke.html">env_poke()</a></code> that will only bind new names, never re-bind old names. Some programming languages only do this, and are known as [single assignment languages][<a href="https://en.wikipedia.org/wiki/Assignment_(computer_science)#Single_assignment" class="uri">https://en.wikipedia.org/wiki/Assignment_(computer_science)#Single_assignment</a>].</p>
+<p><strong>A5.</strong> Create a version of <code><a href="https://rdrr.io/pkg/rlang/man/env_poke.html">env_poke()</a></code> that doesn’t allow re-binding old names:</p>
+<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">env_poke2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">env</span>, <span class="va">nm</span>, <span class="va">value</span><span class="op">)</span> <span class="op">{</span>
   <span class="kw">if</span> <span class="op">(</span><span class="va">nm</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">env</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"Can't re-bind existing names."</span><span class="op">)</span>
+    <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rlang/man/abort.html">abort</a></span><span class="op">(</span><span class="st">"Can't re-bind existing names."</span><span class="op">)</span>
   <span class="op">}</span>
 
-  <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_poke.html">env_poke</a></span><span class="op">(</span><span class="va">env</span>, <span class="va">nm</span>, <span class="va">value</span><span class="op">)</span>
+  <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env_poke.html">env_poke</a></span><span class="op">(</span><span class="va">env</span>, <span class="va">nm</span>, <span class="va">value</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>Making sure that it behaves as expected:</p>
-<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">2</span>, c <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env.html">env</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">2</span>, c <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 
 <span class="co"># re-binding old names not allowed</span>
 <span class="fu">env_poke2</span><span class="op">(</span><span class="va">e</span>, <span class="st">"b"</span>, <span class="fl">4</span><span class="op">)</span>
@@ -177,25 +177,25 @@
 <span class="va">e</span><span class="op">$</span><span class="va">d</span>
 <span class="co">#&gt; [1] 8</span></code></pre></div>
 <p>Contrast this behavior with the following:</p>
-<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">2</span>, c <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env.html">env</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">2</span>, c <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 
 <span class="va">e</span><span class="op">$</span><span class="va">b</span>
 <span class="co">#&gt; [1] 2</span>
 
 <span class="co"># re-binding old names allowed</span>
-<span class="fu"><a href="https://rlang.r-lib.org/reference/env_poke.html">env_poke</a></span><span class="op">(</span><span class="va">e</span>, <span class="st">"b"</span>, <span class="fl">4</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env_poke.html">env_poke</a></span><span class="op">(</span><span class="va">e</span>, <span class="st">"b"</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="va">e</span><span class="op">$</span><span class="va">b</span>
 <span class="co">#&gt; [1] 4</span></code></pre></div>
 <p><strong>Q6.</strong> What does this function do? How does it differ from <code>&lt;&lt;-</code> and why might you prefer it?</p>
-<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rebind</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="va">env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">env</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/empty_env.html">empty_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rebind</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="va">env</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">env</span>, <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/empty_env.html">empty_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
     <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Can't find `"</span>, <span class="va">name</span>, <span class="st">"`"</span>, call. <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_has.html">env_has</a></span><span class="op">(</span><span class="va">env</span>, <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="fu"><a href="https://rlang.r-lib.org/reference/env_poke.html">env_poke</a></span><span class="op">(</span><span class="va">env</span>, <span class="va">name</span>, <span class="va">value</span><span class="op">)</span>
+  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env_has.html">env_has</a></span><span class="op">(</span><span class="va">env</span>, <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env_poke.html">env_poke</a></span><span class="op">(</span><span class="va">env</span>, <span class="va">name</span>, <span class="va">value</span><span class="op">)</span>
   <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-    <span class="fu">rebind</span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env_parent.html">env_parent</a></span><span class="op">(</span><span class="va">env</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu">rebind</span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env_parent.html">env_parent</a></span><span class="op">(</span><span class="va">env</span><span class="op">)</span><span class="op">)</span>
   <span class="op">}</span>
 <span class="op">}</span>
 <span class="fu">rebind</span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">10</span><span class="op">)</span>
@@ -205,7 +205,7 @@
 <span class="va">a</span>
 <span class="co">#&gt; [1] 10</span></code></pre></div>
 <p><strong>A6.</strong> The downside of <code>&lt;&lt;-</code> is that it will create a new binding if it doesn’t exist in the given environment, which is something that we may not wish:</p>
-<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># `x` doesn't exist</span>
 <span class="fu"><a href="https://rdrr.io/r/base/exists.html">exists</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>
 <span class="co">#&gt; [1] FALSE</span>
@@ -216,20 +216,20 @@
 <span class="op">}</span>
 
 <span class="co"># in the global environment</span>
-<span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_has.html">env_has</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/search_envs.html">global_env</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"x"</span><span class="op">)</span>
+<span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env_has.html">env_has</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/rlang/man/search_envs.html">global_env</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"x"</span><span class="op">)</span>
 <span class="co">#&gt;    x </span>
 <span class="co">#&gt; TRUE</span>
 <span class="va">x</span>
 <span class="co">#&gt; [1] 5</span></code></pre></div>
 <p>But <code>rebind()</code> function will let us know if the binding doesn’t exist, which is much safer way to super-assign:</p>
-<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rebind</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="va">env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">env</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/empty_env.html">empty_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rebind</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="va">env</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">env</span>, <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/empty_env.html">empty_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
     <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Can't find `"</span>, <span class="va">name</span>, <span class="st">"`"</span>, call. <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_has.html">env_has</a></span><span class="op">(</span><span class="va">env</span>, <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="fu"><a href="https://rlang.r-lib.org/reference/env_poke.html">env_poke</a></span><span class="op">(</span><span class="va">env</span>, <span class="va">name</span>, <span class="va">value</span><span class="op">)</span>
+  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env_has.html">env_has</a></span><span class="op">(</span><span class="va">env</span>, <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env_poke.html">env_poke</a></span><span class="op">(</span><span class="va">env</span>, <span class="va">name</span>, <span class="va">value</span><span class="op">)</span>
   <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-    <span class="fu">rebind</span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env_parent.html">env_parent</a></span><span class="op">(</span><span class="va">env</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu">rebind</span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/env_parent.html">env_parent</a></span><span class="op">(</span><span class="va">env</span><span class="op">)</span><span class="op">)</span>
   <span class="op">}</span>
 <span class="op">}</span>
 
@@ -257,9 +257,9 @@
 <h3>
 <span class="header-section-number">7.0.3</span> Exercises 7.4.5<a class="anchor" aria-label="anchor" href="#exercises-7.4.5"><i class="fas fa-link"></i></a>
 </h3>
-<p><strong>Q1.</strong> How is <code><a href="https://rlang.r-lib.org/reference/search_envs.html">search_envs()</a></code> different from <code>env_parents(global_env())</code>?</p>
+<p><strong>Q1.</strong> How is <code><a href="https://rdrr.io/pkg/rlang/man/search_envs.html">search_envs()</a></code> different from <code>env_parents(global_env())</code>?</p>
 <p><strong>Q2.</strong> Draw a diagram that shows the enclosing environments of this function:</p>
-<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x1</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">f2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x2</span><span class="op">)</span> <span class="op">{</span>
     <span class="va">f3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x3</span><span class="op">)</span> <span class="op">{</span>
@@ -309,7 +309,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-05-25.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-05-27.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -82,14 +82,13 @@ objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
 funs <- Filter(is.function, objs)
 ```
 
-    Use it to answer the following questions:
+Use it to answer the following questions:
 
-    a. Which base function has the most arguments?
-    
-    a. How many base functions have no arguments? What's special about those
-       functions?
-       
-    a. How could you adapt the code to find all primitive functions?
+a. Which base function has the most arguments?
+
+b. How many base functions have no arguments? What's special about those functions?
+
+c. How could you adapt the code to find all primitive functions?
 
 **A5.** The provided code is the following:
 
@@ -98,7 +97,7 @@ objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
 funs <- Filter(is.function, objs)
 ```
 
-- Which base function has the most arguments?
+a. Which base function has the most arguments?
 
 `scan()` function has the most arguments.
 
@@ -114,7 +113,7 @@ df_formals <- purrr::map_df(funs, ~ length(formals(.))) %>%
   dplyr::arrange(desc(argumentCount))
 ```
 
-- How many base functions have no arguments? What’s special about those functions?
+b. How many base functions have no arguments? What’s special about those functions?
 
 At the time of writing, 253 base functions have no arguments. Most of these are primitive functions
 
@@ -122,7 +121,7 @@ At the time of writing, 253 base functions have no arguments. Most of these are 
 dplyr::filter(df_formals, argumentCount == 0)
 ```
 
-- How could you adapt the code to find all primitive functions?
+c. How could you adapt the code to find all primitive functions?
 
 ```{r}
 objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
@@ -326,7 +325,7 @@ f1()
 y
 ```
 
-**A3.** TODO:
+**A3.** Note that in the function call `f1()`, the `x` and `y` arguments are missing. That means, the default arguments are evaluated in the function environment, and not in the environment in which the function is defined. 
 
 ```{r}
 y <- 10
@@ -336,11 +335,18 @@ f1 <- function(x =
                    2
                  },
                y = 0) {
+  print(missing(x))
+  print(missing(y))
+
   c(x, y)
 }
+
 f1()
+
 y
 ```
+
+This is why `x` and `y` in function environment are assigned the values we see returned, and the `y` in the global environment remains unchanged.
 
 **Q4.** In `hist()`, the default value of `xlim` is `range(breaks)`, the default value for `breaks` is `"Sturges"`, and
 
@@ -350,6 +356,20 @@ range("Sturges")
 
 Explain how `hist()` works to get a correct `xlim` value.
 
+**A4.** The `xlim` defines the range of axes breaks for the histogram.
+
+```{r}
+hist(mtcars$wt, xlim = c(1, 6))
+```
+
+The default `c("Sturges", "Sturges")` uses Sturges' algorithm to compute the number of breaks, and thus, the range for axes breaks.
+
+```{r}
+nclass.Sturges(mtcars$wt)
+```
+
+To see the implementation, run `sloop::s3_get_method("hist.default")`.
+
 **Q5.** Explain why this function works. Why is it confusing?
 
 ```{r}
@@ -357,10 +377,39 @@ show_time <- function(x = stop("Error!")) {
   stop <- function(...) Sys.time()
   print(x)
 }
+
 show_time()
 ```
 
+**A5.** Let's take this step-by-step.
+
+The function argument `x` is missing in the function call. This means that `stop("Error!")` is evaluated in the function environment, and not global environment.
+
+But `stop("Error!")` evaluated only when `x` is evaluated, and due to lazy evaluation, this happens only when `print(x)` is called.
+
+`print(x)` leads to `x` being evaluated, which evaluates `stop` in the function environment. But in function environment, the `base::stop()` is masked by a locally defined `stop` function, which returns `Sys.time()` output.
+
 **Q6.** How many arguments are required when calling `library()`?
+
+**A6.** Going solely by its signature, 
+
+```{r}
+formals(library)
+```
+
+it looks like the following arguments are required:
+
+```{r}
+formals(library) %>%
+  purrr::discard(is.null) %>%
+  purrr::map_lgl(~ .x == "") %>%
+  purrr::keep(~ isTRUE(.x)) %>%
+  names()
+```
+
+But, in reality, only one argument is required: `package`. The function internally checks if the other arguments are missing and internally chooses necessary defaults.
+
+It would have been better if there arguments were `NULL` instead of missing; that would avoid this confusion.
 
 ## Exercises 6.6.1
 
@@ -484,6 +533,17 @@ More importantly, its parameters `dir` allows temporarily changing working direc
 
 **Q4.** Write a function that opens a graphics device, runs the supplied code, and  closes the graphics device (always, regardless of whether or not the plotting code works).
 
+**A4.** Here is a function that opens a graphics device, runs the supplied code, and  closes the graphics device:
+
+```{r, eval=FALSE}
+with_png_device <- function(filename, code, ...) {
+  grDevices::png(filename = filename, ...)
+  on.exit(grDevices::dev.off(), add = TRUE)
+  
+  force(code)
+}
+```
+
 **Q5.** We can use `on.exit()` to implement a simple version of `capture.output()`.
 
 ```{r, eval = getRversion() >= "3.5"}
@@ -500,6 +560,34 @@ capture.output2(cat("a", "b", "c", sep = "\n"))
 ```
 
 Compare `capture.output()` to `capture.output2()`. How do the functions differ? What features have I removed to make the key ideas easier to see? How have I rewritten the key ideas so they're easier to understand?
+
+**A5.** The `capture.output()` is significantly more complex, as can be seen by its definition:
+
+```{r}
+capture.output
+```
+
+Here are few key differences:
+
+- `capture.output()` uses `print()` function to print to console:
+
+```{r}
+capture.output(1)
+
+capture.output2(1)
+```
+
+- `capture.output()` can capture messages as well:
+
+```{r}
+capture.output(message("Hi there!"), "a", type = "message")
+```
+
+- `capture.output()` takes into account visibility of the expression:
+
+```{r}
+capture.output(1, invisible(2), 3)
+```
 
 ## Exercises 6.8.6
 
@@ -718,4 +806,3 @@ identical(intersect(x, y), x %n% y)
 identical(union(x, y), x %u% y)
 identical(setdiff(x, y), x %/% y)
 ```
-

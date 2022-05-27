@@ -87,37 +87,37 @@
 <span class="header-section-number">23.1</span> Exercises 23.2.4<a class="anchor" aria-label="anchor" href="#exercises-23.2.4"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Profile the following function with <code>torture = TRUE</code>. What is surprising? Read the source code of <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code> to figure out what’s going on.</p>
-<div class="sourceCode" id="cb419"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb430"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span> <span class="op">=</span> <span class="fl">1e5</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p><strong>A1.</strong></p>
 <p>Let’s first source the functions mentioned in exercises.</p>
-<div class="sourceCode" id="cb420"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb431"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/profvis/">profvis</a></span><span class="op">)</span>
 
 <span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="st">"profiling-exercises.R"</span><span class="op">)</span></code></pre></div>
 <p>First, we try without <code>torture = TRUE</code>: it returns no meaningful results.</p>
-<div class="sourceCode" id="cb421"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb432"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/profvis/man/profvis.html">profvis</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Error in parse_rprof(prof_output, expr_source): No parsing data available. Maybe your function was too fast?</span></code></pre></div>
 <p>Maybe because the function runs too fast?</p>
-<div class="sourceCode" id="cb422"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span>, check <span class="op">=</span> <span class="cn">FALSE</span>, iterations <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>
+<div class="sourceCode" id="cb433"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bench/man/mark.html">mark</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span>, check <span class="op">=</span> <span class="cn">FALSE</span>, iterations <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1 × 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 f()          99.7µs    138µs     6755.     792KB     103.</span></code></pre></div>
+<span class="co">#&gt; 1 f()          99.5µs    134µs     7134.     792KB     109.</span></code></pre></div>
 <p>As mentioned in the docs, setting <code>torture = TRUE</code></p>
 <blockquote>
 <p>Triggers garbage collection after every torture memory allocation call.</p>
 </blockquote>
 <p>This process somehow never seems to finish and crashes the RStudio session when it stops!</p>
-<div class="sourceCode" id="cb423"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb434"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/profvis/man/profvis.html">profvis</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span>, torture <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>The question says that documentation for <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code> may provide clues:</p>
-<div class="sourceCode" id="cb424"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb435"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rm</span>
 <span class="co">#&gt; function (..., list = character(), pos = -1, envir = as.environment(pos), </span>
 <span class="co">#&gt;     inherits = FALSE) </span>
@@ -132,7 +132,7 @@
 <span class="co">#&gt;     list &lt;- .Primitive("c")(list, names)</span>
 <span class="co">#&gt;     .Internal(remove(list, envir, inherits))</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x127680848&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x1561fd248&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>I still couldn’t figure out why. I would recommend checking out the <a href="https://advanced-r-solutions.rbind.io/measuring-performance.html#profiling">official answer</a>.</p>
 </div>
@@ -140,14 +140,14 @@
 <h2>
 <span class="header-section-number">23.2</span> Exercises 23.3.3<a class="anchor" aria-label="anchor" href="#exercises-23.3.3"><i class="fas fa-link"></i></a>
 </h2>
-<p><strong>Q1.</strong> Instead of using <code><a href="http://bench.r-lib.org/reference/mark.html">bench::mark()</a></code>, you could use the built-in function <code><a href="https://rdrr.io/r/base/system.time.html">system.time()</a></code>. But <code><a href="https://rdrr.io/r/base/system.time.html">system.time()</a></code> is much less precise, so you’ll need to repeat each operation many times with a loop, and then divide to find the average time of each operation, as in the code below.</p>
-<div class="sourceCode" id="cb425"><pre class="downlit sourceCode r">
+<p><strong>Q1.</strong> Instead of using <code><a href="https://rdrr.io/pkg/bench/man/mark.html">bench::mark()</a></code>, you could use the built-in function <code><a href="https://rdrr.io/r/base/system.time.html">system.time()</a></code>. But <code><a href="https://rdrr.io/r/base/system.time.html">system.time()</a></code> is much less precise, so you’ll need to repeat each operation many times with a loop, and then divide to find the average time of each operation, as in the code below.</p>
+<div class="sourceCode" id="cb436"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">1e6</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span> <span class="va">x</span><span class="op">^</span><span class="fl">0.5</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span></code></pre></div>
-<p>How do the estimates from <code><a href="https://rdrr.io/r/base/system.time.html">system.time()</a></code> compare to those from <code><a href="http://bench.r-lib.org/reference/mark.html">bench::mark()</a></code>? Why are they different?</p>
+<p>How do the estimates from <code><a href="https://rdrr.io/r/base/system.time.html">system.time()</a></code> compare to those from <code><a href="https://rdrr.io/pkg/bench/man/mark.html">bench::mark()</a></code>? Why are they different?</p>
 <p><strong>A1.</strong></p>
-<div class="sourceCode" id="cb426"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb437"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
 <span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">1e6</span>
@@ -155,18 +155,18 @@
 
 <span class="co"># bench -------------------</span>
 
-<span class="va">bench_df</span> <span class="op">&lt;-</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span>
+<span class="va">bench_df</span> <span class="op">&lt;-</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bench/man/mark.html">mark</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,
   <span class="va">x</span><span class="op">^</span><span class="fl">0.5</span>,
   iterations <span class="op">=</span> <span class="va">n</span>
 <span class="op">)</span>
 
-<span class="va">t_bench_df</span> <span class="op">&lt;-</span> <span class="va">bench_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">expression</span>, <span class="va">time</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rowwise.html">rowwise</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">time</span><span class="op">)</span>
+<span class="va">t_bench_df</span> <span class="op">&lt;-</span> <span class="va">bench_df</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span><span class="op">(</span><span class="va">expression</span>, <span class="va">time</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/rowwise.html">rowwise</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">time</span><span class="op">)</span>
 
 <span class="co"># system.time -------------------</span>
 
@@ -178,55 +178,55 @@
 <span class="va">t1_systime_nogc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, gcFirst <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span>
 <span class="va">t2_systime_nogc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span> <span class="va">x</span><span class="op">^</span><span class="fl">0.5</span>, gcFirst <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span>
 
-<span class="va">t_systime_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
+<span class="va">t_systime_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tibble/man/tibble.html">tibble</a></span><span class="op">(</span>
   <span class="st">"expression"</span> <span class="op">=</span> <span class="va">bench_df</span><span class="op">$</span><span class="va">expression</span>,
   <span class="st">"systime_with_gc_us"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">t1_systime_gc</span><span class="op">[</span><span class="st">"elapsed"</span><span class="op">]</span>, <span class="va">t2_systime_gc</span><span class="op">[</span><span class="st">"elapsed"</span><span class="op">]</span><span class="op">)</span>,
   <span class="st">"systime_with_nogc_us"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">t1_systime_nogc</span><span class="op">[</span><span class="st">"elapsed"</span><span class="op">]</span>, <span class="va">t2_systime_nogc</span><span class="op">[</span><span class="st">"elapsed"</span><span class="op">]</span><span class="op">)</span>
-<span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+<span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span>
     systime_with_gc_us <span class="op">=</span> <span class="va">systime_with_gc_us</span> <span class="op">*</span> <span class="fl">1e6</span>,
     systime_with_nogc_us <span class="op">=</span> <span class="va">systime_with_nogc_us</span> <span class="op">*</span> <span class="fl">1e6</span>
   <span class="op">)</span></code></pre></div>
 <p>Compare results from these alternatives:</p>
-<div class="sourceCode" id="cb427"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb438"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">t_bench_df</span>
 <span class="co">#&gt; # A tibble: 2 × 2</span>
 <span class="co">#&gt;   expression     mean</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)    419.98ns</span>
-<span class="co">#&gt; 2 x^0.5        1.31µs</span>
+<span class="co">#&gt; 1 sqrt(x)    405.76ns</span>
+<span class="co">#&gt; 2 x^0.5        1.28µs</span>
 
 <span class="va">t_systime_df</span>
 <span class="co">#&gt; # A tibble: 2 × 3</span>
 <span class="co">#&gt;   expression systime_with_gc_us systime_with_nogc_us</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;              &lt;dbl&gt;                &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)                 0.395                 0.41</span>
-<span class="co">#&gt; 2 x^0.5                   1.21                  1.23</span></code></pre></div>
+<span class="co">#&gt; 1 sqrt(x)                 0.387                0.400</span>
+<span class="co">#&gt; 2 x^0.5                   1.21                 1.22</span></code></pre></div>
 <p>The comparison reveals that these two approaches yield quite similar results.</p>
 <p><strong>Q2.</strong> Here are two other ways to compute the square root of a vector. Which do you think will be fastest? Which will be slowest? Use microbenchmarking to test your answers.</p>
-<div class="sourceCode" id="cb428"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb439"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span><span class="op">^</span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><strong>A2.</strong></p>
 <p>Microbenchmarking all ways to compute square root of a vector mentioned in this chapter.</p>
-<div class="sourceCode" id="cb429"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb440"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span>
 
-<span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span>
+<span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bench/man/mark.html">mark</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,
   <span class="va">x</span><span class="op">^</span><span class="fl">0.5</span>,
   <span class="va">x</span><span class="op">^</span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>,
   <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>,
   iterations <span class="op">=</span> <span class="fl">1000</span>
-<span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">median</span><span class="op">)</span>
+<span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/arrange.html">arrange</a></span><span class="op">(</span><span class="va">median</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 4 × 6</span>
 <span class="co">#&gt;   expression         min   median `itr/sec` mem_alloc</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;    &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span>
-<span class="co">#&gt; 1 sqrt(x)         1.02µs   1.93µs   567505.    7.86KB</span>
-<span class="co">#&gt; 2 exp(log(x)/2)   6.19µs   7.17µs   141419.    7.86KB</span>
-<span class="co">#&gt; 3 x^(1/2)         9.31µs  10.19µs    98515.    7.86KB</span>
-<span class="co">#&gt; 4 x^0.5           9.22µs  10.25µs    98888.    7.86KB</span>
+<span class="co">#&gt; 1 sqrt(x)         1.07µs   1.68µs   554750.    7.86KB</span>
+<span class="co">#&gt; 2 exp(log(x)/2)   6.11µs   7.22µs   140820.    7.86KB</span>
+<span class="co">#&gt; 3 x^0.5           9.27µs  10.17µs    99768.    7.86KB</span>
+<span class="co">#&gt; 4 x^(1/2)         9.31µs  10.27µs    99079.    7.86KB</span>
 <span class="co">#&gt;   `gc/sec`</span>
 <span class="co">#&gt;      &lt;dbl&gt;</span>
 <span class="co">#&gt; 1        0</span>
@@ -263,7 +263,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-05-25.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-05-27.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

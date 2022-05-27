@@ -31,7 +31,7 @@ The names (`a`, `b`, and `c`) are references to the same object in memory, as ca
 library(lobstr)
 
 obj_addrs(list(a, b, c))
-#> [1] "0x12f8a5120" "0x12f8a5120" "0x12f8a5120"
+#> [1] "0x11fccefd0" "0x11fccefd0" "0x11fccefd0"
 ```
 
 Except `d`, which is a different object, even if it has the same value:
@@ -39,7 +39,7 @@ Except `d`, which is a different object, even if it has the same value:
 
 ```r
 obj_addr(d)
-#> [1] "0x12f7494a0"
+#> [1] "0x11fb7d350"
 ```
 
 **Q2.** The following code accesses the mean function in multiple ways. Do they all point to the same underlying function object? Verify this with `lobstr::obj_addr()`.
@@ -60,15 +60,15 @@ Following code verifies that indeed these calls all point to the same underlying
 
 ```r
 obj_addr(mean)
-#> [1] "0x12cd4db90"
+#> [1] "0x12de3e390"
 obj_addr(base::mean)
-#> [1] "0x12cd4db90"
+#> [1] "0x12de3e390"
 obj_addr(get("mean"))
-#> [1] "0x12cd4db90"
+#> [1] "0x12de3e390"
 obj_addr(evalq(mean))
-#> [1] "0x12cd4db90"
+#> [1] "0x12de3e390"
 obj_addr(match.fun("mean"))
-#> [1] "0x12cd4db90"
+#> [1] "0x12de3e390"
 ```
 
 **Q3.** By default, base R data import functions, like `read.csv()`, will automatically convert non-syntactic names to syntactic ones. Why might this be problematic? What option allows you to suppress this behaviour?
@@ -126,7 +126,7 @@ make.names(.123e1)
 
 ```r
 tracemem(1:10)
-#> [1] "<0x14a83c4e0>"
+#> [1] "<0x11dc4a8e0>"
 ```
 
 **Q2.** Explain why `tracemem()` shows two copies when you run this code. Hint: carefully look at the difference between this code and the code shown earlier in the section.
@@ -147,11 +147,11 @@ Were it not for `4` being a double - and not an integer (`4L`) - this would have
 ```r
 x <- c(1L, 2L, 3L)
 tracemem(x)
-#> [1] "<0x14b117748>"
+#> [1] "<0x11d6cfd08>"
 
 x[[3]] <- 4
-#> tracemem[0x14b117748 -> 0x14b1ab148]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
-#> tracemem[0x14b1ab148 -> 0x14b1d34c8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x11d6cfd08 -> 0x11d763708]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
+#> tracemem[0x11d763708 -> 0x11d78bac8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 ```
 
 Try with integer:
@@ -160,10 +160,10 @@ Try with integer:
 ```r
 x <- c(1L, 2L, 3L)
 tracemem(x)
-#> [1] "<0x14b3e1c88>"
+#> [1] "<0x10d9a1c48>"
 
 x[[3]] <- 4L
-#> tracemem[0x14b3e1c88 -> 0x14b461688]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x10d9a1c48 -> 0x10da23648]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 ```
 
 As for why this still produces a copy, this is from Solutions manual:
@@ -188,20 +188,20 @@ b <- list(a, a)
 c <- list(b, a, 1:10)
 
 ref(a)
-#> [1:0x14b9b80a8] <int>
+#> [1:0x10df700a8] <int>
 
 ref(b)
-#> █ [1:0x14b9bf348] <list> 
-#> ├─[2:0x14b9b80a8] <int> 
-#> └─[2:0x14b9b80a8]
+#> █ [1:0x10df77308] <list> 
+#> ├─[2:0x10df700a8] <int> 
+#> └─[2:0x10df700a8]
 
 ref(c)
-#> █ [1:0x14ba06a28] <list> 
-#> ├─█ [2:0x14b9bf348] <list> 
-#> │ ├─[3:0x14b9b80a8] <int> 
-#> │ └─[3:0x14b9b80a8] 
-#> ├─[3:0x14b9b80a8] 
-#> └─[4:0x14ba583c8] <int>
+#> █ [1:0x10dfbea28] <list> 
+#> ├─█ [2:0x10df77308] <list> 
+#> │ ├─[3:0x10df700a8] <int> 
+#> │ └─[3:0x10df700a8] 
+#> ├─[3:0x10df700a8] 
+#> └─[4:0x10e01a3c8] <int>
 ```
 
 **Q4.** What happens when you run this code?
@@ -223,7 +223,7 @@ x
 #> [[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x14e936668"
+#> [1] "0x10e4cd6a0"
 
 x[[2]] <- x
 x
@@ -234,13 +234,13 @@ x
 #> [[2]][[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x14e9d0788"
+#> [1] "0x10d12c748"
 
 ref(x)
-#> █ [1:0x14e9d0788] <list> 
-#> ├─[2:0x14e9464a8] <int> 
-#> └─█ [3:0x14e936668] <list> 
-#>   └─[2:0x14e9464a8]
+#> █ [1:0x10d12c748] <list> 
+#> ├─[2:0x10e4dd4a8] <int> 
+#> └─█ [3:0x10e4cd6a0] <list> 
+#>   └─[2:0x10e4dd4a8]
 ```
 
 Figure from the official solution manual can be found here:
@@ -373,16 +373,16 @@ Copy-on-modify prevents the creation of a circular list.
 x <- list()
 
 obj_addr(x)
-#> [1] "0x12f981a30"
+#> [1] "0x11fdb08a0"
 
 tracemem(x)
-#> [1] "<0x12f981a30>"
+#> [1] "<0x11fdb08a0>"
 
 x[[1]] <- x
-#> tracemem[0x12f981a30 -> 0x12f7ef270]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x11fdb08a0 -> 0x11fc260a8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 
 obj_addr(x[[1]])
-#> [1] "0x12f981a30"
+#> [1] "0x11fdb08a0"
 ```
 
 **Q2.** Wrap the two methods for subtracting medians into two functions, then use the 'bench' package to carefully compare their speeds. How does performance change as the number of columns increase?
