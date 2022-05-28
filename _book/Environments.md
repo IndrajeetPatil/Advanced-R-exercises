@@ -1,5 +1,19 @@
 # Environments
 
+<!-- ```{r, include = FALSE, eval=FALSE} -->
+<!-- # don't include because otherwise all loaded packages will  -->
+<!-- # show up in search path for environments -->
+<!-- source("common.R") -->
+<!-- ``` -->
+
+Attaching the needed libraries:
+
+
+```r
+library(rlang)
+```
+
+
 ### Exercises 7.2.7
 
 **Q1.** List three ways in which an environment differs from a list.
@@ -12,12 +26,13 @@ semantics | value | reference
 data structure | linear | non-linear
 duplicated names | allowed | not allowed
 has parent? | false | true
+can contain itself? | false | true
 
 **Q2.** Create an environment as illustrated by this picture.
 
 <img src="diagrams/environments/recursive-1.png" width="177" />
 
-**A2.** Creating the specified environment:
+**A2.** Creating the environment illustrated in the picture:
 
 
 ```r
@@ -26,14 +41,14 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x115879d98>
+#> <environment: 0x10f710068>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
 
 # should be the same as the `e` memory address
 lobstr::obj_addr(e$loop)
-#> [1] "0x115879d98"
+#> [1] "0x10f710068"
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -52,16 +67,14 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x116fdae20" "0x116fdae20"
+#> [1] "0x109adc260" "0x109adc260"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x108838cc0" "0x108838cc0"
+#> [1] "0x109b47d20" "0x109b47d20"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
 
-**A4.** 
-
-An environment is a non-linear data structure, and has no concept of ordered elements. Therefore, indexing it (e.g. `e[[1]]`) doesn't make sense.
+**A4.** An environment is a non-linear data structure, and has no concept of ordered elements. Therefore, indexing it (e.g. `e[[1]]`) doesn't make sense.
 
 Subsetting a list or a vector returns a subset of the underlying data structure. So, subsetting a vector returns another vector. But it's unclear what subsetting an environment (e.g. `e[c("a", "b")]`) should return because there is no data structure to contain its returns. It can't be another environment since environments have reference semantics.
 
@@ -73,10 +86,10 @@ Subsetting a list or a vector returns a subset of the underlying data structure.
 ```r
 env_poke2 <- function(env, nm, value) {
   if (nm %in% names(env)) {
-    rlang::abort("Can't re-bind existing names.")
+    abort("Can't re-bind existing names.")
   }
 
-  rlang::env_poke(env, nm, value)
+  env_poke(env, nm, value)
 }
 ```
 
@@ -147,7 +160,7 @@ exists("x")
 }
 
 # in the global environment
-rlang::env_has(global_env(), "x")
+env_has(global_env(), "x")
 #>    x 
 #> TRUE
 x
@@ -186,11 +199,164 @@ a
 
 **Q1.** Modify `where()` to return _all_ environments that contain a binding for `name`. Carefully think through what type of object the function will need to return.
 
-**Q2.** Write a function called `fget()` that finds only function objects. It  should have two arguments, `name` and `env`, and should obey the regular scoping rules for functions: if there's an object with a matching name that's not a function, look in the parent. For an added challenge, also add an `inherits` argument which controls whether the function recurses up the parents or only looks in one environment.
+**A1.** Here is a modified version of `where()` that returns _all_ environments that contain a binding for `name`.
+
+Since we anticipate more than one environment, we dynamically update a list each time an environment with the specified binding is found. It is important to initialize to an empty list since that signifies that given binding is not found in any of the environments.
+
+
+```r
+where <- function(name, env = caller_env()) {
+  env_list <- list()
+
+  while (!identical(env, empty_env())) {
+    if (env_has(env, name)) {
+      env_list <- append(env_list, env)
+    }
+
+    env <- env_parent(env)
+  }
+
+  return(env_list)
+}
+```
+
+Let's try it out:
+
+
+```r
+where("yyy")
+#> list()
+
+x <- 5
+where("x")
+#> [[1]]
+#> <environment: R_GlobalEnv>
+
+where("mean")
+#> [[1]]
+#> <environment: base>
+
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+where("filter")
+#> [[1]]
+#> <environment: package:dplyr>
+#> attr(,"name")
+#> [1] "package:dplyr"
+#> attr(,"path")
+#> [1] "/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library/dplyr"
+#> 
+#> [[2]]
+#> <environment: package:stats>
+#> attr(,"name")
+#> [1] "package:stats"
+#> attr(,"path")
+#> [1] "/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library/stats"
+detach("package:dplyr")
+```
+
+**Q2.** Write a function called `fget()` that finds only function objects. It should have two arguments, `name` and `env`, and should obey the regular scoping rules for functions: if there's an object with a matching name that's not a function, look in the parent. For an added challenge, also add an `inherits` argument which controls whether the function recurses up the parents or only looks in one environment.
+
+**A2.** Here is a function that recursively looks for function objects:
+
+
+```r
+fget <- function(name, env = caller_env(), inherits = FALSE) {
+  # we need only function objects
+  f_value <- mget(name,
+    envir = env,
+    mode = "function",
+    inherits = FALSE, # since we have our custom argument
+    ifnotfound = list(NULL)
+  )
+
+  if (!is.null(f_value[[1]])) {
+    # success case
+    f_value[[1]]
+  } else {
+    if (inherits && !identical(env, empty_env())) {
+      # recursive case
+      env <- env_parent(env)
+      fget(name, env, inherits = TRUE)
+    } else {
+      # base case
+      stop("No function objects with matching name was found.", call. = FALSE)
+    }
+  }
+}
+```
+
+Let's try it out:
+
+
+```r
+fget("mean", inherits = FALSE)
+#> Error: No function objects with matching name was found.
+
+fget("mean", inherits = TRUE)
+#> function (x, ...) 
+#> UseMethod("mean")
+#> <bytecode: 0x11da29200>
+#> <environment: namespace:base>
+
+mean <- 5
+fget("mean", inherits = FALSE)
+#> Error: No function objects with matching name was found.
+
+mean <- function() NULL
+fget("mean", inherits = FALSE)
+#> function() NULL
+rm("mean")
+```
 
 ### Exercises 7.4.5
 
 **Q1.** How is `search_envs()` different from `env_parents(global_env())`?
+
+**A1.** The `search_envs()` lists a chain of environments currently attached to the search path and contains exported functions from these packages. The search path always ends at the `{base}` package environment. The search path also includes the global environment.
+
+
+```r
+search_envs()
+#>  [[1]] $ <env: global>
+#>  [[2]] $ <env: package:rlang>
+#>  [[3]] $ <env: package:stats>
+#>  [[4]] $ <env: package:graphics>
+#>  [[5]] $ <env: package:grDevices>
+#>  [[6]] $ <env: package:utils>
+#>  [[7]] $ <env: package:datasets>
+#>  [[8]] $ <env: package:methods>
+#>  [[9]] $ <env: Autoloads>
+#> [[10]] $ <env: org:r-lib>
+#> [[11]] $ <env: package:base>
+```
+
+The `env_parents()` lists all parent environments up until the empty environment. Of course, the global environment itself is not included in this list.
+
+
+```r
+env_parents(global_env())
+#>  [[1]] $ <env: package:rlang>
+#>  [[2]] $ <env: package:stats>
+#>  [[3]] $ <env: package:graphics>
+#>  [[4]] $ <env: package:grDevices>
+#>  [[5]] $ <env: package:utils>
+#>  [[6]] $ <env: package:datasets>
+#>  [[7]] $ <env: package:methods>
+#>  [[8]] $ <env: Autoloads>
+#>  [[9]] $ <env: org:r-lib>
+#> [[10]] $ <env: package:base>
+#> [[11]] $ <env: empty>
+```
+
+
 
 **Q2.** Draw a diagram that shows the enclosing environments of this function:
 

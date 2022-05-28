@@ -8,13 +8,5 @@ knitr::opts_chunk$set(
   strip.white = FALSE
 )
 
-# needed libraries
-library(tidyverse, warn.conflicts = FALSE)
-library(lobstr, warn.conflicts = FALSE)
-library(sloop, warn.conflicts = FALSE)
-library(rlang, warn.conflicts = FALSE)
-library(fastmatch, warn.conflicts = FALSE)
-library(fasttime, warn.conflicts = FALSE)
-
 # for reproducibility
 set.seed(1024)

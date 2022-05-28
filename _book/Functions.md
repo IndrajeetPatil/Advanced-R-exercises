@@ -2,6 +2,14 @@
 
 
 
+Attaching the needed libraries:
+
+
+```r
+library(tidyverse, warn.conflicts = FALSE)
+```
+
+
 ## Exercises 6.2.5
 
 **Q1.** Given a name, like `"mean"`, `match.fun()` lets you find a function. Given a function, can you find its name? Why doesn't that make sense in R?
@@ -13,7 +21,7 @@
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x13077c640>
+#> <bytecode: 0x143a27c00>
 #> <environment: namespace:base>
 ```
 
@@ -128,8 +136,6 @@ a. Which base function has the most arguments?
 
 
 ```r
-library(tidyverse)
-
 df_formals <- purrr::map_df(funs, ~ length(formals(.))) %>%
   tidyr::pivot_longer(
     cols = dplyr::everything(),
@@ -293,7 +299,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x13077c640>
+#> <bytecode: 0x143a27c00>
 #> <environment: namespace:base>
 
 # other package function
@@ -303,7 +309,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x11b683190>
+#> <bytecode: 0x125e7d7d0>
 #> <environment: namespace:purrr>
 ```
 
@@ -487,7 +493,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x10a3eee18" "0x10a3eee18"
+#> [1] "0x142769a40" "0x142769a40"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -552,7 +558,7 @@ Explain how `hist()` works to get a correct `xlim` value.
 hist(mtcars$wt, xlim = c(1, 6))
 ```
 
-<img src="Functions_files/figure-html/unnamed-chunk-30-1.png" width="672" />
+<img src="Functions_files/figure-html/unnamed-chunk-31-1.png" width="672" />
 
 The default `c("Sturges", "Sturges")` uses Sturges' algorithm to compute the number of breaks, and thus, the range for axes breaks.
 
@@ -574,7 +580,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-05-27 16:27:59 CEST"
+#> [1] "2022-05-28 21:09:24 CEST"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -687,7 +693,7 @@ For `mean()` function, there is only one parameter (`x`) and it's matched by the
 plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
 ```
 
-<img src="Functions_files/figure-html/unnamed-chunk-37-1.png" width="288" />
+<img src="Functions_files/figure-html/unnamed-chunk-38-1.png" width="288" />
 
 **A2.** First, check documentation for `plot()`:
 
@@ -794,7 +800,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x10848c070>
+#> <bytecode: 0x12373de38>
 #> <environment: namespace:withr>
 ```
 
@@ -876,7 +882,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x10980dd28>
+#> <bytecode: 0x145c144e8>
 #> <environment: namespace:utils>
 ```
 
