@@ -41,14 +41,14 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x10f710068>
+#> <environment: 0x14c199458>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
 
 # should be the same as the `e` memory address
 lobstr::obj_addr(e$loop)
-#> [1] "0x10f710068"
+#> [1] "0x14c199458"
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -67,9 +67,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x109adc260" "0x109adc260"
+#> [1] "0x12ce114d8" "0x12ce114d8"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x109b47d20" "0x109b47d20"
+#> [1] "0x12ce82ee0" "0x12ce82ee0"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -303,7 +303,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x11da29200>
+#> <bytecode: 0x15c1e0400>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -375,6 +375,83 @@ f1(1)
 ```
 
 **Q3.** Write an enhanced version of `str()` that provides more information about functions. Show where the function was found and what environment it was defined in.
+
+**A3.**  To write the required function, we can first re-purpose the `fget()` function we wrote above to return not the found function, but to return the environment in which it was found and its enclosing environment:
+
+
+```r
+fget2 <- function(name, env = caller_env()) {
+  # we need only function objects
+  f_value <- mget(name,
+                  envir = env,
+                  mode = "function",
+                  inherits = FALSE,
+                  ifnotfound = list(NULL)
+  )
+  
+  if (!is.null(f_value[[1]])) {
+    # success case
+    list(
+     "where" = env,
+      "enclosing" = fn_env(f_value[[1]])
+    )
+  } else {
+    if (!identical(env, empty_env())) {
+      # recursive case
+      env <- env_parent(env)
+      fget2(name, env)
+    } else {
+      # base case
+      stop("No function objects with matching name was found.", call. = FALSE)
+    }
+  }
+}
+```
+
+Let's try it out:
+
+
+```r
+fget2("mean")
+#> $where
+#> <environment: base>
+#> 
+#> $enclosing
+#> <environment: namespace:base>
+
+mean <- function() NULL
+fget2("mean")
+#> $where
+#> <environment: R_GlobalEnv>
+#> 
+#> $enclosing
+#> <environment: R_GlobalEnv>
+rm("mean")
+```
+
+We can now write the new version of `str()` as a wrapper around this function. We only need to foresee that users might enter the function name either as a symbol or a string.
+
+
+```r
+str_function <- function(.f) {
+  fget2(as_string(ensym(.f)))
+} 
+
+str_function(mean)
+#> $where
+#> <environment: base>
+#> 
+#> $enclosing
+#> <environment: namespace:base>
+
+str_function("mean")
+#> $where
+#> <environment: base>
+#> 
+#> $enclosing
+#> <environment: namespace:base>
+```
+
 
 ### Exercises 7.5.5
 

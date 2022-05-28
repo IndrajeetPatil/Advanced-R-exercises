@@ -289,6 +289,60 @@ f1(1)
 
 **Q3.** Write an enhanced version of `str()` that provides more information about functions. Show where the function was found and what environment it was defined in.
 
+**A3.**  To write the required function, we can first re-purpose the `fget()` function we wrote above to return not the found function, but to return the environment in which it was found and its enclosing environment:
+
+```{r}
+fget2 <- function(name, env = caller_env()) {
+  # we need only function objects
+  f_value <- mget(name,
+                  envir = env,
+                  mode = "function",
+                  inherits = FALSE,
+                  ifnotfound = list(NULL)
+  )
+  
+  if (!is.null(f_value[[1]])) {
+    # success case
+    list(
+     "where" = env,
+      "enclosing" = fn_env(f_value[[1]])
+    )
+  } else {
+    if (!identical(env, empty_env())) {
+      # recursive case
+      env <- env_parent(env)
+      fget2(name, env)
+    } else {
+      # base case
+      stop("No function objects with matching name was found.", call. = FALSE)
+    }
+  }
+}
+```
+
+Let's try it out:
+
+```{r}
+fget2("mean")
+
+mean <- function() NULL
+fget2("mean")
+rm("mean")
+```
+
+We can now write the new version of `str()` as a wrapper around this function. We only need to foresee that users might enter the function name either as a symbol or a string.
+
+```{r}
+str_function <- function(.f) {
+  fget2(as_string(ensym(.f)))
+} 
+
+str_function(mean)
+
+str_function("mean")
+```
+
+
 ### Exercises 7.5.5
 
 **Q1.** Write a function that lists all the variables defined in the environment in which it was called. It should return the same results as `ls()`.
