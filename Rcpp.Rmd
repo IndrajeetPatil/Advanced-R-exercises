@@ -129,19 +129,16 @@ pmin(v1, v2)
 ```
 
 **Q2.** To practice your function writing skills, convert the following functions into C++. For now, assume the inputs have no missing values.
-  
-    1. `all()`.
-    
-    2. `cumprod()`, `cummin()`, `cummax()`.
-    
-    3. `diff()`. Start by assuming lag 1, and then generalise for lag `n`.
-    
-    4. `range()`.
-    
-    5. `var()`. Read about the approaches you can take on 
-       [Wikipedia](http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance).
-       Whenever implementing a numerical algorithm, it's always good to check 
-       what is already known about the problem.
+
+1. `all()`.
+
+2. `cumprod()`, `cummin()`, `cummax()`.
+
+3. `diff()`. Start by assuming lag 1, and then generalise for lag `n`.
+
+4. `range()`.
+
+5. `var()`. Read about the approaches you can take on  [Wikipedia](http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance). Whenever implementing a numerical algorithm, it's always good to check what is already known about the problem.
 
 **A2.** The performance benefits are not going to be observed if the function is primitive since those are already tuned to the max in R for performance. So, expect performance gain only for `diff()` and `var()`.
 
@@ -293,7 +290,51 @@ bench::mark(
 
 - `diff()`
 
-TODO
+```{Rcpp}
+#include <vector>
+#include <functional>
+#include <algorithm>
+using namespace std;
+// [[Rcpp::plugins(cpp11)]]
+
+// [[Rcpp::export]]
+std::vector<double> diffC(const std::vector<double> &x, int lag)
+{
+    std::vector<double> vec_start;
+    std::vector<double> vec_lagged;
+
+    for (size_t i = lag; i < x.size(); i++)
+    {
+        vec_lagged.push_back(x[i]);
+    }
+
+    for (size_t i = 0; i < (x.size() - lag); i++)
+    {
+        vec_start.push_back(x[i]);
+    }
+
+    std::transform(
+        vec_lagged.begin(), vec_lagged.end(),
+        vec_start.begin(), vec_lagged.begin(),
+        std::minus<double>());
+
+    return vec_lagged;
+}
+```
+
+```{r}
+v1 <- c(1, 2, 4, 8, 13)
+
+diff(v1, 2)
+diffC(v1, 2)
+
+# performance benefits?
+bench::mark(
+  diff(v1, 2),
+  diffC(v1, 2),
+  iterations = 100
+)
+```
 
 - `range()`
 
