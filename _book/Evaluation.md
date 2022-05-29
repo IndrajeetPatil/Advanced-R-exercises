@@ -2,6 +2,13 @@
 
 
 
+Attaching the needed libraries:
+
+
+```r
+library(rlang)
+```
+
 ### Exercises 20.2.4
 
 **Q1.** Carefully read the documentation for `source()`. What environment does it use by default? What if you supply `local = TRUE`? How do you provide a custom environment?
@@ -48,17 +55,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x10ea8e2d0
+#> env:  0x122c9c7d0
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x12ed5c5e8
+#> env:  0x12453eb90
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x118cbf4e8
+#> env:  0x1248ad190
 ```
 
 **Q2.** Write an `enenv()` function that captures the environment associated with an argument. (Hint: this should only require two function calls.)

@@ -13,7 +13,6 @@ Attaching the needed libraries:
 library(rlang)
 ```
 
-
 ### Exercises 7.2.7
 
 **Q1.** List three ways in which an environment differs from a list.
@@ -41,14 +40,14 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x14c199458>
+#> <environment: 0x1067a65c8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
 
 # should be the same as the `e` memory address
 lobstr::obj_addr(e$loop)
-#> [1] "0x14c199458"
+#> [1] "0x1067a65c8"
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -67,9 +66,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x12ce114d8" "0x12ce114d8"
+#> [1] "0x1042fe7e0" "0x1042fe7e0"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x12ce82ee0" "0x12ce82ee0"
+#> [1] "0x104353378" "0x104353378"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -303,7 +302,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x15c1e0400>
+#> <bytecode: 0x11722cb60>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -327,6 +326,25 @@ rm("mean")
 search_envs()
 #>  [[1]] $ <env: global>
 #>  [[2]] $ <env: package:rlang>
+#>  [[3]] $ <env: package:magrittr>
+#>  [[4]] $ <env: package:stats>
+#>  [[5]] $ <env: package:graphics>
+#>  [[6]] $ <env: package:grDevices>
+#>  [[7]] $ <env: package:utils>
+#>  [[8]] $ <env: package:datasets>
+#>  [[9]] $ <env: package:methods>
+#> [[10]] $ <env: Autoloads>
+#> [[11]] $ <env: org:r-lib>
+#> [[12]] $ <env: package:base>
+```
+
+The `env_parents()` lists all parent environments up until the empty environment. Of course, the global environment itself is not included in this list.
+
+
+```r
+env_parents(global_env())
+#>  [[1]] $ <env: package:rlang>
+#>  [[2]] $ <env: package:magrittr>
 #>  [[3]] $ <env: package:stats>
 #>  [[4]] $ <env: package:graphics>
 #>  [[5]] $ <env: package:grDevices>
@@ -336,24 +354,7 @@ search_envs()
 #>  [[9]] $ <env: Autoloads>
 #> [[10]] $ <env: org:r-lib>
 #> [[11]] $ <env: package:base>
-```
-
-The `env_parents()` lists all parent environments up until the empty environment. Of course, the global environment itself is not included in this list.
-
-
-```r
-env_parents(global_env())
-#>  [[1]] $ <env: package:rlang>
-#>  [[2]] $ <env: package:stats>
-#>  [[3]] $ <env: package:graphics>
-#>  [[4]] $ <env: package:grDevices>
-#>  [[5]] $ <env: package:utils>
-#>  [[6]] $ <env: package:datasets>
-#>  [[7]] $ <env: package:methods>
-#>  [[8]] $ <env: Autoloads>
-#>  [[9]] $ <env: org:r-lib>
-#> [[10]] $ <env: package:base>
-#> [[11]] $ <env: empty>
+#> [[12]] $ <env: empty>
 ```
 
 

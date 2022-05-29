@@ -1,5 +1,14 @@
 # Expressions
 
+
+
+Attaching the needed libraries:
+
+
+```r
+library(rlang)
+```
+
 ### Exercises 18.2.4
 
 **Q1.** Reconstruct the code represented by the trees below:
@@ -359,7 +368,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x13f3342e0>
+#> <bytecode: 0x149ed1560>
 #> <environment: namespace:base>
 ```
 

@@ -41,7 +41,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()          99.8µs    139µs     6634.     792KB     101.
+#> 1 f()          99.5µs    134µs     7019.    4.65MB     99.7
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -73,7 +73,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x1238dbda0>
+#> <bytecode: 0x14f6b3cf0>
 #> <environment: namespace:base>
 ```
 
@@ -97,6 +97,14 @@ How do the estimates from `system.time()` compare to those from `bench::mark()`?
 
 ```r
 library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 
 n <- 1e6
 x <- runif(100)
@@ -145,15 +153,15 @@ t_bench_df
 #> # A tibble: 2 × 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)     420.7ns
-#> 2 x^0.5        1.29µs
+#> 1 sqrt(x)     400.4ns
+#> 2 x^0.5        1.27µs
 
 t_systime_df
 #> # A tibble: 2 × 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                 0.393                0.407
-#> 2 x^0.5                   1.22                 1.27
+#> 1 sqrt(x)                 0.418                0.404
+#> 2 x^0.5                   1.24                 1.23
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -185,10 +193,10 @@ bench::mark(
 #> # A tibble: 4 × 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)         1.02µs   1.97µs   558352.    7.86KB
-#> 2 exp(log(x)/2)   6.15µs   7.13µs   140896.    7.86KB
-#> 3 x^0.5           9.18µs  10.13µs   100372.    7.86KB
-#> 4 x^(1/2)         9.31µs  10.21µs    99674.    7.86KB
+#> 1 sqrt(x)         1.02µs   1.31µs   613316.    7.86KB
+#> 2 exp(log(x)/2)   6.19µs   6.81µs   140461.    7.86KB
+#> 3 x^0.5           9.22µs   9.51µs    99171.    7.86KB
+#> 4 x^(1/2)         9.27µs  10.23µs    99682.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

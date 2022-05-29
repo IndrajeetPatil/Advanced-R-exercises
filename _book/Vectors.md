@@ -214,7 +214,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x10c12d968>
+#> <bytecode: 0x1320d4f30>
 #> <environment: namespace:stats>
 
 setNames(c(1, 2), c("a", "b"))
@@ -233,7 +233,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x12b7b9378>
+#> <bytecode: 0x142528f00>
 #> <environment: namespace:base>
 
 A <- provideDimnames(N <- array(1:24, dim = 2:4))
@@ -614,14 +614,11 @@ attributes(c(date, datetime))
 #> [1] "Date"
 
 c(datetime, date)
-#> [1] "1950-01-26 00:01:00 UTC" "1947-08-15 00:00:00 UTC"
+#> [1] "1950-01-26 01:01:00 CET"  "1947-08-15 02:00:00 CEST"
 
 attributes(c(datetime, date))
 #> $class
-#> [1] "POSIXct" "POSIXt" 
-#> 
-#> $tzone
-#> [1] "UTC"
+#> [1] "POSIXct" "POSIXt"
 ```
 
 Behavior with `unlist()`: Removes all attributes and we are left only with the underlying double representations of these objects.

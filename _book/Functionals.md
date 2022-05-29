@@ -13,6 +13,11 @@
 
 ```r
 library(purrr)
+#> 
+#> Attaching package: 'purrr'
+#> The following object is masked from 'package:magrittr':
+#> 
+#>     set_names
 
 # mapping by position -----------------------
 
@@ -27,7 +32,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x1419dcc50>
+#> <environment: 0x127709810>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -38,7 +43,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x14185b2a8>
+#> <environment: 0x127322b70>
 
 # mapping by name -----------------------
 
@@ -56,7 +61,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x1416a5fc8>
+#> <environment: 0x1168cdec8>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -68,7 +73,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x141564c40>
+#> <environment: 0x111e2b8f0>
 
 # compact functions ----------------------------
 
@@ -132,7 +137,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck(x, 0.597890264587477, 0.587997315218672, .default = NULL)
-#> <environment: 0x115812f60>
+#> <environment: 0x113ff3ae8>
 ```
 
 **Q3.** Use the appropriate `map()` function to:
@@ -825,10 +830,20 @@ Here is an example:
 
 ```r
 library(rlang)
+#> 
+#> Attaching package: 'rlang'
+#> The following objects are masked from 'package:purrr':
+#> 
+#>     %@%, as_function, flatten, flatten_chr,
+#>     flatten_dbl, flatten_int, flatten_lgl,
+#>     flatten_raw, invoke, splice
+#> The following object is masked from 'package:magrittr':
+#> 
+#>     set_names
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x136cdfb90>
+#> <environment: 0x110ff4760>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>

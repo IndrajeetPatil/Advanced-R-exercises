@@ -116,6 +116,11 @@ catch_cnd(abort("An error"))
 
 ```r
 library(rlang)
+#> 
+#> Attaching package: 'rlang'
+#> The following object is masked from 'package:magrittr':
+#> 
+#>     set_names
 
 stopInfo <- catch_cnd(stop("An error"))
 abortInfo <- catch_cnd(abort("An error"))

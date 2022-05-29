@@ -1,4 +1,4 @@
-My solutions to exercises from Hadley Wickham's _Advanced R_ (2nd Edition) [book](https://adv-r.hadley.nz/).
+My solutions to exercises from Hadley Wickham's _Advanced R_ (2nd edition) [book](https://adv-r.hadley.nz/).
 
 I've tried my best to make sure that I have not included any incorrect solutions by consulting the [official solutions manual](https://advanced-r-solutions.rbind.io/index.html) which is co-authored by the original author. That said, I provide no guarantees that all solutions are correct. Additionally, when I disagreed with the proposed official solutions or found them to be inadequate or incorrect, I've stuck with my own solutions.
 

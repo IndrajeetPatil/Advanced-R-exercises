@@ -195,9 +195,9 @@ bench::mark(
 #include <vector>
 
 // [[Rcpp::export]]
-std::vector<double> cumulativeProduct(std::vector<double> x)
+std::vector<double> cumprodC(const std::vector<double> &x)
 {
-    std::vector<double> out = x;
+    std::vector<double> out{x};
 
     for (size_t i = 1; i < x.size(); i++)
     {
@@ -213,12 +213,80 @@ std::vector<double> cumulativeProduct(std::vector<double> x)
 v1 <- c(10, 4, 6, 8)
 
 cumprod(v1)
-cumulativeProduct(v1)
+cumprodC(v1)
 
 # performance benefits?
 bench::mark(
   cumprod(v1),
-  cumulativeProduct(v1),
+  cumprodC(v1),
+  iterations = 100
+)
+```
+
+- `cumminC()`
+
+```{Rcpp}
+#include <vector>
+// [[Rcpp::plugins(cpp11)]]
+
+// [[Rcpp::export]]
+std::vector<double> cumminC(const std::vector<double> &x)
+{
+    std::vector<double> out{x};
+
+    for (size_t i = 1; i < x.size(); i++)
+    {
+        out[i] = (out[i] < out[i - 1]) ? out[i] : out[i - 1];
+    }
+
+    return out;
+}
+```
+
+```{r}
+v1 <- c(3:1, 2:0, 4:2)
+
+cummin(v1)
+cumminC(v1)
+
+# performance benefits?
+bench::mark(
+  cummin(v1),
+  cumminC(v1),
+  iterations = 100
+)
+```
+
+- `cummaxC()`
+
+```{Rcpp}
+#include <vector>
+// [[Rcpp::plugins(cpp11)]]
+
+// [[Rcpp::export]]
+std::vector<double> cummaxC(const std::vector<double> &x)
+{
+    std::vector<double> out{x};
+
+    for (size_t i = 1; i < x.size(); i++)
+    {
+        out[i] = (out[i] > out[i - 1]) ? out[i] : out[i - 1];
+    }
+    
+    return out;
+}
+```
+
+```{r}
+v1 <- c(3:1, 2:0, 4:2)
+
+cummax(v1)
+cummaxC(v1)
+
+# performance benefits?
+bench::mark(
+  cummax(v1),
+  cummaxC(v1),
   iterations = 100
 )
 ```

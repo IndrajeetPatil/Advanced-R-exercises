@@ -10,3 +10,6 @@ knitr::opts_chunk$set(
 
 # for reproducibility
 set.seed(1024)
+
+# needed for the pipe operator
+library(magrittr)

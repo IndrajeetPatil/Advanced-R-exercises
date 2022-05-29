@@ -1,5 +1,14 @@
 # Improving performance
 
+
+
+Attaching the needed libraries:
+
+
+```r
+library(ggplot2)
+```
+
 ### Exercises 24.3.1
 
 **Q1.** What are faster alternatives to `lm()`? Which are specifically designed to work with larger datasets?
@@ -53,10 +62,10 @@ bench::mark(
 #> # A tibble: 4 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 lm            557µs    601µs     1627.    1.25MB
-#> 2 speedglm      586µs    605µs     1630.   62.44MB
-#> 3 biglm         477µs    505µs     1970.  936.43KB
-#> 4 fastLm        533µs    565µs     1754.  982.55KB
+#> 1 lm            560µs    594µs     1655.    1.25MB
+#> 2 speedglm      596µs    627µs     1590.   62.53MB
+#> 3 biglm         479µs    504µs     1967.   936.3KB
+#> 4 fastLm        542µs    592µs     1688.    4.21MB
 ```
 
 The results might change depending on the size of the dataset, so you will have to experiment with different algorithms and find the one that fits the needs of your dataset the best.
@@ -89,8 +98,8 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          451ns    574ns  1619201.    2.77KB
-#> 2 fastmatch     369ns    492ns  1995581.    2.66KB
+#> 1 base          492ns    574ns  1566910.    2.77KB
+#> 2 fastmatch     410ns    492ns  1983216.    2.66KB
 ```
 
 But, with a larger vector, `fmatch()` is only orders of magnitude faster! ⚡
@@ -106,11 +115,13 @@ bench::mark(
   "base" = match(c("x", "y"), large_vec),
   "fastmatch" = fmatch(c("x", "y"), large_vec)
 )[1:5]
+#> Warning: Some expressions had a GC in every iteration; so
+#> filtering is disabled.
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base         14.4ms   14.7ms      67.8    31.4MB
-#> 2 fastmatch     410ns    451ns 2008547.         0B
+#> 1 base         16.1ms   18.2ms      42.2    31.4MB
+#> 2 fastmatch     369ns    451ns 2002034.         0B
 ```
 
 We can also look at the hash table:
@@ -189,10 +200,10 @@ bench::mark(
 #> # A tibble: 4 × 6
 #>   expression       min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>  <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 as.POSIXct   30.87µs  32.23µs    30779.        0B     0   
-#> 2 as.POSIXlt   24.15µs  25.91µs    37901.        0B     0   
-#> 3 ymd_hms       1.22ms   1.27ms      783.    23.6KB     7.11
-#> 4 fastPOSIXct 491.97ns 573.99ns  1705752.        0B     0
+#> 1 as.POSIXct   32.31µs  34.44µs    28685.        0B     0   
+#> 2 as.POSIXlt   24.48µs  27.02µs    30275.        0B    30.3 
+#> 3 ymd_hms       1.24ms   1.27ms      777.    23.6KB     5.48
+#> 4 fastPOSIXct 492.03ns 574.01ns  1720102.        0B     0
 ```
 
 
@@ -254,7 +265,7 @@ rowSums
 #>     else names(z) <- dimnames(x)[[1L]]
 #>     z
 #> }
-#> <bytecode: 0x1172ad480>
+#> <bytecode: 0x10b18b4b8>
 #> <environment: namespace:base>
 ```
 
@@ -265,7 +276,7 @@ rowSums
 .rowSums
 #> function (x, m, n, na.rm = FALSE) 
 #> .Internal(rowSums(x, m, n, na.rm))
-#> <bytecode: 0x154d25318>
+#> <bytecode: 0x10c5028b0>
 #> <environment: namespace:base>
 ```
 
@@ -282,12 +293,12 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression                                 min   median
 #>   <bch:expr>                            <bch:tm> <bch:tm>
-#> 1 rowSums(x)                              94.4µs    133µs
-#> 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])   93.8µs    136µs
+#> 1 rowSums(x)                                95µs    132µs
+#> 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])   93.6µs    129µs
 #>   `itr/sec` mem_alloc
 #>       <dbl> <bch:byt>
-#> 1     7034.     859KB
-#> 2     7147.     859KB
+#> 1     7564.     859KB
+#> 2     7779.     859KB
 ```
 
 **Q2.** Make a faster version of `chisq.test()` that only computes the chi-square test statistic when the input is two numeric vectors with no missing values. You can try simplifying `chisq.test()` or by coding from the [mathematical definition](http://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test).
@@ -354,8 +365,8 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          636µs    724µs     1362.    1.47MB
-#> 2 custom        488µs    555µs     1629.    1.12MB
+#> 1 base          642µs    726µs     1375.    1.47MB
+#> 2 custom        514µs    570µs     1750.    1.13MB
 ```
 
 **Q3.** Can you make a faster version of `table()` for the case of an input of two integer vectors with no missing values? Can you use it to speed up your chi-square test?
@@ -408,8 +419,8 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          463µs    529µs     1883.     960KB
-#> 2 custom        259µs    291µs     3391.     475KB
+#> 1 base          485µs    548µs     1813.     960KB
+#> 2 custom        268µs    294µs     3385.     488KB
 ```
 
 We can also use this function in our custom chi-squared test function and see if the performance improves any further:
@@ -467,8 +478,8 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          628µs    725µs     1355.    1.28MB
-#> 2 custom        284µs    337µs     2283.     595KB
+#> 1 base          652µs    732µs     1360.    1.28MB
+#> 2 custom        290µs    317µs     3164.  594.27KB
 ```
 
 ### Exercises 24.5.1
@@ -567,7 +578,7 @@ ggplot(
   )
 ```
 
-<img src="Perf-improve_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+<img src="Perf-improve_files/figure-html/unnamed-chunk-28-1.png" width="672" />
 
 **Q3.** How can you use `crossprod()` to compute a weighted sum? How much faster is it than the naive `sum(x * w)`?
 
@@ -596,6 +607,6 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression                min   median `itr/sec` mem_alloc
 #>   <bch:expr>           <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 crossprod(x, w)[[1]]    246ns    369ns  2524775.        0B
-#> 2 sum(x * w)[[1]]          82ns    205ns  4380809.        0B
+#> 1 crossprod(x, w)[[1]]    246ns    369ns  2510636.        0B
+#> 2 sum(x * w)[[1]]          82ns    205ns  4318536.        0B
 ```

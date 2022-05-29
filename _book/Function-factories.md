@@ -1,5 +1,14 @@
 # Function factories
 
+
+
+Attaching the needed libraries:
+
+
+```r
+library(rlang)
+```
+
 ### Exercises 10.2.6
 
 **Q1.** The definition of `force()` is simple:
@@ -9,7 +18,7 @@
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x15214a708>
+#> <bytecode: 0x14c94a708>
 #> <environment: namespace:base>
 ```
 
@@ -35,15 +44,15 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x133462b00>
-#> <environment: 0x133463468>
+#> <bytecode: 0x13ea61818>
+#> <environment: 0x13ea62148>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
 curve(f(x), 0, 11)
 ```
 
-<img src="Function-factories_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="Function-factories_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 - `ecdf()`
 
@@ -173,15 +182,15 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x12361a4b0>
+#> <environment: 0x11cfa0d70>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x12380f430>
-#> <environment: 0x1236991e8>
+#> <bytecode: 0x11d946da0>
+#> <environment: 0x11d825318>
 ```
 
 ### Exercises 10.3.4

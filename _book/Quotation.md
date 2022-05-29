@@ -1,5 +1,14 @@
 # Quotation
 
+
+
+Attaching the needed libraries:
+
+
+```r
+library(rlang)
+```
+
 ### Exercises 19.2.2
 
 **Q1.** For each function in the following base R code, identify which arguments are quoted and which are evaluated.
@@ -7,11 +16,6 @@
 
 ```r
 library(MASS)
-#> 
-#> Attaching package: 'MASS'
-#> The following object is masked from 'package:dplyr':
-#> 
-#>     select
 
 mtcars2 <- subset(mtcars, cyl == 4)
 
