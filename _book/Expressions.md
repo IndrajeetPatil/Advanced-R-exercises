@@ -369,7 +369,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x125296a40>
+#> <bytecode: 0x126a8fa40>
 #> <environment: namespace:base>
 ```
 
@@ -912,7 +912,7 @@ find_function_call <- function(x, .f) {
     if (is_call(x, .f)) {
       list(x)
     } else {
-      purrr::map(as.list(x), ~find_function_call(.x, .f)) %>%
+      purrr::map(as.list(x), ~ find_function_call(.x, .f)) %>%
         purrr::compact() %>%
         unlist(use.names = FALSE)
     }

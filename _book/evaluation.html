@@ -83,7 +83,7 @@
 <span class="header-section-number">20</span> Evaluation<a class="anchor" aria-label="anchor" href="#evaluation"><i class="fas fa-link"></i></a>
 </h1>
 <p>Attaching the needed libraries:</p>
-<div class="sourceCode" id="cb444"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb447"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span><span class="op">)</span></code></pre></div>
 <div id="exercises-20.2.4" class="section level3" number="20.0.1">
 <h3>
@@ -91,18 +91,18 @@
 </h3>
 <p><strong>Q1.</strong> Carefully read the documentation for <code><a href="https://rdrr.io/r/base/source.html">source()</a></code>. What environment does it use by default? What if you supply <code>local = TRUE</code>? How do you provide a custom environment?</p>
 <p><strong>Q2.</strong> Predict the results of the following lines of code:</p>
-<div class="sourceCode" id="cb445"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb448"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><strong>Q3.</strong> Fill in the function bodies below to re-implement <code><a href="https://rdrr.io/r/base/get.html">get()</a></code> using <code><a href="https://rlang.r-lib.org/reference/sym.html">sym()</a></code> and <code><a href="https://rdrr.io/r/base/eval.html">eval()</a></code>, and<code><a href="https://rdrr.io/r/base/assign.html">assign()</a></code> using <code><a href="https://rlang.r-lib.org/reference/sym.html">sym()</a></code>, <code><a href="https://rlang.r-lib.org/reference/expr.html">expr()</a></code>, and <code><a href="https://rdrr.io/r/base/eval.html">eval()</a></code>. Don’t worry about the multiple ways of choosing an environment that <code><a href="https://rdrr.io/r/base/get.html">get()</a></code> and <code><a href="https://rdrr.io/r/base/assign.html">assign()</a></code> support; assume that the user supplies it explicitly.</p>
-<div class="sourceCode" id="cb446"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb449"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># name is a string</span>
 <span class="va">get2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">env</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span>
 <span class="va">assign2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="va">env</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span></code></pre></div>
 <p><strong>Q4.</strong> Modify <code>source2()</code> so it returns the result of <em>every</em> expression, not just the last one. Can you eliminate the for loop?</p>
 <p><strong>Q5.</strong> We can make <code><a href="https://rdrr.io/r/base/eval.html">base::local()</a></code> slightly easier to understand by spreading out over multiple lines:</p>
-<div class="sourceCode" id="cb447"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb450"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">local3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">expr</span>, <span class="va">envir</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">new.env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">call</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substitute.html">substitute</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span>, <span class="va">envir</span><span class="op">)</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">call</span>, envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
@@ -114,22 +114,22 @@
 <span class="header-section-number">20.0.2</span> Exercises 20.3.6<a class="anchor" aria-label="anchor" href="#exercises-20.3.6"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> Predict what each of the following quosures will return if evaluated.</p>
-<div class="sourceCode" id="cb448"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb451"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">q1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">q1</span>
 <span class="co">#&gt; &lt;quosure&gt;</span>
 <span class="co">#&gt; expr: ^x</span>
-<span class="co">#&gt; env:  0x150571dc0</span>
+<span class="co">#&gt; env:  0x1119e85c0</span>
 <span class="va">q2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="op">!</span><span class="op">!</span><span class="va">q1</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span>
 <span class="va">q2</span>
 <span class="co">#&gt; &lt;quosure&gt;</span>
 <span class="co">#&gt; expr: ^x + (^x)</span>
-<span class="co">#&gt; env:  0x1371bfd08</span>
+<span class="co">#&gt; env:  0x112b4b708</span>
 <span class="va">q3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="op">!</span><span class="op">!</span><span class="va">q2</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span>
 <span class="va">q3</span>
 <span class="co">#&gt; &lt;quosure&gt;</span>
 <span class="co">#&gt; expr: ^x + (^x + (^x))</span>
-<span class="co">#&gt; env:  0x16037d508</span></code></pre></div>
+<span class="co">#&gt; env:  0x112eb1708</span></code></pre></div>
 <p><strong>Q2.</strong> Write an <code>enenv()</code> function that captures the environment associated with an argument. (Hint: this should only require two function calls.)</p>
 </div>
 <div id="exercises-20.4.6" class="section level3" number="20.0.3">
@@ -138,7 +138,7 @@
 </h3>
 <p><strong>Q1.</strong> Why did I use a for loop in <code>transform2()</code> instead of <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>? Consider <code>transform2(df, x = x * 2, x = x * 2)</code>.</p>
 <p><strong>Q2.</strong> Here’s an alternative implementation of <code>subset2()</code>:</p>
-<div class="sourceCode" id="cb449"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb452"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">subset3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">rows</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">rows</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html">enquo</a></span><span class="op">(</span><span class="va">rows</span><span class="op">)</span>
   <span class="fu"><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span><span class="op">!</span><span class="op">!</span><span class="va">rows</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span>
@@ -147,7 +147,7 @@
 <span class="fu">subset3</span><span class="op">(</span><span class="va">df</span>, <span class="va">x</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p>Compare and contrast <code>subset3()</code> to <code>subset2()</code>. What are its advantages and disadvantages?</p>
 <p><strong>Q3.</strong> The following function implements the basics of <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">dplyr::arrange()</a></code>. Annotate each line with a comment explaining what it does. Can you explain why <code>!!.na.last</code> is strictly correct, but omitting the <code>!!</code> is unlikely to cause problems?</p>
-<div class="sourceCode" id="cb450"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb453"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">arrange2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">.df</span>, <span class="va">...</span>, <span class="va">.na.last</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">args</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html">enquos</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
   <span class="va">order_call</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">args</span>, na.last <span class="op">=</span> <span class="op">!</span><span class="op">!</span><span class="va">.na.last</span><span class="op">)</span><span class="op">)</span>
@@ -161,7 +161,7 @@
 <span class="header-section-number">20.0.4</span> Exercises 20.5.4<a class="anchor" aria-label="anchor" href="#exercises-20.5.4"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> I’ve included an alternative implementation of <code>threshold_var()</code> below. What makes it different to the approach I used above? What makes it harder?</p>
-<div class="sourceCode" id="cb451"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb454"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">threshold_var</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">var</span>, <span class="va">val</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">ensym</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span>
   <span class="fu">subset2</span><span class="op">(</span><span class="va">df</span>, <span class="fu">`$`</span><span class="op">(</span><span class="va">.data</span>, <span class="op">!</span><span class="op">!</span><span class="va">var</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="op">!</span><span class="op">!</span><span class="va">val</span><span class="op">)</span>
@@ -172,7 +172,7 @@
 <span class="header-section-number">20.0.5</span> Exercises 20.6.3<a class="anchor" aria-label="anchor" href="#exercises-20.6.3"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> Why does this function fail?</p>
-<div class="sourceCode" id="cb452"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb455"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm3a</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">formula</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">formula</span><span class="op">)</span>
   <span class="va">lm_call</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">formula</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span><span class="op">)</span>
@@ -183,7 +183,7 @@
 <span class="co">#&gt; Error in as.data.frame.default(data, optional = TRUE):</span>
 <span class="co">#&gt; cannot coerce class ‘"function"’ to a data.frame</span></code></pre></div>
 <p><strong>Q2.</strong> When model building, typically the response and data are relatively constant while you rapidly experiment with different predictors. Write a small wrapper that allows you to reduce duplication in the code below.</p>
-<div class="sourceCode" id="cb453"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb456"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">disp</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span> <span class="op">*</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></code></pre></div>

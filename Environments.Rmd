@@ -9,7 +9,7 @@
 Attaching the needed libraries:
 
 ```{r, warning=FALSE, message=FALSE}
-library(rlang)
+library(rlang, warn.conflicts = FALSE)
 ```
 
 ### Exercises 7.2.7
@@ -269,8 +269,6 @@ The `env_parents()` lists all parent environments up until the empty environment
 env_parents(global_env())
 ```
 
-
-
 **Q2.** Draw a diagram that shows the enclosing environments of this function:
 
 ```{r, eval = FALSE}
@@ -286,24 +284,30 @@ f1 <- function(x1) {
 f1(1)
 ```
 
+**A2.** I don't have access to the graphics software used to create diagrams in the book, so I am linking the diagram from the official solutions manual:
+
+```{r, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("https://raw.githubusercontent.com/Tazinho/Advanced-R-Solutions/main/images/environments/function_environments_corrected.png")
+```
+
 **Q3.** Write an enhanced version of `str()` that provides more information about functions. Show where the function was found and what environment it was defined in.
 
-**A3.**  To write the required function, we can first re-purpose the `fget()` function we wrote above to return not the found function, but to return the environment in which it was found and its enclosing environment:
+**A3.** To write the required function, we can first re-purpose the `fget()` function we wrote above to return not the found function, but to return the environment in which it was found and its enclosing environment:
 
 ```{r}
 fget2 <- function(name, env = caller_env()) {
   # we need only function objects
   f_value <- mget(name,
-                  envir = env,
-                  mode = "function",
-                  inherits = FALSE,
-                  ifnotfound = list(NULL)
+    envir = env,
+    mode = "function",
+    inherits = FALSE,
+    ifnotfound = list(NULL)
   )
-  
+
   if (!is.null(f_value[[1]])) {
     # success case
     list(
-     "where" = env,
+      "where" = env,
       "enclosing" = fn_env(f_value[[1]])
     )
   } else {
@@ -334,14 +338,77 @@ We can now write the new version of `str()` as a wrapper around this function. W
 ```{r}
 str_function <- function(.f) {
   fget2(as_string(ensym(.f)))
-} 
+}
 
 str_function(mean)
 
 str_function("mean")
 ```
 
-
 ### Exercises 7.5.5
 
 **Q1.** Write a function that lists all the variables defined in the environment in which it was called. It should return the same results as `ls()`.
+
+**A1.** Here is a function that lists all the variables defined in the environment in which it was called:
+
+```{r}
+# let's first remove everything that exists in the global environment right now
+# to test with only newly defined objects
+rm(list = ls())
+rm(.Random.seed, envir = globalenv())
+
+ls_env <- function(env = rlang::caller_env()) {
+  sort(rlang::env_names(env))
+}
+```
+
+The MVP here is `rlang::caller_env()`, so let's also have a look at its definition:
+
+```{r}
+rlang::caller_env
+```
+
+As can be seen, it defines the caller frame/environment as the first ancestor of the parent frame/environment. We can vary `n` to change this and see how the caller environment changes:
+
+```{r}
+explore_caller_env <- function() {
+  print(rlang::caller_env(1))
+
+  print(rlang::caller_env(0))
+  return(rlang::current_env()) # execution environment
+}
+
+explore_caller_env()
+
+rlang::fn_env(explore_caller_env)
+
+rm("explore_caller_env")
+```
+
+Let's try it out:
+
+- In global environment:
+
+```{r}
+x <- "a"
+y <- 1
+
+ls_env()
+
+ls()
+```
+
+- In function environment:
+
+```{r}
+foo <- function() {
+  a <- "x"
+  b <- 2
+
+  print(ls_env())
+
+  print(ls())
+}
+
+foo()
+```

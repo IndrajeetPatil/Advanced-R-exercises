@@ -690,7 +690,7 @@ find_function_call <- function(x, .f) {
     if (is_call(x, .f)) {
       list(x)
     } else {
-      purrr::map(as.list(x), ~find_function_call(.x, .f)) %>%
+      purrr::map(as.list(x), ~ find_function_call(.x, .f)) %>%
         purrr::compact() %>%
         unlist(use.names = FALSE)
     }

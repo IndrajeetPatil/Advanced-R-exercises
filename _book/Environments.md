@@ -10,7 +10,7 @@ Attaching the needed libraries:
 
 
 ```r
-library(rlang)
+library(rlang, warn.conflicts = FALSE)
 ```
 
 ### Exercises 7.2.7
@@ -40,14 +40,14 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x115445d60>
+#> <environment: 0x11982ba40>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
 
 # should be the same as the `e` memory address
 lobstr::obj_addr(e$loop)
-#> [1] "0x115445d60"
+#> [1] "0x11982ba40"
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -66,9 +66,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x124e1fb30" "0x124e1fb30"
+#> [1] "0x11abbc1f8" "0x11abbc1f8"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x124e746c8" "0x124e746c8"
+#> [1] "0x11ac2db90" "0x11ac2db90"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -302,7 +302,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x12463c758>
+#> <bytecode: 0x11830dc40>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -357,8 +357,6 @@ env_parents(global_env())
 #> [[12]] $ <env: empty>
 ```
 
-
-
 **Q2.** Draw a diagram that shows the enclosing environments of this function:
 
 
@@ -375,25 +373,29 @@ f1 <- function(x1) {
 f1(1)
 ```
 
+**A2.** I don't have access to the graphics software used to create diagrams in the book, so I am linking the diagram from the official solutions manual:
+
+<img src="https://raw.githubusercontent.com/Tazinho/Advanced-R-Solutions/main/images/environments/function_environments_corrected.png" width="100%" />
+
 **Q3.** Write an enhanced version of `str()` that provides more information about functions. Show where the function was found and what environment it was defined in.
 
-**A3.**  To write the required function, we can first re-purpose the `fget()` function we wrote above to return not the found function, but to return the environment in which it was found and its enclosing environment:
+**A3.** To write the required function, we can first re-purpose the `fget()` function we wrote above to return not the found function, but to return the environment in which it was found and its enclosing environment:
 
 
 ```r
 fget2 <- function(name, env = caller_env()) {
   # we need only function objects
   f_value <- mget(name,
-                  envir = env,
-                  mode = "function",
-                  inherits = FALSE,
-                  ifnotfound = list(NULL)
+    envir = env,
+    mode = "function",
+    inherits = FALSE,
+    ifnotfound = list(NULL)
   )
-  
+
   if (!is.null(f_value[[1]])) {
     # success case
     list(
-     "where" = env,
+      "where" = env,
       "enclosing" = fn_env(f_value[[1]])
     )
   } else {
@@ -436,7 +438,7 @@ We can now write the new version of `str()` as a wrapper around this function. W
 ```r
 str_function <- function(.f) {
   fget2(as_string(ensym(.f)))
-} 
+}
 
 str_function(mean)
 #> $where
@@ -453,7 +455,89 @@ str_function("mean")
 #> <environment: namespace:base>
 ```
 
-
 ### Exercises 7.5.5
 
 **Q1.** Write a function that lists all the variables defined in the environment in which it was called. It should return the same results as `ls()`.
+
+**A1.** Here is a function that lists all the variables defined in the environment in which it was called:
+
+
+```r
+# let's first remove everything that exists in the global environment right now
+# to test with only newly defined objects
+rm(list = ls())
+rm(.Random.seed, envir = globalenv())
+
+ls_env <- function(env = rlang::caller_env()) {
+  sort(rlang::env_names(env))
+}
+```
+
+The MVP here is `rlang::caller_env()`, so let's also have a look at its definition:
+
+
+```r
+rlang::caller_env
+#> function (n = 1) 
+#> {
+#>     parent.frame(n + 1)
+#> }
+#> <bytecode: 0x118e1b078>
+#> <environment: namespace:rlang>
+```
+
+As can be seen, it defines the caller frame/environment as the first ancestor of the parent frame/environment. We can vary `n` to change this and see how the caller environment changes:
+
+
+```r
+explore_caller_env <- function() {
+  print(rlang::caller_env(1))
+
+  print(rlang::caller_env(0))
+  return(rlang::current_env()) # execution environment
+}
+
+explore_caller_env()
+#> <environment: R_GlobalEnv>
+#> <environment: 0x11b170c38>
+#> <environment: 0x11b170c38>
+
+rlang::fn_env(explore_caller_env)
+#> <environment: R_GlobalEnv>
+
+rm("explore_caller_env")
+```
+
+Let's try it out:
+
+- In global environment:
+
+
+```r
+x <- "a"
+y <- 1
+
+ls_env()
+#> [1] "ls_env" "x"      "y"
+
+ls()
+#> [1] "ls_env" "x"      "y"
+```
+
+- In function environment:
+
+
+```r
+foo <- function() {
+  a <- "x"
+  b <- 2
+
+  print(ls_env())
+
+  print(ls())
+}
+
+foo()
+#> [1] "a" "b"
+#> [1] "a" "b"
+```
