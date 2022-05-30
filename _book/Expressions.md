@@ -6,7 +6,8 @@ Attaching the needed libraries:
 
 
 ```r
-library(rlang)
+library(rlang, warn.conflicts = FALSE)
+library(lobstr, warn.conflicts = FALSE)
 ```
 
 ### Exercises 18.2.4
@@ -44,19 +45,19 @@ We can confirm it by drawing ASTs for them:
 
 
 ```r
-lobstr::ast(f(g(h())))
+ast(f(g(h())))
 #> █─f 
 #> └─█─g 
 #>   └─█─h
 
-lobstr::ast(1 + 2 + 3)
+ast(1 + 2 + 3)
 #> █─`+` 
 #> ├─█─`+` 
 #> │ ├─1 
 #> │ └─2 
 #> └─3
 
-lobstr::ast((x + y) * z)
+ast((x + y) * z)
 #> █─`*` 
 #> ├─█─`(` 
 #> │ └─█─`+` 
@@ -65,7 +66,7 @@ lobstr::ast((x + y) * z)
 #> └─z
 ```
 
-**Q2.** Draw the following trees by hand and then check your answers with `lobstr::ast()`.
+**Q2.** Draw the following trees by hand and then check your answers with `ast()`.
 
 
 ```r
@@ -74,11 +75,11 @@ f(1, g(2, h(3, i())))
 f(g(1, 2), h(3, i(4, 5)))
 ```
 
-**A2.** Successfully drawn by hand. Checking using `lobstr::ast()`:
+**A2.** Successfully drawn by hand. Checking using `ast()`:
 
 
 ```r
-lobstr::ast(f(g(h(i(1, 2, 3)))))
+ast(f(g(h(i(1, 2, 3)))))
 #> █─f 
 #> └─█─g 
 #>   └─█─h 
@@ -87,7 +88,7 @@ lobstr::ast(f(g(h(i(1, 2, 3)))))
 #>       ├─2 
 #>       └─3
 
-lobstr::ast(f(1, g(2, h(3, i()))))
+ast(f(1, g(2, h(3, i()))))
 #> █─f 
 #> ├─1 
 #> └─█─g 
@@ -96,7 +97,7 @@ lobstr::ast(f(1, g(2, h(3, i()))))
 #>     ├─3 
 #>     └─█─i
 
-lobstr::ast(f(g(1, 2), h(3, i(4, 5))))
+ast(f(g(1, 2), h(3, i(4, 5))))
 #> █─f 
 #> ├─█─g 
 #> │ ├─1 
@@ -112,15 +113,15 @@ lobstr::ast(f(g(1, 2), h(3, i(4, 5))))
 
 
 ```r
-lobstr::ast(`x` + `y`)
+ast(`x` + `y`)
 #> █─`+` 
 #> ├─x 
 #> └─y
-lobstr::ast(x**y)
+ast(x**y)
 #> █─`^` 
 #> ├─x 
 #> └─y
-lobstr::ast(1 -> x)
+ast(1 -> x)
 #> █─`<-` 
 #> ├─x 
 #> └─1
@@ -158,7 +159,7 @@ str2expression("1 -> x")
 
 
 ```r
-lobstr::ast(function(x = 1, y = 2) {})
+ast(function(x = 1, y = 2) {})
 #> █─`function` 
 #> ├─█─x = 1 
 #> │ └─y = 2 
@@ -178,7 +179,7 @@ Therefore, the last leaf in this AST, although not specified in the function cal
 
 
 ```r
-lobstr::ast(if (FALSE) 1 else if (FALSE) 2 else if (FALSE) 3 else 4)
+ast(if (FALSE) 1 else if (FALSE) 2 else if (FALSE) 3 else 4)
 #> █─`if` 
 #> ├─FALSE 
 #> ├─1 
@@ -205,7 +206,7 @@ x_complex <- rlang::expr(1 + 1i)
 typeof(x_complex)
 #> [1] "language"
 
-lobstr::ast(1 + 1i)
+ast(1 + 1i)
 #> █─`+` 
 #> ├─1 
 #> └─1i
@@ -219,7 +220,7 @@ x_raw <- rlang::expr(raw(2))
 typeof(x_raw)
 #> [1] "language"
 
-lobstr::ast(raw(2))
+ast(raw(2))
 #> █─raw 
 #> └─2
 ```
@@ -232,7 +233,7 @@ x_int <- rlang::expr(2L)
 typeof(x_int)
 #> [1] "integer"
 
-lobstr::ast(2L)
+ast(2L)
 #> 2L
 ```
 
@@ -244,7 +245,7 @@ x_vec <- rlang::expr(c(1, 2))
 typeof(x_vec)
 #> [1] "language"
 
-lobstr::ast(c(1, 2))
+ast(c(1, 2))
 #> █─c 
 #> ├─1 
 #> └─2
@@ -368,7 +369,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x149ed1560>
+#> <bytecode: 0x125296a40>
 #> <environment: namespace:base>
 ```
 
@@ -427,7 +428,7 @@ This construction follows from the prefix form of this expression, revealed by i
 
 
 ```r
-lobstr::ast(if (x > 1) "a" else "b")
+ast(if (x > 1) "a" else "b")
 #> █─`if` 
 #> ├─█─`>` 
 #> │ ├─x 
@@ -452,11 +453,11 @@ Compare and contrast the two uses by referencing the AST.
 
 
 ```r
-lobstr::ast(f((1)))
+ast(f((1)))
 #> █─f 
 #> └─█─`(` 
 #>   └─1
-lobstr::ast(`(`(1 + 1))
+ast(`(`(1 + 1))
 #> █─`(` 
 #> └─█─`+` 
 #>   ├─1 
@@ -486,7 +487,7 @@ We can also have a look at its AST:
 
 
 ```r
-lobstr::ast({
+ast({
   m <- mean(x = 1)
 })
 #> █─`{` 
@@ -510,7 +511,7 @@ The same can also be seen by its AST:
 
 
 ```r
-lobstr::ast(-2^2)
+ast(-2^2)
 #> █─`-` 
 #> └─█─`^` 
 #>   ├─2 
@@ -535,7 +536,7 @@ This can be easily seen by its AST:
 
 
 ```r
-lobstr::ast(!1 + !1)
+ast(!1 + !1)
 #> █─`!` 
 #> └─█─`+` 
 #>   ├─1 
@@ -574,7 +575,7 @@ This is easy to surmise from its AST:
 
 
 ```r
-lobstr::ast(x1 <- x2 <- x3 <- 0)
+ast(x1 <- x2 <- x3 <- 0)
 #> █─`<-` 
 #> ├─x1 
 #> └─█─`<-` 
@@ -590,14 +591,14 @@ lobstr::ast(x1 <- x2 <- x3 <- 0)
 
 
 ```r
-lobstr::ast(x + y %+% z)
+ast(x + y %+% z)
 #> █─`+` 
 #> ├─x 
 #> └─█─`%+%` 
 #>   ├─y 
 #>   └─z
 
-lobstr::ast(x^y %+% z)
+ast(x^y %+% z)
 #> █─`%+%` 
 #> ├─█─`^` 
 #> │ ├─x 
@@ -709,25 +710,6 @@ rlang::expr_text(expr)
 
 
 
-
-
-```r
-logical_abbr_rec <- function(x) {
-  switch_expr(x,
-    # Base cases
-    constant = FALSE,
-    symbol = rlang::as_string(x) %in% c("F", "T"),
-
-    # Recursive cases
-    pairlist = purrr::some(x, logical_abbr_rec),
-    call = {
-      if (rlang::is_call(x, "T") || rlang::is_call(x, "F")) x <- as.list(x)[-1]
-      purrr::some(x, logical_abbr_rec)
-    }
-  )
-}
-```
-
 Let's try it out:
 
 
@@ -798,9 +780,196 @@ logical_abbr(function(x = TRUE) {
 
 **Q3.** Modify `find_assign` to also detect assignment using replacement functions, i.e. `names(x) <- y`.
 
-**A3.** 
+**A3.** Although both simple assignment (`x <- y`) and assignment using replacement functions (`names(x) <- y`) have `<-` operator in their call, in the latter case, `names(x)` will be a call object and not a symbol:
 
 
+```r
+expr1 <- expr(names(x) <- y)
+as.list(expr1)
+#> [[1]]
+#> `<-`
+#> 
+#> [[2]]
+#> names(x)
+#> 
+#> [[3]]
+#> y
+typeof(expr1[[2]])
+#> [1] "language"
 
+expr2 <- expr(x <- y)
+as.list(expr2)
+#> [[1]]
+#> `<-`
+#> 
+#> [[2]]
+#> x
+#> 
+#> [[3]]
+#> y
+typeof(expr2[[2]])
+#> [1] "symbol"
+```
+
+That's how we can detect this kind of assignment by checking if the second element of the expression is a `symbol` or `language` type object. 
+
+
+```r
+expr_type <- function(x) {
+  if (rlang::is_syntactic_literal(x)) {
+    "constant"
+  } else if (is.symbol(x)) {
+    "symbol"
+  } else if (is.call(x)) {
+    "call"
+  } else if (is.pairlist(x)) {
+    "pairlist"
+  } else {
+    typeof(x)
+  }
+}
+
+switch_expr <- function(x, ...) {
+  switch(expr_type(x),
+    ...,
+    stop("Don't know how to handle type ", typeof(x), call. = FALSE)
+  )
+}
+
+flat_map_chr <- function(.x, .f, ...) {
+  purrr::flatten_chr(purrr::map(.x, .f, ...))
+}
+
+extract_symbol <- function(x) {
+  if (is_symbol(x[[2]])) {
+    as_string(x[[2]])
+  } else {
+    extract_symbol(as.list(x[[2]]))
+  }
+}
+
+find_assign_call <- function(x) {
+  if (is_call(x, "<-") && is_symbol(x[[2]])) {
+    lhs <- as_string(x[[2]])
+    children <- as.list(x)[-1]
+  } else if (is_call(x, "<-") && is_call(x[[2]])) {
+    lhs <- extract_symbol(as.list(x[[2]]))
+    children <- as.list(x)[-1]
+  } else {
+    lhs <- character()
+    children <- as.list(x)
+  }
+
+  c(lhs, flat_map_chr(children, find_assign_rec))
+}
+
+find_assign_rec <- function(x) {
+  switch_expr(x,
+    # Base cases
+    constant = ,
+    symbol = character(),
+
+    # Recursive cases
+    pairlist = flat_map_chr(x, find_assign_rec),
+    call = find_assign_call(x)
+  )
+}
+
+find_assign <- function(x) find_assign_rec(enexpr(x))
+```
+
+Let's try it out:
+
+
+```r
+find_assign(names(x))
+#> character(0)
+
+find_assign(names(x) <- y)
+#> [1] "x"
+
+find_assign(names(f(x)) <- y)
+#> [1] "x"
+
+find_assign(names(x) <- y <- z <- NULL)
+#> [1] "x" "y" "z"
+
+find_assign(a <- b <- c <- 1)
+#> [1] "a" "b" "c"
+
+find_assign(system.time(x <- print(y <- 5)))
+#> [1] "x" "y"
+```
 
 **Q4.** Write a function that extracts all calls to a specified function.
+
+**A4.** Here is a function that extracts all calls to a specified function:
+
+
+```r
+find_function_call <- function(x, .f) {
+  if (is_call(x)) {
+    if (is_call(x, .f)) {
+      list(x)
+    } else {
+      purrr::map(as.list(x), ~find_function_call(.x, .f)) %>%
+        purrr::compact() %>%
+        unlist(use.names = FALSE)
+    }
+  }
+}
+
+# example-1: with infix operator `:`
+find_function_call(expr(mean(1:2)), ":")
+#> [[1]]
+#> 1:2
+
+find_function_call(expr(sum(mean(1:2))), ":")
+#> [[1]]
+#> 1:2
+
+find_function_call(expr(list(1:5, 4:6, 3:9)), ":")
+#> [[1]]
+#> 1:5
+#> 
+#> [[2]]
+#> 4:6
+#> 
+#> [[3]]
+#> 3:9
+
+find_function_call(expr(list(1:5, sum(4:6), mean(3:9))), ":")
+#> [[1]]
+#> 1:5
+#> 
+#> [[2]]
+#> 4:6
+#> 
+#> [[3]]
+#> 3:9
+
+# example-2: with assignment operator `<-`
+find_function_call(expr(names(x)), "<-")
+#> NULL
+
+find_function_call(expr(names(x) <- y), "<-")
+#> [[1]]
+#> names(x) <- y
+
+find_function_call(expr(names(f(x)) <- y), "<-")
+#> [[1]]
+#> names(f(x)) <- y
+
+find_function_call(expr(names(x) <- y <- z <- NULL), "<-")
+#> [[1]]
+#> names(x) <- y <- z <- NULL
+
+find_function_call(expr(a <- b <- c <- 1), "<-")
+#> [[1]]
+#> a <- b <- c <- 1
+
+find_function_call(expr(system.time(x <- print(y <- 5))), "<-")
+#> [[1]]
+#> x <- print(y <- 5)
+```
+

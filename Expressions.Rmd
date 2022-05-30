@@ -7,7 +7,8 @@ source("common.R")
 Attaching the needed libraries:
 
 ```{r, warning=FALSE, message=FALSE}
-library(rlang)
+library(rlang, warn.conflicts = FALSE)
+library(lobstr, warn.conflicts = FALSE)
 ```
 
 ### Exercises 18.2.4
@@ -42,14 +43,14 @@ f(g(h()))
 We can confirm it by drawing ASTs for them:
 
 ```{r}
-lobstr::ast(f(g(h())))
+ast(f(g(h())))
 
-lobstr::ast(1 + 2 + 3)
+ast(1 + 2 + 3)
 
-lobstr::ast((x + y) * z)
+ast((x + y) * z)
 ```
 
-**Q2.** Draw the following trees by hand and then check your answers with `lobstr::ast()`.
+**Q2.** Draw the following trees by hand and then check your answers with `ast()`.
 
 ```{r, eval = FALSE}
 f(g(h(i(1, 2, 3))))
@@ -57,22 +58,22 @@ f(1, g(2, h(3, i())))
 f(g(1, 2), h(3, i(4, 5)))
 ```
 
-**A2.** Successfully drawn by hand. Checking using `lobstr::ast()`:
+**A2.** Successfully drawn by hand. Checking using `ast()`:
 
 ```{r}
-lobstr::ast(f(g(h(i(1, 2, 3)))))
+ast(f(g(h(i(1, 2, 3)))))
 
-lobstr::ast(f(1, g(2, h(3, i()))))
+ast(f(1, g(2, h(3, i()))))
 
-lobstr::ast(f(g(1, 2), h(3, i(4, 5))))
+ast(f(g(1, 2), h(3, i(4, 5))))
 ```
 
 **Q3.** What's happening with the ASTs below? (Hint: carefully read `?"^"`.)
 
 ```{r}
-lobstr::ast(`x` + `y`)
-lobstr::ast(x**y)
-lobstr::ast(1 -> x)
+ast(`x` + `y`)
+ast(x**y)
+ast(1 -> x)
 ```
 
 **A3.** The `str2expression()` helps make sense of these ASTs.
@@ -100,7 +101,7 @@ str2expression("1 -> x")
 **Q4.** What is special about the AST below?
 
 ```{r}
-lobstr::ast(function(x = 1, y = 2) {})
+ast(function(x = 1, y = 2) {})
 ```
 
 **A4.** As mentioned in [this](https://adv-r.hadley.nz/functions.html#fun-components) section:
@@ -114,7 +115,7 @@ Therefore, the last leaf in this AST, although not specified in the function cal
 **A5.** There is nothing special about this tree. It just shows the nested loop structure inherent to code with `if` and multiple `else if` statements.
 
 ```{r}
-lobstr::ast(if (FALSE) 1 else if (FALSE) 2 else if (FALSE) 3 else 4)
+ast(if (FALSE) 1 else if (FALSE) 2 else if (FALSE) 3 else 4)
 ```
 
 ### Exercises 18.3.5
@@ -129,7 +130,7 @@ Complex numbers are created via a **function call** (using `+`), as can be seen 
 x_complex <- rlang::expr(1 + 1i)
 typeof(x_complex)
 
-lobstr::ast(1 + 1i)
+ast(1 + 1i)
 ```
 
 Similarly, for raw vectors (using `raw()`):
@@ -138,7 +139,7 @@ Similarly, for raw vectors (using `raw()`):
 x_raw <- rlang::expr(raw(2))
 typeof(x_raw)
 
-lobstr::ast(raw(2))
+ast(raw(2))
 ```
 
 Contrast this with other atomic vectors:
@@ -147,7 +148,7 @@ Contrast this with other atomic vectors:
 x_int <- rlang::expr(2L)
 typeof(x_int)
 
-lobstr::ast(2L)
+ast(2L)
 ```
 
 For the same reason, you can't you create an expression that contains an atomic vector of length greater than one since that itself is a function call that uses `c()` function:
@@ -156,7 +157,7 @@ For the same reason, you can't you create an expression that contains an atomic 
 x_vec <- rlang::expr(c(1, 2))
 typeof(x_vec)
 
-lobstr::ast(c(1, 2))
+ast(c(1, 2))
 ```
 
 **Q2.** What happens when you subset a call object to remove the first element? e.g. `expr(read.csv("foo.csv", header = TRUE))[-1]`. Why?
@@ -293,7 +294,7 @@ call_obj2
 This construction follows from the prefix form of this expression, revealed by its AST:
 
 ```{r}
-lobstr::ast(if (x > 1) "a" else "b")
+ast(if (x > 1) "a" else "b")
 ```
 
 ### Exercises 18.4.4
@@ -310,8 +311,8 @@ Compare and contrast the two uses by referencing the AST.
 **A1.** Let's first have a look at the AST:
 
 ```{r}
-lobstr::ast(f((1)))
-lobstr::ast(`(`(1 + 1))
+ast(f((1)))
+ast(`(`(1 + 1))
 ```
 
 As, you can see `(` is being used in two separate ways:
@@ -335,7 +336,7 @@ m <- mean(x = 1)
 We can also have a look at its AST:
 
 ```{r}
-lobstr::ast({
+ast({
   m <- mean(x = 1)
 })
 ```
@@ -351,7 +352,7 @@ lobstr::ast({
 The same can also be seen by its AST:
 
 ```{r}
-lobstr::ast(-2^2)
+ast(-2^2)
 ```
 
 A less confusing way to write this would be:
@@ -369,7 +370,7 @@ This is because the `!` operator has higher precedence than the unary `+` operat
 This can be easily seen by its AST:
 
 ```{r}
-lobstr::ast(!1 + !1)
+ast(!1 + !1)
 ```
 
 **Q5.** Why does `x1 <- x2 <- x3 <- 0` work? Describe the two reasons.
@@ -399,7 +400,7 @@ Therefore, the order of assignment here is:
 This is easy to surmise from its AST:
 
 ```{r}
-lobstr::ast(x1 <- x2 <- x3 <- 0)
+ast(x1 <- x2 <- x3 <- 0)
 ```
 
 **Q6.** Compare the ASTs of `x + y %+% z` and `x ^ y %+% z`. What have you learned about the precedence of custom infix functions?
@@ -407,9 +408,9 @@ lobstr::ast(x1 <- x2 <- x3 <- 0)
 **A6.** Looking at the ASTs for these expressions,
 
 ```{r}
-lobstr::ast(x + y %+% z)
+ast(x + y %+% z)
 
-lobstr::ast(x^y %+% z)
+ast(x^y %+% z)
 ```
 
 we can say that the custom infix operator `%+%` has:
@@ -507,10 +508,7 @@ switch_expr <- function(x, ...) {
     stop("Don't know how to handle type ", typeof(x), call. = FALSE)
   )
 }
-```
 
-
-```{r}
 logical_abbr_rec <- function(x) {
   switch_expr(x,
     # Base cases
@@ -588,11 +586,67 @@ logical_abbr(function(x = TRUE) {
 
 **Q3.** Modify `find_assign` to also detect assignment using replacement functions, i.e. `names(x) <- y`.
 
-**A3.** 
+**A3.** Although both simple assignment (`x <- y`) and assignment using replacement functions (`names(x) <- y`) have `<-` operator in their call, in the latter case, `names(x)` will be a call object and not a symbol:
 
-```{r, echo=FALSE}
+```{r}
+expr1 <- expr(names(x) <- y)
+as.list(expr1)
+typeof(expr1[[2]])
+
+expr2 <- expr(x <- y)
+as.list(expr2)
+typeof(expr2[[2]])
+```
+
+That's how we can detect this kind of assignment by checking if the second element of the expression is a `symbol` or `language` type object. 
+
+```{r}
+expr_type <- function(x) {
+  if (rlang::is_syntactic_literal(x)) {
+    "constant"
+  } else if (is.symbol(x)) {
+    "symbol"
+  } else if (is.call(x)) {
+    "call"
+  } else if (is.pairlist(x)) {
+    "pairlist"
+  } else {
+    typeof(x)
+  }
+}
+
+switch_expr <- function(x, ...) {
+  switch(expr_type(x),
+    ...,
+    stop("Don't know how to handle type ", typeof(x), call. = FALSE)
+  )
+}
+
 flat_map_chr <- function(.x, .f, ...) {
   purrr::flatten_chr(purrr::map(.x, .f, ...))
+}
+
+extract_symbol <- function(x) {
+  if (is_symbol(x[[2]])) {
+    as_string(x[[2]])
+  } else {
+    extract_symbol(as.list(x[[2]]))
+  }
+}
+
+find_assign_call <- function(x) {
+  if (is_call(x, "<-") && is_symbol(x[[2]])) {
+    lhs <- as_string(x[[2]])
+    children <- as.list(x)[-1]
+  } else if (is_call(x, "<-") && is_call(x[[2]])) {
+    lhs <- extract_symbol(as.list(x[[2]]))
+    children <- as.list(x)[-1]
+  } else {
+    lhs <- character()
+    children <- as.list(x)
+  }
+
+  c(lhs, flat_map_chr(children, find_assign_rec))
 }
 
 find_assign_rec <- function(x) {
@@ -602,19 +656,67 @@ find_assign_rec <- function(x) {
     symbol = character(),
 
     # Recursive cases
-    pairlist = flat_map_chr(as.list(x), find_assign_rec),
-    call = {
-      if (is_call(x, "<-")) {
-        as_string(x[[2]])
-      } else {
-        flat_map_chr(as.list(x), find_assign_rec)
-      }
-    }
+    pairlist = flat_map_chr(x, find_assign_rec),
+    call = find_assign_call(x)
   )
 }
 
 find_assign <- function(x) find_assign_rec(enexpr(x))
 ```
 
+Let's try it out:
+
+```{r}
+find_assign(names(x))
+
+find_assign(names(x) <- y)
+
+find_assign(names(f(x)) <- y)
+
+find_assign(names(x) <- y <- z <- NULL)
+
+find_assign(a <- b <- c <- 1)
+
+find_assign(system.time(x <- print(y <- 5)))
+```
 
 **Q4.** Write a function that extracts all calls to a specified function.
+
+**A4.** Here is a function that extracts all calls to a specified function:
+
+```{r}
+find_function_call <- function(x, .f) {
+  if (is_call(x)) {
+    if (is_call(x, .f)) {
+      list(x)
+    } else {
+      purrr::map(as.list(x), ~find_function_call(.x, .f)) %>%
+        purrr::compact() %>%
+        unlist(use.names = FALSE)
+    }
+  }
+}
+
+# example-1: with infix operator `:`
+find_function_call(expr(mean(1:2)), ":")
+
+find_function_call(expr(sum(mean(1:2))), ":")
+
+find_function_call(expr(list(1:5, 4:6, 3:9)), ":")
+
+find_function_call(expr(list(1:5, sum(4:6), mean(3:9))), ":")
+
+# example-2: with assignment operator `<-`
+find_function_call(expr(names(x)), "<-")
+
+find_function_call(expr(names(x) <- y), "<-")
+
+find_function_call(expr(names(f(x)) <- y), "<-")
+
+find_function_call(expr(names(x) <- y <- z <- NULL), "<-")
+
+find_function_call(expr(a <- b <- c <- 1), "<-")
+
+find_function_call(expr(system.time(x <- print(y <- 5))), "<-")
+```
+
