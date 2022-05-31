@@ -5,7 +5,6 @@
 
 ```r
 library(Rcpp)
-library(cpp11)
 ```
 
 ## Exercises 25.2.6
@@ -217,12 +216,12 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
-#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    5.54µs
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))  10.54µs
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    7.75µs
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))  10.87µs
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1   6.03µs   154417.    15.8KB        0
-#> 2  11.44µs    82729.    18.3KB        0
+#> 1   7.93µs   122625.    15.8KB        0
+#> 2  11.23µs    87208.    18.3KB        0
 ```
 
 - `cumprod()`
@@ -264,8 +263,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 cumprod(v1)         0  41.04ns  6156091.        0B
-#> 2 cumprodC(v1)    861ns   1.02µs   853685.    6.62KB
+#> 1 cumprod(v1)         0     41ns 18710163.        0B
+#> 2 cumprodC(v1)    738ns    943ns   609901.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -311,8 +310,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression       min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>  <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 cummin(v1)  122.99ns  123.1ns  4051168.        0B        0
-#> 2 cumminC(v1)   1.84µs    2.3µs   382229.    6.62KB        0
+#> 1 cummin(v1)  122.99ns 164.03ns  5711336.        0B        0
+#> 2 cumminC(v1)   1.64µs   2.01µs   484409.    6.62KB        0
 ```
 
 - `cummaxC()`
@@ -354,8 +353,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression       min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>  <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 cummax(v1)      41ns  82.02ns  3382570.        0B        0
-#> 2 cummaxC(v1)    1.6µs   1.84µs   334248.    6.62KB        0
+#> 1 cummax(v1)      82ns    123ns  2872648.        0B        0
+#> 2 cummaxC(v1)    1.6µs    1.8µs   358941.    6.62KB        0
 ```
 
 - `diff()`
@@ -418,8 +417,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 diff(v1, 2)    4.76µs   5.17µs   182958.        0B
-#> 2 diffC(v1, 2)    2.3µs   3.01µs   278680.    2.49KB
+#> 1 diff(v1, 2)    3.44µs    3.9µs   204787.        0B
+#> 2 diffC(v1, 2)   1.84µs   2.13µs   425804.    2.49KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -465,8 +464,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 range(v1)    1.07µs   1.15µs   814078.        0B        0
-#> 2 rangeC(v1) 943.02ns   1.11µs   860614.    6.62KB        0
+#> 1 range(v1)    1.31µs   1.39µs   540439.        0B        0
+#> 2 rangeC(v1)   1.15µs   1.35µs   527008.    6.62KB        0
 ```
 
 - `var()`
@@ -514,8 +513,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 var(v1)        8.36µs   9.68µs    97350.        0B
-#> 2 variance(v1)   1.72µs   2.03µs   404678.    6.62KB
+#> 1 var(v1)        3.65µs   4.06µs   236777.        0B
+#> 2 variance(v1) 697.04ns 820.03ns  1070194.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -696,8 +695,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression              min   median `itr/sec` mem_alloc
 #>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 median.default(v2)   29.6µs  31.36µs    30118.        0B
-#> 2 medianC(v2)          1.76µs   2.42µs   300704.    2.49KB
+#> 1 median.default(v2)  24.31µs  25.52µs    38441.        0B
+#> 2 medianC(v2)          1.76µs   2.21µs   421316.    2.49KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -747,8 +746,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression          min   median `itr/sec` mem_alloc
 #>   <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 x1 %in% x2        984ns   1.11µs   842771.        0B
-#> 2 matchC(x1, x2)   2.75µs   2.87µs   325896.    6.62KB
+#> 1 x1 %in% x2     696.98ns 922.53ns  1011182.        0B
+#> 2 matchC(x1, x2)   1.76µs   2.01µs   444101.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -784,6 +783,51 @@ unique(v1)
 #> [1] 1 3 6 7 8 9
 uniqueC(v1)
 #> [1] 9 8 1 7 3 6
+```
+
+We can make comparable version using `set` data structure:
+
+
+```cpp
+#include <set>
+#include <vector>
+#include <iostream>
+using namespace std;
+// [[Rcpp::plugins(cpp11)]]
+
+// [[Rcpp::export]]
+std::set<double> uniqueC2(const std::vector<double> &x)
+{
+    std::set<double> xSet(x.begin(), x.end());
+
+    return xSet;
+}
+```
+
+
+```r
+v1 <- c(1, 3, 3, 6, 7, 8, 9)
+
+unique(v1)
+#> [1] 1 3 6 7 8 9
+uniqueC2(v1)
+#> [1] 1 3 6 7 8 9
+
+# performance benefits?
+bench::mark(
+  unique(v1),
+  uniqueC2(v1),
+  iterations = 100
+)
+#> # A tibble: 2 × 6
+#>   expression        min   median `itr/sec` mem_alloc
+#>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
+#> 1 unique(v1)     2.01µs   2.42µs   290531.        0B
+#> 2 uniqueC2(v1)   1.68µs    1.8µs   412691.    6.62KB
+#>   `gc/sec`
+#>      <dbl>
+#> 1        0
+#> 2        0
 ```
 
 1. `min()` using `std::min()`, or `max()` using `std::max()`.
@@ -827,8 +871,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 min(v1)    287.02ns 287.02ns  2044354.        0B        0
-#> 2 minC(v1)     1.48µs   1.64µs   570791.    6.62KB        0
+#> 1 min(v1)    245.99ns 287.02ns  2054689.        0B        0
+#> 2 minC(v1)     1.52µs   2.01µs   408133.    6.62KB        0
 
 max(v1)
 #> [1] 9
@@ -844,8 +888,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 max(v1)    163.97ns 205.01ns  4735473.        0B        0
-#> 2 maxC(v1)     1.11µs   1.21µs   765050.    6.62KB        0
+#> 1 max(v1)    122.99ns 205.01ns  4219305.        0B        0
+#> 2 maxC(v1)     1.15µs   1.52µs   527010.    6.62KB        0
 ```
 
 1. `which.min()` using `min_element`, or `which.max()` using `max_element`.
@@ -854,7 +898,6 @@ bench::mark(
 ```cpp
 #include <vector>
 #include <algorithm>
-#include <iostream>
 using namespace std;
 // [[Rcpp::plugins(cpp11)]]
 
@@ -896,8 +939,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression          min   median `itr/sec` mem_alloc
 #>   <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 which.min(v1)  368.98ns 410.07ns  1999103.        0B
-#> 2 which_minC(v1)   1.72µs   1.93µs   496236.    6.62KB
+#> 1 which.min(v1)     164ns    246ns  3106836.        0B
+#> 2 which_minC(v1)    779ns    984ns   977149.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -917,8 +960,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression          min   median `itr/sec` mem_alloc
 #>   <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 which.max(v1)  245.99ns 246.04ns  1965289.        0B
-#> 2 which_maxC(v1)   1.07µs   1.19µs   745182.    6.62KB
+#> 1 which.max(v1)     123ns    164ns  4867770.        0B
+#> 2 which_maxC(v1)    697ns    902ns   753272.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -927,3 +970,118 @@ bench::mark(
 
 1. `setdiff()`, `union()`, and `intersect()` for integers using sorted ranges and `set_union`, `set_intersection` and `set_difference`.
 
+Note that the following C++ implementations of given functions are not strictly equivalent to their R versions. As far as I can see, there is no way for them to be identical while satisfying the specifications mentioned in the question.
+
+- `union()`
+
+
+```cpp
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <set>
+using namespace std;
+// [[Rcpp::plugins(cpp11)]]
+
+// [[Rcpp::export]]
+std::set<int> unionC(std::vector<int> &v1, std::vector<int> &v2)
+{
+    std::sort(v1.begin(), v1.end());
+    std::sort(v2.begin(), v2.end());
+
+    std::vector<int> union_vec(v1.size() + v2.size());
+    auto it = std::set_union(v1.begin(), v1.end(), v2.begin(), v2.end(), union_vec.begin());
+
+    union_vec.resize(it - union_vec.begin());
+    std::set<int> union_set(union_vec.begin(), union_vec.end());
+
+    return union_set;
+}
+```
+
+
+```r
+v1 <- c(1, 4, 5, 5, 5, 6, 2)
+v2 <- c(4, 1, 6, 8)
+
+union(v1, v2)
+#> [1] 1 4 5 6 2 8
+unionC(v1, v2)
+#> [1] 1 2 4 5 6 8
+```
+
+- `intersect()`
+
+
+```cpp
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <set>
+using namespace std;
+// [[Rcpp::plugins(cpp11)]]
+
+// [[Rcpp::export]]
+std::set<int> intersectC(std::vector<int> &v1, std::vector<int> &v2)
+{
+    std::sort(v1.begin(), v1.end());
+    std::sort(v2.begin(), v2.end());
+
+    std::vector<int> union_vec(v1.size() + v2.size());
+    auto it = std::set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), union_vec.begin());
+
+    union_vec.resize(it - union_vec.begin());
+    std::set<int> union_set(union_vec.begin(), union_vec.end());
+
+    return union_set;
+}
+```
+
+
+```r
+v1 <- c(1, 4, 5, 5, 5, 6, 2)
+v2 <- c(4, 1, 6, 8)
+
+intersect(v1, v2)
+#> [1] 1 4 6
+intersectC(v1, v2)
+#> [1] 1 4 6
+```
+
+- `setdiff()`
+
+
+```cpp
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <set>
+using namespace std;
+// [[Rcpp::plugins(cpp11)]]
+
+// [[Rcpp::export]]
+std::set<int> setdiffC(std::vector<int> &v1, std::vector<int> &v2)
+{
+    std::sort(v1.begin(), v1.end());
+    std::sort(v2.begin(), v2.end());
+
+    std::vector<int> union_vec(v1.size() + v2.size());
+    auto it = std::set_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), union_vec.begin());
+
+    union_vec.resize(it - union_vec.begin());
+    std::set<int> union_set(union_vec.begin(), union_vec.end());
+
+    return union_set;
+}
+```
+
+
+```r
+v1 <- c(1, 4, 5, 5, 5, 6, 2)
+v2 <- c(4, 1, 6, 8)
+
+setdiff(v1, v2)
+#> [1] 5 2
+setdiffC(v1, v2)
+#> [1] 2 5
+```

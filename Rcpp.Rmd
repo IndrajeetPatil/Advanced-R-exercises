@@ -6,7 +6,6 @@ source("common.R")
 
 ```{r}
 library(Rcpp)
-library(cpp11)
 ```
 
 ## Exercises 25.2.6
@@ -636,6 +635,38 @@ unique(v1)
 uniqueC(v1)
 ```
 
+We can make comparable version using `set` data structure:
+
+```{Rcpp}
+#include <set>
+#include <vector>
+#include <iostream>
+using namespace std;
+// [[Rcpp::plugins(cpp11)]]
+
+// [[Rcpp::export]]
+std::set<double> uniqueC2(const std::vector<double> &x)
+{
+    std::set<double> xSet(x.begin(), x.end());
+
+    return xSet;
+}
+```
+
+```{r}
+v1 <- c(1, 3, 3, 6, 7, 8, 9)
+
+unique(v1)
+uniqueC2(v1)
+
+# performance benefits?
+bench::mark(
+  unique(v1),
+  uniqueC2(v1),
+  iterations = 100
+)
+```
+
 1. `min()` using `std::min()`, or `max()` using `std::max()`.
 
 ```{Rcpp}
@@ -687,7 +718,6 @@ bench::mark(
 ```{Rcpp}
 #include <vector>
 #include <algorithm>
-#include <iostream>
 using namespace std;
 // [[Rcpp::plugins(cpp11)]]
 
@@ -737,3 +767,106 @@ bench::mark(
 
 1. `setdiff()`, `union()`, and `intersect()` for integers using sorted ranges and `set_union`, `set_intersection` and `set_difference`.
 
+Note that the following C++ implementations of given functions are not strictly equivalent to their R versions. As far as I can see, there is no way for them to be identical while satisfying the specifications mentioned in the question.
+
+- `union()`
+
+```{Rcpp}
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <set>
+using namespace std;
+// [[Rcpp::plugins(cpp11)]]
+
+// [[Rcpp::export]]
+std::set<int> unionC(std::vector<int> &v1, std::vector<int> &v2)
+{
+    std::sort(v1.begin(), v1.end());
+    std::sort(v2.begin(), v2.end());
+
+    std::vector<int> union_vec(v1.size() + v2.size());
+    auto it = std::set_union(v1.begin(), v1.end(), v2.begin(), v2.end(), union_vec.begin());
+
+    union_vec.resize(it - union_vec.begin());
+    std::set<int> union_set(union_vec.begin(), union_vec.end());
+
+    return union_set;
+}
+```
+
+```{r}
+v1 <- c(1, 4, 5, 5, 5, 6, 2)
+v2 <- c(4, 1, 6, 8)
+
+union(v1, v2)
+unionC(v1, v2)
+```
+
+- `intersect()`
+
+```{Rcpp}
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <set>
+using namespace std;
+// [[Rcpp::plugins(cpp11)]]
+
+// [[Rcpp::export]]
+std::set<int> intersectC(std::vector<int> &v1, std::vector<int> &v2)
+{
+    std::sort(v1.begin(), v1.end());
+    std::sort(v2.begin(), v2.end());
+
+    std::vector<int> union_vec(v1.size() + v2.size());
+    auto it = std::set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), union_vec.begin());
+
+    union_vec.resize(it - union_vec.begin());
+    std::set<int> union_set(union_vec.begin(), union_vec.end());
+
+    return union_set;
+}
+```
+
+```{r}
+v1 <- c(1, 4, 5, 5, 5, 6, 2)
+v2 <- c(4, 1, 6, 8)
+
+intersect(v1, v2)
+intersectC(v1, v2)
+```
+
+- `setdiff()`
+
+```{Rcpp}
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <set>
+using namespace std;
+// [[Rcpp::plugins(cpp11)]]
+
+// [[Rcpp::export]]
+std::set<int> setdiffC(std::vector<int> &v1, std::vector<int> &v2)
+{
+    std::sort(v1.begin(), v1.end());
+    std::sort(v2.begin(), v2.end());
+
+    std::vector<int> union_vec(v1.size() + v2.size());
+    auto it = std::set_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), union_vec.begin());
+
+    union_vec.resize(it - union_vec.begin());
+    std::set<int> union_set(union_vec.begin(), union_vec.end());
+
+    return union_set;
+}
+```
+
+```{r}
+v1 <- c(1, 4, 5, 5, 5, 6, 2)
+v2 <- c(4, 1, 6, 8)
+
+setdiff(v1, v2)
+setdiffC(v1, v2)
+```
