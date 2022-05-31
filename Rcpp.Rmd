@@ -4,13 +4,14 @@
 source("common.R")
 ```
 
-## Exercises 25.2.6
-
-**Q1.** With the basics of C++ in hand, it's now a great time to practice by reading and writing some simple C++ functions. For each ofthe following functions, read the code and figure out what the corresponding base R function is. You might not understand every part of the code yet, but you should be able to figure out the basics of what the function does.
- 
 ```{r}
 library(Rcpp)
+library(cpp11)
 ```
+
+## Exercises 25.2.6
+
+**Q1.** With the basics of C++ in hand, it's now a great time to practice by reading and writing some simple C++ functions. For each of the following functions, read the code and figure out what the corresponding base R function is. You might not understand every part of the code yet, but you should be able to figure out the basics of what the function does.
 
 ```{Rcpp}
 #include <Rcpp.h>
@@ -415,7 +416,7 @@ bench::mark(
 
 **Q1.** Rewrite any of the functions from Exercise 25.2.6 to deal with missing values. If `na.rm` is true, ignore the missing values. If `na.rm` is false,  return a missing value if the input contains any missing values. Some good functions to practice with are `min()`, `max()`, `range()`, `mean()`, and `var()`.
 
-**A1.**
+**A1.** We will only create a version of `range()` that deals with missing values. The same principle applies to others:
 
 ```{Rcpp}
 #include <iostream>
@@ -523,6 +524,42 @@ bench::mark(
 ```
 
 1. `%in%` using `unordered_set` and the `find()` or `count()` methods.
+
+```{Rcpp}
+#include <vector>
+#include <unordered_set>
+using namespace std;
+// [[Rcpp::plugins(cpp11)]]
+
+// [[Rcpp::export]]
+std::vector<bool> matchC(const std::vector<double> &x, const std::vector<double> &table)
+{
+    std::unordered_set<double> tableUnique(table.begin(), table.end());
+    std::vector<bool> out;
+
+    for (const auto &xElem : x)
+    {
+        out.push_back(tableUnique.find(xElem) != tableUnique.end() ? true : false);
+    }
+
+    return out;
+}
+```
+
+```{r}
+x1 <- c(3, 4, 8)
+x2 <- c(1, 2, 3, 3, 4, 4, 5, 6) 
+  
+x1 %in% x2
+matchC(x1, x2)
+
+# performance benefits?
+bench::mark(
+  x1 %in% x2,
+  matchC(x1, x2),
+  iterations = 100
+)
+```
 
 1. `unique()` using an `unordered_set` (challenge: do it in one line!).
 

@@ -44,7 +44,34 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 7</span> Environments</a></li></ul>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
+<li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
+<li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
+<li><a class="active" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
+<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
+<li><a class="" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
+<li><a class="" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
+<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
+<li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
+<li><a class="" href="quotation.html"><span class="header-section-number">19</span> Quotation</a></li>
+<li><a class="" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
+<li><a class="" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></li>
+<li><a class="" href="improving-performance.html"><span class="header-section-number">24</span> Improving performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></li>
+</ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
@@ -61,7 +88,7 @@
 <!-- source("common.R") -->
 <!-- ``` -->
 <p>Attaching the needed libraries:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <div id="exercises-7.2.7" class="section level3" number="7.0.1">
 <h3>
@@ -106,24 +133,24 @@
 <p><strong>Q2.</strong> Create an environment as illustrated by this picture.</p>
 <div class="inline-figure"><img src="diagrams/environments/recursive-1.png" width="177"></div>
 <p><strong>A2.</strong> Creating the environment illustrated in the picture:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span><span class="op">)</span>
 
 <span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">e</span><span class="op">$</span><span class="va">loop</span> <span class="op">&lt;-</span> <span class="va">e</span>
 <span class="fu"><a href="https://rlang.r-lib.org/reference/env_print.html">env_print</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>
-<span class="co">#&gt; &lt;environment: 0x11982ba40&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x12fd92950&gt;</span>
 <span class="co">#&gt; Parent: &lt;environment: global&gt;</span>
 <span class="co">#&gt; Bindings:</span>
 <span class="co">#&gt; • loop: &lt;env&gt;</span>
 
 <span class="co"># should be the same as the `e` memory address</span>
 <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">e</span><span class="op">$</span><span class="va">loop</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x11982ba40"</span></code></pre></div>
+<span class="co">#&gt; [1] "0x12fd92950"</span></code></pre></div>
 <p><strong>Q3.</strong> Create a pair of environments as illustrated by this picture.</p>
 <div class="inline-figure"><img src="diagrams/environments/recursive-2.png" width="307"></div>
 <p><strong>A3.</strong> Creating the specified environment:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">e1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">e2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span><span class="op">)</span>
 
@@ -132,15 +159,15 @@
 
 <span class="co"># following should be the same</span>
 <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span><span class="op">$</span><span class="va">deloop</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x11abbc1f8" "0x11abbc1f8"</span>
+<span class="co">#&gt; [1] "0x108894630" "0x108894630"</span>
 <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">e2</span>, <span class="va">e1</span><span class="op">$</span><span class="va">loop</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x11ac2db90" "0x11ac2db90"</span></code></pre></div>
+<span class="co">#&gt; [1] "0x108905fc8" "0x108905fc8"</span></code></pre></div>
 <p><strong>Q4.</strong> Explain why <code>e[[1]]</code> and <code>e[c("a", "b")]</code> don’t make sense when <code>e</code> is an environment.</p>
 <p><strong>A4.</strong> An environment is a non-linear data structure, and has no concept of ordered elements. Therefore, indexing it (e.g. <code>e[[1]]</code>) doesn’t make sense.</p>
 <p>Subsetting a list or a vector returns a subset of the underlying data structure. So, subsetting a vector returns another vector. But it’s unclear what subsetting an environment (e.g. <code>e[c("a", "b")]</code>) should return because there is no data structure to contain its returns. It can’t be another environment since environments have reference semantics.</p>
 <p><strong>Q5.</strong> Create a version of <code><a href="https://rlang.r-lib.org/reference/env_poke.html">env_poke()</a></code> that will only bind new names, never re-bind old names. Some programming languages only do this, and are known as [single assignment languages][<a href="https://en.wikipedia.org/wiki/Assignment_(computer_science)#Single_assignment" class="uri">https://en.wikipedia.org/wiki/Assignment_(computer_science)#Single_assignment</a>].</p>
 <p><strong>A5.</strong> Create a version of <code><a href="https://rlang.r-lib.org/reference/env_poke.html">env_poke()</a></code> that doesn’t allow re-binding old names:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">env_poke2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">env</span>, <span class="va">nm</span>, <span class="va">value</span><span class="op">)</span> <span class="op">{</span>
   <span class="kw">if</span> <span class="op">(</span><span class="va">nm</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">env</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
     <span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"Can't re-bind existing names."</span><span class="op">)</span>
@@ -149,7 +176,7 @@
   <span class="fu"><a href="https://rlang.r-lib.org/reference/env_poke.html">env_poke</a></span><span class="op">(</span><span class="va">env</span>, <span class="va">nm</span>, <span class="va">value</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>Making sure that it behaves as expected:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">2</span>, c <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 
 <span class="co"># re-binding old names not allowed</span>
@@ -162,7 +189,7 @@
 <span class="va">e</span><span class="op">$</span><span class="va">d</span>
 <span class="co">#&gt; [1] 8</span></code></pre></div>
 <p>Contrast this behavior with the following:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">2</span>, c <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 
 <span class="va">e</span><span class="op">$</span><span class="va">b</span>
@@ -173,7 +200,7 @@
 <span class="va">e</span><span class="op">$</span><span class="va">b</span>
 <span class="co">#&gt; [1] 4</span></code></pre></div>
 <p><strong>Q6.</strong> What does this function do? How does it differ from <code>&lt;&lt;-</code> and why might you prefer it?</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rebind</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="va">env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">env</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/empty_env.html">empty_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
     <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Can't find `"</span>, <span class="va">name</span>, <span class="st">"`"</span>, call. <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -190,7 +217,7 @@
 <span class="va">a</span>
 <span class="co">#&gt; [1] 10</span></code></pre></div>
 <p><strong>A6.</strong> The downside of <code>&lt;&lt;-</code> is that it will create a new binding if it doesn’t exist in the given environment, which is something that we may not wish:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># `x` doesn't exist</span>
 <span class="fu"><a href="https://rdrr.io/r/base/exists.html">exists</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>
 <span class="co">#&gt; [1] FALSE</span>
@@ -207,7 +234,7 @@
 <span class="va">x</span>
 <span class="co">#&gt; [1] 5</span></code></pre></div>
 <p>But <code>rebind()</code> function will let us know if the binding doesn’t exist, which is much safer way to super-assign:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rebind</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="va">env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">env</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/empty_env.html">empty_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
     <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Can't find `"</span>, <span class="va">name</span>, <span class="st">"`"</span>, call. <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -238,7 +265,7 @@
 <p><strong>Q1.</strong> Modify <code>where()</code> to return <em>all</em> environments that contain a binding for <code>name</code>. Carefully think through what type of object the function will need to return.</p>
 <p><strong>A1.</strong> Here is a modified version of <code>where()</code> that returns <em>all</em> environments that contain a binding for <code>name</code>.</p>
 <p>Since we anticipate more than one environment, we dynamically update a list each time an environment with the specified binding is found. It is important to initialize to an empty list since that signifies that given binding is not found in any of the environments.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">where</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">env_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
 
@@ -253,7 +280,7 @@
   <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">env_list</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>Let’s try it out:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">where</span><span class="op">(</span><span class="st">"yyy"</span><span class="op">)</span>
 <span class="co">#&gt; list()</span>
 
@@ -292,7 +319,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/detach.html">detach</a></span><span class="op">(</span><span class="st">"package:dplyr"</span><span class="op">)</span></code></pre></div>
 <p><strong>Q2.</strong> Write a function called <code>fget()</code> that finds only function objects. It should have two arguments, <code>name</code> and <code>env</code>, and should obey the regular scoping rules for functions: if there’s an object with a matching name that’s not a function, look in the parent. For an added challenge, also add an <code>inherits</code> argument which controls whether the function recurses up the parents or only looks in one environment.</p>
 <p><strong>A2.</strong> Here is a function that recursively looks for function objects:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb186"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fget</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">inherits</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>
   <span class="co"># we need only function objects</span>
   <span class="va">f_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html">mget</a></span><span class="op">(</span><span class="va">name</span>,
@@ -317,14 +344,14 @@
   <span class="op">}</span>
 <span class="op">}</span></code></pre></div>
 <p>Let’s try it out:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fget</span><span class="op">(</span><span class="st">"mean"</span>, inherits <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; Error: No function objects with matching name was found.</span>
 
 <span class="fu">fget</span><span class="op">(</span><span class="st">"mean"</span>, inherits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x11830dc40&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x10ee1dcb0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span>
 
 <span class="va">mean</span> <span class="op">&lt;-</span> <span class="fl">5</span>
@@ -342,7 +369,7 @@
 </h3>
 <p><strong>Q1.</strong> How is <code><a href="https://rlang.r-lib.org/reference/search_envs.html">search_envs()</a></code> different from <code>env_parents(global_env())</code>?</p>
 <p><strong>A1.</strong> The <code><a href="https://rlang.r-lib.org/reference/search_envs.html">search_envs()</a></code> lists a chain of environments currently attached to the search path and contains exported functions from these packages. The search path always ends at the <code>{base}</code> package environment. The search path also includes the global environment.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rlang.r-lib.org/reference/search_envs.html">search_envs</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;  [[1]] $ &lt;env: global&gt;</span>
 <span class="co">#&gt;  [[2]] $ &lt;env: package:rlang&gt;</span>
@@ -357,7 +384,7 @@
 <span class="co">#&gt; [[11]] $ &lt;env: org:r-lib&gt;</span>
 <span class="co">#&gt; [[12]] $ &lt;env: package:base&gt;</span></code></pre></div>
 <p>The <code><a href="https://rlang.r-lib.org/reference/env_parent.html">env_parents()</a></code> lists all parent environments up until the empty environment. Of course, the global environment itself is not included in this list.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rlang.r-lib.org/reference/env_parent.html">env_parents</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/search_envs.html">global_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;  [[1]] $ &lt;env: package:rlang&gt;</span>
 <span class="co">#&gt;  [[2]] $ &lt;env: package:magrittr&gt;</span>
@@ -372,7 +399,7 @@
 <span class="co">#&gt; [[11]] $ &lt;env: package:base&gt;</span>
 <span class="co">#&gt; [[12]] $ &lt;env: empty&gt;</span></code></pre></div>
 <p><strong>Q2.</strong> Draw a diagram that shows the enclosing environments of this function:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb190"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x1</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">f2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x2</span><span class="op">)</span> <span class="op">{</span>
     <span class="va">f3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x3</span><span class="op">)</span> <span class="op">{</span>
@@ -387,7 +414,7 @@
 <div class="inline-figure"><img src="https://raw.githubusercontent.com/Tazinho/Advanced-R-Solutions/main/images/environments/function_environments_corrected.png" width="100%"></div>
 <p><strong>Q3.</strong> Write an enhanced version of <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> that provides more information about functions. Show where the function was found and what environment it was defined in.</p>
 <p><strong>A3.</strong> To write the required function, we can first re-purpose the <code>fget()</code> function we wrote above to return not the found function, but to return the environment in which it was found and its enclosing environment:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fget2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="co"># we need only function objects</span>
   <span class="va">f_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html">mget</a></span><span class="op">(</span><span class="va">name</span>,
@@ -415,7 +442,7 @@
   <span class="op">}</span>
 <span class="op">}</span></code></pre></div>
 <p>Let’s try it out:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb192"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fget2</span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>
 <span class="co">#&gt; $where</span>
 <span class="co">#&gt; &lt;environment: base&gt;</span>
@@ -432,7 +459,7 @@
 <span class="co">#&gt; &lt;environment: R_GlobalEnv&gt;</span>
 <span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span></code></pre></div>
 <p>We can now write the new version of <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> as a wrapper around this function. We only need to foresee that users might enter the function name either as a symbol or a string.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">str_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">.f</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu">fget2</span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/as_string.html">as_string</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">ensym</a></span><span class="op">(</span><span class="va">.f</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span>
@@ -457,7 +484,7 @@
 </h3>
 <p><strong>Q1.</strong> Write a function that lists all the variables defined in the environment in which it was called. It should return the same results as <code><a href="https://rdrr.io/r/base/ls.html">ls()</a></code>.</p>
 <p><strong>A1.</strong> Here is a function that lists all the variables defined in the environment in which it was called:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb194"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># let's first remove everything that exists in the global environment right now</span>
 <span class="co"># to test with only newly defined objects</span>
 <span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span>list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
@@ -467,16 +494,16 @@
   <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_names.html">env_names</a></span><span class="op">(</span><span class="va">env</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>The MVP here is <code><a href="https://rlang.r-lib.org/reference/stack.html">rlang::caller_env()</a></code>, so let’s also have a look at its definition:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">rlang</span><span class="fu">::</span><span class="va"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span>
 <span class="co">#&gt; function (n = 1) </span>
 <span class="co">#&gt; {</span>
 <span class="co">#&gt;     parent.frame(n + 1)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x118e1b078&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x10f177ee8&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:rlang&gt;</span></code></pre></div>
 <p>As can be seen, it defines the caller frame/environment as the first ancestor of the parent frame/environment. We can vary <code>n</code> to change this and see how the caller environment changes:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">explore_caller_env</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 
@@ -486,8 +513,8 @@
 
 <span class="fu">explore_caller_env</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; &lt;environment: R_GlobalEnv&gt;</span>
-<span class="co">#&gt; &lt;environment: 0x11b170c38&gt;</span>
-<span class="co">#&gt; &lt;environment: 0x11b170c38&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x10913fd58&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x10913fd58&gt;</span>
 
 <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/fn_env.html">fn_env</a></span><span class="op">(</span><span class="va">explore_caller_env</span><span class="op">)</span>
 <span class="co">#&gt; &lt;environment: R_GlobalEnv&gt;</span>
@@ -497,7 +524,7 @@
 <ul>
 <li>In global environment:</li>
 </ul>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="st">"a"</span>
 <span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">1</span>
 
@@ -509,7 +536,7 @@
 <ul>
 <li>In function environment:</li>
 </ul>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb198"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">foo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">a</span> <span class="op">&lt;-</span> <span class="st">"x"</span>
   <span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">2</span>
@@ -526,15 +553,23 @@
 </div>
 </div>
   <div class="chapter-nav">
-<div class="empty"></div>
-<div class="empty"></div>
+<div class="prev"><a href="functions.html"><span class="header-section-number">6</span> Functions</a></div>
+<div class="next"><a href="conditions.html"><span class="header-section-number">8</span> Conditions</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <div id="book-on-this-page"></div>
+      <ul class="nav navbar-nav"><li>
+<a class="nav-link" href="#environments"><span class="header-section-number">7</span> Environments</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#exercises-7.2.7"><span class="header-section-number">7.0.1</span> Exercises 7.2.7</a></li>
+<li><a class="nav-link" href="#exercises-7.3.1"><span class="header-section-number">7.0.2</span> Exercises 7.3.1</a></li>
+<li><a class="nav-link" href="#exercises-7.4.5"><span class="header-section-number">7.0.3</span> Exercises 7.4.5</a></li>
+<li><a class="nav-link" href="#exercises-7.5.5"><span class="header-section-number">7.0.4</span> Exercises 7.5.5</a></li>
+</ul>
+</li></ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Environments.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Environments.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -546,7 +581,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-05-30.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-05-31.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -554,6 +589,34 @@
   </div>
 
 </div></div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
 </body>
 </html>
