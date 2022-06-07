@@ -19,7 +19,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x141949108>
+#> <bytecode: 0x14014a708>
 #> <environment: namespace:base>
 ```
 
@@ -45,8 +45,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x1138253c0>
-#> <environment: 0x113824390>
+#> <bytecode: 0x10d62f3c0>
+#> <environment: 0x10d62e390>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -201,15 +201,15 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x1416aa8e0>
+#> <environment: 0x11a33d008>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x1318380b0>
-#> <environment: 0x141602840>
+#> <bytecode: 0x119a1b220>
+#> <environment: 0x11a298770>
 ```
 
 ### Exercises 10.3.4
@@ -270,8 +270,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1         12.79µs  13.98µs    69387.    12.8KB     62.5
-#> 2 LL2          6.85µs   7.38µs   129670.        0B     64.9
+#> 1 LL1         13.16µs  14.19µs    63056.    12.8KB     56.8
+#> 2 LL2          7.01µs   7.67µs   121722.        0B     60.9
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -297,16 +297,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 × 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1         20.42µs  21.69µs    45532.
-#>  2     10 LL2           8.4µs    9.1µs   107614.
-#>  3     20 LL1         22.39µs  23.53µs    41811.
-#>  4     20 LL2           8.2µs   8.81µs   110912.
-#>  5     50 LL1         26.57µs  27.72µs    35567.
-#>  6     50 LL2          8.08µs   8.65µs   113967.
-#>  7    100 LL1         36.82µs  38.62µs    25557.
-#>  8    100 LL2           8.9µs   9.51µs   102172.
-#>  9   1000 LL1        508.44µs 524.27µs     1899.
-#> 10   1000 LL2         29.36µs  30.42µs    32552.
+#>  1     10 LL1         20.38µs  21.98µs    44889.
+#>  2     10 LL2          8.49µs   9.18µs   107199.
+#>  3     20 LL1         22.59µs  23.98µs    40996.
+#>  4     20 LL2           8.4µs   9.02µs   108645.
+#>  5     50 LL1          26.9µs  29.07µs    32231.
+#>  6     50 LL2          8.28µs    8.9µs   109382.
+#>  7    100 LL1         37.02µs   39.4µs    24709.
+#>  8    100 LL2          8.98µs   9.72µs    99713.
+#>  9   1000 LL1        509.34µs 535.25µs     1828.
+#> 10   1000 LL2         29.48µs     31µs    31804.
 
 ggplot(
   df_bench,
@@ -338,9 +338,10 @@ ggplot(
     (d) `f(z)`.
     (e) It depends.
 
-**Q2.** Compare and contrast the effects of `env_bind()` vs. `attach()` for the 
-   following code.
-   
+**Q2.** Compare and contrast the effects of `env_bind()` vs. `attach()` for the  following code.
+
+**A2.**
+
 
 ```r
 funs <- list(

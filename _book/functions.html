@@ -95,7 +95,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x11f758130&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x140625730&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>But, given a function, it doesn’t make sense to find its name because there can be multiple names bound to the same function.</p>
 <div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
@@ -322,7 +322,7 @@
 <span class="va">mean</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x11f758130&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x140625730&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span>
 
 <span class="co"># other package function</span>
@@ -332,7 +332,7 @@
 <span class="co">#&gt;     .f &lt;- as_mapper(.f, ...)</span>
 <span class="co">#&gt;     .Call(map_impl, environment(), ".x", ".f", "list")</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x11d091498&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x10b8bc898&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></code></pre></div>
 <p>There are two exceptions to this rule:</p>
 <ul>
@@ -475,7 +475,7 @@ running the code yourself.</p>
 
 <span class="fu">f2</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] 100</span>
-<span class="co">#&gt; [1] "0x11cb3f3d8" "0x11cb3f3d8"</span></code></pre></div>
+<span class="co">#&gt; [1] "0x1062c7fd8" "0x1062c7fd8"</span></code></pre></div>
 <p><strong>Q3.</strong> What does this function return? Why? Which principle does it illustrate?</p>
 <div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">10</span>
@@ -498,8 +498,8 @@ running the code yourself.</p>
                    <span class="fl">2</span>
                  <span class="op">}</span>,
                <span class="va">y</span> <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/missing.html">missing</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/missing.html">missing</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/missing.html">missing</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/missing.html">missing</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>
 
   <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>
 <span class="op">}</span>
@@ -534,7 +534,7 @@ running the code yourself.</p>
 <span class="op">}</span>
 
 <span class="fu">show_time</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2022-06-07 19:01:09 CEST"</span></code></pre></div>
+<span class="co">#&gt; [1] "2022-06-07 19:25:22 CEST"</span></code></pre></div>
 <p><strong>A5.</strong> Let’s take this step-by-step.</p>
 <p>The function argument <code>x</code> is missing in the function call. This means that <code>stop("Error!")</code> is evaluated in the function environment, and not global environment.</p>
 <p>But <code>stop("Error!")</code> evaluated only when <code>x</code> is evaluated, and due to lazy evaluation, this happens only when <code>print(x)</code> is called.</p>
@@ -688,7 +688,7 @@ running the code yourself.</p>
 <span class="co">#&gt;     on.exit(setwd(old))</span>
 <span class="co">#&gt;     force(code)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x11f06c000&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x1406910a8&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:withr&gt;</span></code></pre></div>
 <p>More importantly, its parameters <code>dir</code> allows temporarily changing working directory to <em>any</em> directory.</p>
 <p><strong>Q4.</strong> Write a function that opens a graphics device, runs the supplied code, and closes the graphics device (always, regardless of whether or not the plotting code works).</p>
@@ -755,7 +755,7 @@ running the code yourself.</p>
 <span class="co">#&gt;         invisible(NULL)</span>
 <span class="co">#&gt;     else rval</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x11c7c76b0&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x1067f2840&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:utils&gt;</span></code></pre></div>
 <p>Here are few key differences:</p>
 <ul>
