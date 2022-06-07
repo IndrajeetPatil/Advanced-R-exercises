@@ -7,7 +7,8 @@ source("common.R")
 Attaching the needed libraries:
 
 ```{r, warning=FALSE, message=FALSE}
-library(rlang)
+library(rlang, warn.conflicts = FALSE)
+library(ggplot2, warn.conflicts = FALSE)
 ```
 
 ### Exercises 10.2.6
@@ -125,6 +126,19 @@ new_counter2 <- function() {
 }
 ```
 
+**A5.** In case closures are not used, the counts are stored in the global variable, which can be modified by other processes or even deleted.
+
+```{r}
+new_counter2()
+
+new_counter2()
+
+new_counter2()
+
+i <- 20
+new_counter2()
+```
+
 **Q6.** What happens if you use `<-` instead of `<<-`? Make predictions, then verify with the code below.
 
 ```{r}
@@ -170,6 +184,73 @@ boxcox3 <- function(x) {
 **Q3.** Why don't you need to worry that `boot_permute()` stores a copy of the data inside the function that it generates?
 
 **Q4.** How much time does `ll_poisson2()` save compared to `ll_poisson1()`? Use `bench::mark()` to see how much faster the optimisation occurs. How does changing the length of `x` change the results?
+
+**A4.** Let's first compare the performance of these functions with the example in the book:
+
+```{r}
+ll_poisson1 <- function(x) {
+  n <- length(x)
+
+  function(lambda) {
+    log(lambda) * sum(x) - n * lambda - sum(lfactorial(x))
+  }
+}
+
+ll_poisson2 <- function(x) {
+  n <- length(x)
+  sum_x <- sum(x)
+  c <- sum(lfactorial(x))
+
+  function(lambda) {
+    log(lambda) * sum_x - n * lambda - c
+  }
+}
+
+x1 <- c(41, 30, 31, 38, 29, 24, 30, 29, 31, 38)
+
+bench::mark(
+  "LL1" = optimise(ll_poisson1(x1), c(0, 100), maximum = TRUE),
+  "LL2" = optimise(ll_poisson2(x1), c(0, 100), maximum = TRUE)
+)
+```
+
+As can be seen, the second version is much faster than the first version.
+
+We can also vary the length of the vector and confirm that across a wide range of vector lengths, this performance advantage is observed.
+
+```{r}
+generate_ll_benches <- function(n) {
+  x_vec <- sample.int(n, n)
+
+  bench::mark(
+    "LL1" = optimise(ll_poisson1(x_vec), c(0, 100), maximum = TRUE),
+    "LL2" = optimise(ll_poisson2(x_vec), c(0, 100), maximum = TRUE)
+  )[1:4] %>%
+    dplyr::mutate(length = n, .before = expression)
+}
+
+(df_bench <- purrr::map_dfr(
+  .x = c(10, 20, 50, 100, 1000),
+  .f = ~ generate_ll_benches(n = .x)
+))
+
+ggplot(
+  df_bench,
+  aes(
+    x = as.numeric(length),
+    y = median,
+    group = as.character(expression),
+    color = as.character(expression)
+  )
+) +
+  geom_point() +
+  geom_line() +
+  labs(
+    x = "Vector length",
+    y = "Median Execution Time",
+    colour = "Function used"
+  )
+```
 
 ### Exercises 10.5.1
 

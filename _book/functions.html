@@ -95,7 +95,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x14cbc86b0&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x11f758130&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>But, given a function, it doesn’t make sense to find its name because there can be multiple names bound to the same function.</p>
 <div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
@@ -322,7 +322,7 @@
 <span class="va">mean</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x14cbc86b0&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x11f758130&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span>
 
 <span class="co"># other package function</span>
@@ -332,7 +332,7 @@
 <span class="co">#&gt;     .f &lt;- as_mapper(.f, ...)</span>
 <span class="co">#&gt;     .Call(map_impl, environment(), ".x", ".f", "list")</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x14d1a4548&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x11d091498&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></code></pre></div>
 <p>There are two exceptions to this rule:</p>
 <ul>
@@ -475,7 +475,7 @@ running the code yourself.</p>
 
 <span class="fu">f2</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] 100</span>
-<span class="co">#&gt; [1] "0x14adaee28" "0x14adaee28"</span></code></pre></div>
+<span class="co">#&gt; [1] "0x11cb3f3d8" "0x11cb3f3d8"</span></code></pre></div>
 <p><strong>Q3.</strong> What does this function return? Why? Which principle does it illustrate?</p>
 <div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">10</span>
@@ -520,7 +520,7 @@ running the code yourself.</p>
 <p><strong>A4.</strong> The <code>xlim</code> defines the range of axes breaks for the histogram.</p>
 <div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="Functions_files/figure-html/unnamed-chunk-31-1.png" width="672"></div>
+<div class="inline-figure"><img src="Functions_files/figure-html/unnamed-chunk-31-1.png" width="100%"></div>
 <p>The default <code>c("Sturges", "Sturges")</code> uses Sturges’ algorithm to compute the number of breaks, and thus, the range for axes breaks.</p>
 <div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">)</span>
@@ -534,7 +534,7 @@ running the code yourself.</p>
 <span class="op">}</span>
 
 <span class="fu">show_time</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2022-05-31 14:15:58 CEST"</span></code></pre></div>
+<span class="co">#&gt; [1] "2022-06-07 19:01:09 CEST"</span></code></pre></div>
 <p><strong>A5.</strong> Let’s take this step-by-step.</p>
 <p>The function argument <code>x</code> is missing in the function call. This means that <code>stop("Error!")</code> is evaluated in the function environment, and not global environment.</p>
 <p>But <code>stop("Error!")</code> evaluated only when <code>x</code> is evaluated, and due to lazy evaluation, this happens only when <code>print(x)</code> is called.</p>
@@ -619,7 +619,7 @@ running the code yourself.</p>
 <p><strong>Q2.</strong> Explain how to find the documentation for the named arguments in the following function call:</p>
 <div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, col <span class="op">=</span> <span class="st">"red"</span>, pch <span class="op">=</span> <span class="fl">20</span>, xlab <span class="op">=</span> <span class="st">"x"</span>, col.lab <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="Functions_files/figure-html/unnamed-chunk-38-1.png" width="288"></div>
+<div class="inline-figure"><img src="Functions_files/figure-html/unnamed-chunk-38-1.png" width="100%"></div>
 <p><strong>A2.</strong> First, check documentation for <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>:</p>
 <div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">plot</span><span class="op">)</span>
@@ -688,7 +688,7 @@ running the code yourself.</p>
 <span class="co">#&gt;     on.exit(setwd(old))</span>
 <span class="co">#&gt;     force(code)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x12d0cd840&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x11f06c000&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:withr&gt;</span></code></pre></div>
 <p>More importantly, its parameters <code>dir</code> allows temporarily changing working directory to <em>any</em> directory.</p>
 <p><strong>Q4.</strong> Write a function that opens a graphics device, runs the supplied code, and closes the graphics device (always, regardless of whether or not the plotting code works).</p>
@@ -755,7 +755,7 @@ running the code yourself.</p>
 <span class="co">#&gt;         invisible(NULL)</span>
 <span class="co">#&gt;     else rval</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x14b0e4a80&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x11c7c76b0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:utils&gt;</span></code></pre></div>
 <p>Here are few key differences:</p>
 <ul>
@@ -1016,7 +1016,7 @@ running the code yourself.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-05-31.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-06-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

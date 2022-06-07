@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x14cbc86b0>
+#> <bytecode: 0x11f758130>
 #> <environment: namespace:base>
 ```
 
@@ -298,7 +298,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x14cbc86b0>
+#> <bytecode: 0x11f758130>
 #> <environment: namespace:base>
 
 # other package function
@@ -308,7 +308,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x14d1a4548>
+#> <bytecode: 0x11d091498>
 #> <environment: namespace:purrr>
 ```
 
@@ -492,7 +492,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x14adaee28" "0x14adaee28"
+#> [1] "0x11cb3f3d8" "0x11cb3f3d8"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -557,7 +557,7 @@ Explain how `hist()` works to get a correct `xlim` value.
 hist(mtcars$wt, xlim = c(1, 6))
 ```
 
-<img src="Functions_files/figure-html/unnamed-chunk-31-1.png" width="672" />
+<img src="Functions_files/figure-html/unnamed-chunk-31-1.png" width="100%" />
 
 The default `c("Sturges", "Sturges")` uses Sturges' algorithm to compute the number of breaks, and thus, the range for axes breaks.
 
@@ -579,7 +579,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-05-31 14:15:58 CEST"
+#> [1] "2022-06-07 19:01:09 CEST"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -692,7 +692,7 @@ For `mean()` function, there is only one parameter (`x`) and it's matched by the
 plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
 ```
 
-<img src="Functions_files/figure-html/unnamed-chunk-38-1.png" width="288" />
+<img src="Functions_files/figure-html/unnamed-chunk-38-1.png" width="100%" />
 
 **A2.** First, check documentation for `plot()`:
 
@@ -799,7 +799,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x12d0cd840>
+#> <bytecode: 0x11f06c000>
 #> <environment: namespace:withr>
 ```
 
@@ -881,7 +881,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x14b0e4a80>
+#> <bytecode: 0x11c7c76b0>
 #> <environment: namespace:utils>
 ```
 
