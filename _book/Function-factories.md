@@ -19,7 +19,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x14014a708>
+#> <bytecode: 0x13184ad08>
 #> <environment: namespace:base>
 ```
 
@@ -45,8 +45,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x10d62f3c0>
-#> <environment: 0x10d62e390>
+#> <bytecode: 0x1327b8380>
+#> <environment: 0x1327bb960>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -128,7 +128,7 @@ stopifnot(all.equal(m1(x), 0))
 stopifnot(all.equal(m2(x), var(x) * 99 / 100))
 ```
 
-**A4.** The desired function:
+**A4.** The following function satisfied the specified requirements:
 
 
 ```r
@@ -146,6 +146,7 @@ Testing it with specified test cases:
 m1 <- moment(1)
 m2 <- moment(2)
 x <- runif(100)
+
 stopifnot(all.equal(m1(x), 0))
 stopifnot(all.equal(m2(x), var(x) * 99 / 100))
 ```
@@ -201,15 +202,15 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x11a33d008>
+#> <environment: 0x122e8e208>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x119a1b220>
-#> <environment: 0x11a298770>
+#> <bytecode: 0x122348c50>
+#> <environment: 0x1227c6f90>
 ```
 
 ### Exercises 10.3.4
@@ -219,6 +220,56 @@ new_counter3()
 ### Exercises 10.4.4
 
 **Q1.** In `boot_model()`, why don't I need to force the evaluation of `df` or `model`?
+
+
+```r
+boot_model <- function(df, formula) {
+  mod <- lm(formula, data = df)
+  fitted <- unname(fitted(mod))
+  resid <- unname(resid(mod))
+  rm(mod)
+  
+  print(env_binding_are_lazy(current_env()))
+
+  function() {
+    fitted + sample(resid)
+  }
+}
+```
+
+We can also confirm that there are no lazy bindings in the function environment:
+
+
+```r
+boot_model(mtcars, mpg ~ wt)
+#>   resid  fitted      df formula 
+#>   FALSE   FALSE   FALSE   FALSE
+#> function() {
+#>     fitted + sample(resid)
+#>   }
+#> <environment: 0x1237ef510>
+```
+
+Contrast this with the first function we saw in the chapter which *did* have a lazy binding:
+
+
+```r
+power1 <- function(exp) {
+  print(env_binding_are_lazy(current_env()))
+  
+  function(x) {
+    x ^ exp
+  }
+}
+
+power1(2)
+#>  exp 
+#> TRUE
+#> function(x) {
+#>     x ^ exp
+#>   }
+#> <environment: 0x132714300>
+```
 
 **Q2.** Why might you formulate the Box-Cox transformation like this?
 
@@ -270,8 +321,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1         13.16µs  14.19µs    63056.    12.8KB     56.8
-#> 2 LL2          7.01µs   7.67µs   121722.        0B     60.9
+#> 1 LL1         13.04µs  14.02µs    68864.    12.8KB     68.9
+#> 2 LL2          6.81µs   7.38µs   129521.        0B     64.8
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -297,16 +348,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 × 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1         20.38µs  21.98µs    44889.
-#>  2     10 LL2          8.49µs   9.18µs   107199.
-#>  3     20 LL1         22.59µs  23.98µs    40996.
-#>  4     20 LL2           8.4µs   9.02µs   108645.
-#>  5     50 LL1          26.9µs  29.07µs    32231.
-#>  6     50 LL2          8.28µs    8.9µs   109382.
-#>  7    100 LL1         37.02µs   39.4µs    24709.
-#>  8    100 LL2          8.98µs   9.72µs    99713.
-#>  9   1000 LL1        509.34µs 535.25µs     1828.
-#> 10   1000 LL2         29.48µs     31µs    31804.
+#>  1     10 LL1         20.58µs  22.92µs    38377.
+#>  2     10 LL2           8.4µs   9.55µs    91035.
+#>  3     20 LL1         22.47µs   23.9µs    41094.
+#>  4     20 LL2          8.24µs    8.9µs   110073.
+#>  5     50 LL1         26.49µs  27.84µs    35261.
+#>  6     50 LL2          8.08µs   8.86µs   109830.
+#>  7    100 LL1         36.82µs  38.99µs    24361.
+#>  8    100 LL2          8.94µs   9.96µs    93277.
+#>  9   1000 LL1        508.11µs 527.34µs     1886.
+#> 10   1000 LL2         29.48µs  32.23µs    30737.
 
 ggplot(
   df_bench,
@@ -326,7 +377,7 @@ ggplot(
   )
 ```
 
-<img src="Function-factories_files/figure-html/unnamed-chunk-18-1.png" width="100%" />
+<img src="Function-factories_files/figure-html/unnamed-chunk-21-1.png" width="100%" />
 
 ### Exercises 10.5.1
 

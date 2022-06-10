@@ -1,4 +1,4 @@
-# Quotation
+# Quasiquotation
 
 ```{r, include = FALSE}
 source("common.R")
@@ -25,6 +25,68 @@ sum(mtcars2$am)
 rm(mtcars2)
 ```
 
+**A1.** To identify which arguments are quoted and which are evaluated, we can use the trick mentioned in the book:
+
+> If you’re ever unsure about whether an argument is quoted or evaluated, try executing the code outside of the function. If it doesn’t work or does something different, then that argument is quoted.
+
+- `library(MASS)`
+
+The `package` argument in `library()` is quoted:
+
+```{r, error=TRUE}
+library(MASS)
+
+MASS
+```
+
+- `subset(mtcars, cyl == 4)`
+
+The argument `x` is evaluated, while the argument `subset` is quoted.
+
+```{r, error=TRUE}
+mtcars2 <- subset(mtcars, cyl == 4)
+
+mtcars
+
+cyl == 4
+```
+
+- `with(mtcars2, sum(vs))`
+
+The argument `data` is evaluated, while `expr` argument is quoted.
+
+```{r, error=TRUE}
+with(mtcars2, sum(vs))
+
+mtcars2
+
+sum(vs)
+```
+
+- `sum(mtcars2$am)`
+
+The argument `...` is evaluated.
+
+```{r, error=TRUE}
+sum(mtcars2$am)
+
+mtcars2$am
+```
+
+- `rm(mtcars2)`
+
+The trick we are using so far won't work here since trying to print `mtcars2` will always fail after `rm()` has made a pass at it.
+
+```{r, error=TRUE}
+rm(mtcars2)
+```
+
+We can instead look at the docs for `...`:
+
+> ... the objects to be removed, as names (unquoted) or character strings (quoted).
+
+Thus, this argument is not evaluated, but rather quoted.
+
 **Q2.** For each function in the following tidyverse code, identify which arguments are quoted and which are evaluated.
 
 ```{r, eval = FALSE}
@@ -39,9 +101,50 @@ ggplot(by_cyl, aes(cyl, mean)) +
   geom_point()
 ```
 
+**A2.** As seen in the answer for **Q1.**, `library()` quotes its first argument:
+
+```{r, eval=FALSE}
+library(dplyr)
+library(ggplot2)
+```
+
+In the following code:
+
+- `%>%` (lazily) evaluates its argument
+- `group_by()` and `summarise()` quote their arguments
+
+```{r}
+by_cyl <- mtcars %>% 
+  group_by(cyl) %>%
+  summarise(mean = mean(mpg))
+```
+
+In the following code:
+
+- `ggplot()` evaluates the `data` argument
+- `aes()` quotes its arguments
+
+```{r}
+ggplot(by_cyl, aes(cyl, mean)) +
+  geom_point()
+```
+
 ### Exercises 19.3.6
 
 **Q1.** How is `expr()` implemented? Look at its source code.
+
+**A1.** Looking at the source code, we can see that `expr()` is a simple wrapper around `enexpr()` and captures and returns the naked expressions:
+
+```{r}
+rlang::expr
+```
+
+For example:
+
+```{r}
+x <- expr(x <- 1)
+x
+```
 
 **Q2.** Compare and contrast the following two functions. Can you predict the output before running them?
 

@@ -4,13 +4,43 @@
 source("common.R")
 ```
 
+Attaching the needed libraries:
+
+```{r, warning=FALSE, message=FALSE}
+library(purrr, warn.conflicts = FALSE)
+```
+
 ### Exercises 11.2.3
 
 **Q1.** Base R provides a function operator in the form of `Vectorize()`. What does it do? When might you use it?
 
+**A1.** `Vectorize()` function creates a function that vectorizes the action of the provided function.
+
+For example, the function `rep.int()` repeats a vector of integers `times` number of times, but there is no way to specify each element to be repeated a specific number of times. That is, the `times` argument is not vectorized.
+
+```{r}
+rep.int(1:4, 4:1)
+```
+
+Contrast this output with the vectorized version of this function:
+
+```{r}
+vrep <- Vectorize(rep.int)
+vrep(1:4, 4:1)
+```
+
+
 **Q2.** Read the source code for `possibly()`. How does it work?
 
+```{r}
+possibly
+```
+
 **Q3.** Read the source code for `safely()`. How does it work?
+
+```{r}
+safely
+```
 
 ### Exercises 11.3.1
 

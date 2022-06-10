@@ -96,7 +96,7 @@ stopifnot(all.equal(m1(x), 0))
 stopifnot(all.equal(m2(x), var(x) * 99 / 100))
 ```
 
-**A4.** The desired function:
+**A4.** The following function satisfied the specified requirements:
 
 ```{r}
 moment <- function(k) {
@@ -112,6 +112,7 @@ Testing it with specified test cases:
 m1 <- moment(1)
 m2 <- moment(2)
 x <- runif(100)
+
 stopifnot(all.equal(m1(x), 0))
 stopifnot(all.equal(m2(x), var(x) * 99 / 100))
 ```
@@ -166,6 +167,41 @@ new_counter3()
 ### Exercises 10.4.4
 
 **Q1.** In `boot_model()`, why don't I need to force the evaluation of `df` or `model`?
+
+```{r}
+boot_model <- function(df, formula) {
+  mod <- lm(formula, data = df)
+  fitted <- unname(fitted(mod))
+  resid <- unname(resid(mod))
+  rm(mod)
+  
+  print(env_binding_are_lazy(current_env()))
+
+  function() {
+    fitted + sample(resid)
+  }
+}
+```
+
+We can also confirm that there are no lazy bindings in the function environment:
+
+```{r}
+boot_model(mtcars, mpg ~ wt)
+```
+
+Contrast this with the first function we saw in the chapter which *did* have a lazy binding:
+
+```{r}
+power1 <- function(exp) {
+  print(env_binding_are_lazy(current_env()))
+  
+  function(x) {
+    x ^ exp
+  }
+}
+
+power1(2)
+```
 
 **Q2.** Why might you formulate the Box-Cox transformation like this?
 

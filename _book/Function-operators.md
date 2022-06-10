@@ -2,13 +2,83 @@
 
 
 
+Attaching the needed libraries:
+
+
+```r
+library(purrr, warn.conflicts = FALSE)
+```
+
 ### Exercises 11.2.3
 
 **Q1.** Base R provides a function operator in the form of `Vectorize()`. What does it do? When might you use it?
 
+**A1.** `Vectorize()` function creates a function that vectorizes the action of the provided function.
+
+For example, the function `rep.int()` repeats a vector of integers `times` number of times, but there is no way to specify each element to be repeated a specific number of times. That is, the `times` argument is not vectorized.
+
+
+```r
+rep.int(1:4, 4:1)
+#>  [1] 1 1 1 1 2 2 2 3 3 4
+```
+
+Contrast this output with the vectorized version of this function:
+
+
+```r
+vrep <- Vectorize(rep.int)
+vrep(1:4, 4:1)
+#> [[1]]
+#> [1] 1 1 1 1
+#> 
+#> [[2]]
+#> [1] 2 2 2
+#> 
+#> [[3]]
+#> [1] 3 3
+#> 
+#> [[4]]
+#> [1] 4
+```
+
+
 **Q2.** Read the source code for `possibly()`. How does it work?
 
+
+```r
+possibly
+#> function (.f, otherwise, quiet = TRUE) 
+#> {
+#>     .f <- as_mapper(.f)
+#>     force(otherwise)
+#>     function(...) {
+#>         tryCatch(.f(...), error = function(e) {
+#>             if (!quiet) 
+#>                 message("Error: ", e$message)
+#>             otherwise
+#>         }, interrupt = function(e) {
+#>             stop("Terminated by user", call. = FALSE)
+#>         })
+#>     }
+#> }
+#> <bytecode: 0x11f21df58>
+#> <environment: namespace:purrr>
+```
+
 **Q3.** Read the source code for `safely()`. How does it work?
+
+
+```r
+safely
+#> function (.f, otherwise = NULL, quiet = TRUE) 
+#> {
+#>     .f <- as_mapper(.f)
+#>     function(...) capture_error(.f(...), otherwise, quiet)
+#> }
+#> <bytecode: 0x11fe23880>
+#> <environment: namespace:purrr>
+```
 
 ### Exercises 11.3.1
 
