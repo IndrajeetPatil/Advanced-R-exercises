@@ -62,7 +62,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x11f21df58>
+#> <bytecode: 0x11f695a00>
 #> <environment: namespace:purrr>
 ```
 
@@ -76,7 +76,7 @@ safely
 #>     .f <- as_mapper(.f)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x11fe23880>
+#> <bytecode: 0x11dfd2438>
 #> <environment: namespace:purrr>
 ```
 

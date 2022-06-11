@@ -64,7 +64,7 @@
 <li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
 <li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
 <li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
-<li><a class="" href="quotation.html"><span class="header-section-number">19</span> Quotation</a></li>
+<li><a class="" href="quasiquotation.html"><span class="header-section-number">19</span> Quasiquotation</a></li>
 <li><a class="" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
 <li><a class="" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
 <li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
@@ -139,14 +139,14 @@
 <span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">e</span><span class="op">$</span><span class="va">loop</span> <span class="op">&lt;-</span> <span class="va">e</span>
 <span class="fu"><a href="https://rlang.r-lib.org/reference/env_print.html">env_print</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>
-<span class="co">#&gt; &lt;environment: 0x127fa4a90&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x14a34e710&gt;</span>
 <span class="co">#&gt; Parent: &lt;environment: global&gt;</span>
 <span class="co">#&gt; Bindings:</span>
 <span class="co">#&gt; • loop: &lt;env&gt;</span>
 
 <span class="co"># should be the same as the `e` memory address</span>
 <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">e</span><span class="op">$</span><span class="va">loop</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x127fa4a90"</span></code></pre></div>
+<span class="co">#&gt; [1] "0x14a34e710"</span></code></pre></div>
 <p><strong>Q3.</strong> Create a pair of environments as illustrated by this picture.</p>
 <div class="inline-figure"><img src="diagrams/environments/recursive-2.png" width="307"></div>
 <p><strong>A3.</strong> Creating the specified environment:</p>
@@ -159,9 +159,9 @@
 
 <span class="co"># following should be the same</span>
 <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span><span class="op">$</span><span class="va">deloop</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x107d91810" "0x107d91810"</span>
+<span class="co">#&gt; [1] "0x10f8b3c10" "0x10f8b3c10"</span>
 <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">e2</span>, <span class="va">e1</span><span class="op">$</span><span class="va">loop</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "0x107dff2d0" "0x107dff2d0"</span></code></pre></div>
+<span class="co">#&gt; [1] "0x10f9216d0" "0x10f9216d0"</span></code></pre></div>
 <p><strong>Q4.</strong> Explain why <code>e[[1]]</code> and <code>e[c("a", "b")]</code> don’t make sense when <code>e</code> is an environment.</p>
 <p><strong>A4.</strong> An environment is a non-linear data structure, and has no concept of ordered elements. Therefore, indexing it (e.g. <code>e[[1]]</code>) doesn’t make sense.</p>
 <p>Subsetting a list or a vector returns a subset of the underlying data structure. So, subsetting a vector returns another vector. But it’s unclear what subsetting an environment (e.g. <code>e[c("a", "b")]</code>) should return because there is no data structure to contain its returns. It can’t be another environment since environments have reference semantics.</p>
@@ -351,7 +351,7 @@
 <span class="fu">fget</span><span class="op">(</span><span class="st">"mean"</span>, inherits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; function (x, ...) </span>
 <span class="co">#&gt; UseMethod("mean")</span>
-<span class="co">#&gt; &lt;bytecode: 0x142a2a730&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x12fa031a0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span>
 
 <span class="va">mean</span> <span class="op">&lt;-</span> <span class="fl">5</span>
@@ -500,7 +500,7 @@
 <span class="co">#&gt; {</span>
 <span class="co">#&gt;     parent.frame(n + 1)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x142d82800&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x12fd5b270&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:rlang&gt;</span></code></pre></div>
 <p>As can be seen, it defines the caller frame/environment as the first ancestor of the parent frame/environment. We can vary <code>n</code> to change this and see how the caller environment changes:</p>
 <div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
@@ -513,8 +513,8 @@
 
 <span class="fu">explore_caller_env</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; &lt;environment: R_GlobalEnv&gt;</span>
-<span class="co">#&gt; &lt;environment: 0x141ca0ed0&gt;</span>
-<span class="co">#&gt; &lt;environment: 0x141ca0ed0&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x14991bcd0&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x14991bcd0&gt;</span>
 
 <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/fn_env.html">fn_env</a></span><span class="op">(</span><span class="va">explore_caller_env</span><span class="op">)</span>
 <span class="co">#&gt; &lt;environment: R_GlobalEnv&gt;</span>
@@ -581,7 +581,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-06-07.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-06-11.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

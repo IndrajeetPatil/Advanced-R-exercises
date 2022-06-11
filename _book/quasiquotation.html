@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 19 Quasiquotation | Advanced R Exercises</title>
+<meta name="author" content="Indrajeet Patil">
+<meta name="description" content="Attaching the needed libraries: library(rlang) library(dplyr) library(ggplot2)  19.0.1 Exercises 19.2.2 Q1. For each function in the following base R code, identify which arguments are quoted and...">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta property="og:title" content="Chapter 19 Quasiquotation | Advanced R Exercises">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/cover.png">
+<meta property="og:description" content="Attaching the needed libraries: library(rlang) library(dplyr) library(ggplot2)  19.0.1 Exercises 19.2.2 Q1. For each function in the following base R code, identify which arguments are quoted and...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 19 Quasiquotation | Advanced R Exercises">
+<meta name="twitter:description" content="Attaching the needed libraries: library(rlang) library(dplyr) library(ggplot2)  19.0.1 Exercises 19.2.2 Q1. For each function in the following base R code, identify which arguments are quoted and...">
+<meta name="twitter:image" content="/cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Advanced R Exercises</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
+<li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
+<li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
+<li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
+<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
+<li><a class="" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
+<li><a class="" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
+<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
+<li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
+<li><a class="active" href="quasiquotation.html"><span class="header-section-number">19</span> Quasiquotation</a></li>
+<li><a class="" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
+<li><a class="" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></li>
+<li><a class="" href="improving-performance.html"><span class="header-section-number">24</span> Improving performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="quasiquotation" class="section level1" number="19">
+<h1>
+<span class="header-section-number">19</span> Quasiquotation<a class="anchor" aria-label="anchor" href="#quasiquotation"><i class="fas fa-link"></i></a>
+</h1>
+<p>Attaching the needed libraries:</p>
+<div class="sourceCode" id="cb448"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></code></pre></div>
+<div id="exercises-19.2.2" class="section level3" number="19.0.1">
+<h3>
+<span class="header-section-number">19.0.1</span> Exercises 19.2.2<a class="anchor" aria-label="anchor" href="#exercises-19.2.2"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Q1.</strong> For each function in the following base R code, identify which arguments are quoted and which are evaluated.</p>
+<div class="sourceCode" id="cb449"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'MASS'</span>
+<span class="co">#&gt; The following object is masked from 'package:dplyr':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     select</span>
+
+<span class="va">mtcars2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">mtcars2</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">am</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">)</span></code></pre></div>
+<p><strong>A1.</strong> To identify which arguments are quoted and which are evaluated, we can use the trick mentioned in the book:</p>
+<blockquote>
+<p>If you’re ever unsure about whether an argument is quoted or evaluated, try executing the code outside of the function. If it doesn’t work or does something different, then that argument is quoted.</p>
+</blockquote>
+<ul>
+<li><code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library(MASS)</a></code></li>
+</ul>
+<p>The <code>package</code> argument in <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> is quoted:</p>
+<div class="sourceCode" id="cb450"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span>
+
+<span class="va">MASS</span>
+<span class="co">#&gt; Error in eval(expr, envir, enclos): object 'MASS' not found</span></code></pre></div>
+<ul>
+<li><code>subset(mtcars, cyl == 4)</code></li>
+</ul>
+<p>The argument <code>x</code> is evaluated, while the argument <code>subset</code> is quoted.</p>
+<div class="sourceCode" id="cb451"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mtcars2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span>
+
+<span class="va">mtcars</span>
+<span class="co">#&gt;                      mpg cyl  disp  hp drat    wt  qsec vs</span>
+<span class="co">#&gt; Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0</span>
+<span class="co">#&gt; Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0</span>
+<span class="co">#&gt; Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1</span>
+<span class="co">#&gt; Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1</span>
+<span class="co">#&gt; Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0</span>
+<span class="co">#&gt; Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1</span>
+<span class="co">#&gt; Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0</span>
+<span class="co">#&gt; Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1</span>
+<span class="co">#&gt; Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1</span>
+<span class="co">#&gt; Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1</span>
+<span class="co">#&gt; Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1</span>
+<span class="co">#&gt; Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0</span>
+<span class="co">#&gt; Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0</span>
+<span class="co">#&gt; Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0</span>
+<span class="co">#&gt; Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0</span>
+<span class="co">#&gt; Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0</span>
+<span class="co">#&gt; Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0</span>
+<span class="co">#&gt; Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1</span>
+<span class="co">#&gt; Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1</span>
+<span class="co">#&gt; Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1</span>
+<span class="co">#&gt; Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1</span>
+<span class="co">#&gt; Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0</span>
+<span class="co">#&gt; AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0</span>
+<span class="co">#&gt; Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0</span>
+<span class="co">#&gt; Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0</span>
+<span class="co">#&gt; Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1</span>
+<span class="co">#&gt; Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0</span>
+<span class="co">#&gt; Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1</span>
+<span class="co">#&gt; Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0</span>
+<span class="co">#&gt; Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0</span>
+<span class="co">#&gt; Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0</span>
+<span class="co">#&gt; Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1</span>
+<span class="co">#&gt;                     am gear carb</span>
+<span class="co">#&gt; Mazda RX4            1    4    4</span>
+<span class="co">#&gt; Mazda RX4 Wag        1    4    4</span>
+<span class="co">#&gt; Datsun 710           1    4    1</span>
+<span class="co">#&gt; Hornet 4 Drive       0    3    1</span>
+<span class="co">#&gt; Hornet Sportabout    0    3    2</span>
+<span class="co">#&gt; Valiant              0    3    1</span>
+<span class="co">#&gt; Duster 360           0    3    4</span>
+<span class="co">#&gt; Merc 240D            0    4    2</span>
+<span class="co">#&gt; Merc 230             0    4    2</span>
+<span class="co">#&gt; Merc 280             0    4    4</span>
+<span class="co">#&gt; Merc 280C            0    4    4</span>
+<span class="co">#&gt; Merc 450SE           0    3    3</span>
+<span class="co">#&gt; Merc 450SL           0    3    3</span>
+<span class="co">#&gt; Merc 450SLC          0    3    3</span>
+<span class="co">#&gt; Cadillac Fleetwood   0    3    4</span>
+<span class="co">#&gt; Lincoln Continental  0    3    4</span>
+<span class="co">#&gt; Chrysler Imperial    0    3    4</span>
+<span class="co">#&gt; Fiat 128             1    4    1</span>
+<span class="co">#&gt; Honda Civic          1    4    2</span>
+<span class="co">#&gt; Toyota Corolla       1    4    1</span>
+<span class="co">#&gt; Toyota Corona        0    3    1</span>
+<span class="co">#&gt; Dodge Challenger     0    3    2</span>
+<span class="co">#&gt; AMC Javelin          0    3    2</span>
+<span class="co">#&gt; Camaro Z28           0    3    4</span>
+<span class="co">#&gt; Pontiac Firebird     0    3    2</span>
+<span class="co">#&gt; Fiat X1-9            1    4    1</span>
+<span class="co">#&gt; Porsche 914-2        1    5    2</span>
+<span class="co">#&gt; Lotus Europa         1    5    2</span>
+<span class="co">#&gt; Ford Pantera L       1    5    4</span>
+<span class="co">#&gt; Ferrari Dino         1    5    6</span>
+<span class="co">#&gt; Maserati Bora        1    5    8</span>
+<span class="co">#&gt; Volvo 142E           1    4    2</span>
+
+<span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span>
+<span class="co">#&gt; Error in eval(expr, envir, enclos): object 'cyl' not found</span></code></pre></div>
+<ul>
+<li><code>with(mtcars2, sum(vs))</code></li>
+</ul>
+<p>The argument <code>data</code> is evaluated, while <code>expr</code> argument is quoted.</p>
+<div class="sourceCode" id="cb452"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">mtcars2</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 10</span>
+
+<span class="va">mtcars2</span>
+<span class="co">#&gt;                 mpg cyl  disp  hp drat    wt  qsec vs am</span>
+<span class="co">#&gt; Datsun 710     22.8   4 108.0  93 3.85 2.320 18.61  1  1</span>
+<span class="co">#&gt; Merc 240D      24.4   4 146.7  62 3.69 3.190 20.00  1  0</span>
+<span class="co">#&gt; Merc 230       22.8   4 140.8  95 3.92 3.150 22.90  1  0</span>
+<span class="co">#&gt; Fiat 128       32.4   4  78.7  66 4.08 2.200 19.47  1  1</span>
+<span class="co">#&gt; Honda Civic    30.4   4  75.7  52 4.93 1.615 18.52  1  1</span>
+<span class="co">#&gt; Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1</span>
+<span class="co">#&gt; Toyota Corona  21.5   4 120.1  97 3.70 2.465 20.01  1  0</span>
+<span class="co">#&gt; Fiat X1-9      27.3   4  79.0  66 4.08 1.935 18.90  1  1</span>
+<span class="co">#&gt; Porsche 914-2  26.0   4 120.3  91 4.43 2.140 16.70  0  1</span>
+<span class="co">#&gt; Lotus Europa   30.4   4  95.1 113 3.77 1.513 16.90  1  1</span>
+<span class="co">#&gt; Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.60  1  1</span>
+<span class="co">#&gt;                gear carb</span>
+<span class="co">#&gt; Datsun 710        4    1</span>
+<span class="co">#&gt; Merc 240D         4    2</span>
+<span class="co">#&gt; Merc 230          4    2</span>
+<span class="co">#&gt; Fiat 128          4    1</span>
+<span class="co">#&gt; Honda Civic       4    2</span>
+<span class="co">#&gt; Toyota Corolla    4    1</span>
+<span class="co">#&gt; Toyota Corona     3    1</span>
+<span class="co">#&gt; Fiat X1-9         4    1</span>
+<span class="co">#&gt; Porsche 914-2     5    2</span>
+<span class="co">#&gt; Lotus Europa      5    2</span>
+<span class="co">#&gt; Volvo 142E        4    2</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span>
+<span class="co">#&gt; Error in eval(expr, envir, enclos): object 'vs' not found</span></code></pre></div>
+<ul>
+<li><code>sum(mtcars2$am)</code></li>
+</ul>
+<p>The argument <code>...</code> is evaluated.</p>
+<div class="sourceCode" id="cb453"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">am</span><span class="op">)</span>
+<span class="co">#&gt; [1] 8</span>
+
+<span class="va">mtcars2</span><span class="op">$</span><span class="va">am</span>
+<span class="co">#&gt;  [1] 1 0 0 1 1 1 0 1 1 1 1</span></code></pre></div>
+<ul>
+<li><code>rm(mtcars2)</code></li>
+</ul>
+<p>The trick we are using so far won’t work here since trying to print <code>mtcars2</code> will always fail after <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code> has made a pass at it.</p>
+<div class="sourceCode" id="cb454"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">)</span></code></pre></div>
+<p>We can instead look at the docs for <code>...</code>:</p>
+<blockquote>
+<p>… the objects to be removed, as names (unquoted) or character strings (quoted).</p>
+</blockquote>
+<p>Thus, this argument is not evaluated, but rather quoted.</p>
+<p><strong>Q2.</strong> For each function in the following tidyverse code, identify which arguments are quoted and which are evaluated.</p>
+<div class="sourceCode" id="cb455"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+
+<span class="va">by_cyl</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">by_cyl</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><strong>A2.</strong> As seen in the answer for <strong>Q1.</strong>, <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> quotes its first argument:</p>
+<div class="sourceCode" id="cb456"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></code></pre></div>
+<p>In the following code:</p>
+<ul>
+<li>
+<code>%&gt;%</code> (lazily) evaluates its argument</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> quote their arguments</li>
+</ul>
+<div class="sourceCode" id="cb457"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">by_cyl</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>In the following code:</p>
+<ul>
+<li>
+<code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> evaluates the <code>data</code> argument</li>
+<li>
+<code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> quotes its arguments</li>
+</ul>
+<div class="sourceCode" id="cb458"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">by_cyl</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="Quotation_files/figure-html/unnamed-chunk-12-1.png" width="100%"></div>
+</div>
+<div id="exercises-19.3.6" class="section level3" number="19.0.2">
+<h3>
+<span class="header-section-number">19.0.2</span> Exercises 19.3.6<a class="anchor" aria-label="anchor" href="#exercises-19.3.6"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Q1.</strong> How is <code><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr()</a></code> implemented? Look at its source code.</p>
+<p><strong>A1.</strong> Looking at the source code, we can see that <code><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr()</a></code> is a simple wrapper around <code><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexpr()</a></code>, and captures and returns the user-entered expressions:</p>
+<div class="sourceCode" id="cb459"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">rlang</span><span class="fu">::</span><span class="va"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span>
+<span class="co">#&gt; function (expr) </span>
+<span class="co">#&gt; {</span>
+<span class="co">#&gt;     enexpr(expr)</span>
+<span class="co">#&gt; }</span>
+<span class="co">#&gt; &lt;bytecode: 0x104f1f400&gt;</span>
+<span class="co">#&gt; &lt;environment: namespace:rlang&gt;</span></code></pre></div>
+<p>For example:</p>
+<div class="sourceCode" id="cb460"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">x</span>
+<span class="co">#&gt; x &lt;- 1</span></code></pre></div>
+<p><strong>Q2.</strong> Compare and contrast the following two functions. Can you predict the output before running them?</p>
+<div class="sourceCode" id="cb461"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="va">f2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="fu">f1</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span>, <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span>
+<span class="fu">f2</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span>, <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span></code></pre></div>
+<p><strong>A2.</strong> The <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> captures and returns the expressions specified by the developer instead of their values:</p>
+<div class="sourceCode" id="cb462"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="fu">f1</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span>, <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span>
+<span class="co">#&gt; $x</span>
+<span class="co">#&gt; x</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $y</span>
+<span class="co">#&gt; y</span></code></pre></div>
+<p>On the other hand, <code><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexprs()</a></code> captures the user-entered expressions and returns their values:</p>
+<div class="sourceCode" id="cb463"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">f2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="fu">f2</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span>, <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span>
+<span class="co">#&gt; $x</span>
+<span class="co">#&gt; a + b</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $y</span>
+<span class="co">#&gt; c + d</span></code></pre></div>
+<p><strong>Q3.</strong> What happens if you try to use <code><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexpr()</a></code> with an expression (i.e. <code>enexpr(x + y)</code>? What happens if <code><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexpr()</a></code> is passed a missing argument?</p>
+<p><strong>A3.</strong> If you try to use <code><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexpr()</a></code> with an expression, it fails because it works only with types <code>symbol</code> and <code>character</code> (which is converted to <code>symbol</code>).</p>
+<div class="sourceCode" id="cb464"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexpr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span>
+<span class="co">#&gt; Error in `enexpr()`:</span>
+<span class="co">#&gt; ! `arg` must be a symbol</span></code></pre></div>
+<p>If <code><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexpr()</a></code> is passed a missing argument, it returns a missing argument:</p>
+<div class="sourceCode" id="cb465"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">arg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/missing_arg.html">missing_arg</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexpr</a></span><span class="op">(</span><span class="va">arg</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rlang.r-lib.org/reference/missing_arg.html">is_missing</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexpr</a></span><span class="op">(</span><span class="va">arg</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
+<p><strong>Q4.</strong> How are <code>exprs(a)</code> and <code>exprs(a = )</code> different? Think about both the input and the output.</p>
+<p><strong>A4.</strong> The key difference here is that the former will return an unnamed list, while the latter will return a named list. This is because the former is interpreted as an unnamed argument, while the latter a named argument.</p>
+<div class="sourceCode" id="cb466"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; a</span>
+
+<span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>a <span class="op">=</span> <span class="op">)</span>
+<span class="co">#&gt; $a</span></code></pre></div>
+<p>In both cases, <code>a</code> is treated as a symbol:</p>
+<div class="sourceCode" id="cb467"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="va">is_symbol</span><span class="op">)</span>
+<span class="co">#&gt;      </span>
+<span class="co">#&gt; TRUE</span>
+
+<span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>a <span class="op">=</span> <span class="op">)</span>, <span class="va">is_symbol</span><span class="op">)</span>
+<span class="co">#&gt;    a </span>
+<span class="co">#&gt; TRUE</span></code></pre></div>
+<p>But, the argument is missing only in the latter case, since only the name but no corresponding value is provided:</p>
+<div class="sourceCode" id="cb468"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="va">is_missing</span><span class="op">)</span>
+<span class="co">#&gt;       </span>
+<span class="co">#&gt; FALSE</span>
+
+<span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>a <span class="op">=</span> <span class="op">)</span>, <span class="va">is_missing</span><span class="op">)</span>
+<span class="co">#&gt;    a </span>
+<span class="co">#&gt; TRUE</span></code></pre></div>
+<p><strong>Q5.</strong> What are other differences between <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> and <code><a href="https://rdrr.io/r/base/list.html">alist()</a></code>? Read the documentation for the named arguments of <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> to find out.</p>
+<p><strong>Q6.</strong> The documentation for <code><a href="https://rdrr.io/r/base/substitute.html">substitute()</a></code> says:</p>
+<pre><code>&gt; Substitution takes place by examining each component of the parse tree 
+&gt; as follows: 
+&gt; 
+&gt; * If it is not a bound symbol in `env`, it is unchanged. 
+&gt; * If it is a promise object (i.e., a formal argument to a function) 
+&gt;   the expression slot of the promise replaces the symbol. 
+&gt; * If it is an ordinary variable, its value is substituted, unless 
+&gt; `env` is .GlobalEnv in which case the symbol is left unchanged.</code></pre>
+<p>Create examples that illustrate each of the above cases.</p>
+</div>
+<div id="exercises-19.4.8" class="section level3" number="19.0.3">
+<h3>
+<span class="header-section-number">19.0.3</span> Exercises 19.4.8<a class="anchor" aria-label="anchor" href="#exercises-19.4.8"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Q1.</strong> Given the following components:</p>
+<div class="sourceCode" id="cb470"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">xy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span>
+<span class="va">xz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span>
+<span class="va">yz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span>
+<span class="va">abc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span></code></pre></div>
+<p>Use quasiquotation to construct the following calls:</p>
+<div class="sourceCode" id="cb471"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span>
+<span class="op">-</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span>
+<span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span> <span class="op">-</span> <span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Trig.html">atan2</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, <span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, <span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">foo</span><span class="op">(</span>a <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, b <span class="op">=</span> <span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></code></pre></div>
+<p><strong>A1.</strong> Using quasiquotation to construct the specified calls:</p>
+<div class="sourceCode" id="cb472"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">xy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span>
+<span class="va">xz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span>
+<span class="va">yz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span>
+<span class="va">abc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span>
+
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span> <span class="va">yz</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; (x + y)/(y + z)</span>
+
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">-</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xz</span><span class="op">)</span> <span class="op">^</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; -(x + z)^(y + z)</span>
+
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span> <span class="op">-</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; (x + y) + (y + z) - (x + y)</span>
+
+<span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="st">"atan2"</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; atan2(x + y, y + z)</span>
+
+<span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="st">"sum"</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; sum(x + y, x + y, y + z)</span>
+
+<span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="st">"sum"</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">abc</span><span class="op">)</span>
+<span class="co">#&gt; sum(a, b, c)</span>
+
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">abc</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; mean(c(a, b, c), na.rm = TRUE)</span>
+
+<span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="st">"foo"</span>, a <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span>, b <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; foo(a = x + y, b = y + z)</span></code></pre></div>
+<p><strong>Q2.</strong> The following two calls print the same, but are actually different:</p>
+<div class="sourceCode" id="cb473"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; mean(1:10)</span>
+<span class="op">(</span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; mean(1:10)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span>
+<span class="co">#&gt; [1] FALSE</span></code></pre></div>
+<p>What’s the difference? Which one is more natural?</p>
+</div>
+<div id="exercises-19.6.5" class="section level3" number="19.0.4">
+<h3>
+<span class="header-section-number">19.0.4</span> Exercises 19.6.5<a class="anchor" aria-label="anchor" href="#exercises-19.6.5"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Q1.</strong> One way to implement <code><a href="https://rlang.r-lib.org/reference/exec.html">exec()</a></code> is shown below. Describe how it works. What are the key ideas?</p>
+<div class="sourceCode" id="cb474"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">exec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">...</span>, <span class="va">.env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">args</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">f</span>, <span class="va">args</span>, envir <span class="op">=</span> <span class="va">.env</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<p><strong>Q2.</strong> Carefully read the source code for <code><a href="https://rdrr.io/r/base/interaction.html">interaction()</a></code>, <code><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid()</a></code>, and <code><a href="https://rdrr.io/r/graphics/par.html">par()</a></code>. Compare and contrast the techniques they use for switching between dots and list behaviour.</p>
+<p><strong>Q3.</strong> Explain the problem with this definition of <code>set_attr()</code></p>
+<div class="sourceCode" id="cb475"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">set_attr</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">attr</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">attr</span>
+  <span class="va">x</span>
+<span class="op">}</span>
+<span class="fu">set_attr</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, x <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="co">#&gt; Error in attributes(x) &lt;- attr: attributes must be named</span></code></pre></div>
+</div>
+<div id="exercises-19.7.5" class="section level3" number="19.0.5">
+<h3>
+<span class="header-section-number">19.0.5</span> Exercises 19.7.5<a class="anchor" aria-label="anchor" href="#exercises-19.7.5"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Q1.</strong> In the linear-model example, we could replace the <code><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr()</a></code> in <code>reduce(summands, ~ expr(!!.x + !!.y))</code> with <code><a href="https://rlang.r-lib.org/reference/call2.html">call2()</a></code>: <code>reduce(summands, call2, "+")</code>. Compare and contrast the two approaches. Which do you think is easier to read?</p>
+<p><strong>Q2.</strong> Re-implement the Box-Cox transform defined below using unquoting and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
+<div class="sourceCode" id="cb476"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bc</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="va">lambda</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="va">lambda</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<p><strong>Q3.</strong> Re-implement the simple <code><a href="https://purrr.tidyverse.org/reference/compose.html">compose()</a></code> defined below using quasiquotation and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
+<div class="sourceCode" id="cb477"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">compose</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">g</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="expressions.html"><span class="header-section-number">18</span> Expressions</a></div>
+<div class="next"><a href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li>
+<a class="nav-link" href="#quasiquotation"><span class="header-section-number">19</span> Quasiquotation</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#exercises-19.2.2"><span class="header-section-number">19.0.1</span> Exercises 19.2.2</a></li>
+<li><a class="nav-link" href="#exercises-19.3.6"><span class="header-section-number">19.0.2</span> Exercises 19.3.6</a></li>
+<li><a class="nav-link" href="#exercises-19.4.8"><span class="header-section-number">19.0.3</span> Exercises 19.4.8</a></li>
+<li><a class="nav-link" href="#exercises-19.6.5"><span class="header-section-number">19.0.4</span> Exercises 19.6.5</a></li>
+<li><a class="nav-link" href="#exercises-19.7.5"><span class="header-section-number">19.0.5</span> Exercises 19.7.5</a></li>
+</ul>
+</li></ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Quotation.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Quotation.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-06-11.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

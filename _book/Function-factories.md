@@ -19,7 +19,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x13184ad08>
+#> <bytecode: 0x14894a708>
 #> <environment: namespace:base>
 ```
 
@@ -45,8 +45,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x1327b8380>
-#> <environment: 0x1327bb960>
+#> <bytecode: 0x11a34e680>
+#> <environment: 0x11a34dd50>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -202,15 +202,15 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x122e8e208>
+#> <environment: 0x13ac74ad0>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x122348c50>
-#> <environment: 0x1227c6f90>
+#> <bytecode: 0x1499f7e28>
+#> <environment: 0x13ab35e40>
 ```
 
 ### Exercises 10.3.4
@@ -247,7 +247,7 @@ boot_model(mtcars, mpg ~ wt)
 #> function() {
 #>     fitted + sample(resid)
 #>   }
-#> <environment: 0x1237ef510>
+#> <environment: 0x118b56470>
 ```
 
 Contrast this with the first function we saw in the chapter which *did* have a lazy binding:
@@ -268,7 +268,7 @@ power1(2)
 #> function(x) {
 #>     x ^ exp
 #>   }
-#> <environment: 0x132714300>
+#> <environment: 0x11926e280>
 ```
 
 **Q2.** Why might you formulate the Box-Cox transformation like this?
@@ -321,8 +321,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1         13.04µs  14.02µs    68864.    12.8KB     68.9
-#> 2 LL2          6.81µs   7.38µs   129521.        0B     64.8
+#> 1 LL1          13.2µs  14.02µs    69004.    12.8KB     69.1
+#> 2 LL2          6.97µs   7.54µs   125385.        0B     62.7
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -348,16 +348,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 × 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1         20.58µs  22.92µs    38377.
-#>  2     10 LL2           8.4µs   9.55µs    91035.
-#>  3     20 LL1         22.47µs   23.9µs    41094.
-#>  4     20 LL2          8.24µs    8.9µs   110073.
-#>  5     50 LL1         26.49µs  27.84µs    35261.
-#>  6     50 LL2          8.08µs   8.86µs   109830.
-#>  7    100 LL1         36.82µs  38.99µs    24361.
-#>  8    100 LL2          8.94µs   9.96µs    93277.
-#>  9   1000 LL1        508.11µs 527.34µs     1886.
-#> 10   1000 LL2         29.48µs  32.23µs    30737.
+#>  1     10 LL1         20.83µs  21.89µs    45092.
+#>  2     10 LL2          8.45µs    9.1µs   108122.
+#>  3     20 LL1          22.8µs  23.98µs    41107.
+#>  4     20 LL2          8.28µs   8.98µs   109725.
+#>  5     50 LL1          26.9µs  28.17µs    35081.
+#>  6     50 LL2          8.16µs   8.77µs   112368.
+#>  7    100 LL1         37.43µs  39.07µs    25408.
+#>  8    100 LL2          8.98µs   9.72µs    99242.
+#>  9   1000 LL1        517.83µs 536.36µs     1859.
+#> 10   1000 LL2         29.93µs  31.08µs    31889.
 
 ggplot(
   df_bench,

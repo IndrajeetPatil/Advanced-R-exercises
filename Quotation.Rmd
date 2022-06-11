@@ -8,6 +8,8 @@ Attaching the needed libraries:
 
 ```{r, warning=FALSE, message=FALSE}
 library(rlang)
+library(dplyr)
+library(ggplot2)
 ```
 
 ### Exercises 19.2.2
@@ -133,7 +135,7 @@ ggplot(by_cyl, aes(cyl, mean)) +
 
 **Q1.** How is `expr()` implemented? Look at its source code.
 
-**A1.** Looking at the source code, we can see that `expr()` is a simple wrapper around `enexpr()` and captures and returns the naked expressions:
+**A1.** Looking at the source code, we can see that `expr()` is a simple wrapper around `enexpr()`, and captures and returns the user-entered expressions:
 
 ```{r}
 rlang::expr
@@ -159,9 +161,69 @@ f1(a + b, c + d)
 f2(a + b, c + d)
 ```
 
-**Q3.**  What happens if you try to use `enexpr()` with an expression (i.e. `enexpr(x + y)`? What happens if `enexpr()` is passed a missing argument?
+**A2.** The `exprs()` captures and returns the expressions specified by the developer instead of their values:
+
+```{r}
+f1 <- function(x, y) {
+  exprs(x = x, y = y)
+}
+
+f1(a + b, c + d)
+```
+
+On the other hand, `enexprs()` captures the user-entered expressions and returns their values:
+
+```{r}
+f2 <- function(x, y) {
+  enexprs(x = x, y = y)
+}
+
+f2(a + b, c + d)
+```
+
+**Q3.** What happens if you try to use `enexpr()` with an expression (i.e. `enexpr(x + y)`? What happens if `enexpr()` is passed a missing argument?
+
+**A3.** If you try to use `enexpr()` with an expression, it fails because it works only with types `symbol` and `character` (which is converted to `symbol`).
+
+```{r, error=TRUE}
+enexpr(x + y)
+```
+
+If `enexpr()` is passed a missing argument, it returns a missing argument:
+
+```{r, error=TRUE}
+arg <- missing_arg()
+
+enexpr(arg)
+
+is_missing(enexpr(arg))
+```
 
 **Q4.** How are `exprs(a)` and `exprs(a = )` different? Think about both the input and the output.
+
+**A4.** The key difference here is that the former will return an unnamed list, while the latter will return a named list. This is because the former is interpreted as an unnamed argument, while the latter a named argument.
+
+```{r}
+exprs(a)
+
+exprs(a = )
+```
+
+In both cases, `a` is treated as a symbol:
+
+```{r}
+purrr::map_lgl(exprs(a), is_symbol)
+
+purrr::map_lgl(exprs(a = ), is_symbol)
+```
+
+But, the argument is missing only in the latter case, since only the name but no corresponding value is provided:
+
+```{r}
+purrr::map_lgl(exprs(a), is_missing)
+
+purrr::map_lgl(exprs(a = ), is_missing)
+```
 
 **Q5.** What are other differences between `exprs()` and `alist()`? Read the  documentation for the named arguments of `exprs()` to find out.
 
@@ -200,6 +262,31 @@ sum(x + y, x + y, y + z)
 sum(a, b, c)
 mean(c(a, b, c), na.rm = TRUE)
 foo(a = x + y, b = y + z)
+```
+
+**A1.** Using quasiquotation to construct the specified calls:
+
+```{r}
+xy <- expr(x + y)
+xz <- expr(x + z)
+yz <- expr(y + z)
+abc <- exprs(a, b, c)
+
+expr((!!xy) / (!! yz))
+
+expr(-(!!xz) ^ (!!yz))
+
+expr(((!!xy)) + (!!yz) - (!!xy))
+
+call2("atan2", expr(!!xy), expr(!!yz))
+
+call2("sum", expr(!!xy), expr(!!xy), expr(!!yz))
+
+call2("sum", !!!abc)
+
+expr(mean(c(!!!abc), na.rm = TRUE))
+
+call2("foo", a = expr(!!xy), b = expr(!!yz))
 ```
 
 **Q2.** The following two calls print the same, but are actually different:
