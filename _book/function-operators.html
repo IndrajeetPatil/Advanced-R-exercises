@@ -109,7 +109,9 @@
 <span class="fu">which_near</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, tolerance <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>
 <span class="co">#&gt; [1] 5 3</span></code></pre></div>
 <p>We solved a complex task here using the <code><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize()</a></code> function!</p>
+<hr>
 <p><strong>Q2.</strong> Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">possibly()</a></code>. How does it work?</p>
+<p><strong>A2.</strong> Let’s have a look at the source code for this function:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">possibly</span>
 <span class="co">#&gt; function (.f, otherwise, quiet = TRUE) </span>
@@ -126,9 +128,16 @@
 <span class="co">#&gt;         })</span>
 <span class="co">#&gt;     }</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x124aebea8&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x11befe468&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></code></pre></div>
+<p>Looking at this code, we can see that <code><a href="https://purrr.tidyverse.org/reference/safely.html">possibly()</a></code>:</p>
+<ul>
+<li>uses <code><a href="https://rdrr.io/r/base/conditions.html">tryCatch()</a></code> for error handling</li>
+<li>has a parameter <code>otherwise</code> to specify default value in case an error occurs</li>
+<li>has a parameter <code>quiet</code> to suppress error message (if needed)</li>
+</ul>
 <p><strong>Q3.</strong> Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code>. How does it work?</p>
+<p><strong>A3.</strong> Let’s have a look at the source code for this function:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">safely</span>
 <span class="co">#&gt; function (.f, otherwise = NULL, quiet = TRUE) </span>
@@ -136,8 +145,29 @@
 <span class="co">#&gt;     .f &lt;- as_mapper(.f)</span>
 <span class="co">#&gt;     function(...) capture_error(.f(...), otherwise, quiet)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x155490018&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x12d91f0a0&gt;</span>
+<span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span>
+
+<span class="fu">purrr</span><span class="fu">:::</span><span class="va">capture_error</span>
+<span class="co">#&gt; function (code, otherwise = NULL, quiet = TRUE) </span>
+<span class="co">#&gt; {</span>
+<span class="co">#&gt;     tryCatch(list(result = code, error = NULL), error = function(e) {</span>
+<span class="co">#&gt;         if (!quiet) </span>
+<span class="co">#&gt;             message("Error: ", e$message)</span>
+<span class="co">#&gt;         list(result = otherwise, error = e)</span>
+<span class="co">#&gt;     }, interrupt = function(e) {</span>
+<span class="co">#&gt;         stop("Terminated by user", call. = FALSE)</span>
+<span class="co">#&gt;     })</span>
+<span class="co">#&gt; }</span>
+<span class="co">#&gt; &lt;bytecode: 0x11d046838&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></code></pre></div>
+<p>Looking at this code, we can see that <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code>:</p>
+<ul>
+<li>uses a list to save both the results (if the function executes successfully) and the error (if it fails)</li>
+<li>uses <code><a href="https://rdrr.io/r/base/conditions.html">tryCatch()</a></code> for error handling</li>
+<li>has a parameter <code>otherwise</code> to specify default value in case an error occurs</li>
+<li>has a parameter <code>quiet</code> to suppress error message (if needed)</li>
+</ul>
 </div>
 <div id="exercises-11.3.1" class="section level3" number="11.0.2">
 <h3>

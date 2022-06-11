@@ -67,7 +67,11 @@ which_near(x1, x2, tolerance = 0.1)
 
 We solved a complex task here using the `Vectorize()` function!
 
+---
+
 **Q2.** Read the source code for `possibly()`. How does it work?
+
+**A2.** Let's have a look at the source code for this function:
 
 
 ```r
@@ -86,11 +90,19 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x124aebea8>
+#> <bytecode: 0x11befe468>
 #> <environment: namespace:purrr>
 ```
 
+Looking at this code, we can see that `possibly()`:
+
+- uses `tryCatch()` for error handling
+- has a parameter `otherwise` to specify default value in case an error occurs
+- has a parameter `quiet` to suppress error message (if needed)
+
 **Q3.** Read the source code for `safely()`. How does it work?
+
+**A3.** Let's have a look at the source code for this function:
 
 
 ```r
@@ -100,9 +112,30 @@ safely
 #>     .f <- as_mapper(.f)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x155490018>
+#> <bytecode: 0x12d91f0a0>
+#> <environment: namespace:purrr>
+
+purrr:::capture_error
+#> function (code, otherwise = NULL, quiet = TRUE) 
+#> {
+#>     tryCatch(list(result = code, error = NULL), error = function(e) {
+#>         if (!quiet) 
+#>             message("Error: ", e$message)
+#>         list(result = otherwise, error = e)
+#>     }, interrupt = function(e) {
+#>         stop("Terminated by user", call. = FALSE)
+#>     })
+#> }
+#> <bytecode: 0x11d046838>
 #> <environment: namespace:purrr>
 ```
+
+Looking at this code, we can see that `safely()`:
+
+- uses a list to save both the results (if the function executes successfully) and the error (if it fails)
+- uses `tryCatch()` for error handling
+- has a parameter `otherwise` to specify default value in case an error occurs
+- has a parameter `quiet` to suppress error message (if needed)
 
 ### Exercises 11.3.1
 
