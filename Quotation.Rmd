@@ -8,6 +8,7 @@ Attaching the needed libraries:
 
 ```{r, warning=FALSE, message=FALSE}
 library(rlang)
+library(lobstr)
 library(dplyr)
 library(ggplot2)
 ```
@@ -48,7 +49,7 @@ The argument `x` is evaluated, while the argument `subset` is quoted.
 ```{r, error=TRUE}
 mtcars2 <- subset(mtcars, cyl == 4)
 
-mtcars
+invisible(mtcars)
 
 cyl == 4
 ```
@@ -60,7 +61,7 @@ The argument `data` is evaluated, while `expr` argument is quoted.
 ```{r, error=TRUE}
 with(mtcars2, sum(vs))
 
-mtcars2
+invisible(mtcars2)
 
 sum(vs)
 ```
@@ -298,6 +299,30 @@ identical(a, b)
 ```
 
 What's the difference? Which one is more natural?
+
+**A2.** We can see the difference between these two expression if we convert them to lists:
+
+```{r}
+as.list(expr(mean(1:10)))
+
+as.list(expr(mean(!!(1:10))))
+```
+
+As can be seen, the second element of `a` is a `call` object, while that in `b` is an integer vector:
+
+```{r}
+waldo::compare(a, b)
+```
+
+The same can also be noticed in ASTs for these expressions:
+
+```{r}
+ast(expr(mean(1:10)))
+
+ast(expr(mean(!!(1:10))))
+```
+
+The first call is more natural, since the second one inlines a vector directly into the call, something that is rarely done.
 
 ### Exercises 19.6.5
 
