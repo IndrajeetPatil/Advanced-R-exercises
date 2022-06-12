@@ -11,6 +11,8 @@ library(purrr, warn.conflicts = FALSE)
 
 ### Exercises 11.2.3
 
+---
+
 **Q1.** Base R provides a function operator in the form of `Vectorize()`. What does it do? When might you use it?
 
 **A1.** `Vectorize()` function creates a function that vectorizes the action of the provided function over specified arguments. We will see its utility by solving a problem that otherwise couldn't be solved.
@@ -90,7 +92,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x11befe468>
+#> <bytecode: 0x125636c38>
 #> <environment: namespace:purrr>
 ```
 
@@ -99,6 +101,8 @@ Looking at this code, we can see that `possibly()`:
 - uses `tryCatch()` for error handling
 - has a parameter `otherwise` to specify default value in case an error occurs
 - has a parameter `quiet` to suppress error message (if needed)
+
+---
 
 **Q3.** Read the source code for `safely()`. How does it work?
 
@@ -112,7 +116,7 @@ safely
 #>     .f <- as_mapper(.f)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x12d91f0a0>
+#> <bytecode: 0x1257539a0>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -126,7 +130,7 @@ purrr:::capture_error
 #>         stop("Terminated by user", call. = FALSE)
 #>     })
 #> }
-#> <bytecode: 0x11d046838>
+#> <bytecode: 0x10c86ede0>
 #> <environment: namespace:purrr>
 ```
 
@@ -137,14 +141,28 @@ Looking at this code, we can see that `safely()`:
 - has a parameter `otherwise` to specify default value in case an error occurs
 - has a parameter `quiet` to suppress error message (if needed)
 
+---
+
 ### Exercises 11.3.1
+
+---
 
 **Q1.** Weigh the pros and cons of `download.file %>% dot_every(10) %>% delay_by(0.1)` versus `download.file %>% delay_by(0.1) %>% dot_every(10)`.
 
+---
+
 **Q2.** Should you memoise `file.download()`? Why or why not?
+
+---
 
 **Q3.** Create a function operator that reports whenever a file is created or deleted in the working directory, using `dir()` and `setdiff()`. What other global function effects might you want to track?
 
+---
+
 **Q4.** Write a function operator that logs a timestamp and message to a file every time a function is run.
 
+---
+
 **Q5.** Modify `delay_by()` so that instead of delaying by a fixed amount of time, it ensures that a certain amount of time has elapsed since the function was last called. That is, if you called `g <- delay_by(1, f); g(); Sys.sleep(2); g()` there shouldn't be an extra delay.
+
+---

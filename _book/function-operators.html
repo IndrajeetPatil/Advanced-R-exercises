@@ -62,6 +62,7 @@
 <h3>
 <span class="header-section-number">11.0.1</span> Exercises 11.2.3<a class="anchor" aria-label="anchor" href="#exercises-11.2.3"><i class="fas fa-link"></i></a>
 </h3>
+<hr>
 <p><strong>Q1.</strong> Base R provides a function operator in the form of <code><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize()</a></code>. What does it do? When might you use it?</p>
 <p><strong>A1.</strong> <code><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize()</a></code> function creates a function that vectorizes the action of the provided function over specified arguments. We will see its utility by solving a problem that otherwise couldn’t be solved.</p>
 <p>The problem is to build a hybrid between the following functions:</p>
@@ -128,7 +129,7 @@
 <span class="co">#&gt;         })</span>
 <span class="co">#&gt;     }</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x11befe468&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x125636c38&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></code></pre></div>
 <p>Looking at this code, we can see that <code><a href="https://purrr.tidyverse.org/reference/safely.html">possibly()</a></code>:</p>
 <ul>
@@ -136,6 +137,7 @@
 <li>has a parameter <code>otherwise</code> to specify default value in case an error occurs</li>
 <li>has a parameter <code>quiet</code> to suppress error message (if needed)</li>
 </ul>
+<hr>
 <p><strong>Q3.</strong> Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code>. How does it work?</p>
 <p><strong>A3.</strong> Let’s have a look at the source code for this function:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -145,7 +147,7 @@
 <span class="co">#&gt;     .f &lt;- as_mapper(.f)</span>
 <span class="co">#&gt;     function(...) capture_error(.f(...), otherwise, quiet)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x12d91f0a0&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x1257539a0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span>
 
 <span class="fu">purrr</span><span class="fu">:::</span><span class="va">capture_error</span>
@@ -159,7 +161,7 @@
 <span class="co">#&gt;         stop("Terminated by user", call. = FALSE)</span>
 <span class="co">#&gt;     })</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x11d046838&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x10c86ede0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></code></pre></div>
 <p>Looking at this code, we can see that <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code>:</p>
 <ul>
@@ -168,17 +170,23 @@
 <li>has a parameter <code>otherwise</code> to specify default value in case an error occurs</li>
 <li>has a parameter <code>quiet</code> to suppress error message (if needed)</li>
 </ul>
+<hr>
 </div>
 <div id="exercises-11.3.1" class="section level3" number="11.0.2">
 <h3>
 <span class="header-section-number">11.0.2</span> Exercises 11.3.1<a class="anchor" aria-label="anchor" href="#exercises-11.3.1"><i class="fas fa-link"></i></a>
 </h3>
+<hr>
 <p><strong>Q1.</strong> Weigh the pros and cons of <code>download.file %&gt;% dot_every(10) %&gt;% delay_by(0.1)</code> versus <code>download.file %&gt;% delay_by(0.1) %&gt;% dot_every(10)</code>.</p>
+<hr>
 <p><strong>Q2.</strong> Should you memoise <code>file.download()</code>? Why or why not?</p>
+<hr>
 <p><strong>Q3.</strong> Create a function operator that reports whenever a file is created or deleted in the working directory, using <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code> and <code><a href="https://generics.r-lib.org/reference/setops.html">setdiff()</a></code>. What other global function effects might you want to track?</p>
+<hr>
 <p><strong>Q4.</strong> Write a function operator that logs a timestamp and message to a file every time a function is run.</p>
+<hr>
 <p><strong>Q5.</strong> Modify <code>delay_by()</code> so that instead of delaying by a fixed amount of time, it ensures that a certain amount of time has elapsed since the function was last called. That is, if you called <code>g &lt;- delay_by(1, f); g(); Sys.sleep(2); g()</code> there shouldn’t be an extra delay.</p>
-
+<hr>
 </div>
 </div>
   <div class="chapter-nav">

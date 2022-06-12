@@ -164,6 +164,40 @@ new_counter3()
 
 **Q1.** Compare and contrast `ggplot2::label_bquote()` with `scales::number_format()`.
 
+**A1.** To compare and contrast, let's first look at the source code for these functions:
+
+```{r}
+ggplot2::label_bquote
+
+scales::number_format
+```
+
+Both of these functions returns formatting functions used to style the facets labels and other labels to have the desired format. 
+
+For example, using plotmath expression in the facet label:
+
+```{r}
+library(ggplot2)
+
+p <- ggplot(mtcars, aes(wt, mpg)) +
+  geom_point()
+p + facet_grid(. ~ vs, labeller = label_bquote(cols = alpha^.(vs)))
+```
+
+Or to display axes labels in the desired format:
+
+```{r}
+library(scales)
+
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point() +
+  scale_y_continuous(labels = number_format(accuracy = 0.01, decimal.mark = ","))
+```
+
+The `ggplot2::label_bquote()` adds an additional class to the returned function.
+
+The `scales::number_format()` function is a simple pass-through method that forces evaluation of all its parameters and passes them on to the underlying `scales::number()` function.
+
 ### Exercises 10.4.4
 
 **Q1.** In `boot_model()`, why don't I need to force the evaluation of `df` or `model`?
@@ -174,7 +208,7 @@ boot_model <- function(df, formula) {
   fitted <- unname(fitted(mod))
   resid <- unname(resid(mod))
   rm(mod)
-  
+
   print(env_binding_are_lazy(current_env()))
 
   function() {
@@ -194,9 +228,9 @@ Contrast this with the first function we saw in the chapter which *did* have a l
 ```{r}
 power1 <- function(exp) {
   print(env_binding_are_lazy(current_env()))
-  
+
   function(x) {
-    x ^ exp
+    x^exp
   }
 }
 

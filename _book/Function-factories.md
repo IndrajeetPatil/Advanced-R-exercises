@@ -19,7 +19,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x14894a708>
+#> <bytecode: 0x12914a708>
 #> <environment: namespace:base>
 ```
 
@@ -45,8 +45,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x11a34e680>
-#> <environment: 0x11a34dd50>
+#> <bytecode: 0x10a603a98>
+#> <environment: 0x10a602ec8>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -202,20 +202,107 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x13ac74ad0>
+#> <environment: 0x109ba9f90>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x1499f7e28>
-#> <environment: 0x13ab35e40>
+#> <bytecode: 0x109d8c7d8>
+#> <environment: 0x109c51420>
 ```
 
 ### Exercises 10.3.4
 
 **Q1.** Compare and contrast `ggplot2::label_bquote()` with `scales::number_format()`.
+
+**A1.** To compare and contrast, let's first look at the source code for these functions:
+
+
+```r
+ggplot2::label_bquote
+#> function (rows = NULL, cols = NULL, default) 
+#> {
+#>     cols_quoted <- substitute(cols)
+#>     rows_quoted <- substitute(rows)
+#>     has_warned <- FALSE
+#>     call_env <- env_parent()
+#>     fun <- function(labels) {
+#>         quoted <- resolve_labeller(rows_quoted, cols_quoted, 
+#>             labels)
+#>         if (is.null(quoted)) {
+#>             return(label_value(labels))
+#>         }
+#>         evaluate <- function(...) {
+#>             params <- list(...)
+#>             if ("x" %in% find_names(quoted) && !"x" %in% names(params)) {
+#>                 if (!has_warned) {
+#>                   warn("Referring to `x` is deprecated, use variable name instead")
+#>                   has_warned <<- TRUE
+#>                 }
+#>                 params$x <- params[[1]]
+#>             }
+#>             params <- as_environment(params, call_env)
+#>             eval(substitute(bquote(expr, params), list(expr = quoted)))
+#>         }
+#>         list(do.call("Map", c(list(f = evaluate), labels)))
+#>     }
+#>     structure(fun, class = "labeller")
+#> }
+#> <bytecode: 0x10663a6a8>
+#> <environment: namespace:ggplot2>
+
+scales::number_format
+#> function (accuracy = NULL, scale = 1, prefix = "", suffix = "", 
+#>     big.mark = " ", decimal.mark = ".", style_positive = c("none", 
+#>         "plus"), style_negative = c("hyphen", "minus", "parens"), 
+#>     scale_cut = NULL, trim = TRUE, ...) 
+#> {
+#>     force_all(accuracy, scale, prefix, suffix, big.mark, decimal.mark, 
+#>         style_positive, style_negative, scale_cut, trim, ...)
+#>     function(x) {
+#>         number(x, accuracy = accuracy, scale = scale, prefix = prefix, 
+#>             suffix = suffix, big.mark = big.mark, decimal.mark = decimal.mark, 
+#>             style_positive = style_positive, style_negative = style_negative, 
+#>             scale_cut = scale_cut, trim = trim, ...)
+#>     }
+#> }
+#> <bytecode: 0x1066e2d00>
+#> <environment: namespace:scales>
+```
+
+Both of these functions returns formatting functions used to style the facets labels and other labels to have the desired format. 
+
+For example, using plotmath expression in the facet label:
+
+
+```r
+library(ggplot2)
+
+p <- ggplot(mtcars, aes(wt, mpg)) +
+  geom_point()
+p + facet_grid(. ~ vs, labeller = label_bquote(cols = alpha^.(vs)))
+```
+
+<img src="Function-factories_files/figure-html/unnamed-chunk-17-1.png" width="100%" />
+
+Or to display axes labels in the desired format:
+
+
+```r
+library(scales)
+
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point() +
+  scale_y_continuous(labels = number_format(accuracy = 0.01, decimal.mark = ","))
+```
+
+<img src="Function-factories_files/figure-html/unnamed-chunk-18-1.png" width="100%" />
+
+The `ggplot2::label_bquote()` adds an additional class to the returned function.
+
+The `scales::number_format()` function is a simple pass-through method that forces evaluation of all its parameters and passes them on to the underlying `scales::number()` function.
 
 ### Exercises 10.4.4
 
@@ -228,7 +315,7 @@ boot_model <- function(df, formula) {
   fitted <- unname(fitted(mod))
   resid <- unname(resid(mod))
   rm(mod)
-  
+
   print(env_binding_are_lazy(current_env()))
 
   function() {
@@ -247,7 +334,7 @@ boot_model(mtcars, mpg ~ wt)
 #> function() {
 #>     fitted + sample(resid)
 #>   }
-#> <environment: 0x118b56470>
+#> <environment: 0x119ebe930>
 ```
 
 Contrast this with the first function we saw in the chapter which *did* have a lazy binding:
@@ -256,9 +343,9 @@ Contrast this with the first function we saw in the chapter which *did* have a l
 ```r
 power1 <- function(exp) {
   print(env_binding_are_lazy(current_env()))
-  
+
   function(x) {
-    x ^ exp
+    x^exp
   }
 }
 
@@ -266,9 +353,9 @@ power1(2)
 #>  exp 
 #> TRUE
 #> function(x) {
-#>     x ^ exp
+#>     x^exp
 #>   }
-#> <environment: 0x11926e280>
+#> <environment: 0x109b9c580>
 ```
 
 **Q2.** Why might you formulate the Box-Cox transformation like this?
@@ -321,8 +408,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1          13.2µs  14.02µs    69004.    12.8KB     69.1
-#> 2 LL2          6.97µs   7.54µs   125385.        0B     62.7
+#> 1 LL1         13.32µs  14.88µs    58888.    12.8KB     88.5
+#> 2 LL2          7.17µs   8.36µs    87967.        0B     61.6
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -348,16 +435,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 × 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1         20.83µs  21.89µs    45092.
-#>  2     10 LL2          8.45µs    9.1µs   108122.
-#>  3     20 LL1          22.8µs  23.98µs    41107.
-#>  4     20 LL2          8.28µs   8.98µs   109725.
-#>  5     50 LL1          26.9µs  28.17µs    35081.
-#>  6     50 LL2          8.16µs   8.77µs   112368.
-#>  7    100 LL1         37.43µs  39.07µs    25408.
-#>  8    100 LL2          8.98µs   9.72µs    99242.
-#>  9   1000 LL1        517.83µs 536.36µs     1859.
-#> 10   1000 LL2         29.93µs  31.08µs    31889.
+#>  1     10 LL1         20.75µs  22.47µs    42536.
+#>  2     10 LL2           8.4µs    9.1µs   107470.
+#>  3     20 LL1         22.67µs  24.85µs    37307.
+#>  4     20 LL2          8.36µs   9.27µs   101449.
+#>  5     50 LL1         26.32µs  29.15µs    33385.
+#>  6     50 LL2          8.36µs   9.27µs    94135.
+#>  7    100 LL1         36.78µs  39.85µs    24360.
+#>  8    100 LL2          9.06µs   9.51µs   103723.
+#>  9   1000 LL1        509.71µs 536.24µs     1853.
+#> 10   1000 LL2         29.97µs  31.32µs    31703.
 
 ggplot(
   df_bench,
@@ -377,7 +464,7 @@ ggplot(
   )
 ```
 
-<img src="Function-factories_files/figure-html/unnamed-chunk-21-1.png" width="100%" />
+<img src="Function-factories_files/figure-html/unnamed-chunk-24-1.png" width="100%" />
 
 ### Exercises 10.5.1
 
