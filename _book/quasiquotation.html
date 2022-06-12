@@ -68,11 +68,6 @@
 <p><strong>Q1.</strong> For each function in the following base R code, identify which arguments are quoted and which are evaluated.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'MASS'</span>
-<span class="co">#&gt; The following object is masked from 'package:dplyr':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     select</span>
 
 <span class="va">mtcars2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span>
 
@@ -160,7 +155,7 @@
 <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> quote their arguments</li>
 </ul>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">by_cyl</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<code class="sourceCode R"><span class="va">by_cyl</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>In the following code:</p>
@@ -187,7 +182,7 @@
 <span class="co">#&gt; {</span>
 <span class="co">#&gt;     enexpr(expr)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x106a50e38&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x114976ff0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:rlang&gt;</span></code></pre></div>
 <p>For example:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -308,10 +303,10 @@
 <span class="va">yz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span>
 <span class="va">abc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span>
 
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span> <span class="va">yz</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; (x + y)/(y + z)</span>
 
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">-</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xz</span><span class="op">)</span> <span class="op">^</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">-</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xz</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; -(x + z)^(y + z)</span>
 
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span> <span class="op">-</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span><span class="op">)</span>
@@ -410,11 +405,59 @@
     <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="va">lambda</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="va">lambda</span>
   <span class="op">}</span>
 <span class="op">}</span></code></pre></div>
-<p><strong>Q3.</strong> Re-implement the simple <code><a href="https://purrr.tidyverse.org/reference/compose.html">compose()</a></code> defined below using quasiquotation and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
+<p><strong>A2.</strong> Re-implementation of the Box-Cox transform using unquoting and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bc_new</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexpr</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span>
+  
+  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rlang.r-lib.org/reference/new_function.html">new_function</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">)</span>,
+      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+    <span class="op">)</span>
+  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rlang.r-lib.org/reference/new_function.html">new_function</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">)</span>,
+      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">lambda</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">lambda</span><span class="op">)</span><span class="op">)</span>
+    <span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<p>Let’s try it out to see if it produces the same output as before:</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">bc</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0</span>
+<span class="fu">bc_new</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0</span>
+
+<span class="fu">bc</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1.5</span>
+<span class="fu">bc_new</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1.5</span></code></pre></div>
+<p><strong>Q3.</strong> Re-implement the simple <code><a href="https://purrr.tidyverse.org/reference/compose.html">compose()</a></code> defined below using quasiquotation and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">compose</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">g</span><span class="op">)</span> <span class="op">{</span>
   <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
+<p><strong>A3.</strong> Following is a re-implementation of <code><a href="https://purrr.tidyverse.org/reference/compose.html">compose()</a></code> using quasiquotation and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">compose_new</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">g</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexpr</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span> <span class="co"># or ensym(f)</span>
+  <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexpr</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="co"># or ensym(g)</span>
+
+  <span class="fu"><a href="https://rlang.r-lib.org/reference/new_function.html">new_function</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>... <span class="op">=</span> <span class="op">)</span>,
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">f</span><span class="op">)</span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">g</span><span class="op">)</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<p>Checking that the new version behaves the same way as the original version:</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">not_null</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/compose.html">compose</a></span><span class="op">(</span><span class="va">`!`</span>, <span class="va">is.null</span><span class="op">)</span>
+<span class="fu">not_null</span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span>
+
+<span class="va">not_null2</span> <span class="op">&lt;-</span> <span class="fu">compose_new</span><span class="op">(</span><span class="va">`!`</span>, <span class="va">is.null</span><span class="op">)</span>
+<span class="fu">not_null2</span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
 
 </div>
 </div>

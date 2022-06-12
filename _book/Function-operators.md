@@ -92,7 +92,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x125636c38>
+#> <bytecode: 0x128c55e38>
 #> <environment: namespace:purrr>
 ```
 
@@ -116,7 +116,7 @@ safely
 #>     .f <- as_mapper(.f)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x1257539a0>
+#> <bytecode: 0x106b45da0>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -130,7 +130,7 @@ purrr:::capture_error
 #>         stop("Terminated by user", call. = FALSE)
 #>     })
 #> }
-#> <bytecode: 0x10c86ede0>
+#> <bytecode: 0x128cc29e0>
 #> <environment: namespace:purrr>
 ```
 
@@ -151,7 +151,7 @@ Looking at this code, we can see that `safely()`:
 
 ---
 
-**Q2.** Should you memoise `file.download()`? Why or why not?
+**Q2.** Should you memoise `download.file()`? Why or why not?
 
 ---
 

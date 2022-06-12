@@ -17,7 +17,7 @@ library(ggplot2)
 
 **Q1.** For each function in the following base R code, identify which arguments are quoted and which are evaluated.
 
-```{r, results = FALSE}
+```{r, results = FALSE, message=FALSE, warning=FALSE}
 library(MASS)
 
 mtcars2 <- subset(mtcars, cyl == 4)
@@ -117,7 +117,7 @@ In the following code:
 - `group_by()` and `summarise()` quote their arguments
 
 ```{r}
-by_cyl <- mtcars %>% 
+by_cyl <- mtcars %>%
   group_by(cyl) %>%
   summarise(mean = mean(mpg))
 ```
@@ -273,9 +273,9 @@ xz <- expr(x + z)
 yz <- expr(y + z)
 abc <- exprs(a, b, c)
 
-expr((!!xy) / (!! yz))
+expr((!!xy) / (!!yz))
 
-expr(-(!!xz) ^ (!!yz))
+expr(-(!!xz)^(!!yz))
 
 expr(((!!xy)) + (!!yz) - (!!xy))
 
@@ -364,10 +364,65 @@ bc <- function(lambda) {
 }
 ```
 
+**A2.** Re-implementation of the Box-Cox transform using unquoting and `new_function()`:
+
+```{r}
+bc_new <- function(lambda) {
+  lambda <- enexpr(lambda)
+  
+  if (!!lambda == 0) {
+    new_function(
+      exprs(x = ),
+      expr(log(x))
+    )
+  } else {
+    new_function(
+      exprs(x = ),
+      expr((x^(!!lambda) - 1) / (!!lambda))
+    )
+  }
+}
+```
+
+Let's try it out to see if it produces the same output as before:
+
+```{r}
+bc(0)(1)
+bc_new(0)(1)
+
+bc(2)(2)
+bc_new(2)(2)
+```
+
+
 **Q3.**  Re-implement the simple `compose()` defined below using quasiquotation and `new_function()`:
 
 ```{r}
 compose <- function(f, g) {
   function(...) f(g(...))
 }
+```
+
+**A3.** Following is a re-implementation of `compose()` using quasiquotation and `new_function()`:
+
+```{r}
+compose_new <- function(f, g) {
+  f <- enexpr(f) # or ensym(f)
+  g <- enexpr(g) # or ensym(g)
+
+  new_function(
+    exprs(... = ),
+    expr((!!f)((!!g)(...)))
+  )
+}
+```
+
+Checking that the new version behaves the same way as the original version:
+
+```{r}
+not_null <- compose(`!`, is.null)
+not_null(4)
+
+not_null2 <- compose_new(`!`, is.null)
+not_null2(4)
 ```

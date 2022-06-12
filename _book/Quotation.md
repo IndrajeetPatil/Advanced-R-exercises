@@ -19,11 +19,6 @@ library(ggplot2)
 
 ```r
 library(MASS)
-#> 
-#> Attaching package: 'MASS'
-#> The following object is masked from 'package:dplyr':
-#> 
-#>     select
 
 mtcars2 <- subset(mtcars, cyl == 4)
 
@@ -136,7 +131,7 @@ In the following code:
 
 
 ```r
-by_cyl <- mtcars %>% 
+by_cyl <- mtcars %>%
   group_by(cyl) %>%
   summarise(mean = mean(mpg))
 ```
@@ -167,7 +162,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x106a50e38>
+#> <bytecode: 0x114976ff0>
 #> <environment: namespace:rlang>
 ```
 
@@ -339,10 +334,10 @@ xz <- expr(x + z)
 yz <- expr(y + z)
 abc <- exprs(a, b, c)
 
-expr((!!xy) / (!! yz))
+expr((!!xy) / (!!yz))
 #> (x + y)/(y + z)
 
-expr(-(!!xz) ^ (!!yz))
+expr(-(!!xz)^(!!yz))
 #> -(x + z)^(y + z)
 
 expr(((!!xy)) + (!!yz) - (!!xy))
@@ -469,6 +464,43 @@ bc <- function(lambda) {
 }
 ```
 
+**A2.** Re-implementation of the Box-Cox transform using unquoting and `new_function()`:
+
+
+```r
+bc_new <- function(lambda) {
+  lambda <- enexpr(lambda)
+  
+  if (!!lambda == 0) {
+    new_function(
+      exprs(x = ),
+      expr(log(x))
+    )
+  } else {
+    new_function(
+      exprs(x = ),
+      expr((x^(!!lambda) - 1) / (!!lambda))
+    )
+  }
+}
+```
+
+Let's try it out to see if it produces the same output as before:
+
+
+```r
+bc(0)(1)
+#> [1] 0
+bc_new(0)(1)
+#> [1] 0
+
+bc(2)(2)
+#> [1] 1.5
+bc_new(2)(2)
+#> [1] 1.5
+```
+
+
 **Q3.**  Re-implement the simple `compose()` defined below using quasiquotation and `new_function()`:
 
 
@@ -476,4 +508,32 @@ bc <- function(lambda) {
 compose <- function(f, g) {
   function(...) f(g(...))
 }
+```
+
+**A3.** Following is a re-implementation of `compose()` using quasiquotation and `new_function()`:
+
+
+```r
+compose_new <- function(f, g) {
+  f <- enexpr(f) # or ensym(f)
+  g <- enexpr(g) # or ensym(g)
+
+  new_function(
+    exprs(... = ),
+    expr((!!f)((!!g)(...)))
+  )
+}
+```
+
+Checking that the new version behaves the same way as the original version:
+
+
+```r
+not_null <- compose(`!`, is.null)
+not_null(4)
+#> [1] TRUE
+
+not_null2 <- compose_new(`!`, is.null)
+not_null2(4)
+#> [1] TRUE
 ```
