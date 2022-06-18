@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x11ea1a8b0>
+#> <environment: 0x104e8e478>
 #> Parent: <environment: global>
 ```
 
@@ -142,17 +142,34 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x1078d14a0
+#> env:  0x10439e000
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x11da522e0
+#> env:  0x104ad5198
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x11ea91b78
+#> env:  0x104f0c7c8
+```
+
+**A1.** Correctly predicted 😉
+
+
+```r
+q1 <- new_quosure(expr(x), env(x = 1))
+eval_tidy(q1)
+#> [1] 1
+
+q2 <- new_quosure(expr(x + !!q1), env(x = 10))
+eval_tidy(q2)
+#> [1] 11
+
+q3 <- new_quosure(expr(x + !!q2), env(x = 100))
+eval_tidy(q3)
+#> [1] 111
 ```
 
 **Q2.** Write an `enenv()` function that captures the environment associated with an argument. (Hint: this should only require two function calls.)

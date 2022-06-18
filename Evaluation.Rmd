@@ -124,6 +124,19 @@ q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 ```
 
+**A1.** Correctly predicted 😉
+
+```{r}
+q1 <- new_quosure(expr(x), env(x = 1))
+eval_tidy(q1)
+
+q2 <- new_quosure(expr(x + !!q1), env(x = 10))
+eval_tidy(q2)
+
+q3 <- new_quosure(expr(x + !!q2), env(x = 100))
+eval_tidy(q3)
+```
+
 **Q2.** Write an `enenv()` function that captures the environment associated with an argument. (Hint: this should only require two function calls.)
 
 ### Exercises 20.4.6
