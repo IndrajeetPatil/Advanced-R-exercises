@@ -80,7 +80,7 @@ assign2 <- function(name, value, env) {}
 
 - `get()`
 
-```{r, error=TRUE}
+```{r}
 get2 <- function(name, env = caller_env()) {
   name <- sym(name)
   eval(name, env)
@@ -98,7 +98,40 @@ get2("y[1]")
 get("y[1]")
 ```
 
+- `assign()`
+
+```{r}
+assign2 <- function(name, value, env = caller_env()) {
+  name <- sym(name)
+  eval(expr(!!name <- !!value), env)
+}
+
+assign("y1", 4)
+y1
+
+assign2("y2", 4)
+y2
+```
+
 **Q4.** Modify `source2()` so it returns the result of *every* expression, not just the last one. Can you eliminate the for loop?
+
+**A4.** We can use `purrr::map()` to iterate over every expression and return result of every expression:
+
+```{r}
+source2 <- function(path, env = caller_env()) {
+  file <- paste(readLines(path, warn = FALSE), collapse = "\n")
+  exprs <- parse_exprs(file)
+  purrr::map(exprs, ~ eval(.x, env))
+}
+
+withr::with_tempdir(
+  code = {
+    f <- tempfile(fileext = ".R")
+    writeLines("1 + 1; 2 + 4", f)
+    source2(f)
+  }
+)
+```
 
 **Q5.** We can make `base::local()` slightly easier to understand by spreading out over multiple lines:
 
@@ -138,6 +171,20 @@ eval_tidy(q3)
 ```
 
 **Q2.** Write an `enenv()` function that captures the environment associated with an argument. (Hint: this should only require two function calls.)
+
+**A2.** We can make use of the `get_env()` helper to get the environment associated with an argument:
+
+```{r}
+enenv <- function(x) {
+  x <- enquo(x)
+  get_env(x)
+}
+
+enenv(x)
+
+foo <- function(x) enenv(x)
+foo()
+```
 
 ### Exercises 20.4.6
 
