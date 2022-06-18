@@ -95,7 +95,7 @@
 <code class="sourceCode R"><span class="va">force</span>
 <span class="co">#&gt; function (x) </span>
 <span class="co">#&gt; x</span>
-<span class="co">#&gt; &lt;bytecode: 0x15894a708&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x1338f8708&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:base&gt;</span></code></pre></div>
 <p>Why is it better to <code>force(x)</code> instead of just <code>x</code>?</p>
 <p><strong>A1.</strong> Because of lazy evaluation, argument to a function won’t be evaluated until its value is needed, but sometimes we may want to have eager evaluation.</p>
@@ -113,8 +113,8 @@
 <span class="va">f</span>
 <span class="co">#&gt; function (v) </span>
 <span class="co">#&gt; .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="co">#&gt; &lt;bytecode: 0x12a42a300&gt;</span>
-<span class="co">#&gt; &lt;environment: 0x12a4299d0&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x106f39a70&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x106f39140&gt;</span>
 <span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt;  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901</span>
 <span class="co">#&gt;  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142</span>
@@ -226,15 +226,15 @@
 <span class="co">#&gt;     i &lt;- i + 1</span>
 <span class="co">#&gt;     i</span>
 <span class="co">#&gt;   }</span>
-<span class="co">#&gt; &lt;environment: 0x149242558&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x11354b498&gt;</span>
 
 <span class="fu">new_counter3</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; function() {</span>
 <span class="co">#&gt;     i &lt;- i + 1</span>
 <span class="co">#&gt;     i</span>
 <span class="co">#&gt;   }</span>
-<span class="co">#&gt; &lt;bytecode: 0x149541ea0&gt;</span>
-<span class="co">#&gt; &lt;environment: 0x1490719c8&gt;</span></code></pre></div>
+<span class="co">#&gt; &lt;bytecode: 0x11209df00&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x1136aa428&gt;</span></code></pre></div>
 </div>
 <div id="exercises-10.3.4" class="section level3" number="10.0.2">
 <h3>
@@ -272,7 +272,7 @@
 <span class="co">#&gt;     }</span>
 <span class="co">#&gt;     structure(fun, class = "labeller")</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x128e67e38&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x1139f7310&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:ggplot2&gt;</span>
 
 <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/comma.html">number_format</a></span>
@@ -290,7 +290,7 @@
 <span class="co">#&gt;             scale_cut = scale_cut, trim = trim, ...)</span>
 <span class="co">#&gt;     }</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x128f0e310&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x113aa1978&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:scales&gt;</span></code></pre></div>
 <p>Both of these functions returns formatting functions used to style the facets labels and other labels to have the desired format.</p>
 <p>For example, using plotmath expression in the facet label:</p>
@@ -338,7 +338,7 @@
 <span class="co">#&gt; function() {</span>
 <span class="co">#&gt;     fitted + sample(resid)</span>
 <span class="co">#&gt;   }</span>
-<span class="co">#&gt; &lt;environment: 0x158aea728&gt;</span></code></pre></div>
+<span class="co">#&gt; &lt;environment: 0x10702ce38&gt;</span></code></pre></div>
 <p>Contrast this with the first function we saw in the chapter which <em>did</em> have a lazy binding:</p>
 <div class="sourceCode" id="cb282"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">power1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="op">{</span>
@@ -355,7 +355,7 @@
 <span class="co">#&gt; function(x) {</span>
 <span class="co">#&gt;     x^exp</span>
 <span class="co">#&gt;   }</span>
-<span class="co">#&gt; &lt;environment: 0x1490f4390&gt;</span></code></pre></div>
+<span class="co">#&gt; &lt;environment: 0x113676420&gt;</span></code></pre></div>
 <p><strong>Q2.</strong> Why might you formulate the Box-Cox transformation like this?</p>
 <div class="sourceCode" id="cb283"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">boxcox3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
@@ -398,8 +398,8 @@
 <span class="co">#&gt; # A tibble: 2 × 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 LL1          13.2µs  14.35µs    66478.    12.8KB     99.9</span>
-<span class="co">#&gt; 2 LL2          7.09µs   7.95µs   117032.        0B     93.7</span></code></pre></div>
+<span class="co">#&gt; 1 LL1          13.2µs  14.43µs    65010.    12.8KB     97.7</span>
+<span class="co">#&gt; 2 LL2          7.05µs   7.79µs   119484.        0B     95.7</span></code></pre></div>
 <p>As can be seen, the second version is much faster than the first version.</p>
 <p>We can also vary the length of the vector and confirm that across a wide range of vector lengths, this performance advantage is observed.</p>
 <div class="sourceCode" id="cb285"><pre class="downlit sourceCode r">
@@ -420,16 +420,16 @@
 <span class="co">#&gt; # A tibble: 10 × 5</span>
 <span class="co">#&gt;    length expression      min   median `itr/sec`</span>
 <span class="co">#&gt;     &lt;dbl&gt; &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt;  1     10 LL1          20.5µs  22.39µs    43645.</span>
-<span class="co">#&gt;  2     10 LL2          8.49µs   9.18µs   107384.</span>
-<span class="co">#&gt;  3     20 LL1         22.47µs  24.35µs    36622.</span>
-<span class="co">#&gt;  4     20 LL2          8.32µs   9.18µs   106365.</span>
-<span class="co">#&gt;  5     50 LL1         26.49µs  29.73µs    31927.</span>
-<span class="co">#&gt;  6     50 LL2           8.2µs   8.73µs   112868.</span>
-<span class="co">#&gt;  7    100 LL1         36.82µs  38.91µs    25565.</span>
-<span class="co">#&gt;  8    100 LL2          8.98µs   9.59µs   103157.</span>
-<span class="co">#&gt;  9   1000 LL1        508.48µs 533.78µs     1874.</span>
-<span class="co">#&gt; 10   1000 LL2         29.68µs  31.12µs    31885.</span>
+<span class="co">#&gt;  1     10 LL1         20.79µs  22.51µs    43245.</span>
+<span class="co">#&gt;  2     10 LL2          8.57µs   9.18µs   107080.</span>
+<span class="co">#&gt;  3     20 LL1         22.75µs  24.27µs    40119.</span>
+<span class="co">#&gt;  4     20 LL2           8.4µs   9.22µs   105787.</span>
+<span class="co">#&gt;  5     50 LL1         26.86µs  29.03µs    33272.</span>
+<span class="co">#&gt;  6     50 LL2          8.24µs   9.14µs   101825.</span>
+<span class="co">#&gt;  7    100 LL1         37.43µs  40.43µs    21760.</span>
+<span class="co">#&gt;  8    100 LL2          9.14µs     10µs    88816.</span>
+<span class="co">#&gt;  9   1000 LL1        518.32µs 546.04µs     1787.</span>
+<span class="co">#&gt; 10   1000 LL2         30.09µs  31.86µs    29804.</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
   <span class="va">df_bench</span>,

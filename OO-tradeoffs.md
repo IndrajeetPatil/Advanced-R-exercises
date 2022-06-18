@@ -1,3 +1,0 @@
-# Trade-offs
-
-No exercises.

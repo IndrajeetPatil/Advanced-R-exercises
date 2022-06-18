@@ -1,3 +1,0 @@
-# Base Types
-
-No exercises.
