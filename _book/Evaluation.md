@@ -11,7 +11,51 @@ library(rlang)
 
 ### Exercises 20.2.4
 
+---
+
 **Q1.** Carefully read the documentation for `source()`. What environment does it use by default? What if you supply `local = TRUE`? How do you provide a custom environment?
+
+**A1.** The parameter `local` for `source()` decides the environment in which the parsed expressions are evaluated. 
+
+By default `local = FALSE`, this corresponds to the user's workspace (the global environment, i.e.). 
+
+
+```r
+withr::with_tempdir(
+  code = {
+    f <- tempfile()
+    writeLines("rlang::env_print()", f)
+    foo <- function() source(f, local = FALSE)
+    foo()
+  }
+)
+#> <environment: global>
+#> Parent: <environment: package:rlang>
+#> Bindings:
+#> • .Random.seed: <int>
+#> • foo: <fn>
+#> • f: <chr>
+```
+
+If `local = TRUE`, then the environment from which `source()` is called will be used.
+
+
+```r
+withr::with_tempdir(
+  code = {
+    f <- tempfile()
+    writeLines("rlang::env_print()", f)
+    foo <- function() source(f, local = TRUE)
+    foo()
+  }
+)
+#> <environment: 0x11ea1a8b0>
+#> Parent: <environment: global>
+```
+
+To specify a custom environment, the `sys.source()` function can be used, which provides an `envir` parameter.
+
+---
 
 **Q2.** Predict the results of the following lines of code:
 
@@ -22,13 +66,56 @@ eval(eval(expr(eval(expr(eval(expr(2 + 2)))))))
 expr(eval(expr(eval(expr(eval(expr(2 + 2)))))))
 ```
 
-**Q3.** Fill in the function bodies below to re-implement `get()` using `sym()` and `eval()`, and`assign()` using `sym()`, `expr()`, and `eval()`. Don't worry about the multiple ways of choosing an environment that `get()` and `assign()` support; assume that the user supplies it explicitly.
+**A2.** Correctly predicted 😉
+
+
+```r
+eval(expr(eval(expr(eval(expr(2 + 2))))))
+#> [1] 4
+
+eval(eval(expr(eval(expr(eval(expr(2 + 2)))))))
+#> [1] 4
+
+expr(eval(expr(eval(expr(eval(expr(2 + 2)))))))
+#> eval(expr(eval(expr(eval(expr(2 + 2))))))
+```
+
+---
+
+**Q3.** Fill in the function bodies below to re-implement `get()` using `sym()` and `eval()`, and `assign()` using `sym()`, `expr()`, and `eval()`. Don't worry about the multiple ways of choosing an environment that `get()` and `assign()` support; assume that the user supplies it explicitly.
 
 
 ```r
 # name is a string
 get2 <- function(name, env) {}
 assign2 <- function(name, value, env) {}
+```
+
+**A3.** Here are the required re-implementations:
+
+- `get()`
+
+
+```r
+get2 <- function(name, env = caller_env()) {
+  name <- sym(name)
+  eval(name, env)
+}
+
+x <- 2
+
+get2("x")
+#> [1] 2
+get("x")
+#> [1] 2
+
+y <- 1:4
+assign("y[1]", 2)
+
+get2("y[1]")
+#> [1] 2
+get("y[1]")
+#> [1] 2
 ```
 
 **Q4.** Modify `source2()` so it returns the result of *every* expression, not just the last one. Can you eliminate the for loop?
@@ -55,17 +142,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x10d32a6a8
+#> env:  0x1078d14a0
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x10f55d698
+#> env:  0x11da522e0
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x10f8cf698
+#> env:  0x11ea91b78
 ```
 
 **Q2.** Write an `enenv()` function that captures the environment associated with an argument. (Hint: this should only require two function calls.)

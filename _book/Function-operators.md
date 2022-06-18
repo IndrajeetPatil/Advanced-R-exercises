@@ -92,7 +92,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x128c55e38>
+#> <bytecode: 0x111852868>
 #> <environment: namespace:purrr>
 ```
 
@@ -116,7 +116,7 @@ safely
 #>     .f <- as_mapper(.f)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x106b45da0>
+#> <bytecode: 0x111a138b0>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -130,7 +130,7 @@ purrr:::capture_error
 #>         stop("Terminated by user", call. = FALSE)
 #>     })
 #> }
-#> <bytecode: 0x128cc29e0>
+#> <bytecode: 0x111a788c0>
 #> <environment: namespace:purrr>
 ```
 

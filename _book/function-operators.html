@@ -7,7 +7,7 @@
 <title>Chapter 11 Function operators | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
 <meta name="description" content="Attaching the needed libraries: library(purrr, warn.conflicts = FALSE)  11.0.1 Exercises 11.2.3 Q1. Base R provides a function operator in the form of Vectorize(). What does it do? When might you...">
-<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
 <meta property="og:title" content="Chapter 11 Function operators | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.png">
@@ -44,7 +44,34 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 11</span> Function operators</a></li></ul>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
+<li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
+<li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
+<li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
+<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
+<li><a class="" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
+<li><a class="active" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
+<li><a class="" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
+<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
+<li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
+<li><a class="" href="quasiquotation.html"><span class="header-section-number">19</span> Quasiquotation</a></li>
+<li><a class="" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
+<li><a class="" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></li>
+<li><a class="" href="improving-performance.html"><span class="header-section-number">24</span> Improving performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></li>
+</ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
@@ -56,7 +83,7 @@
 <span class="header-section-number">11</span> Function operators<a class="anchor" aria-label="anchor" href="#function-operators"><i class="fas fa-link"></i></a>
 </h1>
 <p>Attaching the needed libraries:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb288"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <div id="exercises-11.2.3" class="section level3" number="11.0.1">
 <h3>
@@ -73,7 +100,7 @@
 <code><a href="https://dplyr.tidyverse.org/reference/near.html">dplyr::near()</a></code> (which is vectorized element-wise and thus expects two vectors of equal length)</li>
 </ul>
 <p>in order to find indices of matching numeric values for the given threshold.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb289"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">which_near</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">tolerance</span><span class="op">)</span> <span class="op">{</span>
   <span class="co"># Vectorize `dplyr::near()` function only over the `y` argument.</span>
   <span class="co"># Note that that `Vectorize()` is a function operator and will return a function.</span>
@@ -95,7 +122,7 @@
   <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="fl">0L</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>Let’s use it:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb290"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.1</span>, <span class="fl">3.3</span>, <span class="fl">8.45</span>, <span class="fl">8</span>, <span class="fl">6</span><span class="op">)</span>
 <span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">8.40</span>, <span class="fl">3</span><span class="op">)</span>
 
@@ -113,7 +140,7 @@
 <hr>
 <p><strong>Q2.</strong> Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">possibly()</a></code>. How does it work?</p>
 <p><strong>A2.</strong> Let’s have a look at the source code for this function:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb291"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">possibly</span>
 <span class="co">#&gt; function (.f, otherwise, quiet = TRUE) </span>
 <span class="co">#&gt; {</span>
@@ -129,7 +156,7 @@
 <span class="co">#&gt;         })</span>
 <span class="co">#&gt;     }</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x128c55e38&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x111852868&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></code></pre></div>
 <p>Looking at this code, we can see that <code><a href="https://purrr.tidyverse.org/reference/safely.html">possibly()</a></code>:</p>
 <ul>
@@ -140,14 +167,14 @@
 <hr>
 <p><strong>Q3.</strong> Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code>. How does it work?</p>
 <p><strong>A3.</strong> Let’s have a look at the source code for this function:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb292"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">safely</span>
 <span class="co">#&gt; function (.f, otherwise = NULL, quiet = TRUE) </span>
 <span class="co">#&gt; {</span>
 <span class="co">#&gt;     .f &lt;- as_mapper(.f)</span>
 <span class="co">#&gt;     function(...) capture_error(.f(...), otherwise, quiet)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x106b45da0&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x111a138b0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span>
 
 <span class="fu">purrr</span><span class="fu">:::</span><span class="va">capture_error</span>
@@ -161,7 +188,7 @@
 <span class="co">#&gt;         stop("Terminated by user", call. = FALSE)</span>
 <span class="co">#&gt;     })</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x128cc29e0&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x111a788c0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></code></pre></div>
 <p>Looking at this code, we can see that <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code>:</p>
 <ul>
@@ -190,15 +217,21 @@
 </div>
 </div>
   <div class="chapter-nav">
-<div class="empty"></div>
-<div class="empty"></div>
+<div class="prev"><a href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></div>
+<div class="next"><a href="base-types.html"><span class="header-section-number">12</span> Base Types</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <div id="book-on-this-page"></div>
+      <ul class="nav navbar-nav"><li>
+<a class="nav-link" href="#function-operators"><span class="header-section-number">11</span> Function operators</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#exercises-11.2.3"><span class="header-section-number">11.0.1</span> Exercises 11.2.3</a></li>
+<li><a class="nav-link" href="#exercises-11.3.1"><span class="header-section-number">11.0.2</span> Exercises 11.3.1</a></li>
+</ul>
+</li></ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Function-operators.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Function-operators.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -210,7 +243,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-06-11.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-06-18.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -218,6 +251,34 @@
   </div>
 
 </div></div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
 </body>
 </html>
