@@ -14,6 +14,8 @@ library(ggplot2)
 
 ### Exercises 19.2.2
 
+---
+
 **Q1.** For each function in the following base R code, identify which arguments are quoted and which are evaluated.
 
 
@@ -101,6 +103,8 @@ We can instead look at the docs for `...`:
 
 Thus, this argument is not evaluated, but rather quoted.
 
+---
+
 **Q2.** For each function in the following tidyverse code, identify which arguments are quoted and which are evaluated.
 
 
@@ -149,7 +153,11 @@ ggplot(by_cyl, aes(cyl, mean)) +
 
 <img src="Quotation_files/figure-html/unnamed-chunk-12-1.png" width="100%" />
 
+---
+
 ### Exercises 19.3.6
+
+---
 
 **Q1.** How is `expr()` implemented? Look at its source code.
 
@@ -162,7 +170,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x10c34b870>
+#> <bytecode: 0x10b724b08>
 #> <environment: namespace:rlang>
 ```
 
@@ -174,6 +182,8 @@ x <- expr(x <- 1)
 x
 #> x <- 1
 ```
+
+---
 
 **Q2.** Compare and contrast the following two functions. Can you predict the output before running them?
 
@@ -221,6 +231,8 @@ f2(a + b, c + d)
 #> c + d
 ```
 
+---
+
 **Q3.** What happens if you try to use `enexpr()` with an expression (i.e. `enexpr(x + y)`? What happens if `enexpr()` is passed a missing argument?
 
 **A3.** If you try to use `enexpr()` with an expression, it fails because it works only with types `symbol` and `character` (which is converted to `symbol`).
@@ -243,6 +255,8 @@ enexpr(arg)
 is_missing(enexpr(arg))
 #> [1] TRUE
 ```
+
+---
 
 **Q4.** How are `exprs(a)` and `exprs(a = )` different? Think about both the input and the output.
 
@@ -284,7 +298,11 @@ purrr::map_lgl(exprs(a = ), is_missing)
 #> TRUE
 ```
 
+---
+
 **Q5.** What are other differences between `exprs()` and `alist()`? Read the  documentation for the named arguments of `exprs()` to find out.
+
+---
 
 **Q6.** The documentation for `substitute()` says:
 
@@ -299,7 +317,11 @@ purrr::map_lgl(exprs(a = ), is_missing)
   
 Create examples that illustrate each of the above cases.
 
+---
+
 ### Exercises 19.4.8
+
+---
 
 **Q1.** Given the following components:
 
@@ -358,6 +380,8 @@ expr(mean(c(!!!abc), na.rm = TRUE))
 call2("foo", a = expr(!!xy), b = expr(!!yz))
 #> foo(a = x + y, b = y + z)
 ```
+
+---
 
 **Q2.** The following two calls print the same, but are actually different:
 
@@ -420,7 +444,11 @@ ast(expr(mean(!!(1:10))))
 
 The first call is more natural, since the second one inlines a vector directly into the call, something that is rarely done.
 
+---
+
 ### Exercises 19.6.5
+
+---
 
 **Q1.** One way to implement `exec()` is shown below. Describe how it works. What are the key ideas?
 
@@ -432,7 +460,11 @@ exec <- function(f, ..., .env = caller_env()) {
 }
 ```
 
+---
+
 **Q2.** Carefully read the source code for `interaction()`, `expand.grid()`, and `par()`. Compare and contrast the techniques they use for switching between dots and list behaviour.
+
+---
 
 **Q3.**  Explain the problem with this definition of `set_attr()`
 
@@ -447,9 +479,15 @@ set_attr(1:10, x = 10)
 #> Error in attributes(x) <- attr: attributes must be named
 ```
 
+---
+
 ### Exercises 19.7.5
 
+---
+
 **Q1.** In the linear-model example, we could replace the `expr()` in `reduce(summands, ~ expr(!!.x + !!.y))` with `call2()`: `reduce(summands, call2, "+")`. Compare and contrast the two approaches. Which do you think is easier to read?
+
+---
 
 **Q2.** Re-implement the Box-Cox transform defined below using unquoting and `new_function()`:
 
@@ -500,6 +538,7 @@ bc_new(2)(2)
 #> [1] 1.5
 ```
 
+---
 
 **Q3.**  Re-implement the simple `compose()` defined below using quasiquotation and `new_function()`:
 
@@ -537,3 +576,5 @@ not_null2 <- compose_new(`!`, is.null)
 not_null2(4)
 #> [1] TRUE
 ```
+
+---

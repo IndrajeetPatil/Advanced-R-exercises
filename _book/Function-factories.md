@@ -12,6 +12,8 @@ library(ggplot2, warn.conflicts = FALSE)
 
 ### Exercises 10.2.6
 
+---
+
 **Q1.** The definition of `force()` is simple:
 
 
@@ -19,7 +21,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x1338f8708>
+#> <bytecode: 0x12b0ff508>
 #> <environment: namespace:base>
 ```
 
@@ -28,6 +30,8 @@ Why is it better to `force(x)` instead of just `x`?
 **A1.** Because of lazy evaluation, argument to a function won't be evaluated until its value is needed, but sometimes we may want to have eager evaluation.
 
 Using `force()` makes this intent clearer.
+
+---
 
 **Q2.** Base R contains two function factories, `approxfun()` and `ecdf()`. Read their documentation and experiment to figure out what the functions do and what they return.
 
@@ -45,8 +49,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x106f39a70>
-#> <environment: 0x106f39140>
+#> <bytecode: 0x10ea0cc60>
+#> <environment: 0x10eab00f8>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -78,6 +82,8 @@ f(seq(-2, 2, by = 0.1))
 #> [36] 0.91666667 0.91666667 0.91666667 1.00000000 1.00000000
 #> [41] 1.00000000
 ```
+
+---
 
 **Q3.** Create a function `pick()` that takes an index, `i`, as an argument and returns a function with an argument `x` that subsets `x` with `i`.
 
@@ -117,6 +123,8 @@ identical(
 #> [1] TRUE
 ```
 
+---
+
 **Q4.** Create a function that creates functions that compute the i^th^ [central moment](http://en.wikipedia.org/wiki/Central_moment) of a numeric vector. You can test it by running the following code:
 
 
@@ -151,6 +159,8 @@ stopifnot(all.equal(m1(x), 0))
 stopifnot(all.equal(m2(x), var(x) * 99 / 100))
 ```
 
+---
+
 **Q5.** What happens if you don't use a closure? Make predictions, then verify with the code below.
 
 
@@ -180,6 +190,8 @@ new_counter2()
 #> [1] 21
 ```
 
+---
+
 **Q6.** What happens if you use `<-` instead of `<<-`? Make predictions, then verify with the code below.
 
 
@@ -202,18 +214,22 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x11354b498>
+#> <environment: 0x12ab181d0>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x11209df00>
-#> <environment: 0x1136aa428>
+#> <bytecode: 0x10d1796a0>
+#> <environment: 0x12ab86438>
 ```
 
+---
+
 ### Exercises 10.3.4
+
+---
 
 **Q1.** Compare and contrast `ggplot2::label_bquote()` with `scales::number_format()`.
 
@@ -250,7 +266,7 @@ ggplot2::label_bquote
 #>     }
 #>     structure(fun, class = "labeller")
 #> }
-#> <bytecode: 0x1139f7310>
+#> <bytecode: 0x10d61b160>
 #> <environment: namespace:ggplot2>
 
 scales::number_format
@@ -268,7 +284,7 @@ scales::number_format
 #>             scale_cut = scale_cut, trim = trim, ...)
 #>     }
 #> }
-#> <bytecode: 0x113aa1978>
+#> <bytecode: 0x11ae9e440>
 #> <environment: namespace:scales>
 ```
 
@@ -304,7 +320,11 @@ The `ggplot2::label_bquote()` adds an additional class to the returned function.
 
 The `scales::number_format()` function is a simple pass-through method that forces evaluation of all its parameters and passes them on to the underlying `scales::number()` function.
 
+---
+
 ### Exercises 10.4.4
+
+---
 
 **Q1.** In `boot_model()`, why don't I need to force the evaluation of `df` or `model`?
 
@@ -334,7 +354,7 @@ boot_model(mtcars, mpg ~ wt)
 #> function() {
 #>     fitted + sample(resid)
 #>   }
-#> <environment: 0x10702ce38>
+#> <environment: 0x12b3d4af0>
 ```
 
 Contrast this with the first function we saw in the chapter which *did* have a lazy binding:
@@ -355,8 +375,10 @@ power1(2)
 #> function(x) {
 #>     x^exp
 #>   }
-#> <environment: 0x113676420>
+#> <environment: 0x12aed53e0>
 ```
+
+---
 
 **Q2.** Why might you formulate the Box-Cox transformation like this?
 
@@ -373,7 +395,11 @@ boxcox3 <- function(x) {
 }
 ```
 
+---
+
 **Q3.** Why don't you need to worry that `boot_permute()` stores a copy of the data inside the function that it generates?
+
+---
 
 **Q4.** How much time does `ll_poisson2()` save compared to `ll_poisson1()`? Use `bench::mark()` to see how much faster the optimisation occurs. How does changing the length of `x` change the results?
 
@@ -408,8 +434,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1          13.2µs  14.43µs    65010.    12.8KB     97.7
-#> 2 LL2          7.05µs   7.79µs   119484.        0B     95.7
+#> 1 LL1         13.24µs  14.51µs    65907.    12.8KB     99.0
+#> 2 LL2          6.97µs   7.83µs   119918.        0B     96.0
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -435,16 +461,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 × 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1         20.79µs  22.51µs    43245.
-#>  2     10 LL2          8.57µs   9.18µs   107080.
-#>  3     20 LL1         22.75µs  24.27µs    40119.
-#>  4     20 LL2           8.4µs   9.22µs   105787.
-#>  5     50 LL1         26.86µs  29.03µs    33272.
-#>  6     50 LL2          8.24µs   9.14µs   101825.
-#>  7    100 LL1         37.43µs  40.43µs    21760.
-#>  8    100 LL2          9.14µs     10µs    88816.
-#>  9   1000 LL1        518.32µs 546.04µs     1787.
-#> 10   1000 LL2         30.09µs  31.86µs    29804.
+#>  1     10 LL1         20.38µs   22.1µs    43689.
+#>  2     10 LL2          8.36µs   9.02µs   108902.
+#>  3     20 LL1         22.26µs  23.37µs    42166.
+#>  4     20 LL2          8.24µs   8.77µs   112565.
+#>  5     50 LL1         26.32µs  28.21µs    34871.
+#>  6     50 LL2          8.08µs   9.02µs   108482.
+#>  7    100 LL1          36.7µs   38.7µs    25412.
+#>  8    100 LL2          8.94µs   9.39µs   104605.
+#>  9   1000 LL1        508.28µs 527.67µs     1871.
+#> 10   1000 LL2         29.48µs  31.12µs    31745.
 
 ggplot(
   df_bench,
@@ -466,6 +492,8 @@ ggplot(
 
 <img src="Function-factories_files/figure-html/unnamed-chunk-24-1.png" width="100%" />
 
+---
+
 ### Exercises 10.5.1
 
 **Q1.** Which of the following commands is equivalent to `with(x, f(z))`?
@@ -475,6 +503,8 @@ ggplot(
     (c) `x$f(z)`.
     (d) `f(z)`.
     (e) It depends.
+
+---
 
 **Q2.** Compare and contrast the effects of `env_bind()` vs. `attach()` for the  following code.
 
@@ -498,3 +528,5 @@ env_bind(globalenv(), !!!funs)
 mean <- function(x) stop("Hi!")
 env_unbind(globalenv(), names(funs))
 ```
+
+---

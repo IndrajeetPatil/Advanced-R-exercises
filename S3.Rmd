@@ -6,6 +6,8 @@ source("common.R")
 
 ## Exercises 13.2.1 
 
+---
+
 **Q1.** Describe the difference between `t.test()` and `t.data.frame()`. When is each function called?
 
 **A1.** 
@@ -21,6 +23,8 @@ library(sloop)
 ftype(t.test)
 ftype(t.data.frame)
 ```
+
+---
 
 **Q2.** Make a list of commonly used base R functions that contain `.` in their name but are not `S3` methods.
 
@@ -47,6 +51,8 @@ ftype(as.data.frame)
 ftype(on.exit)
 ```
 
+---
+
 **Q3.** What does the `as.data.frame.data.frame()` method do? Why is it confusing? How could you avoid this confusion in your own code?
  
 **A3.** It's an `S3` **method** for **generic** `as.data.frame()`.
@@ -62,6 +68,7 @@ s3_methods_generic("as.data.frame") %>%
   dplyr::filter(class == "data.frame")
 ```
 
+---
 
 **Q4.** Describe the difference in behaviour in these two calls.
 
@@ -96,6 +103,8 @@ mean(unclass(some_days))
 s3_dispatch(mean(unclass(some_days)))
 ```
 
+---
+
 **Q5.** What class of object does the following code return? What base type is it built on? What attributes does it use?
 
 ```{r, eval=FALSE}
@@ -124,6 +133,8 @@ Apart from `class`, it has the following attributes:
 ```{r}
 attributes(x)
 ```
+
+---
 
 **Q6.** What class of object does the following code return? What base type is it built on? What attributes does it use?
 
@@ -154,7 +165,11 @@ Apart from `class`, it has the following attributes:
 attributes(x)
 ```
 
+---
+
 ## Exercises 13.3.4
+
+---
 
 **Q1.** Write a constructor for `data.frame` objects. What base type is a data frame built on? What attributes does it use? What are the restrictions placed on the individual elements? What about the names?
 
@@ -202,6 +217,8 @@ new_data_frame(list("x" = 1, "y" = 2))
 
 new_data_frame(list("x" = 1, "y" = 2), row.names = "row-1")
 ```
+
+---
 
 **Q2.** Enhance my `factor()` helper to have better behaviour when one or more `values` is not found in `levels`. What does `base::factor()` do in this situation?
 
@@ -272,6 +289,8 @@ create_factor(c("a", "b", "c"), levels = c("a", "c"))
 
 create_factor(c("a", "b", "c"), levels = c("a", "b", "c"))
 ```
+
+---
 
 **Q3.** Carefully read the source code of `factor()`. What does it do that my constructor does not?
 
