@@ -31,7 +31,7 @@ The names (`a`, `b`, and `c`) are references to the same object in memory, as ca
 library(lobstr)
 
 obj_addrs(list(a, b, c))
-#> [1] "0x12dea70b0" "0x12dea70b0" "0x12dea70b0"
+#> [1] "0x128524c38" "0x128524c38" "0x128524c38"
 ```
 
 Except `d`, which is a different object, even if it has the same value:
@@ -39,7 +39,7 @@ Except `d`, which is a different object, even if it has the same value:
 
 ```r
 obj_addr(d)
-#> [1] "0x12db9c7e8"
+#> [1] "0x13e60fa48"
 ```
 
 **Q2.** The following code accesses the mean function in multiple ways. Do they all point to the same underlying function object? Verify this with `lobstr::obj_addr()`.
@@ -60,15 +60,15 @@ Following code verifies that indeed these calls all point to the same underlying
 
 ```r
 obj_addr(mean)
-#> [1] "0x13c4dec90"
+#> [1] "0x12e5496d8"
 obj_addr(base::mean)
-#> [1] "0x13c4dec90"
+#> [1] "0x12e5496d8"
 obj_addr(get("mean"))
-#> [1] "0x13c4dec90"
+#> [1] "0x12e5496d8"
 obj_addr(evalq(mean))
-#> [1] "0x13c4dec90"
+#> [1] "0x12e5496d8"
 obj_addr(match.fun("mean"))
-#> [1] "0x13c4dec90"
+#> [1] "0x12e5496d8"
 ```
 
 **Q3.** By default, base R data import functions, like `read.csv()`, will automatically convert non-syntactic names to syntactic ones. Why might this be problematic? What option allows you to suppress this behaviour?
@@ -126,7 +126,7 @@ make.names(.123e1)
 
 ```r
 tracemem(1:10)
-#> [1] "<0x12ce304e0>"
+#> [1] "<0x129555cf8>"
 ```
 
 **Q2.** Explain why `tracemem()` shows two copies when you run this code. Hint: carefully look at the difference between this code and the code shown earlier in the section.
@@ -147,11 +147,11 @@ Were it not for `4` being a double - and not an integer (`4L`) - this would have
 ```r
 x <- c(1L, 2L, 3L)
 tracemem(x)
-#> [1] "<0x12dec0048>"
+#> [1] "<0x12a07a388>"
 
 x[[3]] <- 4
-#> tracemem[0x12dec0048 -> 0x12cd78908]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
-#> tracemem[0x12cd78908 -> 0x12f91bed8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x12a07a388 -> 0x12a17bc88]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
+#> tracemem[0x12a17bc88 -> 0x12a183ba8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 ```
 
 Try with integer:
@@ -160,10 +160,10 @@ Try with integer:
 ```r
 x <- c(1L, 2L, 3L)
 tracemem(x)
-#> [1] "<0x12e946e08>"
+#> [1] "<0x13e7cc388>"
 
 x[[3]] <- 4L
-#> tracemem[0x12e946e08 -> 0x12e98f088]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x13e7cc388 -> 0x12a848388]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 ```
 
 As for why this still produces a copy, this is from Solutions manual:
@@ -188,20 +188,20 @@ b <- list(a, a)
 c <- list(b, a, 1:10)
 
 ref(a)
-#> [1:0x10c17abe0] <int>
+#> [1:0x12ad72358] <int>
 
 ref(b)
-#> █ [1:0x12fd19bc8] <list> 
-#> ├─[2:0x10c17abe0] <int> 
-#> └─[2:0x10c17abe0]
+#> █ [1:0x12a2600c8] <list> 
+#> ├─[2:0x12ad72358] <int> 
+#> └─[2:0x12ad72358]
 
 ref(c)
-#> █ [1:0x10c9956a8] <list> 
-#> ├─█ [2:0x12fd19bc8] <list> 
-#> │ ├─[3:0x10c17abe0] <int> 
-#> │ └─[3:0x10c17abe0] 
-#> ├─[3:0x10c17abe0] 
-#> └─[4:0x10c21eef0] <int>
+#> █ [1:0x12a29f978] <list> 
+#> ├─█ [2:0x12a2600c8] <list> 
+#> │ ├─[3:0x12ad72358] <int> 
+#> │ └─[3:0x12ad72358] 
+#> ├─[3:0x12ad72358] 
+#> └─[4:0x12a2ae668] <int>
 ```
 
 **Q4.** What happens when you run this code?
@@ -223,7 +223,7 @@ x
 #> [[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x13c2cd6f8"
+#> [1] "0x12928b640"
 
 x[[2]] <- x
 x
@@ -234,13 +234,13 @@ x
 #> [[2]][[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x12f981dc8"
+#> [1] "0x129940c48"
 
 ref(x)
-#> █ [1:0x12f981dc8] <list> 
-#> ├─[2:0x12dce0fd8] <int> 
-#> └─█ [3:0x13c2cd6f8] <list> 
-#>   └─[2:0x12dce0fd8]
+#> █ [1:0x129940c48] <list> 
+#> ├─[2:0x13f093cd8] <int> 
+#> └─█ [3:0x12928b640] <list> 
+#>   └─[2:0x13f093cd8]
 ```
 
 Figure from the official solution manual can be found here:
@@ -270,7 +270,7 @@ object.size(y)
 #> 8005648 bytes
 
 obj_size(y)
-#> 80,896 B
+#> 80.90 kB
 ```
 
 **Q2.**  Take the following list. Why is its size somewhat misleading?
@@ -289,7 +289,7 @@ These functions are not externally created objects in R, but are always availabl
 ```r
 funs <- list(mean, sd, var)
 obj_size(funs)
-#> 17,608 B
+#> 17.55 kB
 ```
 
 Nevertheless, it's still interesting that the addition is not the same as size of list of those objects.
@@ -297,14 +297,14 @@ Nevertheless, it's still interesting that the addition is not the same as size o
 
 ```r
 obj_size(mean)
-#> 1,184 B
+#> 1.13 kB
 obj_size(sd)
-#> 4,480 B
+#> 4.48 kB
 obj_size(var)
-#> 12,472 B
+#> 12.47 kB
 
 obj_size(mean) + obj_size(sd) + obj_size(var)
-#> 18,136 B
+#> 18.08 kB
 ```
 
 **Q3.** Predict the output of the following code:
@@ -333,25 +333,25 @@ obj_size(a, b)
 ```r
 a <- runif(1e6)
 obj_size(a)
-#> 8,000,048 B
+#> 8.00 MB
 
 b <- list(a, a)
 obj_size(b)
-#> 8,000,112 B
+#> 8.00 MB
 obj_size(a, b)
-#> 8,000,112 B
+#> 8.00 MB
 
 b[[1]][[1]] <- 10
 obj_size(b)
-#> 16,000,160 B
+#> 16.00 MB
 obj_size(a, b)
-#> 16,000,160 B
+#> 16.00 MB
 
 b[[2]][[1]] <- 10
 obj_size(b)
-#> 16,000,160 B
+#> 16.00 MB
 obj_size(a, b)
-#> 24,000,208 B
+#> 24.00 MB
 ```
 
 ## 2.5.3 Exercises
@@ -373,16 +373,16 @@ Copy-on-modify prevents the creation of a circular list.
 x <- list()
 
 obj_addr(x)
-#> [1] "0x12e5c5558"
+#> [1] "0x1291bdb08"
 
 tracemem(x)
-#> [1] "<0x12e5c5558>"
+#> [1] "<0x1291bdb08>"
 
 x[[1]] <- x
-#> tracemem[0x12e5c5558 -> 0x12e6d4128]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x1291bdb08 -> 0x14e72f440]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 
 obj_addr(x[[1]])
-#> [1] "0x12e5c5558"
+#> [1] "0x1291bdb08"
 ```
 
 **Q2.** Wrap the two methods for subtracting medians into two functions, then use the 'bench' package to carefully compare their speeds. How does performance change as the number of columns increase?

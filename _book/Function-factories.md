@@ -21,7 +21,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x12b0ff508>
+#> <bytecode: 0x14994a708>
 #> <environment: namespace:base>
 ```
 
@@ -49,8 +49,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x10ea0cc60>
-#> <environment: 0x10eab00f8>
+#> <bytecode: 0x11c51f708>
+#> <environment: 0x11c51ed68>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -214,15 +214,15 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x12ab181d0>
+#> <environment: 0x11c98dee8>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x10d1796a0>
-#> <environment: 0x12ab86438>
+#> <bytecode: 0x11b656390>
+#> <environment: 0x11ca06470>
 ```
 
 ---
@@ -266,7 +266,7 @@ ggplot2::label_bquote
 #>     }
 #>     structure(fun, class = "labeller")
 #> }
-#> <bytecode: 0x10d61b160>
+#> <bytecode: 0x11cd0d580>
 #> <environment: namespace:ggplot2>
 
 scales::number_format
@@ -284,7 +284,7 @@ scales::number_format
 #>             scale_cut = scale_cut, trim = trim, ...)
 #>     }
 #> }
-#> <bytecode: 0x11ae9e440>
+#> <bytecode: 0x11cd8fb98>
 #> <environment: namespace:scales>
 ```
 
@@ -354,7 +354,7 @@ boot_model(mtcars, mpg ~ wt)
 #> function() {
 #>     fitted + sample(resid)
 #>   }
-#> <environment: 0x12b3d4af0>
+#> <environment: 0x11c9712e0>
 ```
 
 Contrast this with the first function we saw in the chapter which *did* have a lazy binding:
@@ -375,7 +375,7 @@ power1(2)
 #> function(x) {
 #>     x^exp
 #>   }
-#> <environment: 0x12aed53e0>
+#> <environment: 0x14a2c0820>
 ```
 
 ---
@@ -434,8 +434,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1         13.24µs  14.51µs    65907.    12.8KB     99.0
-#> 2 LL2          6.97µs   7.83µs   119918.        0B     96.0
+#> 1 LL1         16.15µs  18.08µs    52106.    12.8KB     78.3
+#> 2 LL2          8.49µs   9.63µs    97568.        0B     68.3
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -461,16 +461,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 × 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1         20.38µs   22.1µs    43689.
-#>  2     10 LL2          8.36µs   9.02µs   108902.
-#>  3     20 LL1         22.26µs  23.37µs    42166.
-#>  4     20 LL2          8.24µs   8.77µs   112565.
-#>  5     50 LL1         26.32µs  28.21µs    34871.
-#>  6     50 LL2          8.08µs   9.02µs   108482.
-#>  7    100 LL1          36.7µs   38.7µs    25412.
-#>  8    100 LL2          8.94µs   9.39µs   104605.
-#>  9   1000 LL1        508.28µs 527.67µs     1871.
-#> 10   1000 LL2         29.48µs  31.12µs    31745.
+#>  1     10 LL1         25.34µs     28µs    35331.
+#>  2     10 LL2         10.33µs   11.2µs    86679.
+#>  3     20 LL1         25.79µs   30.5µs    32072.
+#>  4     20 LL2         10.04µs   10.6µs    92532.
+#>  5     50 LL1         30.46µs   34.2µs    28248.
+#>  6     50 LL2          9.39µs   10.5µs    89263.
+#>  7    100 LL1          45.3µs   47.3µs    20743.
+#>  8    100 LL2         10.95µs   11.5µs    85382.
+#>  9   1000 LL1        627.96µs  650.6µs     1509.
+#> 10   1000 LL2         36.33µs   37.6µs    25994.
 
 ggplot(
   df_bench,
