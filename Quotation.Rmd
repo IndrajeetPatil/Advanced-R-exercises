@@ -8,6 +8,7 @@ Attaching the needed libraries:
 
 ```{r, warning=FALSE, message=FALSE}
 library(rlang)
+library(purrr)
 library(lobstr)
 library(dplyr)
 library(ggplot2)
@@ -425,13 +426,30 @@ exec <- function(f, ..., .env = caller_env()) {
 }
 ```
 
+**A1.** The keys ideas that underlie the `exec()` function 
+
+- The function constructs a call using function `f` and its argument `...`, and evaluates the call in the environment `.env`.
+
+- The function uses [dynamic dots](https://rlang.r-lib.org/reference/dyn-dots.html) via `list2()`, which means that you ca splice argument using `!!!`, you can inject names using `:=`, and trailing commas are not a problem.
+
+Here is an example:
+
+```{r}
+vec <- c(1:5, NA)
+args_list <- list(trim = 0, na.rm = TRUE)
+
+exec(mean, vec, !!!args_list, , .env = caller_env())
+
+rm("exec")
+```
+
 ---
 
 **Q2.** Carefully read the source code for `interaction()`, `expand.grid()`, and `par()`. Compare and contrast the techniques they use for switching between dots and list behaviour.
 
 ---
 
-**Q3.**  Explain the problem with this definition of `set_attr()`
+**Q3.** Explain the problem with this definition of `set_attr()`
 
 ```{r, error = TRUE}
 set_attr <- function(x, ...) {
@@ -442,6 +460,31 @@ set_attr <- function(x, ...) {
 set_attr(1:10, x = 10)
 ```
 
+**A3.** The `set_attr()` function signature has a parameter called `x`, and additionally it uses dynamic dots to pass multiple arguments to specify additional attributes for `x`.
+
+But, as shown in the example, this creates a problem when the attribute is itself named `x`. Naming the arguments won't help either:
+
+```{r, error = TRUE}
+set_attr <- function(x, ...) {
+  attr <- rlang::list2(...)
+  attributes(x) <- attr
+  x
+}
+set_attr(x = 1:10, x = 10)
+```
+
+We can avoid these issues by renaming the parameter:
+
+```{r}
+set_attr <- function(.x, ...) {
+  attr <- rlang::list2(...)
+  attributes(.x) <- attr
+  .x
+}
+
+set_attr(.x = 1:10, x = 10)
+```
+
 ---
 
 ### Exercises 19.7.5
@@ -449,6 +492,24 @@ set_attr(1:10, x = 10)
 ---
 
 **Q1.** In the linear-model example, we could replace the `expr()` in `reduce(summands, ~ expr(!!.x + !!.y))` with `call2()`: `reduce(summands, call2, "+")`. Compare and contrast the two approaches. Which do you think is easier to read?
+
+**A1.** We can rewrite the `linear()` function from this chapter using `call2()` as follows:
+
+```{r}
+linear <- function(var, val) {
+  var <- ensym(var)
+  coef_name <- map(seq_along(val[-1]), ~ expr((!!var)[[!!.x]]))
+  
+  summands <- map2(val[-1], coef_name, ~ expr((!!.x * !!.y)))
+  summands <- c(val[[1]], summands)
+  
+  reduce(summands, ~ call2("+", .x, .y))
+}
+
+linear(x, c(10, 5, -4))
+```
+
+I personally find the version with `call2()` to be much more readable since the `!!` syntax is a bit esoteric.
 
 ---
 
