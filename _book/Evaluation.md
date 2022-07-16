@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x109944630>
+#> <environment: 0x108ff3ae0>
 #> Parent: <environment: global>
 ```
 
@@ -192,17 +192,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x10905af90
+#> env:  0x108be4330
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x109b7c778
+#> env:  0x1093f6228
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x109c1ebf8
+#> env:  0x11bf0b680
 ```
 
 **A1.** Correctly predicted 😉
@@ -240,7 +240,7 @@ enenv(x)
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x11cb32ca0>
+#> <environment: 0x11c82f5c0>
 ```
 
 ---

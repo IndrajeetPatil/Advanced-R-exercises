@@ -170,7 +170,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x1131f6a60>
+#> <bytecode: 0x10a51fe40>
 #> <environment: namespace:rlang>
 ```
 
@@ -302,6 +302,96 @@ purrr::map_lgl(exprs(a = ), is_missing)
 
 **Q5.** What are other differences between `exprs()` and `alist()`? Read the  documentation for the named arguments of `exprs()` to find out.
 
+**A5.** Here are some additional differences between `exprs()` and `alist()`.
+
+- Names: If the inputs are not named, `exprs()` provides a way to name them automatically using `.named` argument.
+
+
+```r
+alist("x" = 1, TRUE, "z" = expr(x + y))
+#> $x
+#> [1] 1
+#> 
+#> [[2]]
+#> [1] TRUE
+#> 
+#> $z
+#> expr(x + y)
+
+exprs("x" = 1, TRUE, "z" = expr(x + y), .named = TRUE)
+#> $x
+#> [1] 1
+#> 
+#> $`TRUE`
+#> [1] TRUE
+#> 
+#> $z
+#> expr(x + y)
+```
+
+- Ignoring empty arguments: The `.ignore_empty` argument in `exprs()` gives you a much finer control over what to do with the empty arguments, while `alist()` always ignores none of such arguments.
+
+
+```r
+alist("x" = 1, , TRUE, )
+#> $x
+#> [1] 1
+#> 
+#> [[2]]
+#> 
+#> 
+#> [[3]]
+#> [1] TRUE
+#> 
+#> [[4]]
+
+exprs("x" = 1, , TRUE, , .ignore_empty = "trailing")
+#> $x
+#> [1] 1
+#> 
+#> [[2]]
+#> 
+#> 
+#> [[3]]
+#> [1] TRUE
+
+exprs("x" = 1, , TRUE, , .ignore_empty = "none")
+#> $x
+#> [1] 1
+#> 
+#> [[2]]
+#> 
+#> 
+#> [[3]]
+#> [1] TRUE
+#> 
+#> [[4]]
+
+exprs("x" = 1, , TRUE, , .ignore_empty = "all")
+#> $x
+#> [1] 1
+#> 
+#> [[2]]
+#> [1] TRUE
+```
+
+- Names injection: Using `.unquote_names` argument in `exprs()`, we can inject a name for the argument.
+
+
+```r
+alist(foo := bar)
+#> [[1]]
+#> `:=`(foo, bar)
+
+exprs(foo := bar, .unquote_names = FALSE)
+#> [[1]]
+#> `:=`(foo, bar)
+
+exprs(foo := bar, .unquote_names = TRUE)
+#> $foo
+#> bar
+```
+
 ---
 
 **Q6.** The documentation for `substitute()` says:
@@ -316,6 +406,43 @@ purrr::map_lgl(exprs(a = ), is_missing)
     > `env` is .GlobalEnv in which case the symbol is left unchanged.
   
 Create examples that illustrate each of the above cases.
+
+**A6.** See below examples that illustrate each of the above-mentioned cases.
+
+> If it is not a bound symbol in `env`, it is unchanged. 
+
+Symbol `x` is not bound in `env`, so it remains unchanged. 
+
+
+```r
+substitute(x + y, env = list(y = 2))
+#> x + 2
+```
+
+> If it is a promise object (i.e., a formal argument to a function) 
+> the expression slot of the promise replaces the symbol. 
+
+
+```r
+msg <- "old"
+delayedAssign("myVar", msg) # creates a promise 
+substitute(myVar)
+#> myVar
+msg <- "new!"
+myVar
+#> [1] "new!"
+```
+
+> If it is an ordinary variable, its value is substituted, unless 
+> `env` is .GlobalEnv in which case the symbol is left unchanged.
+
+
+```r
+x <- 2
+y <- 1
+substitute(x + y, env = .GlobalEnv)
+#> x + y
+```
 
 ---
 
