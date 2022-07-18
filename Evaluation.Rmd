@@ -222,13 +222,13 @@ transform2 <- function(.data, ...) {
 
 transform3 <- function(.data, ...) {
   dots <- enquos(...)
-  
+
   purrr::map(dots, function(x, .data = .data) {
     name <- names(x)
     dot <- x
-    
+
     .data[[name]] <- eval_tidy(dot, .data)
-    
+
     .data
   })
 }

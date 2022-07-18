@@ -7,6 +7,7 @@ Attaching the needed libraries:
 
 ```r
 library(rlang)
+library(purrr)
 library(lobstr)
 library(dplyr)
 library(ggplot2)
@@ -170,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x10a51fe40>
+#> <bytecode: 0x114f14f28>
 #> <environment: namespace:rlang>
 ```
 
@@ -425,7 +426,7 @@ substitute(x + y, env = list(y = 2))
 
 ```r
 msg <- "old"
-delayedAssign("myVar", msg) # creates a promise 
+delayedAssign("myVar", msg) # creates a promise
 substitute(myVar)
 #> myVar
 msg <- "new!"
@@ -587,13 +588,44 @@ exec <- function(f, ..., .env = caller_env()) {
 }
 ```
 
+**A1.** The keys ideas that underlie the `exec()` function 
+
+- The function constructs a call using function `f` and its argument `...`, and evaluates the call in the environment `.env`.
+
+- The function uses [dynamic dots](https://rlang.r-lib.org/reference/dyn-dots.html) via `list2()`, which means that you ca splice argument using `!!!`, you can inject names using `:=`, and trailing commas are not a problem.
+
+Here is an example:
+
+
+```r
+vec <- c(1:5, NA)
+args_list <- list(trim = 0, na.rm = TRUE)
+
+exec(mean, vec, !!!args_list, , .env = caller_env())
+#> [1] 3
+
+rm("exec")
+```
+
 ---
 
 **Q2.** Carefully read the source code for `interaction()`, `expand.grid()`, and `par()`. Compare and contrast the techniques they use for switching between dots and list behaviour.
 
+**A2.** Source code reveals the following comparison table:
+
+| Function        | Capture the dots    | Handle list input                                                    |
+| :-------------- | :------------------ | :------------------------------------------------------------------- |
+| `interaction()` | `args <- list(...)` | `length(args) == 1L && is.list(args[[1L]])`                          |
+| `expand.grid()` | `args <- list(...)` | `length(args) == 1L && is.list(args[[1L]])`                          |
+| `par()`         | `args <- list(...)` | `length(args) == 1L && (is.list(args[[1L]] || is.null(args[[1L]])))` |
+
+All functions capture the dots in a list.
+
+Using these dots, the functions check if a list was entered as an argument by checking the number of arguments and, if the count is 1, checking if the argument is a list.
+
 ---
 
-**Q3.**  Explain the problem with this definition of `set_attr()`
+**Q3.** Explain the problem with this definition of `set_attr()`
 
 
 ```r
@@ -606,6 +638,37 @@ set_attr(1:10, x = 10)
 #> Error in attributes(x) <- attr: attributes must be named
 ```
 
+**A3.** The `set_attr()` function signature has a parameter called `x`, and additionally it uses dynamic dots to pass multiple arguments to specify additional attributes for `x`.
+
+But, as shown in the example, this creates a problem when the attribute is itself named `x`. Naming the arguments won't help either:
+
+
+```r
+set_attr <- function(x, ...) {
+  attr <- rlang::list2(...)
+  attributes(x) <- attr
+  x
+}
+set_attr(x = 1:10, x = 10)
+#> Error in set_attr(x = 1:10, x = 10): formal argument "x" matched by multiple actual arguments
+```
+
+We can avoid these issues by renaming the parameter:
+
+
+```r
+set_attr <- function(.x, ...) {
+  attr <- rlang::list2(...)
+  attributes(.x) <- attr
+  .x
+}
+
+set_attr(.x = 1:10, x = 10)
+#>  [1]  1  2  3  4  5  6  7  8  9 10
+#> attr(,"x")
+#> [1] 10
+```
+
 ---
 
 ### Exercises 19.7.5
@@ -613,6 +676,26 @@ set_attr(1:10, x = 10)
 ---
 
 **Q1.** In the linear-model example, we could replace the `expr()` in `reduce(summands, ~ expr(!!.x + !!.y))` with `call2()`: `reduce(summands, call2, "+")`. Compare and contrast the two approaches. Which do you think is easier to read?
+
+**A1.** We can rewrite the `linear()` function from this chapter using `call2()` as follows:
+
+
+```r
+linear <- function(var, val) {
+  var <- ensym(var)
+  coef_name <- map(seq_along(val[-1]), ~ expr((!!var)[[!!.x]]))
+
+  summands <- map2(val[-1], coef_name, ~ expr((!!.x * !!.y)))
+  summands <- c(val[[1]], summands)
+
+  reduce(summands, ~ call2("+", .x, .y))
+}
+
+linear(x, c(10, 5, -4))
+#> 10 + (5 * x[[1L]]) + (-4 * x[[2L]])
+```
+
+I personally find the version with `call2()` to be much more readable since the `!!` syntax is a bit esoteric.
 
 ---
 
@@ -635,7 +718,7 @@ bc <- function(lambda) {
 ```r
 bc_new <- function(lambda) {
   lambda <- enexpr(lambda)
-  
+
   if (!!lambda == 0) {
     new_function(
       exprs(x = ),

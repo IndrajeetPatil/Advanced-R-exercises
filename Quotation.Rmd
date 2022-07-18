@@ -307,7 +307,7 @@ substitute(x + y, env = list(y = 2))
 
 ```{r}
 msg <- "old"
-delayedAssign("myVar", msg) # creates a promise 
+delayedAssign("myVar", msg) # creates a promise
 substitute(myVar)
 msg <- "new!"
 myVar
@@ -447,6 +447,18 @@ rm("exec")
 
 **Q2.** Carefully read the source code for `interaction()`, `expand.grid()`, and `par()`. Compare and contrast the techniques they use for switching between dots and list behaviour.
 
+**A2.** Source code reveals the following comparison table:
+
+| Function        | Capture the dots    | Handle list input                                                    |
+| :-------------- | :------------------ | :------------------------------------------------------------------- |
+| `interaction()` | `args <- list(...)` | `length(args) == 1L && is.list(args[[1L]])`                          |
+| `expand.grid()` | `args <- list(...)` | `length(args) == 1L && is.list(args[[1L]])`                          |
+| `par()`         | `args <- list(...)` | `length(args) == 1L && (is.list(args[[1L]] || is.null(args[[1L]])))` |
+
+All functions capture the dots in a list.
+
+Using these dots, the functions check if a list was entered as an argument by checking the number of arguments and, if the count is 1, checking if the argument is a list.
+
 ---
 
 **Q3.** Explain the problem with this definition of `set_attr()`
@@ -499,10 +511,10 @@ set_attr(.x = 1:10, x = 10)
 linear <- function(var, val) {
   var <- ensym(var)
   coef_name <- map(seq_along(val[-1]), ~ expr((!!var)[[!!.x]]))
-  
+
   summands <- map2(val[-1], coef_name, ~ expr((!!.x * !!.y)))
   summands <- c(val[[1]], summands)
-  
+
   reduce(summands, ~ call2("+", .x, .y))
 }
 
@@ -530,7 +542,7 @@ bc <- function(lambda) {
 ```{r}
 bc_new <- function(lambda) {
   lambda <- enexpr(lambda)
-  
+
   if (!!lambda == 0) {
     new_function(
       exprs(x = ),

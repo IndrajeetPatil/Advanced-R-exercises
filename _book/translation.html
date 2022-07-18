@@ -18,7 +18,7 @@
 <meta name="twitter:image" content="/cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -87,19 +87,19 @@
 <span class="header-section-number">21.0.1</span> Exercises 21.2.6<a class="anchor" aria-label="anchor" href="#exercises-21.2.6"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Q1.</strong> The escaping rules for <code>&lt;script&gt;</code> tags are different because they contain JavaScript, not HTML. Instead of escaping angle brackets or ampersands, you need to escape <code>&lt;/script&gt;</code> so that the tag isn’t closed too early. For example, <code>script("'&lt;/script&gt;'")</code>, shouldn’t generate this:</p>
-<div class="sourceCode" id="cb525"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb525-1"><a href="translation.html#cb525-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">'&lt;/script&gt;'</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb529"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb529-1"><a href="translation.html#cb529-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">'&lt;/script&gt;'</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
 <p>But</p>
-<div class="sourceCode" id="cb526"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb526-1"><a href="translation.html#cb526-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">'&lt;</span><span class="sc">\/</span><span class="st">script&gt;'</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb530"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb530-1"><a href="translation.html#cb530-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">'&lt;</span><span class="sc">\/</span><span class="st">script&gt;'</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
 <p>Adapt the <code>escape()</code> to follow these rules when a new argument <code>script</code> is set to <code>TRUE</code>.</p>
 <p><strong>Q2.</strong> The use of <code>...</code> for all functions has some big downsides. There’s no input validation and there will be little information in the documentation or autocomplete about how they are used in the function. Create a new function that, when given a named list of tags and their attribute names (like below), creates tag functions with named arguments.</p>
-<div class="sourceCode" id="cb527"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb531"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"href"</span><span class="op">)</span>,</span>
 <span>  img <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"src"</span>, <span class="st">"width"</span>, <span class="st">"height"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>All tags should get <code>class</code> and <code>id</code> attributes.</p>
 <p><strong>Q3.</strong> Reason about the following code that calls <code>with_html()</code> referencing objects from the environment. Will it work or fail? Why? Run the code to verify your predictions.</p>
-<div class="sourceCode" id="cb528"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb532"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">greeting</span> <span class="op">&lt;-</span> <span class="st">"Hello!"</span></span>
 <span><span class="fu">with_html</span><span class="op">(</span><span class="fu">p</span><span class="op">(</span><span class="va">greeting</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="st">"p"</span></span>
@@ -143,7 +143,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-07-16.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-07-18.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
