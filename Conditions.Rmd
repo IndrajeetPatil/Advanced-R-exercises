@@ -91,7 +91,7 @@ catch_cnd(abort("An error"))
 
 **A1.** Contrasting these two lists, we can see that `rlang::abort()` contains two additional pieces of information:
 
-- `trace`: A backtrace capturing the sequence of calls that lead to the current function 
+- `trace`: A traceback capturing the sequence of calls that lead to the current function 
 - `parent`: Information about another condition used as a parent to create a chained condition.
 
 ```{r}
@@ -171,9 +171,66 @@ withCallingHandlers(
 )
 ```
 
+**A3.** The surprising part of this output is the `b` before the last `c`.
+
+This happens because the inner calling handler doesn't handle the message, so it bubbles up to the outer calling handler.
+
 **Q4.** Read the source code for `catch_cnd()` and explain how it works.
 
+**A4.** Let's look at the source code for `catch_cnd()`:
+
+```{r}
+rlang::catch_cnd
+```
+
+As mentioned in the function docs:
+
+> This is a small wrapper around `tryCatch()` that captures any condition signalled while evaluating its argument.
+
+The `classes` argument allows a character vector of condition classes to catch, and the complex tidy evaluation generates the necessary condition (if there is any; otherwise `NULL`).
+
+```{r, error=TRUE}
+catch_cnd(10)
+
+catch_cnd(abort(message = "an error", class = "my class"))
+
+catch_cnd(abort("an error"), classes = "message")
+```
+
 **Q5.** How could you rewrite `show_condition()` to use a single handler?
+
+**A5.** The source code for `rlang::catch_cond()` gives us a clue as to how we can do this.
+
+Conditions also have a `class` attribute, and we can use it to determine which handler will match the condition.
+
+```{r}
+show_condition2 <- function(code) {
+  tryCatch(
+    condition = function(cnd) {
+      if (inherits(cnd, "error")) return("error")
+      if (inherits(cnd, "warning")) return("warning")
+      if (inherits(cnd, "message")) return("message")
+    },
+    {
+      code
+      NULL
+    }
+  )
+}
+```
+
+Let's try this new version with the examples from original version:
+
+```{r}
+show_condition2(stop("!"))
+show_condition2(10)
+show_condition2(warning("?!"))
+show_condition2({
+  10
+  message("?")
+  warning("?!")
+})
+```
 
 ### Exercises 8.5.4
 

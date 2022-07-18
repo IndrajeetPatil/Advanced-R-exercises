@@ -32,7 +32,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x103a1a6e0>
+#> <environment: 0x12ccb25c8>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -43,7 +43,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x114b10c50>
+#> <environment: 0x12c810288>
 
 # mapping by name -----------------------
 
@@ -61,7 +61,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x1138c38f8>
+#> <environment: 0x13d3f6860>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -73,7 +73,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x105a6e460>
+#> <environment: 0x13cd6e480>
 
 # compact functions ----------------------------
 
@@ -137,7 +137,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck(x, 0.597890264587477, 0.587997315218672, .default = NULL)
-#> <environment: 0x103c25358>
+#> <environment: 0x10cd59e88>
 ```
 
 **Q3.** Use the appropriate `map()` function to:
@@ -843,7 +843,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x107b40d98>
+#> <environment: 0x10caf76c8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>

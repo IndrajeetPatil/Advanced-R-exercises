@@ -83,7 +83,7 @@
 <span class="header-section-number">11</span> Function operators<a class="anchor" aria-label="anchor" href="#function-operators"><i class="fas fa-link"></i></a>
 </h1>
 <p>Attaching the needed libraries:</p>
-<div class="sourceCode" id="cb288"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb297"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div id="exercises-11.2.3" class="section level3" number="11.0.1">
 <h3>
@@ -100,7 +100,7 @@
 <code><a href="https://dplyr.tidyverse.org/reference/near.html">dplyr::near()</a></code> (which is vectorized element-wise and thus expects two vectors of equal length)</li>
 </ul>
 <p>in order to find indices of matching numeric values for the given threshold.</p>
-<div class="sourceCode" id="cb289"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb298"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">which_near</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">tolerance</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co"># Vectorize `dplyr::near()` function only over the `y` argument.</span></span>
 <span>  <span class="co"># Note that that `Vectorize()` is a function operator and will return a function.</span></span>
@@ -122,7 +122,7 @@
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="fl">0L</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Let’s use it:</p>
-<div class="sourceCode" id="cb290"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb299"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.1</span>, <span class="fl">3.3</span>, <span class="fl">8.45</span>, <span class="fl">8</span>, <span class="fl">6</span><span class="op">)</span></span>
 <span><span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">8.40</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span></span>
@@ -140,7 +140,7 @@
 <hr>
 <p><strong>Q2.</strong> Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">possibly()</a></code>. How does it work?</p>
 <p><strong>A2.</strong> Let’s have a look at the source code for this function:</p>
-<div class="sourceCode" id="cb291"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb300"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">possibly</span></span>
 <span><span class="co">#&gt; function (.f, otherwise, quiet = TRUE) </span></span>
 <span><span class="co">#&gt; {</span></span>
@@ -156,7 +156,7 @@
 <span><span class="co">#&gt;         })</span></span>
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x10c0ecfd0&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x108735fc8&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></span></code></pre></div>
 <p>Looking at this code, we can see that <code><a href="https://purrr.tidyverse.org/reference/safely.html">possibly()</a></code>:</p>
 <ul>
@@ -167,14 +167,14 @@
 <hr>
 <p><strong>Q3.</strong> Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code>. How does it work?</p>
 <p><strong>A3.</strong> Let’s have a look at the source code for this function:</p>
-<div class="sourceCode" id="cb292"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb301"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">safely</span></span>
 <span><span class="co">#&gt; function (.f, otherwise = NULL, quiet = TRUE) </span></span>
 <span><span class="co">#&gt; {</span></span>
 <span><span class="co">#&gt;     .f &lt;- as_mapper(.f)</span></span>
 <span><span class="co">#&gt;     function(...) capture_error(.f(...), otherwise, quiet)</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x10c28b668&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x1088dd660&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></span>
 <span></span>
 <span><span class="fu">purrr</span><span class="fu">:::</span><span class="va">capture_error</span></span>
@@ -188,7 +188,7 @@
 <span><span class="co">#&gt;         stop("Terminated by user", call. = FALSE)</span></span>
 <span><span class="co">#&gt;     })</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x10c2eef28&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x108940320&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></span></code></pre></div>
 <p>Looking at this code, we can see that <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code>:</p>
 <ul>
