@@ -366,6 +366,39 @@ arrange2 <- function(.df, ..., .na.last = TRUE) {
 }
 ```
 
+**A3.** Annotated version of the function:
+
+```{r}
+arrange2 <- function(.df, ..., .na.last = TRUE) {
+  # capture user-supplied expressions (and corresponding environments) as quosures
+  args <- enquos(...)
+  
+  # create a call object by splicing a list of quosures
+  order_call <- expr(order(!!!args, na.last = !!.na.last))
+
+  # and evaluate the constructed call in the data frame
+  ord <- eval_tidy(order_call, .df)
+  
+  # sanity check
+  stopifnot(length(ord) == nrow(.df))
+  
+  .df[ord, , drop = FALSE]
+}
+```
+
+To see why it doesn't matter whether whether we unquote the `.na.last` argument or not, let's have a look at this smaller example:
+
+```{r}
+x <- TRUE
+eval(expr(c(x = !!x)))
+eval(expr(c(x = x)))
+```
+
+As can be seen:
+
+- without unquoting, `.na.last` is found in the function environment
+- with unquoting, `.na.last` is included in the `order` call object itself
+
 ---
 
 ### Exercises 20.5.4
