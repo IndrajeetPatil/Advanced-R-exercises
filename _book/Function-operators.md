@@ -92,7 +92,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x108f71a18>
+#> <bytecode: 0x1263eac70>
 #> <environment: namespace:purrr>
 ```
 
@@ -116,7 +116,7 @@ safely
 #>     .f <- as_mapper(.f)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x109117a18>
+#> <bytecode: 0x126586c70>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -130,7 +130,7 @@ purrr:::capture_error
 #>         stop("Terminated by user", call. = FALSE)
 #>     })
 #> }
-#> <bytecode: 0x109170978>
+#> <bytecode: 0x1265dfbd0>
 #> <environment: namespace:purrr>
 ```
 
@@ -216,10 +216,10 @@ withr::with_tempfile("logfile", code = {
   
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2022-07-22 18:11:59
-#> Function called at:  2022-07-22 18:12:04
-#> Function called at:  2022-07-22 18:12:09
-#> Function called at:  2022-07-22 18:12:17
+#> Function created at: 2022-07-25 17:18:21
+#> Function called at:  2022-07-25 17:18:26
+#> Function called at:  2022-07-25 17:18:31
+#> Function called at:  2022-07-25 17:18:39
 ```
 
 ---

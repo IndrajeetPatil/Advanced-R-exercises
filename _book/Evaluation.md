@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x131d0bd20>
+#> <environment: 0x13116a5d8>
 #> Parent: <environment: global>
 ```
 
@@ -178,6 +178,64 @@ local3 <- function(expr, envir = new.env()) {
 
 Explain how `local()` works in words. (Hint: you might want to `print(call)` to help understand what `substitute()` is doing, and read the documentation to remind yourself what environment `new.env()` will inherit from.)
 
+**A5.** In order to figure out how this function works, let's add the suggested `print(call)`:
+
+
+```r
+local3 <- function(expr, envir = new.env()) {
+  call <- substitute(eval(quote(expr), envir))
+  print(call)
+  
+  eval(call, envir = parent.frame())
+}
+
+local3({
+  x <- 10
+  y <- 200
+  x + y
+})
+#> eval(quote({
+#>     x <- 10
+#>     y <- 200
+#>     x + y
+#> }), new.env())
+#> [1] 210
+```
+
+As docs for `substitute()` mention:
+
+> Substituting and quoting often cause confusion when the argument is expression(...). The result is a call to the expression constructor function and needs to be evaluated with eval to give the actual expression object.
+
+Thus, to get the actual expression object, quoted expression needs to be evaluated using `eval()`:
+
+
+```r
+is_expression(eval(quote({
+  x <- 10
+  y <- 200
+  x + y
+}), new.env()))
+#> [1] TRUE
+```
+
+Finally, the generated `call` is evaluated in the caller environment. So the final function call looks like the following:
+
+
+```r
+# outer environment
+eval(
+  # inner environment
+  eval(quote({
+    x <- 10
+    y <- 200
+    x + y
+  }), new.env()),
+  envir = parent.frame()
+)
+```
+
+Note here that the bindings for `x` and `y` are found in the inner environment, while bindings for functions `eval()`, `quote`, etc. are found in the outer environment. 
+
 ---
 
 ### Exercises 20.3.6
@@ -192,17 +250,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x1318764c0
+#> env:  0x1311dfef0
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x132152d90
+#> env:  0x131613018
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x1325b8e90
+#> env:  0x1332f8f80
 ```
 
 **A1.** Correctly predicted 😉
@@ -240,7 +298,7 @@ enenv(x)
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x127752c58>
+#> <environment: 0x117e39b58>
 ```
 
 ---
@@ -282,7 +340,7 @@ transform3 <- function(.data, ...) {
 }
 ```
 
-When we use a `for` loop, in each iteration, we are updating the `x` column with the current expression under evaluation. That is, repeatedly modifying the same column works. 
+When we use a `for()` loop, in each iteration, we are updating the `x` column with the current expression under evaluation. That is, repeatedly modifying the same column works. 
 
 
 ```r
@@ -294,7 +352,7 @@ transform2(df, x = x * 2, x = x * 2)
 #> 3 12
 ```
 
-If we use `map` instead, we are trying to evaluate all expressions at the same time; i.e., the same column is being attempted to modify on using multiple expressions.
+If we use `map()` instead, we are trying to evaluate all expressions at the same time; i.e., the same column is being attempted to modify on using multiple expressions.
 
 
 ```r
