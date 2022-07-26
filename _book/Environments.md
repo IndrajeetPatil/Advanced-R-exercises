@@ -40,14 +40,14 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x117ef89c8>
+#> <environment: 0x11f63c1c8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
 
 # should be the same as the `e` memory address
 lobstr::obj_addr(e$loop)
-#> [1] "0x117ef89c8"
+#> [1] "0x11f63c1c8"
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -66,9 +66,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x117742c70" "0x117742c70"
+#> [1] "0x10cf43270" "0x10cf43270"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x11779adb8" "0x11779adb8"
+#> [1] "0x10cf963b8" "0x10cf963b8"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -302,7 +302,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x12749ae30>
+#> <bytecode: 0x11ed59230>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -482,7 +482,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x127730d28>
+#> <bytecode: 0x10c8bcf28>
 #> <environment: namespace:rlang>
 ```
 
@@ -499,8 +499,8 @@ explore_caller_env <- function() {
 
 explore_caller_env()
 #> <environment: R_GlobalEnv>
-#> <environment: 0x117ef6a00>
-#> <environment: 0x117ef6a00>
+#> <environment: 0x11f63a1c8>
+#> <environment: 0x11f63a1c8>
 
 rlang::fn_env(explore_caller_env)
 #> <environment: R_GlobalEnv>

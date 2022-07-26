@@ -414,6 +414,29 @@ threshold_var <- function(df, var, val) {
 }
 ```
 
+**A1.** First, let's compare the two definitions for the same function and make sure that they produce the same output:
+
+```{r}
+threshold_var_old <- function(df, var, val) {
+  var <- as_string(ensym(var))
+  subset2(df, .data[[var]] >= !!val)
+}
+
+threshold_var_new <- threshold_var
+
+df <- data.frame(x = 1:10)
+
+identical(
+  threshold_var(df, x, 8),
+  threshold_var(df, x, 8)
+)
+```
+
+The key difference is in the subsetting operator used:
+
+- The old version uses non-quoting `[[` operator. Thus, `var` argument first needs to be converted to a string.
+- The new version uses quoting `$` operator. Thus, `var` argument is first quoted and then unquoted (using `!!`).
+
 ---
 
 ### Exercises 20.6.3

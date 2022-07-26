@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x13116a5d8>
+#> <environment: 0x133f6ed40>
 #> Parent: <environment: global>
 ```
 
@@ -250,17 +250,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x1311dfef0
+#> env:  0x133ff3520
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x131613018
+#> env:  0x125104810
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x1332f8f80
+#> env:  0x1255e0b00
 ```
 
 **A1.** Correctly predicted 😉
@@ -298,7 +298,7 @@ enenv(x)
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x117e39b58>
+#> <environment: 0x1238f9a50>
 ```
 
 ---
@@ -446,6 +446,45 @@ arrange2 <- function(.df, ..., .na.last = TRUE) {
 }
 ```
 
+**A3.** Annotated version of the function:
+
+
+```r
+arrange2 <- function(.df, ..., .na.last = TRUE) {
+  # capture user-supplied expressions (and corresponding environments) as quosures
+  args <- enquos(...)
+  
+  # create a call object by splicing a list of quosures
+  order_call <- expr(order(!!!args, na.last = !!.na.last))
+
+  # and evaluate the constructed call in the data frame
+  ord <- eval_tidy(order_call, .df)
+  
+  # sanity check
+  stopifnot(length(ord) == nrow(.df))
+  
+  .df[ord, , drop = FALSE]
+}
+```
+
+To see why it doesn't matter whether whether we unquote the `.na.last` argument or not, let's have a look at this smaller example:
+
+
+```r
+x <- TRUE
+eval(expr(c(x = !!x)))
+#>    x 
+#> TRUE
+eval(expr(c(x = x)))
+#>    x 
+#> TRUE
+```
+
+As can be seen:
+
+- without unquoting, `.na.last` is found in the function environment
+- with unquoting, `.na.last` is included in the `order` call object itself
+
 ---
 
 ### Exercises 20.5.4
@@ -461,6 +500,31 @@ threshold_var <- function(df, var, val) {
   subset2(df, `$`(.data, !!var) >= !!val)
 }
 ```
+
+**A1.** First, let's compare the two definitions for the same function and make sure that they produce the same output:
+
+
+```r
+threshold_var_old <- function(df, var, val) {
+  var <- as_string(ensym(var))
+  subset2(df, .data[[var]] >= !!val)
+}
+
+threshold_var_new <- threshold_var
+
+df <- data.frame(x = 1:10)
+
+identical(
+  threshold_var(df, x, 8),
+  threshold_var(df, x, 8)
+)
+#> [1] TRUE
+```
+
+The key difference is in the subsetting operator used:
+
+- The old version uses non-quoting `[[` operator. Thus, `var` argument first needs to be converted to a string.
+- The new version uses quoting `$` operator. Thus, `var` argument is first quoted and then unquoted (using `!!`).
 
 ---
 
