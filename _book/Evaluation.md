@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x133f6ed40>
+#> <environment: 0x10a5181e0>
 #> Parent: <environment: global>
 ```
 
@@ -185,7 +185,7 @@ Explain how `local()` works in words. (Hint: you might want to `print(call)` to 
 local3 <- function(expr, envir = new.env()) {
   call <- substitute(eval(quote(expr), envir))
   print(call)
-  
+
   eval(call, envir = parent.frame())
 }
 
@@ -250,17 +250,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x133ff3520
+#> env:  0x10a595fb0
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x125104810
+#> env:  0x139b1d6a0
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x1255e0b00
+#> env:  0x139ecea60
 ```
 
 **A1.** Correctly predicted 😉
@@ -298,7 +298,7 @@ enenv(x)
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x1238f9a50>
+#> <environment: 0x1387faae8>
 ```
 
 ---
@@ -453,16 +453,16 @@ arrange2 <- function(.df, ..., .na.last = TRUE) {
 arrange2 <- function(.df, ..., .na.last = TRUE) {
   # capture user-supplied expressions (and corresponding environments) as quosures
   args <- enquos(...)
-  
+
   # create a call object by splicing a list of quosures
   order_call <- expr(order(!!!args, na.last = !!.na.last))
 
   # and evaluate the constructed call in the data frame
   ord <- eval_tidy(order_call, .df)
-  
+
   # sanity check
   stopifnot(length(ord) == nrow(.df))
-  
+
   .df[ord, , drop = FALSE]
 }
 ```
@@ -547,6 +547,22 @@ lm3a(mpg ~ disp, mtcars)$call
 #> cannot coerce class ‘"function"’ to a data.frame
 ```
 
+**A1.** This doesn't work because when `lm_call` call is evaluated in `caller_env()`, it finds a binding for `base::data()` function, and not `data` from execution environment.
+
+To make it work, we need to unquote `data` into the expression:
+
+
+```r
+lm3a <- function(formula, data) {
+  formula <- enexpr(formula)
+  lm_call <- expr(lm(!!formula, data = !!data))
+  eval(lm_call, caller_env())
+}
+
+is_call(lm3a(mpg ~ disp, mtcars)$call)
+#> [1] TRUE
+```
+
 ---
 
 **Q2.** When model building, typically the response and data are relatively constant while you rapidly experiment with different predictors. Write a small wrapper that allows you to reduce duplication in the code below.
@@ -558,8 +574,83 @@ lm(mpg ~ I(1 / disp), data = mtcars)
 lm(mpg ~ disp * cyl, data = mtcars)
 ```
 
+**A2.** Here is a small wrapper that allows you to enter only the predictors:
+
+
+```r
+lm_custom <- function(data = mtcars, x, y = mpg) {
+  x <- enexpr(x)
+  y <- enexpr(y)
+  data <- enexpr(data)
+
+  lm_call <- expr(lm(formula = !!y ~ !!x, data = !!data))
+
+  eval(lm_call, caller_env())
+}
+
+identical(
+  lm_custom(x = disp),
+  lm(mpg ~ disp, data = mtcars)
+)
+#> [1] TRUE
+
+identical(
+  lm_custom(x = I(1 / disp)),
+  lm(mpg ~ I(1 / disp), data = mtcars)
+)
+#> [1] TRUE
+
+identical(
+  lm_custom(x = disp * cyl),
+  lm(mpg ~ disp * cyl, data = mtcars)
+)
+#> [1] TRUE
+```
+
+But the function is flexible enough to also allow changing both the data and the dependent variable:
+
+
+```r
+lm_custom(data = iris, x = Sepal.Length, y = Petal.Width)
+#> 
+#> Call:
+#> lm(formula = Petal.Width ~ Sepal.Length, data = iris)
+#> 
+#> Coefficients:
+#>  (Intercept)  Sepal.Length  
+#>      -3.2002        0.7529
+```
+
 ---
 
 **Q3.** Another way to write `resample_lm()` would be to include the resample expression (`data[sample(nrow(data), replace = TRUE), , drop = FALSE]`) in the data argument. Implement that approach. What are the advantages? What are the disadvantages?
+
+**A3.** In this variant of `resample_lm()`, we are providing the resampled data as an argument. 
+
+
+```r
+resample_lm3 <- function(formula,
+                         data,
+                         resample_data = data[sample(nrow(data), replace = TRUE), , drop = FALSE],
+                         env = current_env()) {
+  formula <- enexpr(formula)
+  lm_call <- expr(lm(!!formula, data = resample_data))
+  expr_print(lm_call)
+  eval(lm_call, env)
+}
+
+df <- data.frame(x = 1:10, y = 5 + 3 * (1:10) + round(rnorm(10), 2))
+resample_lm3(y ~ x, data = df)
+#> lm(y ~ x, data = resample_data)
+#> 
+#> Call:
+#> lm(formula = y ~ x, data = resample_data)
+#> 
+#> Coefficients:
+#> (Intercept)            x  
+#>       2.654        3.420
+```
+
+This makes use of R's lazy evaluation of function arguments. That is, `resample_data` argument will be evaluated only when it is needed in the function.
 
 ---

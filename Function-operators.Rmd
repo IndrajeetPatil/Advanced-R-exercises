@@ -140,7 +140,7 @@ Here, the first dot is printed after the 9th download is finished, and the 10th 
 
 ```{r}
 # helper function to write to a file connection
-write_line <- function(filepath, ...) { 
+write_line <- function(filepath, ...) {
   cat(..., "\n", sep = "", file = filepath, append = TRUE)
 }
 
@@ -148,9 +148,9 @@ write_line <- function(filepath, ...) {
 logger <- function(f, filepath) {
   force(f)
   force(filepath)
-  
+
   write_line(filepath, "Function created at: ", as.character(Sys.time()))
-  
+
   function(...) {
     write_line(filepath, "Function called at:  ", as.character(Sys.time()))
     f(...)
@@ -160,16 +160,16 @@ logger <- function(f, filepath) {
 # check that the function works as expected with a tempfile
 withr::with_tempfile("logfile", code = {
   logged_runif <- logger(runif, logfile)
-  
+
   Sys.sleep(sample.int(10, 1))
   logged_runif(1)
-  
+
   Sys.sleep(sample.int(10, 1))
   logged_runif(2)
-  
+
   Sys.sleep(sample.int(10, 1))
   logged_runif(3)
-  
+
   cat(readLines(logfile), sep = "\n")
 })
 ```

@@ -252,7 +252,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x11355fab0>
+#> <bytecode: 0x120dccee0>
 #> <environment: namespace:rlang>
 ```
 
@@ -290,9 +290,15 @@ Conditions also have a `class` attribute, and we can use it to determine which h
 show_condition2 <- function(code) {
   tryCatch(
     condition = function(cnd) {
-      if (inherits(cnd, "error")) return("error")
-      if (inherits(cnd, "warning")) return("warning")
-      if (inherits(cnd, "message")) return("message")
+      if (inherits(cnd, "error")) {
+        return("error")
+      }
+      if (inherits(cnd, "warning")) {
+        return("warning")
+      }
+      if (inherits(cnd, "message")) {
+        return("message")
+      }
     },
     {
       code

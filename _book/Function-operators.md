@@ -92,7 +92,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x130b66e70>
+#> <bytecode: 0x10d571a18>
 #> <environment: namespace:purrr>
 ```
 
@@ -116,7 +116,7 @@ safely
 #>     .f <- as_mapper(.f)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x130d02e70>
+#> <bytecode: 0x10d70da18>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -130,7 +130,7 @@ purrr:::capture_error
 #>         stop("Terminated by user", call. = FALSE)
 #>     })
 #> }
-#> <bytecode: 0x130d5bdd0>
+#> <bytecode: 0x10d766978>
 #> <environment: namespace:purrr>
 ```
 
@@ -184,7 +184,7 @@ Here, the first dot is printed after the 9th download is finished, and the 10th 
 
 ```r
 # helper function to write to a file connection
-write_line <- function(filepath, ...) { 
+write_line <- function(filepath, ...) {
   cat(..., "\n", sep = "", file = filepath, append = TRUE)
 }
 
@@ -192,9 +192,9 @@ write_line <- function(filepath, ...) {
 logger <- function(f, filepath) {
   force(f)
   force(filepath)
-  
+
   write_line(filepath, "Function created at: ", as.character(Sys.time()))
-  
+
   function(...) {
     write_line(filepath, "Function called at:  ", as.character(Sys.time()))
     f(...)
@@ -204,22 +204,22 @@ logger <- function(f, filepath) {
 # check that the function works as expected with a tempfile
 withr::with_tempfile("logfile", code = {
   logged_runif <- logger(runif, logfile)
-  
+
   Sys.sleep(sample.int(10, 1))
   logged_runif(1)
-  
+
   Sys.sleep(sample.int(10, 1))
   logged_runif(2)
-  
+
   Sys.sleep(sample.int(10, 1))
   logged_runif(3)
-  
+
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2022-07-26 11:25:40
-#> Function called at:  2022-07-26 11:25:45
-#> Function called at:  2022-07-26 11:25:50
-#> Function called at:  2022-07-26 11:25:58
+#> Function created at: 2022-07-26 13:19:27
+#> Function called at:  2022-07-26 13:19:32
+#> Function called at:  2022-07-26 13:19:37
+#> Function called at:  2022-07-26 13:19:45
 ```
 
 ---
