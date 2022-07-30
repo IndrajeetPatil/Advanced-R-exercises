@@ -8,17 +8,17 @@ bibliography: [book.bib, packages.bib]
 # url: your book url like https://bookdown.org/yihui/bookdown
 cover-image: cover.png
 description: |
-  My solutions to exercises in Hadley Wickham's *Advanced R* (2nd edition) book.
+  Solutions to exercises in Hadley Wickham's *Advanced R* (2nd edition) book.
 biblio-style: apalike
 csl: chicago-fullnote-bibliography.csl
 ---
 
 # About {-}
 
-My solutions to exercises from Hadley Wickham's _Advanced R_ (2nd edition) [book](https://adv-r.hadley.nz/).
+This book provides solutions to exercises from Hadley Wickham's _Advanced R_ (2nd edition) [book](https://adv-r.hadley.nz/).
 
-Driven by the urge to solve all book exercises independently to test my own understanding, I started building this solution manual. But, as I was consulting the [official solutions manual](https://advanced-r-solutions.rbind.io/index.html) to check my solutions, I realized that some of the solutions were quite different. I thought this was good, because if readers of the official manual find any of the answers unsatisfactory, they would have another resource to consult with. 
+Driven by the urge to solve all book exercises independently to test my own understanding, I started building this solution manual. But, while consulting the [official solutions manual](https://advanced-r-solutions.rbind.io/index.html) to check correctness of my solutions, I realized that many of the solutions were quite different, or were similar but explained in a different manner. Thinking that if readers of the official manual found any of the answers unsatisfactory or unclear, they would have another resource to consult with, I decided to publish this as an online book.
 
-Although I have tried to make sure that all solutions are correct, the blame for any inaccuracies lies solely with me. I'd very much appreciate any suggestions or corrections.
+Although I have tried to make sure that all solutions are correct, the blame for any inaccuracies lies solely with me. I'd very much appreciate [any suggestions or corrections](https://github.com/IndrajeetPatil/Advanced-R-exercises/issues).
 
 <img src="cover.png" width="60%" />

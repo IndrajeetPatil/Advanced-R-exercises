@@ -113,33 +113,33 @@
 <span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span> <span class="op">*</span> <span class="va">z</span></span></code></pre></div>
 <p>We can confirm it by drawing ASTs for them:</p>
 <div class="sourceCode" id="cb426"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fu">h</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fu">h</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─f </span></span>
 <span><span class="co">#&gt; └─█─g </span></span>
 <span><span class="co">#&gt;   └─█─h</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`+` </span></span>
 <span><span class="co">#&gt; ├─█─`+` </span></span>
 <span><span class="co">#&gt; │ ├─1 </span></span>
 <span><span class="co">#&gt; │ └─2 </span></span>
 <span><span class="co">#&gt; └─3</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span> <span class="op">*</span> <span class="va">z</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span> <span class="op">*</span> <span class="va">z</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`*` </span></span>
 <span><span class="co">#&gt; ├─█─`(` </span></span>
 <span><span class="co">#&gt; │ └─█─`+` </span></span>
 <span><span class="co">#&gt; │   ├─x </span></span>
 <span><span class="co">#&gt; │   └─y </span></span>
 <span><span class="co">#&gt; └─z</span></span></code></pre></div>
-<p><strong>Q2.</strong> Draw the following trees by hand and then check your answers with <code><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast()</a></code>.</p>
+<p><strong>Q2.</strong> Draw the following trees by hand and then check your answers with <code><a href="https://lobstr.r-lib.org/reference/ast.html">ast()</a></code>.</p>
 <div class="sourceCode" id="cb427"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fu">h</span><span class="op">(</span><span class="fu">i</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="fl">1</span>, <span class="fu">g</span><span class="op">(</span><span class="fl">2</span>, <span class="fu">h</span><span class="op">(</span><span class="fl">3</span>, <span class="fu">i</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu">h</span><span class="op">(</span><span class="fl">3</span>, <span class="fu">i</span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><strong>A2.</strong> Successfully drawn by hand. Checking using <code><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast()</a></code>:</p>
+<p><strong>A2.</strong> Successfully drawn by hand. Checking using <code><a href="https://lobstr.r-lib.org/reference/ast.html">ast()</a></code>:</p>
 <div class="sourceCode" id="cb428"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fu">h</span><span class="op">(</span><span class="fu">i</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fu">h</span><span class="op">(</span><span class="fu">i</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─f </span></span>
 <span><span class="co">#&gt; └─█─g </span></span>
 <span><span class="co">#&gt;   └─█─h </span></span>
@@ -148,7 +148,7 @@
 <span><span class="co">#&gt;       ├─2 </span></span>
 <span><span class="co">#&gt;       └─3</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="fl">1</span>, <span class="fu">g</span><span class="op">(</span><span class="fl">2</span>, <span class="fu">h</span><span class="op">(</span><span class="fl">3</span>, <span class="fu">i</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="fl">1</span>, <span class="fu">g</span><span class="op">(</span><span class="fl">2</span>, <span class="fu">h</span><span class="op">(</span><span class="fl">3</span>, <span class="fu">i</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─f </span></span>
 <span><span class="co">#&gt; ├─1 </span></span>
 <span><span class="co">#&gt; └─█─g </span></span>
@@ -157,7 +157,7 @@
 <span><span class="co">#&gt;     ├─3 </span></span>
 <span><span class="co">#&gt;     └─█─i</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu">h</span><span class="op">(</span><span class="fl">3</span>, <span class="fu">i</span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu">h</span><span class="op">(</span><span class="fl">3</span>, <span class="fu">i</span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─f </span></span>
 <span><span class="co">#&gt; ├─█─g </span></span>
 <span><span class="co">#&gt; │ ├─1 </span></span>
@@ -169,15 +169,15 @@
 <span><span class="co">#&gt;     └─5</span></span></code></pre></div>
 <p><strong>Q3.</strong> What’s happening with the ASTs below? (Hint: carefully read <code><a href="https://rdrr.io/r/base/Arithmetic.html">?"^"</a></code>.)</p>
 <div class="sourceCode" id="cb429"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="va">`x`</span> <span class="op">+</span> <span class="va">`y`</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="va">`x`</span> <span class="op">+</span> <span class="va">`y`</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`+` </span></span>
 <span><span class="co">#&gt; ├─x </span></span>
 <span><span class="co">#&gt; └─y</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="va">x</span><span class="op">**</span><span class="va">y</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="va">x</span><span class="op">**</span><span class="va">y</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`^` </span></span>
 <span><span class="co">#&gt; ├─x </span></span>
 <span><span class="co">#&gt; └─y</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-&gt;</span> <span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-&gt;</span> <span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`&lt;-` </span></span>
 <span><span class="co">#&gt; ├─x </span></span>
 <span><span class="co">#&gt; └─1</span></span></code></pre></div>
@@ -199,7 +199,7 @@
 <span><span class="co">#&gt; expression(x &lt;- 1)</span></span></code></pre></div>
 <p><strong>Q4.</strong> What is special about the AST below?</p>
 <div class="sourceCode" id="cb433"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span> <span class="op">=</span> <span class="fl">1</span>, <span class="va">y</span> <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span> <span class="op">=</span> <span class="fl">1</span>, <span class="va">y</span> <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`function` </span></span>
 <span><span class="co">#&gt; ├─█─x = 1 </span></span>
 <span><span class="co">#&gt; │ └─y = 2 </span></span>
@@ -213,7 +213,7 @@
 <p><strong>Q5.</strong> What does the call tree of an <code>if</code> statement with multiple <code>else if</code> conditions look like? Why?</p>
 <p><strong>A5.</strong> There is nothing special about this tree. It just shows the nested loop structure inherent to code with <code>if</code> and multiple <code>else if</code> statements.</p>
 <div class="sourceCode" id="cb434"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fl">1</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fl">2</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fl">3</span> <span class="kw">else</span> <span class="fl">4</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fl">1</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fl">2</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fl">3</span> <span class="kw">else</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`if` </span></span>
 <span><span class="co">#&gt; ├─FALSE </span></span>
 <span><span class="co">#&gt; ├─1 </span></span>
@@ -237,7 +237,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">x_complex</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "language"</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">1i</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">1i</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`+` </span></span>
 <span><span class="co">#&gt; ├─1 </span></span>
 <span><span class="co">#&gt; └─1i</span></span></code></pre></div>
@@ -247,7 +247,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">x_raw</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "language"</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/raw.html">raw</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/raw.html">raw</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─raw </span></span>
 <span><span class="co">#&gt; └─2</span></span></code></pre></div>
 <p>Contrast this with other atomic vectors:</p>
@@ -256,7 +256,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">x_int</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "integer"</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fl">2L</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fl">2L</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 2L</span></span></code></pre></div>
 <p>For the same reason, you can’t you create an expression that contains an atomic vector of length greater than one since that itself is a function call that uses <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> function:</p>
 <div class="sourceCode" id="cb438"><pre class="downlit sourceCode r">
@@ -264,7 +264,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">x_vec</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "language"</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─c </span></span>
 <span><span class="co">#&gt; ├─1 </span></span>
 <span><span class="co">#&gt; └─2</span></span></code></pre></div>
@@ -350,7 +350,7 @@
 <code class="sourceCode R"><span><span class="va">mean</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; UseMethod("mean")</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x125313a38&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x132ecfe38&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>As mentioned in the respective <a href="If%20the%20function%20uses%20...%20it%E2%80%99s%20not%20possible%20to%20standardise%20all%20arguments.">section</a>:</p>
 <blockquote>
@@ -387,7 +387,7 @@
 <span><span class="co">#&gt; if (x &gt; 1) "a" else "b"</span></span></code></pre></div>
 <p>This construction follows from the prefix form of this expression, revealed by its AST:</p>
 <div class="sourceCode" id="cb452"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="kw">if</span> <span class="op">(</span><span class="va">x</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="st">"a"</span> <span class="kw">else</span> <span class="st">"b"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="kw">if</span> <span class="op">(</span><span class="va">x</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="st">"a"</span> <span class="kw">else</span> <span class="st">"b"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`if` </span></span>
 <span><span class="co">#&gt; ├─█─`&gt;` </span></span>
 <span><span class="co">#&gt; │ ├─x </span></span>
@@ -406,11 +406,11 @@
 <p>Compare and contrast the two uses by referencing the AST.</p>
 <p><strong>A1.</strong> Let’s first have a look at the AST:</p>
 <div class="sourceCode" id="cb454"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─f </span></span>
 <span><span class="co">#&gt; └─█─`(` </span></span>
 <span><span class="co">#&gt;   └─1</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu">`(`</span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fu">`(`</span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`(` </span></span>
 <span><span class="co">#&gt; └─█─`+` </span></span>
 <span><span class="co">#&gt;   ├─1 </span></span>
@@ -432,7 +432,7 @@
 <code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p>We can also have a look at its AST:</p>
 <div class="sourceCode" id="cb456"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="op">{</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`{` </span></span>
@@ -447,7 +447,7 @@
 <span><span class="co">#&gt; [1] -4</span></span></code></pre></div>
 <p>The same can also be seen by its AST:</p>
 <div class="sourceCode" id="cb458"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`-` </span></span>
 <span><span class="co">#&gt; └─█─`^` </span></span>
 <span><span class="co">#&gt;   ├─2 </span></span>
@@ -461,7 +461,7 @@
 <p>This is because the <code>!</code> operator has higher precedence than the unary <code>+</code> operator. Thus, <code>!1</code> evaluates to <code>FALSE</code>, which is added to <code>1 + FALSE</code>, which evaluates to <code>1</code>, and then logically negated to <code>!1</code>, or <code>FALSE</code>.</p>
 <p>This can be easily seen by its AST:</p>
 <div class="sourceCode" id="cb460"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="op">!</span><span class="fl">1</span> <span class="op">+</span> <span class="op">!</span><span class="fl">1</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="op">!</span><span class="fl">1</span> <span class="op">+</span> <span class="op">!</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`!` </span></span>
 <span><span class="co">#&gt; └─█─`+` </span></span>
 <span><span class="co">#&gt;   ├─1 </span></span>
@@ -487,7 +487,7 @@
 <span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
 <p>This is easy to surmise from its AST:</p>
 <div class="sourceCode" id="cb464"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="va">x2</span> <span class="op">&lt;-</span> <span class="va">x3</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="va">x2</span> <span class="op">&lt;-</span> <span class="va">x3</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`&lt;-` </span></span>
 <span><span class="co">#&gt; ├─x1 </span></span>
 <span><span class="co">#&gt; └─█─`&lt;-` </span></span>
@@ -498,14 +498,14 @@
 <p><strong>Q6.</strong> Compare the ASTs of <code>x + y %+% z</code> and <code>x ^ y %+% z</code>. What have you learned about the precedence of custom infix functions?</p>
 <p><strong>A6.</strong> Looking at the ASTs for these expressions,</p>
 <div class="sourceCode" id="cb465"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span> <span class="op"><a href="https://ggplot2.tidyverse.org/reference/gg-add.html">%+%</a></span> <span class="va">z</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span> <span class="op"><a href="https://ggplot2.tidyverse.org/reference/gg-add.html">%+%</a></span> <span class="va">z</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`+` </span></span>
 <span><span class="co">#&gt; ├─x </span></span>
 <span><span class="co">#&gt; └─█─`%+%` </span></span>
 <span><span class="co">#&gt;   ├─y </span></span>
 <span><span class="co">#&gt;   └─z</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="va">y</span> <span class="op"><a href="https://ggplot2.tidyverse.org/reference/gg-add.html">%+%</a></span> <span class="va">z</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="va">y</span> <span class="op"><a href="https://ggplot2.tidyverse.org/reference/gg-add.html">%+%</a></span> <span class="va">z</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─`%+%` </span></span>
 <span><span class="co">#&gt; ├─█─`^` </span></span>
 <span><span class="co">#&gt; │ ├─x </span></span>

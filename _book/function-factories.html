@@ -96,7 +96,7 @@
 <code class="sourceCode R"><span><span class="va">force</span></span>
 <span><span class="co">#&gt; function (x) </span></span>
 <span><span class="co">#&gt; x</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x14894a708&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x14314a708&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>Why is it better to <code>force(x)</code> instead of just <code>x</code>?</p>
 <p><strong>A1.</strong> Because of lazy evaluation, argument to a function won’t be evaluated until its value is needed, but sometimes we may want to have eager evaluation.</p>
@@ -115,8 +115,8 @@
 <span><span class="va">f</span></span>
 <span><span class="co">#&gt; function (v) </span></span>
 <span><span class="co">#&gt; .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x11a4339a8&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x11a433078&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x114593c10&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x1145932e0&gt;</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901</span></span>
 <span><span class="co">#&gt;  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142</span></span>
@@ -232,15 +232,15 @@
 <span><span class="co">#&gt;     i &lt;- i + 1</span></span>
 <span><span class="co">#&gt;     i</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x129c5fa20&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x123ca33b0&gt;</span></span>
 <span></span>
 <span><span class="fu">new_counter3</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function() {</span></span>
 <span><span class="co">#&gt;     i &lt;- i + 1</span></span>
 <span><span class="co">#&gt;     i</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x12959f538&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x1299ec958&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;bytecode: 0x1235dfa30&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x123a306d8&gt;</span></span></code></pre></div>
 <hr>
 </div>
 <div id="exercises-10.3.4" class="section level3" number="10.0.2">
@@ -280,7 +280,7 @@
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt;     structure(fun, class = "labeller")</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x128b85958&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x1343c1668&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:ggplot2&gt;</span></span>
 <span></span>
 <span><span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/comma.html">number_format</a></span></span>
@@ -298,7 +298,7 @@
 <span><span class="co">#&gt;             scale_cut = scale_cut, trim = trim, ...)</span></span>
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x118994880&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x1243a1468&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:scales&gt;</span></span></code></pre></div>
 <p>Both of these functions returns formatting functions used to style the facets labels and other labels to have the desired format.</p>
 <p>For example, using plotmath expression in the facet label:</p>
@@ -348,7 +348,7 @@
 <span><span class="co">#&gt; function() {</span></span>
 <span><span class="co">#&gt;     fitted + sample(resid)</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x119d8c518&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x113ef0d78&gt;</span></span></code></pre></div>
 <p>Contrast this with the first function we saw in the chapter which <em>did</em> have a lazy binding:</p>
 <div class="sourceCode" id="cb297"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">power1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="op">{</span></span>
@@ -365,7 +365,7 @@
 <span><span class="co">#&gt; function(x) {</span></span>
 <span><span class="co">#&gt;     x^exp</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x11a124cc0&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x114289158&gt;</span></span></code></pre></div>
 <hr>
 <p><strong>Q2.</strong> Why might you formulate the Box-Cox transformation like this?</p>
 <div class="sourceCode" id="cb298"><pre class="downlit sourceCode r">
@@ -391,7 +391,7 @@
 <div class="sourceCode" id="cb300"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">boxcox2</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function(x) (x^lambda - 1) / lambda</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x129903830&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x123940a50&gt;</span></span>
 <span></span>
 <span><span class="fu">boxcox3</span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function(lambda) {</span></span>
@@ -401,7 +401,7 @@
 <span><span class="co">#&gt;       (x^lambda - 1) / lambda</span></span>
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x12975b7c0&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x123798a48&gt;</span></span></code></pre></div>
 <p>As can be seen, in <code>boxcox2()</code>, we can vary <code>x</code> for the same value of <code>lambda</code>, while in <code>boxcox3()</code>, we can vary <code>lambda</code> for the same vector. This can be handy while exploring different transformations across inputs.</p>
 <hr>
 <p><strong>Q3.</strong> Why don’t you need to worry that <code>boot_permute()</code> stores a copy of the data inside the function that it generates?</p>
@@ -422,12 +422,12 @@
 <span><span class="co">#&gt;     col &lt;- df[[var]]</span></span>
 <span><span class="co">#&gt;     col[sample(n, replace = TRUE)]</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x1188a4a68&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x1243206b0&gt;</span></span></code></pre></div>
 <p>This is why we don’t need to worry about a copy being made because the <code>df</code> in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:</p>
 <div class="sourceCode" id="cb302"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">boot_permute_env</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/fn_env.html">fn_env</a></span><span class="op">(</span><span class="fu">boot_permute</span><span class="op">(</span><span class="va">mtcars</span>, <span class="st">"mpg"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_print.html">env_print</a></span><span class="op">(</span><span class="va">boot_permute_env</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x118cdbdc8&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x1247a74d0&gt;</span></span>
 <span><span class="co">#&gt; Parent: &lt;environment: global&gt;</span></span>
 <span><span class="co">#&gt; Bindings:</span></span>
 <span><span class="co">#&gt; • n: &lt;int&gt;</span></span>
@@ -435,8 +435,8 @@
 <span><span class="co">#&gt; • var: &lt;chr&gt;</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span></span>
-<span>  <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">boot_permute_env</span><span class="op">$</span><span class="va">df</span><span class="op">)</span>,</span>
-<span>  <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
+<span>  <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">boot_permute_env</span><span class="op">$</span><span class="va">df</span><span class="op">)</span>,</span>
+<span>  <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>We can also check that the values of these bindings are the same as what we entered into the function factory:</p>
@@ -476,8 +476,8 @@
 <span><span class="co">#&gt; # A tibble: 2 × 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 LL1         12.96µs   14.2µs    67922.    12.8KB     34.0</span></span>
-<span><span class="co">#&gt; 2 LL2          7.01µs    7.5µs   128477.        0B     25.7</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 LL1         12.91µs  14.23µs    67818.    12.8KB     33.9</span></span>
+<span><span class="co">#&gt; 2 LL2          6.97µs   7.42µs   129258.        0B     25.9</span></span></code></pre></div>
 <p>As can be seen, the second version is much faster than the first version.</p>
 <p>We can also vary the length of the vector and confirm that across a wide range of vector lengths, this performance advantage is observed.</p>
 <div class="sourceCode" id="cb305"><pre class="downlit sourceCode r">
@@ -498,16 +498,16 @@
 <span><span class="co">#&gt; # A tibble: 10 × 5</span></span>
 <span><span class="co">#&gt;    length expression      min   median `itr/sec`</span></span>
 <span><span class="co">#&gt;     &lt;dbl&gt; &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1     10 LL1         20.79µs  21.77µs    45676.</span></span>
-<span><span class="co">#&gt;  2     10 LL2          8.57µs    9.1µs   109240.</span></span>
-<span><span class="co">#&gt;  3     20 LL1          22.8µs  23.82µs    41502.</span></span>
-<span><span class="co">#&gt;  4     20 LL2          8.36µs    8.9µs   111406.</span></span>
-<span><span class="co">#&gt;  5     50 LL1         26.77µs     28µs    35304.</span></span>
-<span><span class="co">#&gt;  6     50 LL2          8.24µs   8.73µs   112762.</span></span>
-<span><span class="co">#&gt;  7    100 LL1         37.43µs  39.16µs    25432.</span></span>
-<span><span class="co">#&gt;  8    100 LL2           9.1µs   9.59µs   102795.</span></span>
-<span><span class="co">#&gt;  9   1000 LL1         518.2µs 537.06µs     1857.</span></span>
-<span><span class="co">#&gt; 10   1000 LL2         29.93µs  31.49µs    31488.</span></span>
+<span><span class="co">#&gt;  1     10 LL1          20.5µs  21.69µs    45702.</span></span>
+<span><span class="co">#&gt;  2     10 LL2          8.45µs   9.06µs   109343.</span></span>
+<span><span class="co">#&gt;  3     20 LL1          22.3µs  23.41µs    42204.</span></span>
+<span><span class="co">#&gt;  4     20 LL2           8.2µs   8.77µs   112588.</span></span>
+<span><span class="co">#&gt;  5     50 LL1         26.36µs  27.68µs    35772.</span></span>
+<span><span class="co">#&gt;  6     50 LL2          8.08µs   8.73µs   112644.</span></span>
+<span><span class="co">#&gt;  7    100 LL1          36.7µs  38.79µs    25627.</span></span>
+<span><span class="co">#&gt;  8    100 LL2          8.94µs   9.51µs   103761.</span></span>
+<span><span class="co">#&gt;  9   1000 LL1        508.11µs 529.43µs     1882.</span></span>
+<span><span class="co">#&gt; 10   1000 LL2         29.48µs  31.82µs    31167.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
 <span>  <span class="va">df_bench</span>,</span>

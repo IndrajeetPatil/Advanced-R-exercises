@@ -214,7 +214,7 @@
 <span><span class="co">#&gt; {</span></span>
 <span><span class="co">#&gt;     enexpr(expr)</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x1163e0898&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x1120dc898&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:rlang&gt;</span></span></code></pre></div>
 <p>For example:</p>
 <div class="sourceCode" id="cb493"><pre class="downlit sourceCode r">
@@ -509,14 +509,14 @@ the expression slot of the promise replaces the symbol.</p>
 <span><span class="co">#&gt; `new[[2]]` is an integer vector (1, 2, 3, 4, 5, ...)</span></span></code></pre></div>
 <p>The same can also be noticed in ASTs for these expressions:</p>
 <div class="sourceCode" id="cb515"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─expr </span></span>
 <span><span class="co">#&gt; └─█─mean </span></span>
 <span><span class="co">#&gt;   └─█─`:` </span></span>
 <span><span class="co">#&gt;     ├─1 </span></span>
 <span><span class="co">#&gt;     └─10</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lobstr/man/ast.html">ast</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; █─expr </span></span>
 <span><span class="co">#&gt; └─█─mean </span></span>
 <span><span class="co">#&gt;   └─&lt;inline integer&gt;</span></span></code></pre></div>

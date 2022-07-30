@@ -108,7 +108,7 @@
 <span><span class="co">#&gt; # A tibble: 1 × 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 f()           102µs    165µs     5726.    4.65MB     81.3</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 f()           101µs    154µs     6148.    4.65MB     87.3</span></span></code></pre></div>
 <p>As mentioned in the docs, setting <code>torture = TRUE</code></p>
 <blockquote>
 <p>Triggers garbage collection after every torture memory allocation call.</p>
@@ -132,7 +132,7 @@
 <span><span class="co">#&gt;     list &lt;- .Primitive("c")(list, names)</span></span>
 <span><span class="co">#&gt;     .Internal(remove(list, envir, inherits))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x122e13878&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x14a6eb478&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>I still couldn’t figure out why. I would recommend checking out the <a href="https://advanced-r-solutions.rbind.io/measuring-performance.html#profiling">official answer</a>.</p>
 </div>
@@ -201,15 +201,15 @@
 <span><span class="co">#&gt; # A tibble: 2 × 2</span></span>
 <span><span class="co">#&gt;   expression     mean</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt;</span></span>
-<span><span class="co">#&gt; 1 sqrt(x)     425.1ns</span></span>
-<span><span class="co">#&gt; 2 x^0.5         1.3µs</span></span>
+<span><span class="co">#&gt; 1 sqrt(x)    423.69ns</span></span>
+<span><span class="co">#&gt; 2 x^0.5        1.27µs</span></span>
 <span></span>
 <span><span class="va">t_systime_df</span></span>
 <span><span class="co">#&gt; # A tibble: 2 × 3</span></span>
 <span><span class="co">#&gt;   expression systime_with_gc_us systime_with_nogc_us</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt;              &lt;dbl&gt;                &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 sqrt(x)                 0.393                0.389</span></span>
-<span><span class="co">#&gt; 2 x^0.5                   1.23                 1.23</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 sqrt(x)                 0.388                0.380</span></span>
+<span><span class="co">#&gt; 2 x^0.5                   1.22                 1.22</span></span></code></pre></div>
 <p>The comparison reveals that these two approaches yield quite similar results.</p>
 <p><strong>Q2.</strong> Here are two other ways to compute the square root of a vector. Which do you think will be fastest? Which will be slowest? Use microbenchmarking to test your answers.</p>
 <div class="sourceCode" id="cb575"><pre class="downlit sourceCode r">
@@ -231,13 +231,13 @@
 <span><span class="co">#&gt; # A tibble: 4 × 6</span></span>
 <span><span class="co">#&gt;   expression         min   median `itr/sec` mem_alloc</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt;    &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span><span class="co">#&gt; 1 sqrt(x)         1.07µs   1.23µs   715075.    7.86KB</span></span>
-<span><span class="co">#&gt; 2 exp(log(x)/2)   6.19µs   7.17µs   141066.    7.86KB</span></span>
-<span><span class="co">#&gt; 3 x^0.5           9.31µs   9.55µs   100254.    7.86KB</span></span>
-<span><span class="co">#&gt; 4 x^(1/2)         9.31µs    9.9µs    99310.    7.86KB</span></span>
+<span><span class="co">#&gt; 1 sqrt(x)         1.07µs   1.31µs   701853.    7.86KB</span></span>
+<span><span class="co">#&gt; 2 exp(log(x)/2)    6.4µs   7.38µs   138168.    7.86KB</span></span>
+<span><span class="co">#&gt; 3 x^0.5           9.27µs   9.55µs    99778.    7.86KB</span></span>
+<span><span class="co">#&gt; 4 x^(1/2)         9.27µs  10.25µs    99224.    7.86KB</span></span>
 <span><span class="co">#&gt;   `gc/sec`</span></span>
 <span><span class="co">#&gt;      &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1     716.</span></span>
+<span><span class="co">#&gt; 1     703.</span></span>
 <span><span class="co">#&gt; 2       0 </span></span>
 <span><span class="co">#&gt; 3       0 </span></span>
 <span><span class="co">#&gt; 4       0</span></span></code></pre></div>

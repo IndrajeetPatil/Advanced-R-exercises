@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x136273438>
+#> <bytecode: 0x12c2d1638>
 #> <environment: namespace:base>
 ```
 
@@ -299,7 +299,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x136273438>
+#> <bytecode: 0x12c2d1638>
 #> <environment: namespace:base>
 
 # other package function
@@ -309,7 +309,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x117683ea8>
+#> <bytecode: 0x12a0cb2a8>
 #> <environment: namespace:purrr>
 ```
 
@@ -493,7 +493,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x116a6bb10" "0x116a6bb10"
+#> [1] "0x11fb41510" "0x11fb41510"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -580,7 +580,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-07-30 17:42:01 CEST"
+#> [1] "2022-07-30 17:59:52 CEST"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -800,7 +800,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x1207cde18>
+#> <bytecode: 0x12ab80c50>
 #> <environment: namespace:withr>
 ```
 
@@ -882,7 +882,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x120c5eac8>
+#> <bytecode: 0x12a5a9d00>
 #> <environment: namespace:utils>
 ```
 

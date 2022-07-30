@@ -118,7 +118,7 @@
 <span>    <span class="fu">foo</span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x11230e7f0&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x11b539ff0&gt;</span></span>
 <span><span class="co">#&gt; Parent: &lt;environment: global&gt;</span></span></code></pre></div>
 <p>To specify a custom environment, the <code><a href="https://rdrr.io/r/base/sys.source.html">sys.source()</a></code> function can be used, which provides an <code>envir</code> parameter.</p>
 <hr>
@@ -271,17 +271,17 @@
 <span><span class="va">q1</span></span>
 <span><span class="co">#&gt; &lt;quosure&gt;</span></span>
 <span><span class="co">#&gt; expr: ^x</span></span>
-<span><span class="co">#&gt; env:  0x1123ab858</span></span>
+<span><span class="co">#&gt; env:  0x11b5d7058</span></span>
 <span><span class="va">q2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="op">!</span><span class="op">!</span><span class="va">q1</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">q2</span></span>
 <span><span class="co">#&gt; &lt;quosure&gt;</span></span>
 <span><span class="co">#&gt; expr: ^x + (^x)</span></span>
-<span><span class="co">#&gt; env:  0x112c99440</span></span>
+<span><span class="co">#&gt; env:  0x11be9d640</span></span>
 <span><span class="va">q3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="op">!</span><span class="op">!</span><span class="va">q2</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">q3</span></span>
 <span><span class="co">#&gt; &lt;quosure&gt;</span></span>
 <span><span class="co">#&gt; expr: ^x + (^x + (^x))</span></span>
-<span><span class="co">#&gt; env:  0x11317d720</span></span></code></pre></div>
+<span><span class="co">#&gt; env:  0x11c381b20</span></span></code></pre></div>
 <p><strong>A1.</strong> Correctly predicted 😉</p>
 <div class="sourceCode" id="cb542"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">q1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
@@ -309,7 +309,7 @@
 <span></span>
 <span><span class="va">foo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">enenv</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="fu">foo</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x1274545f8&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x11ac297f8&gt;</span></span></code></pre></div>
 <hr>
 </div>
 <div id="exercises-20.4.6" class="section level3" number="20.0.3">
