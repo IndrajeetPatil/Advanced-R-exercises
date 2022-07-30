@@ -247,10 +247,10 @@ show_condition2({
 ```{r}
 abort_missing_package <- function(pkg) {
   msg <- glue::glue("Problem loading `{pkg}` package, which is missing and must be installed.")
-  
+
   abort("error_missing_package",
-        message = msg,
-        pkg = pkg
+    message = msg,
+    pkg = pkg
   )
 }
 
@@ -271,6 +271,33 @@ For a reference, also see the source code for following functions:
 - `insight::check_if_installed()`
 
 **Q2.** Inside a package you often need to stop with an error when something is not right. Other packages that depend on your package might be tempted to check these errors in their unit tests. How could you help these packages to avoid relying on the error message which is part of the user interface rather than the API and might change without notice?
+
+**A2.** As an example, let's say that another package developer wanted to use the `check_if_pkg_installed()` function that we just wrote.
+
+So the developer using it in their own package can write a unit test like this:
+
+```{r}
+expect_error(
+  check_if_pkg_installed("xyz123"),
+  "Problem loading `xyz123` package, which is missing and must be installed."
+)
+```
+
+To dissuade developers from having to rely on error messages to check for errors, we can instead provide a custom condition, which can be used for unit testing instead:
+
+```{r}
+e <- catch_cnd(check_if_pkg_installed("xyz123"))
+
+inherits(e, "error_missing_package")
+```
+
+So that the unit test could be:
+
+```{r}
+expect_s3_class(e, "error_missing_package")
+```
+
+This test wouldn't fail even if we decided to change the exact message.
 
 ### Exercises 8.6.6
 
