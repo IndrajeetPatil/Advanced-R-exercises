@@ -86,24 +86,24 @@
 <h3>
 <span class="header-section-number">15.0.1</span> Exercises 15.2.1<a class="anchor" aria-label="anchor" href="#exercises-15.2.1"><i class="fas fa-link"></i></a>
 </h3>
-<p><strong>Q1.</strong> <code><a href="https://lubridate.tidyverse.org/reference/period.html">lubridate::period()</a></code> returns an S4 class. What slots does it have? What class is each slot? What accessors does it provide?</p>
+<p><strong>Q1.</strong> <code><a href="https://rdrr.io/pkg/lubridate/man/period.html">lubridate::period()</a></code> returns an S4 class. What slots does it have? What class is each slot? What accessors does it provide?</p>
 <p><strong>A1.</strong> Let’s first create an instance of <code>Period</code> class:</p>
-<div class="sourceCode" id="cb403"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb408"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org">lubridate</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'lubridate'</span></span>
 <span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     date, intersect, setdiff, union</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/period.html">period</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">43</span>, <span class="fl">6</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hour"</span>, <span class="st">"second"</span>, <span class="st">"minute"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/period.html">period</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">43</span>, <span class="fl">6</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hour"</span>, <span class="st">"second"</span>, <span class="st">"minute"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">x</span></span>
 <span><span class="co">#&gt; [1] "2H 6M 43S"</span></span></code></pre></div>
 <p>It has the following slots:</p>
-<div class="sourceCode" id="cb404"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb409"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/methods/slot.html">slotNames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] ".Data"  "year"   "month"  "day"    "hour"   "minute"</span></span></code></pre></div>
 <p>Additionally, the base type of each slot (<code>numeric</code>) can be seen in <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> output:</p>
-<div class="sourceCode" id="cb405"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb410"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Formal class 'Period' [package "lubridate"] with 6 slots</span></span>
 <span><span class="co">#&gt;   ..@ .Data : num 43</span></span>
@@ -113,22 +113,22 @@
 <span><span class="co">#&gt;   ..@ hour  : num 2</span></span>
 <span><span class="co">#&gt;   ..@ minute: num 6</span></span></code></pre></div>
 <p>The <a href="https://lubridate.tidyverse.org">lubridate</a> package provides accessors to access all of these slots:</p>
-<div class="sourceCode" id="cb406"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb411"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
-<span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/month.html">month</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
-<span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html">day</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/day.html">day</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
-<span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/hour.html">hour</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/hour.html">hour</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 2</span></span>
-<span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/minute.html">minute</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/minute.html">minute</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 6</span></span>
-<span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/second.html">second</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/second.html">second</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 43</span></span></code></pre></div>
 <p><strong>Q2.</strong> What other ways can you find help for a method? Read <code><a href="https://rdrr.io/r/utils/Question.html">?"?"</a></code> and summarise the details.</p>
 <p><strong>A2.</strong> The <code>"?"</code> operator allows access to this documentation in three ways. To demonstrate different ways to access documentation, let’s define a new <code>S4</code> class.</p>
-<div class="sourceCode" id="cb407"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb412"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pow</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">exp</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">exp</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/methods/setGeneric.html">setGeneric</a></span><span class="op">(</span><span class="st">"pow"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "pow"</span></span>
@@ -137,12 +137,12 @@
 <ul>
 <li>The general documentation for a generic can be found with <code>?topic</code>:</li>
 </ul>
-<div class="sourceCode" id="cb408"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb413"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">?</span><span class="va">pow</span></span></code></pre></div>
 <ul>
 <li>The expression <code>type?topic</code> will look for the overall documentation methods for the function <code>f</code>.</li>
 </ul>
-<div class="sourceCode" id="cb409"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb414"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">?</span><span class="va">pow</span> <span class="co"># produces the function documentation</span></span>
 <span></span>
 <span><span class="va">methods</span><span class="op">?</span><span class="va">pow</span> <span class="co"># looks for the overall methods documentation</span></span></code></pre></div>
@@ -211,7 +211,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-07-26.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-07-30.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

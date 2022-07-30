@@ -2,6 +2,14 @@
 
 
 
+Attaching the needed libraries:
+
+
+```r
+library(rlang, warn.conflicts = FALSE)
+library(testthat, warn.conflicts = FALSE)
+```
+
 ### Exercises 8.2.4
 
 **Q1.** Write a wrapper around `file.remove()` that throws an error if the file to be deleted does not exist.
@@ -116,11 +124,6 @@ catch_cnd(abort("An error"))
 
 ```r
 library(rlang)
-#> 
-#> Attaching package: 'rlang'
-#> The following object is masked from 'package:magrittr':
-#> 
-#>     set_names
 
 stopInfo <- catch_cnd(stop("An error"))
 abortInfo <- catch_cnd(abort("An error"))
@@ -252,7 +255,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x120dccee0>
+#> <bytecode: 0x106daded0>
 #> <environment: namespace:rlang>
 ```
 
@@ -330,11 +333,75 @@ show_condition2({
 
 **Q1.** Inside a package, it's occasionally useful to check that a package is installed before using it. Write a function that checks if a package is installed (with `requireNamespace("pkg", quietly = FALSE))` and if not, throws a custom condition that includes the package name in the metadata.
 
+**A1.** Here is the desired function:
+
+
+```r
+abort_missing_package <- function(pkg) {
+  msg <- glue::glue("Problem loading `{pkg}` package, which is missing and must be installed.")
+
+  abort("error_missing_package",
+    message = msg,
+    pkg = pkg
+  )
+}
+
+check_if_pkg_installed <- function(pkg) {
+  tryCatch(
+    requireNamespace(pkg, quietly = FALSE),
+    error_missing_package = abort_missing_package(pkg)
+  )
+}
+
+check_if_pkg_installed("xyz123")
+#> Error in `abort_missing_package()`:
+#> ! Problem loading `xyz123` package, which is missing and must be installed.
+check_if_pkg_installed("dplyr")
+#> Error in `abort_missing_package()`:
+#> ! Problem loading `dplyr` package, which is missing and must be installed.
+```
+
+For a reference, also see the source code for following functions:
+
+- `rlang::is_installed()`
+- `insight::check_if_installed()`
+
 **Q2.** Inside a package you often need to stop with an error when something is not right. Other packages that depend on your package might be tempted to check these errors in their unit tests. How could you help these packages to avoid relying on the error message which is part of the user interface rather than the API and might change without notice?
+
+**A2.** As an example, let's say that another package developer wanted to use the `check_if_pkg_installed()` function that we just wrote.
+
+So the developer using it in their own package can write a unit test like this:
+
+
+```r
+expect_error(
+  check_if_pkg_installed("xyz123"),
+  "Problem loading `xyz123` package, which is missing and must be installed."
+)
+```
+
+To dissuade developers from having to rely on error messages to check for errors, we can instead provide a custom condition, which can be used for unit testing instead:
+
+
+```r
+e <- catch_cnd(check_if_pkg_installed("xyz123"))
+
+inherits(e, "error_missing_package")
+#> [1] TRUE
+```
+
+So that the unit test could be:
+
+
+```r
+expect_s3_class(e, "error_missing_package")
+```
+
+This test wouldn't fail even if we decided to change the exact message.
 
 ### Exercises 8.6.6
 
-**Q1.** Create `suppressConditions()` that works like `suppressMessages()` and  `suppressWarnings()` but suppresses everything. Think carefully about how you should handle errors.
+**Q1.** Create `suppressConditions()` that works like `suppressMessages()` and `suppressWarnings()` but suppresses everything. Think carefully about how you should handle errors.
 
 **Q2.** Compare the following two implementations of `message2error()`. What is the main advantage of `withCallingHandlers()` in this scenario? (Hint: look carefully at the traceback.)
 
