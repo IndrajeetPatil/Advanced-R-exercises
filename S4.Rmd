@@ -9,6 +9,8 @@ code <- function(...) paste0("`", ..., "`")
 
 ### Exercises 15.2.1
 
+---
+
 **Q1.** `lubridate::period()` returns an S4 class. What slots does it have? What class is each slot? What accessors does it provide?
 
 **A1.** Let's first create an instance of `Period` class:
@@ -42,6 +44,8 @@ minute(x)
 second(x)
 ```
 
+---
+
 **Q2.** What other ways can you find help for a method? Read `?"?"` and summarise the details.
 
 **A2.** The `"?"` operator allows access to this documentation in three ways. To demonstrate different ways to access documentation, let's define a new `S4` class.
@@ -68,14 +72,115 @@ Ways to access documentation:
 methods?pow # looks for the overall methods documentation
 ```
 
+---
 
 ### Exercises 15.3.6
 
+---
+
 **Q1.** Extend the Person class with fields to match `utils::person()`. Think about what slots you will need, what class each slot should have, and what you'll need to check in your validity method.
+
+**A1.** The code below extends the `Person` class described in the book to match more closely with `utils::person()`.
+
+```{r}
+setClass("Person",
+  slots = c(
+    age     = "numeric",
+    given   = "character",
+    family  = "character",
+    middle  = "character",
+    email   = "character",
+    role    = "character",
+    comment = "character"
+  ),
+  prototype = list(
+    age     = NA_real_,
+    given   = NA_character_,
+    family  = NA_character_,
+    middle  = NA_character_,
+    email   = NA_character_,
+    role    = NA_character_,
+    comment = NA_character_
+  )
+)
+
+# Helper function to create an instance of the `Person` class
+Person <- function(given,
+                   family,
+                   middle = NA_character_,
+                   age = NA_real_,
+                   email = NA_character_,
+                   role = NA_character_,
+                   comment = NA_character_) {
+  age <- as.double(age)
+
+  new("Person",
+    age     = age,
+    given   = given,
+    family  = family,
+    middle  = middle,
+    email   = email,
+    role    = role,
+    comment = comment
+  )
+}
+
+# Validator to ensure that each slot is of length one and that the specified
+# role is one of the possible roles
+setValidity("Person", function(object) {
+  invalid_length <- NULL
+  slot_lengths <- c(
+    length(object@age),
+    length(object@given),
+    length(object@middle),
+    length(object@family),
+    length(object@email),
+    length(object@comment)
+  )
+  
+  if (any(slot_lengths != 1L)) {
+    invalid_length <- "Slots @age, @given, @family, @middle, @email, @comment must be of length 1."
+  }
+
+  possible_roles <- c(
+    NA_character_, "aut", "com", "cph", "cre", "ctb", "ctr", "dtc", "fnd", "rev", "ths", "trl"
+  )
+
+  if (any(!object@role %in% possible_roles)) {
+    invalid_length <- paste(
+      invalid_length, "\n",
+      "@role(s) must be one of",
+      paste(possible_roles, collapse = ", ")
+    )
+  }
+
+  if (!is.null(invalid_length)) {
+    return(invalid_length)
+  } else {
+    return(TRUE)
+  }
+})
+```
+
+Let's make sure that validation works as expected:
+
+```{r, error=TRUE}
+Person(c("Indrajeet", "Surendra"), "Patil")
+Person("Indrajeet", "Patil", role = "xyz")
+Person("Indrajeet", "Patil", role = c("aut", "cph"))
+```
+
+
+
+---
 
 **Q2.** What happens if you define a new S4 class that doesn't have any slots? (Hint: read about virtual classes in `?setClass`.)
 
+---
+
 **Q3.** Imagine you were going to reimplement factors, dates, and data frames in S4. Sketch out the `setClass()` calls that you would use to define the classes. Think about appropriate `slots` and `prototype`.
+
+---
 
 ### Exercises 15.4.5
 
