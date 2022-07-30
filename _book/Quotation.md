@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x11f4fce48>
+#> <bytecode: 0x10e112e10>
 #> <environment: namespace:rlang>
 ```
 

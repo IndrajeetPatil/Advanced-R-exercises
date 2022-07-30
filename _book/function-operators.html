@@ -83,7 +83,7 @@
 <span class="header-section-number">11</span> Function operators<a class="anchor" aria-label="anchor" href="#function-operators"><i class="fas fa-link"></i></a>
 </h1>
 <p>Attaching the needed libraries:</p>
-<div class="sourceCode" id="cb302"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb308"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div id="exercises-11.2.3" class="section level3" number="11.0.1">
 <h3>
@@ -97,24 +97,24 @@
 <li>
 <code>%in%</code> (which doesn’t provide any way to provide tolerance when comparing numeric values),</li>
 <li>
-<code><a href="https://rdrr.io/pkg/dplyr/man/near.html">dplyr::near()</a></code> (which is vectorized element-wise and thus expects two vectors of equal length)</li>
+<code><a href="https://dplyr.tidyverse.org/reference/near.html">dplyr::near()</a></code> (which is vectorized element-wise and thus expects two vectors of equal length)</li>
 </ul>
 <p>in order to find indices of matching numeric values for the given threshold.</p>
-<div class="sourceCode" id="cb303"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb309"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">which_near</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">tolerance</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co"># Vectorize `dplyr::near()` function only over the `y` argument.</span></span>
 <span>  <span class="co"># Note that that `Vectorize()` is a function operator and will return a function.</span></span>
-<span>  <span class="va">customNear</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/dplyr/man/near.html">near</a></span>, vectorize.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"y"</span><span class="op">)</span>, SIMPLIFY <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="va">customNear</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/near.html">near</a></span>, vectorize.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"y"</span><span class="op">)</span>, SIMPLIFY <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="co"># Apply the vectorized function to the two vectors and then check where the</span></span>
 <span>  <span class="co"># comparisons are equal (i.e. `TRUE`) using `which()`.</span></span>
 <span>  <span class="co">#</span></span>
 <span>  <span class="co"># Use `compact()` to remove empty elements from the resulting list.</span></span>
-<span>  <span class="va">index_list</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/purrr/man/keep.html">compact</a></span><span class="op">(</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/purrr/man/map.html">map</a></span><span class="op">(</span><span class="fu">customNear</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, tol <span class="op">=</span> <span class="va">tolerance</span><span class="op">)</span>, <span class="va">which</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">index_list</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">compact</a></span><span class="op">(</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fu">customNear</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, tol <span class="op">=</span> <span class="va">tolerance</span><span class="op">)</span>, <span class="va">which</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="co"># If there are any matches, return the indices as an atomic vector of integers.</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">index_list</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0L</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">index_vector</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/purrr/man/as_vector.html">simplify</a></span><span class="op">(</span><span class="va">index_list</span>, <span class="st">"integer"</span><span class="op">)</span></span>
+<span>    <span class="va">index_vector</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/as_vector.html">simplify</a></span><span class="op">(</span><span class="va">index_list</span>, <span class="st">"integer"</span><span class="op">)</span></span>
 <span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">index_vector</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span></span>
@@ -122,14 +122,14 @@
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="fl">0L</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Let’s use it:</p>
-<div class="sourceCode" id="cb304"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb310"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.1</span>, <span class="fl">3.3</span>, <span class="fl">8.45</span>, <span class="fl">8</span>, <span class="fl">6</span><span class="op">)</span></span>
 <span><span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">8.40</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">x1</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">x2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 5</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/near.html">near</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, tol <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/near.html">near</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, tol <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in x - y: longer object length is not a multiple of</span></span>
 <span><span class="co">#&gt; shorter object length</span></span>
 <span><span class="co">#&gt; integer(0)</span></span>
@@ -138,9 +138,9 @@
 <span><span class="co">#&gt; [1] 5 3</span></span></code></pre></div>
 <p>We solved a complex task here using the <code><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize()</a></code> function!</p>
 <hr>
-<p><strong>Q2.</strong> Read the source code for <code><a href="https://rdrr.io/pkg/purrr/man/safely.html">possibly()</a></code>. How does it work?</p>
+<p><strong>Q2.</strong> Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">possibly()</a></code>. How does it work?</p>
 <p><strong>A2.</strong> Let’s have a look at the source code for this function:</p>
-<div class="sourceCode" id="cb305"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb311"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">possibly</span></span>
 <span><span class="co">#&gt; function (.f, otherwise, quiet = TRUE) </span></span>
 <span><span class="co">#&gt; {</span></span>
@@ -156,25 +156,25 @@
 <span><span class="co">#&gt;         })</span></span>
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x10ef84400&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x12212e400&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></span></code></pre></div>
-<p>Looking at this code, we can see that <code><a href="https://rdrr.io/pkg/purrr/man/safely.html">possibly()</a></code>:</p>
+<p>Looking at this code, we can see that <code><a href="https://purrr.tidyverse.org/reference/safely.html">possibly()</a></code>:</p>
 <ul>
 <li>uses <code><a href="https://rdrr.io/r/base/conditions.html">tryCatch()</a></code> for error handling</li>
 <li>has a parameter <code>otherwise</code> to specify default value in case an error occurs</li>
 <li>has a parameter <code>quiet</code> to suppress error message (if needed)</li>
 </ul>
 <hr>
-<p><strong>Q3.</strong> Read the source code for <code><a href="https://rdrr.io/pkg/purrr/man/safely.html">safely()</a></code>. How does it work?</p>
+<p><strong>Q3.</strong> Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code>. How does it work?</p>
 <p><strong>A3.</strong> Let’s have a look at the source code for this function:</p>
-<div class="sourceCode" id="cb306"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb312"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">safely</span></span>
 <span><span class="co">#&gt; function (.f, otherwise = NULL, quiet = TRUE) </span></span>
 <span><span class="co">#&gt; {</span></span>
 <span><span class="co">#&gt;     .f &lt;- as_mapper(.f)</span></span>
 <span><span class="co">#&gt;     function(...) capture_error(.f(...), otherwise, quiet)</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x10f12e4e0&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x1222ce4e0&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></span>
 <span></span>
 <span><span class="fu">purrr</span><span class="fu">:::</span><span class="va">capture_error</span></span>
@@ -188,9 +188,9 @@
 <span><span class="co">#&gt;         stop("Terminated by user", call. = FALSE)</span></span>
 <span><span class="co">#&gt;     })</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x10f187350&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x122327350&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></span></code></pre></div>
-<p>Looking at this code, we can see that <code><a href="https://rdrr.io/pkg/purrr/man/safely.html">safely()</a></code>:</p>
+<p>Looking at this code, we can see that <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code>:</p>
 <ul>
 <li>uses a list to save both the results (if the function executes successfully) and the error (if it fails)</li>
 <li>uses <code><a href="https://rdrr.io/r/base/conditions.html">tryCatch()</a></code> for error handling</li>
@@ -222,12 +222,12 @@
 <li><p>Memoization works by caching results, which can take up a significant amount of memory.</p></li>
 </ul>
 <hr>
-<p><strong>Q3.</strong> Create a function operator that reports whenever a file is created or deleted in the working directory, using <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code> and <code><a href="https://rdrr.io/pkg/generics/man/setops.html">setdiff()</a></code>. What other global function effects might you want to track?</p>
+<p><strong>Q3.</strong> Create a function operator that reports whenever a file is created or deleted in the working directory, using <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code> and <code><a href="https://generics.r-lib.org/reference/setops.html">setdiff()</a></code>. What other global function effects might you want to track?</p>
 <p><strong>A3.</strong></p>
 <hr>
 <p><strong>Q4.</strong> Write a function operator that logs a timestamp and message to a file every time a function is run.</p>
 <p><strong>A4.</strong> The following function operator logs a timestamp and message to a file every time a function is run:</p>
-<div class="sourceCode" id="cb307"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb313"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># helper function to write to a file connection</span></span>
 <span><span class="va">write_line</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">filepath</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">...</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span>, file <span class="op">=</span> <span class="va">filepath</span>, append <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -247,7 +247,7 @@
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="co"># check that the function works as expected with a tempfile</span></span>
-<span><span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/withr/man/with_tempfile.html">with_tempfile</a></span><span class="op">(</span><span class="st">"logfile"</span>, code <span class="op">=</span> <span class="op">{</span></span>
+<span><span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_tempfile.html">with_tempfile</a></span><span class="op">(</span><span class="st">"logfile"</span>, code <span class="op">=</span> <span class="op">{</span></span>
 <span>  <span class="va">logged_runif</span> <span class="op">&lt;-</span> <span class="fu">logger</span><span class="op">(</span><span class="va">runif</span>, <span class="va">logfile</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
@@ -261,10 +261,10 @@
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="va">logfile</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Function created at: 2022-07-30 07:23:44</span></span>
-<span><span class="co">#&gt; Function called at:  2022-07-30 07:23:49</span></span>
-<span><span class="co">#&gt; Function called at:  2022-07-30 07:23:54</span></span>
-<span><span class="co">#&gt; Function called at:  2022-07-30 07:24:02</span></span></code></pre></div>
+<span><span class="co">#&gt; Function created at: 2022-07-30 12:16:08</span></span>
+<span><span class="co">#&gt; Function called at:  2022-07-30 12:16:13</span></span>
+<span><span class="co">#&gt; Function called at:  2022-07-30 12:16:18</span></span>
+<span><span class="co">#&gt; Function called at:  2022-07-30 12:16:26</span></span></code></pre></div>
 <hr>
 <p><strong>Q5.</strong> Modify <code>delay_by()</code> so that instead of delaying by a fixed amount of time, it ensures that a certain amount of time has elapsed since the function was last called. That is, if you called <code>g &lt;- delay_by(1, f); g(); Sys.sleep(2); g()</code> there shouldn’t be an extra delay.</p>
 <p><strong>A5.</strong></p>
