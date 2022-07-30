@@ -4,7 +4,7 @@ Driven by the urge to solve all book exercises independently to test my own unde
 
 Although I have tried to make sure that all solutions are correct, the blame for any inaccuracies lies solely with me. I'd very much appreciate [any suggestions or corrections](https://github.com/IndrajeetPatil/Advanced-R-exercises/issues).
 
-<img src="cover.png" width="80%" />
+<img src="cover.png" width="60%" />
 
 ## Code of Conduct
 
