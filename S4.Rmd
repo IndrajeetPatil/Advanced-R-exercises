@@ -170,15 +170,106 @@ Person("Indrajeet", "Patil", role = "xyz")
 Person("Indrajeet", "Patil", role = c("aut", "cph"))
 ```
 
-
-
 ---
 
 **Q2.** What happens if you define a new S4 class that doesn't have any slots? (Hint: read about virtual classes in `?setClass`.)
 
+**A2.** If you define a new `S4` class that doesn't have any slots, it will create *virtual* classes:
+
+```{r, error=TRUE}
+setClass("Empty")
+
+isVirtualClass("Empty")
+```
+
+You can't create an instance of this class:
+
+```{r, error=TRUE}
+new("Empty")
+```
+
+So how is this useful? As mentioned in `?setClass` docs:
+
+> Classes exist for which no actual objects can be created, the virtual classes.
+>
+> The most common and useful form of virtual class is the class union, a virtual class that is defined in a call to `setClassUnion()` rather than a call to `setClass()`.
+
+So virtual classes can still be inherited:
+
+```{r, eval=FALSE}
+setClass("Nothing", contains = "Empty")
+```
+
+In addition to not specifying any slots, here is another way to create virtual classes:
+
+> Calls to `setClass()` will also create a virtual class, either when only the Class argument is supplied (no slots or superclasses) or when the `contains=` argument includes the special class name `"VIRTUAL"`.
+
 ---
 
 **Q3.** Imagine you were going to reimplement factors, dates, and data frames in S4. Sketch out the `setClass()` calls that you would use to define the classes. Think about appropriate `slots` and `prototype`.
+
+**A3.** The reimplementation of following classes in `S4` might have definitions like the following.
+
+- `factor`
+
+For simplicity, we won't provide all options that `factor()` provides. Note that `x` has pseudo-class `ANY` to accept objects of any type.
+
+```{r}
+setClass("Factor",
+  slots = c(
+    x       = "ANY",
+    levels  = "character",
+    ordered = "logical"
+  ),
+  prototype = list(
+    x       = character(),
+    levels  = character(),
+    ordered = FALSE
+  )
+)
+
+new("Factor", x = letters[1:3], levels = LETTERS[1:3])
+
+new("Factor", x = 1:3, levels = letters[1:3])
+
+new("Factor", x = c(TRUE, FALSE, TRUE), levels = c("x", "y", "x"))
+```
+
+- `Date`
+
+Just like the base-R version, this will have only integer values.
+
+```{r}
+setClass("Date2",
+  slots = list(
+    data = "integer"
+  ),
+  prototype = list(
+    data = integer()
+  )
+)
+
+new("Date2", data = 1342L)
+```
+
+- `data.frame`
+
+The tricky part is supporting the `...` argument of `data.frame()`. For this, we can let the users pass a (named) list.
+
+```{r}
+setClass("DataFrame",
+  slots       = c(
+    data      = "list",
+    row.names = "character"
+  ),
+  prototype   = list(
+    data      = list(),
+    row.names = character(0L)
+  )
+)
+
+new("DataFrame", data = list(x = c("a", "b"), y = c(1L, 2L)))
+```
 
 ---
 
