@@ -92,7 +92,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x124899fc8>
+#> <bytecode: 0x114952d30>
 #> <environment: namespace:purrr>
 ```
 
@@ -116,7 +116,7 @@ safely
 #>     .f <- as_mapper(.f)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x124a3a0a8>
+#> <bytecode: 0x114aeee10>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -130,7 +130,7 @@ purrr:::capture_error
 #>         stop("Terminated by user", call. = FALSE)
 #>     })
 #> }
-#> <bytecode: 0x124a91008>
+#> <bytecode: 0x114b49c80>
 #> <environment: namespace:purrr>
 ```
 
@@ -173,7 +173,60 @@ Here, the first dot is printed after the 9th download is finished, and the 10th 
 
 **Q3.** Create a function operator that reports whenever a file is created or deleted in the working directory, using `dir()` and `setdiff()`. What other global function effects might you want to track?
 
-**A3.** 
+**A3.** First, let's create helper functions to compare and print added or removed filenames:
+
+
+```r
+print_multiple_entries <- function(header, entries) {
+  message(paste0(header, ":\n"), paste0(entries, collapse = "\n"))
+}
+
+file_comparator <- function(old, new) {
+  if (setequal(old, new)) {
+    return()
+  }
+  
+  removed <- setdiff(old, new)
+  added <- setdiff(new, old)
+  
+  if (length(removed) > 0L) print_multiple_entries("- File removed", removed)
+  if (length(added) > 0L) print_multiple_entries("- File added", added)
+}
+```
+
+We can then write a function operator and use it to create functions that will do the necessary tracking:
+
+
+```r
+dir_tracker <- function(f) {
+  force(f)
+  function(...) {
+    old_files <- dir()
+    on.exit(file_comparator(old_files, dir()), add = TRUE)
+    
+    f(...)
+  }
+}
+
+file_creation_tracker <- dir_tracker(file.create)
+file_deletion_tracker <- dir_tracker(file.remove)
+```
+
+Let's try it out:
+
+
+```r
+file_creation_tracker(c("a.txt", "b.txt"))
+#> - File added:
+#> a.txt
+#> b.txt
+#> [1] TRUE TRUE
+
+file_deletion_tracker("a.txt")
+#> - File removed:
+#> a.txt
+#> [1] TRUE
+```
 
 ---
 
@@ -216,10 +269,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2022-08-01 15:26:57
-#> Function called at:  2022-08-01 15:27:02
-#> Function called at:  2022-08-01 15:27:07
-#> Function called at:  2022-08-01 15:27:15
+#> Function created at: 2022-08-01 22:36:21
+#> Function called at:  2022-08-01 22:36:26
+#> Function called at:  2022-08-01 22:36:31
+#> Function called at:  2022-08-01 22:36:39
 ```
 
 ---

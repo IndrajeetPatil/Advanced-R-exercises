@@ -130,7 +130,59 @@ Here, the first dot is printed after the 9th download is finished, and the 10th 
 
 **Q3.** Create a function operator that reports whenever a file is created or deleted in the working directory, using `dir()` and `setdiff()`. What other global function effects might you want to track?
 
-**A3.** 
+**A3.** First, let's create helper functions to compare and print added or removed filenames:
+
+```{r}
+print_multiple_entries <- function(header, entries) {
+  message(paste0(header, ":\n"), paste0(entries, collapse = "\n"))
+}
+
+file_comparator <- function(old, new) {
+  if (setequal(old, new)) {
+    return()
+  }
+  
+  removed <- setdiff(old, new)
+  added <- setdiff(new, old)
+  
+  if (length(removed) > 0L) print_multiple_entries("- File removed", removed)
+  if (length(added) > 0L) print_multiple_entries("- File added", added)
+}
+```
+
+We can then write a function operator and use it to create functions that will do the necessary tracking:
+
+```{r}
+dir_tracker <- function(f) {
+  force(f)
+  function(...) {
+    old_files <- dir()
+    on.exit(file_comparator(old_files, dir()), add = TRUE)
+    
+    f(...)
+  }
+}
+
+file_creation_tracker <- dir_tracker(file.create)
+file_deletion_tracker <- dir_tracker(file.remove)
+```
+
+Let's try it out:
+
+```{r}
+file_creation_tracker(c("a.txt", "b.txt"))
+
+file_deletion_tracker(c("a.txt", "b.txt"))
+```
+
+Other global function effects we might want to track:
+
+- working directory
+- environment variables
+- connections
+- library paths
+- graphics devices
+- [etc.](https://withr.r-lib.org/reference/index.html)
 
 ---
 
@@ -178,6 +230,29 @@ withr::with_tempfile("logfile", code = {
 
 **Q5.** Modify `delay_by()` so that instead of delaying by a fixed amount of time, it ensures that a certain amount of time has elapsed since the function was last called. That is, if you called `g <- delay_by(1, f); g(); Sys.sleep(2); g()` there shouldn't be an extra delay.
 
-**A5.** 
+**A5.** Modified version of the function meeting the specified requirements:
+
+```{r}
+delay_by_atleast <- function(f, amount) {
+  force(f)
+  force(amount)
+  
+  # the last time the function was run
+  last_time <- NULL
+  
+  function(...) {
+    if (!is.null(last_time)) {
+      wait <- (last_time - Sys.time()) + amount
+      if (wait > 0) Sys.sleep(wait)
+    }
+    
+    # update the time in the parent environment when the function finishes
+    # for the next run
+    on.exit(last_time <<- Sys.time()) 
+    
+    f(...)
+  }
+}
+```
 
 ---
