@@ -275,18 +275,194 @@
 <span><span class="co">#&gt; [1] NA</span></span></code></pre></div>
 <hr>
 <p><strong>Q2.</strong> What happens if you define a new S4 class that doesn’t have any slots? (Hint: read about virtual classes in <code><a href="https://rdrr.io/r/methods/setClass.html">?setClass</a></code>.)</p>
+<p><strong>A2.</strong> If you define a new <code>S4</code> class that doesn’t have any slots, it will create <em>virtual</em> classes:</p>
+<div class="sourceCode" id="cb423"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Empty"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/methods/RClassUtils.html">isVirtualClass</a></span><span class="op">(</span><span class="st">"Empty"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<p>You can’t create an instance of this class:</p>
+<div class="sourceCode" id="cb424"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Empty"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in new("Empty"): trying to generate an object from a virtual class ("Empty")</span></span></code></pre></div>
+<p>So how is this useful? As mentioned in <code><a href="https://rdrr.io/r/methods/setClass.html">?setClass</a></code> docs:</p>
+<blockquote>
+<p>Classes exist for which no actual objects can be created, the virtual classes.</p>
+<p>The most common and useful form of virtual class is the class union, a virtual class that is defined in a call to <code><a href="https://rdrr.io/r/methods/setClassUnion.html">setClassUnion()</a></code> rather than a call to <code><a href="https://rdrr.io/r/methods/setClass.html">setClass()</a></code>.</p>
+</blockquote>
+<p>So virtual classes can still be inherited:</p>
+<div class="sourceCode" id="cb425"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Nothing"</span>, contains <span class="op">=</span> <span class="st">"Empty"</span><span class="op">)</span></span></code></pre></div>
+<p>In addition to not specifying any slots, here is another way to create virtual classes:</p>
+<blockquote>
+<p>Calls to <code><a href="https://rdrr.io/r/methods/setClass.html">setClass()</a></code> will also create a virtual class, either when only the Class argument is supplied (no slots or superclasses) or when the <code>contains=</code> argument includes the special class name <code>"VIRTUAL"</code>.</p>
+</blockquote>
 <hr>
 <p><strong>Q3.</strong> Imagine you were going to reimplement factors, dates, and data frames in S4. Sketch out the <code><a href="https://rdrr.io/r/methods/setClass.html">setClass()</a></code> calls that you would use to define the classes. Think about appropriate <code>slots</code> and <code>prototype</code>.</p>
+<p><strong>A3.</strong> The reimplementation of following classes in <code>S4</code> might have definitions like the following.</p>
+<ul>
+<li><code>factor</code></li>
+</ul>
+<p>For simplicity, we won’t provide all options that <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code> provides. Note that <code>x</code> has pseudo-class <code>ANY</code> to accept objects of any type.</p>
+<div class="sourceCode" id="cb426"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Factor"</span>,</span>
+<span>  slots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>    x       <span class="op">=</span> <span class="st">"ANY"</span>,</span>
+<span>    levels  <span class="op">=</span> <span class="st">"character"</span>,</span>
+<span>    ordered <span class="op">=</span> <span class="st">"logical"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  prototype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    x       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    levels  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    ordered <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Factor"</span>, x <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, levels <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; An object of class "Factor"</span></span>
+<span><span class="co">#&gt; Slot "x":</span></span>
+<span><span class="co">#&gt; [1] "a" "b" "c"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "levels":</span></span>
+<span><span class="co">#&gt; [1] "A" "B" "C"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "ordered":</span></span>
+<span><span class="co">#&gt; [1] FALSE</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Factor"</span>, x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, levels <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; An object of class "Factor"</span></span>
+<span><span class="co">#&gt; Slot "x":</span></span>
+<span><span class="co">#&gt; [1] 1 2 3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "levels":</span></span>
+<span><span class="co">#&gt; [1] "a" "b" "c"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "ordered":</span></span>
+<span><span class="co">#&gt; [1] FALSE</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Factor"</span>, x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"x"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; An object of class "Factor"</span></span>
+<span><span class="co">#&gt; Slot "x":</span></span>
+<span><span class="co">#&gt; [1]  TRUE FALSE  TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "levels":</span></span>
+<span><span class="co">#&gt; [1] "x" "y" "x"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "ordered":</span></span>
+<span><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
+<ul>
+<li><code>Date</code></li>
+</ul>
+<p>Just like the base-R version, this will have only integer values.</p>
+<div class="sourceCode" id="cb427"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Date2"</span>,</span>
+<span>  slots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="st">"integer"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  prototype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Date2"</span>, data <span class="op">=</span> <span class="fl">1342L</span><span class="op">)</span></span>
+<span><span class="co">#&gt; An object of class "Date2"</span></span>
+<span><span class="co">#&gt; Slot "data":</span></span>
+<span><span class="co">#&gt; [1] 1342</span></span></code></pre></div>
+<ul>
+<li><code>data.frame</code></li>
+</ul>
+<p>The tricky part is supporting the <code>...</code> argument of <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>. For this, we can let the users pass a (named) list.</p>
+<div class="sourceCode" id="cb428"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"DataFrame"</span>,</span>
+<span>  slots       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>    data      <span class="op">=</span> <span class="st">"list"</span>,</span>
+<span>    row.names <span class="op">=</span> <span class="st">"character"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  prototype   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    data      <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="fl">0L</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"DataFrame"</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">2L</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; An object of class "DataFrame"</span></span>
+<span><span class="co">#&gt; Slot "data":</span></span>
+<span><span class="co">#&gt; $x</span></span>
+<span><span class="co">#&gt; [1] "a" "b"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $y</span></span>
+<span><span class="co">#&gt; [1] 1 2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "row.names":</span></span>
+<span><span class="co">#&gt; character(0)</span></span></code></pre></div>
 <hr>
 </div>
 <div id="exercises-15.4.5" class="section level3" number="15.0.3">
 <h3>
 <span class="header-section-number">15.0.3</span> Exercises 15.4.5<a class="anchor" aria-label="anchor" href="#exercises-15.4.5"><i class="fas fa-link"></i></a>
 </h3>
+<hr>
 <p><strong>Q1.</strong> Add <code>age()</code> accessors for the <code>Person</code> class.</p>
+<p><strong>A1.</strong> We first should define a generic and then a method for our class:</p>
+<div class="sourceCode" id="cb429"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Indra</span> <span class="op">&lt;-</span> <span class="fu">Person</span><span class="op">(</span><span class="st">"Indrajeet"</span>, <span class="st">"Patil"</span>, role <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"aut"</span>, <span class="st">"cph"</span><span class="op">)</span>, age <span class="op">=</span> <span class="fl">34</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/methods/setGeneric.html">setGeneric</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/standardGeneric.html">standardGeneric</a></span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "age"</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">@</span><span class="va">age</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">age</span><span class="op">(</span><span class="va">Indra</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 34</span></span></code></pre></div>
+<hr>
 <p><strong>Q2.</strong> In the definition of the generic, why is it necessary to repeat the name of the generic twice?</p>
+<p><strong>A2.</strong> Let’s look at the generic we just defined; the generic name <code>"name"</code> is repeated twice.</p>
+<div class="sourceCode" id="cb430"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setGeneric.html">setGeneric</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"age"</span>, def <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/standardGeneric.html">standardGeneric</a></span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>This is because:</p>
+<ul>
+<li>the <code>"age"</code> in argument <code>name</code> provides the name for the generic</li>
+<li>the <code>"age"</code> in argument <code>def</code> supplies the method dispatch</li>
+</ul>
+<p>This is reminiscent of how we defined <code>S3</code> generic, where we also had to repeat the name twice:</p>
+<div class="sourceCode" id="cb431"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">age</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/UseMethod.html">UseMethod</a></span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<hr>
 <p><strong>Q3.</strong> Why does the <code><a href="https://rdrr.io/r/methods/show.html">show()</a></code> method defined in Section <a href="https://adv-r.hadley.nz/s4.html#show-method">Show method</a> use <code>is(object)[[1]]</code>? (Hint: try printing the employee subclass.)</p>
+<p><strong>A3.</strong> Because we wish to define <code><a href="https://rdrr.io/r/methods/show.html">show()</a></code> method for a specific class, we need to disregard the other super-/sub-classes.</p>
+<p>Always using the first element ensures that the method will be defined for the class in question:</p>
+<div class="sourceCode" id="cb432"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Alice</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Employee"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/methods/is.html">is</a></span><span class="op">(</span><span class="va">Alice</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Employee" "Person"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/methods/is.html">is</a></span><span class="op">(</span><span class="va">Alice</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] "Employee"</span></span></code></pre></div>
+<hr>
 <p><strong>Q4.</strong> What happens if you define a method with different argument names to the generic?</p>
+<p><strong>A4.</strong> Let’s experiment with the method we defined in <strong>Q1.</strong> to study this behavior.</p>
+<p>The original method that worked as expected since the argument name between generic and method matched:</p>
+<div class="sourceCode" id="cb433"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">@</span><span class="va">age</span><span class="op">)</span></span></code></pre></div>
+<p>If this is not the case, we either get a warning or get an error depending on which and how many arguments have been specified:</p>
+<div class="sourceCode" id="cb434"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">object</span><span class="op">)</span> <span class="va">object</span><span class="op">@</span><span class="va">age</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: For function 'age', signature 'Person': argument in</span></span>
+<span><span class="co">#&gt; method definition changed from (object) to (x)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">object</span>, <span class="va">x</span><span class="op">)</span> <span class="va">object</span><span class="op">@</span><span class="va">age</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in rematchDefinition(definition, fdef, mnames, fnames, signature): methods can add arguments to the generic 'age' only if '...' is an argument to the generic</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/dots.html">...elt</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">@</span><span class="va">age</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: For function 'age', signature 'Person': argument in</span></span>
+<span><span class="co">#&gt; method definition changed from (...) to (x)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="va">x</span><span class="op">@</span><span class="va">age</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in rematchDefinition(definition, fdef, mnames, fnames, signature): methods can add arguments to the generic 'age' only if '...' is an argument to the generic</span></span></code></pre></div>
+<hr>
 </div>
 <div id="exercises-15.5.5" class="section level3" number="15.0.4">
 <h3>
@@ -335,7 +511,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-07-30.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-01.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

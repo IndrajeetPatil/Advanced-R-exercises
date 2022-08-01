@@ -21,7 +21,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x14314a708>
+#> <bytecode: 0x15b94a708>
 #> <environment: namespace:base>
 ```
 
@@ -49,8 +49,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x114593c10>
-#> <environment: 0x1145932e0>
+#> <bytecode: 0x11df1bc10>
+#> <environment: 0x11df1b2e0>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -214,15 +214,15 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x123ca33b0>
+#> <environment: 0x11c4791b0>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x1235dfa30>
-#> <environment: 0x123a306d8>
+#> <bytecode: 0x11bdb5830>
+#> <environment: 0x11c2064d8>
 ```
 
 ---
@@ -266,7 +266,7 @@ ggplot2::label_bquote
 #>     }
 #>     structure(fun, class = "labeller")
 #> }
-#> <bytecode: 0x1343c1668>
+#> <bytecode: 0x12c397468>
 #> <environment: namespace:ggplot2>
 
 scales::number_format
@@ -284,7 +284,7 @@ scales::number_format
 #>             scale_cut = scale_cut, trim = trim, ...)
 #>     }
 #> }
-#> <bytecode: 0x1243a1468>
+#> <bytecode: 0x13cc2be68>
 #> <environment: namespace:scales>
 ```
 
@@ -354,7 +354,7 @@ boot_model(mtcars, mpg ~ wt)
 #> function() {
 #>     fitted + sample(resid)
 #>   }
-#> <environment: 0x113ef0d78>
+#> <environment: 0x11d882a20>
 ```
 
 Contrast this with the first function we saw in the chapter which *did* have a lazy binding:
@@ -375,7 +375,7 @@ power1(2)
 #> function(x) {
 #>     x^exp
 #>   }
-#> <environment: 0x114289158>
+#> <environment: 0x11dc11200>
 ```
 
 ---
@@ -414,7 +414,7 @@ Let's have a look at one example with each:
 ```r
 boxcox2(1)
 #> function(x) (x^lambda - 1) / lambda
-#> <environment: 0x123940a50>
+#> <environment: 0x11c116818>
 
 boxcox3(mtcars$wt)
 #> function(lambda) {
@@ -424,7 +424,7 @@ boxcox3(mtcars$wt)
 #>       (x^lambda - 1) / lambda
 #>     }
 #>   }
-#> <environment: 0x123798a48>
+#> <environment: 0x11bf6e7d8>
 ```
 
 As can be seen, in `boxcox2()`, we can vary `x` for the same value of `lambda`, while in `boxcox3()`, we can vary `lambda` for the same vector. This can be handy while exploring different transformations across inputs.
@@ -452,7 +452,7 @@ boot_permute(mtcars, "mpg")
 #>     col <- df[[var]]
 #>     col[sample(n, replace = TRUE)]
 #>   }
-#> <environment: 0x1243206b0>
+#> <environment: 0x13cbab8c8>
 ```
 
 This is why we don't need to worry about a copy being made because the `df` in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:
@@ -461,7 +461,7 @@ This is why we don't need to worry about a copy being made because the `df` in t
 ```r
 boot_permute_env <- rlang::fn_env(boot_permute(mtcars, "mpg"))
 rlang::env_print(boot_permute_env)
-#> <environment: 0x1247a74d0>
+#> <environment: 0x11c82d708>
 #> Parent: <environment: global>
 #> Bindings:
 #> • n: <int>
@@ -521,8 +521,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1         12.91µs  14.23µs    67818.    12.8KB     33.9
-#> 2 LL2          6.97µs   7.42µs   129258.        0B     25.9
+#> 1 LL1         12.87µs  14.14µs    68111.    12.8KB     34.1
+#> 2 LL2          6.93µs   7.42µs   129778.        0B     26.0
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -548,16 +548,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 × 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1          20.5µs  21.69µs    45702.
-#>  2     10 LL2          8.45µs   9.06µs   109343.
-#>  3     20 LL1          22.3µs  23.41µs    42204.
-#>  4     20 LL2           8.2µs   8.77µs   112588.
-#>  5     50 LL1         26.36µs  27.68µs    35772.
-#>  6     50 LL2          8.08µs   8.73µs   112644.
-#>  7    100 LL1          36.7µs  38.79µs    25627.
-#>  8    100 LL2          8.94µs   9.51µs   103761.
-#>  9   1000 LL1        508.11µs 529.43µs     1882.
-#> 10   1000 LL2         29.48µs  31.82µs    31167.
+#>  1     10 LL1          20.7µs  21.65µs    45975.
+#>  2     10 LL2          8.45µs   9.02µs   110080.
+#>  3     20 LL1         22.67µs  23.82µs    41399.
+#>  4     20 LL2          8.28µs   8.81µs   112164.
+#>  5     50 LL1         26.45µs  27.92µs    35333.
+#>  6     50 LL2          8.12µs   8.65µs   114470.
+#>  7    100 LL1         36.74µs  39.07µs    25514.
+#>  8    100 LL2          9.02µs   9.55µs   103337.
+#>  9   1000 LL1        517.83µs 536.03µs     1862.
+#> 10   1000 LL2         29.52µs   31.2µs    31695.
 
 ggplot(
   df_bench,

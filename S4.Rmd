@@ -275,13 +275,108 @@ new("DataFrame", data = list(x = c("a", "b"), y = c(1L, 2L)))
 
 ### Exercises 15.4.5
 
+---
+
 **Q1.** Add `age()` accessors for the `Person` class.
+
+**A1.** We first should define a generic and then a method for our class:
+
+```{r}
+Indra <- Person("Indrajeet", "Patil", role = c("aut", "cph"), age = 34)
+
+setGeneric("age", function(x) standardGeneric("age"))
+setMethod("age", "Person", function(x) x@age)
+
+age(Indra)
+```
+
+---
 
 **Q2.** In the definition of the generic, why is it necessary to repeat the name of the generic twice?
 
+**A2.** Let's look at the generic we just defined; the generic name `"name"` is repeated twice.
+
+```{r, eval=FALSE}
+setGeneric(name = "age", def = function(x) standardGeneric("age"))
+```
+
+This is because:
+
+- the `"age"` in argument `name` provides the name for the generic
+- the `"age"` in argument `def` supplies the method dispatch
+
+This is reminiscent of how we defined `S3` generic, where we also had to repeat the name twice:
+
+```{r, eval=FALSE}
+age <- function(x) {
+  UseMethod("age")
+}
+```
+
+---
+
 **Q3.** Why does the `show()` method defined in Section [Show method](https://adv-r.hadley.nz/s4.html#show-method) use `is(object)[[1]]`? (Hint: try printing the employee subclass.)
 
+**A3.** Because we wish to define `show()` method for a specific class, we need to disregard the other super-/sub-classes. 
+
+```{r, echo=FALSE}
+setClass("Person", 
+  slots = c(
+    name = "character", 
+    age = "numeric"
+  ), 
+  prototype = list(
+    name = NA_character_,
+    age = NA_real_
+  )
+)
+
+setClass("Employee", 
+  contains = "Person", 
+  slots = c(
+    boss = "Person"
+  ),
+  prototype = list(
+    boss = new("Person")
+  )
+)
+```
+
+Always using the first element ensures that the method will be defined for the class in question:
+
+```{r}
+Alice <- new("Employee")
+
+is(Alice)
+
+is(Alice)[[1]]
+```
+
+---
+
 **Q4.** What happens if you define a method with different argument names to the generic?
+
+**A4.** Let's experiment with the method we defined in **Q1.** to study this behavior.
+
+The original method that worked as expected since the argument name between generic and method matched:
+
+```{r}
+setMethod("age", "Person", function(x) x@age)
+```
+
+If this is not the case, we either get a warning or get an error depending on which and how many arguments have been specified:
+
+```{r, error=TRUE}
+setMethod("age", "Person", function(object) object@age)
+
+setMethod("age", "Person", function(object, x) object@age)
+
+setMethod("age", "Person", function(...) ...elt(1)@age)
+
+setMethod("age", "Person", function(x, ...) x@age)
+```
+
+---
 
 ### Exercises 15.5.5
 
