@@ -94,6 +94,22 @@ tag <- function(tag, script = FALSE) {
   )
 }
 
+void_tag <- function(tag) {
+  new_function(
+    exprs(... = ),
+    expr({
+      dots <- dots_partition(...)
+      if (length(dots$unnamed) > 0) {
+        abort(!!paste0("<", tag, "> must not have unnamed arguments"))
+      }
+      attribs <- html_attributes(dots$named)
+
+      html(paste0(!!paste0("<", tag), attribs, " />"))
+    }),
+    caller_env()
+  )
+}
+
 p <- tag("p")
 script <- tag("script", script = TRUE)
 ```
@@ -146,8 +162,14 @@ tags <- c("a", "abbr", "address", "article", "aside", "audio",
   "u", "ul", "var", "video"
 )
 
+void_tags <- c("area", "base", "br", "col", "command", "embed",
+  "hr", "img", "input", "keygen", "link", "meta", "param",
+  "source", "track", "wbr"
+)
+
 html_tags <- c(
-  tags %>% set_names() %>% map(tag)
+  tags %>% set_names() %>% map(tag),
+  void_tags %>% set_names() %>% map(void_tag)
 )
 
 with_html <- function(code) {
@@ -178,6 +200,17 @@ with_html(p(address))
 ---
 
 **Q4.** Currently the HTML doesn't look terribly pretty, and it's hard to see the structure. How could you adapt `tag()` to do indenting and formatting? (You may need to do some research into block and inline tags.)
+
+**A4.** 
+
+```{r}
+html_tags$p(
+  "Some text. ",
+  html_tags$b(html_tags$i("some bold italic text")),
+  class = "mypara"
+)
+```
+
 
 ---
 
