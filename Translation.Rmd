@@ -2,6 +2,14 @@
 
 ```{r, include = FALSE}
 source("common.R")
+source("dsl-html-attributes.R")
+```
+
+Needed libraries:
+
+```{r, warning=FALSE,message=FALSE}
+library(rlang)
+library(purrr)
 ```
 
 ### Exercises 21.2.6
@@ -19,6 +27,80 @@ But
 ```
 
 Adapt the `escape()` to follow these rules when a new argument `script` is set to `TRUE`.
+
+**A1.**
+
+```{r}
+escape <- function(x, ...) UseMethod("escape")
+
+escape.character <- function(x, script = FALSE) {
+  if (script) {
+    x <- gsub("</script>", "<\\/script>", x, fixed = TRUE)
+  } else {
+    x <- gsub("&", "&amp;", x)
+    x <- gsub("<", "&lt;", x)
+    x <- gsub(">", "&gt;", x)
+  }
+
+  html(x)
+}
+
+escape.advr_html <- function(x) x
+```
+
+We will also need to tweak the boilerplate 
+
+```{r}
+html <- function(x) structure(x, class = "advr_html")
+
+print.advr_html <- function(x, ...) {
+  out <- paste0("<HTML> ", x)
+  cat(paste(strwrap(out), collapse = "\n"), "\n", sep = "")
+}
+
+dots_partition <- function(...) {
+  dots <- list2(...)
+
+  if (is.null(names(dots))) {
+    is_named <- rep(FALSE, length(dots))
+  } else {
+    is_named <- names(dots) != ""
+  }
+
+  list(
+    named = dots[is_named],
+    unnamed = dots[!is_named]
+  )
+}
+
+tag <- function(tag, script = FALSE) {
+  force(script)
+  new_function(
+    exprs(... = ),
+    expr({
+      dots <- dots_partition(...)
+      attribs <- html_attributes(dots$named)
+      children <- map_chr(.x = dots$unnamed, .f = ~escape(.x, !!script))
+
+      html(paste0(
+        !!paste0("<", tag), attribs, ">",
+        paste(children, collapse = ""),
+        !!paste0("</", tag, ">")
+      ))
+    }),
+    caller_env()
+  )
+}
+
+script <- tag("script", script = TRUE)
+```
+
+```{r}
+script("'</script>'")
+```
+
+
+
 
 **Q2.** The use of `...` for all functions has some big downsides. There's no input validation and there will be little information in the documentation or autocomplete about how they are used in the function. Create a new function that, when given a named list of tags and their attribute names (like below), creates tag functions with named arguments.
 

@@ -2,6 +2,14 @@
 
 
 
+Needed libraries:
+
+
+```r
+library(rlang)
+library(purrr)
+```
+
 ### Exercises 21.2.6
 
 **Q1.** The escaping rules for `<script>` tags are different because they contain JavaScript, not HTML. Instead of escaping angle brackets or ampersands, you need to escape `</script>` so that the tag isn't closed too early. For example, `script("'</script>'")`, shouldn't generate this:
@@ -17,6 +25,38 @@ But
 ```
 
 Adapt the `escape()` to follow these rules when a new argument `script` is set to `TRUE`.
+
+**A1.**
+
+
+```r
+escape <- function(x, ...) UseMethod("escape")
+
+escape.character <- function(x, script = FALSE) {
+  if (script) {
+    x <- gsub("</script>", "<\\/script>", x, fixed = TRUE)
+  } else {
+    x <- gsub("&", "&amp;", x)
+    x <- gsub("<", "&lt;", x)
+    x <- gsub(">", "&gt;", x)
+  }
+
+  html(x)
+}
+
+escape.advr_html <- function(x) x
+```
+
+
+
+
+```r
+script("'</script>'")
+#> <HTML> <script>'&lt;/script&gt;'</script>
+```
+
+
+
 
 **Q2.** The use of `...` for all functions has some big downsides. There's no input validation and there will be little information in the documentation or autocomplete about how they are used in the function. Create a new function that, when given a named list of tags and their attribute names (like below), creates tag functions with named arguments.
 

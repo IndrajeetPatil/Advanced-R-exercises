@@ -137,7 +137,7 @@ setValidity("Person", function(object) {
     length(object@email),
     length(object@comment)
   )
-  
+
   if (any(slot_lengths != 1L)) {
     invalid_length <- "Slots @age, @given, @family, @middle, @email, @comment must be of length 1."
   }
@@ -258,11 +258,11 @@ The tricky part is supporting the `...` argument of `data.frame()`. For this, we
 
 ```{r}
 setClass("DataFrame",
-  slots       = c(
+  slots = c(
     data      = "list",
     row.names = "character"
   ),
-  prototype   = list(
+  prototype = list(
     data      = list(),
     row.names = character(0L)
   )
@@ -320,19 +320,19 @@ age <- function(x) {
 **A3.** Because we wish to define `show()` method for a specific class, we need to disregard the other super-/sub-classes. 
 
 ```{r, echo=FALSE}
-setClass("Person", 
+setClass("Person",
   slots = c(
-    name = "character", 
+    name = "character",
     age = "numeric"
-  ), 
+  ),
   prototype = list(
     name = NA_character_,
     age = NA_real_
   )
 )
 
-setClass("Employee", 
-  contains = "Person", 
+setClass("Employee",
+  contains = "Person",
   slots = c(
     boss = "Person"
   ),
@@ -432,8 +432,8 @@ setClass("factor",
 setOldClass("factor", S4Class = "factor")
 
 setClass("Ordered",
-  contains  = "factor",
-  slots     = c(
+  contains = "factor",
+  slots = c(
     levels  = "character",
     ordered = "logical"
   ),

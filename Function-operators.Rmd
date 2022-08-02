@@ -141,10 +141,10 @@ file_comparator <- function(old, new) {
   if (setequal(old, new)) {
     return()
   }
-  
+
   removed <- setdiff(old, new)
   added <- setdiff(new, old)
-  
+
   if (length(removed) > 0L) print_multiple_entries("- File removed", removed)
   if (length(added) > 0L) print_multiple_entries("- File added", added)
 }
@@ -158,7 +158,7 @@ dir_tracker <- function(f) {
   function(...) {
     old_files <- dir()
     on.exit(file_comparator(old_files, dir()), add = TRUE)
-    
+
     f(...)
   }
 }
@@ -236,20 +236,20 @@ withr::with_tempfile("logfile", code = {
 delay_by_atleast <- function(f, amount) {
   force(f)
   force(amount)
-  
+
   # the last time the function was run
   last_time <- NULL
-  
+
   function(...) {
     if (!is.null(last_time)) {
       wait <- (last_time - Sys.time()) + amount
       if (wait > 0) Sys.sleep(wait)
     }
-    
+
     # update the time in the parent environment when the function finishes
     # for the next run
-    on.exit(last_time <<- Sys.time()) 
-    
+    on.exit(last_time <<- Sys.time())
+
     f(...)
   }
 }
