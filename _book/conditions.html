@@ -291,7 +291,7 @@
 <span><span class="co">#&gt;         return(NULL)</span></span>
 <span><span class="co">#&gt;     })))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x119a9f048&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x0000000033c0bd30&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:rlang&gt;</span></span></code></pre></div>
 <p>As mentioned in the function docs:</p>
 <blockquote>
@@ -465,12 +465,16 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/conditions.html">withCallingHandlers</a></span><span class="op">(</span><span class="va">code</span>, message <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"error"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu">message2error1</span><span class="op">(</span><span class="op">{</span><span class="fl">1</span>;  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"hidden error"</span><span class="op">)</span>; <span class="cn">NULL</span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="fu">message2error1</span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="fl">1</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"hidden error"</span><span class="op">)</span></span>
+<span>  <span class="cn">NULL</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in (function (e) : error</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/traceback.html">traceback</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 9: stop("error") at #2</span></span>
-<span><span class="co">#&gt; 8: (function (e) </span></span>
+<span><span class="co">#&gt; 8: (function (e)</span></span>
 <span><span class="co">#&gt;    stop("error"))(list(message = "hidden error\n",</span></span>
 <span><span class="co">#&gt;      call = message("hidden error")))</span></span>
 <span><span class="co">#&gt; 7: signalCondition(cond)</span></span>
@@ -494,7 +498,11 @@
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="va">code</span>, message <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"error"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu">message2error2</span><span class="op">(</span><span class="op">{</span><span class="fl">1</span>; <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"hidden error"</span><span class="op">)</span>; <span class="cn">NULL</span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="fu">message2error2</span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="fl">1</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"hidden error"</span><span class="op">)</span></span>
+<span>  <span class="cn">NULL</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in value[[3L]](cond) : error</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/traceback.html">traceback</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -623,7 +631,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-01.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

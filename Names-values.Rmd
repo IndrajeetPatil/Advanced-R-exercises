@@ -4,7 +4,15 @@
 source("common.R")
 ```
 
-## 2.2.2 Exercises 
+Loading the needed libraries:
+
+```{r, warning=FALSE, message=FALSE}
+library(lobstr)
+```
+
+## Binding basics (Exercise 2.2.2)
+
+---
 
 **Q1.** Explain the relationship between `a`, `b`, `c` and `d` in the following code:
 
@@ -15,28 +23,20 @@ c <- b
 d <- 1:10
 ```
 
-**A1.** 
+**A1.** The names (`a`, `b`, and `c`) have same values and point to the same object in memory, as can be seen by their identical memory addresses:
 
 ```{r}
-a <- 1:10
-b <- a
-c <- b
-d <- 1:10
+obj_addrs <- obj_addrs(list(a, b, c))
+unique(obj_addrs)
 ```
 
-The names (`a`, `b`, and `c`) are references to the same object in memory, as can be seen by the identical memory address:
-
-```{r}
-library(lobstr)
-
-obj_addrs(list(a, b, c))
-```
-
-Except `d`, which is a different object, even if it has the same value:
+Except `d`, which is a different object, even if it has the same value as `a`, `b`, and `c`:
 
 ```{r}
 obj_addr(d)
 ```
+
+---
 
 **Q2.** The following code accesses the mean function in multiple ways. Do they all point to the same underlying function object? Verify this with `lobstr::obj_addr()`.
 
@@ -48,41 +48,47 @@ evalq(mean)
 match.fun("mean")
 ```
 
-**A2.** 
-
-Following code verifies that indeed these calls all point to the same underlying function object.
+**A2.** All listed function calls point to the same underlying function object in memory, as shown by this object's memory address:
 
 ```{r}
-obj_addr(mean)
-obj_addr(base::mean)
-obj_addr(get("mean"))
-obj_addr(evalq(mean))
-obj_addr(match.fun("mean"))
+obj_addrs <- obj_addrs(list(
+  mean,
+base::mean,
+get("mean"),
+evalq(mean),
+match.fun("mean")
+))
+
+unique(obj_addrs)
 ```
+
+---
 
 **Q3.** By default, base R data import functions, like `read.csv()`, will automatically convert non-syntactic names to syntactic ones. Why might this be problematic? What option allows you to suppress this behaviour?
 
-**A3.** 
-
-The conversion of non-syntactic names to syntactic ones can sometimes corrupt the data. Some datasets may require non-syntactic names.
+**A3.** The conversion of non-syntactic names to syntactic ones can sometimes corrupt the data. Some datasets may require non-syntactic names.
 
 To suppress this behavior, one can set `check.names = FALSE`.
 
+---
+
 **Q4.** What rules does `make.names()` use to convert non-syntactic names into syntactic ones?
 
-**A4.**
+**A4.** `make.names()` uses following rules to convert non-syntactic names into syntactic ones:
 
-It just prepends `X` in non-syntactic names and invalid characters (like `@`) are converted to `.`.
+- it prepends non-syntactic names with `X` 
+- it converts invalid characters (like `@`) to `.`
+- it adds a `.` as a suffix if the name is a [reserved keyword](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Reserved.html)
 
 ```{r}
 make.names(c("123abc", "@me", "_yu", "  gh", "else"))
 ```
 
+---
+
 **Q5.** I slightly simplified the rules that govern syntactic names. Why is `.123e1` not a syntactic name? Read `?make.names` for the full details.
 
-**A5.**
-
-Because it is parsed as a number.
+**A5.** `.123e1` is not a syntacti name because it is parsed as a number, and not as a string:
 
 ```{r}
 typeof(.123e1)
@@ -92,23 +98,35 @@ And as the docs mention (emphasis mine):
 
 > A syntactically valid name consists of letters, numbers and the dot or underline characters and starts with a letter or **the dot not followed by a number**.
 
-Here is how `make.names()` will make it syntactic:
+---
 
-```{r}
-make.names(.123e1)
-```
+## Copy-on-modify (Exercise 2.3.6)
 
-## 2.3.6 Exercises 
+---
 
 **Q1.** Why is `tracemem(1:10)` not useful?
 
-**A1.**
-
-`tracemem()` traces copying of objects in R, but since the object created here is not assigned a name, there is nothing to trace. 
+**A1.** `tracemem()` traces copying of objects in R. For example:
 
 ```{r}
+x <- 1:10
+
+tracemem(x)
+
+x <- x + 1
+
+untracemem(x)
+```
+
+But since the object created in memory by `1:10` is not assigned a name, it can't be addressed or modified from R, and so there is nothing to trace. 
+
+```{r}
+obj_addr(1:10)
+
 tracemem(1:10)
 ```
+
+---
 
 **Q2.** Explain why `tracemem()` shows two copies when you run this code. Hint: carefully look at the difference between this code and the code shown earlier in the section.
      
@@ -117,31 +135,40 @@ x <- c(1L, 2L, 3L)
 tracemem(x)
 
 x[[3]] <- 4
+untracemem(x)
 ```
 
-**A2.** 
-
-Were it not for `4` being a double - and not an integer (`4L`) - this would have been modified in place.
+**A2.** This is because the initial atomic vector is of type `integer`, but `4` (and not `4L`) is of type `double`. This is why a new copy is created.
 
 ```{r}
 x <- c(1L, 2L, 3L)
+typeof(x)
 tracemem(x)
 
 x[[3]] <- 4
+untracemem(x)
+
+typeof(x)
 ```
 
-Try with integer:
+Trying with an integer should not create another copy:
 
 ```{r}
 x <- c(1L, 2L, 3L)
+typeof(x)
 tracemem(x)
 
 x[[3]] <- 4L
+untracemem(x)
+
+typeof(x)
 ```
 
-As for why this still produces a copy, this is from Solutions manual:
+To understand why this still produces a copy, here is an explanation from the [official solutions manual](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify):
 
 > Please be aware that running this code in RStudio will result in additional copies because of the reference from the environment pane.
+
+---
 
 **Q3.** Sketch out the relationship between the following objects:
 
@@ -151,7 +178,7 @@ b <- list(a, a)
 c <- list(b, a, 1:10)
 ```
 
-**A3.**
+**A3.** We can understand the relationship between these objects by looking at their memory addresses:
 
 ```{r}
 a <- 1:10
@@ -165,13 +192,21 @@ ref(b)
 ref(c)
 ```
 
+Here is what we learn:
+
+- The name `a` references object `1:10` in the memory.
+- The name `b` is bound to a list of two references to the memory address of `a`.
+- The name `c` is also bound to a list of references to `a` and `b`, and `1:10` object (not bound to any name).
+
+---
+
 **Q4.** What happens when you run this code?
 
 ```{r, eval=FALSE}
 x <- list(1:10)
 x[[2]] <- x
 ```
-    
+
 Draw a picture.
 
 **A4.**
@@ -188,10 +223,17 @@ obj_addr(x)
 ref(x)
 ```
 
-Figure from the official solution manual can be found here:
-<https://advanced-r-solutions.rbind.io/images/names_values/copy_on_modify_fig2.png>
+I don't have access to OmniGraffle software, so I am including here the figure from the [official solution manual](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify):
 
-## 2.4.1 Exercises 
+```{r, echo=FALSE, out.width='180pt'}
+knitr::include_graphics("https://advanced-r-solutions.rbind.io/images/names_values/copy_on_modify_fig2.png")
+```
+
+---
+
+## Object size (Exercise 2.4.1) 
+
+---
 
 **Q1.** In the following example, why are `object.size(y)` and `obj_size(y)` so radically different? Consult the documentation of `object.size()`.
 
@@ -202,9 +244,11 @@ object.size(y)
 obj_size(y)
 ```
 
-**A1.**
+**A1.** As mentioned in the docs for `object.size()`:
 
 > This function...does not detect if elements of a list are shared.
+
+This is why the sizes are so different:
 
 ```{r}
 y <- rep(list(runif(1e4)), 100)
@@ -214,6 +258,8 @@ object.size(y)
 obj_size(y)
 ```
 
+---
+
 **Q2.**  Take the following list. Why is its size somewhat misleading?
 
 ```{r, eval=FALSE}
@@ -221,24 +267,14 @@ funs <- list(mean, sd, var)
 obj_size(funs)
 ```
 
-**A2.**
-
-These functions are not externally created objects in R, but are always available, so doesn't make much sense to measure their size.
+**A2.** These functions are not externally created objects in R, but are always available as part of base packages, so doesn't make much sense to measure their size because they are never going to be *not* available.
 
 ```{r}
 funs <- list(mean, sd, var)
 obj_size(funs)
 ```
 
-Nevertheless, it's still interesting that the addition is not the same as size of list of those objects.
-
-```{r}
-obj_size(mean)
-obj_size(sd)
-obj_size(var)
-
-obj_size(mean) + obj_size(sd) + obj_size(var)
-```
+---
 
 **Q3.** Predict the output of the following code:
 
@@ -278,7 +314,27 @@ obj_size(b)
 obj_size(a, b)
 ```
 
-## 2.5.3 Exercises
+Key pieces of information to keep in mind to make correct predictions:
+
+- Size of empty vector
+
+```{r}
+obj_size(double())
+```
+
+- Size of a single double: 8 bytes
+
+```{r}
+obj_size(double(1))
+```
+
+- Copy-on-modify semantics
+
+---
+
+## Modify-in-place (Exercise 2.5.3)
+
+---
 
 **Q1.** Explain why the following code doesn't create a circular list.
 
@@ -287,9 +343,7 @@ x <- list()
 x[[1]] <- x
 ```
 
-**A1.**
-
-Copy-on-modify prevents the creation of a circular list.
+**A1.** Copy-on-modify prevents the creation of a circular list.
 
 ```{r}
 x <- list()
@@ -303,13 +357,13 @@ x[[1]] <- x
 obj_addr(x[[1]])
 ```
 
+---
+
 **Q2.** Wrap the two methods for subtracting medians into two functions, then use the 'bench' package to carefully compare their speeds. How does performance change as the number of columns increase?
 
-**A2.**
+**A2.** Let's first microbenchmark functions that do and do not create copies for varying lengths of number of columns.
 
-Let's first microbenchmark functions that do and do not create copies for varying lengths of number of columns.
-
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(bench)
 library(tidyverse)
 
@@ -362,7 +416,7 @@ benchDf <- purrr::map_dfr(
 )
 ```
 
-Plotting these benchmarks reveals how the performance gets increasingly worse as the number of dataframes increases:
+Plotting these benchmarks reveals how the performance gets increasingly worse as the number of data frames increases:
 
 ```{r}
 ggplot(
@@ -382,15 +436,17 @@ ggplot(
   )
 ```
 
+---
+
 **Q3.** What happens if you attempt to use `tracemem()` on an environment?
 
-**A3.** 
+**A3.** It doesn't work and the documentation for `tracemem()` makes it clear why:
 
-It doesn't work and the documentation makes it clear as to why:
-
-> It is not useful to trace NULL, environments, promises, weak references, or external pointer objects, as these are not duplicated
+> It is not useful to trace `NULL`, environments, promises, weak references, or external pointer objects, as these are not duplicated
 
 ```{r, error=TRUE}
 e <- rlang::env(a = 1, b = "3")
 tracemem(e)
 ```
+
+---

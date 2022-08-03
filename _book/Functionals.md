@@ -32,7 +32,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x1161696e0>
+#> <environment: 0x00000000204c90b8>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -43,7 +43,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x145bc4d48>
+#> <environment: 0x00000000323960e0>
 
 # mapping by name -----------------------
 
@@ -61,7 +61,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x135295bc8>
+#> <environment: 0x00000000324d6a80>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -73,7 +73,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x1354db9e8>
+#> <environment: 0x00000000325ab440>
 
 # compact functions ----------------------------
 
@@ -137,7 +137,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck(x, 0.597890264587477, 0.587997315218672, .default = NULL)
-#> <environment: 0x120931df0>
+#> <environment: 0x00000000332fdf98>
 ```
 
 **Q3.** Use the appropriate `map()` function to:
@@ -728,7 +728,7 @@ scale01 <- function(x) {
 
 ```r
 purrr::map_df(.x = head(anscombe), .f = scale01)
-#> # A tibble: 6 × 8
+#> # A tibble: 6 x 8
 #>      x1    x2    x3    x4    y1     y2     y3    y4
 #>   <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>  <dbl> <dbl>
 #> 1 0.333 0.333 0.333   NaN 0.362 0.897  0.116  0.266
@@ -843,11 +843,11 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x120510f90>
+#> <environment: 0x0000000032e35d68>
 #> Parent: <environment: global>
 #> Bindings:
-#> • x: <dbl>
-#> • y: <dbl>
+#> * x: <dbl>
+#> * y: <dbl>
 
 eapply(e, as.character)
 #> $x

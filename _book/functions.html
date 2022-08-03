@@ -95,7 +95,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; UseMethod("mean")</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x123a2ee38&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x0000000018064408&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>But, given a function, it doesn’t make sense to find its name because there can be multiple names bound to the same function.</p>
 <div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
@@ -183,21 +183,21 @@
 <p>At the time of writing, 253 base functions have no arguments. Most of these are primitive functions</p>
 <div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">df_formals</span>, <span class="va">argumentCount</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 251 × 2</span></span>
+<span><span class="co">#&gt; # A tibble: 253 x 2</span></span>
 <span><span class="co">#&gt;    `function` argumentCount</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;              &lt;int&gt;</span></span>
 <span><span class="co">#&gt;  1 -                      0</span></span>
-<span><span class="co">#&gt;  2 :                      0</span></span>
-<span><span class="co">#&gt;  3 ::                     0</span></span>
-<span><span class="co">#&gt;  4 :::                    0</span></span>
-<span><span class="co">#&gt;  5 !                      0</span></span>
-<span><span class="co">#&gt;  6 !=                     0</span></span>
-<span><span class="co">#&gt;  7 ...elt                 0</span></span>
-<span><span class="co">#&gt;  8 ...length              0</span></span>
-<span><span class="co">#&gt;  9 ...names               0</span></span>
-<span><span class="co">#&gt; 10 .C                     0</span></span>
-<span><span class="co">#&gt; # … with 241 more rows</span></span>
-<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows</span></span></code></pre></div>
+<span><span class="co">#&gt;  2 !                      0</span></span>
+<span><span class="co">#&gt;  3 !=                     0</span></span>
+<span><span class="co">#&gt;  4 $                      0</span></span>
+<span><span class="co">#&gt;  5 $&lt;-                    0</span></span>
+<span><span class="co">#&gt;  6 %%                     0</span></span>
+<span><span class="co">#&gt;  7 %*%                    0</span></span>
+<span><span class="co">#&gt;  8 %/%                    0</span></span>
+<span><span class="co">#&gt;  9 &amp;                      0</span></span>
+<span><span class="co">#&gt; 10 &amp;&amp;                     0</span></span>
+<span><span class="co">#&gt; # ... with 243 more rows</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>How could you adapt the code to find all primitive functions?</li>
 </ol>
@@ -207,34 +207,34 @@
 <span><span class="va">primitives</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Filter</a></span><span class="op">(</span><span class="va">is.primitive</span>, <span class="va">funs</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">primitives</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   [1] "-"                    ":"                   </span></span>
-<span><span class="co">#&gt;   [3] "::"                   ":::"                 </span></span>
-<span><span class="co">#&gt;   [5] "!"                    "!="                  </span></span>
-<span><span class="co">#&gt;   [7] "...elt"               "...length"           </span></span>
-<span><span class="co">#&gt;   [9] "...names"             ".C"                  </span></span>
-<span><span class="co">#&gt;  [11] ".cache_class"         ".Call"               </span></span>
-<span><span class="co">#&gt;  [13] ".Call.graphics"       ".class2"             </span></span>
-<span><span class="co">#&gt;  [15] ".External"            ".External.graphics"  </span></span>
-<span><span class="co">#&gt;  [17] ".External2"           ".Fortran"            </span></span>
-<span><span class="co">#&gt;  [19] ".Internal"            ".isMethodsDispatchOn"</span></span>
-<span><span class="co">#&gt;  [21] ".Primitive"           ".primTrace"          </span></span>
-<span><span class="co">#&gt;  [23] ".primUntrace"         ".subset"             </span></span>
-<span><span class="co">#&gt;  [25] ".subset2"             "("                   </span></span>
-<span><span class="co">#&gt;  [27] "["                    "[["                  </span></span>
-<span><span class="co">#&gt;  [29] "[[&lt;-"                 "[&lt;-"                 </span></span>
-<span><span class="co">#&gt;  [31] "{"                    "@"                   </span></span>
-<span><span class="co">#&gt;  [33] "@&lt;-"                  "*"                   </span></span>
-<span><span class="co">#&gt;  [35] "/"                    "&amp;"                   </span></span>
-<span><span class="co">#&gt;  [37] "&amp;&amp;"                   "%*%"                 </span></span>
-<span><span class="co">#&gt;  [39] "%/%"                  "%%"                  </span></span>
-<span><span class="co">#&gt;  [41] "^"                    "+"                   </span></span>
-<span><span class="co">#&gt;  [43] "&lt;"                    "&lt;-"                  </span></span>
-<span><span class="co">#&gt;  [45] "&lt;&lt;-"                  "&lt;="                  </span></span>
-<span><span class="co">#&gt;  [47] "="                    "=="                  </span></span>
-<span><span class="co">#&gt;  [49] "&gt;"                    "&gt;="                  </span></span>
-<span><span class="co">#&gt;  [51] "|"                    "||"                  </span></span>
-<span><span class="co">#&gt;  [53] "~"                    "$"                   </span></span>
-<span><span class="co">#&gt;  [55] "$&lt;-"                  "abs"                 </span></span>
+<span><span class="co">#&gt;   [1] "-"                    "!"                   </span></span>
+<span><span class="co">#&gt;   [3] "!="                   "$"                   </span></span>
+<span><span class="co">#&gt;   [5] "$&lt;-"                  "%%"                  </span></span>
+<span><span class="co">#&gt;   [7] "%*%"                  "%/%"                 </span></span>
+<span><span class="co">#&gt;   [9] "&amp;"                    "&amp;&amp;"                  </span></span>
+<span><span class="co">#&gt;  [11] "("                    "*"                   </span></span>
+<span><span class="co">#&gt;  [13] "...elt"               "...length"           </span></span>
+<span><span class="co">#&gt;  [15] "...names"             ".C"                  </span></span>
+<span><span class="co">#&gt;  [17] ".cache_class"         ".Call"               </span></span>
+<span><span class="co">#&gt;  [19] ".Call.graphics"       ".class2"             </span></span>
+<span><span class="co">#&gt;  [21] ".External"            ".External.graphics"  </span></span>
+<span><span class="co">#&gt;  [23] ".External2"           ".Fortran"            </span></span>
+<span><span class="co">#&gt;  [25] ".Internal"            ".isMethodsDispatchOn"</span></span>
+<span><span class="co">#&gt;  [27] ".Primitive"           ".primTrace"          </span></span>
+<span><span class="co">#&gt;  [29] ".primUntrace"         ".subset"             </span></span>
+<span><span class="co">#&gt;  [31] ".subset2"             "/"                   </span></span>
+<span><span class="co">#&gt;  [33] ":"                    "::"                  </span></span>
+<span><span class="co">#&gt;  [35] ":::"                  "@"                   </span></span>
+<span><span class="co">#&gt;  [37] "@&lt;-"                  "["                   </span></span>
+<span><span class="co">#&gt;  [39] "[["                   "[[&lt;-"                </span></span>
+<span><span class="co">#&gt;  [41] "[&lt;-"                  "^"                   </span></span>
+<span><span class="co">#&gt;  [43] "{"                    "|"                   </span></span>
+<span><span class="co">#&gt;  [45] "||"                   "~"                   </span></span>
+<span><span class="co">#&gt;  [47] "+"                    "&lt;"                   </span></span>
+<span><span class="co">#&gt;  [49] "&lt;-"                   "&lt;&lt;-"                 </span></span>
+<span><span class="co">#&gt;  [51] "&lt;="                   "="                   </span></span>
+<span><span class="co">#&gt;  [53] "=="                   "&gt;"                   </span></span>
+<span><span class="co">#&gt;  [55] "&gt;="                   "abs"                 </span></span>
 <span><span class="co">#&gt;  [57] "acos"                 "acosh"               </span></span>
 <span><span class="co">#&gt;  [59] "all"                  "any"                 </span></span>
 <span><span class="co">#&gt;  [61] "anyNA"                "Arg"                 </span></span>
@@ -296,8 +296,8 @@
 <span><span class="co">#&gt; [173] "range"                "Re"                  </span></span>
 <span><span class="co">#&gt; [175] "rep"                  "repeat"              </span></span>
 <span><span class="co">#&gt; [177] "retracemem"           "return"              </span></span>
-<span><span class="co">#&gt; [179] "round"                "seq_along"           </span></span>
-<span><span class="co">#&gt; [181] "seq_len"              "seq.int"             </span></span>
+<span><span class="co">#&gt; [179] "round"                "seq.int"             </span></span>
+<span><span class="co">#&gt; [181] "seq_along"            "seq_len"             </span></span>
 <span><span class="co">#&gt; [183] "sign"                 "signif"              </span></span>
 <span><span class="co">#&gt; [185] "sin"                  "sinh"                </span></span>
 <span><span class="co">#&gt; [187] "sinpi"                "sqrt"                </span></span>
@@ -323,7 +323,7 @@
 <span><span class="va">mean</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; UseMethod("mean")</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x123a2ee38&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x0000000018064408&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span>
 <span></span>
 <span><span class="co"># other package function</span></span>
@@ -333,7 +333,7 @@
 <span><span class="co">#&gt;     .f &lt;- as_mapper(.f, ...)</span></span>
 <span><span class="co">#&gt;     .Call(map_impl, environment(), ".x", ".f", "list")</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x10e3990a8&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x0000000033f65f38&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></span></code></pre></div>
 <p>There are two exceptions to this rule:</p>
 <ul>
@@ -476,7 +476,7 @@ running the code yourself.</p>
 <span></span>
 <span><span class="fu">f2</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 100</span></span>
-<span><span class="co">#&gt; [1] "0x132592310" "0x132592310"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "0x382a1108" "0x382a1108"</span></span></code></pre></div>
 <p><strong>Q3.</strong> What does this function return? Why? Which principle does it illustrate?</p>
 <div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
@@ -535,7 +535,7 @@ running the code yourself.</p>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu">show_time</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2022-08-01 15:26:48 CEST"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2022-08-03 14:50:18 CEST"</span></span></code></pre></div>
 <p><strong>A5.</strong> Let’s take this step-by-step.</p>
 <p>The function argument <code>x</code> is missing in the function call. This means that <code>stop("Error!")</code> is evaluated in the function environment, and not global environment.</p>
 <p>But <code>stop("Error!")</code> evaluated only when <code>x</code> is evaluated, and due to lazy evaluation, this happens only when <code>print(x)</code> is called.</p>
@@ -689,7 +689,7 @@ running the code yourself.</p>
 <span><span class="co">#&gt;     on.exit(setwd(old))</span></span>
 <span><span class="co">#&gt;     force(code)</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x110108cf8&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x000000003621de90&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:withr&gt;</span></span></code></pre></div>
 <p>More importantly, its parameters <code>dir</code> allows temporarily changing working directory to <em>any</em> directory.</p>
 <p><strong>Q4.</strong> Write a function that opens a graphics device, runs the supplied code, and closes the graphics device (always, regardless of whether or not the plotting code works).</p>
@@ -713,6 +713,9 @@ running the code yourself.</p>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu">capture.output2</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in file.remove(temp): cannot remove file 'C:</span></span>
+<span><span class="co">#&gt; \Users\INDRAJ~1\AppData\Local\Temp\Rtmpk3kHG3\file6b9c793c5909',</span></span>
+<span><span class="co">#&gt; reason 'Permission denied'</span></span>
 <span><span class="co">#&gt; [1] "a" "b" "c"</span></span></code></pre></div>
 <p>Compare <code><a href="https://rdrr.io/r/utils/capture.output.html">capture.output()</a></code> to <code>capture.output2()</code>. How do the functions differ? What features have I removed to make the key ideas easier to see? How have I rewritten the key ideas so they’re easier to understand?</p>
 <p><strong>A5.</strong> The <code><a href="https://rdrr.io/r/utils/capture.output.html">capture.output()</a></code> is significantly more complex, as can be seen by its definition:</p>
@@ -756,7 +759,7 @@ running the code yourself.</p>
 <span><span class="co">#&gt;         invisible(NULL)</span></span>
 <span><span class="co">#&gt;     else rval</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x110590ba8&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x000000003666d7a0&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:utils&gt;</span></span></code></pre></div>
 <p>Here are few key differences:</p>
 <ul>
@@ -768,6 +771,9 @@ running the code yourself.</p>
 <span><span class="co">#&gt; [1] "[1] 1"</span></span>
 <span></span>
 <span><span class="fu">capture.output2</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in file.remove(temp): cannot remove file 'C:</span></span>
+<span><span class="co">#&gt; \Users\INDRAJ~1\AppData\Local\Temp\Rtmpk3kHG3\file6b9c6dba50c5',</span></span>
+<span><span class="co">#&gt; reason 'Permission denied'</span></span>
 <span><span class="co">#&gt; character(0)</span></span></code></pre></div>
 <ul>
 <li>
@@ -903,10 +909,10 @@ running the code yourself.</p>
 <span><span class="va">ls_replacement</span> <span class="op">&lt;-</span> <span class="va">ls_replacement</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">ls_replacement</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">base_index</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="va">ls_replacement</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] ".rowNamesDF&lt;-"    "[[&lt;-"            </span></span>
-<span><span class="co">#&gt;  [3] "[&lt;-"              "@&lt;-"             </span></span>
-<span><span class="co">#&gt;  [5] "&lt;-"               "&lt;&lt;-"             </span></span>
-<span><span class="co">#&gt;  [7] "$&lt;-"              "attr&lt;-"          </span></span>
+<span><span class="co">#&gt;  [1] "$&lt;-"              ".rowNamesDF&lt;-"   </span></span>
+<span><span class="co">#&gt;  [3] "@&lt;-"              "[[&lt;-"            </span></span>
+<span><span class="co">#&gt;  [5] "[&lt;-"              "&lt;-"              </span></span>
+<span><span class="co">#&gt;  [7] "&lt;&lt;-"              "attr&lt;-"          </span></span>
 <span><span class="co">#&gt;  [9] "attributes&lt;-"     "body&lt;-"          </span></span>
 <span><span class="co">#&gt; [11] "class&lt;-"          "colnames&lt;-"      </span></span>
 <span><span class="co">#&gt; [13] "comment&lt;-"        "diag&lt;-"          </span></span>
@@ -926,8 +932,8 @@ running the code yourself.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/get.html">mget</a></span><span class="op">(</span><span class="va">ls_replacement</span>, envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">baseenv</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">keep</a></span><span class="op">(</span><span class="va">is.primitive</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "[[&lt;-"           "[&lt;-"            "@&lt;-"           </span></span>
-<span><span class="co">#&gt;  [4] "&lt;-"             "&lt;&lt;-"            "$&lt;-"           </span></span>
+<span><span class="co">#&gt;  [1] "$&lt;-"            "@&lt;-"            "[[&lt;-"          </span></span>
+<span><span class="co">#&gt;  [4] "[&lt;-"            "&lt;-"             "&lt;&lt;-"           </span></span>
 <span><span class="co">#&gt;  [7] "attr&lt;-"         "attributes&lt;-"   "class&lt;-"       </span></span>
 <span><span class="co">#&gt; [10] "dim&lt;-"          "dimnames&lt;-"     "environment&lt;-" </span></span>
 <span><span class="co">#&gt; [13] "length&lt;-"       "levels&lt;-"       "names&lt;-"       </span></span>
@@ -1017,7 +1023,7 @@ running the code yourself.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-01.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

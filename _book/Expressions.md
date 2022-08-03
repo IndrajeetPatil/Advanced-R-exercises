@@ -46,24 +46,24 @@ We can confirm it by drawing ASTs for them:
 
 ```r
 ast(f(g(h())))
-#> █─f 
-#> └─█─g 
-#>   └─█─h
+#> o-f 
+#> \-o-g 
+#>   \-o-h
 
 ast(1 + 2 + 3)
-#> █─`+` 
-#> ├─█─`+` 
-#> │ ├─1 
-#> │ └─2 
-#> └─3
+#> o-`+` 
+#> +-o-`+` 
+#> | +-1 
+#> | \-2 
+#> \-3
 
 ast((x + y) * z)
-#> █─`*` 
-#> ├─█─`(` 
-#> │ └─█─`+` 
-#> │   ├─x 
-#> │   └─y 
-#> └─z
+#> o-`*` 
+#> +-o-`(` 
+#> | \-o-`+` 
+#> |   +-x 
+#> |   \-y 
+#> \-z
 ```
 
 **Q2.** Draw the following trees by hand and then check your answers with `ast()`.
@@ -80,33 +80,33 @@ f(g(1, 2), h(3, i(4, 5)))
 
 ```r
 ast(f(g(h(i(1, 2, 3)))))
-#> █─f 
-#> └─█─g 
-#>   └─█─h 
-#>     └─█─i 
-#>       ├─1 
-#>       ├─2 
-#>       └─3
+#> o-f 
+#> \-o-g 
+#>   \-o-h 
+#>     \-o-i 
+#>       +-1 
+#>       +-2 
+#>       \-3
 
 ast(f(1, g(2, h(3, i()))))
-#> █─f 
-#> ├─1 
-#> └─█─g 
-#>   ├─2 
-#>   └─█─h 
-#>     ├─3 
-#>     └─█─i
+#> o-f 
+#> +-1 
+#> \-o-g 
+#>   +-2 
+#>   \-o-h 
+#>     +-3 
+#>     \-o-i
 
 ast(f(g(1, 2), h(3, i(4, 5))))
-#> █─f 
-#> ├─█─g 
-#> │ ├─1 
-#> │ └─2 
-#> └─█─h 
-#>   ├─3 
-#>   └─█─i 
-#>     ├─4 
-#>     └─5
+#> o-f 
+#> +-o-g 
+#> | +-1 
+#> | \-2 
+#> \-o-h 
+#>   +-3 
+#>   \-o-i 
+#>     +-4 
+#>     \-5
 ```
 
 **Q3.** What's happening with the ASTs below? (Hint: carefully read `?"^"`.)
@@ -114,17 +114,17 @@ ast(f(g(1, 2), h(3, i(4, 5))))
 
 ```r
 ast(`x` + `y`)
-#> █─`+` 
-#> ├─x 
-#> └─y
+#> o-`+` 
+#> +-x 
+#> \-y
 ast(x**y)
-#> █─`^` 
-#> ├─x 
-#> └─y
+#> o-`^` 
+#> +-x 
+#> \-y
 ast(1 -> x)
-#> █─`<-` 
-#> ├─x 
-#> └─1
+#> o-`<-` 
+#> +-x 
+#> \-1
 ```
 
 **A3.** The `str2expression()` helps make sense of these ASTs.
@@ -160,11 +160,11 @@ str2expression("1 -> x")
 
 ```r
 ast(function(x = 1, y = 2) {})
-#> █─`function` 
-#> ├─█─x = 1 
-#> │ └─y = 2 
-#> ├─█─`{` 
-#> └─<inline srcref>
+#> o-`function` 
+#> +-o-x = 1 
+#> | \-y = 2 
+#> +-o-`{` 
+#> \-<inline srcref>
 ```
 
 **A4.** As mentioned in [this](https://adv-r.hadley.nz/functions.html#fun-components) section:
@@ -180,16 +180,16 @@ Therefore, the last leaf in this AST, although not specified in the function cal
 
 ```r
 ast(if (FALSE) 1 else if (FALSE) 2 else if (FALSE) 3 else 4)
-#> █─`if` 
-#> ├─FALSE 
-#> ├─1 
-#> └─█─`if` 
-#>   ├─FALSE 
-#>   ├─2 
-#>   └─█─`if` 
-#>     ├─FALSE 
-#>     ├─3 
-#>     └─4
+#> o-`if` 
+#> +-FALSE 
+#> +-1 
+#> \-o-`if` 
+#>   +-FALSE 
+#>   +-2 
+#>   \-o-`if` 
+#>     +-FALSE 
+#>     +-3 
+#>     \-4
 ```
 
 ### Exercises 18.3.5
@@ -207,9 +207,9 @@ typeof(x_complex)
 #> [1] "language"
 
 ast(1 + 1i)
-#> █─`+` 
-#> ├─1 
-#> └─1i
+#> o-`+` 
+#> +-1 
+#> \-1i
 ```
 
 Similarly, for raw vectors (using `raw()`):
@@ -221,8 +221,8 @@ typeof(x_raw)
 #> [1] "language"
 
 ast(raw(2))
-#> █─raw 
-#> └─2
+#> o-raw 
+#> \-2
 ```
 
 Contrast this with other atomic vectors:
@@ -246,9 +246,9 @@ typeof(x_vec)
 #> [1] "language"
 
 ast(c(1, 2))
-#> █─c 
-#> ├─1 
-#> └─2
+#> o-c 
+#> +-1 
+#> \-2
 ```
 
 **Q2.** What happens when you subset a call object to remove the first element? e.g. `expr(read.csv("foo.csv", header = TRUE))[-1]`. Why?
@@ -369,7 +369,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x125257838>
+#> <bytecode: 0x00000000180643f0>
 #> <environment: namespace:base>
 ```
 
@@ -429,12 +429,12 @@ This construction follows from the prefix form of this expression, revealed by i
 
 ```r
 ast(if (x > 1) "a" else "b")
-#> █─`if` 
-#> ├─█─`>` 
-#> │ ├─x 
-#> │ └─1 
-#> ├─"a" 
-#> └─"b"
+#> o-`if` 
+#> +-o-`>` 
+#> | +-x 
+#> | \-1 
+#> +-"a" 
+#> \-"b"
 ```
 
 ### Exercises 18.4.4
@@ -454,14 +454,14 @@ Compare and contrast the two uses by referencing the AST.
 
 ```r
 ast(f((1)))
-#> █─f 
-#> └─█─`(` 
-#>   └─1
+#> o-f 
+#> \-o-`(` 
+#>   \-1
 ast(`(`(1 + 1))
-#> █─`(` 
-#> └─█─`+` 
-#>   ├─1 
-#>   └─1
+#> o-`(` 
+#> \-o-`+` 
+#>   +-1 
+#>   \-1
 ```
 
 As, you can see `(` is being used in two separate ways:
@@ -490,11 +490,11 @@ We can also have a look at its AST:
 ast({
   m <- mean(x = 1)
 })
-#> █─`{` 
-#> └─█─`<-` 
-#>   ├─m 
-#>   └─█─mean 
-#>     └─x = 1
+#> o-`{` 
+#> \-o-`<-` 
+#>   +-m 
+#>   \-o-mean 
+#>     \-x = 1
 ```
 
 **Q3.** Does `-2^2` yield 4 or -4? Why?
@@ -512,10 +512,10 @@ The same can also be seen by its AST:
 
 ```r
 ast(-2^2)
-#> █─`-` 
-#> └─█─`^` 
-#>   ├─2 
-#>   └─2
+#> o-`-` 
+#> \-o-`^` 
+#>   +-2 
+#>   \-2
 ```
 
 A less confusing way to write this would be:
@@ -537,11 +537,11 @@ This can be easily seen by its AST:
 
 ```r
 ast(!1 + !1)
-#> █─`!` 
-#> └─█─`+` 
-#>   ├─1 
-#>   └─█─`!` 
-#>     └─1
+#> o-`!` 
+#> \-o-`+` 
+#>   +-1 
+#>   \-o-`!` 
+#>     \-1
 ```
 
 **Q5.** Why does `x1 <- x2 <- x3 <- 0` work? Describe the two reasons.
@@ -576,13 +576,13 @@ This is easy to surmise from its AST:
 
 ```r
 ast(x1 <- x2 <- x3 <- 0)
-#> █─`<-` 
-#> ├─x1 
-#> └─█─`<-` 
-#>   ├─x2 
-#>   └─█─`<-` 
-#>     ├─x3 
-#>     └─0
+#> o-`<-` 
+#> +-x1 
+#> \-o-`<-` 
+#>   +-x2 
+#>   \-o-`<-` 
+#>     +-x3 
+#>     \-0
 ```
 
 **Q6.** Compare the ASTs of `x + y %+% z` and `x ^ y %+% z`. What have you learned about the precedence of custom infix functions?
@@ -592,18 +592,18 @@ ast(x1 <- x2 <- x3 <- 0)
 
 ```r
 ast(x + y %+% z)
-#> █─`+` 
-#> ├─x 
-#> └─█─`%+%` 
-#>   ├─y 
-#>   └─z
+#> o-`+` 
+#> +-x 
+#> \-o-`%+%` 
+#>   +-y 
+#>   \-z
 
 ast(x^y %+% z)
-#> █─`%+%` 
-#> ├─█─`^` 
-#> │ ├─x 
-#> │ └─y 
-#> └─z
+#> o-`%+%` 
+#> +-o-`^` 
+#> | +-x 
+#> | \-y 
+#> \-z
 ```
 
 we can say that the custom infix operator `%+%` has:

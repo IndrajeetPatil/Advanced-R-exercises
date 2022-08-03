@@ -46,7 +46,7 @@ escape.character <- function(x, script = FALSE) {
   html(x)
 }
 
-escape.advr_html <- function(x) x
+escape.advr_html <- function(x, ...) x
 ```
 
 We will also need to tweak the boilerplate to pass this additional parameter to `escape()`:
@@ -89,6 +89,22 @@ tag <- function(tag, script = FALSE) {
         paste(children, collapse = ""),
         !!paste0("</", tag, ">")
       ))
+    }),
+    caller_env()
+  )
+}
+
+void_tag <- function(tag) {
+  new_function(
+    exprs(... = ),
+    expr({
+      dots <- dots_partition(...)
+      if (length(dots$unnamed) > 0) {
+        abort(!!paste0("<", tag, "> must not have unnamed arguments"))
+      }
+      attribs <- html_attributes(dots$named)
+
+      html(paste0(!!paste0("<", tag), attribs, " />"))
     }),
     caller_env()
   )
@@ -151,8 +167,14 @@ tags <- c("a", "abbr", "address", "article", "aside", "audio",
   "u", "ul", "var", "video"
 )
 
+void_tags <- c("area", "base", "br", "col", "command", "embed",
+  "hr", "img", "input", "keygen", "link", "meta", "param",
+  "source", "track", "wbr"
+)
+
 html_tags <- c(
-  tags %>% set_names() %>% map(tag)
+  tags %>% set_names() %>% map(tag),
+  void_tags %>% set_names() %>% map(void_tag)
 )
 
 with_html <- function(code) {
@@ -161,7 +183,9 @@ with_html <- function(code) {
 }
 ```
 
-Note that `with_html()` uses `eval_tidy()`, and therefore `code` argument is evaluated first in the `html_tags` named list, which acts as a data mask.
+Note that `with_html()` uses `eval_tidy()`, and therefore `code` argument is evaluated first in the `html_tags` named list, which acts as a data mask, and if no object is found in the data mask, searches in the caller environment.
+
+For this reason, the first example code will work:
 
 
 ```r
@@ -170,19 +194,36 @@ with_html(p(greeting))
 #> <HTML> <p>Hello!</p>
 ```
 
+The following code, however, is not going to work because there is already `address` element in the data mask, and so `p()` will take a function `address()` as an input, and `escape()` doesn't know how to deal with objects of `function` type:
 
 
 ```r
+"address" %in% names(html_tags) 
+#> [1] TRUE
+
 p <- function() "p"
 address <- "123 anywhere street"
 with_html(p(address))
 #> Error in UseMethod("escape"): no applicable method for 'escape' applied to an object of class "function"
 ```
 
-
 ---
 
 **Q4.** Currently the HTML doesn't look terribly pretty, and it's hard to see the structure. How could you adapt `tag()` to do indenting and formatting? (You may need to do some research into block and inline tags.)
+
+**A4.** 
+
+
+```r
+html_tags$p(
+  "Some text. ",
+  html_tags$b(html_tags$i("some bold italic text")),
+  class = "mypara"
+)
+#> <HTML> <p class='mypara'>Some text. <b><i>some bold
+#> italic text</i></b></p>
+```
+
 
 ---
 

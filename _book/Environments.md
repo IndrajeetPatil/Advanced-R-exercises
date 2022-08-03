@@ -40,14 +40,14 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x111916678>
+#> <environment: 0x0000000019608e60>
 #> Parent: <environment: global>
 #> Bindings:
-#> • loop: <env>
+#> * loop: <env>
 
 # should be the same as the `e` memory address
 lobstr::obj_addr(e$loop)
-#> [1] "0x111916678"
+#> [1] "0x19608e60"
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -66,9 +66,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x1115f55e8" "0x1115f55e8"
+#> [1] "0x336c3748" "0x336c3748"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x111646730" "0x111646730"
+#> [1] "0x337ab778" "0x337ab778"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -250,14 +250,14 @@ where("filter")
 #> attr(,"name")
 #> [1] "package:dplyr"
 #> attr(,"path")
-#> [1] "/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library/dplyr"
+#> [1] "C:/Users/IndrajeetPatil/Documents/R/win-library/4.1/dplyr"
 #> 
 #> [[2]]
 #> <environment: package:stats>
 #> attr(,"name")
 #> [1] "package:stats"
 #> attr(,"path")
-#> [1] "/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library/stats"
+#> [1] "C:/Program Files/R/R-4.1.3/library/stats"
 detach("package:dplyr")
 ```
 
@@ -302,7 +302,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x1284e7038>
+#> <bytecode: 0x00000000180843f0>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -482,7 +482,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x11104de78>
+#> <bytecode: 0x0000000018f08b58>
 #> <environment: namespace:rlang>
 ```
 
@@ -499,8 +499,8 @@ explore_caller_env <- function() {
 
 explore_caller_env()
 #> <environment: R_GlobalEnv>
-#> <environment: 0x1119f8640>
-#> <environment: 0x1119f8640>
+#> <environment: 0x0000000033c17098>
+#> <environment: 0x0000000033c17098>
 
 rlang::fn_env(explore_caller_env)
 #> <environment: R_GlobalEnv>

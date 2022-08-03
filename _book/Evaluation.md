@@ -32,9 +32,9 @@ withr::with_tempdir(
 #> <environment: global>
 #> Parent: <environment: package:rlang>
 #> Bindings:
-#> • .Random.seed: <int>
-#> • foo: <fn>
-#> • f: <chr>
+#> * .Random.seed: <int>
+#> * foo: <fn>
+#> * f: <chr>
 ```
 
 If `local = TRUE`, then the environment from which `source()` is called will be used.
@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x117632ff0>
+#> <environment: 0x0000000032f5a630>
 #> Parent: <environment: global>
 ```
 
@@ -250,17 +250,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x1176d0058
+#> env:  0x00000000330a9fd8
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x117f4d440
+#> env:  0x0000000033ad3d08
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x120431720
+#> env:  0x0000000033fafc08
 ```
 
 **A1.** Correctly predicted 😉
@@ -298,7 +298,7 @@ enenv(x)
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x1409bc1f8>
+#> <environment: 0x00000000324be940>
 ```
 
 ---

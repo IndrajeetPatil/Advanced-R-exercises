@@ -92,7 +92,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x114952d30>
+#> <bytecode: 0x0000000032f27fe8>
 #> <environment: namespace:purrr>
 ```
 
@@ -116,7 +116,7 @@ safely
 #>     .f <- as_mapper(.f)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x114aeee10>
+#> <bytecode: 0x00000000330f5d00>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -130,7 +130,7 @@ purrr:::capture_error
 #>         stop("Terminated by user", call. = FALSE)
 #>     })
 #> }
-#> <bytecode: 0x114b49c80>
+#> <bytecode: 0x0000000033149da8>
 #> <environment: namespace:purrr>
 ```
 
@@ -185,10 +185,10 @@ file_comparator <- function(old, new) {
   if (setequal(old, new)) {
     return()
   }
-  
+
   removed <- setdiff(old, new)
   added <- setdiff(new, old)
-  
+
   if (length(removed) > 0L) print_multiple_entries("- File removed", removed)
   if (length(added) > 0L) print_multiple_entries("- File added", added)
 }
@@ -203,7 +203,7 @@ dir_tracker <- function(f) {
   function(...) {
     old_files <- dir()
     on.exit(file_comparator(old_files, dir()), add = TRUE)
-    
+
     f(...)
   }
 }
@@ -222,11 +222,21 @@ file_creation_tracker(c("a.txt", "b.txt"))
 #> b.txt
 #> [1] TRUE TRUE
 
-file_deletion_tracker("a.txt")
+file_deletion_tracker(c("a.txt", "b.txt"))
 #> - File removed:
 #> a.txt
-#> [1] TRUE
+#> b.txt
+#> [1] TRUE TRUE
 ```
+
+Other global function effects we might want to track:
+
+- working directory
+- environment variables
+- connections
+- library paths
+- graphics devices
+- [etc.](https://withr.r-lib.org/reference/index.html)
 
 ---
 
@@ -269,16 +279,40 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2022-08-01 22:36:21
-#> Function called at:  2022-08-01 22:36:26
-#> Function called at:  2022-08-01 22:36:31
-#> Function called at:  2022-08-01 22:36:39
+#> Function created at: 2022-08-03 14:50:46
+#> Function called at:  2022-08-03 14:50:52
+#> Function called at:  2022-08-03 14:50:57
+#> Function called at:  2022-08-03 14:51:05
 ```
 
 ---
 
 **Q5.** Modify `delay_by()` so that instead of delaying by a fixed amount of time, it ensures that a certain amount of time has elapsed since the function was last called. That is, if you called `g <- delay_by(1, f); g(); Sys.sleep(2); g()` there shouldn't be an extra delay.
 
-**A5.** 
+**A5.** Modified version of the function meeting the specified requirements:
+
+
+```r
+delay_by_atleast <- function(f, amount) {
+  force(f)
+  force(amount)
+
+  # the last time the function was run
+  last_time <- NULL
+
+  function(...) {
+    if (!is.null(last_time)) {
+      wait <- (last_time - Sys.time()) + amount
+      if (wait > 0) Sys.sleep(wait)
+    }
+
+    # update the time in the parent environment when the function finishes
+    # for the next run
+    on.exit(last_time <<- Sys.time())
+
+    f(...)
+  }
+}
+```
 
 ---

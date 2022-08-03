@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x123a2ee38>
+#> <bytecode: 0x0000000018064408>
 #> <environment: namespace:base>
 ```
 
@@ -151,21 +151,21 @@ At the time of writing, 253 base functions have no arguments. Most of these are 
 
 ```r
 dplyr::filter(df_formals, argumentCount == 0)
-#> # A tibble: 251 × 2
+#> # A tibble: 253 x 2
 #>    `function` argumentCount
 #>    <chr>              <int>
 #>  1 -                      0
-#>  2 :                      0
-#>  3 ::                     0
-#>  4 :::                    0
-#>  5 !                      0
-#>  6 !=                     0
-#>  7 ...elt                 0
-#>  8 ...length              0
-#>  9 ...names               0
-#> 10 .C                     0
-#> # … with 241 more rows
-#> # ℹ Use `print(n = ...)` to see more rows
+#>  2 !                      0
+#>  3 !=                     0
+#>  4 $                      0
+#>  5 $<-                    0
+#>  6 %%                     0
+#>  7 %*%                    0
+#>  8 %/%                    0
+#>  9 &                      0
+#> 10 &&                     0
+#> # ... with 243 more rows
+#> # i Use `print(n = ...)` to see more rows
 ```
 
 c. How could you adapt the code to find all primitive functions?
@@ -177,34 +177,34 @@ funs <- Filter(is.function, objs)
 primitives <- Filter(is.primitive, funs)
 
 names(primitives)
-#>   [1] "-"                    ":"                   
-#>   [3] "::"                   ":::"                 
-#>   [5] "!"                    "!="                  
-#>   [7] "...elt"               "...length"           
-#>   [9] "...names"             ".C"                  
-#>  [11] ".cache_class"         ".Call"               
-#>  [13] ".Call.graphics"       ".class2"             
-#>  [15] ".External"            ".External.graphics"  
-#>  [17] ".External2"           ".Fortran"            
-#>  [19] ".Internal"            ".isMethodsDispatchOn"
-#>  [21] ".Primitive"           ".primTrace"          
-#>  [23] ".primUntrace"         ".subset"             
-#>  [25] ".subset2"             "("                   
-#>  [27] "["                    "[["                  
-#>  [29] "[[<-"                 "[<-"                 
-#>  [31] "{"                    "@"                   
-#>  [33] "@<-"                  "*"                   
-#>  [35] "/"                    "&"                   
-#>  [37] "&&"                   "%*%"                 
-#>  [39] "%/%"                  "%%"                  
-#>  [41] "^"                    "+"                   
-#>  [43] "<"                    "<-"                  
-#>  [45] "<<-"                  "<="                  
-#>  [47] "="                    "=="                  
-#>  [49] ">"                    ">="                  
-#>  [51] "|"                    "||"                  
-#>  [53] "~"                    "$"                   
-#>  [55] "$<-"                  "abs"                 
+#>   [1] "-"                    "!"                   
+#>   [3] "!="                   "$"                   
+#>   [5] "$<-"                  "%%"                  
+#>   [7] "%*%"                  "%/%"                 
+#>   [9] "&"                    "&&"                  
+#>  [11] "("                    "*"                   
+#>  [13] "...elt"               "...length"           
+#>  [15] "...names"             ".C"                  
+#>  [17] ".cache_class"         ".Call"               
+#>  [19] ".Call.graphics"       ".class2"             
+#>  [21] ".External"            ".External.graphics"  
+#>  [23] ".External2"           ".Fortran"            
+#>  [25] ".Internal"            ".isMethodsDispatchOn"
+#>  [27] ".Primitive"           ".primTrace"          
+#>  [29] ".primUntrace"         ".subset"             
+#>  [31] ".subset2"             "/"                   
+#>  [33] ":"                    "::"                  
+#>  [35] ":::"                  "@"                   
+#>  [37] "@<-"                  "["                   
+#>  [39] "[["                   "[[<-"                
+#>  [41] "[<-"                  "^"                   
+#>  [43] "{"                    "|"                   
+#>  [45] "||"                   "~"                   
+#>  [47] "+"                    "<"                   
+#>  [49] "<-"                   "<<-"                 
+#>  [51] "<="                   "="                   
+#>  [53] "=="                   ">"                   
+#>  [55] ">="                   "abs"                 
 #>  [57] "acos"                 "acosh"               
 #>  [59] "all"                  "any"                 
 #>  [61] "anyNA"                "Arg"                 
@@ -266,8 +266,8 @@ names(primitives)
 #> [173] "range"                "Re"                  
 #> [175] "rep"                  "repeat"              
 #> [177] "retracemem"           "return"              
-#> [179] "round"                "seq_along"           
-#> [181] "seq_len"              "seq.int"             
+#> [179] "round"                "seq.int"             
+#> [181] "seq_along"            "seq_len"             
 #> [183] "sign"                 "signif"              
 #> [185] "sin"                  "sinh"                
 #> [187] "sinpi"                "sqrt"                
@@ -299,7 +299,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x123a2ee38>
+#> <bytecode: 0x0000000018064408>
 #> <environment: namespace:base>
 
 # other package function
@@ -309,7 +309,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x10e3990a8>
+#> <bytecode: 0x0000000033f65f38>
 #> <environment: namespace:purrr>
 ```
 
@@ -493,7 +493,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x132592310" "0x132592310"
+#> [1] "0x382a1108" "0x382a1108"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -580,7 +580,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-08-01 15:26:48 CEST"
+#> [1] "2022-08-03 14:50:18 CEST"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -800,7 +800,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x110108cf8>
+#> <bytecode: 0x000000003621de90>
 #> <environment: namespace:withr>
 ```
 
@@ -834,6 +834,9 @@ capture.output2 <- function(code) {
 }
 
 capture.output2(cat("a", "b", "c", sep = "\n"))
+#> Warning in file.remove(temp): cannot remove file 'C:
+#> \Users\INDRAJ~1\AppData\Local\Temp\Rtmpk3kHG3\file6b9c793c5909',
+#> reason 'Permission denied'
 #> [1] "a" "b" "c"
 ```
 
@@ -882,7 +885,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x110590ba8>
+#> <bytecode: 0x000000003666d7a0>
 #> <environment: namespace:utils>
 ```
 
@@ -896,6 +899,9 @@ capture.output(1)
 #> [1] "[1] 1"
 
 capture.output2(1)
+#> Warning in file.remove(temp): cannot remove file 'C:
+#> \Users\INDRAJ~1\AppData\Local\Temp\Rtmpk3kHG3\file6b9c6dba50c5',
+#> reason 'Permission denied'
 #> character(0)
 ```
 
@@ -1086,10 +1092,10 @@ base_index <- which(grepl("base", searchpaths()))
 ls_replacement <- ls_replacement[which(names(ls_replacement) == as.character(base_index))]
 
 unname(ls_replacement)
-#>  [1] ".rowNamesDF<-"    "[[<-"            
-#>  [3] "[<-"              "@<-"             
-#>  [5] "<-"               "<<-"             
-#>  [7] "$<-"              "attr<-"          
+#>  [1] "$<-"              ".rowNamesDF<-"   
+#>  [3] "@<-"              "[[<-"            
+#>  [5] "[<-"              "<-"              
+#>  [7] "<<-"              "attr<-"          
 #>  [9] "attributes<-"     "body<-"          
 #> [11] "class<-"          "colnames<-"      
 #> [13] "comment<-"        "diag<-"          
@@ -1113,8 +1119,8 @@ The primitive replacement functions can be listed using `is.primitive()`:
 mget(ls_replacement, envir = baseenv()) %>%
   purrr::keep(is.primitive) %>%
   names()
-#>  [1] "[[<-"           "[<-"            "@<-"           
-#>  [4] "<-"             "<<-"            "$<-"           
+#>  [1] "$<-"            "@<-"            "[[<-"          
+#>  [4] "[<-"            "<-"             "<<-"           
 #>  [7] "attr<-"         "attributes<-"   "class<-"       
 #> [10] "dim<-"          "dimnames<-"     "environment<-" 
 #> [13] "length<-"       "levels<-"       "names<-"       

@@ -38,10 +38,10 @@ Maybe because the function runs too fast?
 
 ```r
 bench::mark(f(), check = FALSE, iterations = 1000)
-#> # A tibble: 1 × 6
+#> # A tibble: 1 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           100µs    136µs     7213.    4.65MB     102.
+#> 1 f()           306us    336us     2934.    4.64MB     41.7
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -73,7 +73,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x127500478>
+#> <bytecode: 0x00000000172bde70>
 #> <environment: namespace:base>
 ```
 
@@ -150,18 +150,18 @@ Compare results from these alternatives:
 
 ```r
 t_bench_df
-#> # A tibble: 2 × 2
+#> # A tibble: 2 x 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)    423.84ns
-#> 2 x^0.5        1.28µs
+#> 1 sqrt(x)      1.81us
+#> 2 x^0.5        5.28us
 
 t_systime_df
-#> # A tibble: 2 × 3
+#> # A tibble: 2 x 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                 0.398                0.384
-#> 2 x^0.5                   1.22                 1.22
+#> 1 sqrt(x)                 0.770                0.790
+#> 2 x^0.5                   3.77                 4.28
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -190,19 +190,19 @@ bench::mark(
   iterations = 1000
 ) %>%
   dplyr::arrange(median)
-#> # A tibble: 4 × 6
+#> # A tibble: 4 x 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)         1.02µs   1.35µs   592965.    7.86KB
-#> 2 exp(log(x)/2)   6.11µs   7.03µs   143394.    7.86KB
-#> 3 x^0.5           9.22µs  10.21µs    99808.    7.86KB
-#> 4 x^(1/2)         9.31µs  10.21µs    99520.    7.86KB
+#> 1 sqrt(x)          5.3us    5.7us   172360.    7.86KB
+#> 2 x^0.5           35.5us   36.1us    27315.    7.86KB
+#> 3 x^(1/2)         36.1us   37.6us    26499.    7.86KB
+#> 4 exp(log(x)/2)  100.5us  101.3us     9753.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
-#> 1     594.
-#> 2       0 
-#> 3       0 
-#> 4       0
+#> 1        0
+#> 2        0
+#> 3        0
+#> 4        0
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.

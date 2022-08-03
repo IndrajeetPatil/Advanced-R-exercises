@@ -269,7 +269,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x119a9f048>
+#> <bytecode: 0x0000000033c0bd30>
 #> <environment: namespace:rlang>
 ```
 
@@ -496,12 +496,16 @@ message2error1 <- function(code) {
   withCallingHandlers(code, message = function(e) stop("error"))
 }
 
-message2error1({1;  message("hidden error"); NULL})
+message2error1({
+  1
+  message("hidden error")
+  NULL
+})
 #> Error in (function (e) : error
 
 traceback()
 #> 9: stop("error") at #2
-#> 8: (function (e) 
+#> 8: (function (e)
 #>    stop("error"))(list(message = "hidden error\n",
 #>      call = message("hidden error")))
 #> 7: signalCondition(cond)
@@ -529,7 +533,11 @@ message2error2 <- function(code) {
   tryCatch(code, message = function(e) (stop("error")))
 }
 
-message2error2({1; stop("hidden error"); NULL})
+message2error2({
+  1
+  stop("hidden error")
+  NULL
+})
 #> Error in value[[3L]](cond) : error
 
 traceback()

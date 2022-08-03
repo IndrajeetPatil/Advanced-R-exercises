@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x10f934898>
+#> <bytecode: 0x00000000332b2f58>
 #> <environment: namespace:rlang>
 ```
 
@@ -558,16 +558,16 @@ The same can also be noticed in ASTs for these expressions:
 
 ```r
 ast(expr(mean(1:10)))
-#> █─expr 
-#> └─█─mean 
-#>   └─█─`:` 
-#>     ├─1 
-#>     └─10
+#> o-expr 
+#> \-o-mean 
+#>   \-o-`:` 
+#>     +-1 
+#>     \-10
 
 ast(expr(mean(!!(1:10))))
-#> █─expr 
-#> └─█─mean 
-#>   └─<inline integer>
+#> o-expr 
+#> \-o-mean 
+#>   \-<inline integer>
 ```
 
 The first call is more natural, since the second one inlines a vector directly into the call, something that is rarely done.
