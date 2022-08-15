@@ -8,11 +8,11 @@ source("common.R")
 
 **Q1.** How do you create raw and complex scalars? (See `?raw` and `?complex`.)
 
-**A1.** 
+**A1.** In R, scalars are nothing but vectors of length 1, and can be created using the same constructor.
 
-- raw vectors
+- Raw vectors
 
-The raw type holds raw bytes. For example,
+The raw type holds raw bytes, and can be created using `charToRaw()`. For example,
 
 ```{r}
 x <- "A string"
@@ -22,16 +22,16 @@ x <- "A string"
 typeof(y)
 ```
 
-You can use it to also figure out differences between characters that might look quite similar:
+An alternative is to use `as.raw()`:
 
 ```{r}
-charToRaw("–") # en-dash
-charToRaw("—") # em-dash
+as.raw("–") # en-dash
+as.raw("—") # em-dash
 ```
 
-- complex vectors
+- Complex vectors
 
-Complex vectors can be used to represent (surprise!) complex numbers.
+Complex vectors are used to represent (surprise!) complex numbers.
 
 Example of a complex scalar:
 
@@ -49,7 +49,7 @@ c("a", 1)
 c(TRUE, 1L)
 ```
 
-**A2.** Usually, the more *general* type would take precedence.
+**A2.** The vector coercion rules dictate that the data type with smaller size will be converted to data type with bigger size.
 
 ```{r}
 c(1, FALSE)
@@ -57,16 +57,6 @@ c(1, FALSE)
 c("a", 1)
 
 c(TRUE, 1L)
-```
-
-Let's try some more examples.
-
-```{r}
-c(1.0, 1L)
-
-c(1.0, "1.0")
-
-c(TRUE, "1.0")
 ```
 
 **Q3.** Why is `1 == "1"` true? Why is `-1 < FALSE` true? Why is `"one" < 2` false?
@@ -107,11 +97,11 @@ c(FALSE, NA_character_)
 
 **Q5.** Precisely what do `is.atomic()`, `is.numeric()`, and `is.vector()` test for?
 
-**A5.** 
+**A5.** Let's discuss them one-by-one.
 
 - `is.atomic()`
 
-This functions checks if the object is of atomic *type* (or `NULL`), and not if it is an atomic *vector*.
+This function checks if the object is a vector of atomic *type* (or `NULL`).
 
 Quoting docs:
 
@@ -120,7 +110,7 @@ Quoting docs:
 ```{r}
 is.atomic(NULL)
 
-is.vector(NULL)
+is.atomic(list(NULL))
 ```
 
 - `is.numeric()`
@@ -132,18 +122,18 @@ Its documentation says:
 Therefore, this function only checks for `double` and `integer` base types and not other types based on top of these types (`factor`, `Date`, `POSIXt`, or `difftime`).
 
 ```{r}
-x <- factor(c(1L, 2L))
+is.numeric(1L)
 
-is.numeric(x)
+is.numeric(factor(1L))
 ```
 
 - `is.vector()`
 
-As the documentation for this function reveals:
+As per its documentation:
 
 > `is.vector` returns `TRUE` if `x` is a vector of the specified mode having no attributes *other than names*. It returns `FALSE` otherwise.
 
-Thus, the function can be incorrect in presence if the object has attributes other than `names`.
+Thus, the function can be incorrectif the object has attributes other than `names`.
 
 ```{r}
 x <- c("x" = 1, "y" = 2)
@@ -165,29 +155,47 @@ is.null(dim(x))
 
 **Q1.** How is `setNames()` implemented? How is `unname()` implemented? Read the source code.
 
-**A1.**
+**A1.** Let's have a look at implementations for these functions.
+
+- `setNames()`
 
 ```{r}
 setNames
+```
+
+Given this function signature, we can see why, when no first argument is given, the result is still a named vector.
+
+```{r}
+setNames(, c("a", "b"))
 
 setNames(c(1, 2), c("a", "b"))
 ```
 
+- `unname()`
+
 ```{r}
 unname
+```
 
-A <- provideDimnames(N <- array(1:24, dim = 2:4))
+`unname()` removes existing names (or dimnames) by setting them to `NULL`.
 
-unname(A, force = TRUE)
+```{r}
+unname(setNames(, c("a", "b")))
 ```
 
 **Q2.** What does `dim()` return when applied to a 1-dimensional vector? When might you use `NROW()` or `NCOL()`?
 
-**A2.** Dimensions for a 1-dimensional vector are `NULL`.
+**A2.** Dimensions for a 1-dimensional vector are `NULL`. For example,
+
+```{r}
+dim(c(1, 2))
+```
+
 
 `NROW()` and `NCOL()` are helpful for getting dimensions for 1D vectors by treating them as if they were matrices or dataframes.
 
 ```{r}
+# example-1
 x <- character(0)
 
 dim(x)
@@ -197,6 +205,17 @@ NROW(x)
 
 ncol(x)
 NCOL(x)
+
+# example-2
+y <- 1:4
+
+dim(y)
+
+nrow(y)
+NROW(y)
+
+ncol(y)
+NCOL(y)
 ```
 
 **Q3.** How would you describe the following three objects? What makes them different from `1:5`?
@@ -207,23 +226,9 @@ x2 <- array(1:5, c(1, 5, 1))
 x3 <- array(1:5, c(5, 1, 1))
 ```
 
-**A3.**
+**A3.** `x1`, `x2`, and `x3` are one-dimensional **array**s, but with different "orientations", if we were to mentally visualize them. 
 
-- `1:5` is a dimensionless **vector** 
-- `x1`, `x2`, and `x3` are one-dimensional **array** 
-
-```{r}
-(x <- 1:5)
-dim(x)
-
-(x1 <- array(1:5, c(1, 1, 5)))
-(x2 <- array(1:5, c(1, 5, 1)))
-(x3 <- array(1:5, c(5, 1, 1)))
-
-dim(x1)
-dim(x2)
-dim(x3)
-```
+`x1` has 5 entries in the third dimension, `x2` in the second dimension, while `x1` in the first dimension.
 
 **Q4.** An early draft used this code to illustrate `structure()`:
 
@@ -247,7 +252,7 @@ structure(1:5, comment = "my attribute")
 
 **Q1.** What sort of object does `table()` return? What is its type? What attributes does it have? How does the dimensionality change as you tabulate more variables?
 
-**A1.** `table()` returns an array with integer type and its dimensions scale with the number of variables present.
+**A1.** `table()` returns an array of `integer` type and its dimensions scale with the number of variables present.
 
 ```{r}
 (x <- table(mtcars$am))
@@ -268,7 +273,7 @@ f1 <- factor(letters)
 levels(f1) <- rev(levels(f1))
 ```
 
-**A2.** Its levels changes but the underlying integer values remain the same.
+**A2.** Its levels change but the underlying integer values remain the same.
 
 ```{r}
 f1 <- factor(letters)
@@ -289,14 +294,17 @@ f3 <- factor(letters, levels = rev(letters))
 
 **A3.** In this code:
 
-`f2`: Only the underlying integers are reversed, but levels remain unchanged.
-`f3`: Both the levels and the underlying integers are reversed.
+- `f2`: Only the underlying integers are reversed, but levels remain unchanged.
 
 ```{r}
 f2 <- rev(factor(letters))
 f2
 as.integer(f2)
+```
 
+- `f3`: Both the levels and the underlying integers are reversed.
+
+```{r}
 f3 <- factor(letters, levels = rev(letters))
 f3
 as.integer(f3)
@@ -306,18 +314,18 @@ as.integer(f3)
 
 **Q1.** List all the ways that a list differs from an atomic vector.
 
-**A1.** 
+**A1.** Here is a table of comparison:
 
-feature | atomic vector  | list (aka generic vector)
-------- | -------------- | --------------
-element type | unique | mixed^[a list can contain a mix of types]
-recursive? | no | yes^[(a list can contain itself)]
-return for out-of-bounds index | `NA`^[(e.g. `c(1)[2]`)] | `NULL`^[(e.g. `list(1)[2]`)]
-memory address | single memory reference^[`lobstr::ref(c(1, 2))`] | reference per list element^[`lobstr::ref(list(1, 2))`]
+| feature                        | atomic vector                                    | list (aka generic vector)                              |
+| :----------------------------- | :----------------------------------------------- | :----------------------------------------------------- |
+| element type                   | unique                                           | mixed^[a list can contain a mix of types]              |
+| recursive?                     | no                                               | yes^[a list can contain itself]                        |
+| return for out-of-bounds index | `NA`                                             | `NULL`                                                 |
+| memory address                 | single memory reference^[`lobstr::ref(c(1, 2))`] | reference per list element^[`lobstr::ref(list(1, 2))`] |
 
 **Q2.** Why do you need to use `unlist()` to convert a list to an atomic vector? Why doesn't `as.vector()` work? 
 
-**A2.** List already *is* a (generic) vector, so `as.vector` is not going to change anything, and there is no `as.atomic.vector`. Thus the need to use `unlist()`.
+**A2.** A list already *is* a (generic) vector, so `as.vector()` is not going to change anything, and there is no `as.atomic.vector`. Thus, we need to use `unlist()`.
 
 ```{r}
 x <- list(a = 1, b = 2)
@@ -325,30 +333,35 @@ x <- list(a = 1, b = 2)
 is.vector(x)
 is.atomic(x)
 
+# still a list
 as.vector(x)
 
+# now a vector
 unlist(x)
 ```
 
 **Q3.** Compare and contrast `c()` and `unlist()` when combining a date and date-time into a single vector.
 
-**A3.** 
+**A3.** Let's first create a date and datetime object
 
 ```{r}
-# creating a date and datetime
 date <- as.Date("1947-08-15")
 datetime <- as.POSIXct("1950-01-26 00:01", tz = "UTC")
+```
 
-# check attributes
+And check their attributes and underlying `double` representation:
+
+```{r}
 attributes(date)
 attributes(datetime)
 
-# check their underlying double representation
 as.double(date) # number of days since the Unix epoch 1970-01-01
 as.double(datetime) # number of seconds since then
 ```
 
-Behavior with `c()`: Works as expected. Only odd thing is that it strips the `tzone` attribute.
+- Behavior with `c()`
+
+Since `S3` method for `c()` dispatches on the first argument, the resulting class of the vector is going to be the same as the first argument. Because of this, some attributes will be lost.
 
 ```{r}
 c(date, datetime)
@@ -360,7 +373,9 @@ c(datetime, date)
 attributes(c(datetime, date))
 ```
 
-Behavior with `unlist()`: Removes all attributes and we are left only with the underlying double representations of these objects.
+- Behavior with `unlist()`
+
+It removes all attributes and we are left only with the underlying double representations of these objects.
 
 ```{r}
 unlist(list(date, datetime))
@@ -378,13 +393,13 @@ unlist(list(datetime, date))
 data.frame(x = numeric(0))
 ```
 
-Data frame with 0 columns is possible. This will be an empty list.
+Data frame with 0 columns is also possible. This will be an empty list.
 
 ```{r}
 data.frame(row.names = 1)
 ```
 
-Both in one go:
+And, finally, data frame with 0 rows *and* columns is also possible:
 
 ```{r}
 data.frame()
@@ -392,9 +407,19 @@ data.frame()
 dim(data.frame())
 ```
 
+Although, it might not be common to *create* such data frames, they can be results of subsetting. For example,
+
+```{r}
+BOD[0, ]
+
+BOD[, 0]
+
+BOD[0, 0]
+```
+
 **Q2.** What happens if you attempt to set rownames that are not unique?
 
-**A2.** If you attempt to set rownames that are not unique, it will not work.
+**A2.** If you attempt to set data frame rownames that are not unique, it will not work.
 
 ```{r, error=TRUE}
 data.frame(row.names = c(1, 1))
@@ -402,7 +427,10 @@ data.frame(row.names = c(1, 1))
 
 **Q3.** If `df` is a data frame, what can you say about `t(df)`, and `t(t(df))`? Perform some experiments, making sure to try different column types.
 
-**A3.** Transposing a dataframe transforms it into a matrix and coerces all its elements to be of the same type.
+**A3.** Transposing a data frame:
+
+- transforms it into a matrix 
+- coerces all its elements to be of the same type
 
 ```{r}
 # original
@@ -432,7 +460,13 @@ dim(t(t(df)))
 
 **Q4.** What does `as.matrix()` do when applied to a data frame with columns of different types? How does it differ from `data.matrix()`?
 
-**A4.** The return type of `as.matrix()` depends on dataframe column types.
+**A4.** The return type of `as.matrix()` depends on the data frame column types.
+
+As docs for `as.matrix()` mention:
+
+> The method for data frames will return a character matrix if there is only atomic columns and any non-(numeric/logical/complex) column, applying as.vector to factors and format to other non-character columns. Otherwise the usual coercion hierarchy (logical < integer < double < complex) will be used, e.g. all-logical data frames will be coerced to a logical matrix, mixed logical-integer will give an integer matrix, etc.
+
+Let's experiment:
 
 ```{r}
 # example with mixed types (coerced to character)
@@ -448,11 +482,13 @@ BOD
 as.matrix(BOD)
 ```
 
+On the other hand, `data.matrix()` always returns a numeric matrix.
+
 From documentation of `data.matrix()`:
 
-> Return the matrix obtained by converting all the variables in a data frame to numeric mode and then binding them together as the columns of a matrix.
+> Return the matrix obtained by converting all the variables in a data frame to numeric mode and then binding them together as the columns of a matrix. Factors and ordered factors are replaced by their internal codes. [...] Character columns are first converted to factors and then to integers.
 
-So `data.matrix()` always returns a numeric matrix:
+Let's experiment:
 
 ```{r}
 data.matrix(df)
