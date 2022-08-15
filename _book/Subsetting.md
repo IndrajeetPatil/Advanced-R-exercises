@@ -25,10 +25,18 @@ mtcars[mtcars$cyl == 4 | 6, ]
 
 
 ```r
+# `==` instead of `=`
 mtcars[mtcars$cyl == 4, ]
+
+# `-(1:4)` instead of `-1:4`
 mtcars[-(1:4), ]
+
+# `,` was missing
 mtcars[mtcars$cyl <= 5, ]
+
+# correct subsetting syntax
 mtcars[mtcars$cyl == 4 | mtcars$cyl == 6, ]
+mtcars[mtcars$cyl %in% c(4, 6), ]
 ```
 
 **Q2.** Why does the following code yield five missing values?
@@ -71,8 +79,6 @@ A3. The documentation for `upper.tri()` states-
 
 > Returns a matrix of logicals the same size of a given matrix with entries `TRUE` in the **upper triangle**
 
-That is, `upper.tri()` return a matrix of logicals.
-
 
 ```r
 (x <- outer(1:5, 1:5, FUN = "*"))
@@ -92,7 +98,7 @@ upper.tri(x)
 #> [5,] FALSE FALSE FALSE FALSE FALSE
 ```
 
-When used with a matrix for subsetting, this logical matrix returns a vector:
+When used with a matrix for subsetting, elements corresponding to `TRUE` in the subsetting matrix are selected. But, instead of a matrix, this returns a vector:
 
 
 ```r
@@ -100,9 +106,9 @@ x[upper.tri(x)]
 #>  [1]  2  3  6  4  8 12  5 10 15 20
 ```
 
-**Q4.**  Why does `mtcars[1:20]` return an error? How does it differ from the similar `mtcars[1:20, ]`?
+**Q4.** Why does `mtcars[1:20]` return an error? How does it differ from the similar `mtcars[1:20, ]`?
 
-When indexed like a list, data frame columns at given indices will be selected.
+**A4.** When indexed like a list, data frame columns at given indices will be selected.
 
 
 ```r
@@ -116,7 +122,7 @@ head(mtcars[1:2])
 #> Valiant           18.1   6
 ```
 
-`mtcars[1:20]` doesn't work because there are 11 columns in `mtcars` dataset.
+`mtcars[1:20]` doesn't work because there are only 11 columns in `mtcars` dataset.
 
 On the other hand, `mtcars[1:20, ]` indexes a dataframe like a matrix, and because there are indeed 20 rows in `mtcars`, all columns with these rows are selected.
 
@@ -141,9 +147,9 @@ diag(x)
 
 **Q6.** What does `df[is.na(df)] <- 0` do? How does it work?
 
-**A6.** This command replaces every instance of `NA` in a dataframe with `0`.
+**A6.** This expression replaces every instance of `NA` in `df` with `0`.
 
-`is.na(df)` produces a matrix of logical values, which provides a way to select and assign.
+`is.na(df)` produces a matrix of logical values, which provides a way of subsetting.
 
 
 ```r
@@ -169,37 +175,39 @@ class(is.na(df))
 
 **Q1.** Brainstorm as many ways as possible to extract the third value from the `cyl` variable in the `mtcars` dataset.
 
-**A1.** Possible ways to do this:
+**A1.** Possible ways to to extract the third value from the `cyl` variable in the `mtcars` dataset:
 
 
 ```r
-mtcars$cyl[[3]]
-#> [1] 4
-mtcars[, "cyl"][[3]]
-#> [1] 4
 mtcars[["cyl"]][[3]]
 #> [1] 4
-
+mtcars[[c(2, 3)]]
+#> [1] 4
+mtcars[3, ][["cyl"]]
+#> [1] 4
 mtcars[3, ]$cyl
 #> [1] 4
 mtcars[3, "cyl"]
 #> [1] 4
-mtcars[3, ][["cyl"]]
-#> [1] 4
-
-mtcars[[c(2, 3)]]
+mtcars[, "cyl"][[3]]
 #> [1] 4
 mtcars[3, 2]
+#> [1] 4
+mtcars$cyl[[3]]
 #> [1] 4
 ```
 
 **Q2.** Given a linear model, e.g., `mod <- lm(mpg ~ wt, data = mtcars)`, extract the residual degrees of freedom. Then extract the R squared from the model summary (`summary(mod)`)
 
-**A2.** Specified linear model:
+**A2.** Given that objects of class `lm` are lists, we can use subsetting operators to extract elements we want.
 
 
 ```r
 mod <- lm(mpg ~ wt, data = mtcars)
+class(mod)
+#> [1] "lm"
+typeof(mod)
+#> [1] "list"
 ```
 
 - extracting the residual degrees of freedom
@@ -208,9 +216,6 @@ mod <- lm(mpg ~ wt, data = mtcars)
 ```r
 mod$df.residual 
 #> [1] 30
-
-# or 
-
 mod[["df.residual"]]
 #> [1] 30
 ```
@@ -221,13 +226,15 @@ mod[["df.residual"]]
 ```r
 summary(mod)$r.squared
 #> [1] 0.7528328
+summary(mod)[["r.squared"]]
+#> [1] 0.7528328
 ```
 
 ## Exercises 4.5.9
 
 **Q1.**  How would you randomly permute the columns of a data frame? (This is an important technique in random forests.) Can you simultaneously permute the rows and columns in one step?
 
-**A1.** Let's select a small data frame to work with.
+**A1.** Let's create a small data frame to work with.
 
 
 ```r
@@ -250,6 +257,8 @@ df
 #> Hornet Sportabout    3    2
 #> Valiant              3    1
 ```
+
+To randomly permute the columns of a data frame, we can combine `[` and `sample()` as follows:
 
 - randomly permute columns
 
@@ -316,7 +325,7 @@ df[sample.int(nrow(df)), sample.int(ncol(df))]
 
 **Q2.** How would you select a random sample of `m` rows from a data frame?  What if the sample had to be contiguous (i.e., with an initial row, a final row, and every row in between)?
 
-**A2.**  Let's select a small data frame to work with.
+**A2.**  Let's create a small data frame to work with.
 
 
 ```r
@@ -342,6 +351,8 @@ df
 # number of rows to sample
 m <- 2L
 ```
+
+To  select a random sample of `m` rows from a data frame, we can combine `[` and `sample()` as follows:
 
 - random and non-contiguous sample of `m` rows from a data frame
 
@@ -377,7 +388,7 @@ df[start_row:end_row, ]
 
 **Q3.** How could you put the columns in a data frame in alphabetical order?
 
-**A3.** Sorting columns in a data frame in the alphabetical order:
+**A3.** we can sort columns in a data frame in the alphabetical order using `[` with `order()`:
 
 
 ```r

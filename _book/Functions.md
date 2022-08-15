@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000018074d20>
+#> <bytecode: 0x0000000018064cb0>
 #> <environment: namespace:base>
 ```
 
@@ -299,7 +299,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000018074d20>
+#> <bytecode: 0x0000000018064cb0>
 #> <environment: namespace:base>
 
 # other package function
@@ -309,7 +309,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x0000000033f64728>
+#> <bytecode: 0x0000000033f547e8>
 #> <environment: namespace:purrr>
 ```
 
@@ -493,7 +493,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x382ce1f8" "0x382ce1f8"
+#> [1] "0x1556bdd0" "0x1556bdd0"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -580,7 +580,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-08-15 07:22:24 CEST"
+#> [1] "2022-08-15 11:15:54 CEST"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -800,7 +800,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x0000000036220d78>
+#> <bytecode: 0x00000000134cafe0>
 #> <environment: namespace:withr>
 ```
 
@@ -835,7 +835,7 @@ capture.output2 <- function(code) {
 
 capture.output2(cat("a", "b", "c", sep = "\n"))
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpQRr3Tk\file2e706ca7273',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpC45BRO\file6da860ef46a8',
 #> reason 'Permission denied'
 #> [1] "a" "b" "c"
 ```
@@ -885,7 +885,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x0000000036670688>
+#> <bytecode: 0x000000001391a8f0>
 #> <environment: namespace:utils>
 ```
 
@@ -900,7 +900,7 @@ capture.output(1)
 
 capture.output2(1)
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpQRr3Tk\file2e7072ea501b',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpC45BRO\file6da8512b4e40',
 #> reason 'Permission denied'
 #> character(0)
 ```
