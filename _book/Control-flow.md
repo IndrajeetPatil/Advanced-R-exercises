@@ -15,9 +15,9 @@ ifelse(NA, 1, "no")
 
 Read the documentation and write down the rules in your own words.
 
-**A1.** Here are *da rulz*: 
+**A1.** Here are the rules about what a call to `ifelse()` might return: 
 
-- It's type unstable, i.e. the type of return will depend on the type of each condition (`yes` and `no`, i.e.): 
+- It is type unstable, i.e. the type of return will depend on the type of which condition is true (`yes` or `no`, i.e.): 
 
 
 ```r
@@ -37,15 +37,23 @@ ifelse(NaN, 1, "no")
 #> [1] NA
 ```
 
-- If the `test` argument doesn't resolve to `logical` type, it will try to coerce the output to `logical` type:
+- If `test` is argument is of logical type, but `NA`, it will return `NA`:
+
+
+```r
+ifelse(NA, 1, "no")
+#> [1] NA
+```
+
+- If the `test` argument doesn't resolve to `logical` type, it will try to coerce the output to a `logical` type:
 
 
 ```r
 # will work
 ifelse("TRUE", 1, "no")
 #> [1] 1
-ifelse("true", 1, "no")
-#> [1] 1
+ifelse("false", 1, "no")
+#> [1] "no"
 
 # won't work
 ifelse("tRuE", 1, "no")
@@ -54,7 +62,7 @@ ifelse(NaN, 1, "no")
 #> [1] NA
 ```
 
-To quote the docs for this function:
+This is also clarified in the docs for this function:
 
 > A vector of the same length and attributes (including dimensions and `"class"`) as `test` and data values from the values of `yes` or `no`. The mode of the answer will be coerced from logical to accommodate first any values taken from yes and then any values taken from `no`.
 
@@ -71,7 +79,7 @@ if (length(x)) "not empty" else "empty"
 #> [1] "empty"
 ```
 
-**A2.** The code works because the conditions - even though of `numeric` type - are successfully coerced to a `logical` type.
+**A2.** The code works because the conditional expressions in `if()` - even though of `numeric` type - can be successfully coerced to a `logical` type.
 
 
 ```r
@@ -96,7 +104,21 @@ for (i in 1:length(x)) {
 out
 ```
 
-**A1.** This works because `1:length(x)` goes both ways; in this case, from 1 to 0. And, since out-of-bound values for atomic vectors is `NA`, all related operations with it also lead to `NA`.
+**A1.** This works because `1:length(x)` works in both positive and negative directions.
+
+
+```r
+1:2
+#> [1] 1 2
+1:0
+#> [1] 1 0
+1:-3
+#> [1]  1  0 -1 -2 -3
+```
+
+In this case, since `x` is of length `0`, `i` will go from `1` to `0`. 
+
+Additionally, since out-of-bound (OOB) value for atomic vectors is `NA`, all related operations with OOB values will also produce `NA`.
 
 
 ```r
@@ -116,17 +138,16 @@ out
 #> [1] NA
 ```
 
-A way to do avoid this unintended behavior would be:
+A way to do avoid this unintended behavior is to use `seq_along()` instead:
 
 
 ```r
 x <- numeric()
 out <- vector("list", length(x))
 
-for (i in 1:seq_along(x)) {
+for (i in seq_along(x)) {
   out[i] <- x[i]^2
 }
-#> Error in 1:seq_along(x): argument of length 0
 
 out
 #> list()
@@ -150,15 +171,19 @@ xs
 ```r
 xs <- c(1, 2, 3)
 for (x in xs) {
-  print(x)
+  cat("x:", x, "\n")
   xs <- c(xs, x * 2)
+  cat("xs:", paste(xs), "\n")
 }
-#> [1] 1
-#> [1] 2
-#> [1] 3
+#> x: 1 
+#> xs: 1 2 3 2 
+#> x: 2 
+#> xs: 1 2 3 2 4 
+#> x: 3 
+#> xs: 1 2 3 2 4 6
 ```
 
-It is worth noting that `x` is not updated after each iteration, otherwise it will take increasingly bigger values of `xs`, and the loop will never end executing.
+It is worth noting that `x` is not updated *after* each iteration; otherwise, it will take increasingly bigger values of `xs`, and the loop will never end executing.
 
 **Q3.** What does the following code tell you about when the index is updated?
 
@@ -173,7 +198,7 @@ for (i in 1:3) {
 #> [1] 6
 ```
 
-**A3.** In a `for` loop the index is updated in the **beginning** of each iteration. Otherwise, we will encounter an infinite loop.
+**A3.** In a `for()` loop the index is updated in the **beginning** of each iteration. Otherwise, we will encounter an infinite loop.
 
 
 ```r
@@ -190,7 +215,7 @@ for (i in 1:3) {
 #> after:   6
 ```
 
-Also, worth contrasting the behavior of `for` loop with that of `while` loop:
+Also, worth contrasting the behavior of `for()` loop with that of `while()` loop:
 
 
 ```r
