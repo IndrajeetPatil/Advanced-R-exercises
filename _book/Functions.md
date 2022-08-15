@@ -140,6 +140,24 @@ funs <- Filter(is.function, objs)
 
 a. Which base function has the most arguments?
 
+We can use `formals()` to extract number of arguments, but because this function returns `NULL` for primitive functions.
+
+
+```r
+formals("!")
+#> NULL
+
+length(formals("!"))
+#> [1] 0
+```
+
+Therefore, we will focus only on non-primitive functions.
+
+
+```r
+funs <- purrr::discard(funs, is.primitive)
+```
+
 `scan()` function has the most arguments.
 
 
@@ -153,7 +171,7 @@ df_formals <- purrr::map_df(funs, ~ length(formals(.))) %>%
   dplyr::arrange(desc(argumentCount))
 
 df_formals
-#> # A tibble: 1,328 x 2
+#> # A tibble: 1,124 x 2
 #>    `function`       argumentCount
 #>    <chr>                    <int>
 #>  1 scan                        22
@@ -166,31 +184,33 @@ df_formals
 #>  8 system2                     11
 #>  9 print.default               10
 #> 10 save                        10
-#> # ... with 1,318 more rows
+#> # ... with 1,114 more rows
 #> # i Use `print(n = ...)` to see more rows
 ```
 
 b. How many base functions have no arguments? What’s special about those functions?
 
-At the time of writing, 253 base functions have no arguments. Most of these are primitive functions
+
+
+At the time of writing, 49 base (non-primitive) functions have no arguments. 
 
 
 ```r
 dplyr::filter(df_formals, argumentCount == 0)
-#> # A tibble: 253 x 2
-#>    `function` argumentCount
-#>    <chr>              <int>
-#>  1 -                      0
-#>  2 !                      0
-#>  3 !=                     0
-#>  4 $                      0
-#>  5 $<-                    0
-#>  6 %%                     0
-#>  7 %*%                    0
-#>  8 %/%                    0
-#>  9 &                      0
-#> 10 &&                     0
-#> # ... with 243 more rows
+#> # A tibble: 49 x 2
+#>    `function`           argumentCount
+#>    <chr>                        <int>
+#>  1 .First.sys                       0
+#>  2 .fixupGFortranStderr             0
+#>  3 .fixupGFortranStdout             0
+#>  4 .NotYetImplemented               0
+#>  5 .OptRequireMethods               0
+#>  6 .standard_regexps                0
+#>  7 .tryResumeInterrupt              0
+#>  8 closeAllConnections              0
+#>  9 contributors                     0
+#> 10 Cstack_info                      0
+#> # ... with 39 more rows
 #> # i Use `print(n = ...)` to see more rows
 ```
 
@@ -201,6 +221,9 @@ c. How could you adapt the code to find all primitive functions?
 objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
 funs <- Filter(is.function, objs)
 primitives <- Filter(is.primitive, funs)
+
+length(primitives)
+#> [1] 204
 
 names(primitives)
 #>   [1] "-"                    "!"                   
@@ -335,11 +358,11 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x0000000033f47fe0>
+#> <bytecode: 0x00000000375f3bf8>
 #> <environment: namespace:purrr>
 ```
 
-There are two exceptions to this rule:
+There are two exceptions where the enclosing environment won't be printed:
 
 - primitive functions
 
@@ -370,7 +393,7 @@ c(c = c)
 
 **A1.** In `c(c = c)`:
 
-* first *c* is interpreted as a function `c()`
+* first *c* is interpreted as a function call `c()`
 * second *c* as a name for the vector element
 * third *c* as a variable with value `10`
 
@@ -382,20 +405,37 @@ c(c = c)
 #> 10
 ```
 
+You can also see this in the lexical analysis of this expression:
+
+
+```r
+p_expr <- parse(text = "c(c = c)", keep.source = TRUE)
+getParseData(p_expr) %>% select(token, text)
+#>                   token text
+#> 12                 expr     
+#> 1  SYMBOL_FUNCTION_CALL    c
+#> 3                  expr     
+#> 2                   '('    (
+#> 4            SYMBOL_SUB    c
+#> 5                EQ_SUB    =
+#> 6                SYMBOL    c
+#> 8                  expr     
+#> 7                   ')'    )
+```
+
 **Q2.** What are the four principles that govern how R looks for values?
 
-**A2.** Here are the four principles:
+**A2.** Principles that govern how R looks for values:
 
 1. Name masking (names defined inside a function mask names defined outside a function)
 
-2. Functions vs. variables (the rule above also applies to function names) 
+1. Functions vs. variables (the rule above also applies to function names) 
 
-3. A fresh start (every time a function is called a new environment is created to host its execution)
+1. A fresh start (every time a function is called, a new environment is created to host its execution)
 
-4. Dynamic look-up (R looks for values when the function is run, not when the function is created)
+1. Dynamic look-up (R looks for values when the function is run, not when the function is created)
 
-**Q3.** What does the following function return? Make a prediction before 
-   running the code yourself.
+**Q3.** What does the following function return? Make a prediction before running the code yourself.
 
 
 ```r
@@ -411,7 +451,7 @@ f <- function(x) {
 f(10)
 ```
 
-Correctly predicted 😉😉
+**A3.** Correctly predicted 😉
 
 
 ```r
@@ -428,6 +468,8 @@ f <- function(x) {
 f(10)
 #> [1] 202
 ```
+
+Although there are multiple `f()` functions, the order of evaluation goes from inside to outside with `x^2` evaluated first and `f(x) * 2` evaluated last. This results in 202 (= `((10 ^ 2) + 1) * 2`).
 
 ## Exercises 6.5.4 
 
@@ -457,7 +499,7 @@ x_ok(1)
 x_ok(1:3)
 ```
 
-**A1.** `&&` evaluates left to right and short-circuit evaluation, i.e., if the first operand is `TRUE`, R will short-circuit and not even look at the second operand.
+**A1.** `&&` evaluates left to right and has short-circuit evaluation, i.e., if the first operand is `TRUE`, R will short-circuit and not even look at the second operand.
 
 
 ```r
@@ -475,7 +517,7 @@ x_ok(1:3)
 #> [1] FALSE
 ```
 
-Replacing `&&` is `&` is undesirable because it performs element-wise logical comparisons and returns a vector of values that is not always useful for decision (`TRUE`, `FALSE`, or `NA`).
+Replacing `&&` with `&` is undesirable because it performs element-wise logical comparisons and returns a vector of values that is not always useful for a decision (`TRUE`, `FALSE`, or `NA`).
 
 
 ```r
@@ -504,7 +546,9 @@ f2 <- function(x = z) {
 f2()
 ```
 
-**A2.** The function returns `100`, and the principle at work here is lazy evaluation. When function environment encounters `x`, it evaluates argument `x = z` and since the name `z` is already bound to value 100, `x` is also bound to the same value.
+**A2.** The function returns `100` due to lazy evaluation. 
+
+When function execution environment encounters `x`, it evaluates argument `x = z` and since the name `z` is already bound to the value 100 in this environment, `x` is also bound to the same value.
 
 We can check this by looking at the memory addresses:
 
@@ -512,14 +556,13 @@ We can check this by looking at the memory addresses:
 ```r
 f2 <- function(x = z) {
   z <- 100
-  print(x)
-
   print(lobstr::obj_addrs(list(x, z)))
+  x
 }
 
 f2()
+#> [1] "0x37f66a98" "0x37f66a98"
 #> [1] 100
-#> [1] "0x38ca3c20" "0x38ca3c20"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -539,7 +582,7 @@ f1()
 y
 ```
 
-**A3.** Note that in the function call `f1()`, the `x` and `y` arguments are missing. That means, the default arguments are evaluated in the function environment, and not in the environment in which the function is defined. 
+**A3.** Let's first look at what the function returns:
 
 
 ```r
@@ -550,22 +593,28 @@ f1 <- function(x =
                    2
                  },
                y = 0) {
-  print(missing(x))
-  print(missing(y))
-
   c(x, y)
 }
-
 f1()
-#> [1] TRUE
-#> [1] TRUE
 #> [1] 2 1
-
 y
 #> [1] 10
 ```
 
-This is why `x` and `y` in function environment are assigned the values we see returned, and the `y` in the global environment remains unchanged.
+This is because of name masking. In the function call `c(x, y)`, when `x` is accessed in the function environment, the following promise is evaluated in the function environment:
+
+
+```r
+x =
+                 {
+                   y <- 1
+                   2
+                 }
+```
+
+And, thus `y` gets assigned to `1`, and `x` to `2`, since its the last value in that scope.
+
+Therefore, neither the promise `y = 0` nor global assignment `y <- 10` is ever consulted to find the value for `y`.
 
 **Q4.** In `hist()`, the default value of `xlim` is `range(breaks)`, the default value for `breaks` is `"Sturges"`, and
 
@@ -577,16 +626,16 @@ range("Sturges")
 
 Explain how `hist()` works to get a correct `xlim` value.
 
-**A4.** The `xlim` defines the range of axes breaks for the histogram.
+**A4.** The `xlim` defines the range of the histogram's `x`-axis.
 
 
 ```r
 hist(mtcars$wt, xlim = c(1, 6))
 ```
 
-<img src="Functions_files/figure-html/unnamed-chunk-31-1.png" width="100%" />
+<img src="Functions_files/figure-html/unnamed-chunk-36-1.png" width="100%" />
 
-The default `c("Sturges", "Sturges")` uses Sturges' algorithm to compute the number of breaks, and thus, the range for axes breaks.
+The default `xlim = range(breaks)` and `breaks = "Sturges"` arguments reveal that the function uses Sturges' algorithm to compute the number of breaks.
 
 
 ```r
@@ -595,6 +644,8 @@ nclass.Sturges(mtcars$wt)
 ```
 
 To see the implementation, run `sloop::s3_get_method("hist.default")`.
+
+`hist()` ensures that the chosen algorithm returns a numeric vector containing at least two unique elements before `xlim` is computed.
 
 **Q5.** Explain why this function works. Why is it confusing?
 
@@ -606,16 +657,16 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-08-15 12:46:16 CEST"
+#> [1] "2022-08-15 15:51:50 CEST"
 ```
 
 **A5.** Let's take this step-by-step.
 
 The function argument `x` is missing in the function call. This means that `stop("Error!")` is evaluated in the function environment, and not global environment.
 
-But `stop("Error!")` evaluated only when `x` is evaluated, and due to lazy evaluation, this happens only when `print(x)` is called.
+But, due to lazy evaluation, the promise `stop("Error!")` is evaluated only when `x` is accessed. This happens only when `print(x)` is called.
 
-`print(x)` leads to `x` being evaluated, which evaluates `stop` in the function environment. But in function environment, the `base::stop()` is masked by a locally defined `stop` function, which returns `Sys.time()` output.
+`print(x)` leads to `x` being evaluated, which evaluates `stop` in the function environment. But, in function environment, the `base::stop()` is masked by a locally defined `stop()` function, which returns `Sys.time()` output.
 
 **Q6.** How many arguments are required when calling `library()`?
 
@@ -677,7 +728,7 @@ formals(library) %>%
 #> [4] "mask.ok"        "exclude"        "include.only"
 ```
 
-But, in reality, only one argument is required: `package`. The function internally checks if the other arguments are missing and internally chooses necessary defaults.
+But, in reality, only one argument is required: `package`. The function internally checks if the other arguments are missing and adjusts accordingly.
 
 It would have been better if there arguments were `NULL` instead of missing; that would avoid this confusion.
 
@@ -719,23 +770,23 @@ For `mean()` function, there is only one parameter (`x`) and it's matched by the
 plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
 ```
 
-<img src="Functions_files/figure-html/unnamed-chunk-38-1.png" width="100%" />
+<img src="Functions_files/figure-html/unnamed-chunk-43-1.png" width="100%" />
 
-**A2.** First, check documentation for `plot()`:
+**A2.** Typing `?plot` in the console, we see its documentation, which also shows its signature:
 
 
-```r
-str(plot)
+```
 #> function (x, y, ...)
 ```
 
-Since `...` are passed to `par()`, we can look at its documentation:
+Since `...` are passed to `par()`, we can look at `?par` docs:
 
 
-```r
-str(par)
+```
 #> function (..., no.readonly = FALSE)
 ```
+
+And so on.
 
 The docs for all parameters of interest [reside there](https://rdrr.io/r/graphics/par.html).
 
@@ -826,7 +877,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x00000000368d6a50>
+#> <bytecode: 0x0000000035d547f0>
 #> <environment: namespace:withr>
 ```
 
@@ -853,15 +904,17 @@ with_png_device <- function(filename, code, ...) {
 capture.output2 <- function(code) {
   temp <- tempfile()
   on.exit(file.remove(temp), add = TRUE, after = TRUE)
+  
   sink(temp)
   on.exit(sink(), add = TRUE, after = TRUE)
+  
   force(code)
   readLines(temp)
 }
 
 capture.output2(cat("a", "b", "c", sep = "\n"))
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpQfajQa\file34f84a763350',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpGO4w7u\file4cf03fe97b71',
 #> reason 'Permission denied'
 #> [1] "a" "b" "c"
 ```
@@ -911,7 +964,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x0000000036f2fe20>
+#> <bytecode: 0x00000000364b5180>
 #> <environment: namespace:utils>
 ```
 
@@ -926,7 +979,7 @@ capture.output(1)
 
 capture.output2(1)
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpQfajQa\file34f84e9074d6',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpGO4w7u\file4cf036794504',
 #> reason 'Permission denied'
 #> character(0)
 ```
@@ -1111,31 +1164,45 @@ So, using `apropos()`, we can find all replacement functions in search paths and
 
 
 ```r
-ls_replacement <- apropos("<-$", where = TRUE, mode = "function")
+ls_replacement <- apropos("<-", where = TRUE, mode = "function")
 
 base_index <- which(grepl("base", searchpaths()))
 
 ls_replacement <- ls_replacement[which(names(ls_replacement) == as.character(base_index))]
 
 unname(ls_replacement)
-#>  [1] "$<-"              ".rowNamesDF<-"   
-#>  [3] "@<-"              "[[<-"            
-#>  [5] "[<-"              "<-"              
-#>  [7] "<<-"              "attr<-"          
-#>  [9] "attributes<-"     "body<-"          
-#> [11] "class<-"          "colnames<-"      
-#> [13] "comment<-"        "diag<-"          
-#> [15] "dim<-"            "dimnames<-"      
-#> [17] "Encoding<-"       "environment<-"   
-#> [19] "formals<-"        "is.na<-"         
-#> [21] "length<-"         "levels<-"        
-#> [23] "mode<-"           "mostattributes<-"
-#> [25] "names<-"          "oldClass<-"      
-#> [27] "parent.env<-"     "regmatches<-"    
-#> [29] "row.names<-"      "rownames<-"      
-#> [31] "split<-"          "storage.mode<-"  
-#> [33] "substr<-"         "substring<-"     
-#> [35] "units<-"
+#>  [1] "$<-"                     "$<-.data.frame"         
+#>  [3] ".rowNamesDF<-"           "@<-"                    
+#>  [5] "[[<-"                    "[[<-.data.frame"        
+#>  [7] "[[<-.factor"             "[[<-.numeric_version"   
+#>  [9] "[[<-.POSIXlt"            "[<-"                    
+#> [11] "[<-.data.frame"          "[<-.Date"               
+#> [13] "[<-.difftime"            "[<-.factor"             
+#> [15] "[<-.numeric_version"     "[<-.POSIXct"            
+#> [17] "[<-.POSIXlt"             "<-"                     
+#> [19] "<<-"                     "attr<-"                 
+#> [21] "attributes<-"            "body<-"                 
+#> [23] "class<-"                 "colnames<-"             
+#> [25] "comment<-"               "diag<-"                 
+#> [27] "dim<-"                   "dimnames<-"             
+#> [29] "dimnames<-.data.frame"   "Encoding<-"             
+#> [31] "environment<-"           "formals<-"              
+#> [33] "is.na<-"                 "is.na<-.default"        
+#> [35] "is.na<-.factor"          "is.na<-.numeric_version"
+#> [37] "length<-"                "length<-.Date"          
+#> [39] "length<-.difftime"       "length<-.factor"        
+#> [41] "length<-.POSIXct"        "length<-.POSIXlt"       
+#> [43] "levels<-"                "levels<-.factor"        
+#> [45] "mode<-"                  "mostattributes<-"       
+#> [47] "names<-"                 "names<-.POSIXlt"        
+#> [49] "oldClass<-"              "parent.env<-"           
+#> [51] "regmatches<-"            "row.names<-"            
+#> [53] "row.names<-.data.frame"  "row.names<-.default"    
+#> [55] "rownames<-"              "split<-"                
+#> [57] "split<-.data.frame"      "split<-.default"        
+#> [59] "storage.mode<-"          "substr<-"               
+#> [61] "substring<-"             "units<-"                
+#> [63] "units<-.difftime"
 ```
 
 The primitive replacement functions can be listed using `is.primitive()`:

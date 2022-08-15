@@ -82,7 +82,7 @@ tag <- function(tag, script = FALSE) {
     expr({
       dots <- dots_partition(...)
       attribs <- html_attributes(dots$named)
-      children <- map_chr(.x = dots$unnamed, .f = ~escape(.x, !!script))
+      children <- map_chr(.x = dots$unnamed, .f = ~ escape(.x, !!script))
 
       html(paste0(
         !!paste0("<", tag), attribs, ">",
@@ -151,23 +151,25 @@ with_html(p(address))
 
 
 ```r
-tags <- c("a", "abbr", "address", "article", "aside", "audio",
-  "b","bdi", "bdo", "blockquote", "body", "button", "canvas",
-  "caption","cite", "code", "colgroup", "data", "datalist",
-  "dd", "del","details", "dfn", "div", "dl", "dt", "em",
-  "eventsource","fieldset", "figcaption", "figure", "footer",
+tags <- c(
+  "a", "abbr", "address", "article", "aside", "audio",
+  "b", "bdi", "bdo", "blockquote", "body", "button", "canvas",
+  "caption", "cite", "code", "colgroup", "data", "datalist",
+  "dd", "del", "details", "dfn", "div", "dl", "dt", "em",
+  "eventsource", "fieldset", "figcaption", "figure", "footer",
   "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header",
-  "hgroup", "html", "i","iframe", "ins", "kbd", "label",
-  "legend", "li", "mark", "map","menu", "meter", "nav",
+  "hgroup", "html", "i", "iframe", "ins", "kbd", "label",
+  "legend", "li", "mark", "map", "menu", "meter", "nav",
   "noscript", "object", "ol", "optgroup", "option", "output",
-  "p", "pre", "progress", "q", "ruby", "rp","rt", "s", "samp",
+  "p", "pre", "progress", "q", "ruby", "rp", "rt", "s", "samp",
   "script", "section", "select", "small", "span", "strong",
   "style", "sub", "summary", "sup", "table", "tbody", "td",
   "textarea", "tfoot", "th", "thead", "time", "title", "tr",
   "u", "ul", "var", "video"
 )
 
-void_tags <- c("area", "base", "br", "col", "command", "embed",
+void_tags <- c(
+  "area", "base", "br", "col", "command", "embed",
   "hr", "img", "input", "keygen", "link", "meta", "param",
   "source", "track", "wbr"
 )
@@ -198,7 +200,7 @@ The following code, however, is not going to work because there is already `addr
 
 
 ```r
-"address" %in% names(html_tags) 
+"address" %in% names(html_tags)
 #> [1] TRUE
 
 p <- function() "p"

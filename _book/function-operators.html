@@ -19,7 +19,9 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
+<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
+<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -83,7 +85,7 @@
 <span class="header-section-number">11</span> Function operators<a class="anchor" aria-label="anchor" href="#function-operators"><i class="fas fa-link"></i></a>
 </h1>
 <p>Attaching the needed libraries:</p>
-<div class="sourceCode" id="cb313"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb320"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div id="exercises-11.2.3" class="section level3" number="11.0.1">
 <h3>
@@ -100,7 +102,7 @@
 <code><a href="https://dplyr.tidyverse.org/reference/near.html">dplyr::near()</a></code> (which is vectorized element-wise and thus expects two vectors of equal length)</li>
 </ul>
 <p>in order to find indices of matching numeric values for the given threshold.</p>
-<div class="sourceCode" id="cb314"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb321"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">which_near</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">tolerance</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co"># Vectorize `dplyr::near()` function only over the `y` argument.</span></span>
 <span>  <span class="co"># Note that that `Vectorize()` is a function operator and will return a function.</span></span>
@@ -122,7 +124,7 @@
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="fl">0L</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Let’s use it:</p>
-<div class="sourceCode" id="cb315"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.1</span>, <span class="fl">3.3</span>, <span class="fl">8.45</span>, <span class="fl">8</span>, <span class="fl">6</span><span class="op">)</span></span>
 <span><span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">8.40</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span></span>
@@ -140,7 +142,7 @@
 <hr>
 <p><strong>Q2.</strong> Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">possibly()</a></code>. How does it work?</p>
 <p><strong>A2.</strong> Let’s have a look at the source code for this function:</p>
-<div class="sourceCode" id="cb316"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb323"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">possibly</span></span>
 <span><span class="co">#&gt; function (.f, otherwise, quiet = TRUE) </span></span>
 <span><span class="co">#&gt; {</span></span>
@@ -156,7 +158,7 @@
 <span><span class="co">#&gt;         })</span></span>
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x0000000032f15f70&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x0000000032f156e0&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></span></code></pre></div>
 <p>Looking at this code, we can see that <code><a href="https://purrr.tidyverse.org/reference/safely.html">possibly()</a></code>:</p>
 <ul>
@@ -167,14 +169,14 @@
 <hr>
 <p><strong>Q3.</strong> Read the source code for <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code>. How does it work?</p>
 <p><strong>A3.</strong> Let’s have a look at the source code for this function:</p>
-<div class="sourceCode" id="cb317"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb324"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">safely</span></span>
 <span><span class="co">#&gt; function (.f, otherwise = NULL, quiet = TRUE) </span></span>
 <span><span class="co">#&gt; {</span></span>
 <span><span class="co">#&gt;     .f &lt;- as_mapper(.f)</span></span>
 <span><span class="co">#&gt;     function(...) capture_error(.f(...), otherwise, quiet)</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x00000000330e39b0&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x00000000330e3120&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></span>
 <span></span>
 <span><span class="fu">purrr</span><span class="fu">:::</span><span class="va">capture_error</span></span>
@@ -188,7 +190,7 @@
 <span><span class="co">#&gt;         stop("Terminated by user", call. = FALSE)</span></span>
 <span><span class="co">#&gt;     })</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x0000000033139c50&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x0000000033135590&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></span></code></pre></div>
 <p>Looking at this code, we can see that <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code>:</p>
 <ul>
@@ -224,7 +226,7 @@
 <hr>
 <p><strong>Q3.</strong> Create a function operator that reports whenever a file is created or deleted in the working directory, using <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code> and <code><a href="https://generics.r-lib.org/reference/setops.html">setdiff()</a></code>. What other global function effects might you want to track?</p>
 <p><strong>A3.</strong> First, let’s create helper functions to compare and print added or removed filenames:</p>
-<div class="sourceCode" id="cb318"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb325"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">print_multiple_entries</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">header</span>, <span class="va">entries</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">header</span>, <span class="st">":\n"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">entries</span>, collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -241,7 +243,7 @@
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">added</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0L</span><span class="op">)</span> <span class="fu">print_multiple_entries</span><span class="op">(</span><span class="st">"- File added"</span>, <span class="va">added</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>We can then write a function operator and use it to create functions that will do the necessary tracking:</p>
-<div class="sourceCode" id="cb319"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb326"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dir_tracker</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span>  <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
@@ -255,7 +257,7 @@
 <span><span class="va">file_creation_tracker</span> <span class="op">&lt;-</span> <span class="fu">dir_tracker</span><span class="op">(</span><span class="va">file.create</span><span class="op">)</span></span>
 <span><span class="va">file_deletion_tracker</span> <span class="op">&lt;-</span> <span class="fu">dir_tracker</span><span class="op">(</span><span class="va">file.remove</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s try it out:</p>
-<div class="sourceCode" id="cb320"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb327"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">file_creation_tracker</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a.txt"</span>, <span class="st">"b.txt"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; - File added:</span></span>
 <span><span class="co">#&gt; a.txt</span></span>
@@ -279,7 +281,7 @@
 <hr>
 <p><strong>Q4.</strong> Write a function operator that logs a timestamp and message to a file every time a function is run.</p>
 <p><strong>A4.</strong> The following function operator logs a timestamp and message to a file every time a function is run:</p>
-<div class="sourceCode" id="cb321"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb328"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># helper function to write to a file connection</span></span>
 <span><span class="va">write_line</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">filepath</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">...</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span>, file <span class="op">=</span> <span class="va">filepath</span>, append <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -313,14 +315,14 @@
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="va">logfile</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Function created at: 2022-08-15 11:16:18</span></span>
-<span><span class="co">#&gt; Function called at:  2022-08-15 11:16:23</span></span>
-<span><span class="co">#&gt; Function called at:  2022-08-15 11:16:29</span></span>
-<span><span class="co">#&gt; Function called at:  2022-08-15 11:16:37</span></span></code></pre></div>
+<span><span class="co">#&gt; Function created at: 2022-08-15 15:52:15</span></span>
+<span><span class="co">#&gt; Function called at:  2022-08-15 15:52:20</span></span>
+<span><span class="co">#&gt; Function called at:  2022-08-15 15:52:25</span></span>
+<span><span class="co">#&gt; Function called at:  2022-08-15 15:52:33</span></span></code></pre></div>
 <hr>
 <p><strong>Q5.</strong> Modify <code>delay_by()</code> so that instead of delaying by a fixed amount of time, it ensures that a certain amount of time has elapsed since the function was last called. That is, if you called <code>g &lt;- delay_by(1, f); g(); Sys.sleep(2); g()</code> there shouldn’t be an extra delay.</p>
 <p><strong>A5.</strong> Modified version of the function meeting the specified requirements:</p>
-<div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb329"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">delay_by_atleast</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">amount</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">amount</span><span class="op">)</span></span>

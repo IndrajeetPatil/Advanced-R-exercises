@@ -269,7 +269,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x0000000033c24e18>
+#> <bytecode: 0x0000000033c24ec8>
 #> <environment: namespace:rlang>
 ```
 

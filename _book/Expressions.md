@@ -16,20 +16,20 @@ library(lobstr, warn.conflicts = FALSE)
 
 
 ```r
-#> █─f
-#> └─█─g
-#>   └─█─h
-#> █─`+`
-#> ├─█─`+`
-#> │ ├─1
-#> │ └─2
-#> └─3
-#> █─`*`
-#> ├─█─`(`
-#> │ └─█─`+`
-#> │   ├─x
-#> │   └─y
-#> └─z
+#> ¦-f
+#> +-¦-g
+#>   +-¦-h
+#> ¦-`+`
+#> +-¦-`+`
+#> ¦ +-1
+#> ¦ +-2
+#> +-3
+#> ¦-`*`
+#> +-¦-`(`
+#> ¦ +-¦-`+`
+#> ¦   +-x
+#> ¦   +-y
+#> +-z
 ```
 
 **A1.** Below is the reconstructed code.
@@ -369,7 +369,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000018064d20>
+#> <bytecode: 0x0000000018074bf0>
 #> <environment: namespace:base>
 ```
 
