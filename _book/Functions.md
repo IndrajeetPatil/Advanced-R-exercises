@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000018064cb0>
+#> <bytecode: 0x0000000018084cb0>
 #> <environment: namespace:base>
 ```
 
@@ -48,19 +48,28 @@ function(x) 3()
 #> [1] 3
 ```
 
-**A2.** This is not correct since the function will evaluate `3()`, which is syntactically not allowed since literals can't be treated like functions.
+**A2.** The first expression is not correct since the function will evaluate `3()`, which is syntactically not allowed since literals can't be treated like functions.
 
 
 ```r
-(function(x) 3())()
-#> Error in (function(x) 3())(): attempt to apply non-function
+f <- (function(x) 3())
+f
+#> function(x) 3()
+f()
+#> Error in f(): attempt to apply non-function
+
+rlang::is_syntactic_literal(3)
+#> [1] TRUE
 ```
 
-This is correct.
+This is the correct way to call an anonymous function.
 
 
 ```r
-(function(x) 3)()
+g <- (function(x) 3)
+g
+#> function(x) 3
+g()
 #> [1] 3
 ```
 
@@ -70,7 +79,7 @@ This is correct.
 
 **Q4.** What function allows you to tell if an object is a function? What function allows you to tell if a function is a primitive function?
 
-**A4.** Use `is.function()` to check if an object is a function:
+**A4.** Use `is.function()` to check if an *object* is a *function*:
 
 
 ```r
@@ -88,7 +97,7 @@ is.function(new.env())
 #> [1] FALSE
 ```
 
-Use `is.primitive()` to check if a function is primitive:
+Use `is.primitive()` to check if a *function* is *primitive*:
 
 
 ```r
@@ -142,6 +151,23 @@ df_formals <- purrr::map_df(funs, ~ length(formals(.))) %>%
     values_to = "argumentCount"
   ) %>%
   dplyr::arrange(desc(argumentCount))
+
+df_formals
+#> # A tibble: 1,328 x 2
+#>    `function`       argumentCount
+#>    <chr>                    <int>
+#>  1 scan                        22
+#>  2 format.default              16
+#>  3 source                      16
+#>  4 formatC                     15
+#>  5 library                     13
+#>  6 merge.data.frame            13
+#>  7 prettyNum                   13
+#>  8 system2                     11
+#>  9 print.default               10
+#> 10 save                        10
+#> # ... with 1,318 more rows
+#> # i Use `print(n = ...)` to see more rows
 ```
 
 b. How many base functions have no arguments? What’s special about those functions?
@@ -299,7 +325,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000018064cb0>
+#> <bytecode: 0x0000000018084cb0>
 #> <environment: namespace:base>
 
 # other package function
@@ -309,7 +335,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x0000000033f547e8>
+#> <bytecode: 0x0000000033f47fe0>
 #> <environment: namespace:purrr>
 ```
 
@@ -493,7 +519,7 @@ f2 <- function(x = z) {
 
 f2()
 #> [1] 100
-#> [1] "0x1556bdd0" "0x1556bdd0"
+#> [1] "0x38ca3c20" "0x38ca3c20"
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
@@ -580,7 +606,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-08-15 11:15:54 CEST"
+#> [1] "2022-08-15 12:46:16 CEST"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -800,7 +826,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x00000000134cafe0>
+#> <bytecode: 0x00000000368d6a50>
 #> <environment: namespace:withr>
 ```
 
@@ -835,7 +861,7 @@ capture.output2 <- function(code) {
 
 capture.output2(cat("a", "b", "c", sep = "\n"))
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpC45BRO\file6da860ef46a8',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpQfajQa\file34f84a763350',
 #> reason 'Permission denied'
 #> [1] "a" "b" "c"
 ```
@@ -885,7 +911,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x000000001391a8f0>
+#> <bytecode: 0x0000000036f2fe20>
 #> <environment: namespace:utils>
 ```
 
@@ -900,7 +926,7 @@ capture.output(1)
 
 capture.output2(1)
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpC45BRO\file6da8512b4e40',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpQfajQa\file34f84e9074d6',
 #> reason 'Permission denied'
 #> character(0)
 ```
