@@ -85,7 +85,7 @@
 <span class="header-section-number">10</span> Function factories<a class="anchor" aria-label="anchor" href="#function-factories"><i class="fas fa-link"></i></a>
 </h1>
 <p>Attaching the needed libraries:</p>
-<div class="sourceCode" id="cb290"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb297"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div id="exercises-10.2.6" class="section level3" number="10.0.1">
@@ -94,7 +94,7 @@
 </h3>
 <hr>
 <p><strong>Q1.</strong> The definition of <code><a href="https://rdrr.io/r/base/force.html">force()</a></code> is simple:</p>
-<div class="sourceCode" id="cb291"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb298"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">force</span></span>
 <span><span class="co">#&gt; function (x) </span></span>
 <span><span class="co">#&gt; x</span></span>
@@ -110,15 +110,15 @@
 <li><code><a href="https://rdrr.io/r/stats/approxfun.html">approxfun()</a></code></li>
 </ul>
 <p>This function factory returns a function performing the linear (or constant) interpolation.</p>
-<div class="sourceCode" id="cb292"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb299"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/approxfun.html">approxfun</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
 <span><span class="va">f</span></span>
 <span><span class="co">#&gt; function (v) </span></span>
 <span><span class="co">#&gt; .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x00000000197f1c68&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x00000000197efc30&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x00000000197becc8&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000000197bbe90&gt;</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901</span></span>
 <span><span class="co">#&gt;  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142</span></span>
@@ -128,7 +128,7 @@
 <li><code><a href="https://rdrr.io/r/stats/ecdf.html">ecdf()</a></code></li>
 </ul>
 <p>This function factory computes an empirical cumulative distribution function.</p>
-<div class="sourceCode" id="cb293"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb300"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ecdf.html">ecdf</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="va">f</span></span>
@@ -147,7 +147,7 @@
 <span><span class="co">#&gt; [41] 1.00000000</span></span></code></pre></div>
 <hr>
 <p><strong>Q3.</strong> Create a function <code>pick()</code> that takes an index, <code>i</code>, as an argument and returns a function with an argument <code>x</code> that subsets <code>x</code> with <code>i</code>.</p>
-<div class="sourceCode" id="cb294"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb301"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pick</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co"># should be equivalent to</span></span>
 <span><span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
@@ -156,13 +156,13 @@
 <span><span class="co"># should be equivalent to</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><strong>A3.</strong> The desired function:</p>
-<div class="sourceCode" id="cb295"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb302"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pick</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span>
 <span>  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Testing it with specified test cases:</p>
-<div class="sourceCode" id="cb296"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb303"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="fu">pick</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span>
@@ -174,21 +174,21 @@
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <hr>
 <p><strong>Q4.</strong> Create a function that creates functions that compute the i<sup>th</sup><a href="http://en.wikipedia.org/wiki/Central_moment">central moment</a> of a numeric vector. You can test it by running the following code:</p>
-<div class="sourceCode" id="cb297"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb304"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu">moment</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu">moment</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="fu">m1</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="fu">m2</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">*</span> <span class="fl">99</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><strong>A4.</strong> The following function satisfied the specified requirements:</p>
-<div class="sourceCode" id="cb298"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb305"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">moment</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">k</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">k</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="va">k</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Testing it with specified test cases:</p>
-<div class="sourceCode" id="cb299"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb306"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu">moment</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu">moment</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
@@ -197,14 +197,14 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="fu">m2</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">*</span> <span class="fl">99</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <hr>
 <p><strong>Q5.</strong> What happens if you don’t use a closure? Make predictions, then verify with the code below.</p>
-<div class="sourceCode" id="cb300"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb307"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span><span class="va">new_counter2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">i</span> <span class="op">&lt;&lt;-</span> <span class="va">i</span> <span class="op">+</span> <span class="fl">1</span></span>
 <span>  <span class="va">i</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p><strong>A5.</strong> In case closures are not used, the counts are stored in the global variable, which can be modified by other processes or even deleted.</p>
-<div class="sourceCode" id="cb301"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb308"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">new_counter2</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1</span></span>
 <span></span>
@@ -219,7 +219,7 @@
 <span><span class="co">#&gt; [1] 21</span></span></code></pre></div>
 <hr>
 <p><strong>Q6.</strong> What happens if you use <code>&lt;-</code> instead of <code>&lt;&lt;-</code>? Make predictions, then verify with the code below.</p>
-<div class="sourceCode" id="cb302"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb309"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_counter3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span>  <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
@@ -228,21 +228,21 @@
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p><strong>A6.</strong> In this case, the function will always return 1.</p>
-<div class="sourceCode" id="cb303"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb310"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">new_counter3</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function() {</span></span>
 <span><span class="co">#&gt;     i &lt;- i + 1</span></span>
 <span><span class="co">#&gt;     i</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000000033116bc8&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x000000003312a100&gt;</span></span>
 <span></span>
 <span><span class="fu">new_counter3</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function() {</span></span>
 <span><span class="co">#&gt;     i &lt;- i + 1</span></span>
 <span><span class="co">#&gt;     i</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x00000000332edd28&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x00000000331b89d0&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;bytecode: 0x0000000033323310&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000000331cad48&gt;</span></span></code></pre></div>
 <hr>
 </div>
 <div id="exercises-10.3.4" class="section level3" number="10.0.2">
@@ -252,7 +252,7 @@
 <hr>
 <p><strong>Q1.</strong> Compare and contrast <code><a href="https://ggplot2.tidyverse.org/reference/label_bquote.html">ggplot2::label_bquote()</a></code> with <code><a href="https://scales.r-lib.org/reference/comma.html">scales::number_format()</a></code>.</p>
 <p><strong>A1.</strong> To compare and contrast, let’s first look at the source code for these functions:</p>
-<div class="sourceCode" id="cb304"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb311"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/label_bquote.html">label_bquote</a></span></span>
 <span><span class="co">#&gt; function (rows = NULL, cols = NULL, default) </span></span>
 <span><span class="co">#&gt; {</span></span>
@@ -282,7 +282,7 @@
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt;     structure(fun, class = "labeller")</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x00000000334a4468&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x00000000334d7dc8&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:ggplot2&gt;</span></span>
 <span></span>
 <span><span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/comma.html">number_format</a></span></span>
@@ -300,11 +300,11 @@
 <span><span class="co">#&gt;             scale_cut = scale_cut, trim = trim, ...)</span></span>
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x0000000033510290&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x0000000033543738&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:scales&gt;</span></span></code></pre></div>
 <p>Both of these functions returns formatting functions used to style the facets labels and other labels to have the desired format.</p>
 <p>For example, using plotmath expression in the facet label:</p>
-<div class="sourceCode" id="cb305"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb312"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -312,7 +312,7 @@
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">vs</span>, labeller <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/label_bquote.html">label_bquote</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">alpha</span><span class="op">^</span><span class="fu">.</span><span class="op">(</span><span class="va">vs</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="Function-factories_files/figure-html/unnamed-chunk-17-1.png" width="100%"></div>
 <p>Or to display axes labels in the desired format:</p>
-<div class="sourceCode" id="cb306"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb313"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -329,7 +329,7 @@
 </h3>
 <hr>
 <p><strong>Q1.</strong> In <code>boot_model()</code>, why don’t I need to force the evaluation of <code>df</code> or <code>model</code>?</p>
-<div class="sourceCode" id="cb307"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb314"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">boot_model</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">formula</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">formula</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
 <span>  <span class="va">fitted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span>
@@ -343,16 +343,16 @@
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>We can also confirm that there are no lazy bindings in the function environment:</p>
-<div class="sourceCode" id="cb308"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb315"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">boot_model</span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   resid  fitted      df formula </span></span>
 <span><span class="co">#&gt;   FALSE   FALSE   FALSE   FALSE</span></span>
 <span><span class="co">#&gt; function() {</span></span>
 <span><span class="co">#&gt;     fitted + sample(resid)</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000000001a4bdaf8&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x000000001a593278&gt;</span></span></code></pre></div>
 <p>Contrast this with the first function we saw in the chapter which <em>did</em> have a lazy binding:</p>
-<div class="sourceCode" id="cb309"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb316"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">power1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_binding_are_active.html">env_binding_are_lazy</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">current_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -367,10 +367,10 @@
 <span><span class="co">#&gt; function(x) {</span></span>
 <span><span class="co">#&gt;     x^exp</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000000017495e20&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x0000000017b5fca0&gt;</span></span></code></pre></div>
 <hr>
 <p><strong>Q2.</strong> Why might you formulate the Box-Cox transformation like this?</p>
-<div class="sourceCode" id="cb310"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb317"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">boxcox3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="kw">if</span> <span class="op">(</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
@@ -381,7 +381,7 @@
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p><strong>A2.</strong> To see why we formulate this transformation like above by comparing it to the one mentioned in the book:</p>
-<div class="sourceCode" id="cb311"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb318"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">boxcox2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
@@ -390,10 +390,10 @@
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Let’s have a look at one example with each:</p>
-<div class="sourceCode" id="cb312"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb319"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">boxcox2</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function(x) (x^lambda - 1) / lambda</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x00000000332cb288&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000000332d69e0&gt;</span></span>
 <span></span>
 <span><span class="fu">boxcox3</span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function(lambda) {</span></span>
@@ -403,12 +403,12 @@
 <span><span class="co">#&gt;       (x^lambda - 1) / lambda</span></span>
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000000003332c348&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x0000000033335ea8&gt;</span></span></code></pre></div>
 <p>As can be seen, in <code>boxcox2()</code>, we can vary <code>x</code> for the same value of <code>lambda</code>, while in <code>boxcox3()</code>, we can vary <code>lambda</code> for the same vector. This can be handy while exploring different transformations across inputs.</p>
 <hr>
 <p><strong>Q3.</strong> Why don’t you need to worry that <code>boot_permute()</code> stores a copy of the data inside the function that it generates?</p>
 <p><strong>A3.</strong> If we look at the source code generated by the function factory, we notice that the exact data frame (<code>mtcars</code>) is not referenced:</p>
-<div class="sourceCode" id="cb313"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb320"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">boot_permute</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">var</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span></span>
@@ -424,12 +424,12 @@
 <span><span class="co">#&gt;     col &lt;- df[[var]]</span></span>
 <span><span class="co">#&gt;     col[sample(n, replace = TRUE)]</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000000003357f7c0&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x0000000033586ba0&gt;</span></span></code></pre></div>
 <p>This is why we don’t need to worry about a copy being made because the <code>df</code> in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:</p>
-<div class="sourceCode" id="cb314"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb321"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">boot_permute_env</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/fn_env.html">fn_env</a></span><span class="op">(</span><span class="fu">boot_permute</span><span class="op">(</span><span class="va">mtcars</span>, <span class="st">"mpg"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_print.html">env_print</a></span><span class="op">(</span><span class="va">boot_permute_env</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x00000000338c8698&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000000338d1718&gt;</span></span>
 <span><span class="co">#&gt; Parent: &lt;environment: global&gt;</span></span>
 <span><span class="co">#&gt; Bindings:</span></span>
 <span><span class="co">#&gt; * n: &lt;int&gt;</span></span>
@@ -442,7 +442,7 @@
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>We can also check that the values of these bindings are the same as what we entered into the function factory:</p>
-<div class="sourceCode" id="cb315"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">boot_permute_env</span><span class="op">$</span><span class="va">df</span>, <span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">boot_permute_env</span><span class="op">$</span><span class="va">var</span>, <span class="st">"mpg"</span><span class="op">)</span></span>
@@ -450,7 +450,7 @@
 <hr>
 <p><strong>Q4.</strong> How much time does <code>ll_poisson2()</code> save compared to <code>ll_poisson1()</code>? Use <code><a href="http://bench.r-lib.org/reference/mark.html">bench::mark()</a></code> to see how much faster the optimisation occurs. How does changing the length of <code>x</code> change the results?</p>
 <p><strong>A4.</strong> Let’s first compare the performance of these functions with the example in the book:</p>
-<div class="sourceCode" id="cb316"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb323"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ll_poisson1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
@@ -478,11 +478,11 @@
 <span><span class="co">#&gt; # A tibble: 2 x 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 LL1          28.6us   36.5us    26178.    12.8KB    10.5 </span></span>
-<span><span class="co">#&gt; 2 LL2          15.3us     19us    48968.        0B     9.80</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 LL1            30us   39.1us    23599.    12.8KB     9.44</span></span>
+<span><span class="co">#&gt; 2 LL2          14.4us     19us    49588.        0B     9.92</span></span></code></pre></div>
 <p>As can be seen, the second version is much faster than the first version.</p>
 <p>We can also vary the length of the vector and confirm that across a wide range of vector lengths, this performance advantage is observed.</p>
-<div class="sourceCode" id="cb317"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb324"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">generate_ll_benches</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">x_vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">n</span><span class="op">)</span></span>
 <span></span>
@@ -500,16 +500,16 @@
 <span><span class="co">#&gt; # A tibble: 10 x 5</span></span>
 <span><span class="co">#&gt;    length expression      min   median `itr/sec`</span></span>
 <span><span class="co">#&gt;     &lt;dbl&gt; &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1     10 LL1          42.8us   55.6us    17998.</span></span>
-<span><span class="co">#&gt;  2     10 LL2          19.6us   23.5us    41719.</span></span>
-<span><span class="co">#&gt;  3     20 LL1          47.7us   63.4us    15633.</span></span>
-<span><span class="co">#&gt;  4     20 LL2          18.9us     23us    42671.</span></span>
-<span><span class="co">#&gt;  5     50 LL1          68.9us   78.9us    12385.</span></span>
-<span><span class="co">#&gt;  6     50 LL2          16.9us   23.8us    40680.</span></span>
-<span><span class="co">#&gt;  7    100 LL1         102.8us  116.8us     8492.</span></span>
-<span><span class="co">#&gt;  8    100 LL2          23.3us   27.3us    35997.</span></span>
-<span><span class="co">#&gt;  9   1000 LL1          1.81ms   2.05ms      483.</span></span>
-<span><span class="co">#&gt; 10   1000 LL2          84.5us  100.9us     9723.</span></span>
+<span><span class="co">#&gt;  1     10 LL1          43.5us   54.8us    17645.</span></span>
+<span><span class="co">#&gt;  2     10 LL2          17.3us     22us    43444.</span></span>
+<span><span class="co">#&gt;  3     20 LL1          47.7us     61us    15756.</span></span>
+<span><span class="co">#&gt;  4     20 LL2            17us   21.8us    44175.</span></span>
+<span><span class="co">#&gt;  5     50 LL1          62.4us   79.8us    12275.</span></span>
+<span><span class="co">#&gt;  6     50 LL2          18.5us   22.6us    43071.</span></span>
+<span><span class="co">#&gt;  7    100 LL1          90.1us  111.5us     8782.</span></span>
+<span><span class="co">#&gt;  8    100 LL2          20.8us   27.2us    36058.</span></span>
+<span><span class="co">#&gt;  9   1000 LL1          1.62ms   2.11ms      476.</span></span>
+<span><span class="co">#&gt; 10   1000 LL2          79.5us  103.7us     9284.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
 <span>  <span class="va">df_bench</span>,</span>
@@ -543,7 +543,7 @@
 <hr>
 <p><strong>Q2.</strong> Compare and contrast the effects of <code><a href="https://rlang.r-lib.org/reference/env_bind.html">env_bind()</a></code> vs. <code><a href="https://rdrr.io/r/base/attach.html">attach()</a></code> for the following code.</p>
 <p><strong>A2.</strong></p>
-<div class="sourceCode" id="cb319"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb326"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">funs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  mean <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  sum <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -561,20 +561,117 @@
 <span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_unbind.html">env_unbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/environment.html">globalenv</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">funs</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
+<div id="session-information-8" class="section level2" number="10.1">
+<h2>
+<span class="header-section-number">10.1</span> Session information<a class="anchor" aria-label="anchor" href="#session-information-8"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb327"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; - Session info -------------------------------------------</span></span>
+<span><span class="co">#&gt;  setting  value</span></span>
+<span><span class="co">#&gt;  version  R version 4.1.3 (2022-03-10)</span></span>
+<span><span class="co">#&gt;  os       Windows 10 x64 (build 22000)</span></span>
+<span><span class="co">#&gt;  system   x86_64, mingw32</span></span>
+<span><span class="co">#&gt;  ui       RTerm</span></span>
+<span><span class="co">#&gt;  language (EN)</span></span>
+<span><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
+<span><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
+<span><span class="co">#&gt;  tz       Europe/Berlin</span></span>
+<span><span class="co">#&gt;  date     2022-08-20</span></span>
+<span><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
+<span><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
+<span><span class="co">#&gt;    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    base        * 4.1.3      2022-03-10 [?] local</span></span>
+<span><span class="co">#&gt;    bench         1.1.2      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;  P compiler      4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;  P datasets    * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    DBI           1.1.3      2022-06-18 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    dplyr         1.0.9      2022-04-28 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.1.0)</span></span>
+<span><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    farver        2.1.1      2022-07-06 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    ggplot2     * 3.3.6      2022-05-03 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;  P graphics    * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;  P grDevices   * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;  P grid          4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    gtable        0.3.0      2019-03-25 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    highr         0.9        2021-04-16 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)</span></span>
+<span><span class="co">#&gt;    labeling      0.4.2      2020-10-20 [1] CRAN (R 4.1.0)</span></span>
+<span><span class="co">#&gt;    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    lobstr        1.1.2      2022-06-22 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;  P methods     * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    munsell       0.5.0      2018-06-12 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    profmem       0.6.0      2020-12-13 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
+<span><span class="co">#&gt;    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
+<span><span class="co">#&gt;    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    scales      * 1.2.0      2022-04-13 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;  P tools         4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;  P utils       * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1</span></span>
+<span><span class="co">#&gt;  [2] C:/Program Files/R/R-4.1.3/library</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  P -- Loaded and on-disk path mismatch.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ----------------------------------------------------------</span></span></code></pre></div>
+
+</div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="functionals.html"><span class="header-section-number">9</span> Functionals</a></div>
 <div class="next"><a href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li>
+      <ul class="nav navbar-nav">
+<li>
 <a class="nav-link" href="#function-factories"><span class="header-section-number">10</span> Function factories</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#exercises-10.2.6"><span class="header-section-number">10.0.1</span> Exercises 10.2.6</a></li>
 <li><a class="nav-link" href="#exercises-10.3.4"><span class="header-section-number">10.0.2</span> Exercises 10.3.4</a></li>
 <li><a class="nav-link" href="#exercises-10.4.4"><span class="header-section-number">10.0.3</span> Exercises 10.4.4</a></li>
 <li><a class="nav-link" href="#exercises-10.5.1"><span class="header-section-number">10.0.4</span> Exercises 10.5.1</a></li>
 </ul>
-</li></ul>
+</li>
+<li><a class="nav-link" href="#session-information-8"><span class="header-section-number">10.1</span> Session information</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
@@ -591,7 +688,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-15.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

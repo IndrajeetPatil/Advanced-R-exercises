@@ -89,37 +89,37 @@
 <span class="header-section-number">23.1</span> Exercises 23.2.4<a class="anchor" aria-label="anchor" href="#exercises-23.2.4"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Profile the following function with <code>torture = TRUE</code>. What is surprising? Read the source code of <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code> to figure out what’s going on.</p>
-<div class="sourceCode" id="cb608"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb624"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span> <span class="op">=</span> <span class="fl">1e5</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p><strong>A1.</strong></p>
 <p>Let’s first source the functions mentioned in exercises.</p>
-<div class="sourceCode" id="cb609"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb625"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/profvis/">profvis</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="st">"profiling-exercises.R"</span><span class="op">)</span></span></code></pre></div>
 <p>First, we try without <code>torture = TRUE</code>: it returns no meaningful results.</p>
-<div class="sourceCode" id="cb610"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb626"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/profvis/man/profvis.html">profvis</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div id="htmlwidget-d4d5348c5feeb7ac0f86" style="width:100%;height:600px;" class="profvis html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d4d5348c5feeb7ac0f86">{"x":{"message":{"prof":{"time":[1,1,1,1,1,1,1,1,1],"depth":[9,8,7,6,5,4,3,2,1],"label":["doTryCatch","tryCatchOne","tryCatchList","tryCatch","profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null,null,null,null,null],"linenum":[null,null,null,null,null,null,null,null,null],"memalloc":[7.71719360351562,7.71719360351562,7.71719360351562,7.71719360351562,7.71719360351562,7.71719360351562,7.71719360351562,7.71719360351562,7.71719360351562],"meminc":[0,0,0,0,0,0,0,0,0],"filename":[null,null,null,null,null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\RtmpsjVAYZ\\file72ec70607f81.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script><p>Maybe because the function runs too fast?</p>
-<div class="sourceCode" id="cb611"><pre class="downlit sourceCode r">
+<script type="application/json" data-for="htmlwidget-d4d5348c5feeb7ac0f86">{"x":{"message":{"prof":{"time":[1,1,1,1,1,1],"depth":[6,5,4,3,2,1],"label":["force","profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null,null],"linenum":[null,null,null,null,null,null],"memalloc":[7.72377014160156,7.72377014160156,7.72377014160156,7.72377014160156,7.72377014160156,7.72377014160156],"meminc":[0,0,0,0,0,0],"filename":[null,null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\Rtmp8AAL2Q\\file6ba838acf34.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script><p>Maybe because the function runs too fast?</p>
+<div class="sourceCode" id="cb627"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span>, check <span class="op">=</span> <span class="cn">FALSE</span>, iterations <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 x 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 f()           234us    276us     3566.    4.64MB     50.6</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 f()           236us    280us     3406.    4.64MB     48.4</span></span></code></pre></div>
 <p>As mentioned in the docs, setting <code>torture = TRUE</code></p>
 <blockquote>
 <p>Triggers garbage collection after every torture memory allocation call.</p>
 </blockquote>
 <p>This process somehow never seems to finish and crashes the RStudio session when it stops!</p>
-<div class="sourceCode" id="cb612"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb628"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/profvis/man/profvis.html">profvis</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span>, torture <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>The question says that documentation for <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code> may provide clues:</p>
-<div class="sourceCode" id="cb613"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb629"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rm</span></span>
 <span><span class="co">#&gt; function (..., list = character(), pos = -1, envir = as.environment(pos), </span></span>
 <span><span class="co">#&gt;     inherits = FALSE) </span></span>
@@ -134,7 +134,7 @@
 <span><span class="co">#&gt;     list &lt;- .Primitive("c")(list, names)</span></span>
 <span><span class="co">#&gt;     .Internal(remove(list, envir, inherits))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x00000000172bebd0&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x00000000172a1720&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>I still couldn’t figure out why. I would recommend checking out the <a href="https://advanced-r-solutions.rbind.io/measuring-performance.html#profiling">official answer</a>.</p>
 </div>
@@ -143,13 +143,13 @@
 <span class="header-section-number">23.2</span> Exercises 23.3.3<a class="anchor" aria-label="anchor" href="#exercises-23.3.3"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Instead of using <code><a href="http://bench.r-lib.org/reference/mark.html">bench::mark()</a></code>, you could use the built-in function <code><a href="https://rdrr.io/r/base/system.time.html">system.time()</a></code>. But <code><a href="https://rdrr.io/r/base/system.time.html">system.time()</a></code> is much less precise, so you’ll need to repeat each operation many times with a loop, and then divide to find the average time of each operation, as in the code below.</p>
-<div class="sourceCode" id="cb614"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb630"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">1e6</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span> <span class="va">x</span><span class="op">^</span><span class="fl">0.5</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span></span></code></pre></div>
 <p>How do the estimates from <code><a href="https://rdrr.io/r/base/system.time.html">system.time()</a></code> compare to those from <code><a href="http://bench.r-lib.org/reference/mark.html">bench::mark()</a></code>? Why are they different?</p>
 <p><strong>A1.</strong></p>
-<div class="sourceCode" id="cb615"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb631"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
@@ -198,28 +198,28 @@
 <span>    systime_with_nogc_us <span class="op">=</span> <span class="va">systime_with_nogc_us</span> <span class="op">*</span> <span class="fl">1e6</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>Compare results from these alternatives:</p>
-<div class="sourceCode" id="cb616"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb632"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">t_bench_df</span></span>
 <span><span class="co">#&gt; # A tibble: 2 x 2</span></span>
 <span><span class="co">#&gt;   expression     mean</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt;</span></span>
-<span><span class="co">#&gt; 1 sqrt(x)       1.2us</span></span>
-<span><span class="co">#&gt; 2 x^0.5        3.76us</span></span>
+<span><span class="co">#&gt; 1 sqrt(x)      1.18us</span></span>
+<span><span class="co">#&gt; 2 x^0.5         3.9us</span></span>
 <span></span>
 <span><span class="va">t_systime_df</span></span>
 <span><span class="co">#&gt; # A tibble: 2 x 3</span></span>
 <span><span class="co">#&gt;   expression systime_with_gc_us systime_with_nogc_us</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt;              &lt;dbl&gt;                &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 sqrt(x)                  1.07                0.700</span></span>
-<span><span class="co">#&gt; 2 x^0.5                    3.42                3.28</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 sqrt(x)                  1.05                0.720</span></span>
+<span><span class="co">#&gt; 2 x^0.5                    3.62                3.59</span></span></code></pre></div>
 <p>The comparison reveals that these two approaches yield quite similar results.</p>
 <p><strong>Q2.</strong> Here are two other ways to compute the square root of a vector. Which do you think will be fastest? Which will be slowest? Use microbenchmarking to test your answers.</p>
-<div class="sourceCode" id="cb617"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb633"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span><span class="op">^</span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><strong>A2.</strong></p>
 <p>Microbenchmarking all ways to compute square root of a vector mentioned in this chapter.</p>
-<div class="sourceCode" id="cb618"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb634"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span></span>
@@ -233,10 +233,10 @@
 <span><span class="co">#&gt; # A tibble: 4 x 6</span></span>
 <span><span class="co">#&gt;   expression         min   median `itr/sec` mem_alloc</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt;    &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span><span class="co">#&gt; 1 sqrt(x)          4.7us    5.1us   192589.    7.86KB</span></span>
-<span><span class="co">#&gt; 2 x^(1/2)         25.6us   26.2us    37835.    7.86KB</span></span>
-<span><span class="co">#&gt; 3 x^0.5           25.5us   30.2us    32849.    7.86KB</span></span>
-<span><span class="co">#&gt; 4 exp(log(x)/2)   67.2us   77.8us    12304.    7.86KB</span></span>
+<span><span class="co">#&gt; 1 sqrt(x)          3.8us    7.8us   150939.    7.86KB</span></span>
+<span><span class="co">#&gt; 2 x^(1/2)         28.5us   30.7us    27414.    7.86KB</span></span>
+<span><span class="co">#&gt; 3 x^0.5           30.9us     46us    21764.    7.86KB</span></span>
+<span><span class="co">#&gt; 4 exp(log(x)/2)     69us   84.5us    11539.    7.86KB</span></span>
 <span><span class="co">#&gt;   `gc/sec`</span></span>
 <span><span class="co">#&gt;      &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1        0</span></span>
@@ -273,7 +273,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-15.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

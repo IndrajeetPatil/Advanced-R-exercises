@@ -85,19 +85,19 @@
 <span class="header-section-number">4</span> Subsetting<a class="anchor" aria-label="anchor" href="#subsetting"><i class="fas fa-link"></i></a>
 </h1>
 <p>Attaching the needed libraries:</p>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span></span></code></pre></div>
 <div id="exercises-4.2.6" class="section level2" number="4.1">
 <h2>
 <span class="header-section-number">4.1</span> Exercises 4.2.6<a class="anchor" aria-label="anchor" href="#exercises-4.2.6"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Fix each of the following common data frame subsetting errors:</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="subsetting.html#cb74-1" aria-hidden="true" tabindex="-1"></a>mtcars[mtcars<span class="sc">$</span>cyl <span class="ot">=</span> <span class="dv">4</span>, ]</span>
-<span id="cb74-2"><a href="subsetting.html#cb74-2" aria-hidden="true" tabindex="-1"></a>mtcars[<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, ]</span>
-<span id="cb74-3"><a href="subsetting.html#cb74-3" aria-hidden="true" tabindex="-1"></a>mtcars[mtcars<span class="sc">$</span>cyl <span class="sc">&lt;=</span> <span class="dv">5</span>]</span>
-<span id="cb74-4"><a href="subsetting.html#cb74-4" aria-hidden="true" tabindex="-1"></a>mtcars[mtcars<span class="sc">$</span>cyl <span class="sc">==</span> <span class="dv">4</span> <span class="sc">|</span> <span class="dv">6</span>, ]</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="subsetting.html#cb75-1" aria-hidden="true" tabindex="-1"></a>mtcars[mtcars<span class="sc">$</span>cyl <span class="ot">=</span> <span class="dv">4</span>, ]</span>
+<span id="cb75-2"><a href="subsetting.html#cb75-2" aria-hidden="true" tabindex="-1"></a>mtcars[<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, ]</span>
+<span id="cb75-3"><a href="subsetting.html#cb75-3" aria-hidden="true" tabindex="-1"></a>mtcars[mtcars<span class="sc">$</span>cyl <span class="sc">&lt;=</span> <span class="dv">5</span>]</span>
+<span id="cb75-4"><a href="subsetting.html#cb75-4" aria-hidden="true" tabindex="-1"></a>mtcars[mtcars<span class="sc">$</span>cyl <span class="sc">==</span> <span class="dv">4</span> <span class="sc">|</span> <span class="dv">6</span>, ]</span></code></pre></div>
 <p><strong>A1.</strong> Fixed versions of these commands:</p>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># `==` instead of `=`</span></span>
 <span><span class="va">mtcars</span><span class="op">[</span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span>, <span class="op">]</span></span>
 <span></span>
@@ -111,7 +111,7 @@
 <span><span class="va">mtcars</span><span class="op">[</span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span> <span class="op">|</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span> <span class="op">==</span> <span class="fl">6</span>, <span class="op">]</span></span>
 <span><span class="va">mtcars</span><span class="op">[</span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">6</span><span class="op">)</span>, <span class="op">]</span></span></code></pre></div>
 <p><strong>Q2.</strong> Why does the following code yield five missing values?</p>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span></span>
 <span><span class="va">x</span><span class="op">[</span><span class="cn">NA</span><span class="op">]</span></span>
 <span><span class="co">#&gt; [1] NA NA NA NA NA</span></span></code></pre></div>
@@ -119,25 +119,25 @@
 <ul>
 <li>The default type of <code>NA</code> in R is of <code>logical</code> type.</li>
 </ul>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "logical"</span></span></code></pre></div>
 <ul>
 <li>R recycles indexes to match the length of the vector.</li>
 </ul>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span></span>
 <span><span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">]</span> <span class="co"># recycled to c(TRUE, FALSE, TRUE, FALSE, TRUE)</span></span>
 <span><span class="co">#&gt; [1] 1 3 5</span></span></code></pre></div>
 <p><strong>Q3.</strong> What does <code><a href="https://rdrr.io/r/base/lower.tri.html">upper.tri()</a></code> return? How does subsetting a matrix with it work? Do we need any additional subsetting rules to describe its behaviour?</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, FUN <span class="op">=</span> <span class="st">"*"</span><span class="op">)</span></span>
 <span><span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">upper.tri</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <p>A3. The documentation for <code><a href="https://rdrr.io/r/base/lower.tri.html">upper.tri()</a></code> states-</p>
 <blockquote>
 <p>Returns a matrix of logicals the same size of a given matrix with entries <code>TRUE</code> in the <strong>upper triangle</strong></p>
 </blockquote>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, FUN <span class="op">=</span> <span class="st">"*"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5]</span></span>
 <span><span class="co">#&gt; [1,]    1    2    3    4    5</span></span>
@@ -154,12 +154,12 @@
 <span><span class="co">#&gt; [4,] FALSE FALSE FALSE FALSE  TRUE</span></span>
 <span><span class="co">#&gt; [5,] FALSE FALSE FALSE FALSE FALSE</span></span></code></pre></div>
 <p>When used with a matrix for subsetting, elements corresponding to <code>TRUE</code> in the subsetting matrix are selected. But, instead of a matrix, this returns a vector:</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">upper.tri</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt;  [1]  2  3  6  4  8 12  5 10 15 20</span></span></code></pre></div>
 <p><strong>Q4.</strong> Why does <code>mtcars[1:20]</code> return an error? How does it differ from the similar <code>mtcars[1:20, ]</code>?</p>
 <p><strong>A4.</strong> When indexed like a list, data frame columns at given indices will be selected.</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    mpg cyl</span></span>
 <span><span class="co">#&gt; Mazda RX4         21.0   6</span></span>
@@ -170,12 +170,12 @@
 <span><span class="co">#&gt; Valiant           18.1   6</span></span></code></pre></div>
 <p><code>mtcars[1:20]</code> doesn’t work because there are only 11 columns in <code>mtcars</code> dataset.</p>
 <p>On the other hand, <code>mtcars[1:20, ]</code> indexes a dataframe like a matrix, and because there are indeed 20 rows in <code>mtcars</code>, all columns with these rows are selected.</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, <span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 20</span></span></code></pre></div>
 <p><strong>Q5.</strong> Implement your own function that extracts the diagonal entries from a matrix (it should behave like <code>diag(x)</code> where <code>x</code> is a matrix).</p>
 <p><strong>A5.</strong> We can combine the existing functions to our advantage:</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">upper.tri</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">lower.tri</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; [1]  1  4  9 16 25</span></span>
 <span></span>
@@ -184,7 +184,7 @@
 <p><strong>Q6.</strong> What does <code>df[is.na(df)] &lt;- 0</code> do? How does it work?</p>
 <p><strong>A6.</strong> This expression replaces every instance of <code>NA</code> in <code>df</code> with <code>0</code>.</p>
 <p><code>is.na(df)</code> produces a matrix of logical values, which provides a way of subsetting.</p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">5</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 3 x 2</span></span>
 <span><span class="co">#&gt;       x     y</span></span>
@@ -208,7 +208,7 @@
 </h2>
 <p><strong>Q1.</strong> Brainstorm as many ways as possible to extract the third value from the <code>cyl</code> variable in the <code>mtcars</code> dataset.</p>
 <p><strong>A1.</strong> Possible ways to to extract the third value from the <code>cyl</code> variable in the <code>mtcars</code> dataset:</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mtcars</span><span class="op">[[</span><span class="st">"cyl"</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co">#&gt; [1] 4</span></span>
 <span><span class="va">mtcars</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span><span class="op">]</span></span>
@@ -227,7 +227,7 @@
 <span><span class="co">#&gt; [1] 4</span></span></code></pre></div>
 <p><strong>Q2.</strong> Given a linear model, e.g., <code>mod &lt;- lm(mpg ~ wt, data = mtcars)</code>, extract the residual degrees of freedom. Then extract the R squared from the model summary (<code>summary(mod)</code>)</p>
 <p><strong>A2.</strong> Given that objects of class <code>lm</code> are lists, we can use subsetting operators to extract elements we want.</p>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "lm"</span></span>
@@ -236,7 +236,7 @@
 <ul>
 <li>extracting the residual degrees of freedom</li>
 </ul>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod</span><span class="op">$</span><span class="va">df.residual</span> </span>
 <span><span class="co">#&gt; [1] 30</span></span>
 <span><span class="va">mod</span><span class="op">[[</span><span class="st">"df.residual"</span><span class="op">]</span><span class="op">]</span></span>
@@ -244,7 +244,7 @@
 <ul>
 <li>extracting the R squared from the model summary</li>
 </ul>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">$</span><span class="va">r.squared</span></span>
 <span><span class="co">#&gt; [1] 0.7528328</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">[[</span><span class="st">"r.squared"</span><span class="op">]</span><span class="op">]</span></span>
@@ -256,7 +256,7 @@
 </h2>
 <p><strong>Q1.</strong> How would you randomly permute the columns of a data frame? (This is an important technique in random forests.) Can you simultaneously permute the rows and columns in one step?</p>
 <p><strong>A1.</strong> Let’s create a small data frame to work with.</p>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># original</span></span>
@@ -279,7 +279,7 @@
 <ul>
 <li>randomly permute columns</li>
 </ul>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt;                   drat    wt carb am  qsec vs  hp  mpg disp</span></span>
 <span><span class="co">#&gt; Mazda RX4         3.90 2.620    4  1 16.46  0 110 21.0  160</span></span>
@@ -298,7 +298,7 @@
 <ul>
 <li>randomly permute rows</li>
 </ul>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span>
 <span><span class="co">#&gt;                    mpg cyl disp  hp drat    wt  qsec vs am</span></span>
 <span><span class="co">#&gt; Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1</span></span>
@@ -317,7 +317,7 @@
 <ul>
 <li>randomly permute columns and rows</li>
 </ul>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt;                    qsec vs gear am    wt drat carb disp  hp</span></span>
 <span><span class="co">#&gt; Mazda RX4         16.46  0    4  1 2.620 3.90    4  160 110</span></span>
@@ -335,7 +335,7 @@
 <span><span class="co">#&gt; Hornet Sportabout 18.7   8</span></span></code></pre></div>
 <p><strong>Q2.</strong> How would you select a random sample of <code>m</code> rows from a data frame? What if the sample had to be contiguous (i.e., with an initial row, a final row, and every row in between)?</p>
 <p><strong>A2.</strong> Let’s create a small data frame to work with.</p>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># original</span></span>
@@ -361,7 +361,7 @@
 <ul>
 <li>random and non-contiguous sample of <code>m</code> rows from a data frame</li>
 </ul>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="va">m</span><span class="op">)</span>, <span class="op">]</span></span>
 <span><span class="co">#&gt;                mpg cyl disp  hp drat    wt  qsec vs am gear</span></span>
 <span><span class="co">#&gt; Valiant       18.1   6  225 105 2.76 3.460 20.22  1  0    3</span></span>
@@ -372,7 +372,7 @@
 <ul>
 <li>random and contiguous sample of <code>m</code> rows from a data frame</li>
 </ul>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># select a random starting position from available number of rows</span></span>
 <span><span class="va">start_row</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">-</span> <span class="va">m</span> <span class="op">+</span> <span class="fl">1</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
@@ -388,7 +388,7 @@
 <span><span class="co">#&gt; Mazda RX4 Wag    4</span></span></code></pre></div>
 <p><strong>Q3.</strong> How could you put the columns in a data frame in alphabetical order?</p>
 <p><strong>A3.</strong> we can sort columns in a data frame in the alphabetical order using <code>[</code> with <code><a href="https://rdrr.io/r/base/order.html">order()</a></code>:</p>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># columns in original order</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"  </span></span>
@@ -398,6 +398,79 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "am"   "carb" "cyl"  "disp" "drat" "gear" "hp"   "mpg" </span></span>
 <span><span class="co">#&gt;  [9] "qsec" "vs"   "wt"</span></span></code></pre></div>
+</div>
+<div id="session-information-2" class="section level2" number="4.4">
+<h2>
+<span class="header-section-number">4.4</span> Session information<a class="anchor" aria-label="anchor" href="#session-information-2"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; - Session info -------------------------------------------</span></span>
+<span><span class="co">#&gt;  setting  value</span></span>
+<span><span class="co">#&gt;  version  R version 4.1.3 (2022-03-10)</span></span>
+<span><span class="co">#&gt;  os       Windows 10 x64 (build 22000)</span></span>
+<span><span class="co">#&gt;  system   x86_64, mingw32</span></span>
+<span><span class="co">#&gt;  ui       RTerm</span></span>
+<span><span class="co">#&gt;  language (EN)</span></span>
+<span><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
+<span><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
+<span><span class="co">#&gt;  tz       Europe/Berlin</span></span>
+<span><span class="co">#&gt;  date     2022-08-20</span></span>
+<span><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
+<span><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
+<span><span class="co">#&gt;    base        * 4.1.3      2022-03-10 [?] local</span></span>
+<span><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;  P compiler      4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;  P datasets    * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;  P graphics    * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;  P grDevices   * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)</span></span>
+<span><span class="co">#&gt;    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;  P methods     * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
+<span><span class="co">#&gt;    rlang         1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
+<span><span class="co">#&gt;    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    tibble      * 3.1.8      2022-07-22 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;  P tools         4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;  P utils       * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1</span></span>
+<span><span class="co">#&gt;  [2] C:/Program Files/R/R-4.1.3/library</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  P -- Loaded and on-disk path mismatch.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ----------------------------------------------------------</span></span></code></pre></div>
 
 </div>
 </div>
@@ -411,6 +484,7 @@
 <li><a class="nav-link" href="#exercises-4.2.6"><span class="header-section-number">4.1</span> Exercises 4.2.6</a></li>
 <li><a class="nav-link" href="#exercises-4.3.5"><span class="header-section-number">4.2</span> Exercises 4.3.5</a></li>
 <li><a class="nav-link" href="#exercises-4.5.9"><span class="header-section-number">4.3</span> Exercises 4.5.9</a></li>
+<li><a class="nav-link" href="#session-information-2"><span class="header-section-number">4.4</span> Session information</a></li>
 </ul>
 
       <div class="book-extra">
@@ -428,7 +502,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-15.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -85,7 +85,7 @@
 <span class="header-section-number">21</span> Translation<a class="anchor" aria-label="anchor" href="#translation"><i class="fas fa-link"></i></a>
 </h1>
 <p>Needed libraries:</p>
-<div class="sourceCode" id="cb596"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb611"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span></span></code></pre></div>
 <div id="exercises-21.2.6" class="section level3" number="21.0.1">
@@ -94,12 +94,12 @@
 </h3>
 <hr>
 <p><strong>Q1.</strong> The escaping rules for <code>&lt;script&gt;</code> tags are different because they contain JavaScript, not HTML. Instead of escaping angle brackets or ampersands, you need to escape <code>&lt;/script&gt;</code> so that the tag isn’t closed too early. For example, <code>script("'&lt;/script&gt;'")</code>, shouldn’t generate this:</p>
-<div class="sourceCode" id="cb597"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb597-1"><a href="translation.html#cb597-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">'&lt;/script&gt;'</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb612"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb612-1"><a href="translation.html#cb612-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">'&lt;/script&gt;'</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
 <p>But</p>
-<div class="sourceCode" id="cb598"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb598-1"><a href="translation.html#cb598-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">'&lt;</span><span class="sc">\/</span><span class="st">script&gt;'</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb613"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb613-1"><a href="translation.html#cb613-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">'&lt;</span><span class="sc">\/</span><span class="st">script&gt;'</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
 <p>Adapt the <code>escape()</code> to follow these rules when a new argument <code>script</code> is set to <code>TRUE</code>.</p>
 <p><strong>A1.</strong></p>
-<div class="sourceCode" id="cb599"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb614"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">escape</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/UseMethod.html">UseMethod</a></span><span class="op">(</span><span class="st">"escape"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">escape.character</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">script</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
@@ -116,7 +116,7 @@
 <span></span>
 <span><span class="va">escape.advr_html</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="va">x</span></span></code></pre></div>
 <p>We will also need to tweak the boilerplate to pass this additional parameter to <code>escape()</code>:</p>
-<div class="sourceCode" id="cb600"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb615"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">html</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span><span class="va">x</span>, class <span class="op">=</span> <span class="st">"advr_html"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">print.advr_html</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
@@ -176,12 +176,12 @@
 <span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">tag</span><span class="op">(</span><span class="st">"p"</span><span class="op">)</span></span>
 <span><span class="va">script</span> <span class="op">&lt;-</span> <span class="fu">tag</span><span class="op">(</span><span class="st">"script"</span>, script <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb601"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb616"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">script</span><span class="op">(</span><span class="st">"'&lt;/script&gt;'"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;HTML&gt; &lt;script&gt;'&lt;\/script&gt;'&lt;/script&gt;</span></span></code></pre></div>
 <hr>
 <p><strong>Q2.</strong> The use of <code>...</code> for all functions has some big downsides. There’s no input validation and there will be little information in the documentation or autocomplete about how they are used in the function. Create a new function that, when given a named list of tags and their attribute names (like below), creates tag functions with named arguments.</p>
-<div class="sourceCode" id="cb602"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb617"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"href"</span><span class="op">)</span>,</span>
 <span>  img <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"src"</span>, <span class="st">"width"</span>, <span class="st">"height"</span><span class="op">)</span></span>
@@ -189,14 +189,14 @@
 <p>All tags should get <code>class</code> and <code>id</code> attributes.</p>
 <hr>
 <p><strong>Q3.</strong> Reason about the following code that calls <code>with_html()</code> referencing objects from the environment. Will it work or fail? Why? Run the code to verify your predictions.</p>
-<div class="sourceCode" id="cb603"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb618"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">greeting</span> <span class="op">&lt;-</span> <span class="st">"Hello!"</span></span>
 <span><span class="fu">with_html</span><span class="op">(</span><span class="fu">p</span><span class="op">(</span><span class="va">greeting</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="st">"p"</span></span>
 <span><span class="va">address</span> <span class="op">&lt;-</span> <span class="st">"123 anywhere street"</span></span>
 <span><span class="fu">with_html</span><span class="op">(</span><span class="fu">p</span><span class="op">(</span><span class="va">address</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><strong>A3.</strong> To work with this, we first need to copy-paste relevant code from the book:</p>
-<div class="sourceCode" id="cb604"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb619"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">"a"</span>, <span class="st">"abbr"</span>, <span class="st">"address"</span>, <span class="st">"article"</span>, <span class="st">"aside"</span>, <span class="st">"audio"</span>,</span>
 <span>  <span class="st">"b"</span>, <span class="st">"bdi"</span>, <span class="st">"bdo"</span>, <span class="st">"blockquote"</span>, <span class="st">"body"</span>, <span class="st">"button"</span>, <span class="st">"canvas"</span>,</span>
@@ -231,12 +231,12 @@
 <span><span class="op">}</span></span></code></pre></div>
 <p>Note that <code>with_html()</code> uses <code><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy()</a></code>, and therefore <code>code</code> argument is evaluated first in the <code>html_tags</code> named list, which acts as a data mask, and if no object is found in the data mask, searches in the caller environment.</p>
 <p>For this reason, the first example code will work:</p>
-<div class="sourceCode" id="cb605"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb620"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">greeting</span> <span class="op">&lt;-</span> <span class="st">"Hello!"</span></span>
 <span><span class="fu">with_html</span><span class="op">(</span><span class="fu">p</span><span class="op">(</span><span class="va">greeting</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;HTML&gt; &lt;p&gt;Hello!&lt;/p&gt;</span></span></code></pre></div>
 <p>The following code, however, is not going to work because there is already <code>address</code> element in the data mask, and so <code>p()</code> will take a function <code>address()</code> as an input, and <code>escape()</code> doesn’t know how to deal with objects of <code>function</code> type:</p>
-<div class="sourceCode" id="cb606"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb621"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="st">"address"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">html_tags</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span>
 <span></span>
@@ -247,7 +247,7 @@
 <hr>
 <p><strong>Q4.</strong> Currently the HTML doesn’t look terribly pretty, and it’s hard to see the structure. How could you adapt <code>tag()</code> to do indenting and formatting? (You may need to do some research into block and inline tags.)</p>
 <p><strong>A4.</strong></p>
-<div class="sourceCode" id="cb607"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb622"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">html_tags</span><span class="op">$</span><span class="fu">p</span><span class="op">(</span></span>
 <span>  <span class="st">"Some text. "</span>,</span>
 <span>  <span class="va">html_tags</span><span class="op">$</span><span class="fu">b</span><span class="op">(</span><span class="va">html_tags</span><span class="op">$</span><span class="fu">i</span><span class="op">(</span><span class="st">"some bold italic text"</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -267,18 +267,88 @@
 <p><strong>Q2.</strong> Complete the DSL to support all the functions that <code>plotmath</code> supports.</p>
 <hr>
 </div>
+<div id="session-information-16" class="section level2" number="21.1">
+<h2>
+<span class="header-section-number">21.1</span> Session information<a class="anchor" aria-label="anchor" href="#session-information-16"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb623"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; - Session info -------------------------------------------</span></span>
+<span><span class="co">#&gt;  setting  value</span></span>
+<span><span class="co">#&gt;  version  R version 4.1.3 (2022-03-10)</span></span>
+<span><span class="co">#&gt;  os       Windows 10 x64 (build 22000)</span></span>
+<span><span class="co">#&gt;  system   x86_64, mingw32</span></span>
+<span><span class="co">#&gt;  ui       RTerm</span></span>
+<span><span class="co">#&gt;  language (EN)</span></span>
+<span><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
+<span><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
+<span><span class="co">#&gt;  tz       Europe/Berlin</span></span>
+<span><span class="co">#&gt;  date     2022-08-20</span></span>
+<span><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
+<span><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
+<span><span class="co">#&gt;    base        * 4.1.3      2022-03-10 [?] local</span></span>
+<span><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;  P compiler      4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;  P datasets    * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;  P graphics    * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;  P grDevices   * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)</span></span>
+<span><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;  P methods     * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    purrr       * 0.3.4      2020-04-17 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
+<span><span class="co">#&gt;    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
+<span><span class="co">#&gt;    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;  P tools         4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;  P utils       * 4.1.3      2022-03-10 [2] local</span></span>
+<span><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1</span></span>
+<span><span class="co">#&gt;  [2] C:/Program Files/R/R-4.1.3/library</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  P -- Loaded and on-disk path mismatch.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ----------------------------------------------------------</span></span></code></pre></div>
+
+</div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></div>
 <div class="next"><a href="debugging.html"><span class="header-section-number">22</span> Debugging</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li>
+      <ul class="nav navbar-nav">
+<li>
 <a class="nav-link" href="#translation"><span class="header-section-number">21</span> Translation</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#exercises-21.2.6"><span class="header-section-number">21.0.1</span> Exercises 21.2.6</a></li>
 <li><a class="nav-link" href="#exercises-21.3.8"><span class="header-section-number">21.0.2</span> Exercises 21.3.8</a></li>
 </ul>
-</li></ul>
+</li>
+<li><a class="nav-link" href="#session-information-16"><span class="header-section-number">21.1</span> Session information</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
@@ -295,7 +365,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-15.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

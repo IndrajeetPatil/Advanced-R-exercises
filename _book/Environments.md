@@ -40,14 +40,14 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x00000000195f88c0>
+#> <environment: 0x00000000195b23f0>
 #> Parent: <environment: global>
 #> Bindings:
 #> * loop: <env>
 
 # should be the same as the `e` memory address
 lobstr::obj_addr(e$loop)
-#> [1] "0x195f88c0"
+#> [1] "0x195b23f0"
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -66,9 +66,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x3369f858" "0x3369f858"
+#> [1] "0x337597b8" "0x337597b8"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x3378a220" "0x3378a220"
+#> [1] "0x33848b80" "0x33848b80"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -302,7 +302,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000018064d20>
+#> <bytecode: 0x0000000017ff22a0>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -482,7 +482,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x0000000018da1510>
+#> <bytecode: 0x00000000182bff20>
 #> <environment: namespace:rlang>
 ```
 
@@ -499,8 +499,8 @@ explore_caller_env <- function() {
 
 explore_caller_env()
 #> <environment: R_GlobalEnv>
-#> <environment: 0x0000000033bedec0>
-#> <environment: 0x0000000033bedec0>
+#> <environment: 0x0000000033c6f888>
+#> <environment: 0x0000000033c6f888>
 
 rlang::fn_env(explore_caller_env)
 #> <environment: R_GlobalEnv>
@@ -541,3 +541,88 @@ foo()
 #> [1] "a" "b"
 #> [1] "a" "b"
 ```
+
+## Session information
+
+
+```r
+sessioninfo::session_info(include_base = TRUE)
+#> - Session info -------------------------------------------
+#>  setting  value
+#>  version  R version 4.1.3 (2022-03-10)
+#>  os       Windows 10 x64 (build 22000)
+#>  system   x86_64, mingw32
+#>  ui       RTerm
+#>  language (EN)
+#>  collate  English_United Kingdom.1252
+#>  ctype    English_United Kingdom.1252
+#>  tz       Europe/Berlin
+#>  date     2022-08-20
+#>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
+#> 
+#> - Packages -----------------------------------------------
+#>  ! package     * version    date (UTC) lib source
+#>    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.1)
+#>    base        * 4.1.3      2022-03-10 [?] local
+#>    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)
+#>    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)
+#>    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)
+#>    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)
+#>  P compiler      4.1.3      2022-03-10 [2] local
+#>    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.3)
+#>  P datasets    * 4.1.3      2022-03-10 [2] local
+#>    DBI           1.1.3      2022-06-18 [1] CRAN (R 4.1.3)
+#>    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)
+#>    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)
+#>    dplyr         1.0.9      2022-04-28 [1] CRAN (R 4.1.3)
+#>    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)
+#>    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.3)
+#>    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)
+#>    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)
+#>    generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.3)
+#>    glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)
+#>  P graphics    * 4.1.3      2022-03-10 [2] local
+#>  P grDevices   * 4.1.3      2022-03-10 [2] local
+#>    highr         0.9        2021-04-16 [1] CRAN (R 4.1.1)
+#>    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)
+#>    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)
+#>    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
+#>    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)
+#>    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)
+#>    lobstr        1.1.2      2022-06-22 [1] CRAN (R 4.1.3)
+#>    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)
+#>    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)
+#>  P methods     * 4.1.3      2022-03-10 [2] local
+#>    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.3)
+#>    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.1)
+#>    png           0.1-7      2013-12-03 [1] CRAN (R 4.1.0)
+#>    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.1)
+#>    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)
+#>    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)
+#>    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)
+#>    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)
+#>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)
+#>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
+#>  P stats       * 4.1.3      2022-03-10 [2] local
+#>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
+#>    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
+#>    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)
+#>    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)
+#>  P tools         4.1.3      2022-03-10 [2] local
+#>    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)
+#>  P utils       * 4.1.3      2022-03-10 [2] local
+#>    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.1.3)
+#>    winch         0.0.8      2022-03-17 [1] CRAN (R 4.1.3)
+#>    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)
+#>    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)
+#>    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)
+#>    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)
+#> 
+#>  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1
+#>  [2] C:/Program Files/R/R-4.1.3/library
+#> 
+#>  P -- Loaded and on-disk path mismatch.
+#> 
+#> ----------------------------------------------------------
+```
+
