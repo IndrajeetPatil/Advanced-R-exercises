@@ -385,11 +385,10 @@ y
 This is because of name masking. In the function call `c(x, y)`, when `x` is accessed in the function environment, the following promise is evaluated in the function environment:
 
 ```{r, eval = FALSE}
-x =
-                 {
-                   y <- 1
-                   2
-                 }
+x <- {
+  y <- 1
+  2
+}
 ```
 
 And, thus `y` gets assigned to `1`, and `x` to `2`, since its the last value in that scope.
@@ -602,10 +601,10 @@ with_png_device <- function(filename, code, ...) {
 capture.output2 <- function(code) {
   temp <- tempfile()
   on.exit(file.remove(temp), add = TRUE, after = TRUE)
-  
+
   sink(temp)
   on.exit(sink(), add = TRUE, after = TRUE)
-  
+
   force(code)
   readLines(temp)
 }

@@ -29,7 +29,8 @@ fileRemove <- function(...) {
         "The following files to be deleted don't exist:",
         names(existing_files[!existing_files]),
         sep = "\n"
-      )
+      ),
+      call. = FALSE
     )
   }
 
@@ -51,10 +52,10 @@ The function should fail if there are any other files provided that don't exist:
 fileRemove(c("random.R", "XYZ.csv"))
 #> The following files to be deleted don't exist:
 #> XYZ.csv
-#> Error in fileRemove(c("random.R", "XYZ.csv")):
+#> Error:
 ```
 
-But does work as expected when the file exists:
+But it does work as expected when the file exists:
 
 
 ```r
@@ -70,13 +71,17 @@ fileRemove("random.R")
 
 > should messages given as a character string have a newline appended?
 
-- If `TRUE`, a final newline is regarded as part of the message:
+- If `TRUE` (default value), a final newline is regarded as part of the message:
 
 
 ```r
-message("Beetle", appendLF = TRUE)
+foo <- function(appendLF) {
+  message("Beetle", appendLF = appendLF)
+  message("Juice", appendLF = appendLF)
+}
+
+foo(appendLF = TRUE)
 #> Beetle
-message("Juice", appendLF = TRUE)
 #> Juice
 ```
 
@@ -84,29 +89,39 @@ message("Juice", appendLF = TRUE)
 
 
 ```r
-message("Beetle", appendLF = FALSE)
-#> Beetle
-message("Juice", appendLF = FALSE)
-#> Juice
+foo <- function(appendLF) {
+  message("Beetle", appendLF = appendLF)
+  message("Juice", appendLF = appendLF)
+}
+
+foo(appendLF = FALSE)
+#> BeetleJuice
 ```
 
 On the other hand, `cat()` converts its arguments to character vectors and concatenates them to a single character vector by default:
 
 
 ```r
-cat("Beetle")
-#> Beetle
-cat("Juice")
-#> Juice
+foo <- function() {
+  cat("Beetle")
+  cat("Juice")
+}
+
+foo()
+#> BeetleJuice
 ```
 
-In order to get output `message()`-like default behavior, we can set `sep = "\n"`:
+In order to get `message()`-like default behavior for outputs, we can set `sep = "\n"`:
 
 
 ```r
-cat("Beetle", sep = "\n")
+foo <- function() {
+  cat("Beetle", sep = "\n")
+  cat("Juice", sep = "\n")
+}
+
+foo()
 #> Beetle
-cat("Juice", sep = "\n")
 #> Juice
 ```
 
@@ -124,7 +139,7 @@ catch_cnd(stop("An error"))
 catch_cnd(abort("An error"))
 ```
 
-**A1.** Contrasting these two lists, we can see that `rlang::abort()` contains two additional pieces of information:
+**A1.** Compared to `base::stop()`, `rlang::abort()` contains two additional pieces of information:
 
 - `trace`: A traceback capturing the sequence of calls that lead to the current function 
 - `parent`: Information about another condition used as a parent to create a chained condition.
@@ -196,6 +211,8 @@ show_condition({
 
 **A2.** Correctly predicted 😉
 
+The first three pieces of code are straightforward:
+
 
 ```r
 show_condition <- function(code) {
@@ -216,6 +233,14 @@ show_condition(10)
 #> NULL
 show_condition(warning("?!"))
 #> [1] "warning"
+```
+
+The last piece of code is the challenging one and it illustrates how `tryCatch()` works. From its docs:
+
+> When several handlers are supplied in a single tryCatch then the first one is considered more recent than the second.
+
+
+```r
 show_condition({
   10
   message("?")
@@ -223,10 +248,6 @@ show_condition({
 })
 #> [1] "message"
 ```
-
-The last piece of code is the challenging one and it illustrates how `tryCatch()` works. From its docs:
-
-> When several handlers are supplied in a single tryCatch then the first one is considered more recent than the second.
 
 ---
 
@@ -269,7 +290,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x0000000033cce540>
+#> <bytecode: 0x000000002f13e5a0>
 #> <environment: namespace:rlang>
 ```
 
@@ -284,16 +305,12 @@ The `classes` argument allows a character vector of condition classes to catch, 
 catch_cnd(10)
 #> NULL
 
-catch_cnd(abort(message = "an error", class = "my class"))
-#> <error/my class>
+catch_cnd(abort(message = "an error", class = "class1"))
+#> <error/class1>
 #> Error:
 #> ! an error
 #> ---
 #> Backtrace:
-
-catch_cnd(abort("an error"), classes = "message")
-#> Error:
-#> ! an error
 ```
 
 ---
@@ -327,7 +344,7 @@ show_condition2 <- function(code) {
 }
 ```
 
-Let's try this new version with the examples from original version:
+Let's try this new version with the examples used for the original version:
 
 
 ```r
@@ -367,18 +384,18 @@ abort_missing_package <- function(pkg) {
 }
 
 check_if_pkg_installed <- function(pkg) {
-  tryCatch(
-    requireNamespace(pkg, quietly = FALSE),
-    error_missing_package = abort_missing_package(pkg)
-  )
+  if(!requireNamespace(pkg, quietly = TRUE)) {
+    abort_missing_package(pkg)
+  }
+
+  TRUE
 }
 
 check_if_pkg_installed("xyz123")
 #> Error in `abort_missing_package()`:
 #> ! Problem loading `xyz123` package, which is missing and must be installed.
 check_if_pkg_installed("dplyr")
-#> Error in `abort_missing_package()`:
-#> ! Problem loading `dplyr` package, which is missing and must be installed.
+#> [1] TRUE
 ```
 
 For a reference, also see the source code for following functions:
@@ -429,25 +446,19 @@ This test wouldn't fail even if we decided to change the exact message.
 
 **Q1.** Create `suppressConditions()` that works like `suppressMessages()` and `suppressWarnings()` but suppresses everything. Think carefully about how you should handle errors.
 
-**A1.** The following function suppresses/muffles both warnings and messages, except error. If errors are present, it doesn't produce an error, but returns a list instead that contains the error message.
+**A1.** To create the desired `suppressConditions()`, we just need to create an equivalent of `suppressWarnings()` and `suppressMessages()` for errors. To suppress the error message, we can handle errors within a `tryCatch()` and return the error object invisibly:
 
 
 ```r
-suppressConditions <- function(expr) {
+suppressErrors <- function(expr) {
   tryCatch(
-    error = function(cnd) {
-      list(result = NULL, error = cnd)
-    },
-    withCallingHandlers(
-      message = function(cnd) {
-        if (inherits(cnd, "message")) tryInvokeRestart("muffleMessage")
-      },
-      warning = function(cnd) {
-        if (inherits(cnd, "warning")) tryInvokeRestart("muffleWarning")
-      },
-      expr
-    )
+    error = function(cnd) invisible(cnd),
+    expr
   )
+}
+
+suppressConditions <- function(expr) {
+  suppressErrors(suppressWarnings(suppressMessages(expr)))
 }
 ```
 
@@ -459,19 +470,27 @@ suppressConditions(1)
 #> [1] 1
 
 suppressConditions({
-  warning("I'm warning you")
   message("I'm messaging you")
+  warning("I'm warning you")
 })
 
 suppressConditions({
   stop("I'm stopping this")
 })
-#> $result
-#> NULL
-#> 
-#> $error
-#> <simpleError in withCallingHandlers(message = function(cnd) {    if (inherits(cnd, "message"))         tryInvokeRestart("muffleMessage")}, warning = function(cnd) {    if (inherits(cnd, "warning"))         tryInvokeRestart("muffleWarning")}, expr): I'm stopping this>
 ```
+
+All condition messages are now suppressed, but note that if we assign error object to a variable, we can still extract useful information for debugging:
+
+
+```r
+e <- suppressConditions({
+  stop("I'm stopping this")
+})
+
+e
+#> <simpleError in withCallingHandlers(expr, message = function(c) if (inherits(c,     classes)) tryInvokeRestart("muffleMessage")): I'm stopping this>
+```
+
 
 ---
 
@@ -488,7 +507,6 @@ message2error <- function(code) {
 ```
 
 **A2.** With `withCallingHandlers()`, the condition handler is called from the signaling function itself, and, therefore, provides a more detailed call stack.
-
 
 
 ```r
@@ -632,7 +650,7 @@ bottles_of_beer <- function(i = 99) {
 }
 ```
 
-**A4.** Because this function catches the `interrupt` and works with it, there is no way to stop `bottles_of_beer()`, because the way you would usually stop it by using `interrupt`!
+**A4.** Because this function catches the `interrupt` and there is no way to stop `bottles_of_beer()`, because the way you would usually stop it by using `interrupt`!
 
 
 ```r
@@ -651,7 +669,7 @@ bottles_of_beer()
 
 In RStudio IDE, you can snap out of this loop by terminating the R session.
 
-But, this shows why catching `interrupts` is dangerous and can result in poor user experience.
+This shows why catching `interrupt` is dangerous and can result in poor user experience.
 
 ---
 
@@ -675,6 +693,7 @@ sessioninfo::session_info(include_base = TRUE)
 #> 
 #> - Packages -----------------------------------------------
 #>  ! package     * version    date (UTC) lib source
+#>    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.1)
 #>    base        * 4.1.3      2022-03-10 [?] local
 #>    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)
 #>    brio          1.1.3      2021-11-30 [1] CRAN (R 4.1.2)
@@ -684,13 +703,16 @@ sessioninfo::session_info(include_base = TRUE)
 #>  P compiler      4.1.3      2022-03-10 [2] local
 #>    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.3)
 #>  P datasets    * 4.1.3      2022-03-10 [2] local
+#>    DBI           1.1.3      2022-06-18 [1] CRAN (R 4.1.3)
 #>    desc          1.4.1      2022-03-06 [1] CRAN (R 4.1.2)
 #>    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)
 #>    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)
+#>    dplyr         1.0.9      2022-04-28 [1] CRAN (R 4.1.3)
 #>    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)
 #>    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.3)
 #>    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)
 #>    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)
+#>    generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.3)
 #>    glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)
 #>  P graphics    * 4.1.3      2022-03-10 [2] local
 #>  P grDevices   * 4.1.3      2022-03-10 [2] local
@@ -703,7 +725,9 @@ sessioninfo::session_info(include_base = TRUE)
 #>    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)
 #>  P methods     * 4.1.3      2022-03-10 [2] local
 #>    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.3)
+#>    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.1)
 #>    pkgload       1.3.0      2022-06-27 [1] CRAN (R 4.1.3)
+#>    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.1)
 #>    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)
 #>    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)
 #>    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)
@@ -715,6 +739,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
 #>    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
 #>    testthat    * 3.1.4      2022-04-26 [1] CRAN (R 4.1.3)
+#>    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)
+#>    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)
 #>  P tools         4.1.3      2022-03-10 [2] local
 #>    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)
 #>  P utils       * 4.1.3      2022-03-10 [2] local

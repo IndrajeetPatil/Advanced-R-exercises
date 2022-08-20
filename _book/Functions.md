@@ -356,7 +356,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x0000000035309048>
+#> <bytecode: 0x0000000035306b90>
 #> <environment: namespace:purrr>
 ```
 
@@ -559,7 +559,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x37580ae8" "0x37580ae8"
+#> [1] "0x3756a728" "0x3756a728"
 #> [1] 100
 ```
 
@@ -603,11 +603,10 @@ This is because of name masking. In the function call `c(x, y)`, when `x` is acc
 
 
 ```r
-x =
-                 {
-                   y <- 1
-                   2
-                 }
+x <- {
+  y <- 1
+  2
+}
 ```
 
 And, thus `y` gets assigned to `1`, and `x` to `2`, since its the last value in that scope.
@@ -655,7 +654,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-08-20 14:00:36 CEST"
+#> [1] "2022-08-20 14:43:57 CEST"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -875,7 +874,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x0000000036197050>
+#> <bytecode: 0x000000003618e390>
 #> <environment: namespace:withr>
 ```
 
@@ -902,17 +901,17 @@ with_png_device <- function(filename, code, ...) {
 capture.output2 <- function(code) {
   temp <- tempfile()
   on.exit(file.remove(temp), add = TRUE, after = TRUE)
-  
+
   sink(temp)
   on.exit(sink(), add = TRUE, after = TRUE)
-  
+
   force(code)
   readLines(temp)
 }
 
 capture.output2(cat("a", "b", "c", sep = "\n"))
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpgPNQr1\file18302ab53c39',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpSCPvQE\filef9042fd31fc',
 #> reason 'Permission denied'
 #> [1] "a" "b" "c"
 ```
@@ -962,7 +961,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x000000003668d2e0>
+#> <bytecode: 0x0000000036682400>
 #> <environment: namespace:utils>
 ```
 
@@ -977,7 +976,7 @@ capture.output(1)
 
 capture.output2(1)
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpgPNQr1\file183014a1357f',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpSCPvQE\filef907b8bc64',
 #> reason 'Permission denied'
 #> character(0)
 ```
@@ -1372,7 +1371,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    rstudioapi      0.13       2020-11-12 [1] CRAN (R 4.1.1)
 #>    rvest           1.0.2      2021-10-16 [1] CRAN (R 4.1.1)
 #>    sass            0.4.2      2022-07-16 [1] CRAN (R 4.1.3)
-#>    scales          1.2.0      2022-04-13 [1] CRAN (R 4.1.3)
+#>    scales          1.2.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    sessioninfo     1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats         * 4.1.3      2022-03-10 [2] local
 #>    stringi         1.7.8      2022-07-11 [1] CRAN (R 4.1.3)

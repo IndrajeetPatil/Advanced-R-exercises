@@ -29,7 +29,8 @@ fileRemove <- function(...) {
         "The following files to be deleted don't exist:",
         names(existing_files[!existing_files]),
         sep = "\n"
-      )
+      ),
+      call. = FALSE
     )
   }
 
@@ -49,7 +50,7 @@ The function should fail if there are any other files provided that don't exist:
 fileRemove(c("random.R", "XYZ.csv"))
 ```
 
-But does work as expected when the file exists:
+But it does work as expected when the file exists:
 
 ```{r}
 fileRemove("random.R")
@@ -63,32 +64,48 @@ fileRemove("random.R")
 
 > should messages given as a character string have a newline appended?
 
-- If `TRUE`, a final newline is regarded as part of the message:
+- If `TRUE` (default value), a final newline is regarded as part of the message:
 
 ```{r}
-message("Beetle", appendLF = TRUE)
-message("Juice", appendLF = TRUE)
+foo <- function(appendLF) {
+  message("Beetle", appendLF = appendLF)
+  message("Juice", appendLF = appendLF)
+}
+
+foo(appendLF = TRUE)
 ```
 
 - If `FALSE`, messages will be concatenated:
 
 ```{r}
-message("Beetle", appendLF = FALSE)
-message("Juice", appendLF = FALSE)
+foo <- function(appendLF) {
+  message("Beetle", appendLF = appendLF)
+  message("Juice", appendLF = appendLF)
+}
+
+foo(appendLF = FALSE)
 ```
 
 On the other hand, `cat()` converts its arguments to character vectors and concatenates them to a single character vector by default:
 
 ```{r}
-cat("Beetle")
-cat("Juice")
+foo <- function() {
+  cat("Beetle")
+  cat("Juice")
+}
+
+foo()
 ```
 
-In order to get output `message()`-like default behavior, we can set `sep = "\n"`:
+In order to get `message()`-like default behavior for outputs, we can set `sep = "\n"`:
 
 ```{r}
-cat("Beetle", sep = "\n")
-cat("Juice", sep = "\n")
+foo <- function() {
+  cat("Beetle", sep = "\n")
+  cat("Juice", sep = "\n")
+}
+
+foo()
 ```
 
 ---
@@ -104,7 +121,7 @@ catch_cnd(stop("An error"))
 catch_cnd(abort("An error"))
 ```
 
-**A1.** Contrasting these two lists, we can see that `rlang::abort()` contains two additional pieces of information:
+**A1.** Compared to `base::stop()`, `rlang::abort()` contains two additional pieces of information:
 
 - `trace`: A traceback capturing the sequence of calls that lead to the current function 
 - `parent`: Information about another condition used as a parent to create a chained condition.
@@ -149,6 +166,8 @@ show_condition({
 
 **A2.** Correctly predicted 😉
 
+The first three pieces of code are straightforward:
+
 ```{r, warning=TRUE,message=TRUE,error=TRUE}
 show_condition <- function(code) {
   tryCatch(
@@ -165,16 +184,19 @@ show_condition <- function(code) {
 show_condition(stop("!"))
 show_condition(10)
 show_condition(warning("?!"))
+```
+
+The last piece of code is the challenging one and it illustrates how `tryCatch()` works. From its docs:
+
+> When several handlers are supplied in a single tryCatch then the first one is considered more recent than the second.
+
+```{r, warning=TRUE,message=TRUE,error=TRUE}
 show_condition({
   10
   message("?")
   warning("?!")
 })
 ```
-
-The last piece of code is the challenging one and it illustrates how `tryCatch()` works. From its docs:
-
-> When several handlers are supplied in a single tryCatch then the first one is considered more recent than the second.
 
 ---
 
@@ -213,9 +235,7 @@ The `classes` argument allows a character vector of condition classes to catch, 
 ```{r, error=TRUE}
 catch_cnd(10)
 
-catch_cnd(abort(message = "an error", class = "my class"))
-
-catch_cnd(abort("an error"), classes = "message")
+catch_cnd(abort(message = "an error", class = "class1"))
 ```
 
 ---
@@ -248,7 +268,7 @@ show_condition2 <- function(code) {
 }
 ```
 
-Let's try this new version with the examples from original version:
+Let's try this new version with the examples used for the original version:
 
 ```{r}
 show_condition2(stop("!"))
@@ -282,10 +302,11 @@ abort_missing_package <- function(pkg) {
 }
 
 check_if_pkg_installed <- function(pkg) {
-  tryCatch(
-    requireNamespace(pkg, quietly = FALSE),
-    error_missing_package = abort_missing_package(pkg)
-  )
+  if(!requireNamespace(pkg, quietly = TRUE)) {
+    abort_missing_package(pkg)
+  }
+
+  TRUE
 }
 
 check_if_pkg_installed("xyz123")
@@ -336,24 +357,18 @@ This test wouldn't fail even if we decided to change the exact message.
 
 **Q1.** Create `suppressConditions()` that works like `suppressMessages()` and `suppressWarnings()` but suppresses everything. Think carefully about how you should handle errors.
 
-**A1.** The following function suppresses/muffles both warnings and messages, except error. If errors are present, it doesn't produce an error, but returns a list instead that contains the error message.
+**A1.** To create the desired `suppressConditions()`, we just need to create an equivalent of `suppressWarnings()` and `suppressMessages()` for errors. To suppress the error message, we can handle errors within a `tryCatch()` and return the error object invisibly:
 
 ```{r}
-suppressConditions <- function(expr) {
+suppressErrors <- function(expr) {
   tryCatch(
-    error = function(cnd) {
-      list(result = NULL, error = cnd)
-    },
-    withCallingHandlers(
-      message = function(cnd) {
-        if (inherits(cnd, "message")) tryInvokeRestart("muffleMessage")
-      },
-      warning = function(cnd) {
-        if (inherits(cnd, "warning")) tryInvokeRestart("muffleWarning")
-      },
-      expr
-    )
+    error = function(cnd) invisible(cnd),
+    expr
   )
+}
+
+suppressConditions <- function(expr) {
+  suppressErrors(suppressWarnings(suppressMessages(expr)))
 }
 ```
 
@@ -363,14 +378,25 @@ Let's try out and see if this works as expected:
 suppressConditions(1)
 
 suppressConditions({
-  warning("I'm warning you")
   message("I'm messaging you")
+  warning("I'm warning you")
 })
 
 suppressConditions({
   stop("I'm stopping this")
 })
 ```
+
+All condition messages are now suppressed, but note that if we assign error object to a variable, we can still extract useful information for debugging:
+
+```{r}
+e <- suppressConditions({
+  stop("I'm stopping this")
+})
+
+e
+```
+
 
 ---
 
@@ -386,7 +412,6 @@ message2error <- function(code) {
 ```
 
 **A2.** With `withCallingHandlers()`, the condition handler is called from the signaling function itself, and, therefore, provides a more detailed call stack.
-
 
 ```{r, error = TRUE, eval = FALSE}
 message2error1 <- function(code) {
@@ -512,7 +537,7 @@ bottles_of_beer <- function(i = 99) {
 }
 ```
 
-**A4.** Because this function catches the `interrupt` and works with it, there is no way to stop `bottles_of_beer()`, because the way you would usually stop it by using `interrupt`!
+**A4.** Because this function catches the `interrupt` and there is no way to stop `bottles_of_beer()`, because the way you would usually stop it by using `interrupt`!
 
 ```{r, eval=FALSE}
 bottles_of_beer()
@@ -530,7 +555,7 @@ bottles_of_beer()
 
 In RStudio IDE, you can snap out of this loop by terminating the R session.
 
-But, this shows why catching `interrupts` is dangerous and can result in poor user experience.
+This shows why catching `interrupt` is dangerous and can result in poor user experience.
 
 ---
 
