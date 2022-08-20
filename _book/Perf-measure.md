@@ -30,7 +30,11 @@ First, we try without `torture = TRUE`: it returns no meaningful results.
 
 ```r
 profvis(f())
-#> Error in parse_rprof(prof_output, expr_source): No parsing data available. Maybe your function was too fast?
+```
+
+```{=html}
+<div id="htmlwidget-d4d5348c5feeb7ac0f86" style="width:100%;height:600px;" class="profvis html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d4d5348c5feeb7ac0f86">{"x":{"message":{"prof":{"time":[1,1,1,1,1,1],"depth":[6,5,4,3,2,1],"label":["Rprof","profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null,null],"linenum":[null,null,null,null,null,null],"memalloc":[7.72345733642578,7.72345733642578,7.72345733642578,7.72345733642578,7.72345733642578,7.72345733642578],"meminc":[0,0,0,0,0,0],"filename":[null,null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\RtmpEV4rYb\\file64982e5a3f4c.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script>
 ```
 
 Maybe because the function runs too fast?
@@ -41,7 +45,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           240us    280us     3391.    4.64MB     48.2
+#> 1 f()           224us    276us     3569.    4.64MB     50.7
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -73,7 +77,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x00000000172a1810>
+#> <bytecode: 0x00000000172a15c8>
 #> <environment: namespace:base>
 ```
 
@@ -153,15 +157,15 @@ t_bench_df
 #> # A tibble: 2 x 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)      1.23us
-#> 2 x^0.5        3.94us
+#> 1 sqrt(x)      1.22us
+#> 2 x^0.5        3.92us
 
 t_systime_df
 #> # A tibble: 2 x 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                 0.830                0.770
-#> 2 x^0.5                   3.67                 3.79
+#> 1 sqrt(x)                  0.98                 0.66
+#> 2 x^0.5                    3.39                 3.3
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -193,10 +197,10 @@ bench::mark(
 #> # A tibble: 4 x 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)          4.8us    8.8us   120249.    7.86KB
-#> 2 x^0.5             30us   34.9us    25763.    7.86KB
-#> 3 x^(1/2)         31.8us   46.7us    21622.    7.86KB
-#> 4 exp(log(x)/2)   70.1us   86.7us    11315.    7.86KB
+#> 1 sqrt(x)          4.6us    9.1us   125899.    7.86KB
+#> 2 x^0.5           25.7us   31.3us    27345.    7.86KB
+#> 3 x^(1/2)         25.8us   43.4us    25567.    7.86KB
+#> 4 exp(log(x)/2)     67us   70.8us    12862.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

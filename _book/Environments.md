@@ -17,15 +17,15 @@ library(rlang, warn.conflicts = FALSE)
 
 **Q1.** List three ways in which an environment differs from a list.
 
-**A1.** As mentioned in the book, here are three ways in which environments differ from lists:
+**A1.** As mentioned in the book, here are a few ways in which environments differ from lists:
 
-Property | List | Environment
-:-------:|:-----:|:---------:
-semantics | value | reference
-data structure | linear | non-linear
-duplicated names | allowed | not allowed
-has parent? | false | true
-can contain itself? | false | true
+|      Property       |  List   | Environment |
+| :-----------------: | :-----: | :---------: |
+|      semantics      |  value  |  reference  |
+|   data structure    | linear  | non-linear  |
+|  duplicated names   | allowed | not allowed |
+|  can have parents?  |  false  |    true     |
+| can contain itself? |  false  |    true     |
 
 **Q2.** Create an environment as illustrated by this picture.
 
@@ -40,14 +40,19 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x00000000195b0d80>
+#> <environment: 0x0000000019667d50>
 #> Parent: <environment: global>
 #> Bindings:
 #> * loop: <env>
+```
 
-# should be the same as the `e` memory address
-lobstr::obj_addr(e$loop)
-#> [1] "0x195b0d80"
+The binding `loop` should have the same memory address as the environment `e`:
+
+
+```r
+lobstr::ref(e$loop)
+#> o [1:0x19667d50] <env> 
+#> \-loop = [1:0x19667d50]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -66,25 +71,25 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x33758ef0" "0x33758ef0"
+#> [1] "0x33ae5488" "0x33ae5488"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x338482b8" "0x338482b8"
+#> [1] "0x33b50000" "0x33b50000"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
 
 **A4.** An environment is a non-linear data structure, and has no concept of ordered elements. Therefore, indexing it (e.g. `e[[1]]`) doesn't make sense.
 
-Subsetting a list or a vector returns a subset of the underlying data structure. So, subsetting a vector returns another vector. But it's unclear what subsetting an environment (e.g. `e[c("a", "b")]`) should return because there is no data structure to contain its returns. It can't be another environment since environments have reference semantics.
+Subsetting a list or a vector returns a subset of the underlying data structure. For example, subsetting a vector returns another vector. But it's unclear what subsetting an environment (e.g. `e[c("a", "b")]`) should return because there is no data structure to contain its returns. It can't be another environment since environments have reference semantics.
 
-**Q5.** Create a version of `env_poke()` that will only bind new names, never re-bind old names. Some programming languages only do this, and are known as [single assignment languages][https://en.wikipedia.org/wiki/Assignment_(computer_science)#Single_assignment].
+**Q5.** Create a version of `env_poke()` that will only bind new names, never re-bind old names. Some programming languages only do this, and are known as [single assignment languages](https://en.wikipedia.org/wiki/Assignment_(computer_science)#Single_assignment).
 
 **A5.** Create a version of `env_poke()` that doesn't allow re-binding old names:
 
 
 ```r
 env_poke2 <- function(env, nm, value) {
-  if (nm %in% names(env)) {
+  if (env_has(env, nm)) {
     abort("Can't re-bind existing names.")
   }
 
@@ -166,7 +171,7 @@ x
 #> [1] 5
 ```
 
-But `rebind()` function will let us know if the binding doesn't exist, which is much safer way to super-assign:
+But `rebind()` function will let us know if the binding doesn't exist, which is much safer:
 
 
 ```r
@@ -181,16 +186,17 @@ rebind <- function(name, value, env = caller_env()) {
 }
 
 # doesn't exist
-exists("a")
-#> [1] TRUE
+exists("abc")
+#> [1] FALSE
 
 # so function will produce an error instead of creating it for us
-rebind("a", 10)
+rebind("abc", 10)
+#> Error: Can't find `abc`
 
-# all good
-a <- 5
-rebind("a", 10)
-a
+# but it will work as expected when the variable already exists
+abc <- 5
+rebind("abc", 10)
+abc
 #> [1] 10
 ```
 
@@ -235,15 +241,7 @@ where("mean")
 #> [[1]]
 #> <environment: base>
 
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
+library(dplyr, warn.conflicts = FALSE)
 where("filter")
 #> [[1]]
 #> <environment: package:dplyr>
@@ -373,13 +371,13 @@ f1 <- function(x1) {
 f1(1)
 ```
 
-**A2.** I don't have access to the graphics software used to create diagrams in the book, so I am linking the diagram from the official solutions manual:
+**A2.** I don't have access to the graphics software used to create diagrams in the book, so I am linking the diagram from the [official solutions manual](https://advanced-r-solutions.rbind.io/environments.html#special-environments), where you will also find a more detailed description for the figure:
 
 <img src="https://raw.githubusercontent.com/Tazinho/Advanced-R-Solutions/main/images/environments/function_environments_corrected.png" width="100%" />
 
 **Q3.** Write an enhanced version of `str()` that provides more information about functions. Show where the function was found and what environment it was defined in.
 
-**A3.** To write the required function, we can first re-purpose the `fget()` function we wrote above to return not the found function, but to return the environment in which it was found and its enclosing environment:
+**A3.** To write the required function, we can first re-purpose the `fget()` function we wrote above to return the environment in which it was found and its enclosing environment:
 
 
 ```r
@@ -432,14 +430,19 @@ fget2("mean")
 rm("mean")
 ```
 
-We can now write the new version of `str()` as a wrapper around this function. We only need to foresee that users might enter the function name either as a symbol or a string.
+We can now write the new version of `str()` as a wrapper around this function. We only need to foresee that the users might enter the function name either as a symbol or a string.
 
 
 ```r
 str_function <- function(.f) {
   fget2(as_string(ensym(.f)))
 }
+```
 
+Let's first try it with `base::mean()`:
+
+
+```r
 str_function(mean)
 #> $where
 #> <environment: base>
@@ -453,6 +456,29 @@ str_function("mean")
 #> 
 #> $enclosing
 #> <environment: namespace:base>
+```
+
+And then with our variant present in the global environment:
+
+
+```r
+mean <- function() NULL
+
+str_function(mean)
+#> $where
+#> <environment: R_GlobalEnv>
+#> 
+#> $enclosing
+#> <environment: R_GlobalEnv>
+
+str_function("mean")
+#> $where
+#> <environment: R_GlobalEnv>
+#> 
+#> $enclosing
+#> <environment: R_GlobalEnv>
+
+rm("mean")
 ```
 
 ### Exercises 7.5.5
@@ -473,7 +499,7 @@ ls_env <- function(env = rlang::caller_env()) {
 }
 ```
 
-The MVP here is `rlang::caller_env()`, so let's also have a look at its definition:
+The workhorse here is `rlang::caller_env()`, so let's also have a look at its definition:
 
 
 ```r
@@ -484,28 +510,6 @@ rlang::caller_env
 #> }
 #> <bytecode: 0x00000000182bfe48>
 #> <environment: namespace:rlang>
-```
-
-As can be seen, it defines the caller frame/environment as the first ancestor of the parent frame/environment. We can vary `n` to change this and see how the caller environment changes:
-
-
-```r
-explore_caller_env <- function() {
-  print(rlang::caller_env(1))
-
-  print(rlang::caller_env(0))
-  return(rlang::current_env()) # execution environment
-}
-
-explore_caller_env()
-#> <environment: R_GlobalEnv>
-#> <environment: 0x0000000033c6efe8>
-#> <environment: 0x0000000033c6efe8>
-
-rlang::fn_env(explore_caller_env)
-#> <environment: R_GlobalEnv>
-
-rm("explore_caller_env")
 ```
 
 Let's try it out:

@@ -104,13 +104,13 @@
 <div class="sourceCode" id="cb626"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/profvis/man/profvis.html">profvis</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div id="htmlwidget-d4d5348c5feeb7ac0f86" style="width:100%;height:600px;" class="profvis html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d4d5348c5feeb7ac0f86">{"x":{"message":{"prof":{"time":[1,1,1,1,1,1],"depth":[6,5,4,3,2,1],"label":["force","profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null,null],"linenum":[null,null,null,null,null,null],"memalloc":[7.72377014160156,7.72377014160156,7.72377014160156,7.72377014160156,7.72377014160156,7.72377014160156],"meminc":[0,0,0,0,0,0],"filename":[null,null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\Rtmp8AAL2Q\\file6ba838acf34.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script><p>Maybe because the function runs too fast?</p>
+<script type="application/json" data-for="htmlwidget-d4d5348c5feeb7ac0f86">{"x":{"message":{"prof":{"time":[1,1,1,1,1,1],"depth":[6,5,4,3,2,1],"label":["Rprof","profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null,null],"linenum":[null,null,null,null,null,null],"memalloc":[7.72345733642578,7.72345733642578,7.72345733642578,7.72345733642578,7.72345733642578,7.72345733642578],"meminc":[0,0,0,0,0,0],"filename":[null,null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\RtmpEV4rYb\\file64982e5a3f4c.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script><p>Maybe because the function runs too fast?</p>
 <div class="sourceCode" id="cb627"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="op">)</span>, check <span class="op">=</span> <span class="cn">FALSE</span>, iterations <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 x 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 f()           236us    280us     3406.    4.64MB     48.4</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 f()           224us    276us     3569.    4.64MB     50.7</span></span></code></pre></div>
 <p>As mentioned in the docs, setting <code>torture = TRUE</code></p>
 <blockquote>
 <p>Triggers garbage collection after every torture memory allocation call.</p>
@@ -134,7 +134,7 @@
 <span><span class="co">#&gt;     list &lt;- .Primitive("c")(list, names)</span></span>
 <span><span class="co">#&gt;     .Internal(remove(list, envir, inherits))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x00000000172a1720&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x00000000172a15c8&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>I still couldn’t figure out why. I would recommend checking out the <a href="https://advanced-r-solutions.rbind.io/measuring-performance.html#profiling">official answer</a>.</p>
 </div>
@@ -203,15 +203,15 @@
 <span><span class="co">#&gt; # A tibble: 2 x 2</span></span>
 <span><span class="co">#&gt;   expression     mean</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt;</span></span>
-<span><span class="co">#&gt; 1 sqrt(x)      1.18us</span></span>
-<span><span class="co">#&gt; 2 x^0.5         3.9us</span></span>
+<span><span class="co">#&gt; 1 sqrt(x)      1.22us</span></span>
+<span><span class="co">#&gt; 2 x^0.5        3.92us</span></span>
 <span></span>
 <span><span class="va">t_systime_df</span></span>
 <span><span class="co">#&gt; # A tibble: 2 x 3</span></span>
 <span><span class="co">#&gt;   expression systime_with_gc_us systime_with_nogc_us</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt;              &lt;dbl&gt;                &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 sqrt(x)                  1.05                0.720</span></span>
-<span><span class="co">#&gt; 2 x^0.5                    3.62                3.59</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 sqrt(x)                  0.98                 0.66</span></span>
+<span><span class="co">#&gt; 2 x^0.5                    3.39                 3.3</span></span></code></pre></div>
 <p>The comparison reveals that these two approaches yield quite similar results.</p>
 <p><strong>Q2.</strong> Here are two other ways to compute the square root of a vector. Which do you think will be fastest? Which will be slowest? Use microbenchmarking to test your answers.</p>
 <div class="sourceCode" id="cb633"><pre class="downlit sourceCode r">
@@ -233,10 +233,10 @@
 <span><span class="co">#&gt; # A tibble: 4 x 6</span></span>
 <span><span class="co">#&gt;   expression         min   median `itr/sec` mem_alloc</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt;    &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span><span class="co">#&gt; 1 sqrt(x)          3.8us    7.8us   150939.    7.86KB</span></span>
-<span><span class="co">#&gt; 2 x^(1/2)         28.5us   30.7us    27414.    7.86KB</span></span>
-<span><span class="co">#&gt; 3 x^0.5           30.9us     46us    21764.    7.86KB</span></span>
-<span><span class="co">#&gt; 4 exp(log(x)/2)     69us   84.5us    11539.    7.86KB</span></span>
+<span><span class="co">#&gt; 1 sqrt(x)          4.6us    9.1us   125899.    7.86KB</span></span>
+<span><span class="co">#&gt; 2 x^0.5           25.7us   31.3us    27345.    7.86KB</span></span>
+<span><span class="co">#&gt; 3 x^(1/2)         25.8us   43.4us    25567.    7.86KB</span></span>
+<span><span class="co">#&gt; 4 exp(log(x)/2)     67us   70.8us    12862.    7.86KB</span></span>
 <span><span class="co">#&gt;   `gc/sec`</span></span>
 <span><span class="co">#&gt;      &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1        0</span></span>

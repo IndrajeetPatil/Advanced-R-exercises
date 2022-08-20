@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000017ff2118>
+#> <bytecode: 0x0000000018002088>
 #> <environment: namespace:base>
 ```
 
@@ -346,7 +346,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000017ff2118>
+#> <bytecode: 0x0000000018002088>
 #> <environment: namespace:base>
 
 # other package function
@@ -356,7 +356,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x00000000353065b0>
+#> <bytecode: 0x0000000035309048>
 #> <environment: namespace:purrr>
 ```
 
@@ -559,7 +559,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x37569608" "0x37569608"
+#> [1] "0x37580ae8" "0x37580ae8"
 #> [1] 100
 ```
 
@@ -655,7 +655,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-08-20 12:02:40 CEST"
+#> [1] "2022-08-20 14:00:36 CEST"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -875,7 +875,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x0000000036189998>
+#> <bytecode: 0x0000000036197050>
 #> <environment: namespace:withr>
 ```
 
@@ -912,7 +912,7 @@ capture.output2 <- function(code) {
 
 capture.output2(cat("a", "b", "c", sep = "\n"))
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpeOroiA\file46c871697fbf',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpgPNQr1\file18302ab53c39',
 #> reason 'Permission denied'
 #> [1] "a" "b" "c"
 ```
@@ -962,7 +962,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x000000003667dd08>
+#> <bytecode: 0x000000003668d2e0>
 #> <environment: namespace:utils>
 ```
 
@@ -977,7 +977,7 @@ capture.output(1)
 
 capture.output2(1)
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpeOroiA\file46c87c764065',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpgPNQr1\file183014a1357f',
 #> reason 'Permission denied'
 #> character(0)
 ```

@@ -16,15 +16,15 @@ library(rlang, warn.conflicts = FALSE)
 
 **Q1.** List three ways in which an environment differs from a list.
 
-**A1.** As mentioned in the book, here are three ways in which environments differ from lists:
+**A1.** As mentioned in the book, here are a few ways in which environments differ from lists:
 
-Property | List | Environment
-:-------:|:-----:|:---------:
-semantics | value | reference
-data structure | linear | non-linear
-duplicated names | allowed | not allowed
-has parent? | false | true
-can contain itself? | false | true
+|      Property       |  List   | Environment |
+| :-----------------: | :-----: | :---------: |
+|      semantics      |  value  |  reference  |
+|   data structure    | linear  | non-linear  |
+|  duplicated names   | allowed | not allowed |
+|  can have parents?  |  false  |    true     |
+| can contain itself? |  false  |    true     |
 
 **Q2.** Create an environment as illustrated by this picture.
 
@@ -40,9 +40,12 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
+```
 
-# should be the same as the `e` memory address
-lobstr::obj_addr(e$loop)
+The binding `loop` should have the same memory address as the environment `e`:
+
+```{r}
+lobstr::ref(e$loop)
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -69,15 +72,15 @@ lobstr::obj_addrs(list(e2, e1$loop))
 
 **A4.** An environment is a non-linear data structure, and has no concept of ordered elements. Therefore, indexing it (e.g. `e[[1]]`) doesn't make sense.
 
-Subsetting a list or a vector returns a subset of the underlying data structure. So, subsetting a vector returns another vector. But it's unclear what subsetting an environment (e.g. `e[c("a", "b")]`) should return because there is no data structure to contain its returns. It can't be another environment since environments have reference semantics.
+Subsetting a list or a vector returns a subset of the underlying data structure. For example, subsetting a vector returns another vector. But it's unclear what subsetting an environment (e.g. `e[c("a", "b")]`) should return because there is no data structure to contain its returns. It can't be another environment since environments have reference semantics.
 
-**Q5.** Create a version of `env_poke()` that will only bind new names, never re-bind old names. Some programming languages only do this, and are known as [single assignment languages][https://en.wikipedia.org/wiki/Assignment_(computer_science)#Single_assignment].
+**Q5.** Create a version of `env_poke()` that will only bind new names, never re-bind old names. Some programming languages only do this, and are known as [single assignment languages](https://en.wikipedia.org/wiki/Assignment_(computer_science)#Single_assignment).
 
 **A5.** Create a version of `env_poke()` that doesn't allow re-binding old names:
 
 ```{r}
 env_poke2 <- function(env, nm, value) {
-  if (nm %in% names(env)) {
+  if (env_has(env, nm)) {
     abort("Can't re-bind existing names.")
   }
 
@@ -144,9 +147,9 @@ env_has(global_env(), "x")
 x
 ```
 
-But `rebind()` function will let us know if the binding doesn't exist, which is much safer way to super-assign:
+But `rebind()` function will let us know if the binding doesn't exist, which is much safer:
 
-```{r}
+```{r, error=TRUE}
 rebind <- function(name, value, env = caller_env()) {
   if (identical(env, empty_env())) {
     stop("Can't find `", name, "`", call. = FALSE)
@@ -158,15 +161,15 @@ rebind <- function(name, value, env = caller_env()) {
 }
 
 # doesn't exist
-exists("a")
+exists("abc")
 
 # so function will produce an error instead of creating it for us
-rebind("a", 10)
+rebind("abc", 10)
 
-# all good
-a <- 5
-rebind("a", 10)
-a
+# but it will work as expected when the variable already exists
+abc <- 5
+rebind("abc", 10)
+abc
 ```
 
 ### Exercises 7.3.1
@@ -203,7 +206,7 @@ where("x")
 
 where("mean")
 
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 where("filter")
 detach("package:dplyr")
 ```
@@ -284,7 +287,7 @@ f1 <- function(x1) {
 f1(1)
 ```
 
-**A2.** I don't have access to the graphics software used to create diagrams in the book, so I am linking the diagram from the official solutions manual:
+**A2.** I don't have access to the graphics software used to create diagrams in the book, so I am linking the diagram from the [official solutions manual](https://advanced-r-solutions.rbind.io/environments.html#special-environments), where you will also find a more detailed description for the figure:
 
 ```{r, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("https://raw.githubusercontent.com/Tazinho/Advanced-R-Solutions/main/images/environments/function_environments_corrected.png")
@@ -292,7 +295,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/Tazinho/Advanced-R-So
 
 **Q3.** Write an enhanced version of `str()` that provides more information about functions. Show where the function was found and what environment it was defined in.
 
-**A3.** To write the required function, we can first re-purpose the `fget()` function we wrote above to return not the found function, but to return the environment in which it was found and its enclosing environment:
+**A3.** To write the required function, we can first re-purpose the `fget()` function we wrote above to return the environment in which it was found and its enclosing environment:
 
 ```{r}
 fget2 <- function(name, env = caller_env()) {
@@ -333,16 +336,32 @@ fget2("mean")
 rm("mean")
 ```
 
-We can now write the new version of `str()` as a wrapper around this function. We only need to foresee that users might enter the function name either as a symbol or a string.
+We can now write the new version of `str()` as a wrapper around this function. We only need to foresee that the users might enter the function name either as a symbol or a string.
 
 ```{r}
 str_function <- function(.f) {
   fget2(as_string(ensym(.f)))
 }
+```
+
+Let's first try it with `base::mean()`:
+
+```{r}
+str_function(mean)
+
+str_function("mean")
+```
+
+And then with our variant present in the global environment:
+
+```{r}
+mean <- function() NULL
 
 str_function(mean)
 
 str_function("mean")
+
+rm("mean")
 ```
 
 ### Exercises 7.5.5
@@ -362,27 +381,10 @@ ls_env <- function(env = rlang::caller_env()) {
 }
 ```
 
-The MVP here is `rlang::caller_env()`, so let's also have a look at its definition:
+The workhorse here is `rlang::caller_env()`, so let's also have a look at its definition:
 
 ```{r}
 rlang::caller_env
-```
-
-As can be seen, it defines the caller frame/environment as the first ancestor of the parent frame/environment. We can vary `n` to change this and see how the caller environment changes:
-
-```{r}
-explore_caller_env <- function() {
-  print(rlang::caller_env(1))
-
-  print(rlang::caller_env(0))
-  return(rlang::current_env()) # execution environment
-}
-
-explore_caller_env()
-
-rlang::fn_env(explore_caller_env)
-
-rm("explore_caller_env")
 ```
 
 Let's try it out:
