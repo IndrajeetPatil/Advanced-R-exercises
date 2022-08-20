@@ -17,7 +17,7 @@ csl: chicago-fullnote-bibliography.csl
 
 This book provides solutions to exercises from Hadley Wickham's _Advanced R_ (2nd edition) [book](https://adv-r.hadley.nz/).
 
-Driven by the urge to solve all book exercises independently to test my own understanding, I started building this solution manual. But, while consulting the [official solutions manual](https://advanced-r-solutions.rbind.io/index.html) to check correctness of my solutions, I realized that many of the solutions were quite different, or were similar but explained in a different manner. Thinking that if readers of the official manual found any of the answers unsatisfactory or unclear, they would have another resource to consult with, I decided to publish this as an online book.
+I started working on this book as part of my process to learn by solving each of the book's exercises. When I compared my solutions to the [official solutions manual](https://advanced-r-solutions.rbind.io/index.html), I realized that many of my solutions took different approaches or were at least explained differently. I'm sharing this book in case others might find another perspective or explanation than the official solution manual helpful for building understanding.
 
 Although I have tried to make sure that all solutions are correct, the blame for any inaccuracies lies solely with me. I'd very much appreciate [any suggestions or corrections](https://github.com/IndrajeetPatil/Advanced-R-exercises/issues).
 
