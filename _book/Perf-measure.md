@@ -40,7 +40,7 @@ profvis(f())
 
 ```{=html}
 <div id="htmlwidget-d4d5348c5feeb7ac0f86" style="width:100%;height:600px;" class="profvis html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d4d5348c5feeb7ac0f86">{"x":{"message":{"prof":{"time":[1,1,1,1,1,1,1,1,1,1],"depth":[10,9,8,7,6,5,4,3,2,1],"label":["doTryCatch","tryCatchOne","tryCatchList","tryCatchList","tryCatch","profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null,null,null,null,null,null],"linenum":[null,null,null,null,null,null,null,null,null,null],"memalloc":[10.7716598510742,10.7716598510742,10.7716598510742,10.7716598510742,10.7716598510742,10.7716598510742,10.7716598510742,10.7716598510742,10.7716598510742,10.7716598510742],"meminc":[0,0,0,0,0,0,0,0,0,0],"filename":[null,null,null,null,null,null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\Rtmpw53fON\\file40f86f72359a.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-d4d5348c5feeb7ac0f86">{"x":{"message":{"prof":{"time":[1,1,1,1,1,1],"depth":[6,5,4,3,2,1],"label":["tryCatch","profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null,null],"linenum":[null,null,null,null,null,null],"memalloc":[10.7711944580078,10.7711944580078,10.7711944580078,10.7711944580078,10.7711944580078,10.7711944580078],"meminc":[0,0,0,0,0,0],"filename":[null,null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\RtmpQ5niFH\\file87c3e0b2288.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script>
 ```
 
 Maybe because the function runs too fast?
@@ -51,7 +51,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           199us    266us     3740.     801KB     53.1
+#> 1 f()           211us    276us     3488.     801KB     49.5
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -83,7 +83,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x00000000172a16c0>
+#> <bytecode: 0x00000000172a15c8>
 #> <environment: namespace:base>
 ```
 
@@ -157,15 +157,15 @@ t_bench_df
 #> # A tibble: 2 x 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)      1.22us
-#> 2 x^0.5        4.16us
+#> 1 sqrt(x)      1.34us
+#> 2 x^0.5        4.17us
 
 t_systime_df
 #> # A tibble: 2 x 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                 0.890                 0.66
-#> 2 x^0.5                   3.34                  3.31
+#> 1 sqrt(x)                  1.14                0.720
+#> 2 x^0.5                    3.69                3.59
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -199,10 +199,10 @@ bench::mark(
 #> # A tibble: 4 x 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)          4.7us      5us   196460.    7.86KB
-#> 2 x^0.5           27.5us   30.2us    32904.    7.86KB
-#> 3 x^(1/2)         27.7us     33us    30226.    7.86KB
-#> 4 exp(log(x)/2)   79.4us   88.6us    11053.    7.86KB
+#> 1 sqrt(x)          4.8us    5.3us   177708.    7.86KB
+#> 2 x^0.5           27.7us   31.8us    30939.    7.86KB
+#> 3 x^(1/2)           28us   31.9us    30952.    7.86KB
+#> 4 exp(log(x)/2)   70.3us   86.4us    11550.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

@@ -1,65 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <title>Chapter 24 Improving performance | Advanced R Exercises</title>
-
-    <meta name="author" content="Indrajeet Patil" />
-  
-   <meta name="description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
-   <meta name="generator" content="placeholder" />
-  <meta property="og:title" content="Chapter 24 Improving performance | Advanced R Exercises" />
-  <meta property="og:type" content="book" />
-  
-  <meta property="og:image" content="/cover.png" />
-  <meta property="og:description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 24 Improving performance | Advanced R Exercises" />
-  
-  <meta name="twitter:description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
-  <meta name="twitter:image" content="/cover.png" />
-  <!-- JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
-    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
-    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
-    <script src="libs/bs3compat-0.4.0/transition.js"></script>
-    <script src="libs/bs3compat-0.4.0/tabs.js"></script>
-    <script src="libs/bs3compat-0.4.0/bs3compat.js"></script>
-    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
-    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
-    <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-    <script src="libs/d3-3.5.6/d3.min.js"></script>
-    <link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet" />
-    <script src="libs/profvis-0.3.6.9000/profvis.js"></script>
-    <script src="libs/profvis-0.3.6.9000/scroll.js"></script>
-    <link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet" />
-    <script src="libs/highlight-6.2.0/highlight.js"></script>
-    <script src="libs/profvis-binding-0.3.7/profvis.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
-
-  <!-- CSS -->
-  <style type="text/css">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 24 Improving performance | Advanced R Exercises</title>
+<meta name="author" content="Indrajeet Patil">
+<meta name="description" content="Attaching the needed libraries: library(ggplot2)  24.1 Exercises 24.3.1 Q1. What are faster alternatives to lm()? Which are specifically designed to work with larger datasets? A1. Faster...">
+<meta name="generator" content="bookdown 0.28 with bs4_book()">
+<meta property="og:title" content="Chapter 24 Improving performance | Advanced R Exercises">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/cover.png">
+<meta property="og:description" content="Attaching the needed libraries: library(ggplot2)  24.1 Exercises 24.3.1 Q1. What are faster alternatives to lm()? Which are specifically designed to work with larger datasets? A1. Faster...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 24 Improving performance | Advanced R Exercises">
+<meta name="twitter:description" content="Attaching the needed libraries: library(ggplot2)  24.1 Exercises 24.3.1 Q1. What are faster alternatives to lm()? Which are specifically designed to work with larger datasets? A1. Faster...">
+<meta name="twitter:image" content="/cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="libs/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
+<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
+<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
-      <link rel="stylesheet" href="bs4_style.css" />
-  
+<link rel="stylesheet" href="bs4_style.css">
 </head>
-
 <body data-spy="scroll" data-target="#toc">
 
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
-    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
@@ -71,176 +46,215 @@
     <div id="main-nav" class="collapse-lg">
       <form role="search">
         <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-      </form>
+</form>
 
-      <nav aria-label="Table of contents">
-        <h2>Table of contents</h2>
-        <div id="book-toc"></div>
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
+<li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
+<li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
+<li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
+<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
+<li><a class="" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
+<li><a class="" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
+<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
+<li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
+<li><a class="" href="quasiquotation.html"><span class="header-section-number">19</span> Quasiquotation</a></li>
+<li><a class="" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
+<li><a class="" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></li>
+<li><a class="active" href="improving-performance.html"><span class="header-section-number">24</span> Improving performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></li>
+</ul>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
+          <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
-    </div>
-  </header>
-
-  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
-<div id="improving-performance" class="section level1" number="24">
-<h1><span class="header-section-number">Chapter 24</span> Improving performance</h1>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="improving-performance" class="section level1" number="24">
+<h1>
+<span class="header-section-number">24</span> Improving performance<a class="anchor" aria-label="anchor" href="#improving-performance"><i class="fas fa-link"></i></a>
+</h1>
 <p>Attaching the needed libraries:</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="improving-performance.html#cb285-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<div class="sourceCode" id="cb641"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
 <div id="exercises-24.3.1" class="section level2" number="24.1">
-<h2><span class="header-section-number">24.1</span> Exercises 24.3.1</h2>
-<p><strong>Q1.</strong> What are faster alternatives to <code>lm()</code>? Which are specifically designed to work with larger datasets?</p>
-<p><strong>A1.</strong> Faster alternatives to <code>lm()</code> can be found by visiting <a href="https://cran.r-project.org/web/views/HighPerformanceComputing.html">CRAN Task View: High-Performance and Parallel Computing with R</a> page.</p>
+<h2>
+<span class="header-section-number">24.1</span> Exercises 24.3.1<a class="anchor" aria-label="anchor" href="#exercises-24.3.1"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>Q1.</strong> What are faster alternatives to <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>? Which are specifically designed to work with larger datasets?</p>
+<p><strong>A1.</strong> Faster alternatives to <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> can be found by visiting <a href="https://cran.r-project.org/web/views/HighPerformanceComputing.html">CRAN Task View: High-Performance and Parallel Computing with R</a> page.</p>
 <p>Here are some of the available options:</p>
 <ul>
-<li><p><code>speedglm::speedlm()</code> (for large datasets)</p></li>
-<li><p><code>biglm::biglm()</code> (specifically designed for data too large to fit in memory)</p></li>
-<li><p><code>RcppEigen::fastLm()</code> (using the <code>Eigen</code> linear algebra library)</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/speedglm/man/speedlm.html">speedglm::speedlm()</a></code> (for large datasets)</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/biglm/man/biglm.html">biglm::biglm()</a></code> (specifically designed for data too large to fit in memory)</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/RcppEigen/man/fastLm.html">RcppEigen::fastLm()</a></code> (using the <code>Eigen</code> linear algebra library)</p></li>
 </ul>
-<p>High performances can be obtained with these packages especially if R is linked against an optimized BLAS, such as ATLAS. You can check this information using <code>sessionInfo()</code>:</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="improving-performance.html#cb286-1" aria-hidden="true" tabindex="-1"></a>sessInfo <span class="ot">&lt;-</span> <span class="fu">sessionInfo</span>()</span>
-<span id="cb286-2"><a href="improving-performance.html#cb286-2" aria-hidden="true" tabindex="-1"></a>sessInfo<span class="sc">$</span>matprod</span>
-<span id="cb286-3"><a href="improving-performance.html#cb286-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;default&quot;</span></span>
-<span id="cb286-4"><a href="improving-performance.html#cb286-4" aria-hidden="true" tabindex="-1"></a>sessInfo<span class="sc">$</span>LAPACK</span>
-<span id="cb286-5"><a href="improving-performance.html#cb286-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;&quot;</span></span></code></pre></div>
+<p>High performances can be obtained with these packages especially if R is linked against an optimized BLAS, such as ATLAS. You can check this information using <code><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo()</a></code>:</p>
+<div class="sourceCode" id="cb642"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sessInfo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">sessInfo</span><span class="op">$</span><span class="va">matprod</span></span>
+<span><span class="co">#&gt; [1] "default"</span></span>
+<span><span class="va">sessInfo</span><span class="op">$</span><span class="va">LAPACK</span></span>
+<span><span class="co">#&gt; [1] ""</span></span></code></pre></div>
 <p>Comparing performance of different alternatives:</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="improving-performance.html#cb287-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
-<span id="cb287-2"><a href="improving-performance.html#cb287-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb287-3"><a href="improving-performance.html#cb287-3" aria-hidden="true" tabindex="-1"></a><span class="co"># having a look at the data</span></span>
-<span id="cb287-4"><a href="improving-performance.html#cb287-4" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(gapminder)</span>
-<span id="cb287-5"><a href="improving-performance.html#cb287-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 1,704</span></span>
-<span id="cb287-6"><a href="improving-performance.html#cb287-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 6</span></span>
-<span id="cb287-7"><a href="improving-performance.html#cb287-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanist~</span></span>
-<span id="cb287-8"><a href="improving-performance.html#cb287-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia~</span></span>
-<span id="cb287-9"><a href="improving-performance.html#cb287-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982~</span></span>
-<span id="cb287-10"><a href="improving-performance.html#cb287-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, ~</span></span>
-<span id="cb287-11"><a href="improving-performance.html#cb287-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13~</span></span>
-<span id="cb287-12"><a href="improving-performance.html#cb287-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, ~</span></span>
-<span id="cb287-13"><a href="improving-performance.html#cb287-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb287-14"><a href="improving-performance.html#cb287-14" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb287-15"><a href="improving-performance.html#cb287-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;lm&quot;</span>       <span class="ot">=</span> stats<span class="sc">::</span><span class="fu">lm</span>(lifeExp <span class="sc">~</span> continent <span class="sc">*</span> gdpPercap, gapminder),</span>
-<span id="cb287-16"><a href="improving-performance.html#cb287-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;speedglm&quot;</span> <span class="ot">=</span> speedglm<span class="sc">::</span><span class="fu">speedlm</span>(lifeExp <span class="sc">~</span> continent <span class="sc">*</span> gdpPercap, gapminder),</span>
-<span id="cb287-17"><a href="improving-performance.html#cb287-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;biglm&quot;</span>    <span class="ot">=</span> biglm<span class="sc">::</span><span class="fu">biglm</span>(lifeExp <span class="sc">~</span> continent <span class="sc">*</span> gdpPercap, gapminder),</span>
-<span id="cb287-18"><a href="improving-performance.html#cb287-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fastLm&quot;</span>   <span class="ot">=</span> RcppEigen<span class="sc">::</span><span class="fu">fastLm</span>(lifeExp <span class="sc">~</span> continent <span class="sc">*</span> gdpPercap, gapminder),</span>
-<span id="cb287-19"><a href="improving-performance.html#cb287-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">check      =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb287-20"><a href="improving-performance.html#cb287-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">iterations =</span> <span class="dv">1000</span></span>
-<span id="cb287-21"><a href="improving-performance.html#cb287-21" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb287-22"><a href="improving-performance.html#cb287-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 x 5</span></span>
-<span id="cb287-23"><a href="improving-performance.html#cb287-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
-<span id="cb287-24"><a href="improving-performance.html#cb287-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span id="cb287-25"><a href="improving-performance.html#cb287-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 lm           1.04ms    1.3ms      717.    1.27MB</span></span>
-<span id="cb287-26"><a href="improving-performance.html#cb287-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 speedglm     1.15ms   1.44ms      641.   61.39MB</span></span>
-<span id="cb287-27"><a href="improving-performance.html#cb287-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 biglm       776.6us      1ms      915.  943.38KB</span></span>
-<span id="cb287-28"><a href="improving-performance.html#cb287-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 fastLm       1.31ms    1.6ms      578.    3.25MB</span></span></code></pre></div>
+<div class="sourceCode" id="cb643"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jennybc/gapminder">gapminder</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># having a look at the data</span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">gapminder</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 1,704</span></span>
+<span><span class="co">#&gt; Columns: 6</span></span>
+<span><span class="co">#&gt; $ country   &lt;fct&gt; "Afghanistan", "Afghanistan", "Afghanist~</span></span>
+<span><span class="co">#&gt; $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia~</span></span>
+<span><span class="co">#&gt; $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982~</span></span>
+<span><span class="co">#&gt; $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, ~</span></span>
+<span><span class="co">#&gt; $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13~</span></span>
+<span><span class="co">#&gt; $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, ~</span></span>
+<span></span>
+<span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span></span>
+<span>  <span class="st">"lm"</span>       <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">lifeExp</span> <span class="op">~</span> <span class="va">continent</span> <span class="op">*</span> <span class="va">gdpPercap</span>, <span class="va">gapminder</span><span class="op">)</span>,</span>
+<span>  <span class="st">"speedglm"</span> <span class="op">=</span> <span class="fu">speedglm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/speedglm/man/speedlm.html">speedlm</a></span><span class="op">(</span><span class="va">lifeExp</span> <span class="op">~</span> <span class="va">continent</span> <span class="op">*</span> <span class="va">gdpPercap</span>, <span class="va">gapminder</span><span class="op">)</span>,</span>
+<span>  <span class="st">"biglm"</span>    <span class="op">=</span> <span class="fu">biglm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/biglm/man/biglm.html">biglm</a></span><span class="op">(</span><span class="va">lifeExp</span> <span class="op">~</span> <span class="va">continent</span> <span class="op">*</span> <span class="va">gdpPercap</span>, <span class="va">gapminder</span><span class="op">)</span>,</span>
+<span>  <span class="st">"fastLm"</span>   <span class="op">=</span> <span class="fu">RcppEigen</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RcppEigen/man/fastLm.html">fastLm</a></span><span class="op">(</span><span class="va">lifeExp</span> <span class="op">~</span> <span class="va">continent</span> <span class="op">*</span> <span class="va">gdpPercap</span>, <span class="va">gapminder</span><span class="op">)</span>,</span>
+<span>  check      <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  iterations <span class="op">=</span> <span class="fl">1000</span></span>
+<span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 4 x 5</span></span>
+<span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
+<span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
+<span><span class="co">#&gt; 1 lm           1.14ms   1.36ms      689.    1.27MB</span></span>
+<span><span class="co">#&gt; 2 speedglm     1.37ms   1.56ms      612.   61.39MB</span></span>
+<span><span class="co">#&gt; 3 biglm       949.7us   1.09ms      887.  943.38KB</span></span>
+<span><span class="co">#&gt; 4 fastLm       1.45ms   1.69ms      566.    3.25MB</span></span></code></pre></div>
 <p>The results might change depending on the size of the dataset, so you will have to experiment with different algorithms and find the one that fits the needs of your dataset the best.</p>
-<p><strong>Q2.</strong> What package implements a version of <code>match()</code> that’s faster for repeated look ups? How much faster is it?</p>
-<p><strong>A2.</strong> The package (and the respective function) is <code>fastmatch::fmatch()</code><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
+<p><strong>Q2.</strong> What package implements a version of <code><a href="https://rdrr.io/r/base/match.html">match()</a></code> that’s faster for repeated look ups? How much faster is it?</p>
+<p><strong>A2.</strong> The package (and the respective function) is <code><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fastmatch::fmatch()</a></code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;In addition to Google search, you can also try &lt;a href="https://www.zuckarelli.de/packagefinder/tutorial.html"&gt;packagefinder&lt;/a&gt; to search for CRAN packages.&lt;/p&gt;'><sup>7</sup></a>.</p>
 <p>The documentation for this function notes:</p>
 <blockquote>
 <p>It is slightly faster than the built-in version because it uses more specialized code, but in addition it retains the hash table within the table object such that it can be re-used, dramatically reducing the look-up time especially for large table.</p>
 </blockquote>
 <p>Let’s try.</p>
-<p>With a small vector, <code>fmatch()</code> is only slightly faster, but of the same order of magnitude.</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="improving-performance.html#cb288-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastmatch, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb288-2"><a href="improving-performance.html#cb288-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb288-3"><a href="improving-performance.html#cb288-3" aria-hidden="true" tabindex="-1"></a>small_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;x&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;n&quot;</span>, <span class="st">&quot;y&quot;</span>)</span>
-<span id="cb288-4"><a href="improving-performance.html#cb288-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb288-5"><a href="improving-performance.html#cb288-5" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(small_vec)</span>
-<span id="cb288-6"><a href="improving-performance.html#cb288-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 6</span></span>
-<span id="cb288-7"><a href="improving-performance.html#cb288-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb288-8"><a href="improving-performance.html#cb288-8" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb288-9"><a href="improving-performance.html#cb288-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;base&quot;</span> <span class="ot">=</span> <span class="fu">match</span>(<span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), small_vec),</span>
-<span id="cb288-10"><a href="improving-performance.html#cb288-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fastmatch&quot;</span> <span class="ot">=</span> <span class="fu">fmatch</span>(<span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), small_vec)</span>
-<span id="cb288-11"><a href="improving-performance.html#cb288-11" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb288-12"><a href="improving-performance.html#cb288-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 x 5</span></span>
-<span id="cb288-13"><a href="improving-performance.html#cb288-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
-<span id="cb288-14"><a href="improving-performance.html#cb288-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span id="cb288-15"><a href="improving-performance.html#cb288-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 base          1.4us    1.7us   478907.        0B</span></span>
-<span id="cb288-16"><a href="improving-performance.html#cb288-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 fastmatch     1.1us    1.5us   526355.    2.66KB</span></span></code></pre></div>
-<p>But, with a larger vector, <code>fmatch()</code> is only orders of magnitude faster! ⚡</p>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="improving-performance.html#cb289-1" aria-hidden="true" tabindex="-1"></a>large_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), <span class="fl">1e4</span>), <span class="st">&quot;x&quot;</span>, <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;m&quot;</span>, <span class="st">&quot;n&quot;</span>), <span class="fl">1e6</span>), <span class="st">&quot;y&quot;</span>)</span>
-<span id="cb289-2"><a href="improving-performance.html#cb289-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb289-3"><a href="improving-performance.html#cb289-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(large_vec)</span>
-<span id="cb289-4"><a href="improving-performance.html#cb289-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2020002</span></span>
-<span id="cb289-5"><a href="improving-performance.html#cb289-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb289-6"><a href="improving-performance.html#cb289-6" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb289-7"><a href="improving-performance.html#cb289-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;base&quot;</span> <span class="ot">=</span> <span class="fu">match</span>(<span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), large_vec),</span>
-<span id="cb289-8"><a href="improving-performance.html#cb289-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fastmatch&quot;</span> <span class="ot">=</span> <span class="fu">fmatch</span>(<span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), large_vec)</span>
-<span id="cb289-9"><a href="improving-performance.html#cb289-9" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb289-10"><a href="improving-performance.html#cb289-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so</span></span>
-<span id="cb289-11"><a href="improving-performance.html#cb289-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; filtering is disabled.</span></span>
-<span id="cb289-12"><a href="improving-performance.html#cb289-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 x 5</span></span>
-<span id="cb289-13"><a href="improving-performance.html#cb289-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
-<span id="cb289-14"><a href="improving-performance.html#cb289-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span id="cb289-15"><a href="improving-performance.html#cb289-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 base         31.5ms   36.1ms      20.9    31.4MB</span></span>
-<span id="cb289-16"><a href="improving-performance.html#cb289-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 fastmatch     1.1us    1.4us  668740.         0B</span></span></code></pre></div>
+<p>With a small vector, <code><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fmatch()</a></code> is only slightly faster, but of the same order of magnitude.</p>
+<div class="sourceCode" id="cb644"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rforge.net/fastmatch">fastmatch</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">small_vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"x"</span>, <span class="st">"m"</span>, <span class="st">"n"</span>, <span class="st">"y"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">small_vec</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 6</span></span>
+<span></span>
+<span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span></span>
+<span>  <span class="st">"base"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, <span class="va">small_vec</span><span class="op">)</span>,</span>
+<span>  <span class="st">"fastmatch"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fmatch</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, <span class="va">small_vec</span><span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 2 x 5</span></span>
+<span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
+<span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
+<span><span class="co">#&gt; 1 base          1.1us    1.5us   571847.        0B</span></span>
+<span><span class="co">#&gt; 2 fastmatch    1000ns    1.3us   634024.    2.66KB</span></span></code></pre></div>
+<p>But, with a larger vector, <code><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fmatch()</a></code> is only orders of magnitude faster! ⚡</p>
+<div class="sourceCode" id="cb645"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">large_vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span>, <span class="fl">1e4</span><span class="op">)</span>, <span class="st">"x"</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"m"</span>, <span class="st">"n"</span><span class="op">)</span>, <span class="fl">1e6</span><span class="op">)</span>, <span class="st">"y"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">large_vec</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 2020002</span></span>
+<span></span>
+<span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span></span>
+<span>  <span class="st">"base"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, <span class="va">large_vec</span><span class="op">)</span>,</span>
+<span>  <span class="st">"fastmatch"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fmatch</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, <span class="va">large_vec</span><span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so</span></span>
+<span><span class="co">#&gt; filtering is disabled.</span></span>
+<span><span class="co">#&gt; # A tibble: 2 x 5</span></span>
+<span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
+<span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
+<span><span class="co">#&gt; 1 base         36.1ms   37.6ms      26.0    31.4MB</span></span>
+<span><span class="co">#&gt; 2 fastmatch     1.1us    1.4us  625469.         0B</span></span></code></pre></div>
 <p>We can also look at the hash table:</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="improving-performance.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fmatch.hash</span>(<span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), small_vec)</span>
-<span id="cb290-2"><a href="improving-performance.html#cb290-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;a&quot; &quot;b&quot; &quot;x&quot; &quot;m&quot; &quot;n&quot; &quot;y&quot;</span></span>
-<span id="cb290-3"><a href="improving-performance.html#cb290-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;.match.hash&quot;)</span></span>
-<span id="cb290-4"><a href="improving-performance.html#cb290-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;hash table&gt;</span></span></code></pre></div>
-<p>Additionally, <code>{fastmatch}</code> also provides a similar infix operator:</p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="improving-performance.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastmatch)</span>
-<span id="cb291-2"><a href="improving-performance.html#cb291-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb291-3"><a href="improving-performance.html#cb291-3" aria-hidden="true" tabindex="-1"></a>small_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;x&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;n&quot;</span>, <span class="st">&quot;y&quot;</span>)</span>
-<span id="cb291-4"><a href="improving-performance.html#cb291-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb291-5"><a href="improving-performance.html#cb291-5" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>) <span class="sc">%in%</span> small_vec</span>
-<span id="cb291-6"><a href="improving-performance.html#cb291-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE TRUE</span></span>
-<span id="cb291-7"><a href="improving-performance.html#cb291-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb291-8"><a href="improving-performance.html#cb291-8" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>) <span class="sc">%fin%</span> small_vec</span>
-<span id="cb291-9"><a href="improving-performance.html#cb291-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb646"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fmatch.hash</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, <span class="va">small_vec</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "a" "b" "x" "m" "n" "y"</span></span>
+<span><span class="co">#&gt; attr(,".match.hash")</span></span>
+<span><span class="co">#&gt; &lt;hash table&gt;</span></span></code></pre></div>
+<p>Additionally, <a href="http://www.rforge.net/fastmatch">fastmatch</a> also provides a similar infix operator:</p>
+<div class="sourceCode" id="cb647"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rforge.net/fastmatch">fastmatch</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">small_vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"x"</span>, <span class="st">"m"</span>, <span class="st">"n"</span>, <span class="st">"y"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">small_vec</span></span>
+<span><span class="co">#&gt; [1] TRUE TRUE</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">%fin%</a></span> <span class="va">small_vec</span></span>
+<span><span class="co">#&gt; [1] TRUE TRUE</span></span></code></pre></div>
 <p><strong>Q3.</strong> List four functions (not just those in base R) that convert a string into a date time object. What are their strengths and weaknesses?</p>
 <p><strong>A3.</strong> Here are four functions that convert a string into a date time object:</p>
 <ul>
-<li><code>base::as.POSIXct()</code></li>
+<li><code><a href="https://rdrr.io/r/base/as.POSIXlt.html">base::as.POSIXct()</a></code></li>
 </ul>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="improving-performance.html#cb292-1" aria-hidden="true" tabindex="-1"></a>base<span class="sc">::</span><span class="fu">as.POSIXct</span>(<span class="st">&quot;2022-05-05 09:23:22&quot;</span>)</span>
-<span id="cb292-2"><a href="improving-performance.html#cb292-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;2022-05-05 09:23:22 CEST&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb648"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span><span class="op">(</span><span class="st">"2022-05-05 09:23:22"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2022-05-05 09:23:22 CEST"</span></span></code></pre></div>
 <ul>
-<li><code>base::as.POSIXlt()</code></li>
+<li><code><a href="https://rdrr.io/r/base/as.POSIXlt.html">base::as.POSIXlt()</a></code></li>
 </ul>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="improving-performance.html#cb293-1" aria-hidden="true" tabindex="-1"></a>base<span class="sc">::</span><span class="fu">as.POSIXlt</span>(<span class="st">&quot;2022-05-05 09:23:22&quot;</span>)</span>
-<span id="cb293-2"><a href="improving-performance.html#cb293-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;2022-05-05 09:23:22 CEST&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb649"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXlt</a></span><span class="op">(</span><span class="st">"2022-05-05 09:23:22"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2022-05-05 09:23:22 CEST"</span></span></code></pre></div>
 <ul>
-<li><code>lubridate::ymd_hms()</code></li>
+<li><code><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html">lubridate::ymd_hms()</a></code></li>
 </ul>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="improving-performance.html#cb294-1" aria-hidden="true" tabindex="-1"></a>lubridate<span class="sc">::</span><span class="fu">ymd_hms</span>(<span class="st">&quot;2022-05-05-09-23-22&quot;</span>)</span>
-<span id="cb294-2"><a href="improving-performance.html#cb294-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;2022-05-05 09:23:22 UTC&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb650"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span><span class="op">(</span><span class="st">"2022-05-05-09-23-22"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2022-05-05 09:23:22 UTC"</span></span></code></pre></div>
 <ul>
-<li><code>fasttime::fastPOSIXct()</code></li>
+<li><code><a href="https://rdrr.io/pkg/fasttime/man/fastPOSIXct.html">fasttime::fastPOSIXct()</a></code></li>
 </ul>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="improving-performance.html#cb295-1" aria-hidden="true" tabindex="-1"></a>fasttime<span class="sc">::</span><span class="fu">fastPOSIXct</span>(<span class="st">&quot;2022-05-05 09:23:22&quot;</span>)</span>
-<span id="cb295-2"><a href="improving-performance.html#cb295-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;2022-05-05 11:23:22 CEST&quot;</span></span></code></pre></div>
-<p>Comparing them, we can see that <code>fasttime::fastPOSIXct()</code> has the best performance:</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="improving-performance.html#cb296-1" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb296-2"><a href="improving-performance.html#cb296-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;as.POSIXct&quot;</span> <span class="ot">=</span> base<span class="sc">::</span><span class="fu">as.POSIXct</span>(<span class="st">&quot;2022-05-05 09:23:22&quot;</span>),</span>
-<span id="cb296-3"><a href="improving-performance.html#cb296-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;as.POSIXlt&quot;</span> <span class="ot">=</span> base<span class="sc">::</span><span class="fu">as.POSIXlt</span>(<span class="st">&quot;2022-05-05 09:23:22&quot;</span>),</span>
-<span id="cb296-4"><a href="improving-performance.html#cb296-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;ymd_hms&quot;</span> <span class="ot">=</span> lubridate<span class="sc">::</span><span class="fu">ymd_hms</span>(<span class="st">&quot;2022-05-05-09-23-22&quot;</span>),</span>
-<span id="cb296-5"><a href="improving-performance.html#cb296-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fastPOSIXct&quot;</span> <span class="ot">=</span> fasttime<span class="sc">::</span><span class="fu">fastPOSIXct</span>(<span class="st">&quot;2022-05-05 09:23:22&quot;</span>),</span>
-<span id="cb296-6"><a href="improving-performance.html#cb296-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">check =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb296-7"><a href="improving-performance.html#cb296-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">iterations =</span> <span class="dv">1000</span></span>
-<span id="cb296-8"><a href="improving-performance.html#cb296-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb296-9"><a href="improving-performance.html#cb296-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 x 6</span></span>
-<span id="cb296-10"><a href="improving-performance.html#cb296-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   expression       min   median `itr/sec` mem_alloc `gc/sec`</span></span>
-<span id="cb296-11"><a href="improving-performance.html#cb296-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span id="cb296-12"><a href="improving-performance.html#cb296-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 as.POSIXct      81us  119.4us     8154.        0B     0   </span></span>
-<span id="cb296-13"><a href="improving-performance.html#cb296-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 as.POSIXlt    59.3us   70.7us    13485.        0B    13.5 </span></span>
-<span id="cb296-14"><a href="improving-performance.html#cb296-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 ymd_hms       3.64ms   4.58ms      206.    23.6KB     1.87</span></span>
-<span id="cb296-15"><a href="improving-performance.html#cb296-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 fastPOSIXct      2us    2.9us   311575.        0B     0</span></span></code></pre></div>
+<div class="sourceCode" id="cb651"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fasttime</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fasttime/man/fastPOSIXct.html">fastPOSIXct</a></span><span class="op">(</span><span class="st">"2022-05-05 09:23:22"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2022-05-05 11:23:22 CEST"</span></span></code></pre></div>
+<p>Comparing them, we can see that <code><a href="https://rdrr.io/pkg/fasttime/man/fastPOSIXct.html">fasttime::fastPOSIXct()</a></code> has the best performance:</p>
+<div class="sourceCode" id="cb652"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span></span>
+<span>  <span class="st">"as.POSIXct"</span> <span class="op">=</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span><span class="op">(</span><span class="st">"2022-05-05 09:23:22"</span><span class="op">)</span>,</span>
+<span>  <span class="st">"as.POSIXlt"</span> <span class="op">=</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXlt</a></span><span class="op">(</span><span class="st">"2022-05-05 09:23:22"</span><span class="op">)</span>,</span>
+<span>  <span class="st">"ymd_hms"</span> <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span><span class="op">(</span><span class="st">"2022-05-05-09-23-22"</span><span class="op">)</span>,</span>
+<span>  <span class="st">"fastPOSIXct"</span> <span class="op">=</span> <span class="fu">fasttime</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fasttime/man/fastPOSIXct.html">fastPOSIXct</a></span><span class="op">(</span><span class="st">"2022-05-05 09:23:22"</span><span class="op">)</span>,</span>
+<span>  check <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  iterations <span class="op">=</span> <span class="fl">1000</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 4 x 6</span></span>
+<span><span class="co">#&gt;   expression       min   median `itr/sec` mem_alloc `gc/sec`</span></span>
+<span><span class="co">#&gt;   &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 as.POSIXct      73us  87.65us    11069.        0B     0   </span></span>
+<span><span class="co">#&gt; 2 as.POSIXlt    57.5us   70.9us    13148.        0B    13.2 </span></span>
+<span><span class="co">#&gt; 3 ymd_hms       3.92ms   4.72ms      208.    23.6KB     1.89</span></span>
+<span><span class="co">#&gt; 4 fastPOSIXct    1.4us    1.9us   381883.        0B     0</span></span></code></pre></div>
 <p>There are many more packages that implement a way to convert from string to a date time object. For more, see <a href="https://cran.r-project.org/web/views/TimeSeries.html">CRAN Task View: Time Series Analysis</a></p>
 <p><strong>Q4.</strong> Which packages provide the ability to compute a rolling mean?</p>
 <p><strong>A4.</strong> Here are a few packages and respective functions that provide a way to compute a rolling mean:</p>
 <ul>
 <li><code>RcppRoll::roll_mean()</code></li>
-<li><code>data.table::frollmean()</code></li>
+<li><code><a href="https://Rdatatable.gitlab.io/data.table/reference/froll.html">data.table::frollmean()</a></code></li>
 <li><code>roll::roll_mean()</code></li>
-<li><code>zoo::rollmean()</code></li>
-<li><code>slider::slide_dbl()</code></li>
+<li><code><a href="https://rdrr.io/pkg/zoo/man/rollmean.html">zoo::rollmean()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/slider/man/slide.html">slider::slide_dbl()</a></code></li>
 </ul>
-<p><strong>Q5.</strong> What are the alternatives to <code>optim()</code>?</p>
-<p><strong>A5.</strong> The <code>optim()</code> function provides general-purpose optimization. As noted in its docs:</p>
+<p><strong>Q5.</strong> What are the alternatives to <code><a href="https://rdrr.io/r/stats/optim.html">optim()</a></code>?</p>
+<p><strong>A5.</strong> The <code><a href="https://rdrr.io/r/stats/optim.html">optim()</a></code> function provides general-purpose optimization. As noted in its docs:</p>
 <blockquote>
 <p>General-purpose optimization based on Nelder–Mead, quasi-Newton and conjugate-gradient algorithms. It includes an option for box-constrained optimization and simulated annealing.</p>
 </blockquote>
@@ -248,66 +262,73 @@
 <p>Most available options can be seen at <a href="https://cran.r-project.org/web/views/Optimization.html">CRAN Task View: Optimization and Mathematical Programming</a>.</p>
 </div>
 <div id="exercises-24.4.3" class="section level2" number="24.2">
-<h2><span class="header-section-number">24.2</span> Exercises 24.4.3</h2>
-<p><strong>Q1.</strong> What’s the difference between <code>rowSums()</code> and <code>.rowSums()</code>?</p>
+<h2>
+<span class="header-section-number">24.2</span> Exercises 24.4.3<a class="anchor" aria-label="anchor" href="#exercises-24.4.3"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>Q1.</strong> What’s the difference between <code><a href="https://rdrr.io/r/base/colSums.html">rowSums()</a></code> and <code><a href="https://rdrr.io/r/base/colSums.html">.rowSums()</a></code>?</p>
 <p><strong>A1.</strong> The documentation for these functions state:</p>
 <blockquote>
 <p>The versions with an initial dot in the name (.colSums() etc) are ‘bare-bones’ versions for use in programming: they apply only to numeric (like) matrices and do not name the result.</p>
 </blockquote>
 <p>Looking at the source code,</p>
 <ul>
-<li><code>rowSums()</code> function does a number of checks to validate if the arguments are acceptable</li>
+<li>
+<code><a href="https://rdrr.io/r/base/colSums.html">rowSums()</a></code> function does a number of checks to validate if the arguments are acceptable</li>
 </ul>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="improving-performance.html#cb297-1" aria-hidden="true" tabindex="-1"></a>rowSums</span>
-<span id="cb297-2"><a href="improving-performance.html#cb297-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (x, na.rm = FALSE, dims = 1L) </span></span>
-<span id="cb297-3"><a href="improving-performance.html#cb297-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {</span></span>
-<span id="cb297-4"><a href="improving-performance.html#cb297-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     if (is.data.frame(x)) </span></span>
-<span id="cb297-5"><a href="improving-performance.html#cb297-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         x &lt;- as.matrix(x)</span></span>
-<span id="cb297-6"><a href="improving-performance.html#cb297-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     if (!is.array(x) || length(dn &lt;- dim(x)) &lt; 2L) </span></span>
-<span id="cb297-7"><a href="improving-performance.html#cb297-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         stop(&quot;&#39;x&#39; must be an array of at least two dimensions&quot;)</span></span>
-<span id="cb297-8"><a href="improving-performance.html#cb297-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     if (dims &lt; 1L || dims &gt; length(dn) - 1L) </span></span>
-<span id="cb297-9"><a href="improving-performance.html#cb297-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         stop(&quot;invalid &#39;dims&#39;&quot;)</span></span>
-<span id="cb297-10"><a href="improving-performance.html#cb297-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     p &lt;- prod(dn[-(id &lt;- seq_len(dims))])</span></span>
-<span id="cb297-11"><a href="improving-performance.html#cb297-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     dn &lt;- dn[id]</span></span>
-<span id="cb297-12"><a href="improving-performance.html#cb297-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     z &lt;- if (is.complex(x)) </span></span>
-<span id="cb297-13"><a href="improving-performance.html#cb297-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         .Internal(rowSums(Re(x), prod(dn), p, na.rm)) + (0+1i) * </span></span>
-<span id="cb297-14"><a href="improving-performance.html#cb297-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             .Internal(rowSums(Im(x), prod(dn), p, na.rm))</span></span>
-<span id="cb297-15"><a href="improving-performance.html#cb297-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     else .Internal(rowSums(x, prod(dn), p, na.rm))</span></span>
-<span id="cb297-16"><a href="improving-performance.html#cb297-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     if (length(dn) &gt; 1L) {</span></span>
-<span id="cb297-17"><a href="improving-performance.html#cb297-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         dim(z) &lt;- dn</span></span>
-<span id="cb297-18"><a href="improving-performance.html#cb297-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         dimnames(z) &lt;- dimnames(x)[id]</span></span>
-<span id="cb297-19"><a href="improving-performance.html#cb297-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     }</span></span>
-<span id="cb297-20"><a href="improving-performance.html#cb297-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     else names(z) &lt;- dimnames(x)[[1L]]</span></span>
-<span id="cb297-21"><a href="improving-performance.html#cb297-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     z</span></span>
-<span id="cb297-22"><a href="improving-performance.html#cb297-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
-<span id="cb297-23"><a href="improving-performance.html#cb297-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x000000003a23cda0&gt;</span></span>
-<span id="cb297-24"><a href="improving-performance.html#cb297-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb653"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rowSums</span></span>
+<span><span class="co">#&gt; function (x, na.rm = FALSE, dims = 1L) </span></span>
+<span><span class="co">#&gt; {</span></span>
+<span><span class="co">#&gt;     if (is.data.frame(x)) </span></span>
+<span><span class="co">#&gt;         x &lt;- as.matrix(x)</span></span>
+<span><span class="co">#&gt;     if (!is.array(x) || length(dn &lt;- dim(x)) &lt; 2L) </span></span>
+<span><span class="co">#&gt;         stop("'x' must be an array of at least two dimensions")</span></span>
+<span><span class="co">#&gt;     if (dims &lt; 1L || dims &gt; length(dn) - 1L) </span></span>
+<span><span class="co">#&gt;         stop("invalid 'dims'")</span></span>
+<span><span class="co">#&gt;     p &lt;- prod(dn[-(id &lt;- seq_len(dims))])</span></span>
+<span><span class="co">#&gt;     dn &lt;- dn[id]</span></span>
+<span><span class="co">#&gt;     z &lt;- if (is.complex(x)) </span></span>
+<span><span class="co">#&gt;         .Internal(rowSums(Re(x), prod(dn), p, na.rm)) + (0+1i) * </span></span>
+<span><span class="co">#&gt;             .Internal(rowSums(Im(x), prod(dn), p, na.rm))</span></span>
+<span><span class="co">#&gt;     else .Internal(rowSums(x, prod(dn), p, na.rm))</span></span>
+<span><span class="co">#&gt;     if (length(dn) &gt; 1L) {</span></span>
+<span><span class="co">#&gt;         dim(z) &lt;- dn</span></span>
+<span><span class="co">#&gt;         dimnames(z) &lt;- dimnames(x)[id]</span></span>
+<span><span class="co">#&gt;     }</span></span>
+<span><span class="co">#&gt;     else names(z) &lt;- dimnames(x)[[1L]]</span></span>
+<span><span class="co">#&gt;     z</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x000000003a7c5ea0&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <ul>
-<li><code>.rowSums()</code> directly proceeds to computation using an internal code which is built in to the R interpreter</li>
+<li>
+<code><a href="https://rdrr.io/r/base/colSums.html">.rowSums()</a></code> directly proceeds to computation using an internal code which is built in to the R interpreter</li>
 </ul>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="improving-performance.html#cb298-1" aria-hidden="true" tabindex="-1"></a>.rowSums</span>
-<span id="cb298-2"><a href="improving-performance.html#cb298-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (x, m, n, na.rm = FALSE) </span></span>
-<span id="cb298-3"><a href="improving-performance.html#cb298-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; .Internal(rowSums(x, m, n, na.rm))</span></span>
-<span id="cb298-4"><a href="improving-performance.html#cb298-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x000000003611f630&gt;</span></span>
-<span id="cb298-5"><a href="improving-performance.html#cb298-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb654"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">.rowSums</span></span>
+<span><span class="co">#&gt; function (x, m, n, na.rm = FALSE) </span></span>
+<span><span class="co">#&gt; .Internal(rowSums(x, m, n, na.rm))</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x000000003e369120&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>But they have comparable performance:</p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="improving-performance.html#cb299-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">x1 =</span> <span class="dv">3</span>, <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="fl">1e4</span>, <span class="dv">2</span><span class="sc">:</span><span class="fl">1e5</span>))</span>
-<span id="cb299-2"><a href="improving-performance.html#cb299-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb299-3"><a href="improving-performance.html#cb299-3" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb299-4"><a href="improving-performance.html#cb299-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowSums</span>(x),</span>
-<span id="cb299-5"><a href="improving-performance.html#cb299-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.rowSums</span>(x, <span class="fu">dim</span>(x)[[<span class="dv">1</span>]], <span class="fu">dim</span>(x)[[<span class="dv">2</span>]])</span>
-<span id="cb299-6"><a href="improving-performance.html#cb299-6" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb299-7"><a href="improving-performance.html#cb299-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 x 5</span></span>
-<span id="cb299-8"><a href="improving-performance.html#cb299-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   expression                                 min   median</span></span>
-<span id="cb299-9"><a href="improving-performance.html#cb299-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt;                            &lt;bch:tm&gt; &lt;bch:tm&gt;</span></span>
-<span id="cb299-10"><a href="improving-performance.html#cb299-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 rowSums(x)                                 1ms    1.2ms</span></span>
-<span id="cb299-11"><a href="improving-performance.html#cb299-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])    976us   1.19ms</span></span>
-<span id="cb299-12"><a href="improving-performance.html#cb299-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   `itr/sec` mem_alloc</span></span>
-<span id="cb299-13"><a href="improving-performance.html#cb299-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span id="cb299-14"><a href="improving-performance.html#cb299-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1      814.     859KB</span></span>
-<span id="cb299-15"><a href="improving-performance.html#cb299-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      819.     859KB</span></span></code></pre></div>
-<p><strong>Q2.</strong> Make a faster version of <code>chisq.test()</code> that only computes the chi-square test statistic when the input is two numeric vectors with no missing values. You can try simplifying <code>chisq.test()</code> or by coding from the <a href="http://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test">mathematical definition</a>.</p>
-<p><strong>A2.</strong> If the function is supposed to accept only two numeric vectors without missing values, then we can make <code>chisq.test()</code> do less work by removing code corresponding to the following :</p>
+<div class="sourceCode" id="cb655"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">3</span>, x2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">1e4</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">1e5</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">.rowSums</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 2 x 5</span></span>
+<span><span class="co">#&gt;   expression                                 min   median</span></span>
+<span><span class="co">#&gt;   &lt;bch:expr&gt;                            &lt;bch:tm&gt; &lt;bch:tm&gt;</span></span>
+<span><span class="co">#&gt; 1 rowSums(x)                             928.5us   1.25ms</span></span>
+<span><span class="co">#&gt; 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])    1.1ms   1.26ms</span></span>
+<span><span class="co">#&gt;   `itr/sec` mem_alloc</span></span>
+<span><span class="co">#&gt;       &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
+<span><span class="co">#&gt; 1      749.     859KB</span></span>
+<span><span class="co">#&gt; 2      740.     859KB</span></span></code></pre></div>
+<p><strong>Q2.</strong> Make a faster version of <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code> that only computes the chi-square test statistic when the input is two numeric vectors with no missing values. You can try simplifying <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code> or by coding from the <a href="http://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test">mathematical definition</a>.</p>
+<p><strong>A2.</strong> If the function is supposed to accept only two numeric vectors without missing values, then we can make <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code> do less work by removing code corresponding to the following :</p>
 <ul>
 <li>checks for data frame and matrix inputs</li>
 <li>goodness-of-fit test</li>
@@ -315,265 +336,279 @@
 <li>checking for missing values</li>
 </ul>
 <p>This leaves us with a much simpler, bare bones implementation:</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="improving-performance.html#cb300-1" aria-hidden="true" tabindex="-1"></a>my_chisq_test <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
-<span id="cb300-2"><a href="improving-performance.html#cb300-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">table</span>(x, y)</span>
-<span id="cb300-3"><a href="improving-performance.html#cb300-3" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">sum</span>(x)</span>
-<span id="cb300-4"><a href="improving-performance.html#cb300-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb300-5"><a href="improving-performance.html#cb300-5" aria-hidden="true" tabindex="-1"></a>  nr <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">nrow</span>(x))</span>
-<span id="cb300-6"><a href="improving-performance.html#cb300-6" aria-hidden="true" tabindex="-1"></a>  nc <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">ncol</span>(x))</span>
-<span id="cb300-7"><a href="improving-performance.html#cb300-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb300-8"><a href="improving-performance.html#cb300-8" aria-hidden="true" tabindex="-1"></a>  sr <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(x)</span>
-<span id="cb300-9"><a href="improving-performance.html#cb300-9" aria-hidden="true" tabindex="-1"></a>  sc <span class="ot">&lt;-</span> <span class="fu">colSums</span>(x)</span>
-<span id="cb300-10"><a href="improving-performance.html#cb300-10" aria-hidden="true" tabindex="-1"></a>  E <span class="ot">&lt;-</span> <span class="fu">outer</span>(sr, sc, <span class="st">&quot;*&quot;</span>) <span class="sc">/</span> n</span>
-<span id="cb300-11"><a href="improving-performance.html#cb300-11" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="cf">function</span>(r, c, n) c <span class="sc">*</span> r <span class="sc">*</span> (n <span class="sc">-</span> r) <span class="sc">*</span> (n <span class="sc">-</span> c) <span class="sc">/</span> n<span class="sc">^</span><span class="dv">3</span></span>
-<span id="cb300-12"><a href="improving-performance.html#cb300-12" aria-hidden="true" tabindex="-1"></a>  V <span class="ot">&lt;-</span> <span class="fu">outer</span>(sr, sc, v, n)</span>
-<span id="cb300-13"><a href="improving-performance.html#cb300-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dimnames</span>(E) <span class="ot">&lt;-</span> <span class="fu">dimnames</span>(x)</span>
-<span id="cb300-14"><a href="improving-performance.html#cb300-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb300-15"><a href="improving-performance.html#cb300-15" aria-hidden="true" tabindex="-1"></a>  STATISTIC <span class="ot">&lt;-</span> <span class="fu">sum</span>((<span class="fu">abs</span>(x <span class="sc">-</span> E))<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> E)</span>
-<span id="cb300-16"><a href="improving-performance.html#cb300-16" aria-hidden="true" tabindex="-1"></a>  PARAMETER <span class="ot">&lt;-</span> (nr <span class="sc">-</span> 1L) <span class="sc">*</span> (nc <span class="sc">-</span> 1L)</span>
-<span id="cb300-17"><a href="improving-performance.html#cb300-17" aria-hidden="true" tabindex="-1"></a>  PVAL <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(STATISTIC, PARAMETER, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb300-18"><a href="improving-performance.html#cb300-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb300-19"><a href="improving-performance.html#cb300-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(STATISTIC) <span class="ot">&lt;-</span> <span class="st">&quot;X-squared&quot;</span></span>
-<span id="cb300-20"><a href="improving-performance.html#cb300-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(PARAMETER) <span class="ot">&lt;-</span> <span class="st">&quot;df&quot;</span></span>
-<span id="cb300-21"><a href="improving-performance.html#cb300-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb300-22"><a href="improving-performance.html#cb300-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>(</span>
-<span id="cb300-23"><a href="improving-performance.html#cb300-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
-<span id="cb300-24"><a href="improving-performance.html#cb300-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">statistic =</span> STATISTIC,</span>
-<span id="cb300-25"><a href="improving-performance.html#cb300-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">parameter =</span> PARAMETER,</span>
-<span id="cb300-26"><a href="improving-performance.html#cb300-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">p.value =</span> PVAL,</span>
-<span id="cb300-27"><a href="improving-performance.html#cb300-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">method =</span> <span class="st">&quot;Pearson&#39;s Chi-squared test&quot;</span>,</span>
-<span id="cb300-28"><a href="improving-performance.html#cb300-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">observed =</span> x,</span>
-<span id="cb300-29"><a href="improving-performance.html#cb300-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">expected =</span> E,</span>
-<span id="cb300-30"><a href="improving-performance.html#cb300-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">residuals =</span> (x <span class="sc">-</span> E) <span class="sc">/</span> <span class="fu">sqrt</span>(E),</span>
-<span id="cb300-31"><a href="improving-performance.html#cb300-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">stdres =</span> (x <span class="sc">-</span> E) <span class="sc">/</span> <span class="fu">sqrt</span>(V)</span>
-<span id="cb300-32"><a href="improving-performance.html#cb300-32" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb300-33"><a href="improving-performance.html#cb300-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">&quot;htest&quot;</span></span>
-<span id="cb300-34"><a href="improving-performance.html#cb300-34" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb300-35"><a href="improving-performance.html#cb300-35" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>And, indeed, this custom function performs slightly better<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> than its base equivalent:</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="improving-performance.html#cb301-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;a&quot;</span>, <span class="dv">1000</span>), <span class="fu">rep</span>(<span class="st">&quot;b&quot;</span>, <span class="dv">9000</span>))</span>
-<span id="cb301-2"><a href="improving-performance.html#cb301-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), <span class="dv">5000</span>))</span>
-<span id="cb301-3"><a href="improving-performance.html#cb301-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb301-4"><a href="improving-performance.html#cb301-4" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb301-5"><a href="improving-performance.html#cb301-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;base&quot;</span> <span class="ot">=</span> <span class="fu">chisq.test</span>(m, n)<span class="sc">$</span>statistic[[<span class="dv">1</span>]],</span>
-<span id="cb301-6"><a href="improving-performance.html#cb301-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;custom&quot;</span> <span class="ot">=</span> <span class="fu">my_chisq_test</span>(m, n)<span class="sc">$</span>statistic[[<span class="dv">1</span>]]</span>
-<span id="cb301-7"><a href="improving-performance.html#cb301-7" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb301-8"><a href="improving-performance.html#cb301-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 x 5</span></span>
-<span id="cb301-9"><a href="improving-performance.html#cb301-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
-<span id="cb301-10"><a href="improving-performance.html#cb301-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span id="cb301-11"><a href="improving-performance.html#cb301-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 base          830us   1.07ms      876.    1.57MB</span></span>
-<span id="cb301-12"><a href="improving-performance.html#cb301-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 custom        623us  820.2us     1167.    1.13MB</span></span></code></pre></div>
-<p><strong>Q3.</strong> Can you make a faster version of <code>table()</code> for the case of an input of two integer vectors with no missing values? Can you use it to speed up your chi-square test?</p>
-<p><strong>A3.</strong> In order to make a leaner version of <code>table()</code>, we can take a similar approach and trim the unnecessary fat in light of our new API of accepting just two vectors without missing values. We can remove the following components from the code:</p>
+<div class="sourceCode" id="cb656"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_chisq_test</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
+<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">nr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">nc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="va">sc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="va">E</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="va">sr</span>, <span class="va">sc</span>, <span class="st">"*"</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span></span>
+<span>  <span class="va">v</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">r</span>, <span class="va">c</span>, <span class="va">n</span><span class="op">)</span> <span class="va">c</span> <span class="op">*</span> <span class="va">r</span> <span class="op">*</span> <span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="va">r</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="va">c</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span><span class="op">^</span><span class="fl">3</span></span>
+<span>  <span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="va">sr</span>, <span class="va">sc</span>, <span class="va">v</span>, <span class="va">n</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/dimnames.html">dimnames</a></span><span class="op">(</span><span class="va">E</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dimnames.html">dimnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">STATISTIC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">E</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">E</span><span class="op">)</span></span>
+<span>  <span class="va">PARAMETER</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">nr</span> <span class="op">-</span> <span class="fl">1L</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="va">nc</span> <span class="op">-</span> <span class="fl">1L</span><span class="op">)</span></span>
+<span>  <span class="va">PVAL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span><span class="va">STATISTIC</span>, <span class="va">PARAMETER</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">STATISTIC</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"X-squared"</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">PARAMETER</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"df"</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>      statistic <span class="op">=</span> <span class="va">STATISTIC</span>,</span>
+<span>      parameter <span class="op">=</span> <span class="va">PARAMETER</span>,</span>
+<span>      p.value <span class="op">=</span> <span class="va">PVAL</span>,</span>
+<span>      method <span class="op">=</span> <span class="st">"Pearson's Chi-squared test"</span>,</span>
+<span>      observed <span class="op">=</span> <span class="va">x</span>,</span>
+<span>      expected <span class="op">=</span> <span class="va">E</span>,</span>
+<span>      residuals <span class="op">=</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">E</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">E</span><span class="op">)</span>,</span>
+<span>      stdres <span class="op">=</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">E</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    class <span class="op">=</span> <span class="st">"htest"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>And, indeed, this custom function performs slightly better<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Deliberately choosing a larger dataset to stress test the new function.&lt;/p&gt;"><sup>8</sup></a> than its base equivalent:</p>
+<div class="sourceCode" id="cb657"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">1000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="fl">9000</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, <span class="fl">5000</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span></span>
+<span>  <span class="st">"base"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="va">m</span>, <span class="va">n</span><span class="op">)</span><span class="op">$</span><span class="va">statistic</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  <span class="st">"custom"</span> <span class="op">=</span> <span class="fu">my_chisq_test</span><span class="op">(</span><span class="va">m</span>, <span class="va">n</span><span class="op">)</span><span class="op">$</span><span class="va">statistic</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 2 x 5</span></span>
+<span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
+<span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
+<span><span class="co">#&gt; 1 base          826us   1.11ms      853.    1.57MB</span></span>
+<span><span class="co">#&gt; 2 custom        725us  842.8us     1147.    1.13MB</span></span></code></pre></div>
+<p><strong>Q3.</strong> Can you make a faster version of <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> for the case of an input of two integer vectors with no missing values? Can you use it to speed up your chi-square test?</p>
+<p><strong>A3.</strong> In order to make a leaner version of <code><a href="https://rdrr.io/r/base/table.html">table()</a></code>, we can take a similar approach and trim the unnecessary fat in light of our new API of accepting just two vectors without missing values. We can remove the following components from the code:</p>
 <ul>
 <li>extracting data from objects entered in <code>...</code> argument</li>
 <li>dealing with missing values</li>
 <li>other input validation checks</li>
 </ul>
-<p>In addition to this removal, we can also use <code>fastmatch::fmatch()</code> instead of <code>match()</code>:</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="improving-performance.html#cb302-1" aria-hidden="true" tabindex="-1"></a>my_table <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
-<span id="cb302-2"><a href="improving-performance.html#cb302-2" aria-hidden="true" tabindex="-1"></a>  x_sorted <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(x))</span>
-<span id="cb302-3"><a href="improving-performance.html#cb302-3" aria-hidden="true" tabindex="-1"></a>  y_sorted <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(y))</span>
-<span id="cb302-4"><a href="improving-performance.html#cb302-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb302-5"><a href="improving-performance.html#cb302-5" aria-hidden="true" tabindex="-1"></a>  x_length <span class="ot">&lt;-</span> <span class="fu">length</span>(x_sorted)</span>
-<span id="cb302-6"><a href="improving-performance.html#cb302-6" aria-hidden="true" tabindex="-1"></a>  y_length <span class="ot">&lt;-</span> <span class="fu">length</span>(y_sorted)</span>
-<span id="cb302-7"><a href="improving-performance.html#cb302-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb302-8"><a href="improving-performance.html#cb302-8" aria-hidden="true" tabindex="-1"></a>  bin <span class="ot">&lt;-</span> fastmatch<span class="sc">::</span><span class="fu">fmatch</span>(x, x_sorted) <span class="sc">+</span> x_length <span class="sc">*</span> fastmatch<span class="sc">::</span><span class="fu">fmatch</span>(y, y_sorted) <span class="sc">-</span> x_length</span>
-<span id="cb302-9"><a href="improving-performance.html#cb302-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb302-10"><a href="improving-performance.html#cb302-10" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">tabulate</span>(bin, x_length <span class="sc">*</span> y_length)</span>
-<span id="cb302-11"><a href="improving-performance.html#cb302-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb302-12"><a href="improving-performance.html#cb302-12" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">array</span>(</span>
-<span id="cb302-13"><a href="improving-performance.html#cb302-13" aria-hidden="true" tabindex="-1"></a>    y,</span>
-<span id="cb302-14"><a href="improving-performance.html#cb302-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">dim =</span> <span class="fu">c</span>(x_length, y_length),</span>
-<span id="cb302-15"><a href="improving-performance.html#cb302-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="at">x =</span> x_sorted, <span class="at">y =</span> y_sorted)</span>
-<span id="cb302-16"><a href="improving-performance.html#cb302-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb302-17"><a href="improving-performance.html#cb302-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb302-18"><a href="improving-performance.html#cb302-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(y) <span class="ot">&lt;-</span> <span class="st">&quot;table&quot;</span></span>
-<span id="cb302-19"><a href="improving-performance.html#cb302-19" aria-hidden="true" tabindex="-1"></a>  y</span>
-<span id="cb302-20"><a href="improving-performance.html#cb302-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In addition to this removal, we can also use <code><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fastmatch::fmatch()</a></code> instead of <code><a href="https://rdrr.io/r/base/match.html">match()</a></code>:</p>
+<div class="sourceCode" id="cb658"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_table</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">x_sorted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">y_sorted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">x_length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x_sorted</span><span class="op">)</span></span>
+<span>  <span class="va">y_length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">y_sorted</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">bin</span> <span class="op">&lt;-</span> <span class="fu">fastmatch</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fmatch</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">x_sorted</span><span class="op">)</span> <span class="op">+</span> <span class="va">x_length</span> <span class="op">*</span> <span class="fu">fastmatch</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fmatch</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">y_sorted</span><span class="op">)</span> <span class="op">-</span> <span class="va">x_length</span></span>
+<span></span>
+<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tabulate.html">tabulate</a></span><span class="op">(</span><span class="va">bin</span>, <span class="va">x_length</span> <span class="op">*</span> <span class="va">y_length</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span></span>
+<span>    <span class="va">y</span>,</span>
+<span>    dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x_length</span>, <span class="va">y_length</span><span class="op">)</span>,</span>
+<span>    dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_sorted</span>, y <span class="op">=</span> <span class="va">y_sorted</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"table"</span></span>
+<span>  <span class="va">y</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p>The custom does perform slightly better:</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="improving-performance.html#cb303-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;a&quot;</span>, <span class="dv">1000</span>), <span class="fu">rep</span>(<span class="st">&quot;b&quot;</span>, <span class="dv">9000</span>))</span>
-<span id="cb303-2"><a href="improving-performance.html#cb303-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), <span class="dv">5000</span>))</span>
-<span id="cb303-3"><a href="improving-performance.html#cb303-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb303-4"><a href="improving-performance.html#cb303-4" aria-hidden="true" tabindex="-1"></a><span class="co"># check is set to FALSE because the custom function has an additional attribute: `&#39;.match.hash&#39;`</span></span>
-<span id="cb303-5"><a href="improving-performance.html#cb303-5" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb303-6"><a href="improving-performance.html#cb303-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;base&quot;</span> <span class="ot">=</span> <span class="fu">table</span>(x, y),</span>
-<span id="cb303-7"><a href="improving-performance.html#cb303-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;custom&quot;</span> <span class="ot">=</span> <span class="fu">my_table</span>(x, y),</span>
-<span id="cb303-8"><a href="improving-performance.html#cb303-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">check =</span> <span class="cn">FALSE</span></span>
-<span id="cb303-9"><a href="improving-performance.html#cb303-9" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb303-10"><a href="improving-performance.html#cb303-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 x 5</span></span>
-<span id="cb303-11"><a href="improving-performance.html#cb303-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
-<span id="cb303-12"><a href="improving-performance.html#cb303-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span id="cb303-13"><a href="improving-performance.html#cb303-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 base          547us    721us     1252.     960KB</span></span>
-<span id="cb303-14"><a href="improving-performance.html#cb303-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 custom        329us    386us     2495.     488KB</span></span></code></pre></div>
+<div class="sourceCode" id="cb659"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">1000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="fl">9000</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, <span class="fl">5000</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># check is set to FALSE because the custom function has an additional attribute: `'.match.hash'`</span></span>
+<span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span></span>
+<span>  <span class="st">"base"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
+<span>  <span class="st">"custom"</span> <span class="op">=</span> <span class="fu">my_table</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
+<span>  check <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 2 x 5</span></span>
+<span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
+<span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
+<span><span class="co">#&gt; 1 base          547us    707us     1375.     960KB</span></span>
+<span><span class="co">#&gt; 2 custom        321us    392us     2484.     488KB</span></span></code></pre></div>
 <p>We can also use this function in our custom chi-squared test function and see if the performance improves any further:</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="improving-performance.html#cb304-1" aria-hidden="true" tabindex="-1"></a>my_chisq_test2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
-<span id="cb304-2"><a href="improving-performance.html#cb304-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">my_table</span>(x, y)</span>
-<span id="cb304-3"><a href="improving-performance.html#cb304-3" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">sum</span>(x)</span>
-<span id="cb304-4"><a href="improving-performance.html#cb304-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb304-5"><a href="improving-performance.html#cb304-5" aria-hidden="true" tabindex="-1"></a>  nr <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">nrow</span>(x))</span>
-<span id="cb304-6"><a href="improving-performance.html#cb304-6" aria-hidden="true" tabindex="-1"></a>  nc <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">ncol</span>(x))</span>
-<span id="cb304-7"><a href="improving-performance.html#cb304-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb304-8"><a href="improving-performance.html#cb304-8" aria-hidden="true" tabindex="-1"></a>  sr <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(x)</span>
-<span id="cb304-9"><a href="improving-performance.html#cb304-9" aria-hidden="true" tabindex="-1"></a>  sc <span class="ot">&lt;-</span> <span class="fu">colSums</span>(x)</span>
-<span id="cb304-10"><a href="improving-performance.html#cb304-10" aria-hidden="true" tabindex="-1"></a>  E <span class="ot">&lt;-</span> <span class="fu">outer</span>(sr, sc, <span class="st">&quot;*&quot;</span>) <span class="sc">/</span> n</span>
-<span id="cb304-11"><a href="improving-performance.html#cb304-11" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="cf">function</span>(r, c, n) c <span class="sc">*</span> r <span class="sc">*</span> (n <span class="sc">-</span> r) <span class="sc">*</span> (n <span class="sc">-</span> c) <span class="sc">/</span> n<span class="sc">^</span><span class="dv">3</span></span>
-<span id="cb304-12"><a href="improving-performance.html#cb304-12" aria-hidden="true" tabindex="-1"></a>  V <span class="ot">&lt;-</span> <span class="fu">outer</span>(sr, sc, v, n)</span>
-<span id="cb304-13"><a href="improving-performance.html#cb304-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dimnames</span>(E) <span class="ot">&lt;-</span> <span class="fu">dimnames</span>(x)</span>
-<span id="cb304-14"><a href="improving-performance.html#cb304-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb304-15"><a href="improving-performance.html#cb304-15" aria-hidden="true" tabindex="-1"></a>  STATISTIC <span class="ot">&lt;-</span> <span class="fu">sum</span>((<span class="fu">abs</span>(x <span class="sc">-</span> E))<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> E)</span>
-<span id="cb304-16"><a href="improving-performance.html#cb304-16" aria-hidden="true" tabindex="-1"></a>  PARAMETER <span class="ot">&lt;-</span> (nr <span class="sc">-</span> 1L) <span class="sc">*</span> (nc <span class="sc">-</span> 1L)</span>
-<span id="cb304-17"><a href="improving-performance.html#cb304-17" aria-hidden="true" tabindex="-1"></a>  PVAL <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(STATISTIC, PARAMETER, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb304-18"><a href="improving-performance.html#cb304-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb304-19"><a href="improving-performance.html#cb304-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(STATISTIC) <span class="ot">&lt;-</span> <span class="st">&quot;X-squared&quot;</span></span>
-<span id="cb304-20"><a href="improving-performance.html#cb304-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(PARAMETER) <span class="ot">&lt;-</span> <span class="st">&quot;df&quot;</span></span>
-<span id="cb304-21"><a href="improving-performance.html#cb304-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb304-22"><a href="improving-performance.html#cb304-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>(</span>
-<span id="cb304-23"><a href="improving-performance.html#cb304-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
-<span id="cb304-24"><a href="improving-performance.html#cb304-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">statistic =</span> STATISTIC,</span>
-<span id="cb304-25"><a href="improving-performance.html#cb304-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">parameter =</span> PARAMETER,</span>
-<span id="cb304-26"><a href="improving-performance.html#cb304-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">p.value =</span> PVAL,</span>
-<span id="cb304-27"><a href="improving-performance.html#cb304-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">method =</span> <span class="st">&quot;Pearson&#39;s Chi-squared test&quot;</span>,</span>
-<span id="cb304-28"><a href="improving-performance.html#cb304-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">observed =</span> x,</span>
-<span id="cb304-29"><a href="improving-performance.html#cb304-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">expected =</span> E,</span>
-<span id="cb304-30"><a href="improving-performance.html#cb304-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">residuals =</span> (x <span class="sc">-</span> E) <span class="sc">/</span> <span class="fu">sqrt</span>(E),</span>
-<span id="cb304-31"><a href="improving-performance.html#cb304-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">stdres =</span> (x <span class="sc">-</span> E) <span class="sc">/</span> <span class="fu">sqrt</span>(V)</span>
-<span id="cb304-32"><a href="improving-performance.html#cb304-32" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb304-33"><a href="improving-performance.html#cb304-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">&quot;htest&quot;</span></span>
-<span id="cb304-34"><a href="improving-performance.html#cb304-34" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb304-35"><a href="improving-performance.html#cb304-35" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb660"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_chisq_test2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">my_table</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
+<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">nr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">nc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="va">sc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="va">E</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="va">sr</span>, <span class="va">sc</span>, <span class="st">"*"</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span></span>
+<span>  <span class="va">v</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">r</span>, <span class="va">c</span>, <span class="va">n</span><span class="op">)</span> <span class="va">c</span> <span class="op">*</span> <span class="va">r</span> <span class="op">*</span> <span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="va">r</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="va">c</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span><span class="op">^</span><span class="fl">3</span></span>
+<span>  <span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="va">sr</span>, <span class="va">sc</span>, <span class="va">v</span>, <span class="va">n</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/dimnames.html">dimnames</a></span><span class="op">(</span><span class="va">E</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dimnames.html">dimnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">STATISTIC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">E</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">E</span><span class="op">)</span></span>
+<span>  <span class="va">PARAMETER</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">nr</span> <span class="op">-</span> <span class="fl">1L</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="va">nc</span> <span class="op">-</span> <span class="fl">1L</span><span class="op">)</span></span>
+<span>  <span class="va">PVAL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span><span class="va">STATISTIC</span>, <span class="va">PARAMETER</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">STATISTIC</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"X-squared"</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">PARAMETER</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"df"</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>      statistic <span class="op">=</span> <span class="va">STATISTIC</span>,</span>
+<span>      parameter <span class="op">=</span> <span class="va">PARAMETER</span>,</span>
+<span>      p.value <span class="op">=</span> <span class="va">PVAL</span>,</span>
+<span>      method <span class="op">=</span> <span class="st">"Pearson's Chi-squared test"</span>,</span>
+<span>      observed <span class="op">=</span> <span class="va">x</span>,</span>
+<span>      expected <span class="op">=</span> <span class="va">E</span>,</span>
+<span>      residuals <span class="op">=</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">E</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">E</span><span class="op">)</span>,</span>
+<span>      stdres <span class="op">=</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">E</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    class <span class="op">=</span> <span class="st">"htest"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p>And, indeed, this new version of the custom function performs even better than it previously did:</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="improving-performance.html#cb305-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;a&quot;</span>, <span class="dv">1000</span>), <span class="fu">rep</span>(<span class="st">&quot;b&quot;</span>, <span class="dv">9000</span>))</span>
-<span id="cb305-2"><a href="improving-performance.html#cb305-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), <span class="dv">5000</span>))</span>
-<span id="cb305-3"><a href="improving-performance.html#cb305-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb305-4"><a href="improving-performance.html#cb305-4" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb305-5"><a href="improving-performance.html#cb305-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;base&quot;</span> <span class="ot">=</span> <span class="fu">chisq.test</span>(m, n)<span class="sc">$</span>statistic[[<span class="dv">1</span>]],</span>
-<span id="cb305-6"><a href="improving-performance.html#cb305-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;custom&quot;</span> <span class="ot">=</span> <span class="fu">my_chisq_test2</span>(m, n)<span class="sc">$</span>statistic[[<span class="dv">1</span>]]</span>
-<span id="cb305-7"><a href="improving-performance.html#cb305-7" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb305-8"><a href="improving-performance.html#cb305-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 x 5</span></span>
-<span id="cb305-9"><a href="improving-performance.html#cb305-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
-<span id="cb305-10"><a href="improving-performance.html#cb305-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span id="cb305-11"><a href="improving-performance.html#cb305-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 base          933us    1.1ms      837.    1.28MB</span></span>
-<span id="cb305-12"><a href="improving-performance.html#cb305-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 custom        406us  546.1us     1636.  594.27KB</span></span></code></pre></div>
+<div class="sourceCode" id="cb661"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">1000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="fl">9000</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, <span class="fl">5000</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span></span>
+<span>  <span class="st">"base"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="va">m</span>, <span class="va">n</span><span class="op">)</span><span class="op">$</span><span class="va">statistic</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  <span class="st">"custom"</span> <span class="op">=</span> <span class="fu">my_chisq_test2</span><span class="op">(</span><span class="va">m</span>, <span class="va">n</span><span class="op">)</span><span class="op">$</span><span class="va">statistic</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 2 x 5</span></span>
+<span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
+<span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
+<span><span class="co">#&gt; 1 base          858us   1.11ms      868.    1.28MB</span></span>
+<span><span class="co">#&gt; 2 custom        413us  493.3us     1963.  594.27KB</span></span></code></pre></div>
 </div>
 <div id="exercises-24.5.1" class="section level2" number="24.3">
-<h2><span class="header-section-number">24.3</span> Exercises 24.5.1</h2>
-<p><strong>Q1.</strong> The density functions, e.g., <code>dnorm()</code>, have a common interface. Which arguments are vectorised over? What does <code>rnorm(10, mean = 10:1)</code> do?</p>
+<h2>
+<span class="header-section-number">24.3</span> Exercises 24.5.1<a class="anchor" aria-label="anchor" href="#exercises-24.5.1"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>Q1.</strong> The density functions, e.g., <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm()</a></code>, have a common interface. Which arguments are vectorised over? What does <code>rnorm(10, mean = 10:1)</code> do?</p>
 <p><strong>A1.</strong> The density function family has the following interface:</p>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="improving-performance.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>, <span class="at">log =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb306-2"><a href="improving-performance.html#cb306-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(q, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>, <span class="at">log.p =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb306-3"><a href="improving-performance.html#cb306-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(p, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>, <span class="at">log.p =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb306-4"><a href="improving-performance.html#cb306-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb662"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span>, log <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">q</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="va">p</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p>Reading the documentation reveals that the following parameters are vectorized:
 <code>x</code>, <code>q</code>, <code>p</code>, <code>mean</code>, <code>sd</code>.</p>
 <p>This means that something like the following will work:</p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="improving-performance.html#cb307-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">5</span>))</span>
-<span id="cb307-2"><a href="improving-performance.html#cb307-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.124335 0.930398 3.844935</span></span></code></pre></div>
+<div class="sourceCode" id="cb663"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1.124335 0.930398 3.844935</span></span></code></pre></div>
 <p>But, for functions that don’t have multiple vectorized parameters, it won’t. For example,</p>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="improving-performance.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="fu">trimws</span>(<span class="fu">c</span>(<span class="st">&quot;  a &quot;</span>, <span class="st">&quot; bc&quot;</span>, <span class="st">&quot;  abc  &quot;</span>), <span class="at">which =</span> <span class="fu">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;right&quot;</span>))</span>
-<span id="cb308-2"><a href="improving-performance.html#cb308-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in match.arg(which): &#39;arg&#39; must be of length 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb664"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/trimws.html">trimws</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"  a "</span>, <span class="st">" bc"</span>, <span class="st">"  abc  "</span><span class="op">)</span>, which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"right"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in match.arg(which): 'arg' must be of length 1</span></span></code></pre></div>
 <p>The following function call generates 10 random numbers (since <code>n = 10</code>) with 10 different distributions with means supplied by the vector <code>10:1</code>.</p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="improving-performance.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">1</span>)</span>
-<span id="cb309-2"><a href="improving-performance.html#cb309-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  8.2421770  9.3920474  7.1362118  7.5789906  5.2551688</span></span>
-<span id="cb309-3"><a href="improving-performance.html#cb309-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [6]  6.0143714  4.6147891  1.1096247  2.8759129 -0.6756857</span></span></code></pre></div>
+<div class="sourceCode" id="cb665"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">10</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1]  8.2421770  9.3920474  7.1362118  7.5789906  5.2551688</span></span>
+<span><span class="co">#&gt;  [6]  6.0143714  4.6147891  1.1096247  2.8759129 -0.6756857</span></span></code></pre></div>
 <p><strong>Q2.</strong> Compare the speed of <code>apply(x, 1, sum)</code> with <code>rowSums(x)</code> for varying sizes of <code>x</code>.</p>
 <p><strong>A2.</strong> We can write a custom function to vary number of rows in a matrix and extract a data frame comparing performance of these two functions.</p>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="improving-performance.html#cb310-1" aria-hidden="true" tabindex="-1"></a>benchPerform <span class="ot">&lt;-</span> <span class="cf">function</span>(nRow, <span class="at">nCol =</span> <span class="dv">100</span>) {</span>
-<span id="cb310-2"><a href="improving-performance.html#cb310-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">data =</span> <span class="fu">rnorm</span>(nRow <span class="sc">*</span> nCol), <span class="at">nrow =</span> nRow, <span class="at">ncol =</span> nCol)</span>
-<span id="cb310-3"><a href="improving-performance.html#cb310-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb310-4"><a href="improving-performance.html#cb310-4" aria-hidden="true" tabindex="-1"></a>  bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb310-5"><a href="improving-performance.html#cb310-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowSums</span>(x),</span>
-<span id="cb310-6"><a href="improving-performance.html#cb310-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">apply</span>(x, <span class="dv">1</span>, sum)</span>
-<span id="cb310-7"><a href="improving-performance.html#cb310-7" aria-hidden="true" tabindex="-1"></a>  )[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb310-8"><a href="improving-performance.html#cb310-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb310-9"><a href="improving-performance.html#cb310-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb310-10"><a href="improving-performance.html#cb310-10" aria-hidden="true" tabindex="-1"></a>nRowList <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">5000</span>, <span class="dv">10000</span>, <span class="dv">50000</span>, <span class="dv">100000</span>)</span>
-<span id="cb310-11"><a href="improving-performance.html#cb310-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb310-12"><a href="improving-performance.html#cb310-12" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(nRowList) <span class="ot">&lt;-</span> <span class="fu">as.character</span>(nRowList)</span>
-<span id="cb310-13"><a href="improving-performance.html#cb310-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb310-14"><a href="improving-performance.html#cb310-14" aria-hidden="true" tabindex="-1"></a>benchDF <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dfr</span>(</span>
-<span id="cb310-15"><a href="improving-performance.html#cb310-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">.x =</span> nRowList,</span>
-<span id="cb310-16"><a href="improving-performance.html#cb310-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">.f =</span> <span class="sc">~</span> <span class="fu">benchPerform</span>(.x),</span>
-<span id="cb310-17"><a href="improving-performance.html#cb310-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">&quot;nRows&quot;</span></span>
-<span id="cb310-18"><a href="improving-performance.html#cb310-18" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb310-19"><a href="improving-performance.html#cb310-19" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">nRows =</span> <span class="fu">as.numeric</span>(nRows))</span>
-<span id="cb310-20"><a href="improving-performance.html#cb310-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so</span></span>
-<span id="cb310-21"><a href="improving-performance.html#cb310-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; filtering is disabled.</span></span>
-<span id="cb310-22"><a href="improving-performance.html#cb310-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb310-23"><a href="improving-performance.html#cb310-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so</span></span>
-<span id="cb310-24"><a href="improving-performance.html#cb310-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; filtering is disabled.</span></span></code></pre></div>
+<div class="sourceCode" id="cb666"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">benchPerform</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">nRow</span>, <span class="va">nCol</span> <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">nRow</span> <span class="op">*</span> <span class="va">nCol</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="va">nRow</span>, ncol <span class="op">=</span> <span class="va">nCol</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="va">sum</span><span class="op">)</span></span>
+<span>  <span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">nRowList</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">100</span>, <span class="fl">500</span>, <span class="fl">1000</span>, <span class="fl">5000</span>, <span class="fl">10000</span>, <span class="fl">50000</span>, <span class="fl">100000</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">nRowList</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">nRowList</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">benchDF</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span><span class="op">(</span></span>
+<span>  .x <span class="op">=</span> <span class="va">nRowList</span>,</span>
+<span>  .f <span class="op">=</span> <span class="op">~</span> <span class="fu">benchPerform</span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>,</span>
+<span>  .id <span class="op">=</span> <span class="st">"nRows"</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>nRows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">nRows</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so</span></span>
+<span><span class="co">#&gt; filtering is disabled.</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so</span></span>
+<span><span class="co">#&gt; filtering is disabled.</span></span></code></pre></div>
 <p>Plotting this data reveals that <code>rowSums(x)</code> has <em>O</em>(1) behavior, while <em>O</em>(n) (?) behavior.</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="improving-performance.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb311-2"><a href="improving-performance.html#cb311-2" aria-hidden="true" tabindex="-1"></a>  benchDF,</span>
-<span id="cb311-3"><a href="improving-performance.html#cb311-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
-<span id="cb311-4"><a href="improving-performance.html#cb311-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">as.numeric</span>(nRows),</span>
-<span id="cb311-5"><a href="improving-performance.html#cb311-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> median,</span>
-<span id="cb311-6"><a href="improving-performance.html#cb311-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">as.character</span>(expression),</span>
-<span id="cb311-7"><a href="improving-performance.html#cb311-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">as.character</span>(expression)</span>
-<span id="cb311-8"><a href="improving-performance.html#cb311-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb311-9"><a href="improving-performance.html#cb311-9" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb311-10"><a href="improving-performance.html#cb311-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb311-11"><a href="improving-performance.html#cb311-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb311-12"><a href="improving-performance.html#cb311-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb311-13"><a href="improving-performance.html#cb311-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Number of Rows&quot;</span>,</span>
-<span id="cb311-14"><a href="improving-performance.html#cb311-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Median Execution Time&quot;</span>,</span>
-<span id="cb311-15"><a href="improving-performance.html#cb311-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">&quot;Function used&quot;</span></span>
-<span id="cb311-16"><a href="improving-performance.html#cb311-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="Perf-improve_files/figure-html/unnamed-chunk-28-1.png" width="100%" /></p>
-<p><strong>Q3.</strong> How can you use <code>crossprod()</code> to compute a weighted sum? How much faster is it than the naive <code>sum(x * w)</code>?</p>
+<div class="sourceCode" id="cb667"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">benchDF</span>,</span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">nRows</span><span class="op">)</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">median</span>,</span>
+<span>    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">expression</span><span class="op">)</span>,</span>
+<span>    color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">expression</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="st">"Number of Rows"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Median Execution Time"</span>,</span>
+<span>    colour <span class="op">=</span> <span class="st">"Function used"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="Perf-improve_files/figure-html/unnamed-chunk-28-1.png" width="100%"></div>
+<p><strong>Q3.</strong> How can you use <code><a href="https://rdrr.io/r/base/crossprod.html">crossprod()</a></code> to compute a weighted sum? How much faster is it than the naive <code>sum(x * w)</code>?</p>
 <p><strong>A3.</strong> Both of these functions provide a way to compute a weighted sum:</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="improving-performance.html#cb312-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb312-2"><a href="improving-performance.html#cb312-2" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(x))</span>
-<span id="cb312-3"><a href="improving-performance.html#cb312-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb312-4"><a href="improving-performance.html#cb312-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(x, w)[[<span class="dv">1</span>]]</span>
-<span id="cb312-5"><a href="improving-performance.html#cb312-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 15.94691</span></span>
-<span id="cb312-6"><a href="improving-performance.html#cb312-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x <span class="sc">*</span> w)[[<span class="dv">1</span>]]</span>
-<span id="cb312-7"><a href="improving-performance.html#cb312-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 15.94691</span></span></code></pre></div>
+<div class="sourceCode" id="cb668"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/crossprod.html">crossprod</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">w</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] 15.94691</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span> <span class="op">*</span> <span class="va">w</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] 15.94691</span></span></code></pre></div>
 <p>But benchmarking their performance reveals that the latter is almost twice as fast as the former!</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="improving-performance.html#cb313-1" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb313-2"><a href="improving-performance.html#cb313-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">crossprod</span>(x, w)[[<span class="dv">1</span>]],</span>
-<span id="cb313-3"><a href="improving-performance.html#cb313-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(x <span class="sc">*</span> w)[[<span class="dv">1</span>]],</span>
-<span id="cb313-4"><a href="improving-performance.html#cb313-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">iterations =</span> <span class="fl">1e6</span></span>
-<span id="cb313-5"><a href="improving-performance.html#cb313-5" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb313-6"><a href="improving-performance.html#cb313-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 x 5</span></span>
-<span id="cb313-7"><a href="improving-performance.html#cb313-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   expression                min   median `itr/sec` mem_alloc</span></span>
-<span id="cb313-8"><a href="improving-performance.html#cb313-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt;           &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span id="cb313-9"><a href="improving-performance.html#cb313-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 crossprod(x, w)[[1]]    800ns    1.2us   717602.        0B</span></span>
-<span id="cb313-10"><a href="improving-performance.html#cb313-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 sum(x * w)[[1]]         500ns    700ns  1160926.        0B</span></span></code></pre></div>
+<div class="sourceCode" id="cb669"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/crossprod.html">crossprod</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">w</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span> <span class="op">*</span> <span class="va">w</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  iterations <span class="op">=</span> <span class="fl">1e6</span></span>
+<span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 2 x 5</span></span>
+<span><span class="co">#&gt;   expression                min   median `itr/sec` mem_alloc</span></span>
+<span><span class="co">#&gt;   &lt;bch:expr&gt;           &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
+<span><span class="co">#&gt; 1 crossprod(x, w)[[1]]    700ns    1.2us   727837.        0B</span></span>
+<span><span class="co">#&gt; 2 sum(x * w)[[1]]         400ns    800ns  1098483.        0B</span></span></code></pre></div>
 
 </div>
 </div>
-<div class="footnotes">
-<hr />
-<ol start="2">
-<li id="fn2"><p>In addition to Google search, you can also try <a href="https://www.zuckarelli.de/packagefinder/tutorial.html">packagefinder</a> to search for CRAN packages.<a href="improving-performance.html#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>Deliberately choosing a larger dataset to stress test the new function.<a href="improving-performance.html#fnref3" class="footnote-back">↩︎</a></p></li>
-</ol>
-</div>
-  </main>
 
-  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page">
-      <h2>On this page</h2>
-      <div id="book-on-this-page"></div>
+  <div class="chapter-nav">
+<div class="prev"><a href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></div>
+<div class="next"><a href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#improving-performance"><span class="header-section-number">24</span> Improving performance</a></li>
+<li><a class="nav-link" href="#exercises-24.3.1"><span class="header-section-number">24.1</span> Exercises 24.3.1</a></li>
+<li><a class="nav-link" href="#exercises-24.4.3"><span class="header-section-number">24.2</span> Exercises 24.4.3</a></li>
+<li><a class="nav-link" href="#exercises-24.5.1"><span class="header-section-number">24.3</span> Exercises 24.5.1</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Perf-improve.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Perf-improve.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
-      </div>
+</div>
     </nav>
-  </div>
+</div>
 
 </div>
 </div> <!-- .container -->
 
-<footer class="bg-primary text-light mt-5">
-  <div class="container"><div class="row">
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-20.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-21.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -581,9 +616,34 @@
   </div>
 
 </div></div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
 
-
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
 </body>
-
 </html>
