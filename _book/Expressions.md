@@ -10,7 +10,7 @@ library(rlang, warn.conflicts = FALSE)
 library(lobstr, warn.conflicts = FALSE)
 ```
 
-## Exercises 18.2.4
+## Abstract syntax trees (Exercises 18.2.4)
 
 **Q1.** Reconstruct the code represented by the trees below:
 
@@ -192,7 +192,7 @@ ast(if (FALSE) 1 else if (FALSE) 2 else if (FALSE) 3 else 4)
 #>     \-4
 ```
 
-## Exercises 18.3.5
+## Expressions (Exercises 18.3.5)
 
 **Q1.** Which two of the six types of atomic vector can't appear in an expression? Why? Similarly, why can't you create an expression that contains an atomic vector of length greater than one?
 
@@ -369,7 +369,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000017ff22a0>
+#> <bytecode: 0x0000000017ff21e0>
 #> <environment: namespace:base>
 ```
 
@@ -437,7 +437,7 @@ ast(if (x > 1) "a" else "b")
 #> \-"b"
 ```
 
-## Exercises 18.4.4
+## Parsing and grammar (Exercises 18.4.4)
 
 **Q1.** R uses parentheses in two slightly different ways as illustrated by these two calls:
 
@@ -702,7 +702,7 @@ rlang::expr_text(expr)
 
 > New function `deparse1()` produces one string, wrapping `deparse()`, to be used typically in `deparse1(substitute(*))`
 
-## Exercises 18.5.3
+## Walking AST with recursive functions (Exercises 18.5.3)
 
 **Q1.** `logical_abbr()` returns `TRUE` for `T(1, 2, 3)`. How could you modify `logical_abbr_rec()` so that it ignores function calls that use `T` or `F`?
 

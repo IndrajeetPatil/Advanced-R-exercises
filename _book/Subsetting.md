@@ -9,7 +9,7 @@ Attaching the needed libraries:
 library(tibble)
 ```
 
-## Exercises 4.2.6
+## Selecting multiple elements (Exercises 4.2.6)
 
 **Q1.** Fix each of the following common data frame subsetting errors:
 
@@ -171,7 +171,7 @@ class(is.na(df))
 #> [1] "matrix" "array"
 ```
 
-## Exercises 4.3.5
+## Selecting a single element (Exercises 4.3.5)
 
 **Q1.** Brainstorm as many ways as possible to extract the third value from the `cyl` variable in the `mtcars` dataset.
 
@@ -230,7 +230,7 @@ summary(mod)[["r.squared"]]
 #> [1] 0.7528328
 ```
 
-## Exercises 4.5.9
+## Applications (Exercises 4.5.9)
 
 **Q1.**  How would you randomly permute the columns of a data frame? (This is an important technique in random forests.) Can you simultaneously permute the rows and columns in one step?
 
@@ -418,7 +418,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-20
+#>  date     2022-08-21
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -457,7 +457,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
+#>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    tibble      * 3.1.8      2022-07-22 [1] CRAN (R 4.1.3)
 #>  P tools         4.1.3      2022-03-10 [2] local
 #>    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)

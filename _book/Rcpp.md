@@ -4,10 +4,10 @@
 
 
 ```r
-library(Rcpp)
+library(Rcpp, warn.conflicts = FALSE)
 ```
 
-## Exercises 25.2.6
+## Getting started with C++ (Exercises 25.2.6)
 
 **Q1.** With the basics of C++ in hand, it's now a great time to practice by reading and writing some simple C++ functions. For each of the following functions, read the code and figure out what the corresponding base R function is. You might not understand every part of the code yet, but you should be able to figure out the basics of what the function does.
 
@@ -216,12 +216,12 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
-#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     8.4us
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   10.2us
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     8.1us
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   12.8us
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1      9us   106610.    15.8KB        0
-#> 2   11.2us    77592.    18.3KB        0
+#> 1   8.75us   106022.    15.8KB        0
+#> 2   14.4us    62077.    18.3KB        0
 ```
 
 - `cumprod()`
@@ -263,8 +263,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 cumprod(v1)     200ns    300ns  3246753.        0B
-#> 2 cumprodC(v1)    2.1us    2.4us   383583.    6.62KB
+#> 1 cumprod(v1)     200ns    500ns  1394700.        0B
+#> 2 cumprodC(v1)    1.9us    3.4us   302206.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -310,8 +310,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression       min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>  <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 cummin(v1)     200ns    300ns  2659574.        0B        0
-#> 2 cumminC(v1)    2.5us    2.8us   324675.    6.62KB        0
+#> 1 cummin(v1)     200ns    300ns  2557545.        0B        0
+#> 2 cumminC(v1)    2.5us   3.15us   267023.    6.62KB        0
 ```
 
 - `cummaxC()`
@@ -353,8 +353,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression       min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>  <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 cummax(v1)     200ns    400ns  2500000.        0B        0
-#> 2 cummaxC(v1)    2.3us    2.8us   307503.    6.62KB        0
+#> 1 cummax(v1)     300ns    500ns  1488095.        0B        0
+#> 2 cummaxC(v1)    2.5us    2.9us   301205.    6.62KB        0
 ```
 
 - `diff()`
@@ -417,8 +417,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 diff(v1, 2)     7.3us      8us   121832.        0B
-#> 2 diffC(v1, 2)    3.4us   3.95us   236967.    2.49KB
+#> 1 diff(v1, 2)     7.7us    8.5us   109517.        0B
+#> 2 diffC(v1, 2)      5us   8.15us   109866.    2.49KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -464,8 +464,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 range(v1)     2.7us      3us   315557.        0B        0
-#> 2 rangeC(v1)    2.3us    2.7us   330360.    6.62KB        0
+#> 1 range(v1)     2.7us    4.2us   219539.        0B        0
+#> 2 rangeC(v1)    1.9us    2.3us   377074.    6.62KB        0
 ```
 
 - `var()`
@@ -513,15 +513,15 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 var(v1)         9.5us   10.4us    90351.        0B
-#> 2 variance(v1)    2.2us    2.5us   347826.    6.62KB
+#> 1 var(v1)        10.7us   20.1us    51983.        0B
+#> 2 variance(v1)    2.2us    4.1us   225378.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
 #> 2        0
 ```
 
-## Exercises 25.4.5
+## Missing values (Exercises 25.4.5)
 
 **Q1.** Rewrite any of the functions from Exercise 25.2.6 to deal with missing values. If `na.rm` is true, ignore the missing values. If `na.rm` is false,  return a missing value if the input contains any missing values. Some good functions to practice with are `min()`, `max()`, `range()`, `mean()`, and `var()`.
 
@@ -637,7 +637,7 @@ cumsumC(v2)
 #> [1]  1  3 NA NA
 ```
 
-## Exercises 25.5.7
+## Standard Template Library (Exercises 25.5.7)
 
 **Q1.** To practice using the STL algorithms and data structures, implement the following using R functions in C++, using the hints provided:
 
@@ -695,8 +695,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression              min   median `itr/sec` mem_alloc
 #>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 median.default(v2)     34us   40.5us    24853.        0B
-#> 2 medianC(v2)           2.4us    2.8us   327654.    2.49KB
+#> 1 median.default(v2)   31.4us  33.35us    28827.        0B
+#> 2 medianC(v2)           4.2us   5.35us   167140.    2.49KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -746,8 +746,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression          min   median `itr/sec` mem_alloc
 #>   <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 x1 %in% x2        1.7us      2us   440917.        0B
-#> 2 matchC(x1, x2)    3.5us    3.9us   241896.    6.62KB
+#> 1 x1 %in% x2        1.6us    2.1us   389864.        0B
+#> 2 matchC(x1, x2)    3.5us    3.9us   218866.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -822,8 +822,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 unique(v1)        4us    4.3us   219587.        0B
-#> 2 uniqueC2(v1)    5.3us    5.5us   170823.    6.62KB
+#> 1 unique(v1)      6.1us    7.9us   112170.        0B
+#> 2 uniqueC2(v1)    4.3us    4.9us   179727.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -871,8 +871,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 min(v1)       500ns    600ns  1503759.        0B        0
-#> 2 minC(v1)      2.8us      3us   306748.    6.62KB        0
+#> 1 min(v1)       700ns    1.1us   789889.        0B        0
+#> 2 minC(v1)      2.4us      4us   236183.    6.62KB        0
 
 max(v1)
 #> [1] 9
@@ -888,8 +888,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 max(v1)       300ns    400ns  1503759.        0B        0
-#> 2 maxC(v1)      1.9us    2.1us   421941.    6.62KB        0
+#> 1 max(v1)       300ns    500ns  1883239.        0B        0
+#> 2 maxC(v1)        2us    3.5us   289184.    6.62KB        0
 ```
 
 1. `which.min()` using `min_element`, or `which.max()` using `max_element`.
@@ -939,8 +939,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression          min   median `itr/sec` mem_alloc
 #>   <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 which.min(v1)     700ns    800ns  1123595.        0B
-#> 2 which_minC(v1)    2.3us    2.5us   371609.    6.62KB
+#> 1 which.min(v1)     700ns    1.7us   578704.        0B
+#> 2 which_minC(v1)    4.3us    4.9us   194099.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -960,8 +960,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression          min   median `itr/sec` mem_alloc
 #>   <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 which.max(v1)     600ns    800ns  1213592.        0B
-#> 2 which_maxC(v1)    2.1us    2.4us   387147.    6.62KB
+#> 1 which.max(v1)     800ns    900ns  1017294.        0B
+#> 2 which_maxC(v1)    2.3us    2.8us   299312.    6.62KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -1101,7 +1101,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-20
+#>  date     2022-08-21
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -1143,7 +1143,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
+#>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)
 #>  P tools         4.1.3      2022-03-10 [2] local
 #>    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)

@@ -13,7 +13,7 @@ library(dplyr)
 library(ggplot2)
 ```
 
-## Exercises 19.2.2
+## Motivation (Exercises 19.2.2)
 
 ---
 
@@ -156,7 +156,7 @@ ggplot(by_cyl, aes(cyl, mean)) +
 
 ---
 
-## Exercises 19.3.6
+## Quoting (Exercises 19.3.6)
 
 ---
 
@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x00000000335959e0>
+#> <bytecode: 0x0000000032fd1948>
 #> <environment: namespace:rlang>
 ```
 
@@ -447,7 +447,7 @@ substitute(x + y, env = .GlobalEnv)
 
 ---
 
-## Exercises 19.4.8
+## Unquoting (Exercises 19.4.8)
 
 ---
 
@@ -574,7 +574,7 @@ The first call is more natural, since the second one inlines a vector directly i
 
 ---
 
-## Exercises 19.6.5
+## `...` (dot-dot-dot) (Exercises 19.6.5)
 
 ---
 
@@ -671,7 +671,7 @@ set_attr(.x = 1:10, x = 10)
 
 ---
 
-## Exercises 19.7.5
+## Case studies (Exercises 19.7.5)
 
 ---
 

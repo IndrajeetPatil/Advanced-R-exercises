@@ -4,7 +4,16 @@
 source("common.R")
 ```
 
-## Exercises 23.2.4
+Attaching the needed libraries:
+
+```{r, warning=FALSE, message=FALSE}
+library(profvis, warn.conflicts = FALSE)
+library(dplyr, warn.conflicts = FALSE)
+```
+
+## Profiling (Exercises 23.2.4)
+
+---
 
 **Q1.** Profile the following function with `torture = TRUE`. What is surprising? Read the source code of `rm()` to figure out what's going on.
 
@@ -15,13 +24,9 @@ f <- function(n = 1e5) {
 }
 ```
 
-**A1.** 
-
-Let's first source the functions mentioned in exercises.
+**A1.** Let's first source the functions mentioned in exercises.
 
 ```{r, warning=FALSE}
-library(profvis)
-
 source("profiling-exercises.R")
 ```
 
@@ -55,7 +60,11 @@ rm
 
 I still couldn't figure out why. I would recommend checking out the [official answer](https://advanced-r-solutions.rbind.io/measuring-performance.html#profiling).
 
-## Exercises 23.3.3
+---
+
+## Microbenchmarking (Exercises 23.3.3)
+
+---
 
 **Q1.** Instead of using `bench::mark()`, you could use the built-in function `system.time()`. But `system.time()` is much less precise, so you'll need to repeat each operation many times with a loop, and then divide to find the average time of each operation, as in the code below.
 
@@ -64,14 +73,12 @@ n <- 1e6
 system.time(for (i in 1:n) sqrt(x)) / n
 system.time(for (i in 1:n) x^0.5) / n
 ```
-    
+
 How do the estimates from `system.time()` compare to those from `bench::mark()`? Why are they different?
 
-**A1.** 
+**A1.** Let's benchmark first:
 
 ```{r}
-library(dplyr)
-
 n <- 1e6
 x <- runif(100)
 
@@ -121,6 +128,8 @@ t_systime_df
 
 The comparison reveals that these two approaches yield quite similar results.
 
+---
+
 **Q2.** Here are two other ways to compute the square root of a vector. Which do you think will be fastest? Which will be slowest? Use microbenchmarking to test your answers.
 
 ```{r, eval = FALSE}
@@ -128,9 +137,9 @@ x^(1 / 2)
 exp(log(x) / 2)
 ```
 
-**A2.**
+---
 
-Microbenchmarking all ways to compute square root of a vector mentioned in this chapter.
+**A2.** Microbenchmarking all ways to compute square root of a vector mentioned in this chapter.
 
 ```{r}
 x <- runif(1000)
@@ -146,3 +155,11 @@ bench::mark(
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.
+
+---
+
+## Session information
+
+```{r}
+sessioninfo::session_info(include_base = TRUE)
+```

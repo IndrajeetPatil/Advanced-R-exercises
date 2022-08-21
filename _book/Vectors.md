@@ -2,7 +2,7 @@
 
 
 
-## Exercises 3.2.5 
+## Atomic vectors (Exercises 3.2.5)
 
 **Q1.** How do you create raw and complex scalars? (See `?raw` and `?complex`.)
 
@@ -192,7 +192,7 @@ is.null(dim(x))
 #> [1] TRUE
 ```
 
-## Exercises 3.3.4
+## Attributes (Exercises 3.3.4)
 
 **Q1.** How is `setNames()` implemented? How is `unname()` implemented? Read the source code.
 
@@ -208,7 +208,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x000000001a2d4558>
+#> <bytecode: 0x000000001a2c4ac8>
 #> <environment: namespace:stats>
 ```
 
@@ -336,7 +336,7 @@ structure(1:5, comment = "my attribute")
 #> [1] 1 2 3 4 5
 ```
 
-## Exercises 3.4.5
+## S3 atomic vectors (Exercises 3.4.5)
 
 **Q1.** What sort of object does `table()` return? What is its type? What attributes does it have? How does the dimensionality change as you tabulate more variables?
 
@@ -494,7 +494,7 @@ as.integer(f3)
 #> [19]  8  7  6  5  4  3  2  1
 ```
 
-## Exercises 3.5.4
+## Lists (Exercises 3.5.4)
 
 **Q1.** List all the ways that a list differs from an atomic vector.
 
@@ -598,7 +598,7 @@ unlist(list(datetime, date))
 #> [1] -628991940      -8175
 ```
 
-## Exercises 3.6.8
+## Data frames and tibbles (Exercises 3.6.8)
 
 **Q1.** Can you have a data frame with zero rows? What about zero columns?
 
@@ -836,7 +836,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-20
+#>  date     2022-08-21
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -871,7 +871,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
+#>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>  P tools         4.1.3      2022-03-10 [2] local
 #>  P utils       * 4.1.3      2022-03-10 [2] local
 #>    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)

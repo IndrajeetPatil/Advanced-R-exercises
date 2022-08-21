@@ -6,19 +6,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 6 Functions | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
-<meta name="description" content='Attaching the needed libraries: library(tidyverse, warn.conflicts = FALSE)  6.1 Exercises 6.2.5 Q1. Given a name, like "mean", match.fun() lets you find a function. Given a function, can you find...'>
+<meta name="description" content='Attaching the needed libraries: library(tidyverse, warn.conflicts = FALSE)  6.1 Function fundamentals (Exercises 6.2.5) Q1. Given a name, like "mean", match.fun() lets you find a function. Given a...'>
 <meta name="generator" content="bookdown 0.28 with bs4_book()">
 <meta property="og:title" content="Chapter 6 Functions | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.png">
-<meta property="og:description" content='Attaching the needed libraries: library(tidyverse, warn.conflicts = FALSE)  6.1 Exercises 6.2.5 Q1. Given a name, like "mean", match.fun() lets you find a function. Given a function, can you find...'>
+<meta property="og:description" content='Attaching the needed libraries: library(tidyverse, warn.conflicts = FALSE)  6.1 Function fundamentals (Exercises 6.2.5) Q1. Given a name, like "mean", match.fun() lets you find a function. Given a...'>
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 6 Functions | Advanced R Exercises">
-<meta name="twitter:description" content='Attaching the needed libraries: library(tidyverse, warn.conflicts = FALSE)  6.1 Exercises 6.2.5 Q1. Given a name, like "mean", match.fun() lets you find a function. Given a function, can you find...'>
+<meta name="twitter:description" content='Attaching the needed libraries: library(tidyverse, warn.conflicts = FALSE)  6.1 Function fundamentals (Exercises 6.2.5) Q1. Given a name, like "mean", match.fun() lets you find a function. Given a...'>
 <meta name="twitter:image" content="/cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="libs/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
 <script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
 <script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
@@ -60,9 +63,9 @@
 <p>Attaching the needed libraries:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<div id="exercises-6.2.5" class="section level2" number="6.1">
+<div id="function-fundamentals-exercises-6.2.5" class="section level2" number="6.1">
 <h2>
-<span class="header-section-number">6.1</span> Exercises 6.2.5<a class="anchor" aria-label="anchor" href="#exercises-6.2.5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.1</span> Function fundamentals (Exercises 6.2.5)<a class="anchor" aria-label="anchor" href="#function-fundamentals-exercises-6.2.5"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Given a name, like <code>"mean"</code>, <code><a href="https://rdrr.io/r/base/match.fun.html">match.fun()</a></code> lets you find a function. Given a function, can you find its name? Why doesn’t that make sense in R?</p>
 <p><strong>A1.</strong> Given a name, <code><a href="https://rdrr.io/r/base/match.fun.html">match.fun()</a></code> lets you find a function.</p>
@@ -70,7 +73,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; UseMethod("mean")</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x0000000018002088&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x0000000017ff21e0&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>But, given a function, it doesn’t make sense to find its name because there can be multiple names bound to the same function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -335,7 +338,7 @@
 <span><span class="va">mean</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; UseMethod("mean")</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x0000000018002088&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x0000000017ff21e0&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span>
 <span></span>
 <span><span class="co"># other package function</span></span>
@@ -345,7 +348,7 @@
 <span><span class="co">#&gt;     .f &lt;- as_mapper(.f, ...)</span></span>
 <span><span class="co">#&gt;     .Call(map_impl, environment(), ".x", ".f", "list")</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x0000000035306b90&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x00000000364f8100&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></span></code></pre></div>
 <p>There are two exceptions where the enclosing environment won’t be printed:</p>
 <ul>
@@ -362,9 +365,9 @@
 <span><span class="va">f</span></span>
 <span><span class="co">#&gt; function(x) mean(x)</span></span></code></pre></div>
 </div>
-<div id="exercises-6.4.5" class="section level2" number="6.2">
+<div id="lexical-scoping-exercises-6.4.5" class="section level2" number="6.2">
 <h2>
-<span class="header-section-number">6.2</span> Exercises 6.4.5<a class="anchor" aria-label="anchor" href="#exercises-6.4.5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.2</span> Lexical scoping (Exercises 6.4.5)<a class="anchor" aria-label="anchor" href="#lexical-scoping-exercises-6.4.5"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> What does the following code return? Why? Describe how each of the three <code>c</code>’s is interpreted.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
@@ -433,9 +436,9 @@
 <span><span class="co">#&gt; [1] 202</span></span></code></pre></div>
 <p>Although there are multiple <code>f()</code> functions, the order of evaluation goes from inside to outside with <code>x^2</code> evaluated first and <code>f(x) * 2</code> evaluated last. This results in 202 (= <code>((10 ^ 2) + 1) * 2</code>).</p>
 </div>
-<div id="exercises-6.5.4" class="section level2" number="6.3">
+<div id="lazy-evaluation-exercises-6.5.4" class="section level2" number="6.3">
 <h2>
-<span class="header-section-number">6.3</span> Exercises 6.5.4<a class="anchor" aria-label="anchor" href="#exercises-6.5.4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.3</span> Lazy evaluation (Exercises 6.5.4)<a class="anchor" aria-label="anchor" href="#lazy-evaluation-exercises-6.5.4"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> What important property of <code>&amp;&amp;</code> makes <code>x_ok()</code> work?</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
@@ -501,7 +504,7 @@
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu">f2</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "0x3756a728" "0x3756a728"</span></span>
+<span><span class="co">#&gt; [1] "0x36af9688" "0x36af9688"</span></span>
 <span><span class="co">#&gt; [1] 100</span></span></code></pre></div>
 <p><strong>Q3.</strong> What does this function return? Why? Which principle does it illustrate?</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
@@ -562,7 +565,7 @@
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu">show_time</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2022-08-20 14:43:57 CEST"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2022-08-21 12:52:21 CEST"</span></span></code></pre></div>
 <p><strong>A5.</strong> Let’s take this step-by-step.</p>
 <p>The function argument <code>x</code> is missing in the function call. This means that <code>stop("Error!")</code> is evaluated in the function environment, and not global environment.</p>
 <p>But, due to lazy evaluation, the promise <code>stop("Error!")</code> is evaluated only when <code>x</code> is accessed. This happens only when <code>print(x)</code> is called.</p>
@@ -621,9 +624,9 @@
 <p>But, in reality, only one argument is required: <code>package</code>. The function internally checks if the other arguments are missing and adjusts accordingly.</p>
 <p>It would have been better if there arguments were <code>NULL</code> instead of missing; that would avoid this confusion.</p>
 </div>
-<div id="exercises-6.6.1" class="section level2" number="6.4">
+<div id="dot-dot-dot-exercises-6.6.1" class="section level2" number="6.4">
 <h2>
-<span class="header-section-number">6.4</span> Exercises 6.6.1<a class="anchor" aria-label="anchor" href="#exercises-6.6.1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.4</span> <code>...</code> (dot-dot-dot) (Exercises 6.6.1)<a class="anchor" aria-label="anchor" href="#dot-dot-dot-exercises-6.6.1"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Explain the following results:</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
@@ -672,9 +675,9 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
-<div id="exercises-6.7.5" class="section level2" number="6.5">
+<div id="exiting-a-function-exercises-6.7.5" class="section level2" number="6.5">
 <h2>
-<span class="header-section-number">6.5</span> Exercises 6.7.5<a class="anchor" aria-label="anchor" href="#exercises-6.7.5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.5</span> Exiting a function (Exercises 6.7.5)<a class="anchor" aria-label="anchor" href="#exiting-a-function-exercises-6.7.5"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> What does <code><a href="https://rdrr.io/r/base/load.html">load()</a></code> return? Why don’t you normally see these values?</p>
 <p><strong>A1.</strong> The <code><a href="https://rdrr.io/r/base/load.html">load()</a></code> function reloads datasets that were saved using the <code><a href="https://rdrr.io/r/base/save.html">save()</a></code> function:</p>
@@ -713,7 +716,7 @@
 <span><span class="co">#&gt;     on.exit(setwd(old))</span></span>
 <span><span class="co">#&gt;     force(code)</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x000000003618e390&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x00000000323b15e0&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:withr&gt;</span></span></code></pre></div>
 <p>More importantly, its parameters <code>dir</code> allows temporarily changing working directory to <em>any</em> directory.</p>
 <p><strong>Q4.</strong> Write a function that opens a graphics device, runs the supplied code, and closes the graphics device (always, regardless of whether or not the plotting code works).</p>
@@ -740,7 +743,7 @@
 <span></span>
 <span><span class="fu">capture.output2</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in file.remove(temp): cannot remove file 'C:</span></span>
-<span><span class="co">#&gt; \Users\INDRAJ~1\AppData\Local\Temp\RtmpSCPvQE\filef9042fd31fc',</span></span>
+<span><span class="co">#&gt; \Users\INDRAJ~1\AppData\Local\Temp\RtmpY7sh3d\file3b9c2e914ad1',</span></span>
 <span><span class="co">#&gt; reason 'Permission denied'</span></span>
 <span><span class="co">#&gt; [1] "a" "b" "c"</span></span></code></pre></div>
 <p>Compare <code><a href="https://rdrr.io/r/utils/capture.output.html">capture.output()</a></code> to <code>capture.output2()</code>. How do the functions differ? What features have I removed to make the key ideas easier to see? How have I rewritten the key ideas so they’re easier to understand?</p>
@@ -785,7 +788,7 @@
 <span><span class="co">#&gt;         invisible(NULL)</span></span>
 <span><span class="co">#&gt;     else rval</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x0000000036682400&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x00000000355a71f0&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:utils&gt;</span></span></code></pre></div>
 <p>Here are few key differences:</p>
 <ul>
@@ -798,7 +801,7 @@
 <span></span>
 <span><span class="fu">capture.output2</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in file.remove(temp): cannot remove file 'C:</span></span>
-<span><span class="co">#&gt; \Users\INDRAJ~1\AppData\Local\Temp\RtmpSCPvQE\filef907b8bc64',</span></span>
+<span><span class="co">#&gt; \Users\INDRAJ~1\AppData\Local\Temp\RtmpY7sh3d\file3b9c2bd27fe4',</span></span>
 <span><span class="co">#&gt; reason 'Permission denied'</span></span>
 <span><span class="co">#&gt; character(0)</span></span></code></pre></div>
 <ul>
@@ -818,9 +821,9 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/capture.output.html">capture.output</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "[1] 1" "[1] 3"</span></span></code></pre></div>
 </div>
-<div id="exercises-6.8.6" class="section level2" number="6.6">
+<div id="function-forms-exercises-6.8.6" class="section level2" number="6.6">
 <h2>
-<span class="header-section-number">6.6</span> Exercises 6.8.6<a class="anchor" aria-label="anchor" href="#exercises-6.8.6"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.6</span> Function forms (Exercises 6.8.6)<a class="anchor" aria-label="anchor" href="#function-forms-exercises-6.8.6"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Rewrite the following code snippets into prefix form:</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
@@ -1047,7 +1050,7 @@
 <span><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
 <span><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
 <span><span class="co">#&gt;  tz       Europe/Berlin</span></span>
-<span><span class="co">#&gt;  date     2022-08-20</span></span>
+<span><span class="co">#&gt;  date     2022-08-21</span></span>
 <span><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
@@ -1112,13 +1115,13 @@
 <span><span class="co">#&gt;    rlang           1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
 <span><span class="co">#&gt;    rmarkdown       2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
 <span><span class="co">#&gt;    rstudioapi      0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    rvest           1.0.2      2021-10-16 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    rvest           1.0.3      2022-08-19 [1] CRAN (R 4.1.3)</span></span>
 <span><span class="co">#&gt;    sass            0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
 <span><span class="co">#&gt;    scales          1.2.1      2022-08-20 [1] CRAN (R 4.1.3)</span></span>
 <span><span class="co">#&gt;    sessioninfo     1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
 <span><span class="co">#&gt;  P stats         * 4.1.3      2022-03-10 [2] local</span></span>
 <span><span class="co">#&gt;    stringi         1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    stringr       * 1.4.0      2019-02-10 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    stringr       * 1.4.1      2022-08-20 [1] CRAN (R 4.1.3)</span></span>
 <span><span class="co">#&gt;    tibble        * 3.1.8      2022-07-22 [1] CRAN (R 4.1.3)</span></span>
 <span><span class="co">#&gt;    tidyr         * 1.2.0      2022-02-01 [1] CRAN (R 4.1.2)</span></span>
 <span><span class="co">#&gt;    tidyselect      1.1.2      2022-02-21 [1] CRAN (R 4.1.2)</span></span>

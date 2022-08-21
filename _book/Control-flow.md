@@ -2,7 +2,7 @@
 
 
 
-## Exercises 5.2.4
+## Choices (Exercises 5.2.4)
 
 **Q1.** What type of vector does each of the following calls to `ifelse()` return?
 
@@ -90,7 +90,7 @@ as.logical(length(numeric()))
 #> [1] FALSE
 ```
 
-## Exercises 5.3.3
+## Loops (Exercises 5.3.3)
 
 **Q1.** Why does this code succeed without errors or warnings? 
     
@@ -246,7 +246,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-20
+#>  date     2022-08-21
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -280,7 +280,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
+#>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>  P tools         4.1.3      2022-03-10 [2] local
 #>  P utils       * 4.1.3      2022-03-10 [2] local
 #>    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)

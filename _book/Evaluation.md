@@ -9,7 +9,7 @@ Attaching the needed libraries:
 library(rlang)
 ```
 
-## Exercises 20.2.4
+## Evaluation basics (Exercises 20.2.4)
 
 ---
 
@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x0000000033022d30>
+#> <environment: 0x0000000032dce6c0>
 #> Parent: <environment: global>
 ```
 
@@ -238,7 +238,7 @@ Note here that the bindings for `x` and `y` are found in the inner environment, 
 
 ---
 
-## Exercises 20.3.6
+## Quosures (Exercises 20.3.6)
 
 ---
 
@@ -250,17 +250,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x000000003315e8f8
+#> env:  0x0000000032e38868
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x0000000033b7d5c8
+#> env:  0x00000000337e53e8
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x000000003405b148
+#> env:  0x0000000033c2c298
 ```
 
 **A1.** Correctly predicted 😉
@@ -298,12 +298,12 @@ enenv(x)
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x0000000032542c10>
+#> <environment: 0x00000000172e5178>
 ```
 
 ---
 
-## Exercises 20.4.6
+## Data masks (Exercises 20.4.6)
 
 ---
 
@@ -487,7 +487,7 @@ As can be seen:
 
 ---
 
-## Exercises 20.5.4
+## Using tidy evaluation (Exercises 20.5.4)
 
 ---
 
@@ -528,7 +528,7 @@ The key difference is in the subsetting operator used:
 
 ---
 
-## Exercises 20.6.3
+## Base evaluation (Exercises 20.6.3)
 
 ---
 

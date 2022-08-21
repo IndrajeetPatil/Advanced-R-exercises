@@ -10,7 +10,7 @@ library(rlang, warn.conflicts = FALSE)
 library(ggplot2, warn.conflicts = FALSE)
 ```
 
-## Exercises 10.2.6
+## Factory fundamentals (Exercises 10.2.6)
 
 ---
 
@@ -21,7 +21,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x00000000120b71f0>
+#> <bytecode: 0x00000000172771f0>
 #> <environment: namespace:base>
 ```
 
@@ -49,8 +49,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x00000000197ce778>
-#> <environment: 0x00000000197cf310>
+#> <bytecode: 0x00000000346b8228>
+#> <environment: 0x00000000346b78f8>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -214,20 +214,20 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x0000000033156bc0>
+#> <environment: 0x00000000322a5048>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x0000000033344c98>
-#> <environment: 0x00000000331ec6d0>
+#> <bytecode: 0x0000000032e69bb0>
+#> <environment: 0x0000000032374208>
 ```
 
 ---
 
-## Exercises 10.3.4
+## Graphical factories (Exercises 10.3.4)
 
 ---
 
@@ -266,7 +266,7 @@ ggplot2::label_bquote
 #>     }
 #>     structure(fun, class = "labeller")
 #> }
-#> <bytecode: 0x00000000334f9750>
+#> <bytecode: 0x00000000330adb88>
 #> <environment: namespace:ggplot2>
 
 scales::number_format
@@ -284,7 +284,7 @@ scales::number_format
 #>             scale_cut = scale_cut, trim = trim, ...)
 #>     }
 #> }
-#> <bytecode: 0x0000000033566fe0>
+#> <bytecode: 0x000000003313a130>
 #> <environment: namespace:scales>
 ```
 
@@ -322,7 +322,7 @@ The `scales::number_format()` function is a simple pass-through method that forc
 
 ---
 
-## Exercises 10.4.4
+## Statistical factories (Exercises 10.4.4)
 
 ---
 
@@ -354,7 +354,7 @@ boot_model(mtcars, mpg ~ wt)
 #> function() {
 #>     fitted + sample(resid)
 #>   }
-#> <environment: 0x000000001a5b46c8>
+#> <environment: 0x0000000033b5f1e0>
 ```
 
 Contrast this with the first function we saw in the chapter which *did* have a lazy binding:
@@ -375,7 +375,7 @@ power1(2)
 #> function(x) {
 #>     x^exp
 #>   }
-#> <environment: 0x00000000183c0dc8>
+#> <environment: 0x000000001a7cc918>
 ```
 
 ---
@@ -414,7 +414,7 @@ Let's have a look at one example with each:
 ```r
 boxcox2(1)
 #> function(x) (x^lambda - 1) / lambda
-#> <environment: 0x00000000332f5398>
+#> <environment: 0x0000000032adf340>
 
 boxcox3(mtcars$wt)
 #> function(lambda) {
@@ -424,7 +424,7 @@ boxcox3(mtcars$wt)
 #>       (x^lambda - 1) / lambda
 #>     }
 #>   }
-#> <environment: 0x0000000033354d78>
+#> <environment: 0x0000000032e92cd8>
 ```
 
 As can be seen, in `boxcox2()`, we can vary `x` for the same value of `lambda`, while in `boxcox3()`, we can vary `lambda` for the same vector. This can be handy while exploring different transformations across inputs.
@@ -452,7 +452,7 @@ boot_permute(mtcars, "mpg")
 #>     col <- df[[var]]
 #>     col[sample(n, replace = TRUE)]
 #>   }
-#> <environment: 0x00000000335a59c8>
+#> <environment: 0x00000000331b9fc0>
 ```
 
 This is why we don't need to worry about a copy being made because the `df` in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:
@@ -461,7 +461,7 @@ This is why we don't need to worry about a copy being made because the `df` in t
 ```r
 boot_permute_env <- rlang::fn_env(boot_permute(mtcars, "mpg"))
 rlang::env_print(boot_permute_env)
-#> <environment: 0x00000000338f08c0>
+#> <environment: 0x00000000334e9148>
 #> Parent: <environment: global>
 #> Bindings:
 #> * n: <int>
@@ -521,8 +521,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1          27.8us   37.7us    24624.    12.8KB     9.85
-#> 2 LL2          16.3us   19.6us    46855.        0B     9.37
+#> 1 LL1          28.4us   37.8us    25464.    12.8KB     10.2
+#> 2 LL2          14.7us   18.7us    49968.        0B     10.0
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -548,16 +548,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 x 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1          44.3us   55.9us    17397.
-#>  2     10 LL2          17.9us     24us    35331.
-#>  3     20 LL1          46.2us   59.3us    16666.
-#>  4     20 LL2          19.3us   22.6us    42951.
-#>  5     50 LL1          62.2us   76.4us    12826.
-#>  6     50 LL2          18.9us   22.4us    43317.
-#>  7    100 LL1          91.6us  115.4us     8690.
-#>  8    100 LL2          19.5us   24.8us    39619.
-#>  9   1000 LL1          1.72ms   2.05ms      483.
-#> 10   1000 LL2          79.2us  100.8us     9666.
+#>  1     10 LL1            43us   54.7us    18074.
+#>  2     10 LL2          17.9us   22.9us    41673.
+#>  3     20 LL1          46.1us   61.6us    15590.
+#>  4     20 LL2          17.1us   21.3us    43143.
+#>  5     50 LL1          63.1us   74.6us    13159.
+#>  6     50 LL2          16.9us   22.4us    43575.
+#>  7    100 LL1          90.9us  113.8us     8690.
+#>  8    100 LL2          20.7us   26.1us    36906.
+#>  9   1000 LL1          1.79ms    2.1ms      473.
+#> 10   1000 LL2          78.1us  100.9us     9796.
 
 ggplot(
   df_bench,
@@ -581,7 +581,7 @@ ggplot(
 
 ---
 
-## Exercises 10.5.1
+## Function factories + functionals (Exercises 10.5.1)
 
 **Q1.** Which of the following commands is equivalent to `with(x, f(z))`?
 

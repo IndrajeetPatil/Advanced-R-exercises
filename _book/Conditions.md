@@ -290,7 +290,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x0000000033d5f0f0>
+#> <bytecode: 0x0000000033bd0408>
 #> <environment: namespace:rlang>
 ```
 
@@ -384,7 +384,7 @@ abort_missing_package <- function(pkg) {
 }
 
 check_if_pkg_installed <- function(pkg) {
-  if(!requireNamespace(pkg, quietly = TRUE)) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
     abort_missing_package(pkg)
   }
 

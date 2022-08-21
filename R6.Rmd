@@ -10,7 +10,7 @@ Loading the needed libraries:
 library(R6)
 ```
 
-## Exercises 14.2.6 
+## Classes and methods (Exercises 14.2.6)
 
 **Q1.** Create a bank account R6 class that stores a balance and allows you to deposit and withdraw money. Create a subclass that throws an error if you attempt to go into overdraft. Create another subclass that allows you to go into overdraft, but charges you a fee. Create the superclass and make sure it works as expected.
 
@@ -265,7 +265,7 @@ And it has only `class` attribute, which is a character vector with the `"R6"` b
 attributes(myExample)
 ```
 
-## Exercises 14.3.3
+## Controlling access (Exercises 14.3.3)
 
 **Q1.** Create a bank account class that prevents you from directly setting the  account balance, but you can still withdraw from and deposit to. Throw an error if you attempt to go into overdraft.
 
@@ -436,15 +436,13 @@ myMallard <- Mallard$new()
 myMallard$quack()
 ```
 
-## Exercises 14.4.4
+## Reference semantics (Exercises 14.4.4)
 
 **Q1.** Create a class that allows you to write a line to a specified file. You should open a connection to the file in `$initialize()`, append a line using `cat()` in `$append_line()`, and close the connection in `$finalize()`.
 
 **A1.** Here is a class that allows you to write a line to a specified file:
 
 ```{r}
-library(R6)
-
 fileEditor <- R6Class(
   "fileEditor",
   public = list(

@@ -9,7 +9,7 @@ Attaching the needed libraries:
 library(purrr, warn.conflicts = FALSE)
 ```
 
-## Exercises 11.2.3
+## Existing function operators (Exercises 11.2.3)
 
 ---
 
@@ -92,7 +92,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x0000000032f33ab8>
+#> <bytecode: 0x0000000032b816b8>
 #> <environment: namespace:purrr>
 ```
 
@@ -116,7 +116,7 @@ safely
 #>     .f <- as_mapper(.f)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x00000000331031b0>
+#> <bytecode: 0x0000000032d6ddb8>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -130,7 +130,7 @@ purrr:::capture_error
 #>         stop("Terminated by user", call. = FALSE)
 #>     })
 #> }
-#> <bytecode: 0x00000000331557a8>
+#> <bytecode: 0x0000000032dc27e8>
 #> <environment: namespace:purrr>
 ```
 
@@ -143,7 +143,7 @@ Looking at this code, we can see that `safely()`:
 
 ---
 
-## Exercises 11.3.1
+## Case study: Creating your own function operators (Exercises 11.3.1)
 
 ---
 
@@ -279,10 +279,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2022-08-21 10:02:28
-#> Function called at:  2022-08-21 10:02:33
-#> Function called at:  2022-08-21 10:02:38
-#> Function called at:  2022-08-21 10:02:46
+#> Function created at: 2022-08-21 12:56:18
+#> Function called at:  2022-08-21 12:56:23
+#> Function called at:  2022-08-21 12:56:28
+#> Function called at:  2022-08-21 12:56:36
 ```
 
 ---

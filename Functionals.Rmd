@@ -247,14 +247,14 @@ trans <- list(
 nm <- names(trans)
 mtcars[nm] <- map2(trans, mtcars[nm], function(f, var) f(var))
 ```
-    
+
 Compare and contrast the `map2()` approach to this `map()` approach:
-    
+
 ```{r, eval = FALSE}
 mtcars[nm] <- map(nm, ~ trans[[.x]](mtcars[[.x]]))
 ```
 
-**A3.** `map2()` supplies the functions defined in `.x = trans` as `f` in the anonymous functions, while the names of the columns defined in  `.y = mtcars[nm]` are picked up by `var` in the anonymous function. Note that the function is iterating over indices for vectors of transformations and column names.
+**A3.** `map2()` supplies the functions stored in `trans` as anonymous functions via placeholder `f`, while the names of the columns specified in `mtcars[nm]` are supplied as `var` argument to the anonymous function. Note that the function is iterating over indices for vectors of transformations and column names.
 
 ```{r, eval=FALSE}
 trans <- list(
@@ -272,14 +272,20 @@ In the `map()` approach, the function is iterating over indices for vectors of c
 mtcars[nm] <- map(nm, ~ trans[[.x]](mtcars[[.x]]))
 ```
 
+The latter approach can't afford passing arguments to placeholders in an anonymous function.
+
 **Q4.** What does `write.csv()` return, i.e. what happens if you use it with `map2()` instead of `walk2()`?
 
-**A4.** If we use `map2()`, it will work, but it will print `NULL`s to the terminal for every list element.
+**A4.** If we use `map2()`, it will work, but it will print `NULL`s to the console for every list element.
 
-```{r, eval=FALSE}
-bods <- split(BOD, BOD$Time)
-nm <- names(bods)
-map2(bods, nm, write.csv)
+```{r}
+withr::with_tempdir(
+  code = {
+    ls <- split(mtcars, mtcars$cyl)
+    nm <- names(ls)
+    map2(ls, nm, write.csv)
+  }
+)
 ```
 
 ## Predicate functionals (Exercises 9.6.3)
@@ -309,18 +315,6 @@ anyNA(c(NA, 1))
 
 **Q2.** `simple_reduce()` has a problem when `x` is length 0 or length 1. Describe the source of the problem and how you might go about fixing it.
 
-```{r, eval=FALSE}
-simple_reduce <- function(x, f) {
-  out <- x[[1]]
-  for (i in seq(2, length(x))) {
-    out <- f(out, x[[i]])
-  }
-  out
-}
-```
-
-**A2.**  Supplied function:
-
 ```{r}
 simple_reduce <- function(x, f) {
   out <- x[[1]]
@@ -331,7 +325,7 @@ simple_reduce <- function(x, f) {
 }
 ```
 
-This function struggles with inputs of length 0 and 1 because function tries to access out-of-bound values.
+**A2.** The supplied function struggles with inputs of length 0 and 1 because function tries to subscript out-of-bound values.
 
 ```{r, error=TRUE}
 simple_reduce(numeric(), sum)
@@ -339,7 +333,7 @@ simple_reduce(1, sum)
 simple_reduce(1:3, sum)
 ```
 
-This problem can be solved by adding `init` argument, which supplies the default or initial value for the function to operate on:
+This problem can be solved by adding `init` argument, which supplies the default or initial value:
 
 ```{r}
 simple_reduce2 <- function(x, f, init = 0) {
@@ -370,7 +364,7 @@ simple_reduce2(1, sum)
 simple_reduce2(1:3, sum)
 ```
 
-With a different kind of function:
+Depending on the function, we can provide a different `init` argument:
 
 ```{r}
 simple_reduce2(numeric(), `*`, init = 1)
@@ -378,25 +372,18 @@ simple_reduce2(1, `*`, init = 1)
 simple_reduce2(1:3, `*`, init = 1)
 ```
 
-And another one:
-
-```{r}
-simple_reduce2(numeric(), `%/%`)
-simple_reduce2(1, `%/%`)
-simple_reduce2(1:3, `%/%`)
-```
-
 **Q3.** Implement the `span()` function from Haskell: given a list `x` and a predicate function `f`, `span(x, f)` returns the location of the longest sequential run of elements where the predicate is true. (Hint: you might find `rle()` helpful.)
 
 **A3.** Implementation of `span()`:
 
 ```{r}
-
-
 span <- function(x, f) {
   running_lengths <- purrr::map_lgl(x, ~ f(.x)) %>% rle()
 
-  df <- dplyr::tibble("lengths" = running_lengths$lengths, "values" = running_lengths$values) %>%
+  df <- dplyr::tibble(
+    "lengths" = running_lengths$lengths,
+    "values" = running_lengths$values
+  ) %>%
     dplyr::mutate(rowid = dplyr::row_number()) %>%
     dplyr::filter(values)
 
@@ -438,7 +425,7 @@ span(c(3, 1, 2, 4, 5, 6), function(x) x %in% c(2, 4))
 
 **Q4.** Implement `arg_max()`. It should take a function and a vector of inputs, and return the elements of the input where the function returns the highest value. For example, `arg_max(-10:5, function(x) x ^ 2)` should return -10. `arg_max(-5:5, function(x) x ^ 2)` should return `c(-5, 5)`. Also implement the matching `arg_min()` function.
 
-**A4.**
+**A4.** Here are implementations for the specified functions:
 
 - Implementing `arg_max()`
 
@@ -486,10 +473,10 @@ scale01 <- function(x) {
 - Applying function to every column in a data frame: We will use `anscombe` as example since it has all numeric columns.
 
 ```{r}
-purrr::map_df(.x = head(anscombe), .f = scale01)
+purrr::map_df(head(anscombe), .f = scale01)
 ```
 
-- Applying function to every numeric column in a data frame: We will use `iris` as example since all of its columns are not of numeric type.
+- Applying function to every numeric column in a data frame: We will use `iris` as example since not all of its columns are of numeric type.
 
 ```{r}
 purrr::modify_if(head(iris), .p = is.numeric, .f = scale01)
@@ -518,9 +505,11 @@ As can be seen, `apply()` returns outputs organised first by the margins being o
 
 **Q2.** What do `eapply()` and `rapply()` do? Does purrr have equivalents?
 
-**A2.** As mentioned in the documentation:
+**A2.** Let's consider them one-by-one.
 
 - `eapply()` 
+
+As mentioned in its documentation:
 
 > `eapply()` applies FUN to the named values from an environment and returns the results as a list.
 

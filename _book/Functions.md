@@ -9,7 +9,7 @@ Attaching the needed libraries:
 library(tidyverse, warn.conflicts = FALSE)
 ```
 
-## Exercises 6.2.5
+## Function fundamentals (Exercises 6.2.5)
 
 **Q1.** Given a name, like `"mean"`, `match.fun()` lets you find a function. Given a function, can you find its name? Why doesn't that make sense in R?
 
@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000018002088>
+#> <bytecode: 0x0000000017ff21e0>
 #> <environment: namespace:base>
 ```
 
@@ -346,7 +346,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000018002088>
+#> <bytecode: 0x0000000017ff21e0>
 #> <environment: namespace:base>
 
 # other package function
@@ -356,7 +356,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x0000000035306b90>
+#> <bytecode: 0x00000000364f8100>
 #> <environment: namespace:purrr>
 ```
 
@@ -379,7 +379,7 @@ f
 #> function(x) mean(x)
 ```
 
-## Exercises 6.4.5
+## Lexical scoping (Exercises 6.4.5)
 
 **Q1.** What does the following code return? Why? Describe how each of the three `c`'s is interpreted.
 
@@ -469,7 +469,7 @@ f(10)
 
 Although there are multiple `f()` functions, the order of evaluation goes from inside to outside with `x^2` evaluated first and `f(x) * 2` evaluated last. This results in 202 (= `((10 ^ 2) + 1) * 2`).
 
-## Exercises 6.5.4 
+## Lazy evaluation (Exercises 6.5.4)
 
 **Q1.** What important property of `&&` makes `x_ok()` work?
 
@@ -559,7 +559,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x3756a728" "0x3756a728"
+#> [1] "0x36af9688" "0x36af9688"
 #> [1] 100
 ```
 
@@ -654,7 +654,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-08-20 14:43:57 CEST"
+#> [1] "2022-08-21 12:52:21 CEST"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -729,7 +729,7 @@ But, in reality, only one argument is required: `package`. The function internal
 
 It would have been better if there arguments were `NULL` instead of missing; that would avoid this confusion.
 
-## Exercises 6.6.1
+## `...` (dot-dot-dot) (Exercises 6.6.1)
 
 **Q1.** Explain the following results:
 
@@ -812,7 +812,7 @@ title <- function(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
 }
 ```
 
-## Exercises 6.7.5
+## Exiting a function (Exercises 6.7.5)
 
 **Q1.** What does `load()` return? Why don't you normally see these values?
 
@@ -874,7 +874,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x000000003618e390>
+#> <bytecode: 0x00000000323b15e0>
 #> <environment: namespace:withr>
 ```
 
@@ -911,7 +911,7 @@ capture.output2 <- function(code) {
 
 capture.output2(cat("a", "b", "c", sep = "\n"))
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpSCPvQE\filef9042fd31fc',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpY7sh3d\file3b9c2e914ad1',
 #> reason 'Permission denied'
 #> [1] "a" "b" "c"
 ```
@@ -961,7 +961,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x0000000036682400>
+#> <bytecode: 0x00000000355a71f0>
 #> <environment: namespace:utils>
 ```
 
@@ -976,7 +976,7 @@ capture.output(1)
 
 capture.output2(1)
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpSCPvQE\filef907b8bc64',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpY7sh3d\file3b9c2bd27fe4',
 #> reason 'Permission denied'
 #> character(0)
 ```
@@ -999,7 +999,7 @@ capture.output(1, invisible(2), 3)
 #> [1] "[1] 1" "[1] 3"
 ```
 
-## Exercises 6.8.6
+## Function forms (Exercises 6.8.6)
 
 **Q1.** Rewrite the following code snippets into prefix form:
 
@@ -1304,7 +1304,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-20
+#>  date     2022-08-21
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -1369,13 +1369,13 @@ sessioninfo::session_info(include_base = TRUE)
 #>    rlang           1.0.4      2022-07-12 [1] CRAN (R 4.1.3)
 #>    rmarkdown       2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)
 #>    rstudioapi      0.13       2020-11-12 [1] CRAN (R 4.1.1)
-#>    rvest           1.0.2      2021-10-16 [1] CRAN (R 4.1.1)
+#>    rvest           1.0.3      2022-08-19 [1] CRAN (R 4.1.3)
 #>    sass            0.4.2      2022-07-16 [1] CRAN (R 4.1.3)
 #>    scales          1.2.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    sessioninfo     1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats         * 4.1.3      2022-03-10 [2] local
 #>    stringi         1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       * 1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
+#>    stringr       * 1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    tibble        * 3.1.8      2022-07-22 [1] CRAN (R 4.1.3)
 #>    tidyr         * 1.2.0      2022-02-01 [1] CRAN (R 4.1.2)
 #>    tidyselect      1.1.2      2022-02-21 [1] CRAN (R 4.1.2)

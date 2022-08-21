@@ -34,7 +34,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x0000000032259230>
+#> <environment: 0x0000000032243a28>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -45,7 +45,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x0000000032343838>
+#> <environment: 0x00000000323292d0>
 
 # mapping by name -----------------------
 
@@ -63,7 +63,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x0000000032480398>
+#> <environment: 0x0000000032463f10>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -75,7 +75,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x0000000032558b98>
+#> <environment: 0x000000003253e630>
 
 # compact functions ----------------------------
 
@@ -135,7 +135,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck(x, 0.597890264587477, 0.587997315218672, .default = NULL)
-#> <environment: 0x00000000331742c0>
+#> <environment: 0x000000003316bc58>
 ```
 
 **Q3.** Use the appropriate `map()` function to:
@@ -448,15 +448,15 @@ trans <- list(
 nm <- names(trans)
 mtcars[nm] <- map2(trans, mtcars[nm], function(f, var) f(var))
 ```
-    
+
 Compare and contrast the `map2()` approach to this `map()` approach:
-    
+
 
 ```r
 mtcars[nm] <- map(nm, ~ trans[[.x]](mtcars[[.x]]))
 ```
 
-**A3.** `map2()` supplies the functions defined in `.x = trans` as `f` in the anonymous functions, while the names of the columns defined in  `.y = mtcars[nm]` are picked up by `var` in the anonymous function. Note that the function is iterating over indices for vectors of transformations and column names.
+**A3.** `map2()` supplies the functions stored in `trans` as anonymous functions via placeholder `f`, while the names of the columns specified in `mtcars[nm]` are supplied as `var` argument to the anonymous function. Note that the function is iterating over indices for vectors of transformations and column names.
 
 
 ```r
@@ -476,15 +476,29 @@ In the `map()` approach, the function is iterating over indices for vectors of c
 mtcars[nm] <- map(nm, ~ trans[[.x]](mtcars[[.x]]))
 ```
 
+The latter approach can't afford passing arguments to placeholders in an anonymous function.
+
 **Q4.** What does `write.csv()` return, i.e. what happens if you use it with `map2()` instead of `walk2()`?
 
-**A4.** If we use `map2()`, it will work, but it will print `NULL`s to the terminal for every list element.
+**A4.** If we use `map2()`, it will work, but it will print `NULL`s to the console for every list element.
 
 
 ```r
-bods <- split(BOD, BOD$Time)
-nm <- names(bods)
-map2(bods, nm, write.csv)
+withr::with_tempdir(
+  code = {
+    ls <- split(mtcars, mtcars$cyl)
+    nm <- names(ls)
+    map2(ls, nm, write.csv)
+  }
+)
+#> $`4`
+#> NULL
+#> 
+#> $`6`
+#> NULL
+#> 
+#> $`8`
+#> NULL
 ```
 
 ## Predicate functionals (Exercises 9.6.3)
@@ -531,20 +545,7 @@ simple_reduce <- function(x, f) {
 }
 ```
 
-**A2.**  Supplied function:
-
-
-```r
-simple_reduce <- function(x, f) {
-  out <- x[[1]]
-  for (i in seq(2, length(x))) {
-    out <- f(out, x[[i]])
-  }
-  out
-}
-```
-
-This function struggles with inputs of length 0 and 1 because function tries to access out-of-bound values.
+**A2.** The supplied function struggles with inputs of length 0 and 1 because function tries to subscript out-of-bound values.
 
 
 ```r
@@ -556,7 +557,7 @@ simple_reduce(1:3, sum)
 #> [1] 6
 ```
 
-This problem can be solved by adding `init` argument, which supplies the default or initial value for the function to operate on:
+This problem can be solved by adding `init` argument, which supplies the default or initial value:
 
 
 ```r
@@ -592,7 +593,7 @@ simple_reduce2(1:3, sum)
 #> [1] 6
 ```
 
-With a different kind of function:
+Depending on the function, we can provide a different `init` argument:
 
 
 ```r
@@ -604,30 +605,19 @@ simple_reduce2(1:3, `*`, init = 1)
 #> [1] 6
 ```
 
-And another one:
-
-
-```r
-simple_reduce2(numeric(), `%/%`)
-#> [1] 0
-simple_reduce2(1, `%/%`)
-#> [1] 1
-simple_reduce2(1:3, `%/%`)
-#> [1] 0
-```
-
 **Q3.** Implement the `span()` function from Haskell: given a list `x` and a predicate function `f`, `span(x, f)` returns the location of the longest sequential run of elements where the predicate is true. (Hint: you might find `rle()` helpful.)
 
 **A3.** Implementation of `span()`:
 
 
 ```r
-
-
 span <- function(x, f) {
   running_lengths <- purrr::map_lgl(x, ~ f(.x)) %>% rle()
 
-  df <- dplyr::tibble("lengths" = running_lengths$lengths, "values" = running_lengths$values) %>%
+  df <- dplyr::tibble(
+    "lengths" = running_lengths$lengths,
+    "values" = running_lengths$values
+  ) %>%
     dplyr::mutate(rowid = dplyr::row_number()) %>%
     dplyr::filter(values)
 
@@ -679,7 +669,7 @@ span(c(3, 1, 2, 4, 5, 6), function(x) x %in% c(2, 4))
 
 **Q4.** Implement `arg_max()`. It should take a function and a vector of inputs, and return the elements of the input where the function returns the highest value. For example, `arg_max(-10:5, function(x) x ^ 2)` should return -10. `arg_max(-5:5, function(x) x ^ 2)` should return `c(-5, 5)`. Also implement the matching `arg_min()` function.
 
-**A4.**
+**A4.** Here are implementations for the specified functions:
 
 - Implementing `arg_max()`
 
@@ -735,7 +725,7 @@ scale01 <- function(x) {
 
 
 ```r
-purrr::map_df(.x = head(anscombe), .f = scale01)
+purrr::map_df(head(anscombe), .f = scale01)
 #> # A tibble: 6 x 8
 #>      x1    x2    x3    x4    y1     y2     y3    y4
 #>   <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>  <dbl> <dbl>
@@ -747,7 +737,7 @@ purrr::map_df(.x = head(anscombe), .f = scale01)
 #> 6 1     1     1       NaN 1     0      0.347  0.416
 ```
 
-- Applying function to every numeric column in a data frame: We will use `iris` as example since all of its columns are not of numeric type.
+- Applying function to every numeric column in a data frame: We will use `iris` as example since not all of its columns are of numeric type.
 
 
 ```r
@@ -827,9 +817,11 @@ As can be seen, `apply()` returns outputs organised first by the margins being o
 
 **Q2.** What do `eapply()` and `rapply()` do? Does purrr have equivalents?
 
-**A2.** As mentioned in the documentation:
+**A2.** Let's consider them one-by-one.
 
 - `eapply()` 
+
+As mentioned in its documentation:
 
 > `eapply()` applies FUN to the named values from an environment and returns the results as a list.
 
@@ -851,7 +843,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x000000001966f640>
+#> <environment: 0x000000001a5bcda8>
 #> Parent: <environment: global>
 #> Bindings:
 #> * x: <dbl>

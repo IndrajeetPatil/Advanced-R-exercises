@@ -10,7 +10,7 @@ library(rlang)
 library(purrr)
 ```
 
-## Exercises 21.2.6
+## HTML (Exercises 21.2.6)
 
 ---
 
@@ -28,7 +28,7 @@ But
 
 Adapt the `escape()` to follow these rules when a new argument `script` is set to `TRUE`.
 
-**A1.**
+**A1.** Let's first start with the boilerplate code included in the book:
 
 
 ```r
@@ -229,7 +229,7 @@ html_tags$p(
 
 ---
 
-## Exercises 21.3.8
+## LaTeX (Exercises 21.3.8)
 
 ---
 

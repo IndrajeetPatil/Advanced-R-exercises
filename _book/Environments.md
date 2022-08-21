@@ -13,7 +13,7 @@ Loading the needed libraries:
 library(rlang, warn.conflicts = FALSE)
 ```
 
-## Exercises 7.2.7
+## Environment basics (Exercises 7.2.7)
 
 **Q1.** List three ways in which an environment differs from a list.
 
@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x00000000196690f0>
+#> <environment: 0x000000001a493518>
 #> Parent: <environment: global>
 #> Bindings:
 #> * loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ```r
 lobstr::ref(e$loop)
-#> o [1:0x196690f0] <env> 
-#> \-loop = [1:0x196690f0]
+#> o [1:0x1a493518] <env> 
+#> \-loop = [1:0x1a493518]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x33af48a0" "0x33af48a0"
+#> [1] "0x15399fc0" "0x15399fc0"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x33b5f810" "0x33b5f810"
+#> [1] "0x154023e8" "0x154023e8"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -200,7 +200,7 @@ abc
 #> [1] 10
 ```
 
-## Exercises 7.3.1
+## Recursing over environments (Exercises 7.3.1)
 
 **Q1.** Modify `where()` to return _all_ environments that contain a binding for `name`. Carefully think through what type of object the function will need to return.
 
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000017ff2118>
+#> <bytecode: 0x0000000017ff21e0>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -313,7 +313,7 @@ fget("mean", inherits = FALSE)
 rm("mean")
 ```
 
-## Exercises 7.4.5
+## Special environments (Exercises 7.4.5)
 
 **Q1.** How is `search_envs()` different from `env_parents(global_env())`?
 
@@ -481,7 +481,7 @@ str_function("mean")
 rm("mean")
 ```
 
-## Exercises 7.5.5
+## Call stacks (Exercises 7.5.5)
 
 **Q1.** Write a function that lists all the variables defined in the environment in which it was called. It should return the same results as `ls()`.
 
@@ -508,7 +508,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x00000000182bfd98>
+#> <bytecode: 0x00000000182bfe60>
 #> <environment: namespace:rlang>
 ```
 
