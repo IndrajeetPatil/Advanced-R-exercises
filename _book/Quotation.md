@@ -13,7 +13,7 @@ library(dplyr)
 library(ggplot2)
 ```
 
-### Exercises 19.2.2
+## Exercises 19.2.2
 
 ---
 
@@ -156,7 +156,7 @@ ggplot(by_cyl, aes(cyl, mean)) +
 
 ---
 
-### Exercises 19.3.6
+## Exercises 19.3.6
 
 ---
 
@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x0000000033595d70>
+#> <bytecode: 0x00000000335959e0>
 #> <environment: namespace:rlang>
 ```
 
@@ -447,7 +447,7 @@ substitute(x + y, env = .GlobalEnv)
 
 ---
 
-### Exercises 19.4.8
+## Exercises 19.4.8
 
 ---
 
@@ -574,7 +574,7 @@ The first call is more natural, since the second one inlines a vector directly i
 
 ---
 
-### Exercises 19.6.5
+## Exercises 19.6.5
 
 ---
 
@@ -671,7 +671,7 @@ set_attr(.x = 1:10, x = 10)
 
 ---
 
-### Exercises 19.7.5
+## Exercises 19.7.5
 
 ---
 
@@ -804,7 +804,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-20
+#>  date     2022-08-21
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -858,11 +858,11 @@ sessioninfo::session_info(include_base = TRUE)
 #>    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)
 #>    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)
 #>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)
-#>    scales        1.2.0      2022-04-13 [1] CRAN (R 4.1.3)
+#>    scales        1.2.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
+#>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)
 #>    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)
 #>  P tools         4.1.3      2022-03-10 [2] local

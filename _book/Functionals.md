@@ -2,23 +2,25 @@
 
 
 
-## Exercises 9.2.6
-
-**Q1.** Use `as_mapper()` to explore how `{purrr}` generates anonymous functions for the integer, character, and list helpers. What helper allows you to extract attributes? Read the documentation to find out.
-
-**A1.**
-
-- Experiments with `{purrr}`:
+Attaching the needed libraries:
 
 
 ```r
-library(purrr)
-#> 
-#> Attaching package: 'purrr'
-#> The following object is masked from 'package:magrittr':
-#> 
-#>     set_names
+library(purrr, warn.conflicts = FALSE)
+```
 
+## My first functional: `map()` (Exercises 9.2.6)
+
+**Q1.** Use `as_mapper()` to explore how `{purrr}` generates anonymous functions for the integer, character, and list helpers. What helper allows you to extract attributes? Read the documentation to find out.
+
+**A1.** Let's handle the two parts of the question separately.
+
+- `as_mapper()` and `{purrr}`-generated anonymous functions:
+
+Looking at the experimentation below with `map()` and `as_mapper()`, we can see that, depending on the type of the input, `as_mapper()` creates an extractor function using `pluck()`.
+
+
+```r
 # mapping by position -----------------------
 
 x <- list(1, list(2, 3, list(1, 2)))
@@ -32,7 +34,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x00000000323b4048>
+#> <environment: 0x0000000032259230>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -43,7 +45,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x0000000032489e38>
+#> <environment: 0x0000000032343838>
 
 # mapping by name -----------------------
 
@@ -61,7 +63,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x00000000325c6998>
+#> <environment: 0x0000000032480398>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -73,7 +75,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x000000003269d278>
+#> <environment: 0x0000000032558b98>
 
 # compact functions ----------------------------
 
@@ -101,14 +103,10 @@ pluck(Titanic, attr_getter("class"))
 
 **Q2.** `map(1:3, ~ runif(2))` is a useful pattern for generating random numbers, but `map(1:3, runif(2))` is not. Why not? Can you explain why it returns the result that it does?
 
-**A2.** 
-
-As shown by `as_mapper()` outputs below, the second call is not appropriate for generating random numbers because it translates to `pluck()` function where the indices for plucking are taken to be randomly generated numbers.
+**A2.** As shown by `as_mapper()` outputs below, the second call is not appropriate for generating random numbers because it translates to `pluck()` function where the indices for plucking are taken to be randomly generated numbers, and these are not valid accessors and so we get `NULL`s in return.
 
 
 ```r
-library(purrr)
-
 map(1:3, ~ runif(2))
 #> [[1]]
 #> [1] 0.2180892 0.9876342
@@ -137,18 +135,18 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck(x, 0.597890264587477, 0.587997315218672, .default = NULL)
-#> <environment: 0x000000003342c5c0>
+#> <environment: 0x00000000331742c0>
 ```
 
 **Q3.** Use the appropriate `map()` function to:
-    
+
     a) Compute the standard deviation of every column in a numeric data frame.
 
     a) Compute the standard deviation of every numeric column in a mixed data frame. (Hint: you'll need to do it in two steps.)
 
     a) Compute the number of levels for every factor in a data frame.
 
-**A3.**
+**A3.** Using the appropriate `map()` function to:
 
 - Compute the standard deviation of every column in a numeric data frame:
 
@@ -231,7 +229,14 @@ trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(7, 10)))
 plot(p)
 ```
 
-<img src="Functionals_files/figure-html/unnamed-chunk-10-1.png" width="100%" />
+<img src="Functionals_files/figure-html/unnamed-chunk-11-1.png" width="100%" />
+
+```r
+
+hist(p)
+```
+
+<img src="Functionals_files/figure-html/unnamed-chunk-11-2.png" width="100%" />
 
 **Q5.** The following code uses a map nested inside another map to apply a function to every element of a nested list. Why does it fail, and  what do you need to do to make it work?
 
@@ -251,7 +256,16 @@ map(x, map, .f = triple)
 #> })
 ```
 
-**A5.** Here is the fixed version:
+**A5.** This function fails because this call effectively evaluates to the following:
+
+
+```r
+map(.x = x, .f = ~ triple(x = .x, map))
+```
+
+But `triple()` has only one parameter (`x`), and so the execution fails.
+
+Here is the fixed version:
 
 
 ```r
@@ -261,7 +275,7 @@ x <- list(
 )
 
 triple <- function(x) x * 3
-map(x, .f = ~ map(., ~ triple(.)))
+map(x, .f = ~ map(.x, ~ triple(.x)))
 #> [[1]]
 #> [[1]][[1]]
 #> [1] 3
@@ -366,19 +380,19 @@ bootstrap <- function(df) {
 
 bootstraps <- map(1:10, ~ bootstrap(mtcars))
 
-map_dbl(
-  bootstraps,
-  ~ summary(lm(formula = mpg ~ disp, data = .))$r.squared
-)
+bootstraps %>%
+  map(~ lm(mpg ~ disp, data = .x)) %>%
+  map(summary) %>%
+  map_dbl("r.squared")
 #>  [1] 0.7864562 0.8110818 0.7956331 0.7632399 0.7967824
 #>  [6] 0.7364226 0.7203027 0.6653252 0.7732780 0.6753329
 ```
 
-## Exercises 9.4.6
+## Map variants (Exercises 9.4.6)
 
 **Q1.** Explain the results of `modify(mtcars, 1)`.
 
-**A1.** `modify()` returns the object of type same as the input. Since the input here is a data frame of certain dimensions and `.f = 1` translates to plucking the first element in each column, it returns a data frames with the same dimensions with the plucked element recycled across rows.
+**A1.** `modify()` returns the object of type same as the input. Since the input here is a data frame of certain dimensions and `.f = 1` translates to plucking the first element in each column, it returns a data frame with the same dimensions with the plucked element recycled across rows.
 
 
 ```r
@@ -408,18 +422,7 @@ paths <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
 walk2(cyls, paths, write.csv)
 ```
 
-**A2.** Rewritten versions are below:
-
-- with `walk2()`
-
-
-```r
-cyls <- split(mtcars, mtcars$cyl)
-paths <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
-walk2(.x = cyls, .y = paths, .f = write.csv)
-```
-
-- with `iwalk()`
+**A2.** Let's first rewrite provided code using `iwalk()`:
 
 
 ```r
@@ -427,6 +430,11 @@ cyls <- split(mtcars, mtcars$cyl)
 names(cyls) <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
 iwalk(cyls, ~ write.csv(.x, .y))
 ```
+
+The advantage of using `iwalk()` is that we need to now deal with only a single variable (`cyls`) instead of two (`cyls` and `paths`).
+
+The disadvantage is that the code is difficult to reason about: 
+In `walk2()`, it's explicit what `.x` (`= cyls`) and `.y` (`= paths`) correspond to, while this is not so for `iwalk()` (i.e., `.x = cyls` and `.y = names(cyls)`) with the `.y` argument being "invisible".
 
 **Q3.** Explain how the following code transforms a data frame using functions stored in a list.
 
@@ -479,7 +487,7 @@ nm <- names(bods)
 map2(bods, nm, write.csv)
 ```
 
-## Exercises 9.6.3
+## Predicate functionals (Exercises 9.6.3)
 
 **Q1.** Why isn't `is.na()` a predicate function? What base R function is closest to being a predicate version of `is.na()`?
 
@@ -614,7 +622,7 @@ simple_reduce2(1:3, `%/%`)
 
 
 ```r
-library(purrr)
+
 
 span <- function(x, f) {
   running_lengths <- purrr::map_lgl(x, ~ f(.x)) %>% rle()
@@ -753,7 +761,7 @@ purrr::modify_if(head(iris), .p = is.numeric, .f = scale01)
 #> 6        1.000   1.0000000         1.00           1  setosa
 ```
 
-## Exercises 9.7.3
+## Base functionals (Exercises 9.7.3)
 
 **Q1.** How does `apply()` arrange the output? Read the documentation and perform some experiments.
 
@@ -843,7 +851,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x00000000334ec2d8>
+#> <environment: 0x000000001966f640>
 #> Parent: <environment: global>
 #> Bindings:
 #> * x: <dbl>
@@ -972,7 +980,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-20
+#>  date     2022-08-21
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -1018,7 +1026,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
+#>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)
 #>    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)
 #>  P tools         4.1.3      2022-03-10 [2] local

@@ -9,7 +9,7 @@ Attaching the needed libraries:
 library(ggplot2)
 ```
 
-### Exercises 24.3.1
+## Exercises 24.3.1
 
 **Q1.** What are faster alternatives to `lm()`? Which are specifically designed to work with larger datasets?
 
@@ -62,10 +62,10 @@ bench::mark(
 #> # A tibble: 4 x 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 lm          995.8us   1.23ms      776.    1.27MB
-#> 2 speedglm     1.23ms   1.41ms      663.   61.39MB
-#> 3 biglm       827.7us  981.1us      953.  943.38KB
-#> 4 fastLm       1.33ms   1.51ms      576.    3.25MB
+#> 1 lm           1.04ms    1.3ms      717.    1.27MB
+#> 2 speedglm     1.15ms   1.44ms      641.   61.39MB
+#> 3 biglm       776.6us      1ms      915.  943.38KB
+#> 4 fastLm       1.31ms    1.6ms      578.    3.25MB
 ```
 
 The results might change depending on the size of the dataset, so you will have to experiment with different algorithms and find the one that fits the needs of your dataset the best.
@@ -98,8 +98,8 @@ bench::mark(
 #> # A tibble: 2 x 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          1.3us    2.2us   447834.        0B
-#> 2 fastmatch     1.3us      2us   485180.    2.66KB
+#> 1 base          1.4us    1.7us   478907.        0B
+#> 2 fastmatch     1.1us    1.5us   526355.    2.66KB
 ```
 
 But, with a larger vector, `fmatch()` is only orders of magnitude faster! ⚡
@@ -120,8 +120,8 @@ bench::mark(
 #> # A tibble: 2 x 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base         29.5ms     32ms      23.0    31.4MB
-#> 2 fastmatch       1us    2.2us  474705.         0B
+#> 1 base         31.5ms   36.1ms      20.9    31.4MB
+#> 2 fastmatch     1.1us    1.4us  668740.         0B
 ```
 
 We can also look at the hash table:
@@ -200,10 +200,10 @@ bench::mark(
 #> # A tibble: 4 x 6
 #>   expression       min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>  <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 as.POSIXct      69us 117.65us     8744.        0B     0   
-#> 2 as.POSIXlt    84.8us  108.2us     9283.        0B     9.29
-#> 3 ymd_hms       3.47ms   4.43ms      208.    23.6KB     1.89
-#> 4 fastPOSIXct      2us    3.3us   282542.        0B     0
+#> 1 as.POSIXct      81us  119.4us     8154.        0B     0   
+#> 2 as.POSIXlt    59.3us   70.7us    13485.        0B    13.5 
+#> 3 ymd_hms       3.64ms   4.58ms      206.    23.6KB     1.87
+#> 4 fastPOSIXct      2us    2.9us   311575.        0B     0
 ```
 
 
@@ -229,7 +229,7 @@ There are many alternatives and the exact one you would want to choose would dep
 
 Most available options can be seen at [CRAN Task View: Optimization and Mathematical Programming](https://cran.r-project.org/web/views/Optimization.html).
 
-### Exercises 24.4.3
+## Exercises 24.4.3
 
 **Q1.** What's the difference between `rowSums()` and `.rowSums()`?
 
@@ -265,7 +265,7 @@ rowSums
 #>     else names(z) <- dimnames(x)[[1L]]
 #>     z
 #> }
-#> <bytecode: 0x0000000039af53d8>
+#> <bytecode: 0x000000003a23cda0>
 #> <environment: namespace:base>
 ```
 
@@ -276,7 +276,7 @@ rowSums
 .rowSums
 #> function (x, m, n, na.rm = FALSE) 
 #> .Internal(rowSums(x, m, n, na.rm))
-#> <bytecode: 0x0000000035ec6618>
+#> <bytecode: 0x000000003611f630>
 #> <environment: namespace:base>
 ```
 
@@ -293,12 +293,12 @@ bench::mark(
 #> # A tibble: 2 x 5
 #>   expression                                 min   median
 #>   <bch:expr>                            <bch:tm> <bch:tm>
-#> 1 rowSums(x)                             916.1us   1.31ms
-#> 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])   1.09ms   1.43ms
+#> 1 rowSums(x)                                 1ms    1.2ms
+#> 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])    976us   1.19ms
 #>   `itr/sec` mem_alloc
 #>       <dbl> <bch:byt>
-#> 1      762.     859KB
-#> 2      695.     859KB
+#> 1      814.     859KB
+#> 2      819.     859KB
 ```
 
 **Q2.** Make a faster version of `chisq.test()` that only computes the chi-square test statistic when the input is two numeric vectors with no missing values. You can try simplifying `chisq.test()` or by coding from the [mathematical definition](http://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test).
@@ -365,8 +365,8 @@ bench::mark(
 #> # A tibble: 2 x 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          775us    978us      972.    1.57MB
-#> 2 custom        610us    765us     1135.    1.13MB
+#> 1 base          830us   1.07ms      876.    1.57MB
+#> 2 custom        623us  820.2us     1167.    1.13MB
 ```
 
 **Q3.** Can you make a faster version of `table()` for the case of an input of two integer vectors with no missing values? Can you use it to speed up your chi-square test?
@@ -419,8 +419,8 @@ bench::mark(
 #> # A tibble: 2 x 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          528us   1.05ms     1028.     960KB
-#> 2 custom        284us  374.9us     2318.     488KB
+#> 1 base          547us    721us     1252.     960KB
+#> 2 custom        329us    386us     2495.     488KB
 ```
 
 We can also use this function in our custom chi-squared test function and see if the performance improves any further:
@@ -478,11 +478,11 @@ bench::mark(
 #> # A tibble: 2 x 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          758us   1.01ms      929.    1.28MB
-#> 2 custom        356us  484.3us     1830.  594.27KB
+#> 1 base          933us    1.1ms      837.    1.28MB
+#> 2 custom        406us  546.1us     1636.  594.27KB
 ```
 
-### Exercises 24.5.1
+## Exercises 24.5.1
 
 **Q1.** The density functions, e.g., `dnorm()`, have a common interface. Which arguments are vectorised over? What does `rnorm(10, mean = 10:1)` do?
 
@@ -607,6 +607,6 @@ bench::mark(
 #> # A tibble: 2 x 5
 #>   expression                min   median `itr/sec` mem_alloc
 #>   <bch:expr>           <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 crossprod(x, w)[[1]]    700ns    1.2us   633922.        0B
-#> 2 sum(x * w)[[1]]         400ns    700ns  1116204.        0B
+#> 1 crossprod(x, w)[[1]]    800ns    1.2us   717602.        0B
+#> 2 sum(x * w)[[1]]         500ns    700ns  1160926.        0B
 ```

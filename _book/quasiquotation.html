@@ -1,37 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 19 Quasiquotation | Advanced R Exercises</title>
-<meta name="author" content="Indrajeet Patil">
-<meta name="description" content="Attaching the needed libraries: library(rlang) library(purrr) library(lobstr) library(dplyr) library(ggplot2)  19.0.1 Exercises 19.2.2 Q1. For each function in the following base R code, identify...">
-<meta name="generator" content="bookdown 0.28 with bs4_book()">
-<meta property="og:title" content="Chapter 19 Quasiquotation | Advanced R Exercises">
-<meta property="og:type" content="book">
-<meta property="og:image" content="/cover.png">
-<meta property="og:description" content="Attaching the needed libraries: library(rlang) library(purrr) library(lobstr) library(dplyr) library(ggplot2)  19.0.1 Exercises 19.2.2 Q1. For each function in the following base R code, identify...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 19 Quasiquotation | Advanced R Exercises">
-<meta name="twitter:description" content="Attaching the needed libraries: library(rlang) library(purrr) library(lobstr) library(dplyr) library(ggplot2)  19.0.1 Exercises 19.2.2 Q1. For each function in the following base R code, identify...">
-<meta name="twitter:image" content="/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
-<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
-<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Chapter 19 Quasiquotation | Advanced R Exercises</title>
+
+    <meta name="author" content="Indrajeet Patil" />
+  
+   <meta name="description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+   <meta name="generator" content="placeholder" />
+  <meta property="og:title" content="Chapter 19 Quasiquotation | Advanced R Exercises" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="/cover.png" />
+  <meta property="og:description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 19 Quasiquotation | Advanced R Exercises" />
+  
+  <meta name="twitter:description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+  <meta name="twitter:image" content="/cover.png" />
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
+    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
+    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
+    <script src="libs/bs3compat-0.4.0/transition.js"></script>
+    <script src="libs/bs3compat-0.4.0/tabs.js"></script>
+    <script src="libs/bs3compat-0.4.0/bs3compat.js"></script>
+    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
+    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
+    <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+    <script src="libs/d3-3.5.6/d3.min.js"></script>
+    <link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet" />
+    <script src="libs/profvis-0.3.6.9000/profvis.js"></script>
+    <script src="libs/profvis-0.3.6.9000/scroll.js"></script>
+    <link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet" />
+    <script src="libs/highlight-6.2.0/highlight.js"></script>
+    <script src="libs/profvis-binding-0.3.7/profvis.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  <style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
-<link rel="stylesheet" href="bs4_style.css">
+      <link rel="stylesheet" href="bs4_style.css" />
+  
 </head>
+
 <body data-spy="scroll" data-target="#toc">
 
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
@@ -43,351 +71,294 @@
     <div id="main-nav" class="collapse-lg">
       <form role="search">
         <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
+      </form>
 
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">About</a></li>
-<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
-<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
-<li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
-<li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
-<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
-<li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
-<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
-<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
-<li><a class="" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
-<li><a class="" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
-<li><a class="" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
-<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
-<li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
-<li><a class="active" href="quasiquotation.html"><span class="header-section-number">19</span> Quasiquotation</a></li>
-<li><a class="" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
-<li><a class="" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></li>
-<li><a class="" href="improving-performance.html"><span class="header-section-number">24</span> Improving performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></li>
-</ul>
+      <nav aria-label="Table of contents">
+        <h2>Table of contents</h2>
+        <div id="book-toc"></div>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
         </div>
       </nav>
-</div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="quasiquotation" class="section level1" number="19">
-<h1>
-<span class="header-section-number">19</span> Quasiquotation<a class="anchor" aria-label="anchor" href="#quasiquotation"><i class="fas fa-link"></i></a>
-</h1>
+    </div>
+  </header>
+
+  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
+<div id="quasiquotation" class="section level1" number="19">
+<h1><span class="header-section-number">Chapter 19</span> Quasiquotation</h1>
 <p>Attaching the needed libraries:</p>
-<div class="sourceCode" id="cb528"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lobstr.r-lib.org/">lobstr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
-<div id="exercises-19.2.2" class="section level3" number="19.0.1">
-<h3>
-<span class="header-section-number">19.0.1</span> Exercises 19.2.2<a class="anchor" aria-label="anchor" href="#exercises-19.2.2"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="quasiquotation.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rlang)</span>
+<span id="cb189-2"><a href="quasiquotation.html#cb189-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb189-3"><a href="quasiquotation.html#cb189-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lobstr)</span>
+<span id="cb189-4"><a href="quasiquotation.html#cb189-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb189-5"><a href="quasiquotation.html#cb189-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<div id="exercises-19.2.2" class="section level2" number="19.1">
+<h2><span class="header-section-number">19.1</span> Exercises 19.2.2</h2>
+<hr />
 <p><strong>Q1.</strong> For each function in the following base R code, identify which arguments are quoted and which are evaluated.</p>
-<div class="sourceCode" id="cb529"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">mtcars2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">mtcars2</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">am</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="quasiquotation.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb190-2"><a href="quasiquotation.html#cb190-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-3"><a href="quasiquotation.html#cb190-3" aria-hidden="true" tabindex="-1"></a>mtcars2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(mtcars, cyl <span class="sc">==</span> <span class="dv">4</span>)</span>
+<span id="cb190-4"><a href="quasiquotation.html#cb190-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-5"><a href="quasiquotation.html#cb190-5" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(mtcars2, <span class="fu">sum</span>(vs))</span>
+<span id="cb190-6"><a href="quasiquotation.html#cb190-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(mtcars2<span class="sc">$</span>am)</span>
+<span id="cb190-7"><a href="quasiquotation.html#cb190-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-8"><a href="quasiquotation.html#cb190-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mtcars2)</span></code></pre></div>
 <p><strong>A1.</strong> To identify which arguments are quoted and which are evaluated, we can use the trick mentioned in the book:</p>
 <blockquote>
 <p>If you’re ever unsure about whether an argument is quoted or evaluated, try executing the code outside of the function. If it doesn’t work or does something different, then that argument is quoted.</p>
 </blockquote>
 <ul>
-<li><code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library(MASS)</a></code></li>
+<li><code>library(MASS)</code></li>
 </ul>
-<p>The <code>package</code> argument in <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> is quoted:</p>
-<div class="sourceCode" id="cb530"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">MASS</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'MASS' not found</span></span></code></pre></div>
+<p>The <code>package</code> argument in <code>library()</code> is quoted:</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="quasiquotation.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb191-2"><a href="quasiquotation.html#cb191-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb191-3"><a href="quasiquotation.html#cb191-3" aria-hidden="true" tabindex="-1"></a>MASS</span>
+<span id="cb191-4"><a href="quasiquotation.html#cb191-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in eval(expr, envir, enclos): object &#39;MASS&#39; not found</span></span></code></pre></div>
 <ul>
 <li><code>subset(mtcars, cyl == 4)</code></li>
 </ul>
 <p>The argument <code>x</code> is evaluated, while the argument <code>subset</code> is quoted.</p>
-<div class="sourceCode" id="cb531"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mtcars2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'cyl' not found</span></span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="quasiquotation.html#cb192-1" aria-hidden="true" tabindex="-1"></a>mtcars2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(mtcars, cyl <span class="sc">==</span> <span class="dv">4</span>)</span>
+<span id="cb192-2"><a href="quasiquotation.html#cb192-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-3"><a href="quasiquotation.html#cb192-3" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(mtcars)</span>
+<span id="cb192-4"><a href="quasiquotation.html#cb192-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-5"><a href="quasiquotation.html#cb192-5" aria-hidden="true" tabindex="-1"></a>cyl <span class="sc">==</span> <span class="dv">4</span></span>
+<span id="cb192-6"><a href="quasiquotation.html#cb192-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in eval(expr, envir, enclos): object &#39;cyl&#39; not found</span></span></code></pre></div>
 <ul>
 <li><code>with(mtcars2, sum(vs))</code></li>
 </ul>
 <p>The argument <code>data</code> is evaluated, while <code>expr</code> argument is quoted.</p>
-<div class="sourceCode" id="cb532"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">mtcars2</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 10</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'vs' not found</span></span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="quasiquotation.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(mtcars2, <span class="fu">sum</span>(vs))</span>
+<span id="cb193-2"><a href="quasiquotation.html#cb193-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 10</span></span>
+<span id="cb193-3"><a href="quasiquotation.html#cb193-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-4"><a href="quasiquotation.html#cb193-4" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(mtcars2)</span>
+<span id="cb193-5"><a href="quasiquotation.html#cb193-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-6"><a href="quasiquotation.html#cb193-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(vs)</span>
+<span id="cb193-7"><a href="quasiquotation.html#cb193-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in eval(expr, envir, enclos): object &#39;vs&#39; not found</span></span></code></pre></div>
 <ul>
 <li><code>sum(mtcars2$am)</code></li>
 </ul>
 <p>The argument <code>...</code> is evaluated.</p>
-<div class="sourceCode" id="cb533"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">am</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 8</span></span>
-<span></span>
-<span><span class="va">mtcars2</span><span class="op">$</span><span class="va">am</span></span>
-<span><span class="co">#&gt;  [1] 1 0 0 1 1 1 0 1 1 1 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="quasiquotation.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(mtcars2<span class="sc">$</span>am)</span>
+<span id="cb194-2"><a href="quasiquotation.html#cb194-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 8</span></span>
+<span id="cb194-3"><a href="quasiquotation.html#cb194-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb194-4"><a href="quasiquotation.html#cb194-4" aria-hidden="true" tabindex="-1"></a>mtcars2<span class="sc">$</span>am</span>
+<span id="cb194-5"><a href="quasiquotation.html#cb194-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 1 0 0 1 1 1 0 1 1 1 1</span></span></code></pre></div>
 <ul>
 <li><code>rm(mtcars2)</code></li>
 </ul>
-<p>The trick we are using so far won’t work here since trying to print <code>mtcars2</code> will always fail after <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code> has made a pass at it.</p>
-<div class="sourceCode" id="cb534"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">)</span></span></code></pre></div>
+<p>The trick we are using so far won’t work here since trying to print <code>mtcars2</code> will always fail after <code>rm()</code> has made a pass at it.</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="quasiquotation.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mtcars2)</span></code></pre></div>
 <p>We can instead look at the docs for <code>...</code>:</p>
 <blockquote>
 <p>… the objects to be removed, as names (unquoted) or character strings (quoted).</p>
 </blockquote>
 <p>Thus, this argument is not evaluated, but rather quoted.</p>
-<hr>
+<hr />
 <p><strong>Q2.</strong> For each function in the following tidyverse code, identify which arguments are quoted and which are evaluated.</p>
-<div class="sourceCode" id="cb535"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">by_cyl</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">by_cyl</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><strong>A2.</strong> As seen in the answer for <strong>Q1.</strong>, <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> quotes its first argument:</p>
-<div class="sourceCode" id="cb536"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="quasiquotation.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb196-2"><a href="quasiquotation.html#cb196-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb196-3"><a href="quasiquotation.html#cb196-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb196-4"><a href="quasiquotation.html#cb196-4" aria-hidden="true" tabindex="-1"></a>by_cyl <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span></span>
+<span id="cb196-5"><a href="quasiquotation.html#cb196-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cyl) <span class="sc">%&gt;%</span></span>
+<span id="cb196-6"><a href="quasiquotation.html#cb196-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(mpg))</span>
+<span id="cb196-7"><a href="quasiquotation.html#cb196-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb196-8"><a href="quasiquotation.html#cb196-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(by_cyl, <span class="fu">aes</span>(cyl, mean)) <span class="sc">+</span></span>
+<span id="cb196-9"><a href="quasiquotation.html#cb196-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><strong>A2.</strong> As seen in the answer for <strong>Q1.</strong>, <code>library()</code> quotes its first argument:</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="quasiquotation.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb197-2"><a href="quasiquotation.html#cb197-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
 <p>In the following code:</p>
 <ul>
-<li>
-<code>%&gt;%</code> (lazily) evaluates its argument</li>
-<li>
-<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> quote their arguments</li>
+<li><code>%&gt;%</code> (lazily) evaluates its argument</li>
+<li><code>group_by()</code> and <code>summarise()</code> quote their arguments</li>
 </ul>
-<div class="sourceCode" id="cb537"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">by_cyl</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="quasiquotation.html#cb198-1" aria-hidden="true" tabindex="-1"></a>by_cyl <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span></span>
+<span id="cb198-2"><a href="quasiquotation.html#cb198-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cyl) <span class="sc">%&gt;%</span></span>
+<span id="cb198-3"><a href="quasiquotation.html#cb198-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(mpg))</span></code></pre></div>
 <p>In the following code:</p>
 <ul>
-<li>
-<code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> evaluates the <code>data</code> argument</li>
-<li>
-<code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> quotes its arguments</li>
+<li><code>ggplot()</code> evaluates the <code>data</code> argument</li>
+<li><code>aes()</code> quotes its arguments</li>
 </ul>
-<div class="sourceCode" id="cb538"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">by_cyl</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="Quotation_files/figure-html/unnamed-chunk-12-1.png" width="100%"></div>
-<hr>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="quasiquotation.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(by_cyl, <span class="fu">aes</span>(cyl, mean)) <span class="sc">+</span></span>
+<span id="cb199-2"><a href="quasiquotation.html#cb199-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="Quotation_files/figure-html/unnamed-chunk-12-1.png" width="100%" /></p>
+<hr />
 </div>
-<div id="exercises-19.3.6" class="section level3" number="19.0.2">
-<h3>
-<span class="header-section-number">19.0.2</span> Exercises 19.3.6<a class="anchor" aria-label="anchor" href="#exercises-19.3.6"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
-<p><strong>Q1.</strong> How is <code><a href="https://rlang.r-lib.org/reference/expr.html">expr()</a></code> implemented? Look at its source code.</p>
-<p><strong>A1.</strong> Looking at the source code, we can see that <code><a href="https://rlang.r-lib.org/reference/expr.html">expr()</a></code> is a simple wrapper around <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr()</a></code>, and captures and returns the user-entered expressions:</p>
-<div class="sourceCode" id="cb539"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">rlang</span><span class="fu">::</span><span class="va"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span></span>
-<span><span class="co">#&gt; function (expr) </span></span>
-<span><span class="co">#&gt; {</span></span>
-<span><span class="co">#&gt;     enexpr(expr)</span></span>
-<span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x0000000033595d70&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: namespace:rlang&gt;</span></span></code></pre></div>
+<div id="exercises-19.3.6" class="section level2" number="19.2">
+<h2><span class="header-section-number">19.2</span> Exercises 19.3.6</h2>
+<hr />
+<p><strong>Q1.</strong> How is <code>expr()</code> implemented? Look at its source code.</p>
+<p><strong>A1.</strong> Looking at the source code, we can see that <code>expr()</code> is a simple wrapper around <code>enexpr()</code>, and captures and returns the user-entered expressions:</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="quasiquotation.html#cb200-1" aria-hidden="true" tabindex="-1"></a>rlang<span class="sc">::</span>expr</span>
+<span id="cb200-2"><a href="quasiquotation.html#cb200-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (expr) </span></span>
+<span id="cb200-3"><a href="quasiquotation.html#cb200-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {</span></span>
+<span id="cb200-4"><a href="quasiquotation.html#cb200-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     enexpr(expr)</span></span>
+<span id="cb200-5"><a href="quasiquotation.html#cb200-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
+<span id="cb200-6"><a href="quasiquotation.html#cb200-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x00000000335959e0&gt;</span></span>
+<span id="cb200-7"><a href="quasiquotation.html#cb200-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:rlang&gt;</span></span></code></pre></div>
 <p>For example:</p>
-<div class="sourceCode" id="cb540"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">x</span></span>
-<span><span class="co">#&gt; x &lt;- 1</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="quasiquotation.html#cb201-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">expr</span>(x <span class="ot">&lt;-</span> <span class="dv">1</span>)</span>
+<span id="cb201-2"><a href="quasiquotation.html#cb201-2" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb201-3"><a href="quasiquotation.html#cb201-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; x &lt;- 1</span></span></code></pre></div>
+<hr />
 <p><strong>Q2.</strong> Compare and contrast the following two functions. Can you predict the output before running them?</p>
-<div class="sourceCode" id="cb541"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">f2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="fu">f1</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span>, <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span></span>
-<span><span class="fu">f2</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span>, <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span></span></code></pre></div>
-<p><strong>A2.</strong> The <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> captures and returns the expressions specified by the developer instead of their values:</p>
-<div class="sourceCode" id="cb542"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu">f1</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span>, <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $x</span></span>
-<span><span class="co">#&gt; x</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $y</span></span>
-<span><span class="co">#&gt; y</span></span></code></pre></div>
-<p>On the other hand, <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexprs()</a></code> captures the user-entered expressions and returns their values:</p>
-<div class="sourceCode" id="cb543"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">f2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu">f2</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span>, <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $x</span></span>
-<span><span class="co">#&gt; a + b</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $y</span></span>
-<span><span class="co">#&gt; c + d</span></span></code></pre></div>
-<hr>
-<p><strong>Q3.</strong> What happens if you try to use <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr()</a></code> with an expression (i.e. <code>enexpr(x + y)</code>? What happens if <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr()</a></code> is passed a missing argument?</p>
-<p><strong>A3.</strong> If you try to use <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr()</a></code> with an expression, it fails because it works only with types <code>symbol</code> and <code>character</code> (which is converted to <code>symbol</code>).</p>
-<div class="sourceCode" id="cb544"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in `enexpr()`:</span></span>
-<span><span class="co">#&gt; ! `arg` must be a symbol</span></span></code></pre></div>
-<p>If <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr()</a></code> is passed a missing argument, it returns a missing argument:</p>
-<div class="sourceCode" id="cb545"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">arg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/missing_arg.html">missing_arg</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">arg</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/missing_arg.html">is_missing</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">arg</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="quasiquotation.html#cb202-1" aria-hidden="true" tabindex="-1"></a>f1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb202-2"><a href="quasiquotation.html#cb202-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exprs</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb202-3"><a href="quasiquotation.html#cb202-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb202-4"><a href="quasiquotation.html#cb202-4" aria-hidden="true" tabindex="-1"></a>f2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb202-5"><a href="quasiquotation.html#cb202-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enexprs</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb202-6"><a href="quasiquotation.html#cb202-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb202-7"><a href="quasiquotation.html#cb202-7" aria-hidden="true" tabindex="-1"></a><span class="fu">f1</span>(a <span class="sc">+</span> b, c <span class="sc">+</span> d)</span>
+<span id="cb202-8"><a href="quasiquotation.html#cb202-8" aria-hidden="true" tabindex="-1"></a><span class="fu">f2</span>(a <span class="sc">+</span> b, c <span class="sc">+</span> d)</span></code></pre></div>
+<p><strong>A2.</strong> The <code>exprs()</code> captures and returns the expressions specified by the developer instead of their values:</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="quasiquotation.html#cb203-1" aria-hidden="true" tabindex="-1"></a>f1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb203-2"><a href="quasiquotation.html#cb203-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exprs</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb203-3"><a href="quasiquotation.html#cb203-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb203-4"><a href="quasiquotation.html#cb203-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb203-5"><a href="quasiquotation.html#cb203-5" aria-hidden="true" tabindex="-1"></a><span class="fu">f1</span>(a <span class="sc">+</span> b, c <span class="sc">+</span> d)</span>
+<span id="cb203-6"><a href="quasiquotation.html#cb203-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $x</span></span>
+<span id="cb203-7"><a href="quasiquotation.html#cb203-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; x</span></span>
+<span id="cb203-8"><a href="quasiquotation.html#cb203-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb203-9"><a href="quasiquotation.html#cb203-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $y</span></span>
+<span id="cb203-10"><a href="quasiquotation.html#cb203-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; y</span></span></code></pre></div>
+<p>On the other hand, <code>enexprs()</code> captures the user-entered expressions and returns their values:</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="quasiquotation.html#cb204-1" aria-hidden="true" tabindex="-1"></a>f2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb204-2"><a href="quasiquotation.html#cb204-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enexprs</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb204-3"><a href="quasiquotation.html#cb204-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb204-4"><a href="quasiquotation.html#cb204-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb204-5"><a href="quasiquotation.html#cb204-5" aria-hidden="true" tabindex="-1"></a><span class="fu">f2</span>(a <span class="sc">+</span> b, c <span class="sc">+</span> d)</span>
+<span id="cb204-6"><a href="quasiquotation.html#cb204-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $x</span></span>
+<span id="cb204-7"><a href="quasiquotation.html#cb204-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a + b</span></span>
+<span id="cb204-8"><a href="quasiquotation.html#cb204-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb204-9"><a href="quasiquotation.html#cb204-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $y</span></span>
+<span id="cb204-10"><a href="quasiquotation.html#cb204-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; c + d</span></span></code></pre></div>
+<hr />
+<p><strong>Q3.</strong> What happens if you try to use <code>enexpr()</code> with an expression (i.e. <code>enexpr(x + y)</code>? What happens if <code>enexpr()</code> is passed a missing argument?</p>
+<p><strong>A3.</strong> If you try to use <code>enexpr()</code> with an expression, it fails because it works only with types <code>symbol</code> and <code>character</code> (which is converted to <code>symbol</code>).</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="quasiquotation.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">enexpr</span>(x <span class="sc">+</span> y)</span>
+<span id="cb205-2"><a href="quasiquotation.html#cb205-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `enexpr()`:</span></span>
+<span id="cb205-3"><a href="quasiquotation.html#cb205-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! `arg` must be a symbol</span></span></code></pre></div>
+<p>If <code>enexpr()</code> is passed a missing argument, it returns a missing argument:</p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="quasiquotation.html#cb206-1" aria-hidden="true" tabindex="-1"></a>arg <span class="ot">&lt;-</span> <span class="fu">missing_arg</span>()</span>
+<span id="cb206-2"><a href="quasiquotation.html#cb206-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-3"><a href="quasiquotation.html#cb206-3" aria-hidden="true" tabindex="-1"></a><span class="fu">enexpr</span>(arg)</span>
+<span id="cb206-4"><a href="quasiquotation.html#cb206-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-5"><a href="quasiquotation.html#cb206-5" aria-hidden="true" tabindex="-1"></a><span class="fu">is_missing</span>(<span class="fu">enexpr</span>(arg))</span>
+<span id="cb206-6"><a href="quasiquotation.html#cb206-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<hr />
 <p><strong>Q4.</strong> How are <code>exprs(a)</code> and <code>exprs(a = )</code> different? Think about both the input and the output.</p>
 <p><strong>A4.</strong> The key difference here is that the former will return an unnamed list, while the latter will return a named list. This is because the former is interpreted as an unnamed argument, while the latter a named argument.</p>
-<div class="sourceCode" id="cb546"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; a</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>a <span class="op">=</span> <span class="op">)</span></span>
-<span><span class="co">#&gt; $a</span></span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="quasiquotation.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exprs</span>(a)</span>
+<span id="cb207-2"><a href="quasiquotation.html#cb207-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb207-3"><a href="quasiquotation.html#cb207-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a</span></span>
+<span id="cb207-4"><a href="quasiquotation.html#cb207-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-5"><a href="quasiquotation.html#cb207-5" aria-hidden="true" tabindex="-1"></a><span class="fu">exprs</span>(<span class="at">a =</span> )</span>
+<span id="cb207-6"><a href="quasiquotation.html#cb207-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $a</span></span></code></pre></div>
 <p>In both cases, <code>a</code> is treated as a symbol:</p>
-<div class="sourceCode" id="cb547"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="va">is_symbol</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      </span></span>
-<span><span class="co">#&gt; TRUE</span></span>
-<span></span>
-<span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>a <span class="op">=</span> <span class="op">)</span>, <span class="va">is_symbol</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    a </span></span>
-<span><span class="co">#&gt; TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="quasiquotation.html#cb208-1" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map_lgl</span>(<span class="fu">exprs</span>(a), is_symbol)</span>
+<span id="cb208-2"><a href="quasiquotation.html#cb208-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      </span></span>
+<span id="cb208-3"><a href="quasiquotation.html#cb208-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; TRUE</span></span>
+<span id="cb208-4"><a href="quasiquotation.html#cb208-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb208-5"><a href="quasiquotation.html#cb208-5" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map_lgl</span>(<span class="fu">exprs</span>(<span class="at">a =</span> ), is_symbol)</span>
+<span id="cb208-6"><a href="quasiquotation.html#cb208-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    a </span></span>
+<span id="cb208-7"><a href="quasiquotation.html#cb208-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; TRUE</span></span></code></pre></div>
 <p>But, the argument is missing only in the latter case, since only the name but no corresponding value is provided:</p>
-<div class="sourceCode" id="cb548"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="va">is_missing</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       </span></span>
-<span><span class="co">#&gt; FALSE</span></span>
-<span></span>
-<span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>a <span class="op">=</span> <span class="op">)</span>, <span class="va">is_missing</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    a </span></span>
-<span><span class="co">#&gt; TRUE</span></span></code></pre></div>
-<hr>
-<p><strong>Q5.</strong> What are other differences between <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> and <code><a href="https://rdrr.io/r/base/list.html">alist()</a></code>? Read the documentation for the named arguments of <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> to find out.</p>
-<p><strong>A5.</strong> Here are some additional differences between <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> and <code><a href="https://rdrr.io/r/base/list.html">alist()</a></code>.</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="quasiquotation.html#cb209-1" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map_lgl</span>(<span class="fu">exprs</span>(a), is_missing)</span>
+<span id="cb209-2"><a href="quasiquotation.html#cb209-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       </span></span>
+<span id="cb209-3"><a href="quasiquotation.html#cb209-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; FALSE</span></span>
+<span id="cb209-4"><a href="quasiquotation.html#cb209-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb209-5"><a href="quasiquotation.html#cb209-5" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map_lgl</span>(<span class="fu">exprs</span>(<span class="at">a =</span> ), is_missing)</span>
+<span id="cb209-6"><a href="quasiquotation.html#cb209-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    a </span></span>
+<span id="cb209-7"><a href="quasiquotation.html#cb209-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; TRUE</span></span></code></pre></div>
+<hr />
+<p><strong>Q5.</strong> What are other differences between <code>exprs()</code> and <code>alist()</code>? Read the documentation for the named arguments of <code>exprs()</code> to find out.</p>
+<p><strong>A5.</strong> Here are some additional differences between <code>exprs()</code> and <code>alist()</code>.</p>
 <ul>
-<li>Names: If the inputs are not named, <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> provides a way to name them automatically using <code>.named</code> argument.</li>
+<li>Names: If the inputs are not named, <code>exprs()</code> provides a way to name them automatically using <code>.named</code> argument.</li>
 </ul>
-<div class="sourceCode" id="cb549"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html">alist</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, <span class="cn">TRUE</span>, <span class="st">"z"</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $x</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $z</span></span>
-<span><span class="co">#&gt; expr(x + y)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, <span class="cn">TRUE</span>, <span class="st">"z"</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span>, .named <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $x</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`TRUE`</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $z</span></span>
-<span><span class="co">#&gt; expr(x + y)</span></span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="quasiquotation.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">alist</span>(<span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="cn">TRUE</span>, <span class="st">&quot;z&quot;</span> <span class="ot">=</span> <span class="fu">expr</span>(x <span class="sc">+</span> y))</span>
+<span id="cb210-2"><a href="quasiquotation.html#cb210-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $x</span></span>
+<span id="cb210-3"><a href="quasiquotation.html#cb210-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span>
+<span id="cb210-4"><a href="quasiquotation.html#cb210-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb210-5"><a href="quasiquotation.html#cb210-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb210-6"><a href="quasiquotation.html#cb210-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb210-7"><a href="quasiquotation.html#cb210-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb210-8"><a href="quasiquotation.html#cb210-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $z</span></span>
+<span id="cb210-9"><a href="quasiquotation.html#cb210-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; expr(x + y)</span></span>
+<span id="cb210-10"><a href="quasiquotation.html#cb210-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-11"><a href="quasiquotation.html#cb210-11" aria-hidden="true" tabindex="-1"></a><span class="fu">exprs</span>(<span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="cn">TRUE</span>, <span class="st">&quot;z&quot;</span> <span class="ot">=</span> <span class="fu">expr</span>(x <span class="sc">+</span> y), <span class="at">.named =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb210-12"><a href="quasiquotation.html#cb210-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $x</span></span>
+<span id="cb210-13"><a href="quasiquotation.html#cb210-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span>
+<span id="cb210-14"><a href="quasiquotation.html#cb210-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb210-15"><a href="quasiquotation.html#cb210-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $`TRUE`</span></span>
+<span id="cb210-16"><a href="quasiquotation.html#cb210-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb210-17"><a href="quasiquotation.html#cb210-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb210-18"><a href="quasiquotation.html#cb210-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $z</span></span>
+<span id="cb210-19"><a href="quasiquotation.html#cb210-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; expr(x + y)</span></span></code></pre></div>
 <ul>
-<li>Ignoring empty arguments: The <code>.ignore_empty</code> argument in <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> gives you a much finer control over what to do with the empty arguments, while <code><a href="https://rdrr.io/r/base/list.html">alist()</a></code> always ignores none of such arguments.</li>
+<li>Ignoring empty arguments: The <code>.ignore_empty</code> argument in <code>exprs()</code> gives you a much finer control over what to do with the empty arguments, while <code>alist()</code> always ignores none of such arguments.</li>
 </ul>
-<div class="sourceCode" id="cb550"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html">alist</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, , <span class="cn">TRUE</span>, <span class="op">)</span></span>
-<span><span class="co">#&gt; $x</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[3]]</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[4]]</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, , <span class="cn">TRUE</span>, , .ignore_empty <span class="op">=</span> <span class="st">"trailing"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $x</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[3]]</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, , <span class="cn">TRUE</span>, , .ignore_empty <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $x</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[3]]</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[4]]</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, , <span class="cn">TRUE</span>, , .ignore_empty <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $x</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="quasiquotation.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">alist</span>(<span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="dv">1</span>, , <span class="cn">TRUE</span>, )</span>
+<span id="cb211-2"><a href="quasiquotation.html#cb211-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $x</span></span>
+<span id="cb211-3"><a href="quasiquotation.html#cb211-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span>
+<span id="cb211-4"><a href="quasiquotation.html#cb211-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb211-5"><a href="quasiquotation.html#cb211-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb211-6"><a href="quasiquotation.html#cb211-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb211-7"><a href="quasiquotation.html#cb211-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb211-8"><a href="quasiquotation.html#cb211-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb211-9"><a href="quasiquotation.html#cb211-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb211-10"><a href="quasiquotation.html#cb211-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb211-11"><a href="quasiquotation.html#cb211-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb211-12"><a href="quasiquotation.html#cb211-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb211-13"><a href="quasiquotation.html#cb211-13" aria-hidden="true" tabindex="-1"></a><span class="fu">exprs</span>(<span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="dv">1</span>, , <span class="cn">TRUE</span>, , <span class="at">.ignore_empty =</span> <span class="st">&quot;trailing&quot;</span>)</span>
+<span id="cb211-14"><a href="quasiquotation.html#cb211-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $x</span></span>
+<span id="cb211-15"><a href="quasiquotation.html#cb211-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span>
+<span id="cb211-16"><a href="quasiquotation.html#cb211-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb211-17"><a href="quasiquotation.html#cb211-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb211-18"><a href="quasiquotation.html#cb211-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb211-19"><a href="quasiquotation.html#cb211-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb211-20"><a href="quasiquotation.html#cb211-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb211-21"><a href="quasiquotation.html#cb211-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb211-22"><a href="quasiquotation.html#cb211-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb211-23"><a href="quasiquotation.html#cb211-23" aria-hidden="true" tabindex="-1"></a><span class="fu">exprs</span>(<span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="dv">1</span>, , <span class="cn">TRUE</span>, , <span class="at">.ignore_empty =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb211-24"><a href="quasiquotation.html#cb211-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $x</span></span>
+<span id="cb211-25"><a href="quasiquotation.html#cb211-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span>
+<span id="cb211-26"><a href="quasiquotation.html#cb211-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb211-27"><a href="quasiquotation.html#cb211-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb211-28"><a href="quasiquotation.html#cb211-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb211-29"><a href="quasiquotation.html#cb211-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb211-30"><a href="quasiquotation.html#cb211-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb211-31"><a href="quasiquotation.html#cb211-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb211-32"><a href="quasiquotation.html#cb211-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb211-33"><a href="quasiquotation.html#cb211-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb211-34"><a href="quasiquotation.html#cb211-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb211-35"><a href="quasiquotation.html#cb211-35" aria-hidden="true" tabindex="-1"></a><span class="fu">exprs</span>(<span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="dv">1</span>, , <span class="cn">TRUE</span>, , <span class="at">.ignore_empty =</span> <span class="st">&quot;all&quot;</span>)</span>
+<span id="cb211-36"><a href="quasiquotation.html#cb211-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $x</span></span>
+<span id="cb211-37"><a href="quasiquotation.html#cb211-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span>
+<span id="cb211-38"><a href="quasiquotation.html#cb211-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb211-39"><a href="quasiquotation.html#cb211-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb211-40"><a href="quasiquotation.html#cb211-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <ul>
-<li>Names injection: Using <code>.unquote_names</code> argument in <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code>, we can inject a name for the argument.</li>
+<li>Names injection: Using <code>.unquote_names</code> argument in <code>exprs()</code>, we can inject a name for the argument.</li>
 </ul>
-<div class="sourceCode" id="cb551"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html">alist</a></span><span class="op">(</span><span class="va">foo</span> <span class="op">:=</span> <span class="va">bar</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; `:=`(foo, bar)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">foo</span> <span class="op">:=</span> <span class="va">bar</span>, .unquote_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; `:=`(foo, bar)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">foo</span> <span class="op">:=</span> <span class="va">bar</span>, .unquote_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $foo</span></span>
-<span><span class="co">#&gt; bar</span></span></code></pre></div>
-<hr>
-<p><strong>Q6.</strong> The documentation for <code><a href="https://rdrr.io/r/base/substitute.html">substitute()</a></code> says:</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="quasiquotation.html#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="fu">alist</span>(<span class="at">foo :=</span> bar)</span>
+<span id="cb212-2"><a href="quasiquotation.html#cb212-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb212-3"><a href="quasiquotation.html#cb212-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `:=`(foo, bar)</span></span>
+<span id="cb212-4"><a href="quasiquotation.html#cb212-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb212-5"><a href="quasiquotation.html#cb212-5" aria-hidden="true" tabindex="-1"></a><span class="fu">exprs</span>(<span class="at">foo :=</span> bar, <span class="at">.unquote_names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb212-6"><a href="quasiquotation.html#cb212-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb212-7"><a href="quasiquotation.html#cb212-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `:=`(foo, bar)</span></span>
+<span id="cb212-8"><a href="quasiquotation.html#cb212-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb212-9"><a href="quasiquotation.html#cb212-9" aria-hidden="true" tabindex="-1"></a><span class="fu">exprs</span>(<span class="at">foo :=</span> bar, <span class="at">.unquote_names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb212-10"><a href="quasiquotation.html#cb212-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $foo</span></span>
+<span id="cb212-11"><a href="quasiquotation.html#cb212-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bar</span></span></code></pre></div>
+<hr />
+<p><strong>Q6.</strong> The documentation for <code>substitute()</code> says:</p>
 <pre><code>&gt; Substitution takes place by examining each component of the parse tree 
 &gt; as follows: 
 &gt; 
@@ -402,437 +373,398 @@
 <p>If it is not a bound symbol in <code>env</code>, it is unchanged.</p>
 </blockquote>
 <p>Symbol <code>x</code> is not bound in <code>env</code>, so it remains unchanged.</p>
-<div class="sourceCode" id="cb553"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">substitute</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, env <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; x + 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="quasiquotation.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="fu">substitute</span>(x <span class="sc">+</span> y, <span class="at">env =</span> <span class="fu">list</span>(<span class="at">y =</span> <span class="dv">2</span>))</span>
+<span id="cb214-2"><a href="quasiquotation.html#cb214-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; x + 2</span></span></code></pre></div>
 <blockquote>
 <p>If it is a promise object (i.e., a formal argument to a function)
 the expression slot of the promise replaces the symbol.</p>
 </blockquote>
-<div class="sourceCode" id="cb554"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">msg</span> <span class="op">&lt;-</span> <span class="st">"old"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/delayedAssign.html">delayedAssign</a></span><span class="op">(</span><span class="st">"myVar"</span>, <span class="va">msg</span><span class="op">)</span> <span class="co"># creates a promise</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">substitute</a></span><span class="op">(</span><span class="va">myVar</span><span class="op">)</span></span>
-<span><span class="co">#&gt; myVar</span></span>
-<span><span class="va">msg</span> <span class="op">&lt;-</span> <span class="st">"new!"</span></span>
-<span><span class="va">myVar</span></span>
-<span><span class="co">#&gt; [1] "new!"</span></span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="quasiquotation.html#cb215-1" aria-hidden="true" tabindex="-1"></a>msg <span class="ot">&lt;-</span> <span class="st">&quot;old&quot;</span></span>
+<span id="cb215-2"><a href="quasiquotation.html#cb215-2" aria-hidden="true" tabindex="-1"></a><span class="fu">delayedAssign</span>(<span class="st">&quot;myVar&quot;</span>, msg) <span class="co"># creates a promise</span></span>
+<span id="cb215-3"><a href="quasiquotation.html#cb215-3" aria-hidden="true" tabindex="-1"></a><span class="fu">substitute</span>(myVar)</span>
+<span id="cb215-4"><a href="quasiquotation.html#cb215-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; myVar</span></span>
+<span id="cb215-5"><a href="quasiquotation.html#cb215-5" aria-hidden="true" tabindex="-1"></a>msg <span class="ot">&lt;-</span> <span class="st">&quot;new!&quot;</span></span>
+<span id="cb215-6"><a href="quasiquotation.html#cb215-6" aria-hidden="true" tabindex="-1"></a>myVar</span>
+<span id="cb215-7"><a href="quasiquotation.html#cb215-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;new!&quot;</span></span></code></pre></div>
 <blockquote>
 <p>If it is an ordinary variable, its value is substituted, unless
 <code>env</code> is .GlobalEnv in which case the symbol is left unchanged.</p>
 </blockquote>
-<div class="sourceCode" id="cb555"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">substitute</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, env <span class="op">=</span> <span class="va">.GlobalEnv</span><span class="op">)</span></span>
-<span><span class="co">#&gt; x + y</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="quasiquotation.html#cb216-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb216-2"><a href="quasiquotation.html#cb216-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb216-3"><a href="quasiquotation.html#cb216-3" aria-hidden="true" tabindex="-1"></a><span class="fu">substitute</span>(x <span class="sc">+</span> y, <span class="at">env =</span> .GlobalEnv)</span>
+<span id="cb216-4"><a href="quasiquotation.html#cb216-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; x + y</span></span></code></pre></div>
+<hr />
 </div>
-<div id="exercises-19.4.8" class="section level3" number="19.0.3">
-<h3>
-<span class="header-section-number">19.0.3</span> Exercises 19.4.8<a class="anchor" aria-label="anchor" href="#exercises-19.4.8"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
+<div id="exercises-19.4.8" class="section level2" number="19.3">
+<h2><span class="header-section-number">19.3</span> Exercises 19.4.8</h2>
+<hr />
 <p><strong>Q1.</strong> Given the following components:</p>
-<div class="sourceCode" id="cb556"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">xy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span></span>
-<span><span class="va">xz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
-<span><span class="va">yz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
-<span><span class="va">abc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="quasiquotation.html#cb217-1" aria-hidden="true" tabindex="-1"></a>xy <span class="ot">&lt;-</span> <span class="fu">expr</span>(x <span class="sc">+</span> y)</span>
+<span id="cb217-2"><a href="quasiquotation.html#cb217-2" aria-hidden="true" tabindex="-1"></a>xz <span class="ot">&lt;-</span> <span class="fu">expr</span>(x <span class="sc">+</span> z)</span>
+<span id="cb217-3"><a href="quasiquotation.html#cb217-3" aria-hidden="true" tabindex="-1"></a>yz <span class="ot">&lt;-</span> <span class="fu">expr</span>(y <span class="sc">+</span> z)</span>
+<span id="cb217-4"><a href="quasiquotation.html#cb217-4" aria-hidden="true" tabindex="-1"></a>abc <span class="ot">&lt;-</span> <span class="fu">exprs</span>(a, b, c)</span></code></pre></div>
 <p>Use quasiquotation to construct the following calls:</p>
-<div class="sourceCode" id="cb557"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
-<span><span class="op">-</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
-<span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span> <span class="op">-</span> <span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">atan2</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, <span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, <span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu">foo</span><span class="op">(</span>a <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, b <span class="op">=</span> <span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="quasiquotation.html#cb218-1" aria-hidden="true" tabindex="-1"></a>(x <span class="sc">+</span> y) <span class="sc">/</span> (y <span class="sc">+</span> z)</span>
+<span id="cb218-2"><a href="quasiquotation.html#cb218-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>(x <span class="sc">+</span> z)<span class="sc">^</span>(y <span class="sc">+</span> z)</span>
+<span id="cb218-3"><a href="quasiquotation.html#cb218-3" aria-hidden="true" tabindex="-1"></a>(x <span class="sc">+</span> y) <span class="sc">+</span> (y <span class="sc">+</span> z) <span class="sc">-</span> (x <span class="sc">+</span> y)</span>
+<span id="cb218-4"><a href="quasiquotation.html#cb218-4" aria-hidden="true" tabindex="-1"></a><span class="fu">atan2</span>(x <span class="sc">+</span> y, y <span class="sc">+</span> z)</span>
+<span id="cb218-5"><a href="quasiquotation.html#cb218-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x <span class="sc">+</span> y, x <span class="sc">+</span> y, y <span class="sc">+</span> z)</span>
+<span id="cb218-6"><a href="quasiquotation.html#cb218-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(a, b, c)</span>
+<span id="cb218-7"><a href="quasiquotation.html#cb218-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(a, b, c), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb218-8"><a href="quasiquotation.html#cb218-8" aria-hidden="true" tabindex="-1"></a><span class="fu">foo</span>(<span class="at">a =</span> x <span class="sc">+</span> y, <span class="at">b =</span> y <span class="sc">+</span> z)</span></code></pre></div>
 <p><strong>A1.</strong> Using quasiquotation to construct the specified calls:</p>
-<div class="sourceCode" id="cb558"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">xy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span></span>
-<span><span class="va">xz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
-<span><span class="va">yz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
-<span><span class="va">abc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; (x + y)/(y + z)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">-</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xz</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; -(x + z)^(y + z)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span> <span class="op">-</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; (x + y) + (y + z) - (x + y)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="st">"atan2"</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; atan2(x + y, y + z)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="st">"sum"</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; sum(x + y, x + y, y + z)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="st">"sum"</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">abc</span><span class="op">)</span></span>
-<span><span class="co">#&gt; sum(a, b, c)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">abc</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; mean(c(a, b, c), na.rm = TRUE)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="st">"foo"</span>, a <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span>, b <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; foo(a = x + y, b = y + z)</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="quasiquotation.html#cb219-1" aria-hidden="true" tabindex="-1"></a>xy <span class="ot">&lt;-</span> <span class="fu">expr</span>(x <span class="sc">+</span> y)</span>
+<span id="cb219-2"><a href="quasiquotation.html#cb219-2" aria-hidden="true" tabindex="-1"></a>xz <span class="ot">&lt;-</span> <span class="fu">expr</span>(x <span class="sc">+</span> z)</span>
+<span id="cb219-3"><a href="quasiquotation.html#cb219-3" aria-hidden="true" tabindex="-1"></a>yz <span class="ot">&lt;-</span> <span class="fu">expr</span>(y <span class="sc">+</span> z)</span>
+<span id="cb219-4"><a href="quasiquotation.html#cb219-4" aria-hidden="true" tabindex="-1"></a>abc <span class="ot">&lt;-</span> <span class="fu">exprs</span>(a, b, c)</span>
+<span id="cb219-5"><a href="quasiquotation.html#cb219-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb219-6"><a href="quasiquotation.html#cb219-6" aria-hidden="true" tabindex="-1"></a><span class="fu">expr</span>((<span class="sc">!!</span>xy) <span class="sc">/</span> (<span class="sc">!!</span>yz))</span>
+<span id="cb219-7"><a href="quasiquotation.html#cb219-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (x + y)/(y + z)</span></span>
+<span id="cb219-8"><a href="quasiquotation.html#cb219-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb219-9"><a href="quasiquotation.html#cb219-9" aria-hidden="true" tabindex="-1"></a><span class="fu">expr</span>(<span class="sc">-</span>(<span class="sc">!!</span>xz)<span class="sc">^</span>(<span class="sc">!!</span>yz))</span>
+<span id="cb219-10"><a href="quasiquotation.html#cb219-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -(x + z)^(y + z)</span></span>
+<span id="cb219-11"><a href="quasiquotation.html#cb219-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb219-12"><a href="quasiquotation.html#cb219-12" aria-hidden="true" tabindex="-1"></a><span class="fu">expr</span>(((<span class="sc">!!</span>xy)) <span class="sc">+</span> (<span class="sc">!!</span>yz) <span class="sc">-</span> (<span class="sc">!!</span>xy))</span>
+<span id="cb219-13"><a href="quasiquotation.html#cb219-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (x + y) + (y + z) - (x + y)</span></span>
+<span id="cb219-14"><a href="quasiquotation.html#cb219-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb219-15"><a href="quasiquotation.html#cb219-15" aria-hidden="true" tabindex="-1"></a><span class="fu">call2</span>(<span class="st">&quot;atan2&quot;</span>, <span class="fu">expr</span>(<span class="sc">!!</span>xy), <span class="fu">expr</span>(<span class="sc">!!</span>yz))</span>
+<span id="cb219-16"><a href="quasiquotation.html#cb219-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; atan2(x + y, y + z)</span></span>
+<span id="cb219-17"><a href="quasiquotation.html#cb219-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb219-18"><a href="quasiquotation.html#cb219-18" aria-hidden="true" tabindex="-1"></a><span class="fu">call2</span>(<span class="st">&quot;sum&quot;</span>, <span class="fu">expr</span>(<span class="sc">!!</span>xy), <span class="fu">expr</span>(<span class="sc">!!</span>xy), <span class="fu">expr</span>(<span class="sc">!!</span>yz))</span>
+<span id="cb219-19"><a href="quasiquotation.html#cb219-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sum(x + y, x + y, y + z)</span></span>
+<span id="cb219-20"><a href="quasiquotation.html#cb219-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb219-21"><a href="quasiquotation.html#cb219-21" aria-hidden="true" tabindex="-1"></a><span class="fu">call2</span>(<span class="st">&quot;sum&quot;</span>, <span class="sc">!!!</span>abc)</span>
+<span id="cb219-22"><a href="quasiquotation.html#cb219-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sum(a, b, c)</span></span>
+<span id="cb219-23"><a href="quasiquotation.html#cb219-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb219-24"><a href="quasiquotation.html#cb219-24" aria-hidden="true" tabindex="-1"></a><span class="fu">expr</span>(<span class="fu">mean</span>(<span class="fu">c</span>(<span class="sc">!!!</span>abc), <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb219-25"><a href="quasiquotation.html#cb219-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean(c(a, b, c), na.rm = TRUE)</span></span>
+<span id="cb219-26"><a href="quasiquotation.html#cb219-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb219-27"><a href="quasiquotation.html#cb219-27" aria-hidden="true" tabindex="-1"></a><span class="fu">call2</span>(<span class="st">&quot;foo&quot;</span>, <span class="at">a =</span> <span class="fu">expr</span>(<span class="sc">!!</span>xy), <span class="at">b =</span> <span class="fu">expr</span>(<span class="sc">!!</span>yz))</span>
+<span id="cb219-28"><a href="quasiquotation.html#cb219-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; foo(a = x + y, b = y + z)</span></span></code></pre></div>
+<hr />
 <p><strong>Q2.</strong> The following two calls print the same, but are actually different:</p>
-<div class="sourceCode" id="cb559"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; mean(1:10)</span></span>
-<span><span class="op">(</span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; mean(1:10)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="quasiquotation.html#cb220-1" aria-hidden="true" tabindex="-1"></a>(a <span class="ot">&lt;-</span> <span class="fu">expr</span>(<span class="fu">mean</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)))</span>
+<span id="cb220-2"><a href="quasiquotation.html#cb220-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean(1:10)</span></span>
+<span id="cb220-3"><a href="quasiquotation.html#cb220-3" aria-hidden="true" tabindex="-1"></a>(b <span class="ot">&lt;-</span> <span class="fu">expr</span>(<span class="fu">mean</span>(<span class="sc">!!</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>))))</span>
+<span id="cb220-4"><a href="quasiquotation.html#cb220-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean(1:10)</span></span>
+<span id="cb220-5"><a href="quasiquotation.html#cb220-5" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(a, b)</span>
+<span id="cb220-6"><a href="quasiquotation.html#cb220-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
 <p>What’s the difference? Which one is more natural?</p>
 <p><strong>A2.</strong> We can see the difference between these two expression if we convert them to lists:</p>
-<div class="sourceCode" id="cb560"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; mean</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt; 1:10</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; mean</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="quasiquotation.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.list</span>(<span class="fu">expr</span>(<span class="fu">mean</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)))</span>
+<span id="cb221-2"><a href="quasiquotation.html#cb221-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb221-3"><a href="quasiquotation.html#cb221-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean</span></span>
+<span id="cb221-4"><a href="quasiquotation.html#cb221-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb221-5"><a href="quasiquotation.html#cb221-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb221-6"><a href="quasiquotation.html#cb221-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1:10</span></span>
+<span id="cb221-7"><a href="quasiquotation.html#cb221-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb221-8"><a href="quasiquotation.html#cb221-8" aria-hidden="true" tabindex="-1"></a><span class="fu">as.list</span>(<span class="fu">expr</span>(<span class="fu">mean</span>(<span class="sc">!!</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>))))</span>
+<span id="cb221-9"><a href="quasiquotation.html#cb221-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb221-10"><a href="quasiquotation.html#cb221-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean</span></span>
+<span id="cb221-11"><a href="quasiquotation.html#cb221-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb221-12"><a href="quasiquotation.html#cb221-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb221-13"><a href="quasiquotation.html#cb221-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></span></code></pre></div>
 <p>As can be seen, the second element of <code>a</code> is a <code>call</code> object, while that in <code>b</code> is an integer vector:</p>
-<div class="sourceCode" id="cb561"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">waldo</span><span class="fu">::</span><span class="fu"><a href="https://waldo.r-lib.org/reference/compare.html">compare</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span></span>
-<span><span class="co">#&gt; `old[[2]]` is a call</span></span>
-<span><span class="co">#&gt; `new[[2]]` is an integer vector (1, 2, 3, 4, 5, ...)</span></span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="quasiquotation.html#cb222-1" aria-hidden="true" tabindex="-1"></a>waldo<span class="sc">::</span><span class="fu">compare</span>(a, b)</span>
+<span id="cb222-2"><a href="quasiquotation.html#cb222-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `old[[2]]` is a call</span></span>
+<span id="cb222-3"><a href="quasiquotation.html#cb222-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `new[[2]]` is an integer vector (1, 2, 3, 4, 5, ...)</span></span></code></pre></div>
 <p>The same can also be noticed in ASTs for these expressions:</p>
-<div class="sourceCode" id="cb562"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; o-expr </span></span>
-<span><span class="co">#&gt; \-o-mean </span></span>
-<span><span class="co">#&gt;   \-o-`:` </span></span>
-<span><span class="co">#&gt;     +-1 </span></span>
-<span><span class="co">#&gt;     \-10</span></span>
-<span></span>
-<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; o-expr </span></span>
-<span><span class="co">#&gt; \-o-mean </span></span>
-<span><span class="co">#&gt;   \-&lt;inline integer&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="quasiquotation.html#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ast</span>(<span class="fu">expr</span>(<span class="fu">mean</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)))</span>
+<span id="cb223-2"><a href="quasiquotation.html#cb223-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; o-expr </span></span>
+<span id="cb223-3"><a href="quasiquotation.html#cb223-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; \-o-mean </span></span>
+<span id="cb223-4"><a href="quasiquotation.html#cb223-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   \-o-`:` </span></span>
+<span id="cb223-5"><a href="quasiquotation.html#cb223-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     +-1 </span></span>
+<span id="cb223-6"><a href="quasiquotation.html#cb223-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     \-10</span></span>
+<span id="cb223-7"><a href="quasiquotation.html#cb223-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb223-8"><a href="quasiquotation.html#cb223-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ast</span>(<span class="fu">expr</span>(<span class="fu">mean</span>(<span class="sc">!!</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>))))</span>
+<span id="cb223-9"><a href="quasiquotation.html#cb223-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; o-expr </span></span>
+<span id="cb223-10"><a href="quasiquotation.html#cb223-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; \-o-mean </span></span>
+<span id="cb223-11"><a href="quasiquotation.html#cb223-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   \-&lt;inline integer&gt;</span></span></code></pre></div>
 <p>The first call is more natural, since the second one inlines a vector directly into the call, something that is rarely done.</p>
-<hr>
+<hr />
 </div>
-<div id="exercises-19.6.5" class="section level3" number="19.0.4">
-<h3>
-<span class="header-section-number">19.0.4</span> Exercises 19.6.5<a class="anchor" aria-label="anchor" href="#exercises-19.6.5"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
-<p><strong>Q1.</strong> One way to implement <code><a href="https://rlang.r-lib.org/reference/exec.html">exec()</a></code> is shown below. Describe how it works. What are the key ideas?</p>
-<div class="sourceCode" id="cb563"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">exec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">...</span>, <span class="va">.env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">args</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">f</span>, <span class="va">args</span>, envir <span class="op">=</span> <span class="va">.env</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<p><strong>A1.</strong> The keys ideas that underlie the <code><a href="https://rlang.r-lib.org/reference/exec.html">exec()</a></code> function</p>
+<div id="exercises-19.6.5" class="section level2" number="19.4">
+<h2><span class="header-section-number">19.4</span> Exercises 19.6.5</h2>
+<hr />
+<p><strong>Q1.</strong> One way to implement <code>exec()</code> is shown below. Describe how it works. What are the key ideas?</p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="quasiquotation.html#cb224-1" aria-hidden="true" tabindex="-1"></a>exec <span class="ot">&lt;-</span> <span class="cf">function</span>(f, ..., <span class="at">.env =</span> <span class="fu">caller_env</span>()) {</span>
+<span id="cb224-2"><a href="quasiquotation.html#cb224-2" aria-hidden="true" tabindex="-1"></a>  args <span class="ot">&lt;-</span> <span class="fu">list2</span>(...)</span>
+<span id="cb224-3"><a href="quasiquotation.html#cb224-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do.call</span>(f, args, <span class="at">envir =</span> .env)</span>
+<span id="cb224-4"><a href="quasiquotation.html#cb224-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>A1.</strong> The keys ideas that underlie the <code>exec()</code> function</p>
 <ul>
 <li><p>The function constructs a call using function <code>f</code> and its argument <code>...</code>, and evaluates the call in the environment <code>.env</code>.</p></li>
-<li><p>The function uses <a href="https://rlang.r-lib.org/reference/dyn-dots.html">dynamic dots</a> via <code><a href="https://rlang.r-lib.org/reference/list2.html">list2()</a></code>, which means that you ca splice argument using <code>!!!</code>, you can inject names using <code>:=</code>, and trailing commas are not a problem.</p></li>
+<li><p>The function uses <a href="https://rlang.r-lib.org/reference/dyn-dots.html">dynamic dots</a> via <code>list2()</code>, which means that you ca splice argument using <code>!!!</code>, you can inject names using <code>:=</code>, and trailing commas are not a problem.</p></li>
 </ul>
 <p>Here is an example:</p>
-<div class="sourceCode" id="cb564"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="cn">NA</span><span class="op">)</span></span>
-<span><span class="va">args_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>trim <span class="op">=</span> <span class="fl">0</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/exec.html">exec</a></span><span class="op">(</span><span class="va">mean</span>, <span class="va">vec</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">args_list</span>, , .env <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 3</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="st">"exec"</span><span class="op">)</span></span></code></pre></div>
-<hr>
-<p><strong>Q2.</strong> Carefully read the source code for <code><a href="https://rdrr.io/r/base/interaction.html">interaction()</a></code>, <code><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid()</a></code>, and <code><a href="https://rdrr.io/r/graphics/par.html">par()</a></code>. Compare and contrast the techniques they use for switching between dots and list behaviour.</p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="quasiquotation.html#cb225-1" aria-hidden="true" tabindex="-1"></a>vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="cn">NA</span>)</span>
+<span id="cb225-2"><a href="quasiquotation.html#cb225-2" aria-hidden="true" tabindex="-1"></a>args_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">trim =</span> <span class="dv">0</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb225-3"><a href="quasiquotation.html#cb225-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb225-4"><a href="quasiquotation.html#cb225-4" aria-hidden="true" tabindex="-1"></a><span class="fu">exec</span>(mean, vec, <span class="sc">!!!</span>args_list, , <span class="at">.env =</span> <span class="fu">caller_env</span>())</span>
+<span id="cb225-5"><a href="quasiquotation.html#cb225-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3</span></span>
+<span id="cb225-6"><a href="quasiquotation.html#cb225-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb225-7"><a href="quasiquotation.html#cb225-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="st">&quot;exec&quot;</span>)</span></code></pre></div>
+<hr />
+<p><strong>Q2.</strong> Carefully read the source code for <code>interaction()</code>, <code>expand.grid()</code>, and <code>par()</code>. Compare and contrast the techniques they use for switching between dots and list behaviour.</p>
 <p><strong>A2.</strong> Source code reveals the following comparison table:</p>
-<div class="inline-table"><table class="table table-sm">
+<table>
 <colgroup>
-<col width="14%">
-<col width="18%">
-<col width="66%">
+<col width="14%" />
+<col width="18%" />
+<col width="66%" />
 </colgroup>
-<thead><tr class="header">
+<thead>
+<tr class="header">
 <th align="left">Function</th>
 <th align="left">Capture the dots</th>
 <th align="left">Handle list input</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td align="left"><code><a href="https://rdrr.io/r/base/interaction.html">interaction()</a></code></td>
+<td align="left"><code>interaction()</code></td>
 <td align="left"><code>args &lt;- list(...)</code></td>
 <td align="left"><code>length(args) == 1L &amp;&amp; is.list(args[[1L]])</code></td>
 </tr>
 <tr class="even">
-<td align="left"><code><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid()</a></code></td>
+<td align="left"><code>expand.grid()</code></td>
 <td align="left"><code>args &lt;- list(...)</code></td>
 <td align="left"><code>length(args) == 1L &amp;&amp; is.list(args[[1L]])</code></td>
 </tr>
 <tr class="odd">
-<td align="left"><code><a href="https://rdrr.io/r/graphics/par.html">par()</a></code></td>
+<td align="left"><code>par()</code></td>
 <td align="left"><code>args &lt;- list(...)</code></td>
 <td align="left"><code>length(args) == 1L &amp;&amp; (is.list(args[[1L]] || is.null(args[[1L]])))</code></td>
 </tr>
 </tbody>
-</table></div>
+</table>
 <p>All functions capture the dots in a list.</p>
 <p>Using these dots, the functions check if a list was entered as an argument by checking the number of arguments and, if the count is 1, checking if the argument is a list.</p>
-<hr>
+<hr />
 <p><strong>Q3.</strong> Explain the problem with this definition of <code>set_attr()</code></p>
-<div class="sourceCode" id="cb565"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">set_attr</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">attr</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">attr</span></span>
-<span>  <span class="va">x</span></span>
-<span><span class="op">}</span></span>
-<span><span class="fu">set_attr</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, x <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in attributes(x) &lt;- attr: attributes must be named</span></span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="quasiquotation.html#cb226-1" aria-hidden="true" tabindex="-1"></a>set_attr <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb226-2"><a href="quasiquotation.html#cb226-2" aria-hidden="true" tabindex="-1"></a>  attr <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">list2</span>(...)</span>
+<span id="cb226-3"><a href="quasiquotation.html#cb226-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">attributes</span>(x) <span class="ot">&lt;-</span> attr</span>
+<span id="cb226-4"><a href="quasiquotation.html#cb226-4" aria-hidden="true" tabindex="-1"></a>  x</span>
+<span id="cb226-5"><a href="quasiquotation.html#cb226-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb226-6"><a href="quasiquotation.html#cb226-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set_attr</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">x =</span> <span class="dv">10</span>)</span>
+<span id="cb226-7"><a href="quasiquotation.html#cb226-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in attributes(x) &lt;- attr: attributes must be named</span></span></code></pre></div>
 <p><strong>A3.</strong> The <code>set_attr()</code> function signature has a parameter called <code>x</code>, and additionally it uses dynamic dots to pass multiple arguments to specify additional attributes for <code>x</code>.</p>
 <p>But, as shown in the example, this creates a problem when the attribute is itself named <code>x</code>. Naming the arguments won’t help either:</p>
-<div class="sourceCode" id="cb566"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">set_attr</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">attr</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">attr</span></span>
-<span>  <span class="va">x</span></span>
-<span><span class="op">}</span></span>
-<span><span class="fu">set_attr</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, x <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in set_attr(x = 1:10, x = 10): formal argument "x" matched by multiple actual arguments</span></span></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="quasiquotation.html#cb227-1" aria-hidden="true" tabindex="-1"></a>set_attr <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb227-2"><a href="quasiquotation.html#cb227-2" aria-hidden="true" tabindex="-1"></a>  attr <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">list2</span>(...)</span>
+<span id="cb227-3"><a href="quasiquotation.html#cb227-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">attributes</span>(x) <span class="ot">&lt;-</span> attr</span>
+<span id="cb227-4"><a href="quasiquotation.html#cb227-4" aria-hidden="true" tabindex="-1"></a>  x</span>
+<span id="cb227-5"><a href="quasiquotation.html#cb227-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb227-6"><a href="quasiquotation.html#cb227-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set_attr</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">x =</span> <span class="dv">10</span>)</span>
+<span id="cb227-7"><a href="quasiquotation.html#cb227-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in set_attr(x = 1:10, x = 10): formal argument &quot;x&quot; matched by multiple actual arguments</span></span></code></pre></div>
 <p>We can avoid these issues by renaming the parameter:</p>
-<div class="sourceCode" id="cb567"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">set_attr</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">.x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">attr</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">attr</span></span>
-<span>  <span class="va">.x</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu">set_attr</span><span class="op">(</span>.x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, x <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></span>
-<span><span class="co">#&gt; attr(,"x")</span></span>
-<span><span class="co">#&gt; [1] 10</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="quasiquotation.html#cb228-1" aria-hidden="true" tabindex="-1"></a>set_attr <span class="ot">&lt;-</span> <span class="cf">function</span>(.x, ...) {</span>
+<span id="cb228-2"><a href="quasiquotation.html#cb228-2" aria-hidden="true" tabindex="-1"></a>  attr <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">list2</span>(...)</span>
+<span id="cb228-3"><a href="quasiquotation.html#cb228-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">attributes</span>(.x) <span class="ot">&lt;-</span> attr</span>
+<span id="cb228-4"><a href="quasiquotation.html#cb228-4" aria-hidden="true" tabindex="-1"></a>  .x</span>
+<span id="cb228-5"><a href="quasiquotation.html#cb228-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb228-6"><a href="quasiquotation.html#cb228-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb228-7"><a href="quasiquotation.html#cb228-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set_attr</span>(<span class="at">.x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">x =</span> <span class="dv">10</span>)</span>
+<span id="cb228-8"><a href="quasiquotation.html#cb228-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></span>
+<span id="cb228-9"><a href="quasiquotation.html#cb228-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;x&quot;)</span></span>
+<span id="cb228-10"><a href="quasiquotation.html#cb228-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 10</span></span></code></pre></div>
+<hr />
 </div>
-<div id="exercises-19.7.5" class="section level3" number="19.0.5">
-<h3>
-<span class="header-section-number">19.0.5</span> Exercises 19.7.5<a class="anchor" aria-label="anchor" href="#exercises-19.7.5"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
-<p><strong>Q1.</strong> In the linear-model example, we could replace the <code><a href="https://rlang.r-lib.org/reference/expr.html">expr()</a></code> in <code>reduce(summands, ~ expr(!!.x + !!.y))</code> with <code><a href="https://rlang.r-lib.org/reference/call2.html">call2()</a></code>: <code>reduce(summands, call2, "+")</code>. Compare and contrast the two approaches. Which do you think is easier to read?</p>
-<p><strong>A1.</strong> We can rewrite the <code>linear()</code> function from this chapter using <code><a href="https://rlang.r-lib.org/reference/call2.html">call2()</a></code> as follows:</p>
-<div class="sourceCode" id="cb568"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">linear</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">var</span>, <span class="va">val</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">ensym</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span></span>
-<span>  <span class="va">coef_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">val</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">var</span><span class="op">)</span><span class="op">[[</span><span class="op">!</span><span class="op">!</span><span class="va">.x</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">summands</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span><span class="va">val</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>, <span class="va">coef_name</span>, <span class="op">~</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">.x</span> <span class="op">*</span> <span class="op">!</span><span class="op">!</span><span class="va">.y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">summands</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">val</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">summands</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce</a></span><span class="op">(</span><span class="va">summands</span>, <span class="op">~</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="st">"+"</span>, <span class="va">.x</span>, <span class="va">.y</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu">linear</span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span>, <span class="op">-</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 10 + (5 * x[[1L]]) + (-4 * x[[2L]])</span></span></code></pre></div>
-<p>I personally find the version with <code><a href="https://rlang.r-lib.org/reference/call2.html">call2()</a></code> to be much more readable since the <code>!!</code> syntax is a bit esoteric.</p>
-<hr>
-<p><strong>Q2.</strong> Re-implement the Box-Cox transform defined below using unquoting and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
-<div class="sourceCode" id="cb569"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bc</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="va">lambda</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="va">lambda</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<p><strong>A2.</strong> Re-implementation of the Box-Cox transform using unquoting and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
-<div class="sourceCode" id="cb570"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bc_new</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rlang.r-lib.org/reference/new_function.html">new_function</a></span><span class="op">(</span></span>
-<span>      <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">)</span>,</span>
-<span>      <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rlang.r-lib.org/reference/new_function.html">new_function</a></span><span class="op">(</span></span>
-<span>      <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">)</span>,</span>
-<span>      <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">lambda</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">lambda</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<div id="exercises-19.7.5" class="section level2" number="19.5">
+<h2><span class="header-section-number">19.5</span> Exercises 19.7.5</h2>
+<hr />
+<p><strong>Q1.</strong> In the linear-model example, we could replace the <code>expr()</code> in <code>reduce(summands, ~ expr(!!.x + !!.y))</code> with <code>call2()</code>: <code>reduce(summands, call2, "+")</code>. Compare and contrast the two approaches. Which do you think is easier to read?</p>
+<p><strong>A1.</strong> We can rewrite the <code>linear()</code> function from this chapter using <code>call2()</code> as follows:</p>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="quasiquotation.html#cb229-1" aria-hidden="true" tabindex="-1"></a>linear <span class="ot">&lt;-</span> <span class="cf">function</span>(var, val) {</span>
+<span id="cb229-2"><a href="quasiquotation.html#cb229-2" aria-hidden="true" tabindex="-1"></a>  var <span class="ot">&lt;-</span> <span class="fu">ensym</span>(var)</span>
+<span id="cb229-3"><a href="quasiquotation.html#cb229-3" aria-hidden="true" tabindex="-1"></a>  coef_name <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">seq_along</span>(val[<span class="sc">-</span><span class="dv">1</span>]), <span class="sc">~</span> <span class="fu">expr</span>((<span class="sc">!!</span>var)[[<span class="sc">!!</span>.x]]))</span>
+<span id="cb229-4"><a href="quasiquotation.html#cb229-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb229-5"><a href="quasiquotation.html#cb229-5" aria-hidden="true" tabindex="-1"></a>  summands <span class="ot">&lt;-</span> <span class="fu">map2</span>(val[<span class="sc">-</span><span class="dv">1</span>], coef_name, <span class="sc">~</span> <span class="fu">expr</span>((<span class="sc">!!</span>.x <span class="sc">*</span> <span class="sc">!!</span>.y)))</span>
+<span id="cb229-6"><a href="quasiquotation.html#cb229-6" aria-hidden="true" tabindex="-1"></a>  summands <span class="ot">&lt;-</span> <span class="fu">c</span>(val[[<span class="dv">1</span>]], summands)</span>
+<span id="cb229-7"><a href="quasiquotation.html#cb229-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb229-8"><a href="quasiquotation.html#cb229-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reduce</span>(summands, <span class="sc">~</span> <span class="fu">call2</span>(<span class="st">&quot;+&quot;</span>, .x, .y))</span>
+<span id="cb229-9"><a href="quasiquotation.html#cb229-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb229-10"><a href="quasiquotation.html#cb229-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb229-11"><a href="quasiquotation.html#cb229-11" aria-hidden="true" tabindex="-1"></a><span class="fu">linear</span>(x, <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="sc">-</span><span class="dv">4</span>))</span>
+<span id="cb229-12"><a href="quasiquotation.html#cb229-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 + (5 * x[[1L]]) + (-4 * x[[2L]])</span></span></code></pre></div>
+<p>I personally find the version with <code>call2()</code> to be much more readable since the <code>!!</code> syntax is a bit esoteric.</p>
+<hr />
+<p><strong>Q2.</strong> Re-implement the Box-Cox transform defined below using unquoting and <code>new_function()</code>:</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="quasiquotation.html#cb230-1" aria-hidden="true" tabindex="-1"></a>bc <span class="ot">&lt;-</span> <span class="cf">function</span>(lambda) {</span>
+<span id="cb230-2"><a href="quasiquotation.html#cb230-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (lambda <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb230-3"><a href="quasiquotation.html#cb230-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(x) <span class="fu">log</span>(x)</span>
+<span id="cb230-4"><a href="quasiquotation.html#cb230-4" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb230-5"><a href="quasiquotation.html#cb230-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(x) (x<span class="sc">^</span>lambda <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> lambda</span>
+<span id="cb230-6"><a href="quasiquotation.html#cb230-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb230-7"><a href="quasiquotation.html#cb230-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>A2.</strong> Re-implementation of the Box-Cox transform using unquoting and <code>new_function()</code>:</p>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="quasiquotation.html#cb231-1" aria-hidden="true" tabindex="-1"></a>bc_new <span class="ot">&lt;-</span> <span class="cf">function</span>(lambda) {</span>
+<span id="cb231-2"><a href="quasiquotation.html#cb231-2" aria-hidden="true" tabindex="-1"></a>  lambda <span class="ot">&lt;-</span> <span class="fu">enexpr</span>(lambda)</span>
+<span id="cb231-3"><a href="quasiquotation.html#cb231-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb231-4"><a href="quasiquotation.html#cb231-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!!</span>lambda <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb231-5"><a href="quasiquotation.html#cb231-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">new_function</span>(</span>
+<span id="cb231-6"><a href="quasiquotation.html#cb231-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">exprs</span>(<span class="at">x =</span> ),</span>
+<span id="cb231-7"><a href="quasiquotation.html#cb231-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">expr</span>(<span class="fu">log</span>(x))</span>
+<span id="cb231-8"><a href="quasiquotation.html#cb231-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb231-9"><a href="quasiquotation.html#cb231-9" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb231-10"><a href="quasiquotation.html#cb231-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">new_function</span>(</span>
+<span id="cb231-11"><a href="quasiquotation.html#cb231-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">exprs</span>(<span class="at">x =</span> ),</span>
+<span id="cb231-12"><a href="quasiquotation.html#cb231-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">expr</span>((x<span class="sc">^</span>(<span class="sc">!!</span>lambda) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> (<span class="sc">!!</span>lambda))</span>
+<span id="cb231-13"><a href="quasiquotation.html#cb231-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb231-14"><a href="quasiquotation.html#cb231-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb231-15"><a href="quasiquotation.html#cb231-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Let’s try it out to see if it produces the same output as before:</p>
-<div class="sourceCode" id="cb571"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">bc</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0</span></span>
-<span><span class="fu">bc_new</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0</span></span>
-<span></span>
-<span><span class="fu">bc</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1.5</span></span>
-<span><span class="fu">bc_new</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1.5</span></span></code></pre></div>
-<hr>
-<p><strong>Q3.</strong> Re-implement the simple <code><a href="https://purrr.tidyverse.org/reference/compose.html">compose()</a></code> defined below using quasiquotation and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
-<div class="sourceCode" id="cb572"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">compose</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">g</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<p><strong>A3.</strong> Following is a re-implementation of <code><a href="https://purrr.tidyverse.org/reference/compose.html">compose()</a></code> using quasiquotation and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
-<div class="sourceCode" id="cb573"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">compose_new</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">g</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span> <span class="co"># or ensym(f)</span></span>
-<span>  <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="co"># or ensym(g)</span></span>
-<span></span>
-<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/new_function.html">new_function</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>... <span class="op">=</span> <span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">f</span><span class="op">)</span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">g</span><span class="op">)</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="quasiquotation.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bc</span>(<span class="dv">0</span>)(<span class="dv">1</span>)</span>
+<span id="cb232-2"><a href="quasiquotation.html#cb232-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb232-3"><a href="quasiquotation.html#cb232-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bc_new</span>(<span class="dv">0</span>)(<span class="dv">1</span>)</span>
+<span id="cb232-4"><a href="quasiquotation.html#cb232-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb232-5"><a href="quasiquotation.html#cb232-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-6"><a href="quasiquotation.html#cb232-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bc</span>(<span class="dv">2</span>)(<span class="dv">2</span>)</span>
+<span id="cb232-7"><a href="quasiquotation.html#cb232-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.5</span></span>
+<span id="cb232-8"><a href="quasiquotation.html#cb232-8" aria-hidden="true" tabindex="-1"></a><span class="fu">bc_new</span>(<span class="dv">2</span>)(<span class="dv">2</span>)</span>
+<span id="cb232-9"><a href="quasiquotation.html#cb232-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.5</span></span></code></pre></div>
+<hr />
+<p><strong>Q3.</strong> Re-implement the simple <code>compose()</code> defined below using quasiquotation and <code>new_function()</code>:</p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="quasiquotation.html#cb233-1" aria-hidden="true" tabindex="-1"></a>compose <span class="ot">&lt;-</span> <span class="cf">function</span>(f, g) {</span>
+<span id="cb233-2"><a href="quasiquotation.html#cb233-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(...) <span class="fu">f</span>(<span class="fu">g</span>(...))</span>
+<span id="cb233-3"><a href="quasiquotation.html#cb233-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>A3.</strong> Following is a re-implementation of <code>compose()</code> using quasiquotation and <code>new_function()</code>:</p>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="quasiquotation.html#cb234-1" aria-hidden="true" tabindex="-1"></a>compose_new <span class="ot">&lt;-</span> <span class="cf">function</span>(f, g) {</span>
+<span id="cb234-2"><a href="quasiquotation.html#cb234-2" aria-hidden="true" tabindex="-1"></a>  f <span class="ot">&lt;-</span> <span class="fu">enexpr</span>(f) <span class="co"># or ensym(f)</span></span>
+<span id="cb234-3"><a href="quasiquotation.html#cb234-3" aria-hidden="true" tabindex="-1"></a>  g <span class="ot">&lt;-</span> <span class="fu">enexpr</span>(g) <span class="co"># or ensym(g)</span></span>
+<span id="cb234-4"><a href="quasiquotation.html#cb234-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb234-5"><a href="quasiquotation.html#cb234-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">new_function</span>(</span>
+<span id="cb234-6"><a href="quasiquotation.html#cb234-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">exprs</span>(<span class="at">... =</span> ),</span>
+<span id="cb234-7"><a href="quasiquotation.html#cb234-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expr</span>((<span class="sc">!!</span>f)((<span class="sc">!!</span>g)(...)))</span>
+<span id="cb234-8"><a href="quasiquotation.html#cb234-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb234-9"><a href="quasiquotation.html#cb234-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Checking that the new version behaves the same way as the original version:</p>
-<div class="sourceCode" id="cb574"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">not_null</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/compose.html">compose</a></span><span class="op">(</span><span class="va">`!`</span>, <span class="va">is.null</span><span class="op">)</span></span>
-<span><span class="fu">not_null</span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span></span>
-<span><span class="va">not_null2</span> <span class="op">&lt;-</span> <span class="fu">compose_new</span><span class="op">(</span><span class="va">`!`</span>, <span class="va">is.null</span><span class="op">)</span></span>
-<span><span class="fu">not_null2</span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="quasiquotation.html#cb235-1" aria-hidden="true" tabindex="-1"></a>not_null <span class="ot">&lt;-</span> <span class="fu">compose</span>(<span class="st">`</span><span class="at">!</span><span class="st">`</span>, is.null)</span>
+<span id="cb235-2"><a href="quasiquotation.html#cb235-2" aria-hidden="true" tabindex="-1"></a><span class="fu">not_null</span>(<span class="dv">4</span>)</span>
+<span id="cb235-3"><a href="quasiquotation.html#cb235-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb235-4"><a href="quasiquotation.html#cb235-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb235-5"><a href="quasiquotation.html#cb235-5" aria-hidden="true" tabindex="-1"></a>not_null2 <span class="ot">&lt;-</span> <span class="fu">compose_new</span>(<span class="st">`</span><span class="at">!</span><span class="st">`</span>, is.null)</span>
+<span id="cb235-6"><a href="quasiquotation.html#cb235-6" aria-hidden="true" tabindex="-1"></a><span class="fu">not_null2</span>(<span class="dv">4</span>)</span>
+<span id="cb235-7"><a href="quasiquotation.html#cb235-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<hr />
 </div>
-<div id="session-information-14" class="section level2" number="19.1">
-<h2>
-<span class="header-section-number">19.1</span> Session information<a class="anchor" aria-label="anchor" href="#session-information-14"><i class="fas fa-link"></i></a>
-</h2>
-<div class="sourceCode" id="cb575"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; - Session info -------------------------------------------</span></span>
-<span><span class="co">#&gt;  setting  value</span></span>
-<span><span class="co">#&gt;  version  R version 4.1.3 (2022-03-10)</span></span>
-<span><span class="co">#&gt;  os       Windows 10 x64 (build 22000)</span></span>
-<span><span class="co">#&gt;  system   x86_64, mingw32</span></span>
-<span><span class="co">#&gt;  ui       RTerm</span></span>
-<span><span class="co">#&gt;  language (EN)</span></span>
-<span><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
-<span><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
-<span><span class="co">#&gt;  tz       Europe/Berlin</span></span>
-<span><span class="co">#&gt;  date     2022-08-20</span></span>
-<span><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
-<span><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
-<span><span class="co">#&gt;    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    base        * 4.1.3      2022-03-10 [?] local</span></span>
-<span><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P compiler      4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;  P datasets    * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    DBI           1.1.3      2022-06-18 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    diffobj       0.3.5      2021-10-05 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    dplyr       * 1.0.9      2022-04-28 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    farver        2.1.1      2022-07-06 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    ggplot2     * 3.3.6      2022-05-03 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P graphics    * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;  P grDevices   * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;  P grid          4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    gtable        0.3.0      2019-03-25 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    highr         0.9        2021-04-16 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)</span></span>
-<span><span class="co">#&gt;    labeling      0.4.2      2020-10-20 [1] CRAN (R 4.1.0)</span></span>
-<span><span class="co">#&gt;    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    lobstr      * 1.1.2      2022-06-22 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    MASS        * 7.3-55     2022-01-16 [2] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P methods     * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    munsell       0.5.0      2018-06-12 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    purrr       * 0.3.4      2020-04-17 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
-<span><span class="co">#&gt;    rematch2      2.1.2      2020-05-01 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
-<span><span class="co">#&gt;    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    scales        1.2.0      2022-04-13 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P tools         4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;  P utils       * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    waldo         0.4.0      2022-03-16 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    winch         0.0.8      2022-03-17 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1</span></span>
-<span><span class="co">#&gt;  [2] C:/Program Files/R/R-4.1.3/library</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  P -- Loaded and on-disk path mismatch.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ----------------------------------------------------------</span></span></code></pre></div>
+<div id="session-information-14" class="section level2" number="19.6">
+<h2><span class="header-section-number">19.6</span> Session information</h2>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="quasiquotation.html#cb236-1" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb236-2"><a href="quasiquotation.html#cb236-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - Session info -------------------------------------------</span></span>
+<span id="cb236-3"><a href="quasiquotation.html#cb236-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  setting  value</span></span>
+<span id="cb236-4"><a href="quasiquotation.html#cb236-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  version  R version 4.1.3 (2022-03-10)</span></span>
+<span id="cb236-5"><a href="quasiquotation.html#cb236-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  os       Windows 10 x64 (build 22000)</span></span>
+<span id="cb236-6"><a href="quasiquotation.html#cb236-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  system   x86_64, mingw32</span></span>
+<span id="cb236-7"><a href="quasiquotation.html#cb236-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ui       RTerm</span></span>
+<span id="cb236-8"><a href="quasiquotation.html#cb236-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  language (EN)</span></span>
+<span id="cb236-9"><a href="quasiquotation.html#cb236-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
+<span id="cb236-10"><a href="quasiquotation.html#cb236-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
+<span id="cb236-11"><a href="quasiquotation.html#cb236-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tz       Europe/Berlin</span></span>
+<span id="cb236-12"><a href="quasiquotation.html#cb236-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  date     2022-08-21</span></span>
+<span id="cb236-13"><a href="quasiquotation.html#cb236-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
+<span id="cb236-14"><a href="quasiquotation.html#cb236-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb236-15"><a href="quasiquotation.html#cb236-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
+<span id="cb236-16"><a href="quasiquotation.html#cb236-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
+<span id="cb236-17"><a href="quasiquotation.html#cb236-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb236-18"><a href="quasiquotation.html#cb236-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    base        * 4.1.3      2022-03-10 [?] local</span></span>
+<span id="cb236-19"><a href="quasiquotation.html#cb236-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-20"><a href="quasiquotation.html#cb236-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-21"><a href="quasiquotation.html#cb236-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb236-22"><a href="quasiquotation.html#cb236-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-23"><a href="quasiquotation.html#cb236-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb236-24"><a href="quasiquotation.html#cb236-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P compiler      4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb236-25"><a href="quasiquotation.html#cb236-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-26"><a href="quasiquotation.html#cb236-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P datasets    * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb236-27"><a href="quasiquotation.html#cb236-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    DBI           1.1.3      2022-06-18 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-28"><a href="quasiquotation.html#cb236-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    diffobj       0.3.5      2021-10-05 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb236-29"><a href="quasiquotation.html#cb236-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb236-30"><a href="quasiquotation.html#cb236-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-31"><a href="quasiquotation.html#cb236-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    dplyr       * 1.0.9      2022-04-28 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-32"><a href="quasiquotation.html#cb236-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-33"><a href="quasiquotation.html#cb236-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-34"><a href="quasiquotation.html#cb236-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    farver        2.1.1      2022-07-06 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-35"><a href="quasiquotation.html#cb236-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb236-36"><a href="quasiquotation.html#cb236-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb236-37"><a href="quasiquotation.html#cb236-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-38"><a href="quasiquotation.html#cb236-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    ggplot2     * 3.3.6      2022-05-03 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-39"><a href="quasiquotation.html#cb236-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb236-40"><a href="quasiquotation.html#cb236-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P graphics    * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb236-41"><a href="quasiquotation.html#cb236-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P grDevices   * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb236-42"><a href="quasiquotation.html#cb236-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P grid          4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb236-43"><a href="quasiquotation.html#cb236-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    gtable        0.3.0      2019-03-25 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb236-44"><a href="quasiquotation.html#cb236-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    highr         0.9        2021-04-16 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb236-45"><a href="quasiquotation.html#cb236-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-46"><a href="quasiquotation.html#cb236-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb236-47"><a href="quasiquotation.html#cb236-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb236-48"><a href="quasiquotation.html#cb236-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)</span></span>
+<span id="cb236-49"><a href="quasiquotation.html#cb236-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    labeling      0.4.2      2020-10-20 [1] CRAN (R 4.1.0)</span></span>
+<span id="cb236-50"><a href="quasiquotation.html#cb236-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb236-51"><a href="quasiquotation.html#cb236-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    lobstr      * 1.1.2      2022-06-22 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-52"><a href="quasiquotation.html#cb236-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-53"><a href="quasiquotation.html#cb236-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    MASS        * 7.3-55     2022-01-16 [2] CRAN (R 4.1.3)</span></span>
+<span id="cb236-54"><a href="quasiquotation.html#cb236-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb236-55"><a href="quasiquotation.html#cb236-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P methods     * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb236-56"><a href="quasiquotation.html#cb236-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    munsell       0.5.0      2018-06-12 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb236-57"><a href="quasiquotation.html#cb236-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-58"><a href="quasiquotation.html#cb236-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb236-59"><a href="quasiquotation.html#cb236-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    purrr       * 0.3.4      2020-04-17 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb236-60"><a href="quasiquotation.html#cb236-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
+<span id="cb236-61"><a href="quasiquotation.html#cb236-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rematch2      2.1.2      2020-05-01 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb236-62"><a href="quasiquotation.html#cb236-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-63"><a href="quasiquotation.html#cb236-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
+<span id="cb236-64"><a href="quasiquotation.html#cb236-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb236-65"><a href="quasiquotation.html#cb236-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-66"><a href="quasiquotation.html#cb236-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    scales        1.2.1      2022-08-20 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-67"><a href="quasiquotation.html#cb236-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb236-68"><a href="quasiquotation.html#cb236-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb236-69"><a href="quasiquotation.html#cb236-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-70"><a href="quasiquotation.html#cb236-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-71"><a href="quasiquotation.html#cb236-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-72"><a href="quasiquotation.html#cb236-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb236-73"><a href="quasiquotation.html#cb236-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P tools         4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb236-74"><a href="quasiquotation.html#cb236-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb236-75"><a href="quasiquotation.html#cb236-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P utils       * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb236-76"><a href="quasiquotation.html#cb236-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-77"><a href="quasiquotation.html#cb236-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    waldo         0.4.0      2022-03-16 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-78"><a href="quasiquotation.html#cb236-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    winch         0.0.8      2022-03-17 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-79"><a href="quasiquotation.html#cb236-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb236-80"><a href="quasiquotation.html#cb236-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb236-81"><a href="quasiquotation.html#cb236-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb236-82"><a href="quasiquotation.html#cb236-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb236-83"><a href="quasiquotation.html#cb236-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb236-84"><a href="quasiquotation.html#cb236-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1</span></span>
+<span id="cb236-85"><a href="quasiquotation.html#cb236-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [2] C:/Program Files/R/R-4.1.3/library</span></span>
+<span id="cb236-86"><a href="quasiquotation.html#cb236-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb236-87"><a href="quasiquotation.html#cb236-87" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P -- Loaded and on-disk path mismatch.</span></span>
+<span id="cb236-88"><a href="quasiquotation.html#cb236-88" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb236-89"><a href="quasiquotation.html#cb236-89" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------------------------</span></span></code></pre></div>
 
 </div>
 </div>
-  <div class="chapter-nav">
-<div class="prev"><a href="expressions.html"><span class="header-section-number">18</span> Expressions</a></div>
-<div class="next"><a href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li>
-<a class="nav-link" href="#quasiquotation"><span class="header-section-number">19</span> Quasiquotation</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#exercises-19.2.2"><span class="header-section-number">19.0.1</span> Exercises 19.2.2</a></li>
-<li><a class="nav-link" href="#exercises-19.3.6"><span class="header-section-number">19.0.2</span> Exercises 19.3.6</a></li>
-<li><a class="nav-link" href="#exercises-19.4.8"><span class="header-section-number">19.0.3</span> Exercises 19.4.8</a></li>
-<li><a class="nav-link" href="#exercises-19.6.5"><span class="header-section-number">19.0.4</span> Exercises 19.6.5</a></li>
-<li><a class="nav-link" href="#exercises-19.7.5"><span class="header-section-number">19.0.5</span> Exercises 19.7.5</a></li>
-</ul>
-</li>
-<li><a class="nav-link" href="#session-information-14"><span class="header-section-number">19.1</span> Session information</a></li>
-</ul>
+  </main>
+
+  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Quotation.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Quotation.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
-</div>
+      </div>
     </nav>
-</div>
+  </div>
 
 </div>
 </div> <!-- .container -->
 
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+<footer class="bg-primary text-light mt-5">
+  <div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
     <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-20.</p>
@@ -843,34 +775,9 @@ the expression slot of the promise replaces the symbol.</p>
   </div>
 
 </div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-for (let popover of popovers) {
-  const div = document.createElement('div');
-  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-  div.innerHTML = popover.getAttribute('data-content');
+</footer>
 
-  var has_math = div.querySelector("span.math");
-  if (has_math) {
-    document.body.appendChild(div);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    MathJax.Hub.Queue(function() {
-      popover.setAttribute('data-content', div.innerHTML);
-      document.body.removeChild(div);
-    })
-  }
-}
-</script>
+
 </body>
+
 </html>

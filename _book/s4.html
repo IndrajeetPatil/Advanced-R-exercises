@@ -1,37 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 15 S4 | Advanced R Exercises</title>
-<meta name="author" content="Indrajeet Patil">
-<meta name="description" content="15.0.1 Exercises 15.2.1 Q1. lubridate::period() returns an S4 class. What slots does it have? What class is each slot? What accessors does it provide? A1. Let’s first create an instance of Period...">
-<meta name="generator" content="bookdown 0.28 with bs4_book()">
-<meta property="og:title" content="Chapter 15 S4 | Advanced R Exercises">
-<meta property="og:type" content="book">
-<meta property="og:image" content="/cover.png">
-<meta property="og:description" content="15.0.1 Exercises 15.2.1 Q1. lubridate::period() returns an S4 class. What slots does it have? What class is each slot? What accessors does it provide? A1. Let’s first create an instance of Period...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 15 S4 | Advanced R Exercises">
-<meta name="twitter:description" content="15.0.1 Exercises 15.2.1 Q1. lubridate::period() returns an S4 class. What slots does it have? What class is each slot? What accessors does it provide? A1. Let’s first create an instance of Period...">
-<meta name="twitter:image" content="/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
-<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
-<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Chapter 15 S4 | Advanced R Exercises</title>
+
+    <meta name="author" content="Indrajeet Patil" />
+  
+   <meta name="description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+   <meta name="generator" content="placeholder" />
+  <meta property="og:title" content="Chapter 15 S4 | Advanced R Exercises" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="/cover.png" />
+  <meta property="og:description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 15 S4 | Advanced R Exercises" />
+  
+  <meta name="twitter:description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+  <meta name="twitter:image" content="/cover.png" />
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
+    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
+    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
+    <script src="libs/bs3compat-0.4.0/transition.js"></script>
+    <script src="libs/bs3compat-0.4.0/tabs.js"></script>
+    <script src="libs/bs3compat-0.4.0/bs3compat.js"></script>
+    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
+    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
+    <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+    <script src="libs/d3-3.5.6/d3.min.js"></script>
+    <link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet" />
+    <script src="libs/profvis-0.3.6.9000/profvis.js"></script>
+    <script src="libs/profvis-0.3.6.9000/scroll.js"></script>
+    <link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet" />
+    <script src="libs/highlight-6.2.0/highlight.js"></script>
+    <script src="libs/profvis-binding-0.3.7/profvis.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  <style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
-<link rel="stylesheet" href="bs4_style.css">
+      <link rel="stylesheet" href="bs4_style.css" />
+  
 </head>
+
 <body data-spy="scroll" data-target="#toc">
 
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
@@ -43,630 +71,556 @@
     <div id="main-nav" class="collapse-lg">
       <form role="search">
         <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
+      </form>
 
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">About</a></li>
-<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
-<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
-<li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
-<li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
-<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
-<li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
-<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
-<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
-<li><a class="" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
-<li><a class="" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
-<li><a class="active" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
-<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
-<li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
-<li><a class="" href="quasiquotation.html"><span class="header-section-number">19</span> Quasiquotation</a></li>
-<li><a class="" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
-<li><a class="" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></li>
-<li><a class="" href="improving-performance.html"><span class="header-section-number">24</span> Improving performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></li>
-</ul>
+      <nav aria-label="Table of contents">
+        <h2>Table of contents</h2>
+        <div id="book-toc"></div>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
         </div>
       </nav>
-</div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="s4" class="section level1" number="15">
-<h1>
-<span class="header-section-number">15</span> S4<a class="anchor" aria-label="anchor" href="#s4"><i class="fas fa-link"></i></a>
-</h1>
-<div id="exercises-15.2.1" class="section level3" number="15.0.1">
-<h3>
-<span class="header-section-number">15.0.1</span> Exercises 15.2.1<a class="anchor" aria-label="anchor" href="#exercises-15.2.1"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
-<p><strong>Q1.</strong> <code><a href="https://lubridate.tidyverse.org/reference/period.html">lubridate::period()</a></code> returns an S4 class. What slots does it have? What class is each slot? What accessors does it provide?</p>
+    </div>
+  </header>
+
+  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
+<div id="s4" class="section level1" number="15">
+<h1><span class="header-section-number">Chapter 15</span> S4</h1>
+<div id="exercises-15.2.1" class="section level2" number="15.1">
+<h2><span class="header-section-number">15.1</span> Exercises 15.2.1</h2>
+<hr />
+<p><strong>Q1.</strong> <code>lubridate::period()</code> returns an S4 class. What slots does it have? What class is each slot? What accessors does it provide?</p>
 <p><strong>A1.</strong> Let’s first create an instance of <code>Period</code> class:</p>
-<div class="sourceCode" id="cb442"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org">lubridate</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'lubridate'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     date, intersect, setdiff, union</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/period.html">period</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">43</span>, <span class="fl">6</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hour"</span>, <span class="st">"second"</span>, <span class="st">"minute"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">x</span></span>
-<span><span class="co">#&gt; [1] "2H 6M 43S"</span></span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="s4.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb103-2"><a href="s4.html#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb103-3"><a href="s4.html#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;lubridate&#39;</span></span>
+<span id="cb103-4"><a href="s4.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></span>
+<span id="cb103-5"><a href="s4.html#cb103-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb103-6"><a href="s4.html#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     date, intersect, setdiff, union</span></span>
+<span id="cb103-7"><a href="s4.html#cb103-7" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> lubridate<span class="sc">::</span><span class="fu">period</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">43</span>, <span class="dv">6</span>), <span class="fu">c</span>(<span class="st">&quot;hour&quot;</span>, <span class="st">&quot;second&quot;</span>, <span class="st">&quot;minute&quot;</span>))</span>
+<span id="cb103-8"><a href="s4.html#cb103-8" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb103-9"><a href="s4.html#cb103-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;2H 6M 43S&quot;</span></span></code></pre></div>
 <p>It has the following slots:</p>
-<div class="sourceCode" id="cb443"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/methods/slot.html">slotNames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] ".Data"  "year"   "month"  "day"    "hour"   "minute"</span></span></code></pre></div>
-<p>Additionally, the base type of each slot (<code>numeric</code>) can be seen in <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> output:</p>
-<div class="sourceCode" id="cb444"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Formal class 'Period' [package "lubridate"] with 6 slots</span></span>
-<span><span class="co">#&gt;   ..@ .Data : num 43</span></span>
-<span><span class="co">#&gt;   ..@ year  : num 0</span></span>
-<span><span class="co">#&gt;   ..@ month : num 0</span></span>
-<span><span class="co">#&gt;   ..@ day   : num 0</span></span>
-<span><span class="co">#&gt;   ..@ hour  : num 2</span></span>
-<span><span class="co">#&gt;   ..@ minute: num 6</span></span></code></pre></div>
-<p>The <a href="https://lubridate.tidyverse.org">lubridate</a> package provides accessors to access all of these slots:</p>
-<div class="sourceCode" id="cb445"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0</span></span>
-<span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0</span></span>
-<span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html">day</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0</span></span>
-<span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/hour.html">hour</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2</span></span>
-<span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/minute.html">minute</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 6</span></span>
-<span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/second.html">second</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 43</span></span></code></pre></div>
-<hr>
-<p><strong>Q2.</strong> What other ways can you find help for a method? Read <code><a href="https://rdrr.io/r/utils/Question.html">?"?"</a></code> and summarise the details.</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="s4.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slotNames</span>(x)</span>
+<span id="cb104-2"><a href="s4.html#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;.Data&quot;  &quot;year&quot;   &quot;month&quot;  &quot;day&quot;    &quot;hour&quot;   &quot;minute&quot;</span></span></code></pre></div>
+<p>Additionally, the base type of each slot (<code>numeric</code>) can be seen in <code>str()</code> output:</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="s4.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(x)</span>
+<span id="cb105-2"><a href="s4.html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Formal class &#39;Period&#39; [package &quot;lubridate&quot;] with 6 slots</span></span>
+<span id="cb105-3"><a href="s4.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ .Data : num 43</span></span>
+<span id="cb105-4"><a href="s4.html#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ year  : num 0</span></span>
+<span id="cb105-5"><a href="s4.html#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ month : num 0</span></span>
+<span id="cb105-6"><a href="s4.html#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ day   : num 0</span></span>
+<span id="cb105-7"><a href="s4.html#cb105-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ hour  : num 2</span></span>
+<span id="cb105-8"><a href="s4.html#cb105-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ minute: num 6</span></span></code></pre></div>
+<p>The <code>{lubridate}</code> package provides accessors to access all of these slots:</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="s4.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">year</span>(x)</span>
+<span id="cb106-2"><a href="s4.html#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb106-3"><a href="s4.html#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="fu">month</span>(x)</span>
+<span id="cb106-4"><a href="s4.html#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb106-5"><a href="s4.html#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="fu">day</span>(x)</span>
+<span id="cb106-6"><a href="s4.html#cb106-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb106-7"><a href="s4.html#cb106-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hour</span>(x)</span>
+<span id="cb106-8"><a href="s4.html#cb106-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span>
+<span id="cb106-9"><a href="s4.html#cb106-9" aria-hidden="true" tabindex="-1"></a><span class="fu">minute</span>(x)</span>
+<span id="cb106-10"><a href="s4.html#cb106-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 6</span></span>
+<span id="cb106-11"><a href="s4.html#cb106-11" aria-hidden="true" tabindex="-1"></a><span class="fu">second</span>(x)</span>
+<span id="cb106-12"><a href="s4.html#cb106-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 43</span></span></code></pre></div>
+<hr />
+<p><strong>Q2.</strong> What other ways can you find help for a method? Read <code>?"?"</code> and summarise the details.</p>
 <p><strong>A2.</strong> The <code>"?"</code> operator allows access to this documentation in three ways. To demonstrate different ways to access documentation, let’s define a new <code>S4</code> class.</p>
-<div class="sourceCode" id="cb446"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pow</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">exp</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">exp</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/methods/setGeneric.html">setGeneric</a></span><span class="op">(</span><span class="st">"pow"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "pow"</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"pow"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"numeric"</span>, <span class="st">"numeric"</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">exp</span><span class="op">)</span> <span class="va">x</span><span class="op">^</span><span class="va">exp</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="s4.html#cb107-1" aria-hidden="true" tabindex="-1"></a>pow <span class="ot">&lt;-</span> <span class="cf">function</span>(x, exp) <span class="fu">c</span>(x, exp)</span>
+<span id="cb107-2"><a href="s4.html#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setGeneric</span>(<span class="st">&quot;pow&quot;</span>)</span>
+<span id="cb107-3"><a href="s4.html#cb107-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;pow&quot;</span></span>
+<span id="cb107-4"><a href="s4.html#cb107-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;pow&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;numeric&quot;</span>), <span class="cf">function</span>(x, exp) x<span class="sc">^</span>exp)</span></code></pre></div>
 <p>Ways to access documentation:</p>
 <ul>
 <li>The general documentation for a generic can be found with <code>?topic</code>:</li>
 </ul>
-<div class="sourceCode" id="cb447"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">?</span><span class="va">pow</span></span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="s4.html#cb108-1" aria-hidden="true" tabindex="-1"></a>?pow</span></code></pre></div>
 <ul>
 <li>The expression <code>type?topic</code> will look for the overall documentation methods for the function <code>f</code>.</li>
 </ul>
-<div class="sourceCode" id="cb448"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">?</span><span class="va">pow</span> <span class="co"># produces the function documentation</span></span>
-<span></span>
-<span><span class="va">methods</span><span class="op">?</span><span class="va">pow</span> <span class="co"># looks for the overall methods documentation</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="s4.html#cb109-1" aria-hidden="true" tabindex="-1"></a>?pow <span class="co"># produces the function documentation</span></span>
+<span id="cb109-2"><a href="s4.html#cb109-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-3"><a href="s4.html#cb109-3" aria-hidden="true" tabindex="-1"></a>methods?pow <span class="co"># looks for the overall methods documentation</span></span></code></pre></div>
+<hr />
 </div>
-<div id="exercises-15.3.6" class="section level3" number="15.0.2">
-<h3>
-<span class="header-section-number">15.0.2</span> Exercises 15.3.6<a class="anchor" aria-label="anchor" href="#exercises-15.3.6"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
-<p><strong>Q1.</strong> Extend the Person class with fields to match <code><a href="https://rdrr.io/r/utils/person.html">utils::person()</a></code>. Think about what slots you will need, what class each slot should have, and what you’ll need to check in your validity method.</p>
-<p><strong>A1.</strong> The code below extends the <code>Person</code> class described in the book to match more closely with <code><a href="https://rdrr.io/r/utils/person.html">utils::person()</a></code>.</p>
-<div class="sourceCode" id="cb449"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Person"</span>,</span>
-<span>  slots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>    age     <span class="op">=</span> <span class="st">"numeric"</span>,</span>
-<span>    given   <span class="op">=</span> <span class="st">"character"</span>,</span>
-<span>    family  <span class="op">=</span> <span class="st">"character"</span>,</span>
-<span>    middle  <span class="op">=</span> <span class="st">"character"</span>,</span>
-<span>    email   <span class="op">=</span> <span class="st">"character"</span>,</span>
-<span>    role    <span class="op">=</span> <span class="st">"character"</span>,</span>
-<span>    comment <span class="op">=</span> <span class="st">"character"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  prototype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>    age     <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
-<span>    given   <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>    family  <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>    middle  <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>    email   <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>    role    <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>    comment <span class="op">=</span> <span class="cn">NA_character_</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Helper function to create an instance of the `Person` class</span></span>
-<span><span class="va">Person</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">given</span>,</span>
-<span>                   <span class="va">family</span>,</span>
-<span>                   <span class="va">middle</span> <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>                   <span class="va">age</span> <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
-<span>                   <span class="va">email</span> <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>                   <span class="va">role</span> <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>                   <span class="va">comment</span> <span class="op">=</span> <span class="cn">NA_character_</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">age</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Person"</span>,</span>
-<span>    age     <span class="op">=</span> <span class="va">age</span>,</span>
-<span>    given   <span class="op">=</span> <span class="va">given</span>,</span>
-<span>    family  <span class="op">=</span> <span class="va">family</span>,</span>
-<span>    middle  <span class="op">=</span> <span class="va">middle</span>,</span>
-<span>    email   <span class="op">=</span> <span class="va">email</span>,</span>
-<span>    role    <span class="op">=</span> <span class="va">role</span>,</span>
-<span>    comment <span class="op">=</span> <span class="va">comment</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="co"># Validator to ensure that each slot is of length one and that the specified</span></span>
-<span><span class="co"># role is one of the possible roles</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/methods/validObject.html">setValidity</a></span><span class="op">(</span><span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">object</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">invalid_length</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span>  <span class="va">slot_lengths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">@</span><span class="va">age</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">@</span><span class="va">given</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">@</span><span class="va">middle</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">@</span><span class="va">family</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">@</span><span class="va">email</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">@</span><span class="va">comment</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="va">slot_lengths</span> <span class="op">!=</span> <span class="fl">1L</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">invalid_length</span> <span class="op">&lt;-</span> <span class="st">"Slots @age, @given, @family, @middle, @email, @comment must be of length 1."</span></span>
-<span>  <span class="op">}</span></span>
-<span></span>
-<span>  <span class="va">possible_roles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>    <span class="cn">NA_character_</span>, <span class="st">"aut"</span>, <span class="st">"com"</span>, <span class="st">"cph"</span>, <span class="st">"cre"</span>, <span class="st">"ctb"</span>, <span class="st">"ctr"</span>, <span class="st">"dtc"</span>, <span class="st">"fnd"</span>, <span class="st">"rev"</span>, <span class="st">"ths"</span>, <span class="st">"trl"</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="op">!</span><span class="va">object</span><span class="op">@</span><span class="va">role</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">possible_roles</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">invalid_length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span></span>
-<span>      <span class="va">invalid_length</span>, <span class="st">"\n"</span>,</span>
-<span>      <span class="st">"@role(s) must be one of"</span>,</span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">possible_roles</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">invalid_length</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">invalid_length</span><span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Class "Person" [in ".GlobalEnv"]</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Slots:</span></span>
-<span><span class="co">#&gt;                                                         </span></span>
-<span><span class="co">#&gt; Name:        age     given    family    middle     email</span></span>
-<span><span class="co">#&gt; Class:   numeric character character character character</span></span>
-<span><span class="co">#&gt;                           </span></span>
-<span><span class="co">#&gt; Name:       role   comment</span></span>
-<span><span class="co">#&gt; Class: character character</span></span></code></pre></div>
+<div id="exercises-15.3.6" class="section level2" number="15.2">
+<h2><span class="header-section-number">15.2</span> Exercises 15.3.6</h2>
+<hr />
+<p><strong>Q1.</strong> Extend the Person class with fields to match <code>utils::person()</code>. Think about what slots you will need, what class each slot should have, and what you’ll need to check in your validity method.</p>
+<p><strong>A1.</strong> The code below extends the <code>Person</code> class described in the book to match more closely with <code>utils::person()</code>.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="s4.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;Person&quot;</span>,</span>
+<span id="cb110-2"><a href="s4.html#cb110-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">slots =</span> <span class="fu">c</span>(</span>
+<span id="cb110-3"><a href="s4.html#cb110-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">age     =</span> <span class="st">&quot;numeric&quot;</span>,</span>
+<span id="cb110-4"><a href="s4.html#cb110-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">given   =</span> <span class="st">&quot;character&quot;</span>,</span>
+<span id="cb110-5"><a href="s4.html#cb110-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">family  =</span> <span class="st">&quot;character&quot;</span>,</span>
+<span id="cb110-6"><a href="s4.html#cb110-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">middle  =</span> <span class="st">&quot;character&quot;</span>,</span>
+<span id="cb110-7"><a href="s4.html#cb110-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">email   =</span> <span class="st">&quot;character&quot;</span>,</span>
+<span id="cb110-8"><a href="s4.html#cb110-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">role    =</span> <span class="st">&quot;character&quot;</span>,</span>
+<span id="cb110-9"><a href="s4.html#cb110-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">comment =</span> <span class="st">&quot;character&quot;</span></span>
+<span id="cb110-10"><a href="s4.html#cb110-10" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb110-11"><a href="s4.html#cb110-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">prototype =</span> <span class="fu">list</span>(</span>
+<span id="cb110-12"><a href="s4.html#cb110-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">age     =</span> <span class="cn">NA_real_</span>,</span>
+<span id="cb110-13"><a href="s4.html#cb110-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">given   =</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb110-14"><a href="s4.html#cb110-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">family  =</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb110-15"><a href="s4.html#cb110-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">middle  =</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb110-16"><a href="s4.html#cb110-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">email   =</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb110-17"><a href="s4.html#cb110-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">role    =</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb110-18"><a href="s4.html#cb110-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">comment =</span> <span class="cn">NA_character_</span></span>
+<span id="cb110-19"><a href="s4.html#cb110-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb110-20"><a href="s4.html#cb110-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb110-21"><a href="s4.html#cb110-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-22"><a href="s4.html#cb110-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Helper function to create an instance of the `Person` class</span></span>
+<span id="cb110-23"><a href="s4.html#cb110-23" aria-hidden="true" tabindex="-1"></a>Person <span class="ot">&lt;-</span> <span class="cf">function</span>(given,</span>
+<span id="cb110-24"><a href="s4.html#cb110-24" aria-hidden="true" tabindex="-1"></a>                   family,</span>
+<span id="cb110-25"><a href="s4.html#cb110-25" aria-hidden="true" tabindex="-1"></a>                   <span class="at">middle =</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb110-26"><a href="s4.html#cb110-26" aria-hidden="true" tabindex="-1"></a>                   <span class="at">age =</span> <span class="cn">NA_real_</span>,</span>
+<span id="cb110-27"><a href="s4.html#cb110-27" aria-hidden="true" tabindex="-1"></a>                   <span class="at">email =</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb110-28"><a href="s4.html#cb110-28" aria-hidden="true" tabindex="-1"></a>                   <span class="at">role =</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb110-29"><a href="s4.html#cb110-29" aria-hidden="true" tabindex="-1"></a>                   <span class="at">comment =</span> <span class="cn">NA_character_</span>) {</span>
+<span id="cb110-30"><a href="s4.html#cb110-30" aria-hidden="true" tabindex="-1"></a>  age <span class="ot">&lt;-</span> <span class="fu">as.double</span>(age)</span>
+<span id="cb110-31"><a href="s4.html#cb110-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-32"><a href="s4.html#cb110-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">new</span>(<span class="st">&quot;Person&quot;</span>,</span>
+<span id="cb110-33"><a href="s4.html#cb110-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">age     =</span> age,</span>
+<span id="cb110-34"><a href="s4.html#cb110-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">given   =</span> given,</span>
+<span id="cb110-35"><a href="s4.html#cb110-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">family  =</span> family,</span>
+<span id="cb110-36"><a href="s4.html#cb110-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">middle  =</span> middle,</span>
+<span id="cb110-37"><a href="s4.html#cb110-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">email   =</span> email,</span>
+<span id="cb110-38"><a href="s4.html#cb110-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">role    =</span> role,</span>
+<span id="cb110-39"><a href="s4.html#cb110-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">comment =</span> comment</span>
+<span id="cb110-40"><a href="s4.html#cb110-40" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb110-41"><a href="s4.html#cb110-41" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb110-42"><a href="s4.html#cb110-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-43"><a href="s4.html#cb110-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Validator to ensure that each slot is of length one and that the specified</span></span>
+<span id="cb110-44"><a href="s4.html#cb110-44" aria-hidden="true" tabindex="-1"></a><span class="co"># role is one of the possible roles</span></span>
+<span id="cb110-45"><a href="s4.html#cb110-45" aria-hidden="true" tabindex="-1"></a><span class="fu">setValidity</span>(<span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(object) {</span>
+<span id="cb110-46"><a href="s4.html#cb110-46" aria-hidden="true" tabindex="-1"></a>  invalid_length <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb110-47"><a href="s4.html#cb110-47" aria-hidden="true" tabindex="-1"></a>  slot_lengths <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb110-48"><a href="s4.html#cb110-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>(object<span class="sc">@</span>age),</span>
+<span id="cb110-49"><a href="s4.html#cb110-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>(object<span class="sc">@</span>given),</span>
+<span id="cb110-50"><a href="s4.html#cb110-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>(object<span class="sc">@</span>middle),</span>
+<span id="cb110-51"><a href="s4.html#cb110-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>(object<span class="sc">@</span>family),</span>
+<span id="cb110-52"><a href="s4.html#cb110-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>(object<span class="sc">@</span>email),</span>
+<span id="cb110-53"><a href="s4.html#cb110-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>(object<span class="sc">@</span>comment)</span>
+<span id="cb110-54"><a href="s4.html#cb110-54" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb110-55"><a href="s4.html#cb110-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-56"><a href="s4.html#cb110-56" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">any</span>(slot_lengths <span class="sc">!=</span> 1L)) {</span>
+<span id="cb110-57"><a href="s4.html#cb110-57" aria-hidden="true" tabindex="-1"></a>    invalid_length <span class="ot">&lt;-</span> <span class="st">&quot;Slots @age, @given, @family, @middle, @email, @comment must be of length 1.&quot;</span></span>
+<span id="cb110-58"><a href="s4.html#cb110-58" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb110-59"><a href="s4.html#cb110-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-60"><a href="s4.html#cb110-60" aria-hidden="true" tabindex="-1"></a>  possible_roles <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb110-61"><a href="s4.html#cb110-61" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA_character_</span>, <span class="st">&quot;aut&quot;</span>, <span class="st">&quot;com&quot;</span>, <span class="st">&quot;cph&quot;</span>, <span class="st">&quot;cre&quot;</span>, <span class="st">&quot;ctb&quot;</span>, <span class="st">&quot;ctr&quot;</span>, <span class="st">&quot;dtc&quot;</span>, <span class="st">&quot;fnd&quot;</span>, <span class="st">&quot;rev&quot;</span>, <span class="st">&quot;ths&quot;</span>, <span class="st">&quot;trl&quot;</span></span>
+<span id="cb110-62"><a href="s4.html#cb110-62" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb110-63"><a href="s4.html#cb110-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-64"><a href="s4.html#cb110-64" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">any</span>(<span class="sc">!</span>object<span class="sc">@</span>role <span class="sc">%in%</span> possible_roles)) {</span>
+<span id="cb110-65"><a href="s4.html#cb110-65" aria-hidden="true" tabindex="-1"></a>    invalid_length <span class="ot">&lt;-</span> <span class="fu">paste</span>(</span>
+<span id="cb110-66"><a href="s4.html#cb110-66" aria-hidden="true" tabindex="-1"></a>      invalid_length, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb110-67"><a href="s4.html#cb110-67" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;@role(s) must be one of&quot;</span>,</span>
+<span id="cb110-68"><a href="s4.html#cb110-68" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(possible_roles, <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>)</span>
+<span id="cb110-69"><a href="s4.html#cb110-69" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb110-70"><a href="s4.html#cb110-70" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb110-71"><a href="s4.html#cb110-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-72"><a href="s4.html#cb110-72" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(invalid_length)) {</span>
+<span id="cb110-73"><a href="s4.html#cb110-73" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(invalid_length)</span>
+<span id="cb110-74"><a href="s4.html#cb110-74" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb110-75"><a href="s4.html#cb110-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">TRUE</span>)</span>
+<span id="cb110-76"><a href="s4.html#cb110-76" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb110-77"><a href="s4.html#cb110-77" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb110-78"><a href="s4.html#cb110-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Class &quot;Person&quot; [in &quot;.GlobalEnv&quot;]</span></span>
+<span id="cb110-79"><a href="s4.html#cb110-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb110-80"><a href="s4.html#cb110-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slots:</span></span>
+<span id="cb110-81"><a href="s4.html#cb110-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                         </span></span>
+<span id="cb110-82"><a href="s4.html#cb110-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Name:        age     given    family    middle     email</span></span>
+<span id="cb110-83"><a href="s4.html#cb110-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Class:   numeric character character character character</span></span>
+<span id="cb110-84"><a href="s4.html#cb110-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                           </span></span>
+<span id="cb110-85"><a href="s4.html#cb110-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Name:       role   comment</span></span>
+<span id="cb110-86"><a href="s4.html#cb110-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Class: character character</span></span></code></pre></div>
 <p>Let’s make sure that validation works as expected:</p>
-<div class="sourceCode" id="cb450"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">Person</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Indrajeet"</span>, <span class="st">"Surendra"</span><span class="op">)</span>, <span class="st">"Patil"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in validObject(.Object): invalid class "Person" object: Slots @age, @given, @family, @middle, @email, @comment must be of length 1.</span></span>
-<span><span class="fu">Person</span><span class="op">(</span><span class="st">"Indrajeet"</span>, <span class="st">"Patil"</span>, role <span class="op">=</span> <span class="st">"xyz"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in validObject(.Object): invalid class "Person" object:  </span></span>
-<span><span class="co">#&gt;  @role(s) must be one of NA, aut, com, cph, cre, ctb, ctr, dtc, fnd, rev, ths, trl</span></span>
-<span><span class="fu">Person</span><span class="op">(</span><span class="st">"Indrajeet"</span>, <span class="st">"Patil"</span>, role <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"aut"</span>, <span class="st">"cph"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; An object of class "Person"</span></span>
-<span><span class="co">#&gt; Slot "age":</span></span>
-<span><span class="co">#&gt; [1] NA</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Slot "given":</span></span>
-<span><span class="co">#&gt; [1] "Indrajeet"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Slot "family":</span></span>
-<span><span class="co">#&gt; [1] "Patil"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Slot "middle":</span></span>
-<span><span class="co">#&gt; [1] NA</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Slot "email":</span></span>
-<span><span class="co">#&gt; [1] NA</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Slot "role":</span></span>
-<span><span class="co">#&gt; [1] "aut" "cph"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Slot "comment":</span></span>
-<span><span class="co">#&gt; [1] NA</span></span></code></pre></div>
-<hr>
-<p><strong>Q2.</strong> What happens if you define a new S4 class that doesn’t have any slots? (Hint: read about virtual classes in <code><a href="https://rdrr.io/r/methods/setClass.html">?setClass</a></code>.)</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="s4.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Person</span>(<span class="fu">c</span>(<span class="st">&quot;Indrajeet&quot;</span>, <span class="st">&quot;Surendra&quot;</span>), <span class="st">&quot;Patil&quot;</span>)</span>
+<span id="cb111-2"><a href="s4.html#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in validObject(.Object): invalid class &quot;Person&quot; object: Slots @age, @given, @family, @middle, @email, @comment must be of length 1.</span></span>
+<span id="cb111-3"><a href="s4.html#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Person</span>(<span class="st">&quot;Indrajeet&quot;</span>, <span class="st">&quot;Patil&quot;</span>, <span class="at">role =</span> <span class="st">&quot;xyz&quot;</span>)</span>
+<span id="cb111-4"><a href="s4.html#cb111-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in validObject(.Object): invalid class &quot;Person&quot; object:  </span></span>
+<span id="cb111-5"><a href="s4.html#cb111-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  @role(s) must be one of NA, aut, com, cph, cre, ctb, ctr, dtc, fnd, rev, ths, trl</span></span>
+<span id="cb111-6"><a href="s4.html#cb111-6" aria-hidden="true" tabindex="-1"></a><span class="fu">Person</span>(<span class="st">&quot;Indrajeet&quot;</span>, <span class="st">&quot;Patil&quot;</span>, <span class="at">role =</span> <span class="fu">c</span>(<span class="st">&quot;aut&quot;</span>, <span class="st">&quot;cph&quot;</span>))</span>
+<span id="cb111-7"><a href="s4.html#cb111-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; An object of class &quot;Person&quot;</span></span>
+<span id="cb111-8"><a href="s4.html#cb111-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;age&quot;:</span></span>
+<span id="cb111-9"><a href="s4.html#cb111-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] NA</span></span>
+<span id="cb111-10"><a href="s4.html#cb111-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb111-11"><a href="s4.html#cb111-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;given&quot;:</span></span>
+<span id="cb111-12"><a href="s4.html#cb111-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Indrajeet&quot;</span></span>
+<span id="cb111-13"><a href="s4.html#cb111-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb111-14"><a href="s4.html#cb111-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;family&quot;:</span></span>
+<span id="cb111-15"><a href="s4.html#cb111-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Patil&quot;</span></span>
+<span id="cb111-16"><a href="s4.html#cb111-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb111-17"><a href="s4.html#cb111-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;middle&quot;:</span></span>
+<span id="cb111-18"><a href="s4.html#cb111-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] NA</span></span>
+<span id="cb111-19"><a href="s4.html#cb111-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb111-20"><a href="s4.html#cb111-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;email&quot;:</span></span>
+<span id="cb111-21"><a href="s4.html#cb111-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] NA</span></span>
+<span id="cb111-22"><a href="s4.html#cb111-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb111-23"><a href="s4.html#cb111-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;role&quot;:</span></span>
+<span id="cb111-24"><a href="s4.html#cb111-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;aut&quot; &quot;cph&quot;</span></span>
+<span id="cb111-25"><a href="s4.html#cb111-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb111-26"><a href="s4.html#cb111-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;comment&quot;:</span></span>
+<span id="cb111-27"><a href="s4.html#cb111-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] NA</span></span></code></pre></div>
+<hr />
+<p><strong>Q2.</strong> What happens if you define a new S4 class that doesn’t have any slots? (Hint: read about virtual classes in <code>?setClass</code>.)</p>
 <p><strong>A2.</strong> If you define a new <code>S4</code> class that doesn’t have any slots, it will create <em>virtual</em> classes:</p>
-<div class="sourceCode" id="cb451"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Empty"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/methods/RClassUtils.html">isVirtualClass</a></span><span class="op">(</span><span class="st">"Empty"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="s4.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;Empty&quot;</span>)</span>
+<span id="cb112-2"><a href="s4.html#cb112-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-3"><a href="s4.html#cb112-3" aria-hidden="true" tabindex="-1"></a><span class="fu">isVirtualClass</span>(<span class="st">&quot;Empty&quot;</span>)</span>
+<span id="cb112-4"><a href="s4.html#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>You can’t create an instance of this class:</p>
-<div class="sourceCode" id="cb452"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Empty"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in new("Empty"): trying to generate an object from a virtual class ("Empty")</span></span></code></pre></div>
-<p>So how is this useful? As mentioned in <code><a href="https://rdrr.io/r/methods/setClass.html">?setClass</a></code> docs:</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="s4.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">new</span>(<span class="st">&quot;Empty&quot;</span>)</span>
+<span id="cb113-2"><a href="s4.html#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in new(&quot;Empty&quot;): trying to generate an object from a virtual class (&quot;Empty&quot;)</span></span></code></pre></div>
+<p>So how is this useful? As mentioned in <code>?setClass</code> docs:</p>
 <blockquote>
 <p>Classes exist for which no actual objects can be created, the virtual classes.</p>
-<p>The most common and useful form of virtual class is the class union, a virtual class that is defined in a call to <code><a href="https://rdrr.io/r/methods/setClassUnion.html">setClassUnion()</a></code> rather than a call to <code><a href="https://rdrr.io/r/methods/setClass.html">setClass()</a></code>.</p>
+<p>The most common and useful form of virtual class is the class union, a virtual class that is defined in a call to <code>setClassUnion()</code> rather than a call to <code>setClass()</code>.</p>
 </blockquote>
 <p>So virtual classes can still be inherited:</p>
-<div class="sourceCode" id="cb453"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Nothing"</span>, contains <span class="op">=</span> <span class="st">"Empty"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="s4.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;Nothing&quot;</span>, <span class="at">contains =</span> <span class="st">&quot;Empty&quot;</span>)</span></code></pre></div>
 <p>In addition to not specifying any slots, here is another way to create virtual classes:</p>
 <blockquote>
-<p>Calls to <code><a href="https://rdrr.io/r/methods/setClass.html">setClass()</a></code> will also create a virtual class, either when only the Class argument is supplied (no slots or superclasses) or when the <code>contains=</code> argument includes the special class name <code>"VIRTUAL"</code>.</p>
+<p>Calls to <code>setClass()</code> will also create a virtual class, either when only the Class argument is supplied (no slots or superclasses) or when the <code>contains=</code> argument includes the special class name <code>"VIRTUAL"</code>.</p>
 </blockquote>
-<hr>
-<p><strong>Q3.</strong> Imagine you were going to reimplement factors, dates, and data frames in S4. Sketch out the <code><a href="https://rdrr.io/r/methods/setClass.html">setClass()</a></code> calls that you would use to define the classes. Think about appropriate <code>slots</code> and <code>prototype</code>.</p>
+<hr />
+<p><strong>Q3.</strong> Imagine you were going to reimplement factors, dates, and data frames in S4. Sketch out the <code>setClass()</code> calls that you would use to define the classes. Think about appropriate <code>slots</code> and <code>prototype</code>.</p>
 <p><strong>A3.</strong> The reimplementation of following classes in <code>S4</code> might have definitions like the following.</p>
 <ul>
 <li><code>factor</code></li>
 </ul>
-<p>For simplicity, we won’t provide all options that <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code> provides. Note that <code>x</code> has pseudo-class <code>ANY</code> to accept objects of any type.</p>
-<div class="sourceCode" id="cb454"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Factor"</span>,</span>
-<span>  slots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>    x       <span class="op">=</span> <span class="st">"ANY"</span>,</span>
-<span>    levels  <span class="op">=</span> <span class="st">"character"</span>,</span>
-<span>    ordered <span class="op">=</span> <span class="st">"logical"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  prototype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>    x       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    levels  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    ordered <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Factor"</span>, x <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, levels <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; An object of class "Factor"</span></span>
-<span><span class="co">#&gt; Slot "x":</span></span>
-<span><span class="co">#&gt; [1] "a" "b" "c"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Slot "levels":</span></span>
-<span><span class="co">#&gt; [1] "A" "B" "C"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Slot "ordered":</span></span>
-<span><span class="co">#&gt; [1] FALSE</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Factor"</span>, x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, levels <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; An object of class "Factor"</span></span>
-<span><span class="co">#&gt; Slot "x":</span></span>
-<span><span class="co">#&gt; [1] 1 2 3</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Slot "levels":</span></span>
-<span><span class="co">#&gt; [1] "a" "b" "c"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Slot "ordered":</span></span>
-<span><span class="co">#&gt; [1] FALSE</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Factor"</span>, x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"x"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; An object of class "Factor"</span></span>
-<span><span class="co">#&gt; Slot "x":</span></span>
-<span><span class="co">#&gt; [1]  TRUE FALSE  TRUE</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Slot "levels":</span></span>
-<span><span class="co">#&gt; [1] "x" "y" "x"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Slot "ordered":</span></span>
-<span><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
+<p>For simplicity, we won’t provide all options that <code>factor()</code> provides. Note that <code>x</code> has pseudo-class <code>ANY</code> to accept objects of any type.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="s4.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;Factor&quot;</span>,</span>
+<span id="cb115-2"><a href="s4.html#cb115-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">slots =</span> <span class="fu">c</span>(</span>
+<span id="cb115-3"><a href="s4.html#cb115-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">x       =</span> <span class="st">&quot;ANY&quot;</span>,</span>
+<span id="cb115-4"><a href="s4.html#cb115-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels  =</span> <span class="st">&quot;character&quot;</span>,</span>
+<span id="cb115-5"><a href="s4.html#cb115-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ordered =</span> <span class="st">&quot;logical&quot;</span></span>
+<span id="cb115-6"><a href="s4.html#cb115-6" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb115-7"><a href="s4.html#cb115-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">prototype =</span> <span class="fu">list</span>(</span>
+<span id="cb115-8"><a href="s4.html#cb115-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x       =</span> <span class="fu">character</span>(),</span>
+<span id="cb115-9"><a href="s4.html#cb115-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels  =</span> <span class="fu">character</span>(),</span>
+<span id="cb115-10"><a href="s4.html#cb115-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">ordered =</span> <span class="cn">FALSE</span></span>
+<span id="cb115-11"><a href="s4.html#cb115-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb115-12"><a href="s4.html#cb115-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb115-13"><a href="s4.html#cb115-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-14"><a href="s4.html#cb115-14" aria-hidden="true" tabindex="-1"></a><span class="fu">new</span>(<span class="st">&quot;Factor&quot;</span>, <span class="at">x =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">levels =</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span>
+<span id="cb115-15"><a href="s4.html#cb115-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; An object of class &quot;Factor&quot;</span></span>
+<span id="cb115-16"><a href="s4.html#cb115-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;x&quot;:</span></span>
+<span id="cb115-17"><a href="s4.html#cb115-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</span></span>
+<span id="cb115-18"><a href="s4.html#cb115-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb115-19"><a href="s4.html#cb115-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;levels&quot;:</span></span>
+<span id="cb115-20"><a href="s4.html#cb115-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;A&quot; &quot;B&quot; &quot;C&quot;</span></span>
+<span id="cb115-21"><a href="s4.html#cb115-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb115-22"><a href="s4.html#cb115-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;ordered&quot;:</span></span>
+<span id="cb115-23"><a href="s4.html#cb115-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span>
+<span id="cb115-24"><a href="s4.html#cb115-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-25"><a href="s4.html#cb115-25" aria-hidden="true" tabindex="-1"></a><span class="fu">new</span>(<span class="st">&quot;Factor&quot;</span>, <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">levels =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span>
+<span id="cb115-26"><a href="s4.html#cb115-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; An object of class &quot;Factor&quot;</span></span>
+<span id="cb115-27"><a href="s4.html#cb115-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;x&quot;:</span></span>
+<span id="cb115-28"><a href="s4.html#cb115-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 3</span></span>
+<span id="cb115-29"><a href="s4.html#cb115-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb115-30"><a href="s4.html#cb115-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;levels&quot;:</span></span>
+<span id="cb115-31"><a href="s4.html#cb115-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</span></span>
+<span id="cb115-32"><a href="s4.html#cb115-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb115-33"><a href="s4.html#cb115-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;ordered&quot;:</span></span>
+<span id="cb115-34"><a href="s4.html#cb115-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span>
+<span id="cb115-35"><a href="s4.html#cb115-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-36"><a href="s4.html#cb115-36" aria-hidden="true" tabindex="-1"></a><span class="fu">new</span>(<span class="st">&quot;Factor&quot;</span>, <span class="at">x =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;x&quot;</span>))</span>
+<span id="cb115-37"><a href="s4.html#cb115-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; An object of class &quot;Factor&quot;</span></span>
+<span id="cb115-38"><a href="s4.html#cb115-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;x&quot;:</span></span>
+<span id="cb115-39"><a href="s4.html#cb115-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  TRUE FALSE  TRUE</span></span>
+<span id="cb115-40"><a href="s4.html#cb115-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb115-41"><a href="s4.html#cb115-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;levels&quot;:</span></span>
+<span id="cb115-42"><a href="s4.html#cb115-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;x&quot; &quot;y&quot; &quot;x&quot;</span></span>
+<span id="cb115-43"><a href="s4.html#cb115-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb115-44"><a href="s4.html#cb115-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;ordered&quot;:</span></span>
+<span id="cb115-45"><a href="s4.html#cb115-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
 <ul>
 <li><code>Date</code></li>
 </ul>
 <p>Just like the base-R version, this will have only integer values.</p>
-<div class="sourceCode" id="cb455"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Date2"</span>,</span>
-<span>  slots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="st">"integer"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  prototype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Date2"</span>, data <span class="op">=</span> <span class="fl">1342L</span><span class="op">)</span></span>
-<span><span class="co">#&gt; An object of class "Date2"</span></span>
-<span><span class="co">#&gt; Slot "data":</span></span>
-<span><span class="co">#&gt; [1] 1342</span></span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="s4.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;Date2&quot;</span>,</span>
+<span id="cb116-2"><a href="s4.html#cb116-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">slots =</span> <span class="fu">list</span>(</span>
+<span id="cb116-3"><a href="s4.html#cb116-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="st">&quot;integer&quot;</span></span>
+<span id="cb116-4"><a href="s4.html#cb116-4" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb116-5"><a href="s4.html#cb116-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">prototype =</span> <span class="fu">list</span>(</span>
+<span id="cb116-6"><a href="s4.html#cb116-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">integer</span>()</span>
+<span id="cb116-7"><a href="s4.html#cb116-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb116-8"><a href="s4.html#cb116-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb116-9"><a href="s4.html#cb116-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-10"><a href="s4.html#cb116-10" aria-hidden="true" tabindex="-1"></a><span class="fu">new</span>(<span class="st">&quot;Date2&quot;</span>, <span class="at">data =</span> 1342L)</span>
+<span id="cb116-11"><a href="s4.html#cb116-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; An object of class &quot;Date2&quot;</span></span>
+<span id="cb116-12"><a href="s4.html#cb116-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;data&quot;:</span></span>
+<span id="cb116-13"><a href="s4.html#cb116-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1342</span></span></code></pre></div>
 <ul>
 <li><code>data.frame</code></li>
 </ul>
-<p>The tricky part is supporting the <code>...</code> argument of <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>. For this, we can let the users pass a (named) list.</p>
-<div class="sourceCode" id="cb456"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"DataFrame"</span>,</span>
-<span>  slots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>    data      <span class="op">=</span> <span class="st">"list"</span>,</span>
-<span>    row.names <span class="op">=</span> <span class="st">"character"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  prototype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>    data      <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="fl">0L</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"DataFrame"</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">2L</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; An object of class "DataFrame"</span></span>
-<span><span class="co">#&gt; Slot "data":</span></span>
-<span><span class="co">#&gt; $x</span></span>
-<span><span class="co">#&gt; [1] "a" "b"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $y</span></span>
-<span><span class="co">#&gt; [1] 1 2</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Slot "row.names":</span></span>
-<span><span class="co">#&gt; character(0)</span></span></code></pre></div>
-<hr>
+<p>The tricky part is supporting the <code>...</code> argument of <code>data.frame()</code>. For this, we can let the users pass a (named) list.</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="s4.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;DataFrame&quot;</span>,</span>
+<span id="cb117-2"><a href="s4.html#cb117-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">slots =</span> <span class="fu">c</span>(</span>
+<span id="cb117-3"><a href="s4.html#cb117-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data      =</span> <span class="st">&quot;list&quot;</span>,</span>
+<span id="cb117-4"><a href="s4.html#cb117-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">row.names =</span> <span class="st">&quot;character&quot;</span></span>
+<span id="cb117-5"><a href="s4.html#cb117-5" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb117-6"><a href="s4.html#cb117-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">prototype =</span> <span class="fu">list</span>(</span>
+<span id="cb117-7"><a href="s4.html#cb117-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data      =</span> <span class="fu">list</span>(),</span>
+<span id="cb117-8"><a href="s4.html#cb117-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">row.names =</span> <span class="fu">character</span>(0L)</span>
+<span id="cb117-9"><a href="s4.html#cb117-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb117-10"><a href="s4.html#cb117-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb117-11"><a href="s4.html#cb117-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-12"><a href="s4.html#cb117-12" aria-hidden="true" tabindex="-1"></a><span class="fu">new</span>(<span class="st">&quot;DataFrame&quot;</span>, <span class="at">data =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), <span class="at">y =</span> <span class="fu">c</span>(1L, 2L)))</span>
+<span id="cb117-13"><a href="s4.html#cb117-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; An object of class &quot;DataFrame&quot;</span></span>
+<span id="cb117-14"><a href="s4.html#cb117-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;data&quot;:</span></span>
+<span id="cb117-15"><a href="s4.html#cb117-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $x</span></span>
+<span id="cb117-16"><a href="s4.html#cb117-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;a&quot; &quot;b&quot;</span></span>
+<span id="cb117-17"><a href="s4.html#cb117-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb117-18"><a href="s4.html#cb117-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $y</span></span>
+<span id="cb117-19"><a href="s4.html#cb117-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 2</span></span>
+<span id="cb117-20"><a href="s4.html#cb117-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb117-21"><a href="s4.html#cb117-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb117-22"><a href="s4.html#cb117-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;row.names&quot;:</span></span>
+<span id="cb117-23"><a href="s4.html#cb117-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; character(0)</span></span></code></pre></div>
+<hr />
 </div>
-<div id="exercises-15.4.5" class="section level3" number="15.0.3">
-<h3>
-<span class="header-section-number">15.0.3</span> Exercises 15.4.5<a class="anchor" aria-label="anchor" href="#exercises-15.4.5"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
+<div id="exercises-15.4.5" class="section level2" number="15.3">
+<h2><span class="header-section-number">15.3</span> Exercises 15.4.5</h2>
+<hr />
 <p><strong>Q1.</strong> Add <code>age()</code> accessors for the <code>Person</code> class.</p>
 <p><strong>A1.</strong> We first should define a generic and then a method for our class:</p>
-<div class="sourceCode" id="cb457"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Indra</span> <span class="op">&lt;-</span> <span class="fu">Person</span><span class="op">(</span><span class="st">"Indrajeet"</span>, <span class="st">"Patil"</span>, role <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"aut"</span>, <span class="st">"cph"</span><span class="op">)</span>, age <span class="op">=</span> <span class="fl">34</span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/methods/setGeneric.html">setGeneric</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/standardGeneric.html">standardGeneric</a></span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "age"</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">@</span><span class="va">age</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">age</span><span class="op">(</span><span class="va">Indra</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 34</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="s4.html#cb118-1" aria-hidden="true" tabindex="-1"></a>Indra <span class="ot">&lt;-</span> <span class="fu">Person</span>(<span class="st">&quot;Indrajeet&quot;</span>, <span class="st">&quot;Patil&quot;</span>, <span class="at">role =</span> <span class="fu">c</span>(<span class="st">&quot;aut&quot;</span>, <span class="st">&quot;cph&quot;</span>), <span class="at">age =</span> <span class="dv">34</span>)</span>
+<span id="cb118-2"><a href="s4.html#cb118-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-3"><a href="s4.html#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setGeneric</span>(<span class="st">&quot;age&quot;</span>, <span class="cf">function</span>(x) <span class="fu">standardGeneric</span>(<span class="st">&quot;age&quot;</span>))</span>
+<span id="cb118-4"><a href="s4.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;age&quot;</span></span>
+<span id="cb118-5"><a href="s4.html#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) x<span class="sc">@</span>age)</span>
+<span id="cb118-6"><a href="s4.html#cb118-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-7"><a href="s4.html#cb118-7" aria-hidden="true" tabindex="-1"></a><span class="fu">age</span>(Indra)</span>
+<span id="cb118-8"><a href="s4.html#cb118-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 34</span></span></code></pre></div>
+<hr />
 <p><strong>Q2.</strong> In the definition of the generic, why is it necessary to repeat the name of the generic twice?</p>
 <p><strong>A2.</strong> Let’s look at the generic we just defined; the generic name <code>"name"</code> is repeated twice.</p>
-<div class="sourceCode" id="cb458"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setGeneric.html">setGeneric</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"age"</span>, def <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/standardGeneric.html">standardGeneric</a></span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="s4.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setGeneric</span>(<span class="at">name =</span> <span class="st">&quot;age&quot;</span>, <span class="at">def =</span> <span class="cf">function</span>(x) <span class="fu">standardGeneric</span>(<span class="st">&quot;age&quot;</span>))</span></code></pre></div>
 <p>This is because:</p>
 <ul>
 <li>the <code>"age"</code> in argument <code>name</code> provides the name for the generic</li>
 <li>the <code>"age"</code> in argument <code>def</code> supplies the method dispatch</li>
 </ul>
 <p>This is reminiscent of how we defined <code>S3</code> generic, where we also had to repeat the name twice:</p>
-<div class="sourceCode" id="cb459"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">age</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/UseMethod.html">UseMethod</a></span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<hr>
-<p><strong>Q3.</strong> Why does the <code><a href="https://rdrr.io/r/methods/show.html">show()</a></code> method defined in Section <a href="https://adv-r.hadley.nz/s4.html#show-method">Show method</a> use <code>is(object)[[1]]</code>? (Hint: try printing the employee subclass.)</p>
-<p><strong>A3.</strong> Because we wish to define <code><a href="https://rdrr.io/r/methods/show.html">show()</a></code> method for a specific class, we need to disregard the other super-/sub-classes.</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="s4.html#cb120-1" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb120-2"><a href="s4.html#cb120-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">UseMethod</span>(<span class="st">&quot;age&quot;</span>)</span>
+<span id="cb120-3"><a href="s4.html#cb120-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<hr />
+<p><strong>Q3.</strong> Why does the <code>show()</code> method defined in Section <a href="https://adv-r.hadley.nz/s4.html#show-method">Show method</a> use <code>is(object)[[1]]</code>? (Hint: try printing the employee subclass.)</p>
+<p><strong>A3.</strong> Because we wish to define <code>show()</code> method for a specific class, we need to disregard the other super-/sub-classes.</p>
 <p>Always using the first element ensures that the method will be defined for the class in question:</p>
-<div class="sourceCode" id="cb460"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Alice</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Employee"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/methods/is.html">is</a></span><span class="op">(</span><span class="va">Alice</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Employee" "Person"</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/methods/is.html">is</a></span><span class="op">(</span><span class="va">Alice</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] "Employee"</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="s4.html#cb121-1" aria-hidden="true" tabindex="-1"></a>Alice <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;Employee&quot;</span>)</span>
+<span id="cb121-2"><a href="s4.html#cb121-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-3"><a href="s4.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(Alice)</span>
+<span id="cb121-4"><a href="s4.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Employee&quot; &quot;Person&quot;</span></span>
+<span id="cb121-5"><a href="s4.html#cb121-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-6"><a href="s4.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="fu">is</span>(Alice)[[<span class="dv">1</span>]]</span>
+<span id="cb121-7"><a href="s4.html#cb121-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Employee&quot;</span></span></code></pre></div>
+<hr />
 <p><strong>Q4.</strong> What happens if you define a method with different argument names to the generic?</p>
 <p><strong>A4.</strong> Let’s experiment with the method we defined in <strong>Q1.</strong> to study this behavior.</p>
 <p>The original method that worked as expected since the argument name between generic and method matched:</p>
-<div class="sourceCode" id="cb461"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">@</span><span class="va">age</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="s4.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) x<span class="sc">@</span>age)</span></code></pre></div>
 <p>If this is not the case, we either get a warning or get an error depending on which and how many arguments have been specified:</p>
-<div class="sourceCode" id="cb462"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">object</span><span class="op">)</span> <span class="va">object</span><span class="op">@</span><span class="va">age</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: For function 'age', signature 'Person': argument in</span></span>
-<span><span class="co">#&gt; method definition changed from (object) to (x)</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">object</span>, <span class="va">x</span><span class="op">)</span> <span class="va">object</span><span class="op">@</span><span class="va">age</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in rematchDefinition(definition, fdef, mnames, fnames, signature): methods can add arguments to the generic 'age' only if '...' is an argument to the generic</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/dots.html">...elt</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">@</span><span class="va">age</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: For function 'age', signature 'Person': argument in</span></span>
-<span><span class="co">#&gt; method definition changed from (...) to (x)</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="va">x</span><span class="op">@</span><span class="va">age</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in rematchDefinition(definition, fdef, mnames, fnames, signature): methods can add arguments to the generic 'age' only if '...' is an argument to the generic</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="s4.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(object) object<span class="sc">@</span>age)</span>
+<span id="cb123-2"><a href="s4.html#cb123-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: For function &#39;age&#39;, signature &#39;Person&#39;: argument in</span></span>
+<span id="cb123-3"><a href="s4.html#cb123-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; method definition changed from (object) to (x)</span></span>
+<span id="cb123-4"><a href="s4.html#cb123-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-5"><a href="s4.html#cb123-5" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(object, x) object<span class="sc">@</span>age)</span>
+<span id="cb123-6"><a href="s4.html#cb123-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in rematchDefinition(definition, fdef, mnames, fnames, signature): methods can add arguments to the generic &#39;age&#39; only if &#39;...&#39; is an argument to the generic</span></span>
+<span id="cb123-7"><a href="s4.html#cb123-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-8"><a href="s4.html#cb123-8" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(...) <span class="fu">...elt</span>(<span class="dv">1</span>)<span class="sc">@</span>age)</span>
+<span id="cb123-9"><a href="s4.html#cb123-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: For function &#39;age&#39;, signature &#39;Person&#39;: argument in</span></span>
+<span id="cb123-10"><a href="s4.html#cb123-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; method definition changed from (...) to (x)</span></span>
+<span id="cb123-11"><a href="s4.html#cb123-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-12"><a href="s4.html#cb123-12" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x, ...) x<span class="sc">@</span>age)</span>
+<span id="cb123-13"><a href="s4.html#cb123-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in rematchDefinition(definition, fdef, mnames, fnames, signature): methods can add arguments to the generic &#39;age&#39; only if &#39;...&#39; is an argument to the generic</span></span></code></pre></div>
+<hr />
 </div>
-<div id="exercises-15.5.5" class="section level3" number="15.0.4">
-<h3>
-<span class="header-section-number">15.0.4</span> Exercises 15.5.5<a class="anchor" aria-label="anchor" href="#exercises-15.5.5"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
+<div id="exercises-15.5.5" class="section level2" number="15.4">
+<h2><span class="header-section-number">15.4</span> Exercises 15.5.5</h2>
+<hr />
 <p><strong>Q1.</strong> Draw the method graph for <code>f(</code>😅, 😽<code>)</code>.</p>
 <p><strong>A1.</strong> I don’t how to prepare the visual illustrations used in the book, so I am linking to the illustration in the <a href="https://advanced-r-solutions.rbind.io/s4.html#method-dispatch">official solution manual</a>:</p>
-<div class="inline-figure"><img src="https://advanced-r-solutions.rbind.io/images/s4/method_dispatch1.png" width="100%"></div>
-<hr>
+<p><img src="https://advanced-r-solutions.rbind.io/images/s4/method_dispatch1.png" width="100%" /></p>
+<hr />
 <p><strong>Q2.</strong> Draw the method graph for <code>f(</code>😃, 😉, 😙<code>)</code>.</p>
 <p><strong>A2.</strong> I don’t how to prepare the visual illustrations used in the book, so I am linking to the illustration in the <a href="https://advanced-r-solutions.rbind.io/s4.html#method-dispatch">official solution manual</a>:</p>
-<div class="inline-figure"><img src="https://advanced-r-solutions.rbind.io/images/s4/method_dispatch2.png" width="100%"></div>
-<hr>
+<p><img src="https://advanced-r-solutions.rbind.io/images/s4/method_dispatch2.png" width="100%" /></p>
+<hr />
 <p><strong>Q3.</strong> Take the last example which shows multiple dispatch over two classes that use multiple inheritance. What happens if you define a method for all terminal classes? Why does method dispatch not save us much work here?</p>
 <p><strong>A3.</strong> Because one class has distance of 2 to all terminal nodes and the other four have distance of 1 to two terminal nodes each, this will introduce ambiguity.</p>
 <p>Method dispatch not save us much work here because to resolve this ambiguity we have to define five more methods (one per class combination).</p>
-<hr>
+<hr />
 </div>
-<div id="exercises-15.6.3" class="section level3" number="15.0.5">
-<h3>
-<span class="header-section-number">15.0.5</span> Exercises 15.6.3<a class="anchor" aria-label="anchor" href="#exercises-15.6.3"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
-<p><strong>Q1.</strong> What would a full <code><a href="https://rdrr.io/r/methods/setOldClass.html">setOldClass()</a></code> definition look like for an ordered factor (i.e. add <code>slots</code> and <code>prototype</code> the definition above)?</p>
-<p><strong>A1.</strong> We can register the old-style/<code>S3</code> <code>ordered</code> class to a formally defined class using <code><a href="https://rdrr.io/r/methods/setOldClass.html">setOldClass()</a></code>.</p>
-<div class="sourceCode" id="cb463"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"factor"</span>,</span>
-<span>  contains <span class="op">=</span> <span class="st">"integer"</span>,</span>
-<span>  slots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>    levels <span class="op">=</span> <span class="st">"character"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  prototype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/methods/setOldClass.html">setOldClass</a></span><span class="op">(</span><span class="st">"factor"</span>, S4Class <span class="op">=</span> <span class="st">"factor"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in rm(list = what, pos = classWhere): object</span></span>
-<span><span class="co">#&gt; '.__C__factor' not found</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Ordered"</span>,</span>
-<span>  contains <span class="op">=</span> <span class="st">"factor"</span>,</span>
-<span>  slots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>    levels  <span class="op">=</span> <span class="st">"character"</span>,</span>
-<span>    ordered <span class="op">=</span> <span class="st">"logical"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  prototype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/integer.html">integer</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    levels  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    ordered <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/logical.html">logical</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/methods/setOldClass.html">setOldClass</a></span><span class="op">(</span><span class="st">"ordered"</span>, S4Class <span class="op">=</span> <span class="st">"Ordered"</span><span class="op">)</span></span></code></pre></div>
+<div id="exercises-15.6.3" class="section level2" number="15.5">
+<h2><span class="header-section-number">15.5</span> Exercises 15.6.3</h2>
+<hr />
+<p><strong>Q1.</strong> What would a full <code>setOldClass()</code> definition look like for an ordered factor (i.e. add <code>slots</code> and <code>prototype</code> the definition above)?</p>
+<p><strong>A1.</strong> We can register the old-style/<code>S3</code> <code>ordered</code> class to a formally defined class using <code>setOldClass()</code>.</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="s4.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;factor&quot;</span>,</span>
+<span id="cb124-2"><a href="s4.html#cb124-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">contains =</span> <span class="st">&quot;integer&quot;</span>,</span>
+<span id="cb124-3"><a href="s4.html#cb124-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">slots =</span> <span class="fu">c</span>(</span>
+<span id="cb124-4"><a href="s4.html#cb124-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="st">&quot;character&quot;</span></span>
+<span id="cb124-5"><a href="s4.html#cb124-5" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb124-6"><a href="s4.html#cb124-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">prototype =</span> <span class="fu">structure</span>(</span>
+<span id="cb124-7"><a href="s4.html#cb124-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">integer</span>(),</span>
+<span id="cb124-8"><a href="s4.html#cb124-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="fu">character</span>()</span>
+<span id="cb124-9"><a href="s4.html#cb124-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb124-10"><a href="s4.html#cb124-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb124-11"><a href="s4.html#cb124-11" aria-hidden="true" tabindex="-1"></a><span class="fu">setOldClass</span>(<span class="st">&quot;factor&quot;</span>, <span class="at">S4Class =</span> <span class="st">&quot;factor&quot;</span>)</span>
+<span id="cb124-12"><a href="s4.html#cb124-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in rm(list = what, pos = classWhere): object</span></span>
+<span id="cb124-13"><a href="s4.html#cb124-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &#39;.__C__factor&#39; not found</span></span>
+<span id="cb124-14"><a href="s4.html#cb124-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-15"><a href="s4.html#cb124-15" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;Ordered&quot;</span>,</span>
+<span id="cb124-16"><a href="s4.html#cb124-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">contains =</span> <span class="st">&quot;factor&quot;</span>,</span>
+<span id="cb124-17"><a href="s4.html#cb124-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">slots =</span> <span class="fu">c</span>(</span>
+<span id="cb124-18"><a href="s4.html#cb124-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels  =</span> <span class="st">&quot;character&quot;</span>,</span>
+<span id="cb124-19"><a href="s4.html#cb124-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">ordered =</span> <span class="st">&quot;logical&quot;</span></span>
+<span id="cb124-20"><a href="s4.html#cb124-20" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb124-21"><a href="s4.html#cb124-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">prototype =</span> <span class="fu">structure</span>(</span>
+<span id="cb124-22"><a href="s4.html#cb124-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">integer</span>(),</span>
+<span id="cb124-23"><a href="s4.html#cb124-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels  =</span> <span class="fu">character</span>(),</span>
+<span id="cb124-24"><a href="s4.html#cb124-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">ordered =</span> <span class="fu">logical</span>()</span>
+<span id="cb124-25"><a href="s4.html#cb124-25" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb124-26"><a href="s4.html#cb124-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb124-27"><a href="s4.html#cb124-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-28"><a href="s4.html#cb124-28" aria-hidden="true" tabindex="-1"></a><span class="fu">setOldClass</span>(<span class="st">&quot;ordered&quot;</span>, <span class="at">S4Class =</span> <span class="st">&quot;Ordered&quot;</span>)</span></code></pre></div>
 <p>Let’s use it to see if it works as expected.</p>
-<div class="sourceCode" id="cb464"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Ordered"</span>, <span class="fl">1L</span><span class="op">:</span><span class="fl">4L</span>, levels <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">x</span></span>
-<span><span class="co">#&gt; Object of class "Ordered"</span></span>
-<span><span class="co">#&gt; [1] a b c d</span></span>
-<span><span class="co">#&gt; Levels: a b c d</span></span>
-<span><span class="co">#&gt; Slot "ordered":</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Formal class 'Ordered' [package ".GlobalEnv"] with 4 slots</span></span>
-<span><span class="co">#&gt;   ..@ .Data   : int [1:4] 1 2 3 4</span></span>
-<span><span class="co">#&gt;   ..@ levels  : chr [1:4] "a" "b" "c" "d"</span></span>
-<span><span class="co">#&gt;   ..@ ordered : logi TRUE</span></span>
-<span><span class="co">#&gt;   ..@ .S3Class: chr "factor"</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Ordered"</span></span>
-<span><span class="co">#&gt; attr(,"package")</span></span>
-<span><span class="co">#&gt; [1] ".GlobalEnv"</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="s4.html#cb125-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;Ordered&quot;</span>, 1L<span class="sc">:</span>4L, <span class="at">levels =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb125-2"><a href="s4.html#cb125-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-3"><a href="s4.html#cb125-3" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb125-4"><a href="s4.html#cb125-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Object of class &quot;Ordered&quot;</span></span>
+<span id="cb125-5"><a href="s4.html#cb125-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] a b c d</span></span>
+<span id="cb125-6"><a href="s4.html#cb125-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Levels: a b c d</span></span>
+<span id="cb125-7"><a href="s4.html#cb125-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Slot &quot;ordered&quot;:</span></span>
+<span id="cb125-8"><a href="s4.html#cb125-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb125-9"><a href="s4.html#cb125-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-10"><a href="s4.html#cb125-10" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(x)</span>
+<span id="cb125-11"><a href="s4.html#cb125-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Formal class &#39;Ordered&#39; [package &quot;.GlobalEnv&quot;] with 4 slots</span></span>
+<span id="cb125-12"><a href="s4.html#cb125-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ .Data   : int [1:4] 1 2 3 4</span></span>
+<span id="cb125-13"><a href="s4.html#cb125-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ levels  : chr [1:4] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;</span></span>
+<span id="cb125-14"><a href="s4.html#cb125-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ ordered : logi TRUE</span></span>
+<span id="cb125-15"><a href="s4.html#cb125-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..@ .S3Class: chr &quot;factor&quot;</span></span>
+<span id="cb125-16"><a href="s4.html#cb125-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-17"><a href="s4.html#cb125-17" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x)</span>
+<span id="cb125-18"><a href="s4.html#cb125-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Ordered&quot;</span></span>
+<span id="cb125-19"><a href="s4.html#cb125-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;package&quot;)</span></span>
+<span id="cb125-20"><a href="s4.html#cb125-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;.GlobalEnv&quot;</span></span></code></pre></div>
+<hr />
 <p><strong>Q2.</strong> Define a <code>length</code> method for the <code>Person</code> class.</p>
-<p><strong>A2.</strong> Because our <code>Person</code> class can be used to create objects that represent multiple people, let’s say the <code><a href="https://rdrr.io/r/base/length.html">length()</a></code> method returns how many persons are in the object.</p>
-<div class="sourceCode" id="cb465"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Friends</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Person"</span>, name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Vishu"</span>, <span class="st">"Aditi"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><strong>A2.</strong> Because our <code>Person</code> class can be used to create objects that represent multiple people, let’s say the <code>length()</code> method returns how many persons are in the object.</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="s4.html#cb126-1" aria-hidden="true" tabindex="-1"></a>Friends <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;Person&quot;</span>, <span class="at">name =</span> <span class="fu">c</span>(<span class="st">&quot;Vishu&quot;</span>, <span class="st">&quot;Aditi&quot;</span>))</span></code></pre></div>
 <p>We can define an <code>S3</code> method for this class:</p>
-<div class="sourceCode" id="cb466"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">length.Person</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">@</span><span class="va">name</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">Friends</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="s4.html#cb127-1" aria-hidden="true" tabindex="-1"></a>length.Person <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">length</span>(x<span class="sc">@</span>name)</span>
+<span id="cb127-2"><a href="s4.html#cb127-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb127-3"><a href="s4.html#cb127-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(Friends)</span>
+<span id="cb127-4"><a href="s4.html#cb127-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span></code></pre></div>
 <p>Alternatively, we can also write <code>S4</code> method:</p>
-<div class="sourceCode" id="cb467"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"length"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">@</span><span class="va">name</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">Friends</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="s4.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;length&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) <span class="fu">length</span>(x<span class="sc">@</span>name))</span>
+<span id="cb128-2"><a href="s4.html#cb128-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-3"><a href="s4.html#cb128-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(Friends)</span>
+<span id="cb128-4"><a href="s4.html#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span></code></pre></div>
+<hr />
 </div>
-<div id="session-information-12" class="section level2" number="15.1">
-<h2>
-<span class="header-section-number">15.1</span> Session information<a class="anchor" aria-label="anchor" href="#session-information-12"><i class="fas fa-link"></i></a>
-</h2>
-<div class="sourceCode" id="cb468"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; - Session info -------------------------------------------</span></span>
-<span><span class="co">#&gt;  setting  value</span></span>
-<span><span class="co">#&gt;  version  R version 4.1.3 (2022-03-10)</span></span>
-<span><span class="co">#&gt;  os       Windows 10 x64 (build 22000)</span></span>
-<span><span class="co">#&gt;  system   x86_64, mingw32</span></span>
-<span><span class="co">#&gt;  ui       RTerm</span></span>
-<span><span class="co">#&gt;  language (EN)</span></span>
-<span><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
-<span><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
-<span><span class="co">#&gt;  tz       Europe/Berlin</span></span>
-<span><span class="co">#&gt;  date     2022-08-20</span></span>
-<span><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
-<span><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
-<span><span class="co">#&gt;    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    base        * 4.1.3      2022-03-10 [?] local</span></span>
-<span><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;  P compiler      4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;  P datasets    * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    emo           0.0.0.9000 2021-10-10 [1] Github (hadley/emo@3f03b11)</span></span>
-<span><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P graphics    * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;  P grDevices   * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    highr         0.9        2021-04-16 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)</span></span>
-<span><span class="co">#&gt;    lubridate   * 1.8.0      2021-10-07 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P methods     * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
-<span><span class="co">#&gt;    rlang         1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
-<span><span class="co">#&gt;    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P tools         4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;  P utils       * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1</span></span>
-<span><span class="co">#&gt;  [2] C:/Program Files/R/R-4.1.3/library</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  P -- Loaded and on-disk path mismatch.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ----------------------------------------------------------</span></span></code></pre></div>
+<div id="session-information-12" class="section level2" number="15.6">
+<h2><span class="header-section-number">15.6</span> Session information</h2>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="s4.html#cb129-1" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb129-2"><a href="s4.html#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - Session info -------------------------------------------</span></span>
+<span id="cb129-3"><a href="s4.html#cb129-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  setting  value</span></span>
+<span id="cb129-4"><a href="s4.html#cb129-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  version  R version 4.1.3 (2022-03-10)</span></span>
+<span id="cb129-5"><a href="s4.html#cb129-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  os       Windows 10 x64 (build 22000)</span></span>
+<span id="cb129-6"><a href="s4.html#cb129-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  system   x86_64, mingw32</span></span>
+<span id="cb129-7"><a href="s4.html#cb129-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ui       RTerm</span></span>
+<span id="cb129-8"><a href="s4.html#cb129-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  language (EN)</span></span>
+<span id="cb129-9"><a href="s4.html#cb129-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
+<span id="cb129-10"><a href="s4.html#cb129-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
+<span id="cb129-11"><a href="s4.html#cb129-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tz       Europe/Berlin</span></span>
+<span id="cb129-12"><a href="s4.html#cb129-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  date     2022-08-21</span></span>
+<span id="cb129-13"><a href="s4.html#cb129-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
+<span id="cb129-14"><a href="s4.html#cb129-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb129-15"><a href="s4.html#cb129-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
+<span id="cb129-16"><a href="s4.html#cb129-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
+<span id="cb129-17"><a href="s4.html#cb129-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb129-18"><a href="s4.html#cb129-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    base        * 4.1.3      2022-03-10 [?] local</span></span>
+<span id="cb129-19"><a href="s4.html#cb129-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb129-20"><a href="s4.html#cb129-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb129-21"><a href="s4.html#cb129-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb129-22"><a href="s4.html#cb129-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb129-23"><a href="s4.html#cb129-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P compiler      4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb129-24"><a href="s4.html#cb129-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb129-25"><a href="s4.html#cb129-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P datasets    * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb129-26"><a href="s4.html#cb129-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb129-27"><a href="s4.html#cb129-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb129-28"><a href="s4.html#cb129-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    emo           0.0.0.9000 2021-10-10 [1] Github (hadley/emo@3f03b11)</span></span>
+<span id="cb129-29"><a href="s4.html#cb129-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb129-30"><a href="s4.html#cb129-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb129-31"><a href="s4.html#cb129-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb129-32"><a href="s4.html#cb129-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb129-33"><a href="s4.html#cb129-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb129-34"><a href="s4.html#cb129-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P graphics    * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb129-35"><a href="s4.html#cb129-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P grDevices   * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb129-36"><a href="s4.html#cb129-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    highr         0.9        2021-04-16 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb129-37"><a href="s4.html#cb129-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb129-38"><a href="s4.html#cb129-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb129-39"><a href="s4.html#cb129-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb129-40"><a href="s4.html#cb129-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)</span></span>
+<span id="cb129-41"><a href="s4.html#cb129-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    lubridate   * 1.8.0      2021-10-07 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb129-42"><a href="s4.html#cb129-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb129-43"><a href="s4.html#cb129-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb129-44"><a href="s4.html#cb129-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P methods     * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb129-45"><a href="s4.html#cb129-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb129-46"><a href="s4.html#cb129-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
+<span id="cb129-47"><a href="s4.html#cb129-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rlang         1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb129-48"><a href="s4.html#cb129-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
+<span id="cb129-49"><a href="s4.html#cb129-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb129-50"><a href="s4.html#cb129-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb129-51"><a href="s4.html#cb129-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb129-52"><a href="s4.html#cb129-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb129-53"><a href="s4.html#cb129-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb129-54"><a href="s4.html#cb129-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb129-55"><a href="s4.html#cb129-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P tools         4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb129-56"><a href="s4.html#cb129-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P utils       * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb129-57"><a href="s4.html#cb129-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb129-58"><a href="s4.html#cb129-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb129-59"><a href="s4.html#cb129-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb129-60"><a href="s4.html#cb129-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb129-61"><a href="s4.html#cb129-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb129-62"><a href="s4.html#cb129-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1</span></span>
+<span id="cb129-63"><a href="s4.html#cb129-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [2] C:/Program Files/R/R-4.1.3/library</span></span>
+<span id="cb129-64"><a href="s4.html#cb129-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb129-65"><a href="s4.html#cb129-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P -- Loaded and on-disk path mismatch.</span></span>
+<span id="cb129-66"><a href="s4.html#cb129-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb129-67"><a href="s4.html#cb129-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------------------------</span></span></code></pre></div>
 
 </div>
 </div>
-  <div class="chapter-nav">
-<div class="prev"><a href="r6.html"><span class="header-section-number">14</span> R6</a></div>
-<div class="next"><a href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li>
-<a class="nav-link" href="#s4"><span class="header-section-number">15</span> S4</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#exercises-15.2.1"><span class="header-section-number">15.0.1</span> Exercises 15.2.1</a></li>
-<li><a class="nav-link" href="#exercises-15.3.6"><span class="header-section-number">15.0.2</span> Exercises 15.3.6</a></li>
-<li><a class="nav-link" href="#exercises-15.4.5"><span class="header-section-number">15.0.3</span> Exercises 15.4.5</a></li>
-<li><a class="nav-link" href="#exercises-15.5.5"><span class="header-section-number">15.0.4</span> Exercises 15.5.5</a></li>
-<li><a class="nav-link" href="#exercises-15.6.3"><span class="header-section-number">15.0.5</span> Exercises 15.6.3</a></li>
-</ul>
-</li>
-<li><a class="nav-link" href="#session-information-12"><span class="header-section-number">15.1</span> Session information</a></li>
-</ul>
+  </main>
+
+  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/S4.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/S4.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
-</div>
+      </div>
     </nav>
-</div>
+  </div>
 
 </div>
 </div> <!-- .container -->
 
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+<footer class="bg-primary text-light mt-5">
+  <div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
     <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-20.</p>
@@ -677,34 +631,9 @@
   </div>
 
 </div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-for (let popover of popovers) {
-  const div = document.createElement('div');
-  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-  div.innerHTML = popover.getAttribute('data-content');
+</footer>
 
-  var has_math = div.querySelector("span.math");
-  if (has_math) {
-    document.body.appendChild(div);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    MathJax.Hub.Queue(function() {
-      popover.setAttribute('data-content', div.innerHTML);
-      document.body.removeChild(div);
-    })
-  }
-}
-</script>
+
 </body>
+
 </html>

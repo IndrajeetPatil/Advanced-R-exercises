@@ -1,37 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 21 Translation | Advanced R Exercises</title>
-<meta name="author" content="Indrajeet Patil">
-<meta name="description" content="Needed libraries: library(rlang) library(purrr)  21.0.1 Exercises 21.2.6 Q1. The escaping rules for &lt;script&gt; tags are different because they contain JavaScript, not HTML. Instead of escaping angle...">
-<meta name="generator" content="bookdown 0.28 with bs4_book()">
-<meta property="og:title" content="Chapter 21 Translation | Advanced R Exercises">
-<meta property="og:type" content="book">
-<meta property="og:image" content="/cover.png">
-<meta property="og:description" content="Needed libraries: library(rlang) library(purrr)  21.0.1 Exercises 21.2.6 Q1. The escaping rules for &lt;script&gt; tags are different because they contain JavaScript, not HTML. Instead of escaping angle...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 21 Translation | Advanced R Exercises">
-<meta name="twitter:description" content="Needed libraries: library(rlang) library(purrr)  21.0.1 Exercises 21.2.6 Q1. The escaping rules for &lt;script&gt; tags are different because they contain JavaScript, not HTML. Instead of escaping angle...">
-<meta name="twitter:image" content="/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
-<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
-<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Chapter 21 Translation | Advanced R Exercises</title>
+
+    <meta name="author" content="Indrajeet Patil" />
+  
+   <meta name="description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+   <meta name="generator" content="placeholder" />
+  <meta property="og:title" content="Chapter 21 Translation | Advanced R Exercises" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="/cover.png" />
+  <meta property="og:description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 21 Translation | Advanced R Exercises" />
+  
+  <meta name="twitter:description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+  <meta name="twitter:image" content="/cover.png" />
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
+    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
+    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
+    <script src="libs/bs3compat-0.4.0/transition.js"></script>
+    <script src="libs/bs3compat-0.4.0/tabs.js"></script>
+    <script src="libs/bs3compat-0.4.0/bs3compat.js"></script>
+    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
+    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
+    <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+    <script src="libs/d3-3.5.6/d3.min.js"></script>
+    <link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet" />
+    <script src="libs/profvis-0.3.6.9000/profvis.js"></script>
+    <script src="libs/profvis-0.3.6.9000/scroll.js"></script>
+    <link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet" />
+    <script src="libs/highlight-6.2.0/highlight.js"></script>
+    <script src="libs/profvis-binding-0.3.7/profvis.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  <style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
-<link rel="stylesheet" href="bs4_style.css">
+      <link rel="stylesheet" href="bs4_style.css" />
+  
 </head>
+
 <body data-spy="scroll" data-target="#toc">
 
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
@@ -43,326 +71,277 @@
     <div id="main-nav" class="collapse-lg">
       <form role="search">
         <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
+      </form>
 
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">About</a></li>
-<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
-<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
-<li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
-<li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
-<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
-<li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
-<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
-<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
-<li><a class="" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
-<li><a class="" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
-<li><a class="" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
-<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
-<li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
-<li><a class="" href="quasiquotation.html"><span class="header-section-number">19</span> Quasiquotation</a></li>
-<li><a class="" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
-<li><a class="active" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></li>
-<li><a class="" href="improving-performance.html"><span class="header-section-number">24</span> Improving performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></li>
-</ul>
+      <nav aria-label="Table of contents">
+        <h2>Table of contents</h2>
+        <div id="book-toc"></div>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
         </div>
       </nav>
-</div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="translation" class="section level1" number="21">
-<h1>
-<span class="header-section-number">21</span> Translation<a class="anchor" aria-label="anchor" href="#translation"><i class="fas fa-link"></i></a>
-</h1>
+    </div>
+  </header>
+
+  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
+<div id="translation" class="section level1" number="21">
+<h1><span class="header-section-number">Chapter 21</span> Translation</h1>
 <p>Needed libraries:</p>
-<div class="sourceCode" id="cb611"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span></span></code></pre></div>
-<div id="exercises-21.2.6" class="section level3" number="21.0.1">
-<h3>
-<span class="header-section-number">21.0.1</span> Exercises 21.2.6<a class="anchor" aria-label="anchor" href="#exercises-21.2.6"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="translation.html#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rlang)</span>
+<span id="cb272-2"><a href="translation.html#cb272-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span></code></pre></div>
+<div id="exercises-21.2.6" class="section level2" number="21.1">
+<h2><span class="header-section-number">21.1</span> Exercises 21.2.6</h2>
+<hr />
 <p><strong>Q1.</strong> The escaping rules for <code>&lt;script&gt;</code> tags are different because they contain JavaScript, not HTML. Instead of escaping angle brackets or ampersands, you need to escape <code>&lt;/script&gt;</code> so that the tag isn’t closed too early. For example, <code>script("'&lt;/script&gt;'")</code>, shouldn’t generate this:</p>
-<div class="sourceCode" id="cb612"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb612-1"><a href="translation.html#cb612-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">'&lt;/script&gt;'</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb273-1"><a href="translation.html#cb273-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">&#39;&lt;/script&gt;&#39;</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
 <p>But</p>
-<div class="sourceCode" id="cb613"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb613-1"><a href="translation.html#cb613-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">'&lt;</span><span class="sc">\/</span><span class="st">script&gt;'</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb274-1"><a href="translation.html#cb274-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">&#39;&lt;</span><span class="sc">\/</span><span class="st">script&gt;&#39;</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
 <p>Adapt the <code>escape()</code> to follow these rules when a new argument <code>script</code> is set to <code>TRUE</code>.</p>
 <p><strong>A1.</strong></p>
-<div class="sourceCode" id="cb614"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">escape</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/UseMethod.html">UseMethod</a></span><span class="op">(</span><span class="st">"escape"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">escape.character</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">script</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">script</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"&lt;/script&gt;"</span>, <span class="st">"&lt;\\/script&gt;"</span>, <span class="va">x</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>    <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"&amp;"</span>, <span class="st">"&amp;amp;"</span>, <span class="va">x</span><span class="op">)</span></span>
-<span>    <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"&lt;"</span>, <span class="st">"&amp;lt;"</span>, <span class="va">x</span><span class="op">)</span></span>
-<span>    <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"&gt;"</span>, <span class="st">"&amp;gt;"</span>, <span class="va">x</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span></span>
-<span>  <span class="fu">html</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">escape.advr_html</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="va">x</span></span></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="translation.html#cb275-1" aria-hidden="true" tabindex="-1"></a>escape <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) <span class="fu">UseMethod</span>(<span class="st">&quot;escape&quot;</span>)</span>
+<span id="cb275-2"><a href="translation.html#cb275-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb275-3"><a href="translation.html#cb275-3" aria-hidden="true" tabindex="-1"></a>escape.character <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">script =</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb275-4"><a href="translation.html#cb275-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (script) {</span>
+<span id="cb275-5"><a href="translation.html#cb275-5" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;&lt;/script&gt;&quot;</span>, <span class="st">&quot;&lt;</span><span class="sc">\\</span><span class="st">/script&gt;&quot;</span>, x, <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb275-6"><a href="translation.html#cb275-6" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb275-7"><a href="translation.html#cb275-7" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;&amp;&quot;</span>, <span class="st">&quot;&amp;amp;&quot;</span>, x)</span>
+<span id="cb275-8"><a href="translation.html#cb275-8" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="st">&quot;&amp;lt;&quot;</span>, x)</span>
+<span id="cb275-9"><a href="translation.html#cb275-9" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;&gt;&quot;</span>, <span class="st">&quot;&amp;gt;&quot;</span>, x)</span>
+<span id="cb275-10"><a href="translation.html#cb275-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb275-11"><a href="translation.html#cb275-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb275-12"><a href="translation.html#cb275-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html</span>(x)</span>
+<span id="cb275-13"><a href="translation.html#cb275-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb275-14"><a href="translation.html#cb275-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb275-15"><a href="translation.html#cb275-15" aria-hidden="true" tabindex="-1"></a>escape.advr_html <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) x</span></code></pre></div>
 <p>We will also need to tweak the boilerplate to pass this additional parameter to <code>escape()</code>:</p>
-<div class="sourceCode" id="cb615"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">html</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span><span class="va">x</span>, class <span class="op">=</span> <span class="st">"advr_html"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">print.advr_html</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"&lt;HTML&gt; "</span>, <span class="va">x</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strwrap.html">strwrap</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">dots_partition</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">dots</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">is_named</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">dots</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>    <span class="va">is_named</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">dots</span><span class="op">)</span> <span class="op">!=</span> <span class="st">""</span></span>
-<span>  <span class="op">}</span></span>
-<span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>    named <span class="op">=</span> <span class="va">dots</span><span class="op">[</span><span class="va">is_named</span><span class="op">]</span>,</span>
-<span>    unnamed <span class="op">=</span> <span class="va">dots</span><span class="op">[</span><span class="op">!</span><span class="va">is_named</span><span class="op">]</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">tag</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">tag</span>, <span class="va">script</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">script</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/new_function.html">new_function</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>... <span class="op">=</span> <span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">{</span></span>
-<span>      <span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu">dots_partition</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span>      <span class="va">attribs</span> <span class="op">&lt;-</span> <span class="fu">html_attributes</span><span class="op">(</span><span class="va">dots</span><span class="op">$</span><span class="va">named</span><span class="op">)</span></span>
-<span>      <span class="va">children</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">dots</span><span class="op">$</span><span class="va">unnamed</span>, .f <span class="op">=</span> <span class="op">~</span> <span class="fu">escape</span><span class="op">(</span><span class="va">.x</span>, <span class="op">!</span><span class="op">!</span><span class="va">script</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span>      <span class="fu">html</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span></span>
-<span>        <span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"&lt;"</span>, <span class="va">tag</span><span class="op">)</span>, <span class="va">attribs</span>, <span class="st">"&gt;"</span>,</span>
-<span>        <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">children</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,</span>
-<span>        <span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"&lt;/"</span>, <span class="va">tag</span>, <span class="st">"&gt;"</span><span class="op">)</span></span>
-<span>      <span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="op">}</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">void_tag</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">tag</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/new_function.html">new_function</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>... <span class="op">=</span> <span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">{</span></span>
-<span>      <span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu">dots_partition</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span>      <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">dots</span><span class="op">$</span><span class="va">unnamed</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span>        <span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"&lt;"</span>, <span class="va">tag</span>, <span class="st">"&gt; must not have unnamed arguments"</span><span class="op">)</span><span class="op">)</span></span>
-<span>      <span class="op">}</span></span>
-<span>      <span class="va">attribs</span> <span class="op">&lt;-</span> <span class="fu">html_attributes</span><span class="op">(</span><span class="va">dots</span><span class="op">$</span><span class="va">named</span><span class="op">)</span></span>
-<span></span>
-<span>      <span class="fu">html</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"&lt;"</span>, <span class="va">tag</span><span class="op">)</span>, <span class="va">attribs</span>, <span class="st">" /&gt;"</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="op">}</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">tag</span><span class="op">(</span><span class="st">"p"</span><span class="op">)</span></span>
-<span><span class="va">script</span> <span class="op">&lt;-</span> <span class="fu">tag</span><span class="op">(</span><span class="st">"script"</span>, script <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb616"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">script</span><span class="op">(</span><span class="st">"'&lt;/script&gt;'"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;HTML&gt; &lt;script&gt;'&lt;\/script&gt;'&lt;/script&gt;</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="translation.html#cb276-1" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">structure</span>(x, <span class="at">class =</span> <span class="st">&quot;advr_html&quot;</span>)</span>
+<span id="cb276-2"><a href="translation.html#cb276-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-3"><a href="translation.html#cb276-3" aria-hidden="true" tabindex="-1"></a>print.advr_html <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb276-4"><a href="translation.html#cb276-4" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;&lt;HTML&gt; &quot;</span>, x)</span>
+<span id="cb276-5"><a href="translation.html#cb276-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">paste</span>(<span class="fu">strwrap</span>(out), <span class="at">collapse =</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb276-6"><a href="translation.html#cb276-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb276-7"><a href="translation.html#cb276-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-8"><a href="translation.html#cb276-8" aria-hidden="true" tabindex="-1"></a>dots_partition <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb276-9"><a href="translation.html#cb276-9" aria-hidden="true" tabindex="-1"></a>  dots <span class="ot">&lt;-</span> <span class="fu">list2</span>(...)</span>
+<span id="cb276-10"><a href="translation.html#cb276-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-11"><a href="translation.html#cb276-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(<span class="fu">names</span>(dots))) {</span>
+<span id="cb276-12"><a href="translation.html#cb276-12" aria-hidden="true" tabindex="-1"></a>    is_named <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="fu">length</span>(dots))</span>
+<span id="cb276-13"><a href="translation.html#cb276-13" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb276-14"><a href="translation.html#cb276-14" aria-hidden="true" tabindex="-1"></a>    is_named <span class="ot">&lt;-</span> <span class="fu">names</span>(dots) <span class="sc">!=</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb276-15"><a href="translation.html#cb276-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb276-16"><a href="translation.html#cb276-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-17"><a href="translation.html#cb276-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb276-18"><a href="translation.html#cb276-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">named =</span> dots[is_named],</span>
+<span id="cb276-19"><a href="translation.html#cb276-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">unnamed =</span> dots[<span class="sc">!</span>is_named]</span>
+<span id="cb276-20"><a href="translation.html#cb276-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb276-21"><a href="translation.html#cb276-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb276-22"><a href="translation.html#cb276-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-23"><a href="translation.html#cb276-23" aria-hidden="true" tabindex="-1"></a>tag <span class="ot">&lt;-</span> <span class="cf">function</span>(tag, <span class="at">script =</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb276-24"><a href="translation.html#cb276-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">force</span>(script)</span>
+<span id="cb276-25"><a href="translation.html#cb276-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">new_function</span>(</span>
+<span id="cb276-26"><a href="translation.html#cb276-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">exprs</span>(<span class="at">... =</span> ),</span>
+<span id="cb276-27"><a href="translation.html#cb276-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expr</span>({</span>
+<span id="cb276-28"><a href="translation.html#cb276-28" aria-hidden="true" tabindex="-1"></a>      dots <span class="ot">&lt;-</span> <span class="fu">dots_partition</span>(...)</span>
+<span id="cb276-29"><a href="translation.html#cb276-29" aria-hidden="true" tabindex="-1"></a>      attribs <span class="ot">&lt;-</span> <span class="fu">html_attributes</span>(dots<span class="sc">$</span>named)</span>
+<span id="cb276-30"><a href="translation.html#cb276-30" aria-hidden="true" tabindex="-1"></a>      children <span class="ot">&lt;-</span> <span class="fu">map_chr</span>(<span class="at">.x =</span> dots<span class="sc">$</span>unnamed, <span class="at">.f =</span> <span class="sc">~</span> <span class="fu">escape</span>(.x, <span class="sc">!!</span>script))</span>
+<span id="cb276-31"><a href="translation.html#cb276-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-32"><a href="translation.html#cb276-32" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html</span>(<span class="fu">paste0</span>(</span>
+<span id="cb276-33"><a href="translation.html#cb276-33" aria-hidden="true" tabindex="-1"></a>        <span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;&lt;&quot;</span>, tag), attribs, <span class="st">&quot;&gt;&quot;</span>,</span>
+<span id="cb276-34"><a href="translation.html#cb276-34" aria-hidden="true" tabindex="-1"></a>        <span class="fu">paste</span>(children, <span class="at">collapse =</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb276-35"><a href="translation.html#cb276-35" aria-hidden="true" tabindex="-1"></a>        <span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;&lt;/&quot;</span>, tag, <span class="st">&quot;&gt;&quot;</span>)</span>
+<span id="cb276-36"><a href="translation.html#cb276-36" aria-hidden="true" tabindex="-1"></a>      ))</span>
+<span id="cb276-37"><a href="translation.html#cb276-37" aria-hidden="true" tabindex="-1"></a>    }),</span>
+<span id="cb276-38"><a href="translation.html#cb276-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">caller_env</span>()</span>
+<span id="cb276-39"><a href="translation.html#cb276-39" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb276-40"><a href="translation.html#cb276-40" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb276-41"><a href="translation.html#cb276-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-42"><a href="translation.html#cb276-42" aria-hidden="true" tabindex="-1"></a>void_tag <span class="ot">&lt;-</span> <span class="cf">function</span>(tag) {</span>
+<span id="cb276-43"><a href="translation.html#cb276-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">new_function</span>(</span>
+<span id="cb276-44"><a href="translation.html#cb276-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">exprs</span>(<span class="at">... =</span> ),</span>
+<span id="cb276-45"><a href="translation.html#cb276-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expr</span>({</span>
+<span id="cb276-46"><a href="translation.html#cb276-46" aria-hidden="true" tabindex="-1"></a>      dots <span class="ot">&lt;-</span> <span class="fu">dots_partition</span>(...)</span>
+<span id="cb276-47"><a href="translation.html#cb276-47" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">length</span>(dots<span class="sc">$</span>unnamed) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb276-48"><a href="translation.html#cb276-48" aria-hidden="true" tabindex="-1"></a>        <span class="fu">abort</span>(<span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;&lt;&quot;</span>, tag, <span class="st">&quot;&gt; must not have unnamed arguments&quot;</span>))</span>
+<span id="cb276-49"><a href="translation.html#cb276-49" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb276-50"><a href="translation.html#cb276-50" aria-hidden="true" tabindex="-1"></a>      attribs <span class="ot">&lt;-</span> <span class="fu">html_attributes</span>(dots<span class="sc">$</span>named)</span>
+<span id="cb276-51"><a href="translation.html#cb276-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-52"><a href="translation.html#cb276-52" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html</span>(<span class="fu">paste0</span>(<span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;&lt;&quot;</span>, tag), attribs, <span class="st">&quot; /&gt;&quot;</span>))</span>
+<span id="cb276-53"><a href="translation.html#cb276-53" aria-hidden="true" tabindex="-1"></a>    }),</span>
+<span id="cb276-54"><a href="translation.html#cb276-54" aria-hidden="true" tabindex="-1"></a>    <span class="fu">caller_env</span>()</span>
+<span id="cb276-55"><a href="translation.html#cb276-55" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb276-56"><a href="translation.html#cb276-56" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb276-57"><a href="translation.html#cb276-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-58"><a href="translation.html#cb276-58" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">tag</span>(<span class="st">&quot;p&quot;</span>)</span>
+<span id="cb276-59"><a href="translation.html#cb276-59" aria-hidden="true" tabindex="-1"></a>script <span class="ot">&lt;-</span> <span class="fu">tag</span>(<span class="st">&quot;script&quot;</span>, <span class="at">script =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="translation.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">script</span>(<span class="st">&quot;&#39;&lt;/script&gt;&#39;&quot;</span>)</span>
+<span id="cb277-2"><a href="translation.html#cb277-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;HTML&gt; &lt;script&gt;&#39;&lt;\/script&gt;&#39;&lt;/script&gt;</span></span></code></pre></div>
+<hr />
 <p><strong>Q2.</strong> The use of <code>...</code> for all functions has some big downsides. There’s no input validation and there will be little information in the documentation or autocomplete about how they are used in the function. Create a new function that, when given a named list of tags and their attribute names (like below), creates tag functions with named arguments.</p>
-<div class="sourceCode" id="cb617"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>  a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"href"</span><span class="op">)</span>,</span>
-<span>  img <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"src"</span>, <span class="st">"width"</span>, <span class="st">"height"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="translation.html#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
+<span id="cb278-2"><a href="translation.html#cb278-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">a =</span> <span class="fu">c</span>(<span class="st">&quot;href&quot;</span>),</span>
+<span id="cb278-3"><a href="translation.html#cb278-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">img =</span> <span class="fu">c</span>(<span class="st">&quot;src&quot;</span>, <span class="st">&quot;width&quot;</span>, <span class="st">&quot;height&quot;</span>)</span>
+<span id="cb278-4"><a href="translation.html#cb278-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>All tags should get <code>class</code> and <code>id</code> attributes.</p>
-<hr>
+<hr />
 <p><strong>Q3.</strong> Reason about the following code that calls <code>with_html()</code> referencing objects from the environment. Will it work or fail? Why? Run the code to verify your predictions.</p>
-<div class="sourceCode" id="cb618"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">greeting</span> <span class="op">&lt;-</span> <span class="st">"Hello!"</span></span>
-<span><span class="fu">with_html</span><span class="op">(</span><span class="fu">p</span><span class="op">(</span><span class="va">greeting</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="st">"p"</span></span>
-<span><span class="va">address</span> <span class="op">&lt;-</span> <span class="st">"123 anywhere street"</span></span>
-<span><span class="fu">with_html</span><span class="op">(</span><span class="fu">p</span><span class="op">(</span><span class="va">address</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="translation.html#cb279-1" aria-hidden="true" tabindex="-1"></a>greeting <span class="ot">&lt;-</span> <span class="st">&quot;Hello!&quot;</span></span>
+<span id="cb279-2"><a href="translation.html#cb279-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with_html</span>(<span class="fu">p</span>(greeting))</span>
+<span id="cb279-3"><a href="translation.html#cb279-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="st">&quot;p&quot;</span></span>
+<span id="cb279-4"><a href="translation.html#cb279-4" aria-hidden="true" tabindex="-1"></a>address <span class="ot">&lt;-</span> <span class="st">&quot;123 anywhere street&quot;</span></span>
+<span id="cb279-5"><a href="translation.html#cb279-5" aria-hidden="true" tabindex="-1"></a><span class="fu">with_html</span>(<span class="fu">p</span>(address))</span></code></pre></div>
 <p><strong>A3.</strong> To work with this, we first need to copy-paste relevant code from the book:</p>
-<div class="sourceCode" id="cb619"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"a"</span>, <span class="st">"abbr"</span>, <span class="st">"address"</span>, <span class="st">"article"</span>, <span class="st">"aside"</span>, <span class="st">"audio"</span>,</span>
-<span>  <span class="st">"b"</span>, <span class="st">"bdi"</span>, <span class="st">"bdo"</span>, <span class="st">"blockquote"</span>, <span class="st">"body"</span>, <span class="st">"button"</span>, <span class="st">"canvas"</span>,</span>
-<span>  <span class="st">"caption"</span>, <span class="st">"cite"</span>, <span class="st">"code"</span>, <span class="st">"colgroup"</span>, <span class="st">"data"</span>, <span class="st">"datalist"</span>,</span>
-<span>  <span class="st">"dd"</span>, <span class="st">"del"</span>, <span class="st">"details"</span>, <span class="st">"dfn"</span>, <span class="st">"div"</span>, <span class="st">"dl"</span>, <span class="st">"dt"</span>, <span class="st">"em"</span>,</span>
-<span>  <span class="st">"eventsource"</span>, <span class="st">"fieldset"</span>, <span class="st">"figcaption"</span>, <span class="st">"figure"</span>, <span class="st">"footer"</span>,</span>
-<span>  <span class="st">"form"</span>, <span class="st">"h1"</span>, <span class="st">"h2"</span>, <span class="st">"h3"</span>, <span class="st">"h4"</span>, <span class="st">"h5"</span>, <span class="st">"h6"</span>, <span class="st">"head"</span>, <span class="st">"header"</span>,</span>
-<span>  <span class="st">"hgroup"</span>, <span class="st">"html"</span>, <span class="st">"i"</span>, <span class="st">"iframe"</span>, <span class="st">"ins"</span>, <span class="st">"kbd"</span>, <span class="st">"label"</span>,</span>
-<span>  <span class="st">"legend"</span>, <span class="st">"li"</span>, <span class="st">"mark"</span>, <span class="st">"map"</span>, <span class="st">"menu"</span>, <span class="st">"meter"</span>, <span class="st">"nav"</span>,</span>
-<span>  <span class="st">"noscript"</span>, <span class="st">"object"</span>, <span class="st">"ol"</span>, <span class="st">"optgroup"</span>, <span class="st">"option"</span>, <span class="st">"output"</span>,</span>
-<span>  <span class="st">"p"</span>, <span class="st">"pre"</span>, <span class="st">"progress"</span>, <span class="st">"q"</span>, <span class="st">"ruby"</span>, <span class="st">"rp"</span>, <span class="st">"rt"</span>, <span class="st">"s"</span>, <span class="st">"samp"</span>,</span>
-<span>  <span class="st">"script"</span>, <span class="st">"section"</span>, <span class="st">"select"</span>, <span class="st">"small"</span>, <span class="st">"span"</span>, <span class="st">"strong"</span>,</span>
-<span>  <span class="st">"style"</span>, <span class="st">"sub"</span>, <span class="st">"summary"</span>, <span class="st">"sup"</span>, <span class="st">"table"</span>, <span class="st">"tbody"</span>, <span class="st">"td"</span>,</span>
-<span>  <span class="st">"textarea"</span>, <span class="st">"tfoot"</span>, <span class="st">"th"</span>, <span class="st">"thead"</span>, <span class="st">"time"</span>, <span class="st">"title"</span>, <span class="st">"tr"</span>,</span>
-<span>  <span class="st">"u"</span>, <span class="st">"ul"</span>, <span class="st">"var"</span>, <span class="st">"video"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">void_tags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"area"</span>, <span class="st">"base"</span>, <span class="st">"br"</span>, <span class="st">"col"</span>, <span class="st">"command"</span>, <span class="st">"embed"</span>,</span>
-<span>  <span class="st">"hr"</span>, <span class="st">"img"</span>, <span class="st">"input"</span>, <span class="st">"keygen"</span>, <span class="st">"link"</span>, <span class="st">"meta"</span>, <span class="st">"param"</span>,</span>
-<span>  <span class="st">"source"</span>, <span class="st">"track"</span>, <span class="st">"wbr"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">html_tags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>  <span class="va">tags</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rlang.r-lib.org/reference/set_names.html">set_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">tag</span><span class="op">)</span>,</span>
-<span>  <span class="va">void_tags</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rlang.r-lib.org/reference/set_names.html">set_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">void_tag</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">with_html</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">code</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">code</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html">enquo</a></span><span class="op">(</span><span class="va">code</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy</a></span><span class="op">(</span><span class="va">code</span>, <span class="va">html_tags</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<p>Note that <code>with_html()</code> uses <code><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy()</a></code>, and therefore <code>code</code> argument is evaluated first in the <code>html_tags</code> named list, which acts as a data mask, and if no object is found in the data mask, searches in the caller environment.</p>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="translation.html#cb280-1" aria-hidden="true" tabindex="-1"></a>tags <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb280-2"><a href="translation.html#cb280-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;a&quot;</span>, <span class="st">&quot;abbr&quot;</span>, <span class="st">&quot;address&quot;</span>, <span class="st">&quot;article&quot;</span>, <span class="st">&quot;aside&quot;</span>, <span class="st">&quot;audio&quot;</span>,</span>
+<span id="cb280-3"><a href="translation.html#cb280-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;b&quot;</span>, <span class="st">&quot;bdi&quot;</span>, <span class="st">&quot;bdo&quot;</span>, <span class="st">&quot;blockquote&quot;</span>, <span class="st">&quot;body&quot;</span>, <span class="st">&quot;button&quot;</span>, <span class="st">&quot;canvas&quot;</span>,</span>
+<span id="cb280-4"><a href="translation.html#cb280-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;caption&quot;</span>, <span class="st">&quot;cite&quot;</span>, <span class="st">&quot;code&quot;</span>, <span class="st">&quot;colgroup&quot;</span>, <span class="st">&quot;data&quot;</span>, <span class="st">&quot;datalist&quot;</span>,</span>
+<span id="cb280-5"><a href="translation.html#cb280-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;dd&quot;</span>, <span class="st">&quot;del&quot;</span>, <span class="st">&quot;details&quot;</span>, <span class="st">&quot;dfn&quot;</span>, <span class="st">&quot;div&quot;</span>, <span class="st">&quot;dl&quot;</span>, <span class="st">&quot;dt&quot;</span>, <span class="st">&quot;em&quot;</span>,</span>
+<span id="cb280-6"><a href="translation.html#cb280-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;eventsource&quot;</span>, <span class="st">&quot;fieldset&quot;</span>, <span class="st">&quot;figcaption&quot;</span>, <span class="st">&quot;figure&quot;</span>, <span class="st">&quot;footer&quot;</span>,</span>
+<span id="cb280-7"><a href="translation.html#cb280-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;form&quot;</span>, <span class="st">&quot;h1&quot;</span>, <span class="st">&quot;h2&quot;</span>, <span class="st">&quot;h3&quot;</span>, <span class="st">&quot;h4&quot;</span>, <span class="st">&quot;h5&quot;</span>, <span class="st">&quot;h6&quot;</span>, <span class="st">&quot;head&quot;</span>, <span class="st">&quot;header&quot;</span>,</span>
+<span id="cb280-8"><a href="translation.html#cb280-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;hgroup&quot;</span>, <span class="st">&quot;html&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;iframe&quot;</span>, <span class="st">&quot;ins&quot;</span>, <span class="st">&quot;kbd&quot;</span>, <span class="st">&quot;label&quot;</span>,</span>
+<span id="cb280-9"><a href="translation.html#cb280-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;legend&quot;</span>, <span class="st">&quot;li&quot;</span>, <span class="st">&quot;mark&quot;</span>, <span class="st">&quot;map&quot;</span>, <span class="st">&quot;menu&quot;</span>, <span class="st">&quot;meter&quot;</span>, <span class="st">&quot;nav&quot;</span>,</span>
+<span id="cb280-10"><a href="translation.html#cb280-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;noscript&quot;</span>, <span class="st">&quot;object&quot;</span>, <span class="st">&quot;ol&quot;</span>, <span class="st">&quot;optgroup&quot;</span>, <span class="st">&quot;option&quot;</span>, <span class="st">&quot;output&quot;</span>,</span>
+<span id="cb280-11"><a href="translation.html#cb280-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;p&quot;</span>, <span class="st">&quot;pre&quot;</span>, <span class="st">&quot;progress&quot;</span>, <span class="st">&quot;q&quot;</span>, <span class="st">&quot;ruby&quot;</span>, <span class="st">&quot;rp&quot;</span>, <span class="st">&quot;rt&quot;</span>, <span class="st">&quot;s&quot;</span>, <span class="st">&quot;samp&quot;</span>,</span>
+<span id="cb280-12"><a href="translation.html#cb280-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;script&quot;</span>, <span class="st">&quot;section&quot;</span>, <span class="st">&quot;select&quot;</span>, <span class="st">&quot;small&quot;</span>, <span class="st">&quot;span&quot;</span>, <span class="st">&quot;strong&quot;</span>,</span>
+<span id="cb280-13"><a href="translation.html#cb280-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;style&quot;</span>, <span class="st">&quot;sub&quot;</span>, <span class="st">&quot;summary&quot;</span>, <span class="st">&quot;sup&quot;</span>, <span class="st">&quot;table&quot;</span>, <span class="st">&quot;tbody&quot;</span>, <span class="st">&quot;td&quot;</span>,</span>
+<span id="cb280-14"><a href="translation.html#cb280-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;textarea&quot;</span>, <span class="st">&quot;tfoot&quot;</span>, <span class="st">&quot;th&quot;</span>, <span class="st">&quot;thead&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;title&quot;</span>, <span class="st">&quot;tr&quot;</span>,</span>
+<span id="cb280-15"><a href="translation.html#cb280-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;u&quot;</span>, <span class="st">&quot;ul&quot;</span>, <span class="st">&quot;var&quot;</span>, <span class="st">&quot;video&quot;</span></span>
+<span id="cb280-16"><a href="translation.html#cb280-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb280-17"><a href="translation.html#cb280-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb280-18"><a href="translation.html#cb280-18" aria-hidden="true" tabindex="-1"></a>void_tags <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb280-19"><a href="translation.html#cb280-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;area&quot;</span>, <span class="st">&quot;base&quot;</span>, <span class="st">&quot;br&quot;</span>, <span class="st">&quot;col&quot;</span>, <span class="st">&quot;command&quot;</span>, <span class="st">&quot;embed&quot;</span>,</span>
+<span id="cb280-20"><a href="translation.html#cb280-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;hr&quot;</span>, <span class="st">&quot;img&quot;</span>, <span class="st">&quot;input&quot;</span>, <span class="st">&quot;keygen&quot;</span>, <span class="st">&quot;link&quot;</span>, <span class="st">&quot;meta&quot;</span>, <span class="st">&quot;param&quot;</span>,</span>
+<span id="cb280-21"><a href="translation.html#cb280-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;source&quot;</span>, <span class="st">&quot;track&quot;</span>, <span class="st">&quot;wbr&quot;</span></span>
+<span id="cb280-22"><a href="translation.html#cb280-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb280-23"><a href="translation.html#cb280-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb280-24"><a href="translation.html#cb280-24" aria-hidden="true" tabindex="-1"></a>html_tags <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb280-25"><a href="translation.html#cb280-25" aria-hidden="true" tabindex="-1"></a>  tags <span class="sc">%&gt;%</span> <span class="fu">set_names</span>() <span class="sc">%&gt;%</span> <span class="fu">map</span>(tag),</span>
+<span id="cb280-26"><a href="translation.html#cb280-26" aria-hidden="true" tabindex="-1"></a>  void_tags <span class="sc">%&gt;%</span> <span class="fu">set_names</span>() <span class="sc">%&gt;%</span> <span class="fu">map</span>(void_tag)</span>
+<span id="cb280-27"><a href="translation.html#cb280-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb280-28"><a href="translation.html#cb280-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb280-29"><a href="translation.html#cb280-29" aria-hidden="true" tabindex="-1"></a>with_html <span class="ot">&lt;-</span> <span class="cf">function</span>(code) {</span>
+<span id="cb280-30"><a href="translation.html#cb280-30" aria-hidden="true" tabindex="-1"></a>  code <span class="ot">&lt;-</span> <span class="fu">enquo</span>(code)</span>
+<span id="cb280-31"><a href="translation.html#cb280-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eval_tidy</span>(code, html_tags)</span>
+<span id="cb280-32"><a href="translation.html#cb280-32" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Note that <code>with_html()</code> uses <code>eval_tidy()</code>, and therefore <code>code</code> argument is evaluated first in the <code>html_tags</code> named list, which acts as a data mask, and if no object is found in the data mask, searches in the caller environment.</p>
 <p>For this reason, the first example code will work:</p>
-<div class="sourceCode" id="cb620"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">greeting</span> <span class="op">&lt;-</span> <span class="st">"Hello!"</span></span>
-<span><span class="fu">with_html</span><span class="op">(</span><span class="fu">p</span><span class="op">(</span><span class="va">greeting</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;HTML&gt; &lt;p&gt;Hello!&lt;/p&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="translation.html#cb281-1" aria-hidden="true" tabindex="-1"></a>greeting <span class="ot">&lt;-</span> <span class="st">&quot;Hello!&quot;</span></span>
+<span id="cb281-2"><a href="translation.html#cb281-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with_html</span>(<span class="fu">p</span>(greeting))</span>
+<span id="cb281-3"><a href="translation.html#cb281-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;HTML&gt; &lt;p&gt;Hello!&lt;/p&gt;</span></span></code></pre></div>
 <p>The following code, however, is not going to work because there is already <code>address</code> element in the data mask, and so <code>p()</code> will take a function <code>address()</code> as an input, and <code>escape()</code> doesn’t know how to deal with objects of <code>function</code> type:</p>
-<div class="sourceCode" id="cb621"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="st">"address"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">html_tags</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="st">"p"</span></span>
-<span><span class="va">address</span> <span class="op">&lt;-</span> <span class="st">"123 anywhere street"</span></span>
-<span><span class="fu">with_html</span><span class="op">(</span><span class="fu">p</span><span class="op">(</span><span class="va">address</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in UseMethod("escape"): no applicable method for 'escape' applied to an object of class "function"</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="translation.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;address&quot;</span> <span class="sc">%in%</span> <span class="fu">names</span>(html_tags)</span>
+<span id="cb282-2"><a href="translation.html#cb282-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb282-3"><a href="translation.html#cb282-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb282-4"><a href="translation.html#cb282-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="st">&quot;p&quot;</span></span>
+<span id="cb282-5"><a href="translation.html#cb282-5" aria-hidden="true" tabindex="-1"></a>address <span class="ot">&lt;-</span> <span class="st">&quot;123 anywhere street&quot;</span></span>
+<span id="cb282-6"><a href="translation.html#cb282-6" aria-hidden="true" tabindex="-1"></a><span class="fu">with_html</span>(<span class="fu">p</span>(address))</span>
+<span id="cb282-7"><a href="translation.html#cb282-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in UseMethod(&quot;escape&quot;): no applicable method for &#39;escape&#39; applied to an object of class &quot;function&quot;</span></span></code></pre></div>
+<hr />
 <p><strong>Q4.</strong> Currently the HTML doesn’t look terribly pretty, and it’s hard to see the structure. How could you adapt <code>tag()</code> to do indenting and formatting? (You may need to do some research into block and inline tags.)</p>
 <p><strong>A4.</strong></p>
-<div class="sourceCode" id="cb622"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">html_tags</span><span class="op">$</span><span class="fu">p</span><span class="op">(</span></span>
-<span>  <span class="st">"Some text. "</span>,</span>
-<span>  <span class="va">html_tags</span><span class="op">$</span><span class="fu">b</span><span class="op">(</span><span class="va">html_tags</span><span class="op">$</span><span class="fu">i</span><span class="op">(</span><span class="st">"some bold italic text"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  class <span class="op">=</span> <span class="st">"mypara"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;HTML&gt; &lt;p class='mypara'&gt;Some text. &lt;b&gt;&lt;i&gt;some bold</span></span>
-<span><span class="co">#&gt; italic text&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="translation.html#cb283-1" aria-hidden="true" tabindex="-1"></a>html_tags<span class="sc">$</span><span class="fu">p</span>(</span>
+<span id="cb283-2"><a href="translation.html#cb283-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Some text. &quot;</span>,</span>
+<span id="cb283-3"><a href="translation.html#cb283-3" aria-hidden="true" tabindex="-1"></a>  html_tags<span class="sc">$</span><span class="fu">b</span>(html_tags<span class="sc">$</span><span class="fu">i</span>(<span class="st">&quot;some bold italic text&quot;</span>)),</span>
+<span id="cb283-4"><a href="translation.html#cb283-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="st">&quot;mypara&quot;</span></span>
+<span id="cb283-5"><a href="translation.html#cb283-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb283-6"><a href="translation.html#cb283-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;HTML&gt; &lt;p class=&#39;mypara&#39;&gt;Some text. &lt;b&gt;&lt;i&gt;some bold</span></span>
+<span id="cb283-7"><a href="translation.html#cb283-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; italic text&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</span></span></code></pre></div>
+<hr />
 </div>
-<div id="exercises-21.3.8" class="section level3" number="21.0.2">
-<h3>
-<span class="header-section-number">21.0.2</span> Exercises 21.3.8<a class="anchor" aria-label="anchor" href="#exercises-21.3.8"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
+<div id="exercises-21.3.8" class="section level2" number="21.2">
+<h2><span class="header-section-number">21.2</span> Exercises 21.3.8</h2>
+<hr />
 <p><strong>Q1.</strong> Add escaping. The special symbols that should be escaped by adding a backslash in front of them are <code>\</code>, <code>$</code>, and <code>%</code>. Just as with HTML, you’ll need to make sure you don’t end up double-escaping. So you’ll need to create a small S3 class and then use that in function operators. That will also allow you to embed arbitrary LaTeX if needed.</p>
-<hr>
+<hr />
 <p><strong>Q2.</strong> Complete the DSL to support all the functions that <code>plotmath</code> supports.</p>
-<hr>
+<hr />
 </div>
-<div id="session-information-16" class="section level2" number="21.1">
-<h2>
-<span class="header-section-number">21.1</span> Session information<a class="anchor" aria-label="anchor" href="#session-information-16"><i class="fas fa-link"></i></a>
-</h2>
-<div class="sourceCode" id="cb623"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; - Session info -------------------------------------------</span></span>
-<span><span class="co">#&gt;  setting  value</span></span>
-<span><span class="co">#&gt;  version  R version 4.1.3 (2022-03-10)</span></span>
-<span><span class="co">#&gt;  os       Windows 10 x64 (build 22000)</span></span>
-<span><span class="co">#&gt;  system   x86_64, mingw32</span></span>
-<span><span class="co">#&gt;  ui       RTerm</span></span>
-<span><span class="co">#&gt;  language (EN)</span></span>
-<span><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
-<span><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
-<span><span class="co">#&gt;  tz       Europe/Berlin</span></span>
-<span><span class="co">#&gt;  date     2022-08-20</span></span>
-<span><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
-<span><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
-<span><span class="co">#&gt;    base        * 4.1.3      2022-03-10 [?] local</span></span>
-<span><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;  P compiler      4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;  P datasets    * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P graphics    * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;  P grDevices   * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)</span></span>
-<span><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P methods     * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    purrr       * 0.3.4      2020-04-17 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
-<span><span class="co">#&gt;    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
-<span><span class="co">#&gt;    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P tools         4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;  P utils       * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1</span></span>
-<span><span class="co">#&gt;  [2] C:/Program Files/R/R-4.1.3/library</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  P -- Loaded and on-disk path mismatch.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ----------------------------------------------------------</span></span></code></pre></div>
+<div id="session-information-16" class="section level2" number="21.3">
+<h2><span class="header-section-number">21.3</span> Session information</h2>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="translation.html#cb284-1" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb284-2"><a href="translation.html#cb284-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - Session info -------------------------------------------</span></span>
+<span id="cb284-3"><a href="translation.html#cb284-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  setting  value</span></span>
+<span id="cb284-4"><a href="translation.html#cb284-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  version  R version 4.1.3 (2022-03-10)</span></span>
+<span id="cb284-5"><a href="translation.html#cb284-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  os       Windows 10 x64 (build 22000)</span></span>
+<span id="cb284-6"><a href="translation.html#cb284-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  system   x86_64, mingw32</span></span>
+<span id="cb284-7"><a href="translation.html#cb284-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ui       RTerm</span></span>
+<span id="cb284-8"><a href="translation.html#cb284-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  language (EN)</span></span>
+<span id="cb284-9"><a href="translation.html#cb284-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
+<span id="cb284-10"><a href="translation.html#cb284-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
+<span id="cb284-11"><a href="translation.html#cb284-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tz       Europe/Berlin</span></span>
+<span id="cb284-12"><a href="translation.html#cb284-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  date     2022-08-21</span></span>
+<span id="cb284-13"><a href="translation.html#cb284-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
+<span id="cb284-14"><a href="translation.html#cb284-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb284-15"><a href="translation.html#cb284-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
+<span id="cb284-16"><a href="translation.html#cb284-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
+<span id="cb284-17"><a href="translation.html#cb284-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    base        * 4.1.3      2022-03-10 [?] local</span></span>
+<span id="cb284-18"><a href="translation.html#cb284-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb284-19"><a href="translation.html#cb284-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb284-20"><a href="translation.html#cb284-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb284-21"><a href="translation.html#cb284-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb284-22"><a href="translation.html#cb284-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P compiler      4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb284-23"><a href="translation.html#cb284-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P datasets    * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb284-24"><a href="translation.html#cb284-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb284-25"><a href="translation.html#cb284-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb284-26"><a href="translation.html#cb284-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb284-27"><a href="translation.html#cb284-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb284-28"><a href="translation.html#cb284-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb284-29"><a href="translation.html#cb284-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P graphics    * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb284-30"><a href="translation.html#cb284-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P grDevices   * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb284-31"><a href="translation.html#cb284-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb284-32"><a href="translation.html#cb284-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb284-33"><a href="translation.html#cb284-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb284-34"><a href="translation.html#cb284-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)</span></span>
+<span id="cb284-35"><a href="translation.html#cb284-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb284-36"><a href="translation.html#cb284-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb284-37"><a href="translation.html#cb284-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P methods     * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb284-38"><a href="translation.html#cb284-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    purrr       * 0.3.4      2020-04-17 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb284-39"><a href="translation.html#cb284-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
+<span id="cb284-40"><a href="translation.html#cb284-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb284-41"><a href="translation.html#cb284-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
+<span id="cb284-42"><a href="translation.html#cb284-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb284-43"><a href="translation.html#cb284-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb284-44"><a href="translation.html#cb284-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb284-45"><a href="translation.html#cb284-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb284-46"><a href="translation.html#cb284-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb284-47"><a href="translation.html#cb284-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb284-48"><a href="translation.html#cb284-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P tools         4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb284-49"><a href="translation.html#cb284-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P utils       * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb284-50"><a href="translation.html#cb284-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb284-51"><a href="translation.html#cb284-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb284-52"><a href="translation.html#cb284-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb284-53"><a href="translation.html#cb284-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb284-54"><a href="translation.html#cb284-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb284-55"><a href="translation.html#cb284-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1</span></span>
+<span id="cb284-56"><a href="translation.html#cb284-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [2] C:/Program Files/R/R-4.1.3/library</span></span>
+<span id="cb284-57"><a href="translation.html#cb284-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb284-58"><a href="translation.html#cb284-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P -- Loaded and on-disk path mismatch.</span></span>
+<span id="cb284-59"><a href="translation.html#cb284-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb284-60"><a href="translation.html#cb284-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------------------------</span></span></code></pre></div>
 
 </div>
 </div>
-  <div class="chapter-nav">
-<div class="prev"><a href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></div>
-<div class="next"><a href="debugging.html"><span class="header-section-number">22</span> Debugging</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li>
-<a class="nav-link" href="#translation"><span class="header-section-number">21</span> Translation</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#exercises-21.2.6"><span class="header-section-number">21.0.1</span> Exercises 21.2.6</a></li>
-<li><a class="nav-link" href="#exercises-21.3.8"><span class="header-section-number">21.0.2</span> Exercises 21.3.8</a></li>
-</ul>
-</li>
-<li><a class="nav-link" href="#session-information-16"><span class="header-section-number">21.1</span> Session information</a></li>
-</ul>
+  </main>
+
+  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Translation.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Translation.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
-</div>
+      </div>
     </nav>
-</div>
+  </div>
 
 </div>
 </div> <!-- .container -->
 
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+<footer class="bg-primary text-light mt-5">
+  <div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
     <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-20.</p>
@@ -373,34 +352,9 @@
   </div>
 
 </div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-for (let popover of popovers) {
-  const div = document.createElement('div');
-  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-  div.innerHTML = popover.getAttribute('data-content');
+</footer>
 
-  var has_math = div.querySelector("span.math");
-  if (has_math) {
-    document.body.appendChild(div);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    MathJax.Hub.Queue(function() {
-      popover.setAttribute('data-content', div.innerHTML);
-      document.body.removeChild(div);
-    })
-  }
-}
-</script>
+
 </body>
+
 </html>

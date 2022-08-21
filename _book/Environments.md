@@ -13,7 +13,7 @@ Loading the needed libraries:
 library(rlang, warn.conflicts = FALSE)
 ```
 
-### Exercises 7.2.7
+## Exercises 7.2.7
 
 **Q1.** List three ways in which an environment differs from a list.
 
@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x0000000019667d50>
+#> <environment: 0x00000000196690f0>
 #> Parent: <environment: global>
 #> Bindings:
 #> * loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ```r
 lobstr::ref(e$loop)
-#> o [1:0x19667d50] <env> 
-#> \-loop = [1:0x19667d50]
+#> o [1:0x196690f0] <env> 
+#> \-loop = [1:0x196690f0]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x33ae5488" "0x33ae5488"
+#> [1] "0x33af48a0" "0x33af48a0"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x33b50000" "0x33b50000"
+#> [1] "0x33b5f810" "0x33b5f810"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -200,7 +200,7 @@ abc
 #> [1] 10
 ```
 
-### Exercises 7.3.1
+## Exercises 7.3.1
 
 **Q1.** Modify `where()` to return _all_ environments that contain a binding for `name`. Carefully think through what type of object the function will need to return.
 
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000017ff21c8>
+#> <bytecode: 0x0000000017ff2118>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -313,7 +313,7 @@ fget("mean", inherits = FALSE)
 rm("mean")
 ```
 
-### Exercises 7.4.5
+## Exercises 7.4.5
 
 **Q1.** How is `search_envs()` different from `env_parents(global_env())`?
 
@@ -481,7 +481,7 @@ str_function("mean")
 rm("mean")
 ```
 
-### Exercises 7.5.5
+## Exercises 7.5.5
 
 **Q1.** Write a function that lists all the variables defined in the environment in which it was called. It should return the same results as `ls()`.
 
@@ -508,7 +508,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x00000000182bfe48>
+#> <bytecode: 0x00000000182bfd98>
 #> <environment: namespace:rlang>
 ```
 
@@ -561,7 +561,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-20
+#>  date     2022-08-21
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -609,7 +609,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
+#>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)
 #>    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)
 #>  P tools         4.1.3      2022-03-10 [2] local

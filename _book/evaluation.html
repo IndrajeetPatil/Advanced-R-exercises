@@ -1,37 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 20 Evaluation | Advanced R Exercises</title>
-<meta name="author" content="Indrajeet Patil">
-<meta name="description" content="Attaching the needed libraries: library(rlang)  20.0.1 Exercises 20.2.4 Q1. Carefully read the documentation for source(). What environment does it use by default? What if you supply local = TRUE?...">
-<meta name="generator" content="bookdown 0.28 with bs4_book()">
-<meta property="og:title" content="Chapter 20 Evaluation | Advanced R Exercises">
-<meta property="og:type" content="book">
-<meta property="og:image" content="/cover.png">
-<meta property="og:description" content="Attaching the needed libraries: library(rlang)  20.0.1 Exercises 20.2.4 Q1. Carefully read the documentation for source(). What environment does it use by default? What if you supply local = TRUE?...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 20 Evaluation | Advanced R Exercises">
-<meta name="twitter:description" content="Attaching the needed libraries: library(rlang)  20.0.1 Exercises 20.2.4 Q1. Carefully read the documentation for source(). What environment does it use by default? What if you supply local = TRUE?...">
-<meta name="twitter:image" content="/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
-<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
-<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Chapter 20 Evaluation | Advanced R Exercises</title>
+
+    <meta name="author" content="Indrajeet Patil" />
+  
+   <meta name="description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+   <meta name="generator" content="placeholder" />
+  <meta property="og:title" content="Chapter 20 Evaluation | Advanced R Exercises" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="/cover.png" />
+  <meta property="og:description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 20 Evaluation | Advanced R Exercises" />
+  
+  <meta name="twitter:description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+  <meta name="twitter:image" content="/cover.png" />
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
+    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
+    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
+    <script src="libs/bs3compat-0.4.0/transition.js"></script>
+    <script src="libs/bs3compat-0.4.0/tabs.js"></script>
+    <script src="libs/bs3compat-0.4.0/bs3compat.js"></script>
+    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
+    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
+    <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+    <script src="libs/d3-3.5.6/d3.min.js"></script>
+    <link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet" />
+    <script src="libs/profvis-0.3.6.9000/profvis.js"></script>
+    <script src="libs/profvis-0.3.6.9000/scroll.js"></script>
+    <link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet" />
+    <script src="libs/highlight-6.2.0/highlight.js"></script>
+    <script src="libs/profvis-binding-0.3.7/profvis.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  <style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
-<link rel="stylesheet" href="bs4_style.css">
+      <link rel="stylesheet" href="bs4_style.css" />
+  
 </head>
+
 <body data-spy="scroll" data-target="#toc">
 
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
@@ -43,655 +71,573 @@
     <div id="main-nav" class="collapse-lg">
       <form role="search">
         <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
+      </form>
 
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">About</a></li>
-<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
-<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
-<li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
-<li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
-<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
-<li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
-<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
-<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
-<li><a class="" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
-<li><a class="" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
-<li><a class="" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
-<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
-<li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
-<li><a class="" href="quasiquotation.html"><span class="header-section-number">19</span> Quasiquotation</a></li>
-<li><a class="active" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
-<li><a class="" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></li>
-<li><a class="" href="improving-performance.html"><span class="header-section-number">24</span> Improving performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></li>
-</ul>
+      <nav aria-label="Table of contents">
+        <h2>Table of contents</h2>
+        <div id="book-toc"></div>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
         </div>
       </nav>
-</div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="evaluation" class="section level1" number="20">
-<h1>
-<span class="header-section-number">20</span> Evaluation<a class="anchor" aria-label="anchor" href="#evaluation"><i class="fas fa-link"></i></a>
-</h1>
+    </div>
+  </header>
+
+  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
+<div id="evaluation" class="section level1" number="20">
+<h1><span class="header-section-number">Chapter 20</span> Evaluation</h1>
 <p>Attaching the needed libraries:</p>
-<div class="sourceCode" id="cb576"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span><span class="op">)</span></span></code></pre></div>
-<div id="exercises-20.2.4" class="section level3" number="20.0.1">
-<h3>
-<span class="header-section-number">20.0.1</span> Exercises 20.2.4<a class="anchor" aria-label="anchor" href="#exercises-20.2.4"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
-<p><strong>Q1.</strong> Carefully read the documentation for <code><a href="https://rdrr.io/r/base/source.html">source()</a></code>. What environment does it use by default? What if you supply <code>local = TRUE</code>? How do you provide a custom environment?</p>
-<p><strong>A1.</strong> The parameter <code>local</code> for <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> decides the environment in which the parsed expressions are evaluated.</p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="evaluation.html#cb237-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rlang)</span></code></pre></div>
+<div id="exercises-20.2.4" class="section level2" number="20.1">
+<h2><span class="header-section-number">20.1</span> Exercises 20.2.4</h2>
+<hr />
+<p><strong>Q1.</strong> Carefully read the documentation for <code>source()</code>. What environment does it use by default? What if you supply <code>local = TRUE</code>? How do you provide a custom environment?</p>
+<p><strong>A1.</strong> The parameter <code>local</code> for <code>source()</code> decides the environment in which the parsed expressions are evaluated.</p>
 <p>By default <code>local = FALSE</code>, this corresponds to the user’s workspace (the global environment, i.e.).</p>
-<div class="sourceCode" id="cb577"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_tempfile.html">with_tempdir</a></span><span class="op">(</span></span>
-<span>  code <span class="op">=</span> <span class="op">{</span></span>
-<span>    <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span><span class="op">(</span><span class="st">"rlang::env_print()"</span>, <span class="va">f</span><span class="op">)</span></span>
-<span>    <span class="va">foo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="va">f</span>, local <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span>    <span class="fu">foo</span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: global&gt;</span></span>
-<span><span class="co">#&gt; Parent: &lt;environment: package:rlang&gt;</span></span>
-<span><span class="co">#&gt; Bindings:</span></span>
-<span><span class="co">#&gt; * .Random.seed: &lt;int&gt;</span></span>
-<span><span class="co">#&gt; * foo: &lt;fn&gt;</span></span>
-<span><span class="co">#&gt; * f: &lt;chr&gt;</span></span></code></pre></div>
-<p>If <code>local = TRUE</code>, then the environment from which <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> is called will be used.</p>
-<div class="sourceCode" id="cb578"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_tempfile.html">with_tempdir</a></span><span class="op">(</span></span>
-<span>  code <span class="op">=</span> <span class="op">{</span></span>
-<span>    <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span><span class="op">(</span><span class="st">"rlang::env_print()"</span>, <span class="va">f</span><span class="op">)</span></span>
-<span>    <span class="va">foo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="va">f</span>, local <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>    <span class="fu">foo</span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000000033032830&gt;</span></span>
-<span><span class="co">#&gt; Parent: &lt;environment: global&gt;</span></span></code></pre></div>
-<p>To specify a custom environment, the <code><a href="https://rdrr.io/r/base/sys.source.html">sys.source()</a></code> function can be used, which provides an <code>envir</code> parameter.</p>
-<hr>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="evaluation.html#cb238-1" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_tempdir</span>(</span>
+<span id="cb238-2"><a href="evaluation.html#cb238-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">code =</span> {</span>
+<span id="cb238-3"><a href="evaluation.html#cb238-3" aria-hidden="true" tabindex="-1"></a>    f <span class="ot">&lt;-</span> <span class="fu">tempfile</span>()</span>
+<span id="cb238-4"><a href="evaluation.html#cb238-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">writeLines</span>(<span class="st">&quot;rlang::env_print()&quot;</span>, f)</span>
+<span id="cb238-5"><a href="evaluation.html#cb238-5" aria-hidden="true" tabindex="-1"></a>    foo <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">source</span>(f, <span class="at">local =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb238-6"><a href="evaluation.html#cb238-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">foo</span>()</span>
+<span id="cb238-7"><a href="evaluation.html#cb238-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb238-8"><a href="evaluation.html#cb238-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb238-9"><a href="evaluation.html#cb238-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: global&gt;</span></span>
+<span id="cb238-10"><a href="evaluation.html#cb238-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Parent: &lt;environment: package:rlang&gt;</span></span>
+<span id="cb238-11"><a href="evaluation.html#cb238-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Bindings:</span></span>
+<span id="cb238-12"><a href="evaluation.html#cb238-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; * .Random.seed: &lt;int&gt;</span></span>
+<span id="cb238-13"><a href="evaluation.html#cb238-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; * foo: &lt;fn&gt;</span></span>
+<span id="cb238-14"><a href="evaluation.html#cb238-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; * f: &lt;chr&gt;</span></span></code></pre></div>
+<p>If <code>local = TRUE</code>, then the environment from which <code>source()</code> is called will be used.</p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="evaluation.html#cb239-1" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_tempdir</span>(</span>
+<span id="cb239-2"><a href="evaluation.html#cb239-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">code =</span> {</span>
+<span id="cb239-3"><a href="evaluation.html#cb239-3" aria-hidden="true" tabindex="-1"></a>    f <span class="ot">&lt;-</span> <span class="fu">tempfile</span>()</span>
+<span id="cb239-4"><a href="evaluation.html#cb239-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">writeLines</span>(<span class="st">&quot;rlang::env_print()&quot;</span>, f)</span>
+<span id="cb239-5"><a href="evaluation.html#cb239-5" aria-hidden="true" tabindex="-1"></a>    foo <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">source</span>(f, <span class="at">local =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb239-6"><a href="evaluation.html#cb239-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">foo</span>()</span>
+<span id="cb239-7"><a href="evaluation.html#cb239-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb239-8"><a href="evaluation.html#cb239-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb239-9"><a href="evaluation.html#cb239-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x0000000033022d30&gt;</span></span>
+<span id="cb239-10"><a href="evaluation.html#cb239-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Parent: &lt;environment: global&gt;</span></span></code></pre></div>
+<p>To specify a custom environment, the <code>sys.source()</code> function can be used, which provides an <code>envir</code> parameter.</p>
+<hr />
 <p><strong>Q2.</strong> Predict the results of the following lines of code:</p>
-<div class="sourceCode" id="cb579"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="evaluation.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eval</span>(<span class="fu">expr</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span>))))))</span>
+<span id="cb240-2"><a href="evaluation.html#cb240-2" aria-hidden="true" tabindex="-1"></a><span class="fu">eval</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span>)))))))</span>
+<span id="cb240-3"><a href="evaluation.html#cb240-3" aria-hidden="true" tabindex="-1"></a><span class="fu">expr</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span>)))))))</span></code></pre></div>
 <p><strong>A2.</strong> Correctly predicted 😉</p>
-<div class="sourceCode" id="cb580"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 4</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 4</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; eval(expr(eval(expr(eval(expr(2 + 2))))))</span></span></code></pre></div>
-<hr>
-<p><strong>Q3.</strong> Fill in the function bodies below to re-implement <code><a href="https://rdrr.io/r/base/get.html">get()</a></code> using <code><a href="https://rlang.r-lib.org/reference/sym.html">sym()</a></code> and <code><a href="https://rdrr.io/r/base/eval.html">eval()</a></code>, and <code><a href="https://rdrr.io/r/base/assign.html">assign()</a></code> using <code><a href="https://rlang.r-lib.org/reference/sym.html">sym()</a></code>, <code><a href="https://rlang.r-lib.org/reference/expr.html">expr()</a></code>, and <code><a href="https://rdrr.io/r/base/eval.html">eval()</a></code>. Don’t worry about the multiple ways of choosing an environment that <code><a href="https://rdrr.io/r/base/get.html">get()</a></code> and <code><a href="https://rdrr.io/r/base/assign.html">assign()</a></code> support; assume that the user supplies it explicitly.</p>
-<div class="sourceCode" id="cb581"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># name is a string</span></span>
-<span><span class="va">get2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">env</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span></span>
-<span><span class="va">assign2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="va">env</span><span class="op">)</span> <span class="op">{</span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="evaluation.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eval</span>(<span class="fu">expr</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span>))))))</span>
+<span id="cb241-2"><a href="evaluation.html#cb241-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4</span></span>
+<span id="cb241-3"><a href="evaluation.html#cb241-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb241-4"><a href="evaluation.html#cb241-4" aria-hidden="true" tabindex="-1"></a><span class="fu">eval</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span>)))))))</span>
+<span id="cb241-5"><a href="evaluation.html#cb241-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4</span></span>
+<span id="cb241-6"><a href="evaluation.html#cb241-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb241-7"><a href="evaluation.html#cb241-7" aria-hidden="true" tabindex="-1"></a><span class="fu">expr</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="fu">eval</span>(<span class="fu">expr</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span>)))))))</span>
+<span id="cb241-8"><a href="evaluation.html#cb241-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; eval(expr(eval(expr(eval(expr(2 + 2))))))</span></span></code></pre></div>
+<hr />
+<p><strong>Q3.</strong> Fill in the function bodies below to re-implement <code>get()</code> using <code>sym()</code> and <code>eval()</code>, and <code>assign()</code> using <code>sym()</code>, <code>expr()</code>, and <code>eval()</code>. Don’t worry about the multiple ways of choosing an environment that <code>get()</code> and <code>assign()</code> support; assume that the user supplies it explicitly.</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="evaluation.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="co"># name is a string</span></span>
+<span id="cb242-2"><a href="evaluation.html#cb242-2" aria-hidden="true" tabindex="-1"></a>get2 <span class="ot">&lt;-</span> <span class="cf">function</span>(name, env) {}</span>
+<span id="cb242-3"><a href="evaluation.html#cb242-3" aria-hidden="true" tabindex="-1"></a>assign2 <span class="ot">&lt;-</span> <span class="cf">function</span>(name, value, env) {}</span></code></pre></div>
 <p><strong>A3.</strong> Here are the required re-implementations:</p>
 <ul>
-<li><code><a href="https://rdrr.io/r/base/get.html">get()</a></code></li>
+<li><code>get()</code></li>
 </ul>
-<div class="sourceCode" id="cb582"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">get2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/sym.html">sym</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">env</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
-<span></span>
-<span><span class="fu">get2</span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2</span></span>
-<span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span><span class="op">(</span><span class="st">"y[1]"</span>, <span class="fl">2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">get2</span><span class="op">(</span><span class="st">"y[1]"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span><span class="op">(</span><span class="st">"y[1]"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="evaluation.html#cb243-1" aria-hidden="true" tabindex="-1"></a>get2 <span class="ot">&lt;-</span> <span class="cf">function</span>(name, <span class="at">env =</span> <span class="fu">caller_env</span>()) {</span>
+<span id="cb243-2"><a href="evaluation.html#cb243-2" aria-hidden="true" tabindex="-1"></a>  name <span class="ot">&lt;-</span> <span class="fu">sym</span>(name)</span>
+<span id="cb243-3"><a href="evaluation.html#cb243-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eval</span>(name, env)</span>
+<span id="cb243-4"><a href="evaluation.html#cb243-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb243-5"><a href="evaluation.html#cb243-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb243-6"><a href="evaluation.html#cb243-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb243-7"><a href="evaluation.html#cb243-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb243-8"><a href="evaluation.html#cb243-8" aria-hidden="true" tabindex="-1"></a><span class="fu">get2</span>(<span class="st">&quot;x&quot;</span>)</span>
+<span id="cb243-9"><a href="evaluation.html#cb243-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span>
+<span id="cb243-10"><a href="evaluation.html#cb243-10" aria-hidden="true" tabindex="-1"></a><span class="fu">get</span>(<span class="st">&quot;x&quot;</span>)</span>
+<span id="cb243-11"><a href="evaluation.html#cb243-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span>
+<span id="cb243-12"><a href="evaluation.html#cb243-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb243-13"><a href="evaluation.html#cb243-13" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb243-14"><a href="evaluation.html#cb243-14" aria-hidden="true" tabindex="-1"></a><span class="fu">assign</span>(<span class="st">&quot;y[1]&quot;</span>, <span class="dv">2</span>)</span>
+<span id="cb243-15"><a href="evaluation.html#cb243-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb243-16"><a href="evaluation.html#cb243-16" aria-hidden="true" tabindex="-1"></a><span class="fu">get2</span>(<span class="st">&quot;y[1]&quot;</span>)</span>
+<span id="cb243-17"><a href="evaluation.html#cb243-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span>
+<span id="cb243-18"><a href="evaluation.html#cb243-18" aria-hidden="true" tabindex="-1"></a><span class="fu">get</span>(<span class="st">&quot;y[1]&quot;</span>)</span>
+<span id="cb243-19"><a href="evaluation.html#cb243-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span></code></pre></div>
 <ul>
-<li><code><a href="https://rdrr.io/r/base/assign.html">assign()</a></code></li>
+<li><code>assign()</code></li>
 </ul>
-<div class="sourceCode" id="cb583"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">assign2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="va">env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/sym.html">sym</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="op">!</span><span class="op">!</span><span class="va">value</span><span class="op">)</span>, <span class="va">env</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="va">y1</span></span>
-<span><span class="co">#&gt; [1] 4</span></span>
-<span></span>
-<span><span class="fu">assign2</span><span class="op">(</span><span class="st">"y2"</span>, <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="va">y2</span></span>
-<span><span class="co">#&gt; [1] 4</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="evaluation.html#cb244-1" aria-hidden="true" tabindex="-1"></a>assign2 <span class="ot">&lt;-</span> <span class="cf">function</span>(name, value, <span class="at">env =</span> <span class="fu">caller_env</span>()) {</span>
+<span id="cb244-2"><a href="evaluation.html#cb244-2" aria-hidden="true" tabindex="-1"></a>  name <span class="ot">&lt;-</span> <span class="fu">sym</span>(name)</span>
+<span id="cb244-3"><a href="evaluation.html#cb244-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eval</span>(<span class="fu">expr</span>(<span class="sc">!!</span>name <span class="ot">&lt;-</span> <span class="sc">!!</span>value), env)</span>
+<span id="cb244-4"><a href="evaluation.html#cb244-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb244-5"><a href="evaluation.html#cb244-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb244-6"><a href="evaluation.html#cb244-6" aria-hidden="true" tabindex="-1"></a><span class="fu">assign</span>(<span class="st">&quot;y1&quot;</span>, <span class="dv">4</span>)</span>
+<span id="cb244-7"><a href="evaluation.html#cb244-7" aria-hidden="true" tabindex="-1"></a>y1</span>
+<span id="cb244-8"><a href="evaluation.html#cb244-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4</span></span>
+<span id="cb244-9"><a href="evaluation.html#cb244-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb244-10"><a href="evaluation.html#cb244-10" aria-hidden="true" tabindex="-1"></a><span class="fu">assign2</span>(<span class="st">&quot;y2&quot;</span>, <span class="dv">4</span>)</span>
+<span id="cb244-11"><a href="evaluation.html#cb244-11" aria-hidden="true" tabindex="-1"></a>y2</span>
+<span id="cb244-12"><a href="evaluation.html#cb244-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4</span></span></code></pre></div>
+<hr />
 <p><strong>Q4.</strong> Modify <code>source2()</code> so it returns the result of <em>every</em> expression, not just the last one. Can you eliminate the for loop?</p>
-<p><strong>A4.</strong> We can use <code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code> to iterate over every expression and return result of every expression:</p>
-<div class="sourceCode" id="cb584"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">source2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">path</span>, <span class="va">env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="va">path</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
-<span>  <span class="va">exprs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/parse_expr.html">parse_exprs</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span>
-<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">exprs</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">.x</span>, <span class="va">env</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_tempfile.html">with_tempdir</a></span><span class="op">(</span></span>
-<span>  code <span class="op">=</span> <span class="op">{</span></span>
-<span>    <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".R"</span><span class="op">)</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span><span class="op">(</span><span class="st">"1 + 1; 2 + 4"</span>, <span class="va">f</span><span class="op">)</span></span>
-<span>    <span class="fu">source2</span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; [1] 2</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt; [1] 6</span></span></code></pre></div>
-<hr>
-<p><strong>Q5.</strong> We can make <code><a href="https://rdrr.io/r/base/eval.html">base::local()</a></code> slightly easier to understand by spreading out over multiple lines:</p>
-<div class="sourceCode" id="cb585"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">local3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">expr</span>, <span class="va">envir</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">new.env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">call</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substitute.html">substitute</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span>, <span class="va">envir</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">call</span>, envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<p>Explain how <code><a href="https://rdrr.io/r/base/eval.html">local()</a></code> works in words. (Hint: you might want to <code>print(call)</code> to help understand what <code><a href="https://rdrr.io/r/base/substitute.html">substitute()</a></code> is doing, and read the documentation to remind yourself what environment <code><a href="https://rdrr.io/r/base/environment.html">new.env()</a></code> will inherit from.)</p>
+<p><strong>A4.</strong> We can use <code>purrr::map()</code> to iterate over every expression and return result of every expression:</p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="evaluation.html#cb245-1" aria-hidden="true" tabindex="-1"></a>source2 <span class="ot">&lt;-</span> <span class="cf">function</span>(path, <span class="at">env =</span> <span class="fu">caller_env</span>()) {</span>
+<span id="cb245-2"><a href="evaluation.html#cb245-2" aria-hidden="true" tabindex="-1"></a>  file <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">readLines</span>(path, <span class="at">warn =</span> <span class="cn">FALSE</span>), <span class="at">collapse =</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb245-3"><a href="evaluation.html#cb245-3" aria-hidden="true" tabindex="-1"></a>  exprs <span class="ot">&lt;-</span> <span class="fu">parse_exprs</span>(file)</span>
+<span id="cb245-4"><a href="evaluation.html#cb245-4" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map</span>(exprs, <span class="sc">~</span> <span class="fu">eval</span>(.x, env))</span>
+<span id="cb245-5"><a href="evaluation.html#cb245-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb245-6"><a href="evaluation.html#cb245-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-7"><a href="evaluation.html#cb245-7" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_tempdir</span>(</span>
+<span id="cb245-8"><a href="evaluation.html#cb245-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">code =</span> {</span>
+<span id="cb245-9"><a href="evaluation.html#cb245-9" aria-hidden="true" tabindex="-1"></a>    f <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.R&quot;</span>)</span>
+<span id="cb245-10"><a href="evaluation.html#cb245-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">writeLines</span>(<span class="st">&quot;1 + 1; 2 + 4&quot;</span>, f)</span>
+<span id="cb245-11"><a href="evaluation.html#cb245-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">source2</span>(f)</span>
+<span id="cb245-12"><a href="evaluation.html#cb245-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb245-13"><a href="evaluation.html#cb245-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb245-14"><a href="evaluation.html#cb245-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb245-15"><a href="evaluation.html#cb245-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span>
+<span id="cb245-16"><a href="evaluation.html#cb245-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb245-17"><a href="evaluation.html#cb245-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb245-18"><a href="evaluation.html#cb245-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 6</span></span></code></pre></div>
+<hr />
+<p><strong>Q5.</strong> We can make <code>base::local()</code> slightly easier to understand by spreading out over multiple lines:</p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="evaluation.html#cb246-1" aria-hidden="true" tabindex="-1"></a>local3 <span class="ot">&lt;-</span> <span class="cf">function</span>(expr, <span class="at">envir =</span> <span class="fu">new.env</span>()) {</span>
+<span id="cb246-2"><a href="evaluation.html#cb246-2" aria-hidden="true" tabindex="-1"></a>  call <span class="ot">&lt;-</span> <span class="fu">substitute</span>(<span class="fu">eval</span>(<span class="fu">quote</span>(expr), envir))</span>
+<span id="cb246-3"><a href="evaluation.html#cb246-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eval</span>(call, <span class="at">envir =</span> <span class="fu">parent.frame</span>())</span>
+<span id="cb246-4"><a href="evaluation.html#cb246-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Explain how <code>local()</code> works in words. (Hint: you might want to <code>print(call)</code> to help understand what <code>substitute()</code> is doing, and read the documentation to remind yourself what environment <code>new.env()</code> will inherit from.)</p>
 <p><strong>A5.</strong> In order to figure out how this function works, let’s add the suggested <code>print(call)</code>:</p>
-<div class="sourceCode" id="cb586"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">local3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">expr</span>, <span class="va">envir</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">new.env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">call</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substitute.html">substitute</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span>, <span class="va">envir</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">call</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">call</span>, envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu">local3</span><span class="op">(</span><span class="op">{</span></span>
-<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
-<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
-<span>  <span class="va">x</span> <span class="op">+</span> <span class="va">y</span></span>
-<span><span class="op">}</span><span class="op">)</span></span>
-<span><span class="co">#&gt; eval(quote({</span></span>
-<span><span class="co">#&gt;     x &lt;- 10</span></span>
-<span><span class="co">#&gt;     y &lt;- 200</span></span>
-<span><span class="co">#&gt;     x + y</span></span>
-<span><span class="co">#&gt; }), new.env())</span></span>
-<span><span class="co">#&gt; [1] 210</span></span></code></pre></div>
-<p>As docs for <code><a href="https://rdrr.io/r/base/substitute.html">substitute()</a></code> mention:</p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="evaluation.html#cb247-1" aria-hidden="true" tabindex="-1"></a>local3 <span class="ot">&lt;-</span> <span class="cf">function</span>(expr, <span class="at">envir =</span> <span class="fu">new.env</span>()) {</span>
+<span id="cb247-2"><a href="evaluation.html#cb247-2" aria-hidden="true" tabindex="-1"></a>  call <span class="ot">&lt;-</span> <span class="fu">substitute</span>(<span class="fu">eval</span>(<span class="fu">quote</span>(expr), envir))</span>
+<span id="cb247-3"><a href="evaluation.html#cb247-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(call)</span>
+<span id="cb247-4"><a href="evaluation.html#cb247-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-5"><a href="evaluation.html#cb247-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eval</span>(call, <span class="at">envir =</span> <span class="fu">parent.frame</span>())</span>
+<span id="cb247-6"><a href="evaluation.html#cb247-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb247-7"><a href="evaluation.html#cb247-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-8"><a href="evaluation.html#cb247-8" aria-hidden="true" tabindex="-1"></a><span class="fu">local3</span>({</span>
+<span id="cb247-9"><a href="evaluation.html#cb247-9" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb247-10"><a href="evaluation.html#cb247-10" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb247-11"><a href="evaluation.html#cb247-11" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">+</span> y</span>
+<span id="cb247-12"><a href="evaluation.html#cb247-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb247-13"><a href="evaluation.html#cb247-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; eval(quote({</span></span>
+<span id="cb247-14"><a href="evaluation.html#cb247-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     x &lt;- 10</span></span>
+<span id="cb247-15"><a href="evaluation.html#cb247-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     y &lt;- 200</span></span>
+<span id="cb247-16"><a href="evaluation.html#cb247-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     x + y</span></span>
+<span id="cb247-17"><a href="evaluation.html#cb247-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }), new.env())</span></span>
+<span id="cb247-18"><a href="evaluation.html#cb247-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 210</span></span></code></pre></div>
+<p>As docs for <code>substitute()</code> mention:</p>
 <blockquote>
 <p>Substituting and quoting often cause confusion when the argument is expression(…). The result is a call to the expression constructor function and needs to be evaluated with eval to give the actual expression object.</p>
 </blockquote>
-<p>Thus, to get the actual expression object, quoted expression needs to be evaluated using <code><a href="https://rdrr.io/r/base/eval.html">eval()</a></code>:</p>
-<div class="sourceCode" id="cb587"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_expression.html">is_expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="op">{</span></span>
-<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
-<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
-<span>  <span class="va">x</span> <span class="op">+</span> <span class="va">y</span></span>
-<span><span class="op">}</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/environment.html">new.env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<p>Thus, to get the actual expression object, quoted expression needs to be evaluated using <code>eval()</code>:</p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="evaluation.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is_expression</span>(<span class="fu">eval</span>(<span class="fu">quote</span>({</span>
+<span id="cb248-2"><a href="evaluation.html#cb248-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb248-3"><a href="evaluation.html#cb248-3" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb248-4"><a href="evaluation.html#cb248-4" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">+</span> y</span>
+<span id="cb248-5"><a href="evaluation.html#cb248-5" aria-hidden="true" tabindex="-1"></a>}), <span class="fu">new.env</span>()))</span>
+<span id="cb248-6"><a href="evaluation.html#cb248-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>Finally, the generated <code>call</code> is evaluated in the caller environment. So the final function call looks like the following:</p>
-<div class="sourceCode" id="cb588"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># outer environment</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span></span>
-<span>  <span class="co"># inner environment</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="op">{</span></span>
-<span>    <span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
-<span>    <span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
-<span>    <span class="va">x</span> <span class="op">+</span> <span class="va">y</span></span>
-<span>  <span class="op">}</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/environment.html">new.env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html">parent.frame</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>Note here that the bindings for <code>x</code> and <code>y</code> are found in the inner environment, while bindings for functions <code><a href="https://rdrr.io/r/base/eval.html">eval()</a></code>, <code>quote</code>, etc. are found in the outer environment.</p>
-<hr>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="evaluation.html#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="co"># outer environment</span></span>
+<span id="cb249-2"><a href="evaluation.html#cb249-2" aria-hidden="true" tabindex="-1"></a><span class="fu">eval</span>(</span>
+<span id="cb249-3"><a href="evaluation.html#cb249-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># inner environment</span></span>
+<span id="cb249-4"><a href="evaluation.html#cb249-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eval</span>(<span class="fu">quote</span>({</span>
+<span id="cb249-5"><a href="evaluation.html#cb249-5" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb249-6"><a href="evaluation.html#cb249-6" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb249-7"><a href="evaluation.html#cb249-7" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">+</span> y</span>
+<span id="cb249-8"><a href="evaluation.html#cb249-8" aria-hidden="true" tabindex="-1"></a>  }), <span class="fu">new.env</span>()),</span>
+<span id="cb249-9"><a href="evaluation.html#cb249-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">envir =</span> <span class="fu">parent.frame</span>()</span>
+<span id="cb249-10"><a href="evaluation.html#cb249-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Note here that the bindings for <code>x</code> and <code>y</code> are found in the inner environment, while bindings for functions <code>eval()</code>, <code>quote</code>, etc. are found in the outer environment.</p>
+<hr />
 </div>
-<div id="exercises-20.3.6" class="section level3" number="20.0.2">
-<h3>
-<span class="header-section-number">20.0.2</span> Exercises 20.3.6<a class="anchor" aria-label="anchor" href="#exercises-20.3.6"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
+<div id="exercises-20.3.6" class="section level2" number="20.2">
+<h2><span class="header-section-number">20.2</span> Exercises 20.3.6</h2>
+<hr />
 <p><strong>Q1.</strong> Predict what each of the following quosures will return if evaluated.</p>
-<div class="sourceCode" id="cb589"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">q1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">q1</span></span>
-<span><span class="co">#&gt; &lt;quosure&gt;</span></span>
-<span><span class="co">#&gt; expr: ^x</span></span>
-<span><span class="co">#&gt; env:  0x000000003316c270</span></span>
-<span><span class="va">q2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="op">!</span><span class="op">!</span><span class="va">q1</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">q2</span></span>
-<span><span class="co">#&gt; &lt;quosure&gt;</span></span>
-<span><span class="co">#&gt; expr: ^x + (^x)</span></span>
-<span><span class="co">#&gt; env:  0x0000000033b8cef0</span></span>
-<span><span class="va">q3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="op">!</span><span class="op">!</span><span class="va">q2</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">q3</span></span>
-<span><span class="co">#&gt; &lt;quosure&gt;</span></span>
-<span><span class="co">#&gt; expr: ^x + (^x + (^x))</span></span>
-<span><span class="co">#&gt; env:  0x000000003406aa70</span></span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="evaluation.html#cb250-1" aria-hidden="true" tabindex="-1"></a>q1 <span class="ot">&lt;-</span> <span class="fu">new_quosure</span>(<span class="fu">expr</span>(x), <span class="fu">env</span>(<span class="at">x =</span> <span class="dv">1</span>))</span>
+<span id="cb250-2"><a href="evaluation.html#cb250-2" aria-hidden="true" tabindex="-1"></a>q1</span>
+<span id="cb250-3"><a href="evaluation.html#cb250-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;quosure&gt;</span></span>
+<span id="cb250-4"><a href="evaluation.html#cb250-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; expr: ^x</span></span>
+<span id="cb250-5"><a href="evaluation.html#cb250-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; env:  0x000000003315e8f8</span></span>
+<span id="cb250-6"><a href="evaluation.html#cb250-6" aria-hidden="true" tabindex="-1"></a>q2 <span class="ot">&lt;-</span> <span class="fu">new_quosure</span>(<span class="fu">expr</span>(x <span class="sc">+</span> <span class="sc">!!</span>q1), <span class="fu">env</span>(<span class="at">x =</span> <span class="dv">10</span>))</span>
+<span id="cb250-7"><a href="evaluation.html#cb250-7" aria-hidden="true" tabindex="-1"></a>q2</span>
+<span id="cb250-8"><a href="evaluation.html#cb250-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;quosure&gt;</span></span>
+<span id="cb250-9"><a href="evaluation.html#cb250-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; expr: ^x + (^x)</span></span>
+<span id="cb250-10"><a href="evaluation.html#cb250-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; env:  0x0000000033b7d5c8</span></span>
+<span id="cb250-11"><a href="evaluation.html#cb250-11" aria-hidden="true" tabindex="-1"></a>q3 <span class="ot">&lt;-</span> <span class="fu">new_quosure</span>(<span class="fu">expr</span>(x <span class="sc">+</span> <span class="sc">!!</span>q2), <span class="fu">env</span>(<span class="at">x =</span> <span class="dv">100</span>))</span>
+<span id="cb250-12"><a href="evaluation.html#cb250-12" aria-hidden="true" tabindex="-1"></a>q3</span>
+<span id="cb250-13"><a href="evaluation.html#cb250-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;quosure&gt;</span></span>
+<span id="cb250-14"><a href="evaluation.html#cb250-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; expr: ^x + (^x + (^x))</span></span>
+<span id="cb250-15"><a href="evaluation.html#cb250-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; env:  0x000000003405b148</span></span></code></pre></div>
 <p><strong>A1.</strong> Correctly predicted 😉</p>
-<div class="sourceCode" id="cb590"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">q1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span></span>
-<span><span class="va">q2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="op">!</span><span class="op">!</span><span class="va">q1</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy</a></span><span class="op">(</span><span class="va">q2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 11</span></span>
-<span></span>
-<span><span class="va">q3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="op">!</span><span class="op">!</span><span class="va">q2</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy</a></span><span class="op">(</span><span class="va">q3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 111</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="evaluation.html#cb251-1" aria-hidden="true" tabindex="-1"></a>q1 <span class="ot">&lt;-</span> <span class="fu">new_quosure</span>(<span class="fu">expr</span>(x), <span class="fu">env</span>(<span class="at">x =</span> <span class="dv">1</span>))</span>
+<span id="cb251-2"><a href="evaluation.html#cb251-2" aria-hidden="true" tabindex="-1"></a><span class="fu">eval_tidy</span>(q1)</span>
+<span id="cb251-3"><a href="evaluation.html#cb251-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span>
+<span id="cb251-4"><a href="evaluation.html#cb251-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb251-5"><a href="evaluation.html#cb251-5" aria-hidden="true" tabindex="-1"></a>q2 <span class="ot">&lt;-</span> <span class="fu">new_quosure</span>(<span class="fu">expr</span>(x <span class="sc">+</span> <span class="sc">!!</span>q1), <span class="fu">env</span>(<span class="at">x =</span> <span class="dv">10</span>))</span>
+<span id="cb251-6"><a href="evaluation.html#cb251-6" aria-hidden="true" tabindex="-1"></a><span class="fu">eval_tidy</span>(q2)</span>
+<span id="cb251-7"><a href="evaluation.html#cb251-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 11</span></span>
+<span id="cb251-8"><a href="evaluation.html#cb251-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb251-9"><a href="evaluation.html#cb251-9" aria-hidden="true" tabindex="-1"></a>q3 <span class="ot">&lt;-</span> <span class="fu">new_quosure</span>(<span class="fu">expr</span>(x <span class="sc">+</span> <span class="sc">!!</span>q2), <span class="fu">env</span>(<span class="at">x =</span> <span class="dv">100</span>))</span>
+<span id="cb251-10"><a href="evaluation.html#cb251-10" aria-hidden="true" tabindex="-1"></a><span class="fu">eval_tidy</span>(q3)</span>
+<span id="cb251-11"><a href="evaluation.html#cb251-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 111</span></span></code></pre></div>
+<hr />
 <p><strong>Q2.</strong> Write an <code>enenv()</code> function that captures the environment associated with an argument. (Hint: this should only require two function calls.)</p>
-<p><strong>A2.</strong> We can make use of the <code><a href="https://rlang.r-lib.org/reference/get_env.html">get_env()</a></code> helper to get the environment associated with an argument:</p>
-<div class="sourceCode" id="cb591"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">enenv</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html">enquo</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/get_env.html">get_env</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu">enenv</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: R_GlobalEnv&gt;</span></span>
-<span></span>
-<span><span class="va">foo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">enenv</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="fu">foo</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000000003255b1d0&gt;</span></span></code></pre></div>
-<hr>
+<p><strong>A2.</strong> We can make use of the <code>get_env()</code> helper to get the environment associated with an argument:</p>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="evaluation.html#cb252-1" aria-hidden="true" tabindex="-1"></a>enenv <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb252-2"><a href="evaluation.html#cb252-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">enquo</span>(x)</span>
+<span id="cb252-3"><a href="evaluation.html#cb252-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_env</span>(x)</span>
+<span id="cb252-4"><a href="evaluation.html#cb252-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb252-5"><a href="evaluation.html#cb252-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb252-6"><a href="evaluation.html#cb252-6" aria-hidden="true" tabindex="-1"></a><span class="fu">enenv</span>(x)</span>
+<span id="cb252-7"><a href="evaluation.html#cb252-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: R_GlobalEnv&gt;</span></span>
+<span id="cb252-8"><a href="evaluation.html#cb252-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb252-9"><a href="evaluation.html#cb252-9" aria-hidden="true" tabindex="-1"></a>foo <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">enenv</span>(x)</span>
+<span id="cb252-10"><a href="evaluation.html#cb252-10" aria-hidden="true" tabindex="-1"></a><span class="fu">foo</span>()</span>
+<span id="cb252-11"><a href="evaluation.html#cb252-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x0000000032542c10&gt;</span></span></code></pre></div>
+<hr />
 </div>
-<div id="exercises-20.4.6" class="section level3" number="20.0.3">
-<h3>
-<span class="header-section-number">20.0.3</span> Exercises 20.4.6<a class="anchor" aria-label="anchor" href="#exercises-20.4.6"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
-<p><strong>Q1.</strong> Why did I use a <code>for</code> loop in <code>transform2()</code> instead of <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>? Consider <code>transform2(df, x = x * 2, x = x * 2)</code>.</p>
-<p><strong>A1.</strong> To see why <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> is not appropriate for this function, let’s create a version of the function with <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> and see what happens.</p>
-<div class="sourceCode" id="cb592"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">transform2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html">enquos</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">dots</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">dots</span><span class="op">)</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
-<span>    <span class="va">dot</span> <span class="op">&lt;-</span> <span class="va">dots</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>    <span class="va">.data</span><span class="op">[[</span><span class="va">name</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy</a></span><span class="op">(</span><span class="va">dot</span>, <span class="va">.data</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span></span>
-<span>  <span class="va">.data</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">transform3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html">enquos</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">dots</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">.data</span> <span class="op">=</span> <span class="va">.data</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span>    <span class="va">dot</span> <span class="op">&lt;-</span> <span class="va">x</span></span>
-<span></span>
-<span>    <span class="va">.data</span><span class="op">[[</span><span class="va">name</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy</a></span><span class="op">(</span><span class="va">dot</span>, <span class="va">.data</span><span class="op">)</span></span>
-<span></span>
-<span>    <span class="va">.data</span></span>
-<span>  <span class="op">}</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<div id="exercises-20.4.6" class="section level2" number="20.3">
+<h2><span class="header-section-number">20.3</span> Exercises 20.4.6</h2>
+<hr />
+<p><strong>Q1.</strong> Why did I use a <code>for</code> loop in <code>transform2()</code> instead of <code>map()</code>? Consider <code>transform2(df, x = x * 2, x = x * 2)</code>.</p>
+<p><strong>A1.</strong> To see why <code>map()</code> is not appropriate for this function, let’s create a version of the function with <code>map()</code> and see what happens.</p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="evaluation.html#cb253-1" aria-hidden="true" tabindex="-1"></a>transform2 <span class="ot">&lt;-</span> <span class="cf">function</span>(.data, ...) {</span>
+<span id="cb253-2"><a href="evaluation.html#cb253-2" aria-hidden="true" tabindex="-1"></a>  dots <span class="ot">&lt;-</span> <span class="fu">enquos</span>(...)</span>
+<span id="cb253-3"><a href="evaluation.html#cb253-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb253-4"><a href="evaluation.html#cb253-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(dots)) {</span>
+<span id="cb253-5"><a href="evaluation.html#cb253-5" aria-hidden="true" tabindex="-1"></a>    name <span class="ot">&lt;-</span> <span class="fu">names</span>(dots)[[i]]</span>
+<span id="cb253-6"><a href="evaluation.html#cb253-6" aria-hidden="true" tabindex="-1"></a>    dot <span class="ot">&lt;-</span> dots[[i]]</span>
+<span id="cb253-7"><a href="evaluation.html#cb253-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb253-8"><a href="evaluation.html#cb253-8" aria-hidden="true" tabindex="-1"></a>    .data[[name]] <span class="ot">&lt;-</span> <span class="fu">eval_tidy</span>(dot, .data)</span>
+<span id="cb253-9"><a href="evaluation.html#cb253-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb253-10"><a href="evaluation.html#cb253-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb253-11"><a href="evaluation.html#cb253-11" aria-hidden="true" tabindex="-1"></a>  .data</span>
+<span id="cb253-12"><a href="evaluation.html#cb253-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb253-13"><a href="evaluation.html#cb253-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb253-14"><a href="evaluation.html#cb253-14" aria-hidden="true" tabindex="-1"></a>transform3 <span class="ot">&lt;-</span> <span class="cf">function</span>(.data, ...) {</span>
+<span id="cb253-15"><a href="evaluation.html#cb253-15" aria-hidden="true" tabindex="-1"></a>  dots <span class="ot">&lt;-</span> <span class="fu">enquos</span>(...)</span>
+<span id="cb253-16"><a href="evaluation.html#cb253-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb253-17"><a href="evaluation.html#cb253-17" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map</span>(dots, <span class="cf">function</span>(x, <span class="at">.data =</span> .data) {</span>
+<span id="cb253-18"><a href="evaluation.html#cb253-18" aria-hidden="true" tabindex="-1"></a>    name <span class="ot">&lt;-</span> <span class="fu">names</span>(x)</span>
+<span id="cb253-19"><a href="evaluation.html#cb253-19" aria-hidden="true" tabindex="-1"></a>    dot <span class="ot">&lt;-</span> x</span>
+<span id="cb253-20"><a href="evaluation.html#cb253-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb253-21"><a href="evaluation.html#cb253-21" aria-hidden="true" tabindex="-1"></a>    .data[[name]] <span class="ot">&lt;-</span> <span class="fu">eval_tidy</span>(dot, .data)</span>
+<span id="cb253-22"><a href="evaluation.html#cb253-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb253-23"><a href="evaluation.html#cb253-23" aria-hidden="true" tabindex="-1"></a>    .data</span>
+<span id="cb253-24"><a href="evaluation.html#cb253-24" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb253-25"><a href="evaluation.html#cb253-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>When we use a <code>for()</code> loop, in each iteration, we are updating the <code>x</code> column with the current expression under evaluation. That is, repeatedly modifying the same column works.</p>
-<div class="sourceCode" id="cb593"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
-<span><span class="fu">transform2</span><span class="op">(</span><span class="va">df</span>, x <span class="op">=</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">2</span>, x <span class="op">=</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    x</span></span>
-<span><span class="co">#&gt; 1  4</span></span>
-<span><span class="co">#&gt; 2  8</span></span>
-<span><span class="co">#&gt; 3 12</span></span></code></pre></div>
-<p>If we use <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> instead, we are trying to evaluate all expressions at the same time; i.e., the same column is being attempted to modify on using multiple expressions.</p>
-<div class="sourceCode" id="cb594"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
-<span><span class="fu">transform3</span><span class="op">(</span><span class="va">df</span>, x <span class="op">=</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">2</span>, x <span class="op">=</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval_tidy(dot, .data): promise already under evaluation: recursive default argument reference or earlier problems?</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="evaluation.html#cb254-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb254-2"><a href="evaluation.html#cb254-2" aria-hidden="true" tabindex="-1"></a><span class="fu">transform2</span>(df, <span class="at">x =</span> x <span class="sc">*</span> <span class="dv">2</span>, <span class="at">x =</span> x <span class="sc">*</span> <span class="dv">2</span>)</span>
+<span id="cb254-3"><a href="evaluation.html#cb254-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    x</span></span>
+<span id="cb254-4"><a href="evaluation.html#cb254-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  4</span></span>
+<span id="cb254-5"><a href="evaluation.html#cb254-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  8</span></span>
+<span id="cb254-6"><a href="evaluation.html#cb254-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 12</span></span></code></pre></div>
+<p>If we use <code>map()</code> instead, we are trying to evaluate all expressions at the same time; i.e., the same column is being attempted to modify on using multiple expressions.</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="evaluation.html#cb255-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb255-2"><a href="evaluation.html#cb255-2" aria-hidden="true" tabindex="-1"></a><span class="fu">transform3</span>(df, <span class="at">x =</span> x <span class="sc">*</span> <span class="dv">2</span>, <span class="at">x =</span> x <span class="sc">*</span> <span class="dv">2</span>)</span>
+<span id="cb255-3"><a href="evaluation.html#cb255-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in eval_tidy(dot, .data): promise already under evaluation: recursive default argument reference or earlier problems?</span></span></code></pre></div>
+<hr />
 <p><strong>Q2.</strong> Here’s an alternative implementation of <code>subset2()</code>:</p>
-<div class="sourceCode" id="cb595"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">subset3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">rows</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">rows</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html">enquo</a></span><span class="op">(</span><span class="va">rows</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span><span class="op">!</span><span class="op">!</span><span class="va">rows</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
-<span><span class="fu">subset3</span><span class="op">(</span><span class="va">df</span>, <span class="va">x</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="evaluation.html#cb256-1" aria-hidden="true" tabindex="-1"></a>subset3 <span class="ot">&lt;-</span> <span class="cf">function</span>(data, rows) {</span>
+<span id="cb256-2"><a href="evaluation.html#cb256-2" aria-hidden="true" tabindex="-1"></a>  rows <span class="ot">&lt;-</span> <span class="fu">enquo</span>(rows)</span>
+<span id="cb256-3"><a href="evaluation.html#cb256-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eval_tidy</span>(<span class="fu">expr</span>(data[<span class="sc">!!</span>rows, , <span class="at">drop =</span> <span class="cn">FALSE</span>]), <span class="at">data =</span> data)</span>
+<span id="cb256-4"><a href="evaluation.html#cb256-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb256-5"><a href="evaluation.html#cb256-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb256-6"><a href="evaluation.html#cb256-6" aria-hidden="true" tabindex="-1"></a><span class="fu">subset3</span>(df, x <span class="sc">==</span> <span class="dv">1</span>)</span></code></pre></div>
 <p>Compare and contrast <code>subset3()</code> to <code>subset2()</code>. What are its advantages and disadvantages?</p>
 <p><strong>A2.</strong> Let’s first juxtapose these functions and their outputs so that we can compare them better.</p>
-<div class="sourceCode" id="cb596"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">subset2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">rows</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">rows</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html">enquo</a></span><span class="op">(</span><span class="va">rows</span><span class="op">)</span></span>
-<span>  <span class="va">rows_val</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy</a></span><span class="op">(</span><span class="va">rows</span>, <span class="va">data</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">rows_val</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">data</span><span class="op">[</span><span class="va">rows_val</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
-<span><span class="fu">subset2</span><span class="op">(</span><span class="va">df</span>, <span class="va">x</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   x</span></span>
-<span><span class="co">#&gt; 1 1</span></span></code></pre></div>
-<div class="sourceCode" id="cb597"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">subset3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">rows</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">rows</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html">enquo</a></span><span class="op">(</span><span class="va">rows</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span><span class="op">!</span><span class="op">!</span><span class="va">rows</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu">subset3</span><span class="op">(</span><span class="va">df</span>, <span class="va">x</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   x</span></span>
-<span><span class="co">#&gt; 1 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="evaluation.html#cb257-1" aria-hidden="true" tabindex="-1"></a>subset2 <span class="ot">&lt;-</span> <span class="cf">function</span>(data, rows) {</span>
+<span id="cb257-2"><a href="evaluation.html#cb257-2" aria-hidden="true" tabindex="-1"></a>  rows <span class="ot">&lt;-</span> <span class="fu">enquo</span>(rows)</span>
+<span id="cb257-3"><a href="evaluation.html#cb257-3" aria-hidden="true" tabindex="-1"></a>  rows_val <span class="ot">&lt;-</span> <span class="fu">eval_tidy</span>(rows, data)</span>
+<span id="cb257-4"><a href="evaluation.html#cb257-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">is.logical</span>(rows_val))</span>
+<span id="cb257-5"><a href="evaluation.html#cb257-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb257-6"><a href="evaluation.html#cb257-6" aria-hidden="true" tabindex="-1"></a>  data[rows_val, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb257-7"><a href="evaluation.html#cb257-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb257-8"><a href="evaluation.html#cb257-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb257-9"><a href="evaluation.html#cb257-9" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb257-10"><a href="evaluation.html#cb257-10" aria-hidden="true" tabindex="-1"></a><span class="fu">subset2</span>(df, x <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb257-11"><a href="evaluation.html#cb257-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   x</span></span>
+<span id="cb257-12"><a href="evaluation.html#cb257-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="evaluation.html#cb258-1" aria-hidden="true" tabindex="-1"></a>subset3 <span class="ot">&lt;-</span> <span class="cf">function</span>(data, rows) {</span>
+<span id="cb258-2"><a href="evaluation.html#cb258-2" aria-hidden="true" tabindex="-1"></a>  rows <span class="ot">&lt;-</span> <span class="fu">enquo</span>(rows)</span>
+<span id="cb258-3"><a href="evaluation.html#cb258-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eval_tidy</span>(<span class="fu">expr</span>(data[<span class="sc">!!</span>rows, , <span class="at">drop =</span> <span class="cn">FALSE</span>]), <span class="at">data =</span> data)</span>
+<span id="cb258-4"><a href="evaluation.html#cb258-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb258-5"><a href="evaluation.html#cb258-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb258-6"><a href="evaluation.html#cb258-6" aria-hidden="true" tabindex="-1"></a><span class="fu">subset3</span>(df, x <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb258-7"><a href="evaluation.html#cb258-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   x</span></span>
+<span id="cb258-8"><a href="evaluation.html#cb258-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 1</span></span></code></pre></div>
 <p><strong>Disadvantages of <code>subset3()</code> over <code>subset2()</code></strong></p>
 <p>When the filtering conditions specified in <code>rows</code> don’t evaluate to a logical, the function doesn’t fail informatively. Indeed, it silently returns incorrect result.</p>
-<div class="sourceCode" id="cb598"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/exists.html">exists</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] FALSE</span></span>
-<span></span>
-<span><span class="fu">subset2</span><span class="op">(</span><span class="va">df</span>, <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in subset2(df, x + 1): is.logical(rows_val) is not TRUE</span></span>
-<span></span>
-<span><span class="fu">subset3</span><span class="op">(</span><span class="va">df</span>, <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     x</span></span>
-<span><span class="co">#&gt; 2   2</span></span>
-<span><span class="co">#&gt; 3   3</span></span>
-<span><span class="co">#&gt; NA NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="evaluation.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="st">&quot;x&quot;</span>)</span>
+<span id="cb259-2"><a href="evaluation.html#cb259-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exists</span>(<span class="st">&quot;x&quot;</span>)</span>
+<span id="cb259-3"><a href="evaluation.html#cb259-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span>
+<span id="cb259-4"><a href="evaluation.html#cb259-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb259-5"><a href="evaluation.html#cb259-5" aria-hidden="true" tabindex="-1"></a><span class="fu">subset2</span>(df, x <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb259-6"><a href="evaluation.html#cb259-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in subset2(df, x + 1): is.logical(rows_val) is not TRUE</span></span>
+<span id="cb259-7"><a href="evaluation.html#cb259-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb259-8"><a href="evaluation.html#cb259-8" aria-hidden="true" tabindex="-1"></a><span class="fu">subset3</span>(df, x <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb259-9"><a href="evaluation.html#cb259-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     x</span></span>
+<span id="cb259-10"><a href="evaluation.html#cb259-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   2</span></span>
+<span id="cb259-11"><a href="evaluation.html#cb259-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   3</span></span>
+<span id="cb259-12"><a href="evaluation.html#cb259-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; NA NA</span></span></code></pre></div>
 <p><strong>Advantages of <code>subset3()</code> over <code>subset2()</code></strong></p>
 <p>Some might argue that the function being shorter is an advantage, but this is very much a subjective preference.</p>
-<hr>
-<p><strong>Q3.</strong> The following function implements the basics of <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">dplyr::arrange()</a></code>. Annotate each line with a comment explaining what it does. Can you explain why <code>!!.na.last</code> is strictly correct, but omitting the <code>!!</code> is unlikely to cause problems?</p>
-<div class="sourceCode" id="cb599"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">arrange2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">.df</span>, <span class="va">...</span>, <span class="va">.na.last</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">args</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html">enquos</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span>  <span class="va">order_call</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">args</span>, na.last <span class="op">=</span> <span class="op">!</span><span class="op">!</span><span class="va">.na.last</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">ord</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy</a></span><span class="op">(</span><span class="va">order_call</span>, <span class="va">.df</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">ord</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">.df</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">.df</span><span class="op">[</span><span class="va">ord</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<hr />
+<p><strong>Q3.</strong> The following function implements the basics of <code>dplyr::arrange()</code>. Annotate each line with a comment explaining what it does. Can you explain why <code>!!.na.last</code> is strictly correct, but omitting the <code>!!</code> is unlikely to cause problems?</p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="evaluation.html#cb260-1" aria-hidden="true" tabindex="-1"></a>arrange2 <span class="ot">&lt;-</span> <span class="cf">function</span>(.df, ..., <span class="at">.na.last =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb260-2"><a href="evaluation.html#cb260-2" aria-hidden="true" tabindex="-1"></a>  args <span class="ot">&lt;-</span> <span class="fu">enquos</span>(...)</span>
+<span id="cb260-3"><a href="evaluation.html#cb260-3" aria-hidden="true" tabindex="-1"></a>  order_call <span class="ot">&lt;-</span> <span class="fu">expr</span>(<span class="fu">order</span>(<span class="sc">!!!</span>args, <span class="at">na.last =</span> <span class="sc">!!</span>.na.last))</span>
+<span id="cb260-4"><a href="evaluation.html#cb260-4" aria-hidden="true" tabindex="-1"></a>  ord <span class="ot">&lt;-</span> <span class="fu">eval_tidy</span>(order_call, .df)</span>
+<span id="cb260-5"><a href="evaluation.html#cb260-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">length</span>(ord) <span class="sc">==</span> <span class="fu">nrow</span>(.df))</span>
+<span id="cb260-6"><a href="evaluation.html#cb260-6" aria-hidden="true" tabindex="-1"></a>  .df[ord, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb260-7"><a href="evaluation.html#cb260-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><strong>A3.</strong> Annotated version of the function:</p>
-<div class="sourceCode" id="cb600"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">arrange2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">.df</span>, <span class="va">...</span>, <span class="va">.na.last</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="co"># capture user-supplied expressions (and corresponding environments) as quosures</span></span>
-<span>  <span class="va">args</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html">enquos</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="co"># create a call object by splicing a list of quosures</span></span>
-<span>  <span class="va">order_call</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">args</span>, na.last <span class="op">=</span> <span class="op">!</span><span class="op">!</span><span class="va">.na.last</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="co"># and evaluate the constructed call in the data frame</span></span>
-<span>  <span class="va">ord</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy</a></span><span class="op">(</span><span class="va">order_call</span>, <span class="va">.df</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="co"># sanity check</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">ord</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">.df</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">.df</span><span class="op">[</span><span class="va">ord</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="evaluation.html#cb261-1" aria-hidden="true" tabindex="-1"></a>arrange2 <span class="ot">&lt;-</span> <span class="cf">function</span>(.df, ..., <span class="at">.na.last =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb261-2"><a href="evaluation.html#cb261-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># capture user-supplied expressions (and corresponding environments) as quosures</span></span>
+<span id="cb261-3"><a href="evaluation.html#cb261-3" aria-hidden="true" tabindex="-1"></a>  args <span class="ot">&lt;-</span> <span class="fu">enquos</span>(...)</span>
+<span id="cb261-4"><a href="evaluation.html#cb261-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb261-5"><a href="evaluation.html#cb261-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create a call object by splicing a list of quosures</span></span>
+<span id="cb261-6"><a href="evaluation.html#cb261-6" aria-hidden="true" tabindex="-1"></a>  order_call <span class="ot">&lt;-</span> <span class="fu">expr</span>(<span class="fu">order</span>(<span class="sc">!!!</span>args, <span class="at">na.last =</span> <span class="sc">!!</span>.na.last))</span>
+<span id="cb261-7"><a href="evaluation.html#cb261-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb261-8"><a href="evaluation.html#cb261-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># and evaluate the constructed call in the data frame</span></span>
+<span id="cb261-9"><a href="evaluation.html#cb261-9" aria-hidden="true" tabindex="-1"></a>  ord <span class="ot">&lt;-</span> <span class="fu">eval_tidy</span>(order_call, .df)</span>
+<span id="cb261-10"><a href="evaluation.html#cb261-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb261-11"><a href="evaluation.html#cb261-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># sanity check</span></span>
+<span id="cb261-12"><a href="evaluation.html#cb261-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">length</span>(ord) <span class="sc">==</span> <span class="fu">nrow</span>(.df))</span>
+<span id="cb261-13"><a href="evaluation.html#cb261-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb261-14"><a href="evaluation.html#cb261-14" aria-hidden="true" tabindex="-1"></a>  .df[ord, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb261-15"><a href="evaluation.html#cb261-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>To see why it doesn’t matter whether whether we unquote the <code>.na.last</code> argument or not, let’s have a look at this smaller example:</p>
-<div class="sourceCode" id="cb601"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">!</span><span class="op">!</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    x </span></span>
-<span><span class="co">#&gt; TRUE</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    x </span></span>
-<span><span class="co">#&gt; TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="evaluation.html#cb262-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb262-2"><a href="evaluation.html#cb262-2" aria-hidden="true" tabindex="-1"></a><span class="fu">eval</span>(<span class="fu">expr</span>(<span class="fu">c</span>(<span class="at">x =</span> <span class="sc">!!</span>x)))</span>
+<span id="cb262-3"><a href="evaluation.html#cb262-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    x </span></span>
+<span id="cb262-4"><a href="evaluation.html#cb262-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; TRUE</span></span>
+<span id="cb262-5"><a href="evaluation.html#cb262-5" aria-hidden="true" tabindex="-1"></a><span class="fu">eval</span>(<span class="fu">expr</span>(<span class="fu">c</span>(<span class="at">x =</span> x)))</span>
+<span id="cb262-6"><a href="evaluation.html#cb262-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    x </span></span>
+<span id="cb262-7"><a href="evaluation.html#cb262-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; TRUE</span></span></code></pre></div>
 <p>As can be seen:</p>
 <ul>
 <li>without unquoting, <code>.na.last</code> is found in the function environment</li>
 <li>with unquoting, <code>.na.last</code> is included in the <code>order</code> call object itself</li>
 </ul>
-<hr>
+<hr />
 </div>
-<div id="exercises-20.5.4" class="section level3" number="20.0.4">
-<h3>
-<span class="header-section-number">20.0.4</span> Exercises 20.5.4<a class="anchor" aria-label="anchor" href="#exercises-20.5.4"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
+<div id="exercises-20.5.4" class="section level2" number="20.4">
+<h2><span class="header-section-number">20.4</span> Exercises 20.5.4</h2>
+<hr />
 <p><strong>Q1.</strong> I’ve included an alternative implementation of <code>threshold_var()</code> below. What makes it different to the approach I used above? What makes it harder?</p>
-<div class="sourceCode" id="cb602"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">threshold_var</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">var</span>, <span class="va">val</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">ensym</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span></span>
-<span>  <span class="fu">subset2</span><span class="op">(</span><span class="va">df</span>, <span class="fu">`$`</span><span class="op">(</span><span class="va">.data</span>, <span class="op">!</span><span class="op">!</span><span class="va">var</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="op">!</span><span class="op">!</span><span class="va">val</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="evaluation.html#cb263-1" aria-hidden="true" tabindex="-1"></a>threshold_var <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var, val) {</span>
+<span id="cb263-2"><a href="evaluation.html#cb263-2" aria-hidden="true" tabindex="-1"></a>  var <span class="ot">&lt;-</span> <span class="fu">ensym</span>(var)</span>
+<span id="cb263-3"><a href="evaluation.html#cb263-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset2</span>(df, <span class="st">`</span><span class="at">$</span><span class="st">`</span>(.data, <span class="sc">!!</span>var) <span class="sc">&gt;=</span> <span class="sc">!!</span>val)</span>
+<span id="cb263-4"><a href="evaluation.html#cb263-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><strong>A1.</strong> First, let’s compare the two definitions for the same function and make sure that they produce the same output:</p>
-<div class="sourceCode" id="cb603"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">threshold_var_old</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">var</span>, <span class="va">val</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/as_string.html">as_string</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">ensym</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu">subset2</span><span class="op">(</span><span class="va">df</span>, <span class="va">.data</span><span class="op">[[</span><span class="va">var</span><span class="op">]</span><span class="op">]</span> <span class="op">&gt;=</span> <span class="op">!</span><span class="op">!</span><span class="va">val</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">threshold_var_new</span> <span class="op">&lt;-</span> <span class="va">threshold_var</span></span>
-<span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span></span>
-<span>  <span class="fu">threshold_var</span><span class="op">(</span><span class="va">df</span>, <span class="va">x</span>, <span class="fl">8</span><span class="op">)</span>,</span>
-<span>  <span class="fu">threshold_var</span><span class="op">(</span><span class="va">df</span>, <span class="va">x</span>, <span class="fl">8</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="evaluation.html#cb264-1" aria-hidden="true" tabindex="-1"></a>threshold_var_old <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var, val) {</span>
+<span id="cb264-2"><a href="evaluation.html#cb264-2" aria-hidden="true" tabindex="-1"></a>  var <span class="ot">&lt;-</span> <span class="fu">as_string</span>(<span class="fu">ensym</span>(var))</span>
+<span id="cb264-3"><a href="evaluation.html#cb264-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset2</span>(df, .data[[var]] <span class="sc">&gt;=</span> <span class="sc">!!</span>val)</span>
+<span id="cb264-4"><a href="evaluation.html#cb264-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb264-5"><a href="evaluation.html#cb264-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb264-6"><a href="evaluation.html#cb264-6" aria-hidden="true" tabindex="-1"></a>threshold_var_new <span class="ot">&lt;-</span> threshold_var</span>
+<span id="cb264-7"><a href="evaluation.html#cb264-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb264-8"><a href="evaluation.html#cb264-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb264-9"><a href="evaluation.html#cb264-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb264-10"><a href="evaluation.html#cb264-10" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(</span>
+<span id="cb264-11"><a href="evaluation.html#cb264-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">threshold_var</span>(df, x, <span class="dv">8</span>),</span>
+<span id="cb264-12"><a href="evaluation.html#cb264-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">threshold_var</span>(df, x, <span class="dv">8</span>)</span>
+<span id="cb264-13"><a href="evaluation.html#cb264-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb264-14"><a href="evaluation.html#cb264-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>The key difference is in the subsetting operator used:</p>
 <ul>
 <li>The old version uses non-quoting <code>[[</code> operator. Thus, <code>var</code> argument first needs to be converted to a string.</li>
 <li>The new version uses quoting <code>$</code> operator. Thus, <code>var</code> argument is first quoted and then unquoted (using <code>!!</code>).</li>
 </ul>
-<hr>
+<hr />
 </div>
-<div id="exercises-20.6.3" class="section level3" number="20.0.5">
-<h3>
-<span class="header-section-number">20.0.5</span> Exercises 20.6.3<a class="anchor" aria-label="anchor" href="#exercises-20.6.3"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
+<div id="exercises-20.6.3" class="section level2" number="20.5">
+<h2><span class="header-section-number">20.5</span> Exercises 20.6.3</h2>
+<hr />
 <p><strong>Q1.</strong> Why does this function fail?</p>
-<div class="sourceCode" id="cb604"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lm3a</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">formula</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">formula</span><span class="op">)</span></span>
-<span>  <span class="va">lm_call</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">formula</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">lm_call</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu">lm3a</span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>, <span class="va">mtcars</span><span class="op">)</span><span class="op">$</span><span class="va">call</span></span>
-<span><span class="co">#&gt; Error in as.data.frame.default(data, optional = TRUE):</span></span>
-<span><span class="co">#&gt; cannot coerce class ‘"function"’ to a data.frame</span></span></code></pre></div>
-<p><strong>A1.</strong> This doesn’t work because when <code>lm_call</code> call is evaluated in <code><a href="https://rlang.r-lib.org/reference/stack.html">caller_env()</a></code>, it finds a binding for <code>base::data()</code> function, and not <code>data</code> from execution environment.</p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="evaluation.html#cb265-1" aria-hidden="true" tabindex="-1"></a>lm3a <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, data) {</span>
+<span id="cb265-2"><a href="evaluation.html#cb265-2" aria-hidden="true" tabindex="-1"></a>  formula <span class="ot">&lt;-</span> <span class="fu">enexpr</span>(formula)</span>
+<span id="cb265-3"><a href="evaluation.html#cb265-3" aria-hidden="true" tabindex="-1"></a>  lm_call <span class="ot">&lt;-</span> <span class="fu">expr</span>(<span class="fu">lm</span>(<span class="sc">!!</span>formula, <span class="at">data =</span> data))</span>
+<span id="cb265-4"><a href="evaluation.html#cb265-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eval</span>(lm_call, <span class="fu">caller_env</span>())</span>
+<span id="cb265-5"><a href="evaluation.html#cb265-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb265-6"><a href="evaluation.html#cb265-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb265-7"><a href="evaluation.html#cb265-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lm3a</span>(mpg <span class="sc">~</span> disp, mtcars)<span class="sc">$</span>call</span>
+<span id="cb265-8"><a href="evaluation.html#cb265-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in as.data.frame.default(data, optional = TRUE):</span></span>
+<span id="cb265-9"><a href="evaluation.html#cb265-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; cannot coerce class ‘&quot;function&quot;’ to a data.frame</span></span></code></pre></div>
+<p><strong>A1.</strong> This doesn’t work because when <code>lm_call</code> call is evaluated in <code>caller_env()</code>, it finds a binding for <code>base::data()</code> function, and not <code>data</code> from execution environment.</p>
 <p>To make it work, we need to unquote <code>data</code> into the expression:</p>
-<div class="sourceCode" id="cb605"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lm3a</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">formula</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">formula</span><span class="op">)</span></span>
-<span>  <span class="va">lm_call</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">formula</span>, data <span class="op">=</span> <span class="op">!</span><span class="op">!</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">lm_call</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_call.html">is_call</a></span><span class="op">(</span><span class="fu">lm3a</span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>, <span class="va">mtcars</span><span class="op">)</span><span class="op">$</span><span class="va">call</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="evaluation.html#cb266-1" aria-hidden="true" tabindex="-1"></a>lm3a <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, data) {</span>
+<span id="cb266-2"><a href="evaluation.html#cb266-2" aria-hidden="true" tabindex="-1"></a>  formula <span class="ot">&lt;-</span> <span class="fu">enexpr</span>(formula)</span>
+<span id="cb266-3"><a href="evaluation.html#cb266-3" aria-hidden="true" tabindex="-1"></a>  lm_call <span class="ot">&lt;-</span> <span class="fu">expr</span>(<span class="fu">lm</span>(<span class="sc">!!</span>formula, <span class="at">data =</span> <span class="sc">!!</span>data))</span>
+<span id="cb266-4"><a href="evaluation.html#cb266-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eval</span>(lm_call, <span class="fu">caller_env</span>())</span>
+<span id="cb266-5"><a href="evaluation.html#cb266-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb266-6"><a href="evaluation.html#cb266-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb266-7"><a href="evaluation.html#cb266-7" aria-hidden="true" tabindex="-1"></a><span class="fu">is_call</span>(<span class="fu">lm3a</span>(mpg <span class="sc">~</span> disp, mtcars)<span class="sc">$</span>call)</span>
+<span id="cb266-8"><a href="evaluation.html#cb266-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<hr />
 <p><strong>Q2.</strong> When model building, typically the response and data are relatively constant while you rapidly experiment with different predictors. Write a small wrapper that allows you to reduce duplication in the code below.</p>
-<div class="sourceCode" id="cb606"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">disp</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span> <span class="op">*</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="evaluation.html#cb267-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> disp, <span class="at">data =</span> mtcars)</span>
+<span id="cb267-2"><a href="evaluation.html#cb267-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">I</span>(<span class="dv">1</span> <span class="sc">/</span> disp), <span class="at">data =</span> mtcars)</span>
+<span id="cb267-3"><a href="evaluation.html#cb267-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> disp <span class="sc">*</span> cyl, <span class="at">data =</span> mtcars)</span></code></pre></div>
 <p><strong>A2.</strong> Here is a small wrapper that allows you to enter only the predictors:</p>
-<div class="sourceCode" id="cb607"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lm_custom</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span> <span class="op">=</span> <span class="va">mtcars</span>, <span class="va">x</span>, <span class="va">y</span> <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
-<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">lm_call</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">!</span><span class="op">!</span><span class="va">y</span> <span class="op">~</span> <span class="op">!</span><span class="op">!</span><span class="va">x</span>, data <span class="op">=</span> <span class="op">!</span><span class="op">!</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">lm_call</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span></span>
-<span>  <span class="fu">lm_custom</span><span class="op">(</span>x <span class="op">=</span> <span class="va">disp</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span></span>
-<span>  <span class="fu">lm_custom</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">disp</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">disp</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span></span>
-<span>  <span class="fu">lm_custom</span><span class="op">(</span>x <span class="op">=</span> <span class="va">disp</span> <span class="op">*</span> <span class="va">cyl</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span> <span class="op">*</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="evaluation.html#cb268-1" aria-hidden="true" tabindex="-1"></a>lm_custom <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">data =</span> mtcars, x, <span class="at">y =</span> mpg) {</span>
+<span id="cb268-2"><a href="evaluation.html#cb268-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">enexpr</span>(x)</span>
+<span id="cb268-3"><a href="evaluation.html#cb268-3" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">enexpr</span>(y)</span>
+<span id="cb268-4"><a href="evaluation.html#cb268-4" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">enexpr</span>(data)</span>
+<span id="cb268-5"><a href="evaluation.html#cb268-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-6"><a href="evaluation.html#cb268-6" aria-hidden="true" tabindex="-1"></a>  lm_call <span class="ot">&lt;-</span> <span class="fu">expr</span>(<span class="fu">lm</span>(<span class="at">formula =</span> <span class="sc">!!</span>y <span class="sc">~</span> <span class="sc">!!</span>x, <span class="at">data =</span> <span class="sc">!!</span>data))</span>
+<span id="cb268-7"><a href="evaluation.html#cb268-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-8"><a href="evaluation.html#cb268-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eval</span>(lm_call, <span class="fu">caller_env</span>())</span>
+<span id="cb268-9"><a href="evaluation.html#cb268-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb268-10"><a href="evaluation.html#cb268-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-11"><a href="evaluation.html#cb268-11" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(</span>
+<span id="cb268-12"><a href="evaluation.html#cb268-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm_custom</span>(<span class="at">x =</span> disp),</span>
+<span id="cb268-13"><a href="evaluation.html#cb268-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(mpg <span class="sc">~</span> disp, <span class="at">data =</span> mtcars)</span>
+<span id="cb268-14"><a href="evaluation.html#cb268-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb268-15"><a href="evaluation.html#cb268-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb268-16"><a href="evaluation.html#cb268-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-17"><a href="evaluation.html#cb268-17" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(</span>
+<span id="cb268-18"><a href="evaluation.html#cb268-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm_custom</span>(<span class="at">x =</span> <span class="fu">I</span>(<span class="dv">1</span> <span class="sc">/</span> disp)),</span>
+<span id="cb268-19"><a href="evaluation.html#cb268-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">I</span>(<span class="dv">1</span> <span class="sc">/</span> disp), <span class="at">data =</span> mtcars)</span>
+<span id="cb268-20"><a href="evaluation.html#cb268-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb268-21"><a href="evaluation.html#cb268-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb268-22"><a href="evaluation.html#cb268-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-23"><a href="evaluation.html#cb268-23" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(</span>
+<span id="cb268-24"><a href="evaluation.html#cb268-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm_custom</span>(<span class="at">x =</span> disp <span class="sc">*</span> cyl),</span>
+<span id="cb268-25"><a href="evaluation.html#cb268-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(mpg <span class="sc">~</span> disp <span class="sc">*</span> cyl, <span class="at">data =</span> mtcars)</span>
+<span id="cb268-26"><a href="evaluation.html#cb268-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb268-27"><a href="evaluation.html#cb268-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>But the function is flexible enough to also allow changing both the data and the dependent variable:</p>
-<div class="sourceCode" id="cb608"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">lm_custom</span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, x <span class="op">=</span> <span class="va">Sepal.Length</span>, y <span class="op">=</span> <span class="va">Petal.Width</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = Petal.Width ~ Sepal.Length, data = iris)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;  (Intercept)  Sepal.Length  </span></span>
-<span><span class="co">#&gt;      -3.2002        0.7529</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="evaluation.html#cb269-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm_custom</span>(<span class="at">data =</span> iris, <span class="at">x =</span> Sepal.Length, <span class="at">y =</span> Petal.Width)</span>
+<span id="cb269-2"><a href="evaluation.html#cb269-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb269-3"><a href="evaluation.html#cb269-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb269-4"><a href="evaluation.html#cb269-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = Petal.Width ~ Sepal.Length, data = iris)</span></span>
+<span id="cb269-5"><a href="evaluation.html#cb269-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb269-6"><a href="evaluation.html#cb269-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb269-7"><a href="evaluation.html#cb269-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  (Intercept)  Sepal.Length  </span></span>
+<span id="cb269-8"><a href="evaluation.html#cb269-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      -3.2002        0.7529</span></span></code></pre></div>
+<hr />
 <p><strong>Q3.</strong> Another way to write <code>resample_lm()</code> would be to include the resample expression (<code>data[sample(nrow(data), replace = TRUE), , drop = FALSE]</code>) in the data argument. Implement that approach. What are the advantages? What are the disadvantages?</p>
 <p><strong>A3.</strong> In this variant of <code>resample_lm()</code>, we are providing the resampled data as an argument.</p>
-<div class="sourceCode" id="cb609"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">resample_lm3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">formula</span>,</span>
-<span>                         <span class="va">data</span>,</span>
-<span>                         <span class="va">resample_data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>,</span>
-<span>                         <span class="va">env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">current_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">formula</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">formula</span><span class="op">)</span></span>
-<span>  <span class="va">lm_call</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">formula</span>, data <span class="op">=</span> <span class="va">resample_data</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/expr_print.html">expr_print</a></span><span class="op">(</span><span class="va">lm_call</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">lm_call</span>, <span class="va">env</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, y <span class="op">=</span> <span class="fl">5</span> <span class="op">+</span> <span class="fl">3</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">resample_lm3</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
-<span><span class="co">#&gt; lm(y ~ x, data = resample_data)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = y ~ x, data = resample_data)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt; (Intercept)            x  </span></span>
-<span><span class="co">#&gt;       2.654        3.420</span></span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="evaluation.html#cb270-1" aria-hidden="true" tabindex="-1"></a>resample_lm3 <span class="ot">&lt;-</span> <span class="cf">function</span>(formula,</span>
+<span id="cb270-2"><a href="evaluation.html#cb270-2" aria-hidden="true" tabindex="-1"></a>                         data,</span>
+<span id="cb270-3"><a href="evaluation.html#cb270-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">resample_data =</span> data[<span class="fu">sample</span>(<span class="fu">nrow</span>(data), <span class="at">replace =</span> <span class="cn">TRUE</span>), , <span class="at">drop =</span> <span class="cn">FALSE</span>],</span>
+<span id="cb270-4"><a href="evaluation.html#cb270-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">env =</span> <span class="fu">current_env</span>()) {</span>
+<span id="cb270-5"><a href="evaluation.html#cb270-5" aria-hidden="true" tabindex="-1"></a>  formula <span class="ot">&lt;-</span> <span class="fu">enexpr</span>(formula)</span>
+<span id="cb270-6"><a href="evaluation.html#cb270-6" aria-hidden="true" tabindex="-1"></a>  lm_call <span class="ot">&lt;-</span> <span class="fu">expr</span>(<span class="fu">lm</span>(<span class="sc">!!</span>formula, <span class="at">data =</span> resample_data))</span>
+<span id="cb270-7"><a href="evaluation.html#cb270-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expr_print</span>(lm_call)</span>
+<span id="cb270-8"><a href="evaluation.html#cb270-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eval</span>(lm_call, env)</span>
+<span id="cb270-9"><a href="evaluation.html#cb270-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb270-10"><a href="evaluation.html#cb270-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb270-11"><a href="evaluation.html#cb270-11" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">y =</span> <span class="dv">5</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">+</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">10</span>), <span class="dv">2</span>))</span>
+<span id="cb270-12"><a href="evaluation.html#cb270-12" aria-hidden="true" tabindex="-1"></a><span class="fu">resample_lm3</span>(y <span class="sc">~</span> x, <span class="at">data =</span> df)</span>
+<span id="cb270-13"><a href="evaluation.html#cb270-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(y ~ x, data = resample_data)</span></span>
+<span id="cb270-14"><a href="evaluation.html#cb270-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb270-15"><a href="evaluation.html#cb270-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb270-16"><a href="evaluation.html#cb270-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = y ~ x, data = resample_data)</span></span>
+<span id="cb270-17"><a href="evaluation.html#cb270-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb270-18"><a href="evaluation.html#cb270-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb270-19"><a href="evaluation.html#cb270-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)            x  </span></span>
+<span id="cb270-20"><a href="evaluation.html#cb270-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       2.654        3.420</span></span></code></pre></div>
 <p>This makes use of R’s lazy evaluation of function arguments. That is, <code>resample_data</code> argument will be evaluated only when it is needed in the function.</p>
-<hr>
+<hr />
 </div>
-<div id="session-information-15" class="section level2" number="20.1">
-<h2>
-<span class="header-section-number">20.1</span> Session information<a class="anchor" aria-label="anchor" href="#session-information-15"><i class="fas fa-link"></i></a>
-</h2>
-<div class="sourceCode" id="cb610"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; - Session info -------------------------------------------</span></span>
-<span><span class="co">#&gt;  setting  value</span></span>
-<span><span class="co">#&gt;  version  R version 4.1.3 (2022-03-10)</span></span>
-<span><span class="co">#&gt;  os       Windows 10 x64 (build 22000)</span></span>
-<span><span class="co">#&gt;  system   x86_64, mingw32</span></span>
-<span><span class="co">#&gt;  ui       RTerm</span></span>
-<span><span class="co">#&gt;  language (EN)</span></span>
-<span><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
-<span><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
-<span><span class="co">#&gt;  tz       Europe/Berlin</span></span>
-<span><span class="co">#&gt;  date     2022-08-20</span></span>
-<span><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
-<span><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
-<span><span class="co">#&gt;    base        * 4.1.3      2022-03-10 [?] local</span></span>
-<span><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;  P compiler      4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;  P datasets    * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P graphics    * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;  P grDevices   * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)</span></span>
-<span><span class="co">#&gt;    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P methods     * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
-<span><span class="co">#&gt;    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
-<span><span class="co">#&gt;    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P tools         4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;  P utils       * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1</span></span>
-<span><span class="co">#&gt;  [2] C:/Program Files/R/R-4.1.3/library</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  P -- Loaded and on-disk path mismatch.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ----------------------------------------------------------</span></span></code></pre></div>
+<div id="session-information-15" class="section level2" number="20.6">
+<h2><span class="header-section-number">20.6</span> Session information</h2>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="evaluation.html#cb271-1" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb271-2"><a href="evaluation.html#cb271-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - Session info -------------------------------------------</span></span>
+<span id="cb271-3"><a href="evaluation.html#cb271-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  setting  value</span></span>
+<span id="cb271-4"><a href="evaluation.html#cb271-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  version  R version 4.1.3 (2022-03-10)</span></span>
+<span id="cb271-5"><a href="evaluation.html#cb271-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  os       Windows 10 x64 (build 22000)</span></span>
+<span id="cb271-6"><a href="evaluation.html#cb271-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  system   x86_64, mingw32</span></span>
+<span id="cb271-7"><a href="evaluation.html#cb271-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ui       RTerm</span></span>
+<span id="cb271-8"><a href="evaluation.html#cb271-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  language (EN)</span></span>
+<span id="cb271-9"><a href="evaluation.html#cb271-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
+<span id="cb271-10"><a href="evaluation.html#cb271-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
+<span id="cb271-11"><a href="evaluation.html#cb271-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tz       Europe/Berlin</span></span>
+<span id="cb271-12"><a href="evaluation.html#cb271-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  date     2022-08-21</span></span>
+<span id="cb271-13"><a href="evaluation.html#cb271-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
+<span id="cb271-14"><a href="evaluation.html#cb271-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb271-15"><a href="evaluation.html#cb271-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
+<span id="cb271-16"><a href="evaluation.html#cb271-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
+<span id="cb271-17"><a href="evaluation.html#cb271-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    base        * 4.1.3      2022-03-10 [?] local</span></span>
+<span id="cb271-18"><a href="evaluation.html#cb271-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-19"><a href="evaluation.html#cb271-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-20"><a href="evaluation.html#cb271-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb271-21"><a href="evaluation.html#cb271-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-22"><a href="evaluation.html#cb271-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P compiler      4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb271-23"><a href="evaluation.html#cb271-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-24"><a href="evaluation.html#cb271-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P datasets    * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb271-25"><a href="evaluation.html#cb271-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb271-26"><a href="evaluation.html#cb271-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-27"><a href="evaluation.html#cb271-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-28"><a href="evaluation.html#cb271-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-29"><a href="evaluation.html#cb271-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb271-30"><a href="evaluation.html#cb271-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb271-31"><a href="evaluation.html#cb271-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb271-32"><a href="evaluation.html#cb271-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P graphics    * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb271-33"><a href="evaluation.html#cb271-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P grDevices   * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb271-34"><a href="evaluation.html#cb271-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-35"><a href="evaluation.html#cb271-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb271-36"><a href="evaluation.html#cb271-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb271-37"><a href="evaluation.html#cb271-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)</span></span>
+<span id="cb271-38"><a href="evaluation.html#cb271-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb271-39"><a href="evaluation.html#cb271-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-40"><a href="evaluation.html#cb271-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb271-41"><a href="evaluation.html#cb271-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P methods     * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb271-42"><a href="evaluation.html#cb271-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-43"><a href="evaluation.html#cb271-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb271-44"><a href="evaluation.html#cb271-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
+<span id="cb271-45"><a href="evaluation.html#cb271-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-46"><a href="evaluation.html#cb271-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
+<span id="cb271-47"><a href="evaluation.html#cb271-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb271-48"><a href="evaluation.html#cb271-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-49"><a href="evaluation.html#cb271-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb271-50"><a href="evaluation.html#cb271-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb271-51"><a href="evaluation.html#cb271-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-52"><a href="evaluation.html#cb271-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-53"><a href="evaluation.html#cb271-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P tools         4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb271-54"><a href="evaluation.html#cb271-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb271-55"><a href="evaluation.html#cb271-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P utils       * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb271-56"><a href="evaluation.html#cb271-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-57"><a href="evaluation.html#cb271-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb271-58"><a href="evaluation.html#cb271-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb271-59"><a href="evaluation.html#cb271-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb271-60"><a href="evaluation.html#cb271-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb271-61"><a href="evaluation.html#cb271-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb271-62"><a href="evaluation.html#cb271-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1</span></span>
+<span id="cb271-63"><a href="evaluation.html#cb271-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [2] C:/Program Files/R/R-4.1.3/library</span></span>
+<span id="cb271-64"><a href="evaluation.html#cb271-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb271-65"><a href="evaluation.html#cb271-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P -- Loaded and on-disk path mismatch.</span></span>
+<span id="cb271-66"><a href="evaluation.html#cb271-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb271-67"><a href="evaluation.html#cb271-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------------------------</span></span></code></pre></div>
 
 </div>
 </div>
-  <div class="chapter-nav">
-<div class="prev"><a href="quasiquotation.html"><span class="header-section-number">19</span> Quasiquotation</a></div>
-<div class="next"><a href="translation.html"><span class="header-section-number">21</span> Translation</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li>
-<a class="nav-link" href="#evaluation"><span class="header-section-number">20</span> Evaluation</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#exercises-20.2.4"><span class="header-section-number">20.0.1</span> Exercises 20.2.4</a></li>
-<li><a class="nav-link" href="#exercises-20.3.6"><span class="header-section-number">20.0.2</span> Exercises 20.3.6</a></li>
-<li><a class="nav-link" href="#exercises-20.4.6"><span class="header-section-number">20.0.3</span> Exercises 20.4.6</a></li>
-<li><a class="nav-link" href="#exercises-20.5.4"><span class="header-section-number">20.0.4</span> Exercises 20.5.4</a></li>
-<li><a class="nav-link" href="#exercises-20.6.3"><span class="header-section-number">20.0.5</span> Exercises 20.6.3</a></li>
-</ul>
-</li>
-<li><a class="nav-link" href="#session-information-15"><span class="header-section-number">20.1</span> Session information</a></li>
-</ul>
+  </main>
+
+  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Evaluation.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Evaluation.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
-</div>
+      </div>
     </nav>
-</div>
+  </div>
 
 </div>
 </div> <!-- .container -->
 
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+<footer class="bg-primary text-light mt-5">
+  <div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
     <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-20.</p>
@@ -702,34 +648,9 @@
   </div>
 
 </div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-for (let popover of popovers) {
-  const div = document.createElement('div');
-  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-  div.innerHTML = popover.getAttribute('data-content');
+</footer>
 
-  var has_math = div.querySelector("span.math");
-  if (has_math) {
-    document.body.appendChild(div);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    MathJax.Hub.Queue(function() {
-      popover.setAttribute('data-content', div.innerHTML);
-      document.body.removeChild(div);
-    })
-  }
-}
-</script>
+
 </body>
+
 </html>

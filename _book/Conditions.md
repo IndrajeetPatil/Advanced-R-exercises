@@ -10,7 +10,7 @@ library(rlang, warn.conflicts = FALSE)
 library(testthat, warn.conflicts = FALSE)
 ```
 
-### Exercises 8.2.4
+## Signalling conditions (Exercises 8.2.4)
 
 ---
 
@@ -127,7 +127,7 @@ foo()
 
 ---
 
-### Exercises 8.4.5
+## Handling conditions (Exercises 8.4.5)
 
 ---
 
@@ -290,7 +290,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x000000002f13e5a0>
+#> <bytecode: 0x0000000033d5f0f0>
 #> <environment: namespace:rlang>
 ```
 
@@ -364,7 +364,7 @@ show_condition2({
 
 ---
 
-### Exercises 8.5.4
+## Custom conditions (Exercises 8.5.4)
 
 ---
 
@@ -440,7 +440,7 @@ This test wouldn't fail even if we decided to change the exact message.
 
 ---
 
-### Exercises 8.6.6
+## Applications (Exercises 8.6.6)
 
 ---
 
@@ -688,7 +688,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-20
+#>  date     2022-08-21
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -737,7 +737,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
+#>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    testthat    * 3.1.4      2022-04-26 [1] CRAN (R 4.1.3)
 #>    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)
 #>    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)

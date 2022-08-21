@@ -9,7 +9,7 @@ Attaching the needed libraries:
 library(rlang)
 ```
 
-### Exercises 20.2.4
+## Exercises 20.2.4
 
 ---
 
@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x0000000033032830>
+#> <environment: 0x0000000033022d30>
 #> Parent: <environment: global>
 ```
 
@@ -238,7 +238,7 @@ Note here that the bindings for `x` and `y` are found in the inner environment, 
 
 ---
 
-### Exercises 20.3.6
+## Exercises 20.3.6
 
 ---
 
@@ -250,17 +250,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x000000003316c270
+#> env:  0x000000003315e8f8
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x0000000033b8cef0
+#> env:  0x0000000033b7d5c8
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x000000003406aa70
+#> env:  0x000000003405b148
 ```
 
 **A1.** Correctly predicted 😉
@@ -298,12 +298,12 @@ enenv(x)
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x000000003255b1d0>
+#> <environment: 0x0000000032542c10>
 ```
 
 ---
 
-### Exercises 20.4.6
+## Exercises 20.4.6
 
 ---
 
@@ -487,7 +487,7 @@ As can be seen:
 
 ---
 
-### Exercises 20.5.4
+## Exercises 20.5.4
 
 ---
 
@@ -528,7 +528,7 @@ The key difference is in the subsetting operator used:
 
 ---
 
-### Exercises 20.6.3
+## Exercises 20.6.3
 
 ---
 
@@ -670,7 +670,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-20
+#>  date     2022-08-21
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -710,7 +710,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
+#>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>  P tools         4.1.3      2022-03-10 [2] local
 #>    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)
 #>  P utils       * 4.1.3      2022-03-10 [2] local

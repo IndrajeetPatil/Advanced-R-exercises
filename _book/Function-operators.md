@@ -9,7 +9,7 @@ Attaching the needed libraries:
 library(purrr, warn.conflicts = FALSE)
 ```
 
-### Exercises 11.2.3
+## Exercises 11.2.3
 
 ---
 
@@ -92,7 +92,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x0000000032f62840>
+#> <bytecode: 0x0000000032f33ab8>
 #> <environment: namespace:purrr>
 ```
 
@@ -116,7 +116,7 @@ safely
 #>     .f <- as_mapper(.f)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x0000000033131f38>
+#> <bytecode: 0x00000000331031b0>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -130,7 +130,7 @@ purrr:::capture_error
 #>         stop("Terminated by user", call. = FALSE)
 #>     })
 #> }
-#> <bytecode: 0x0000000033184530>
+#> <bytecode: 0x00000000331557a8>
 #> <environment: namespace:purrr>
 ```
 
@@ -143,7 +143,7 @@ Looking at this code, we can see that `safely()`:
 
 ---
 
-### Exercises 11.3.1
+## Exercises 11.3.1
 
 ---
 
@@ -279,10 +279,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2022-08-20 14:01:01
-#> Function called at:  2022-08-20 14:01:06
-#> Function called at:  2022-08-20 14:01:12
-#> Function called at:  2022-08-20 14:01:20
+#> Function created at: 2022-08-21 10:02:28
+#> Function called at:  2022-08-21 10:02:33
+#> Function called at:  2022-08-21 10:02:38
+#> Function called at:  2022-08-21 10:02:46
 ```
 
 ---
@@ -332,7 +332,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-20
+#>  date     2022-08-21
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -376,7 +376,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
+#>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)
 #>    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)
 #>  P tools         4.1.3      2022-03-10 [2] local

@@ -10,7 +10,7 @@ library(rlang, warn.conflicts = FALSE)
 library(ggplot2, warn.conflicts = FALSE)
 ```
 
-### Exercises 10.2.6
+## Exercises 10.2.6
 
 ---
 
@@ -21,7 +21,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x00000000172771f0>
+#> <bytecode: 0x00000000120b71f0>
 #> <environment: namespace:base>
 ```
 
@@ -49,8 +49,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x00000000197ce368>
-#> <environment: 0x00000000197cb530>
+#> <bytecode: 0x00000000197ce778>
+#> <environment: 0x00000000197cf310>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -214,20 +214,20 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x0000000033139860>
+#> <environment: 0x0000000033156bc0>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x0000000033332a70>
-#> <environment: 0x00000000331da4a8>
+#> <bytecode: 0x0000000033344c98>
+#> <environment: 0x00000000331ec6d0>
 ```
 
 ---
 
-### Exercises 10.3.4
+## Exercises 10.3.4
 
 ---
 
@@ -266,7 +266,7 @@ ggplot2::label_bquote
 #>     }
 #>     structure(fun, class = "labeller")
 #> }
-#> <bytecode: 0x00000000334e7528>
+#> <bytecode: 0x00000000334f9750>
 #> <environment: namespace:ggplot2>
 
 scales::number_format
@@ -284,7 +284,7 @@ scales::number_format
 #>             scale_cut = scale_cut, trim = trim, ...)
 #>     }
 #> }
-#> <bytecode: 0x0000000033554db8>
+#> <bytecode: 0x0000000033566fe0>
 #> <environment: namespace:scales>
 ```
 
@@ -322,7 +322,7 @@ The `scales::number_format()` function is a simple pass-through method that forc
 
 ---
 
-### Exercises 10.4.4
+## Exercises 10.4.4
 
 ---
 
@@ -354,7 +354,7 @@ boot_model(mtcars, mpg ~ wt)
 #> function() {
 #>     fitted + sample(resid)
 #>   }
-#> <environment: 0x000000001a5a37f0>
+#> <environment: 0x000000001a5b46c8>
 ```
 
 Contrast this with the first function we saw in the chapter which *did* have a lazy binding:
@@ -375,7 +375,7 @@ power1(2)
 #> function(x) {
 #>     x^exp
 #>   }
-#> <environment: 0x0000000017b73b38>
+#> <environment: 0x00000000183c0dc8>
 ```
 
 ---
@@ -414,7 +414,7 @@ Let's have a look at one example with each:
 ```r
 boxcox2(1)
 #> function(x) (x^lambda - 1) / lambda
-#> <environment: 0x00000000332e60d0>
+#> <environment: 0x00000000332f5398>
 
 boxcox3(mtcars$wt)
 #> function(lambda) {
@@ -424,7 +424,7 @@ boxcox3(mtcars$wt)
 #>       (x^lambda - 1) / lambda
 #>     }
 #>   }
-#> <environment: 0x0000000033345598>
+#> <environment: 0x0000000033354d78>
 ```
 
 As can be seen, in `boxcox2()`, we can vary `x` for the same value of `lambda`, while in `boxcox3()`, we can vary `lambda` for the same vector. This can be handy while exploring different transformations across inputs.
@@ -452,7 +452,7 @@ boot_permute(mtcars, "mpg")
 #>     col <- df[[var]]
 #>     col[sample(n, replace = TRUE)]
 #>   }
-#> <environment: 0x0000000033596290>
+#> <environment: 0x00000000335a59c8>
 ```
 
 This is why we don't need to worry about a copy being made because the `df` in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:
@@ -461,7 +461,7 @@ This is why we don't need to worry about a copy being made because the `df` in t
 ```r
 boot_permute_env <- rlang::fn_env(boot_permute(mtcars, "mpg"))
 rlang::env_print(boot_permute_env)
-#> <environment: 0x00000000338e0e08>
+#> <environment: 0x00000000338f08c0>
 #> Parent: <environment: global>
 #> Bindings:
 #> * n: <int>
@@ -521,8 +521,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1            29us   36.8us    25902.    12.8KB    10.4 
-#> 2 LL2          14.9us     20us    40689.        0B     8.14
+#> 1 LL1          27.8us   37.7us    24624.    12.8KB     9.85
+#> 2 LL2          16.3us   19.6us    46855.        0B     9.37
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -548,16 +548,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 x 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1          43.7us   55.8us    17592.
-#>  2     10 LL2          17.4us   22.6us    43306.
-#>  3     20 LL1          47.5us   61.9us    15901.
-#>  4     20 LL2          18.5us   22.4us    43169.
-#>  5     50 LL1          58.4us   75.5us    12931.
-#>  6     50 LL2          17.1us   23.3us    41926.
-#>  7    100 LL1          88.9us   99.8us     9638.
-#>  8    100 LL2          19.5us   22.9us    42124.
-#>  9   1000 LL1          1.68ms   2.12ms      475.
-#> 10   1000 LL2          76.2us   92.8us    10450.
+#>  1     10 LL1          44.3us   55.9us    17397.
+#>  2     10 LL2          17.9us     24us    35331.
+#>  3     20 LL1          46.2us   59.3us    16666.
+#>  4     20 LL2          19.3us   22.6us    42951.
+#>  5     50 LL1          62.2us   76.4us    12826.
+#>  6     50 LL2          18.9us   22.4us    43317.
+#>  7    100 LL1          91.6us  115.4us     8690.
+#>  8    100 LL2          19.5us   24.8us    39619.
+#>  9   1000 LL1          1.72ms   2.05ms      483.
+#> 10   1000 LL2          79.2us  100.8us     9666.
 
 ggplot(
   df_bench,
@@ -581,7 +581,7 @@ ggplot(
 
 ---
 
-### Exercises 10.5.1
+## Exercises 10.5.1
 
 **Q1.** Which of the following commands is equivalent to `with(x, f(z))`?
 
@@ -633,7 +633,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-20
+#>  date     2022-08-21
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -687,11 +687,11 @@ sessioninfo::session_info(include_base = TRUE)
 #>    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)
 #>    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)
 #>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)
-#>    scales      * 1.2.0      2022-04-13 [1] CRAN (R 4.1.3)
+#>    scales      * 1.2.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
+#>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)
 #>    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)
 #>  P tools         4.1.3      2022-03-10 [2] local

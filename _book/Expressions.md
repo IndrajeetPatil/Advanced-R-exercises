@@ -10,7 +10,7 @@ library(rlang, warn.conflicts = FALSE)
 library(lobstr, warn.conflicts = FALSE)
 ```
 
-### Exercises 18.2.4
+## Exercises 18.2.4
 
 **Q1.** Reconstruct the code represented by the trees below:
 
@@ -192,7 +192,7 @@ ast(if (FALSE) 1 else if (FALSE) 2 else if (FALSE) 3 else 4)
 #>     \-4
 ```
 
-### Exercises 18.3.5
+## Exercises 18.3.5
 
 **Q1.** Which two of the six types of atomic vector can't appear in an expression? Why? Similarly, why can't you create an expression that contains an atomic vector of length greater than one?
 
@@ -369,7 +369,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000017ff21c8>
+#> <bytecode: 0x0000000017ff22a0>
 #> <environment: namespace:base>
 ```
 
@@ -437,7 +437,7 @@ ast(if (x > 1) "a" else "b")
 #> \-"b"
 ```
 
-### Exercises 18.4.4
+## Exercises 18.4.4
 
 **Q1.** R uses parentheses in two slightly different ways as illustrated by these two calls:
 
@@ -702,7 +702,7 @@ rlang::expr_text(expr)
 
 > New function `deparse1()` produces one string, wrapping `deparse()`, to be used typically in `deparse1(substitute(*))`
 
-### Exercises 18.5.3
+## Exercises 18.5.3
 
 **Q1.** `logical_abbr()` returns `TRUE` for `T(1, 2, 3)`. How could you modify `logical_abbr_rec()` so that it ignores function calls that use `T` or `F`?
 
@@ -988,7 +988,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-20
+#>  date     2022-08-21
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -1029,7 +1029,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)
+#>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>  P tools         4.1.3      2022-03-10 [2] local
 #>    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)
 #>  P utils       * 4.1.3      2022-03-10 [2] local

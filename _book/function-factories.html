@@ -1,37 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 10 Function factories | Advanced R Exercises</title>
-<meta name="author" content="Indrajeet Patil">
-<meta name="description" content="Attaching the needed libraries: library(rlang, warn.conflicts = FALSE) library(ggplot2, warn.conflicts = FALSE)  10.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function...">
-<meta name="generator" content="bookdown 0.28 with bs4_book()">
-<meta property="og:title" content="Chapter 10 Function factories | Advanced R Exercises">
-<meta property="og:type" content="book">
-<meta property="og:image" content="/cover.png">
-<meta property="og:description" content="Attaching the needed libraries: library(rlang, warn.conflicts = FALSE) library(ggplot2, warn.conflicts = FALSE)  10.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 10 Function factories | Advanced R Exercises">
-<meta name="twitter:description" content="Attaching the needed libraries: library(rlang, warn.conflicts = FALSE) library(ggplot2, warn.conflicts = FALSE)  10.0.1 Exercises 10.2.6 Q1. The definition of force() is simple: force #&gt; function...">
-<meta name="twitter:image" content="/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
-<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
-<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Chapter 10 Function factories | Advanced R Exercises</title>
+
+    <meta name="author" content="Indrajeet Patil" />
+  
+   <meta name="description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+   <meta name="generator" content="placeholder" />
+  <meta property="og:title" content="Chapter 10 Function factories | Advanced R Exercises" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="/cover.png" />
+  <meta property="og:description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 Function factories | Advanced R Exercises" />
+  
+  <meta name="twitter:description" content="Solutions to exercises in Hadley Wickham’s Advanced R (2nd edition) book." />
+  <meta name="twitter:image" content="/cover.png" />
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
+    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
+    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
+    <script src="libs/bs3compat-0.4.0/transition.js"></script>
+    <script src="libs/bs3compat-0.4.0/tabs.js"></script>
+    <script src="libs/bs3compat-0.4.0/bs3compat.js"></script>
+    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
+    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
+    <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+    <script src="libs/d3-3.5.6/d3.min.js"></script>
+    <link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet" />
+    <script src="libs/profvis-0.3.6.9000/profvis.js"></script>
+    <script src="libs/profvis-0.3.6.9000/scroll.js"></script>
+    <link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet" />
+    <script src="libs/highlight-6.2.0/highlight.js"></script>
+    <script src="libs/profvis-binding-0.3.7/profvis.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  <style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
-<link rel="stylesheet" href="bs4_style.css">
+      <link rel="stylesheet" href="bs4_style.css" />
+  
 </head>
+
 <body data-spy="scroll" data-target="#toc">
 
 <div class="container-fluid">
 <div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
@@ -43,649 +71,575 @@
     <div id="main-nav" class="collapse-lg">
       <form role="search">
         <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
+      </form>
 
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">About</a></li>
-<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
-<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
-<li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
-<li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
-<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
-<li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
-<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
-<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
-<li><a class="active" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
-<li><a class="" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
-<li><a class="" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
-<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
-<li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
-<li><a class="" href="quasiquotation.html"><span class="header-section-number">19</span> Quasiquotation</a></li>
-<li><a class="" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
-<li><a class="" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></li>
-<li><a class="" href="improving-performance.html"><span class="header-section-number">24</span> Improving performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></li>
-</ul>
+      <nav aria-label="Table of contents">
+        <h2>Table of contents</h2>
+        <div id="book-toc"></div>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
         </div>
       </nav>
-</div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="function-factories" class="section level1" number="10">
-<h1>
-<span class="header-section-number">10</span> Function factories<a class="anchor" aria-label="anchor" href="#function-factories"><i class="fas fa-link"></i></a>
-</h1>
+    </div>
+  </header>
+
+  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
+<div id="function-factories" class="section level1" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Function factories</h1>
 <p>Attaching the needed libraries:</p>
-<div class="sourceCode" id="cb297"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<div id="exercises-10.2.6" class="section level3" number="10.0.1">
-<h3>
-<span class="header-section-number">10.0.1</span> Exercises 10.2.6<a class="anchor" aria-label="anchor" href="#exercises-10.2.6"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
-<p><strong>Q1.</strong> The definition of <code><a href="https://rdrr.io/r/base/force.html">force()</a></code> is simple:</p>
-<div class="sourceCode" id="cb298"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">force</span></span>
-<span><span class="co">#&gt; function (x) </span></span>
-<span><span class="co">#&gt; x</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x00000000172771f0&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="function-factories.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rlang, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb61-2"><a href="function-factories.html#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div id="exercises-10.2.6" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> Exercises 10.2.6</h2>
+<hr />
+<p><strong>Q1.</strong> The definition of <code>force()</code> is simple:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="function-factories.html#cb62-1" aria-hidden="true" tabindex="-1"></a>force</span>
+<span id="cb62-2"><a href="function-factories.html#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (x) </span></span>
+<span id="cb62-3"><a href="function-factories.html#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; x</span></span>
+<span id="cb62-4"><a href="function-factories.html#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x00000000120b71f0&gt;</span></span>
+<span id="cb62-5"><a href="function-factories.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>Why is it better to <code>force(x)</code> instead of just <code>x</code>?</p>
 <p><strong>A1.</strong> Because of lazy evaluation, argument to a function won’t be evaluated until its value is needed, but sometimes we may want to have eager evaluation.</p>
-<p>Using <code><a href="https://rdrr.io/r/base/force.html">force()</a></code> makes this intent clearer.</p>
-<hr>
-<p><strong>Q2.</strong> Base R contains two function factories, <code><a href="https://rdrr.io/r/stats/approxfun.html">approxfun()</a></code> and <code><a href="https://rdrr.io/r/stats/ecdf.html">ecdf()</a></code>. Read their documentation and experiment to figure out what the functions do and what they return.</p>
+<p>Using <code>force()</code> makes this intent clearer.</p>
+<hr />
+<p><strong>Q2.</strong> Base R contains two function factories, <code>approxfun()</code> and <code>ecdf()</code>. Read their documentation and experiment to figure out what the functions do and what they return.</p>
 <p><strong>A2.</strong> About the two function factories-</p>
 <ul>
-<li><code><a href="https://rdrr.io/r/stats/approxfun.html">approxfun()</a></code></li>
+<li><code>approxfun()</code></li>
 </ul>
 <p>This function factory returns a function performing the linear (or constant) interpolation.</p>
-<div class="sourceCode" id="cb299"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/approxfun.html">approxfun</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
-<span><span class="va">f</span></span>
-<span><span class="co">#&gt; function (v) </span></span>
-<span><span class="co">#&gt; .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x00000000197ce368&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x00000000197cb530&gt;</span></span>
-<span><span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901</span></span>
-<span><span class="co">#&gt;  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">11</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="Function-factories_files/figure-html/unnamed-chunk-4-1.png" width="100%"></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="function-factories.html#cb63-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb63-2"><a href="function-factories.html#cb63-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb63-3"><a href="function-factories.html#cb63-3" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">approxfun</span>(x, y)</span>
+<span id="cb63-4"><a href="function-factories.html#cb63-4" aria-hidden="true" tabindex="-1"></a>f</span>
+<span id="cb63-5"><a href="function-factories.html#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (v) </span></span>
+<span id="cb63-6"><a href="function-factories.html#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span></span>
+<span id="cb63-7"><a href="function-factories.html#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x00000000197ce778&gt;</span></span>
+<span id="cb63-8"><a href="function-factories.html#cb63-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x00000000197cf310&gt;</span></span>
+<span id="cb63-9"><a href="function-factories.html#cb63-9" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(x)</span>
+<span id="cb63-10"><a href="function-factories.html#cb63-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901</span></span>
+<span id="cb63-11"><a href="function-factories.html#cb63-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142</span></span>
+<span id="cb63-12"><a href="function-factories.html#cb63-12" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">f</span>(x), <span class="dv">0</span>, <span class="dv">11</span>)</span></code></pre></div>
+<p><img src="Function-factories_files/figure-html/unnamed-chunk-4-1.png" width="100%" /></p>
 <ul>
-<li><code><a href="https://rdrr.io/r/stats/ecdf.html">ecdf()</a></code></li>
+<li><code>ecdf()</code></li>
 </ul>
 <p>This function factory computes an empirical cumulative distribution function.</p>
-<div class="sourceCode" id="cb300"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span></span>
-<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ecdf.html">ecdf</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="va">f</span></span>
-<span><span class="co">#&gt; Empirical CDF </span></span>
-<span><span class="co">#&gt; Call: ecdf(x)</span></span>
-<span><span class="co">#&gt;  x[1:12] = -1.8793, -1.3221, -1.2392,  ..., 1.1604, 1.7956</span></span>
-<span><span class="fu">f</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] 0.00000000 0.00000000 0.08333333 0.08333333 0.08333333</span></span>
-<span><span class="co">#&gt;  [6] 0.08333333 0.08333333 0.16666667 0.25000000 0.25000000</span></span>
-<span><span class="co">#&gt; [11] 0.33333333 0.33333333 0.33333333 0.41666667 0.41666667</span></span>
-<span><span class="co">#&gt; [16] 0.41666667 0.41666667 0.50000000 0.58333333 0.58333333</span></span>
-<span><span class="co">#&gt; [21] 0.66666667 0.75000000 0.75000000 0.75000000 0.75000000</span></span>
-<span><span class="co">#&gt; [26] 0.75000000 0.75000000 0.75000000 0.75000000 0.83333333</span></span>
-<span><span class="co">#&gt; [31] 0.83333333 0.83333333 0.91666667 0.91666667 0.91666667</span></span>
-<span><span class="co">#&gt; [36] 0.91666667 0.91666667 0.91666667 1.00000000 1.00000000</span></span>
-<span><span class="co">#&gt; [41] 1.00000000</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="function-factories.html#cb64-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">12</span>)</span>
+<span id="cb64-2"><a href="function-factories.html#cb64-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(x)</span>
+<span id="cb64-3"><a href="function-factories.html#cb64-3" aria-hidden="true" tabindex="-1"></a>f</span>
+<span id="cb64-4"><a href="function-factories.html#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Empirical CDF </span></span>
+<span id="cb64-5"><a href="function-factories.html#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call: ecdf(x)</span></span>
+<span id="cb64-6"><a href="function-factories.html#cb64-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  x[1:12] = -1.8793, -1.3221, -1.2392,  ..., 1.1604, 1.7956</span></span>
+<span id="cb64-7"><a href="function-factories.html#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">by =</span> <span class="fl">0.1</span>))</span>
+<span id="cb64-8"><a href="function-factories.html#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.00000000 0.00000000 0.08333333 0.08333333 0.08333333</span></span>
+<span id="cb64-9"><a href="function-factories.html#cb64-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [6] 0.08333333 0.08333333 0.16666667 0.25000000 0.25000000</span></span>
+<span id="cb64-10"><a href="function-factories.html#cb64-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [11] 0.33333333 0.33333333 0.33333333 0.41666667 0.41666667</span></span>
+<span id="cb64-11"><a href="function-factories.html#cb64-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [16] 0.41666667 0.41666667 0.50000000 0.58333333 0.58333333</span></span>
+<span id="cb64-12"><a href="function-factories.html#cb64-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [21] 0.66666667 0.75000000 0.75000000 0.75000000 0.75000000</span></span>
+<span id="cb64-13"><a href="function-factories.html#cb64-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [26] 0.75000000 0.75000000 0.75000000 0.75000000 0.83333333</span></span>
+<span id="cb64-14"><a href="function-factories.html#cb64-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [31] 0.83333333 0.83333333 0.91666667 0.91666667 0.91666667</span></span>
+<span id="cb64-15"><a href="function-factories.html#cb64-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [36] 0.91666667 0.91666667 0.91666667 1.00000000 1.00000000</span></span>
+<span id="cb64-16"><a href="function-factories.html#cb64-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [41] 1.00000000</span></span></code></pre></div>
+<hr />
 <p><strong>Q3.</strong> Create a function <code>pick()</code> that takes an index, <code>i</code>, as an argument and returns a function with an argument <code>x</code> that subsets <code>x</code> with <code>i</code>.</p>
-<div class="sourceCode" id="cb301"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">pick</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co"># should be equivalent to</span></span>
-<span><span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu">pick</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co"># should be equivalent to</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="function-factories.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pick</span>(<span class="dv">1</span>)(x)</span>
+<span id="cb65-2"><a href="function-factories.html#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="co"># should be equivalent to</span></span>
+<span id="cb65-3"><a href="function-factories.html#cb65-3" aria-hidden="true" tabindex="-1"></a>x[[<span class="dv">1</span>]]</span>
+<span id="cb65-4"><a href="function-factories.html#cb65-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="function-factories.html#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(mtcars, <span class="fu">pick</span>(<span class="dv">5</span>))</span>
+<span id="cb65-6"><a href="function-factories.html#cb65-6" aria-hidden="true" tabindex="-1"></a><span class="co"># should be equivalent to</span></span>
+<span id="cb65-7"><a href="function-factories.html#cb65-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(mtcars, <span class="cf">function</span>(x) x[[<span class="dv">5</span>]])</span></code></pre></div>
 <p><strong>A3.</strong> The desired function:</p>
-<div class="sourceCode" id="cb302"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pick</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="function-factories.html#cb66-1" aria-hidden="true" tabindex="-1"></a>pick <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb66-2"><a href="function-factories.html#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">force</span>(i)</span>
+<span id="cb66-3"><a href="function-factories.html#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x) x[[i]]</span>
+<span id="cb66-4"><a href="function-factories.html#cb66-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Testing it with specified test cases:</p>
-<div class="sourceCode" id="cb303"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="fu">pick</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu">pick</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
-<hr>
-<p><strong>Q4.</strong> Create a function that creates functions that compute the i<sup>th</sup><a href="http://en.wikipedia.org/wiki/Central_moment">central moment</a> of a numeric vector. You can test it by running the following code:</p>
-<div class="sourceCode" id="cb304"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu">moment</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu">moment</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="fu">m1</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="fu">m2</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">*</span> <span class="fl">99</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="function-factories.html#cb67-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>)</span>
+<span id="cb67-2"><a href="function-factories.html#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(x[[<span class="dv">1</span>]], <span class="fu">pick</span>(<span class="dv">1</span>)(x))</span>
+<span id="cb67-3"><a href="function-factories.html#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb67-4"><a href="function-factories.html#cb67-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-5"><a href="function-factories.html#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(</span>
+<span id="cb67-6"><a href="function-factories.html#cb67-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(mtcars, <span class="fu">pick</span>(<span class="dv">5</span>)),</span>
+<span id="cb67-7"><a href="function-factories.html#cb67-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(mtcars, <span class="cf">function</span>(x) x[[<span class="dv">5</span>]])</span>
+<span id="cb67-8"><a href="function-factories.html#cb67-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb67-9"><a href="function-factories.html#cb67-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<hr />
+<p><strong>Q4.</strong> Create a function that creates functions that compute the i<sup>th</sup> <a href="http://en.wikipedia.org/wiki/Central_moment">central moment</a> of a numeric vector. You can test it by running the following code:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="function-factories.html#cb68-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">moment</span>(<span class="dv">1</span>)</span>
+<span id="cb68-2"><a href="function-factories.html#cb68-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">moment</span>(<span class="dv">2</span>)</span>
+<span id="cb68-3"><a href="function-factories.html#cb68-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
+<span id="cb68-4"><a href="function-factories.html#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all.equal</span>(<span class="fu">m1</span>(x), <span class="dv">0</span>))</span>
+<span id="cb68-5"><a href="function-factories.html#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all.equal</span>(<span class="fu">m2</span>(x), <span class="fu">var</span>(x) <span class="sc">*</span> <span class="dv">99</span> <span class="sc">/</span> <span class="dv">100</span>))</span></code></pre></div>
 <p><strong>A4.</strong> The following function satisfied the specified requirements:</p>
-<div class="sourceCode" id="cb305"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">moment</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">k</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">k</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="va">k</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="function-factories.html#cb69-1" aria-hidden="true" tabindex="-1"></a>moment <span class="ot">&lt;-</span> <span class="cf">function</span>(k) {</span>
+<span id="cb69-2"><a href="function-factories.html#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">force</span>(k)</span>
+<span id="cb69-3"><a href="function-factories.html#cb69-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-4"><a href="function-factories.html#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x) (<span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span>k)) <span class="sc">/</span> <span class="fu">length</span>(x)</span>
+<span id="cb69-5"><a href="function-factories.html#cb69-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Testing it with specified test cases:</p>
-<div class="sourceCode" id="cb306"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu">moment</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu">moment</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="fu">m1</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="fu">m2</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">*</span> <span class="fl">99</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="function-factories.html#cb70-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">moment</span>(<span class="dv">1</span>)</span>
+<span id="cb70-2"><a href="function-factories.html#cb70-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">moment</span>(<span class="dv">2</span>)</span>
+<span id="cb70-3"><a href="function-factories.html#cb70-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
+<span id="cb70-4"><a href="function-factories.html#cb70-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-5"><a href="function-factories.html#cb70-5" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all.equal</span>(<span class="fu">m1</span>(x), <span class="dv">0</span>))</span>
+<span id="cb70-6"><a href="function-factories.html#cb70-6" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all.equal</span>(<span class="fu">m2</span>(x), <span class="fu">var</span>(x) <span class="sc">*</span> <span class="dv">99</span> <span class="sc">/</span> <span class="dv">100</span>))</span></code></pre></div>
+<hr />
 <p><strong>Q5.</strong> What happens if you don’t use a closure? Make predictions, then verify with the code below.</p>
-<div class="sourceCode" id="cb307"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
-<span><span class="va">new_counter2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">i</span> <span class="op">&lt;&lt;-</span> <span class="va">i</span> <span class="op">+</span> <span class="fl">1</span></span>
-<span>  <span class="va">i</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="function-factories.html#cb71-1" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb71-2"><a href="function-factories.html#cb71-2" aria-hidden="true" tabindex="-1"></a>new_counter2 <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb71-3"><a href="function-factories.html#cb71-3" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb71-4"><a href="function-factories.html#cb71-4" aria-hidden="true" tabindex="-1"></a>  i</span>
+<span id="cb71-5"><a href="function-factories.html#cb71-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><strong>A5.</strong> In case closures are not used, the counts are stored in the global variable, which can be modified by other processes or even deleted.</p>
-<div class="sourceCode" id="cb308"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">new_counter2</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span></span>
-<span><span class="fu">new_counter2</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2</span></span>
-<span></span>
-<span><span class="fu">new_counter2</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 3</span></span>
-<span></span>
-<span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">20</span></span>
-<span><span class="fu">new_counter2</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 21</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="function-factories.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">new_counter2</span>()</span>
+<span id="cb72-2"><a href="function-factories.html#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span>
+<span id="cb72-3"><a href="function-factories.html#cb72-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-4"><a href="function-factories.html#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="fu">new_counter2</span>()</span>
+<span id="cb72-5"><a href="function-factories.html#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span>
+<span id="cb72-6"><a href="function-factories.html#cb72-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-7"><a href="function-factories.html#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="fu">new_counter2</span>()</span>
+<span id="cb72-8"><a href="function-factories.html#cb72-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3</span></span>
+<span id="cb72-9"><a href="function-factories.html#cb72-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-10"><a href="function-factories.html#cb72-10" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb72-11"><a href="function-factories.html#cb72-11" aria-hidden="true" tabindex="-1"></a><span class="fu">new_counter2</span>()</span>
+<span id="cb72-12"><a href="function-factories.html#cb72-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 21</span></span></code></pre></div>
+<hr />
 <p><strong>Q6.</strong> What happens if you use <code>&lt;-</code> instead of <code>&lt;&lt;-</code>? Make predictions, then verify with the code below.</p>
-<div class="sourceCode" id="cb309"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">new_counter3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">+</span> <span class="fl">1</span></span>
-<span>    <span class="va">i</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="function-factories.html#cb73-1" aria-hidden="true" tabindex="-1"></a>new_counter3 <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb73-2"><a href="function-factories.html#cb73-2" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb73-3"><a href="function-factories.html#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>() {</span>
+<span id="cb73-4"><a href="function-factories.html#cb73-4" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb73-5"><a href="function-factories.html#cb73-5" aria-hidden="true" tabindex="-1"></a>    i</span>
+<span id="cb73-6"><a href="function-factories.html#cb73-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb73-7"><a href="function-factories.html#cb73-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><strong>A6.</strong> In this case, the function will always return 1.</p>
-<div class="sourceCode" id="cb310"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">new_counter3</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; function() {</span></span>
-<span><span class="co">#&gt;     i &lt;- i + 1</span></span>
-<span><span class="co">#&gt;     i</span></span>
-<span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000000033139860&gt;</span></span>
-<span></span>
-<span><span class="fu">new_counter3</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; function() {</span></span>
-<span><span class="co">#&gt;     i &lt;- i + 1</span></span>
-<span><span class="co">#&gt;     i</span></span>
-<span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x0000000033332a70&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x00000000331da4a8&gt;</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="function-factories.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">new_counter3</span>()</span>
+<span id="cb74-2"><a href="function-factories.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function() {</span></span>
+<span id="cb74-3"><a href="function-factories.html#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     i &lt;- i + 1</span></span>
+<span id="cb74-4"><a href="function-factories.html#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     i</span></span>
+<span id="cb74-5"><a href="function-factories.html#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   }</span></span>
+<span id="cb74-6"><a href="function-factories.html#cb74-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x0000000033156bc0&gt;</span></span>
+<span id="cb74-7"><a href="function-factories.html#cb74-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-8"><a href="function-factories.html#cb74-8" aria-hidden="true" tabindex="-1"></a><span class="fu">new_counter3</span>()</span>
+<span id="cb74-9"><a href="function-factories.html#cb74-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function() {</span></span>
+<span id="cb74-10"><a href="function-factories.html#cb74-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     i &lt;- i + 1</span></span>
+<span id="cb74-11"><a href="function-factories.html#cb74-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     i</span></span>
+<span id="cb74-12"><a href="function-factories.html#cb74-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   }</span></span>
+<span id="cb74-13"><a href="function-factories.html#cb74-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x0000000033344c98&gt;</span></span>
+<span id="cb74-14"><a href="function-factories.html#cb74-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x00000000331ec6d0&gt;</span></span></code></pre></div>
+<hr />
 </div>
-<div id="exercises-10.3.4" class="section level3" number="10.0.2">
-<h3>
-<span class="header-section-number">10.0.2</span> Exercises 10.3.4<a class="anchor" aria-label="anchor" href="#exercises-10.3.4"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
-<p><strong>Q1.</strong> Compare and contrast <code><a href="https://ggplot2.tidyverse.org/reference/label_bquote.html">ggplot2::label_bquote()</a></code> with <code><a href="https://scales.r-lib.org/reference/comma.html">scales::number_format()</a></code>.</p>
+<div id="exercises-10.3.4" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> Exercises 10.3.4</h2>
+<hr />
+<p><strong>Q1.</strong> Compare and contrast <code>ggplot2::label_bquote()</code> with <code>scales::number_format()</code>.</p>
 <p><strong>A1.</strong> To compare and contrast, let’s first look at the source code for these functions:</p>
-<div class="sourceCode" id="cb311"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/label_bquote.html">label_bquote</a></span></span>
-<span><span class="co">#&gt; function (rows = NULL, cols = NULL, default) </span></span>
-<span><span class="co">#&gt; {</span></span>
-<span><span class="co">#&gt;     cols_quoted &lt;- substitute(cols)</span></span>
-<span><span class="co">#&gt;     rows_quoted &lt;- substitute(rows)</span></span>
-<span><span class="co">#&gt;     has_warned &lt;- FALSE</span></span>
-<span><span class="co">#&gt;     call_env &lt;- env_parent()</span></span>
-<span><span class="co">#&gt;     fun &lt;- function(labels) {</span></span>
-<span><span class="co">#&gt;         quoted &lt;- resolve_labeller(rows_quoted, cols_quoted, </span></span>
-<span><span class="co">#&gt;             labels)</span></span>
-<span><span class="co">#&gt;         if (is.null(quoted)) {</span></span>
-<span><span class="co">#&gt;             return(label_value(labels))</span></span>
-<span><span class="co">#&gt;         }</span></span>
-<span><span class="co">#&gt;         evaluate &lt;- function(...) {</span></span>
-<span><span class="co">#&gt;             params &lt;- list(...)</span></span>
-<span><span class="co">#&gt;             if ("x" %in% find_names(quoted) &amp;&amp; !"x" %in% names(params)) {</span></span>
-<span><span class="co">#&gt;                 if (!has_warned) {</span></span>
-<span><span class="co">#&gt;                   warn("Referring to `x` is deprecated, use variable name instead")</span></span>
-<span><span class="co">#&gt;                   has_warned &lt;&lt;- TRUE</span></span>
-<span><span class="co">#&gt;                 }</span></span>
-<span><span class="co">#&gt;                 params$x &lt;- params[[1]]</span></span>
-<span><span class="co">#&gt;             }</span></span>
-<span><span class="co">#&gt;             params &lt;- as_environment(params, call_env)</span></span>
-<span><span class="co">#&gt;             eval(substitute(bquote(expr, params), list(expr = quoted)))</span></span>
-<span><span class="co">#&gt;         }</span></span>
-<span><span class="co">#&gt;         list(do.call("Map", c(list(f = evaluate), labels)))</span></span>
-<span><span class="co">#&gt;     }</span></span>
-<span><span class="co">#&gt;     structure(fun, class = "labeller")</span></span>
-<span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x00000000334e7528&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: namespace:ggplot2&gt;</span></span>
-<span></span>
-<span><span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/comma.html">number_format</a></span></span>
-<span><span class="co">#&gt; function (accuracy = NULL, scale = 1, prefix = "", suffix = "", </span></span>
-<span><span class="co">#&gt;     big.mark = " ", decimal.mark = ".", style_positive = c("none", </span></span>
-<span><span class="co">#&gt;         "plus"), style_negative = c("hyphen", "minus", "parens"), </span></span>
-<span><span class="co">#&gt;     scale_cut = NULL, trim = TRUE, ...) </span></span>
-<span><span class="co">#&gt; {</span></span>
-<span><span class="co">#&gt;     force_all(accuracy, scale, prefix, suffix, big.mark, decimal.mark, </span></span>
-<span><span class="co">#&gt;         style_positive, style_negative, scale_cut, trim, ...)</span></span>
-<span><span class="co">#&gt;     function(x) {</span></span>
-<span><span class="co">#&gt;         number(x, accuracy = accuracy, scale = scale, prefix = prefix, </span></span>
-<span><span class="co">#&gt;             suffix = suffix, big.mark = big.mark, decimal.mark = decimal.mark, </span></span>
-<span><span class="co">#&gt;             style_positive = style_positive, style_negative = style_negative, </span></span>
-<span><span class="co">#&gt;             scale_cut = scale_cut, trim = trim, ...)</span></span>
-<span><span class="co">#&gt;     }</span></span>
-<span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x0000000033554db8&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: namespace:scales&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="function-factories.html#cb75-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span>label_bquote</span>
+<span id="cb75-2"><a href="function-factories.html#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (rows = NULL, cols = NULL, default) </span></span>
+<span id="cb75-3"><a href="function-factories.html#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {</span></span>
+<span id="cb75-4"><a href="function-factories.html#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     cols_quoted &lt;- substitute(cols)</span></span>
+<span id="cb75-5"><a href="function-factories.html#cb75-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     rows_quoted &lt;- substitute(rows)</span></span>
+<span id="cb75-6"><a href="function-factories.html#cb75-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     has_warned &lt;- FALSE</span></span>
+<span id="cb75-7"><a href="function-factories.html#cb75-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     call_env &lt;- env_parent()</span></span>
+<span id="cb75-8"><a href="function-factories.html#cb75-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     fun &lt;- function(labels) {</span></span>
+<span id="cb75-9"><a href="function-factories.html#cb75-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         quoted &lt;- resolve_labeller(rows_quoted, cols_quoted, </span></span>
+<span id="cb75-10"><a href="function-factories.html#cb75-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             labels)</span></span>
+<span id="cb75-11"><a href="function-factories.html#cb75-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         if (is.null(quoted)) {</span></span>
+<span id="cb75-12"><a href="function-factories.html#cb75-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             return(label_value(labels))</span></span>
+<span id="cb75-13"><a href="function-factories.html#cb75-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         }</span></span>
+<span id="cb75-14"><a href="function-factories.html#cb75-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         evaluate &lt;- function(...) {</span></span>
+<span id="cb75-15"><a href="function-factories.html#cb75-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             params &lt;- list(...)</span></span>
+<span id="cb75-16"><a href="function-factories.html#cb75-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             if (&quot;x&quot; %in% find_names(quoted) &amp;&amp; !&quot;x&quot; %in% names(params)) {</span></span>
+<span id="cb75-17"><a href="function-factories.html#cb75-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                 if (!has_warned) {</span></span>
+<span id="cb75-18"><a href="function-factories.html#cb75-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                   warn(&quot;Referring to `x` is deprecated, use variable name instead&quot;)</span></span>
+<span id="cb75-19"><a href="function-factories.html#cb75-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                   has_warned &lt;&lt;- TRUE</span></span>
+<span id="cb75-20"><a href="function-factories.html#cb75-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                 }</span></span>
+<span id="cb75-21"><a href="function-factories.html#cb75-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                 params$x &lt;- params[[1]]</span></span>
+<span id="cb75-22"><a href="function-factories.html#cb75-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             }</span></span>
+<span id="cb75-23"><a href="function-factories.html#cb75-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             params &lt;- as_environment(params, call_env)</span></span>
+<span id="cb75-24"><a href="function-factories.html#cb75-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             eval(substitute(bquote(expr, params), list(expr = quoted)))</span></span>
+<span id="cb75-25"><a href="function-factories.html#cb75-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         }</span></span>
+<span id="cb75-26"><a href="function-factories.html#cb75-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         list(do.call(&quot;Map&quot;, c(list(f = evaluate), labels)))</span></span>
+<span id="cb75-27"><a href="function-factories.html#cb75-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     }</span></span>
+<span id="cb75-28"><a href="function-factories.html#cb75-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     structure(fun, class = &quot;labeller&quot;)</span></span>
+<span id="cb75-29"><a href="function-factories.html#cb75-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
+<span id="cb75-30"><a href="function-factories.html#cb75-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x00000000334f9750&gt;</span></span>
+<span id="cb75-31"><a href="function-factories.html#cb75-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:ggplot2&gt;</span></span>
+<span id="cb75-32"><a href="function-factories.html#cb75-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-33"><a href="function-factories.html#cb75-33" aria-hidden="true" tabindex="-1"></a>scales<span class="sc">::</span>number_format</span>
+<span id="cb75-34"><a href="function-factories.html#cb75-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (accuracy = NULL, scale = 1, prefix = &quot;&quot;, suffix = &quot;&quot;, </span></span>
+<span id="cb75-35"><a href="function-factories.html#cb75-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     big.mark = &quot; &quot;, decimal.mark = &quot;.&quot;, style_positive = c(&quot;none&quot;, </span></span>
+<span id="cb75-36"><a href="function-factories.html#cb75-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         &quot;plus&quot;), style_negative = c(&quot;hyphen&quot;, &quot;minus&quot;, &quot;parens&quot;), </span></span>
+<span id="cb75-37"><a href="function-factories.html#cb75-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     scale_cut = NULL, trim = TRUE, ...) </span></span>
+<span id="cb75-38"><a href="function-factories.html#cb75-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {</span></span>
+<span id="cb75-39"><a href="function-factories.html#cb75-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     force_all(accuracy, scale, prefix, suffix, big.mark, decimal.mark, </span></span>
+<span id="cb75-40"><a href="function-factories.html#cb75-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         style_positive, style_negative, scale_cut, trim, ...)</span></span>
+<span id="cb75-41"><a href="function-factories.html#cb75-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     function(x) {</span></span>
+<span id="cb75-42"><a href="function-factories.html#cb75-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         number(x, accuracy = accuracy, scale = scale, prefix = prefix, </span></span>
+<span id="cb75-43"><a href="function-factories.html#cb75-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             suffix = suffix, big.mark = big.mark, decimal.mark = decimal.mark, </span></span>
+<span id="cb75-44"><a href="function-factories.html#cb75-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             style_positive = style_positive, style_negative = style_negative, </span></span>
+<span id="cb75-45"><a href="function-factories.html#cb75-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             scale_cut = scale_cut, trim = trim, ...)</span></span>
+<span id="cb75-46"><a href="function-factories.html#cb75-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     }</span></span>
+<span id="cb75-47"><a href="function-factories.html#cb75-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
+<span id="cb75-48"><a href="function-factories.html#cb75-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x0000000033566fe0&gt;</span></span>
+<span id="cb75-49"><a href="function-factories.html#cb75-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:scales&gt;</span></span></code></pre></div>
 <p>Both of these functions returns formatting functions used to style the facets labels and other labels to have the desired format.</p>
 <p>For example, using plotmath expression in the facet label:</p>
-<div class="sourceCode" id="cb312"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">vs</span>, labeller <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/label_bquote.html">label_bquote</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">alpha</span><span class="op">^</span><span class="fu">.</span><span class="op">(</span><span class="va">vs</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="Function-factories_files/figure-html/unnamed-chunk-17-1.png" width="100%"></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="function-factories.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb76-2"><a href="function-factories.html#cb76-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-3"><a href="function-factories.html#cb76-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
+<span id="cb76-4"><a href="function-factories.html#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb76-5"><a href="function-factories.html#cb76-5" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">facet_grid</span>(. <span class="sc">~</span> vs, <span class="at">labeller =</span> <span class="fu">label_bquote</span>(<span class="at">cols =</span> alpha<span class="sc">^</span>.(vs)))</span></code></pre></div>
+<p><img src="Function-factories_files/figure-html/unnamed-chunk-17-1.png" width="100%" /></p>
 <p>Or to display axes labels in the desired format:</p>
-<div class="sourceCode" id="cb313"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/comma.html">number_format</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">0.01</span>, decimal.mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="Function-factories_files/figure-html/unnamed-chunk-18-1.png" width="100%"></div>
-<p>The <code><a href="https://ggplot2.tidyverse.org/reference/label_bquote.html">ggplot2::label_bquote()</a></code> adds an additional class to the returned function.</p>
-<p>The <code><a href="https://scales.r-lib.org/reference/comma.html">scales::number_format()</a></code> function is a simple pass-through method that forces evaluation of all its parameters and passes them on to the underlying <code><a href="https://scales.r-lib.org/reference/number.html">scales::number()</a></code> function.</p>
-<hr>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="function-factories.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb77-2"><a href="function-factories.html#cb77-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-3"><a href="function-factories.html#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
+<span id="cb77-4"><a href="function-factories.html#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb77-5"><a href="function-factories.html#cb77-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">number_format</span>(<span class="at">accuracy =</span> <span class="fl">0.01</span>, <span class="at">decimal.mark =</span> <span class="st">&quot;,&quot;</span>))</span></code></pre></div>
+<p><img src="Function-factories_files/figure-html/unnamed-chunk-18-1.png" width="100%" /></p>
+<p>The <code>ggplot2::label_bquote()</code> adds an additional class to the returned function.</p>
+<p>The <code>scales::number_format()</code> function is a simple pass-through method that forces evaluation of all its parameters and passes them on to the underlying <code>scales::number()</code> function.</p>
+<hr />
 </div>
-<div id="exercises-10.4.4" class="section level3" number="10.0.3">
-<h3>
-<span class="header-section-number">10.0.3</span> Exercises 10.4.4<a class="anchor" aria-label="anchor" href="#exercises-10.4.4"><i class="fas fa-link"></i></a>
-</h3>
-<hr>
+<div id="exercises-10.4.4" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Exercises 10.4.4</h2>
+<hr />
 <p><strong>Q1.</strong> In <code>boot_model()</code>, why don’t I need to force the evaluation of <code>df</code> or <code>model</code>?</p>
-<div class="sourceCode" id="cb314"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">boot_model</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">formula</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">formula</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
-<span>  <span class="va">fitted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">resid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_binding_are_active.html">env_binding_are_lazy</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">current_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">fitted</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">resid</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="function-factories.html#cb78-1" aria-hidden="true" tabindex="-1"></a>boot_model <span class="ot">&lt;-</span> <span class="cf">function</span>(df, formula) {</span>
+<span id="cb78-2"><a href="function-factories.html#cb78-2" aria-hidden="true" tabindex="-1"></a>  mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(formula, <span class="at">data =</span> df)</span>
+<span id="cb78-3"><a href="function-factories.html#cb78-3" aria-hidden="true" tabindex="-1"></a>  fitted <span class="ot">&lt;-</span> <span class="fu">unname</span>(<span class="fu">fitted</span>(mod))</span>
+<span id="cb78-4"><a href="function-factories.html#cb78-4" aria-hidden="true" tabindex="-1"></a>  resid <span class="ot">&lt;-</span> <span class="fu">unname</span>(<span class="fu">resid</span>(mod))</span>
+<span id="cb78-5"><a href="function-factories.html#cb78-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span>(mod)</span>
+<span id="cb78-6"><a href="function-factories.html#cb78-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-7"><a href="function-factories.html#cb78-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">env_binding_are_lazy</span>(<span class="fu">current_env</span>()))</span>
+<span id="cb78-8"><a href="function-factories.html#cb78-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-9"><a href="function-factories.html#cb78-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>() {</span>
+<span id="cb78-10"><a href="function-factories.html#cb78-10" aria-hidden="true" tabindex="-1"></a>    fitted <span class="sc">+</span> <span class="fu">sample</span>(resid)</span>
+<span id="cb78-11"><a href="function-factories.html#cb78-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb78-12"><a href="function-factories.html#cb78-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>We can also confirm that there are no lazy bindings in the function environment:</p>
-<div class="sourceCode" id="cb315"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">boot_model</span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   resid  fitted      df formula </span></span>
-<span><span class="co">#&gt;   FALSE   FALSE   FALSE   FALSE</span></span>
-<span><span class="co">#&gt; function() {</span></span>
-<span><span class="co">#&gt;     fitted + sample(resid)</span></span>
-<span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000000001a5a37f0&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="function-factories.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boot_model</span>(mtcars, mpg <span class="sc">~</span> wt)</span>
+<span id="cb79-2"><a href="function-factories.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   resid  fitted      df formula </span></span>
+<span id="cb79-3"><a href="function-factories.html#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   FALSE   FALSE   FALSE   FALSE</span></span>
+<span id="cb79-4"><a href="function-factories.html#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function() {</span></span>
+<span id="cb79-5"><a href="function-factories.html#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     fitted + sample(resid)</span></span>
+<span id="cb79-6"><a href="function-factories.html#cb79-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   }</span></span>
+<span id="cb79-7"><a href="function-factories.html#cb79-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x000000001a5b46c8&gt;</span></span></code></pre></div>
 <p>Contrast this with the first function we saw in the chapter which <em>did</em> have a lazy binding:</p>
-<div class="sourceCode" id="cb316"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">power1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_binding_are_active.html">env_binding_are_lazy</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">current_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">x</span><span class="op">^</span><span class="va">exp</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu">power1</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  exp </span></span>
-<span><span class="co">#&gt; TRUE</span></span>
-<span><span class="co">#&gt; function(x) {</span></span>
-<span><span class="co">#&gt;     x^exp</span></span>
-<span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000000017b73b38&gt;</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="function-factories.html#cb80-1" aria-hidden="true" tabindex="-1"></a>power1 <span class="ot">&lt;-</span> <span class="cf">function</span>(exp) {</span>
+<span id="cb80-2"><a href="function-factories.html#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">env_binding_are_lazy</span>(<span class="fu">current_env</span>()))</span>
+<span id="cb80-3"><a href="function-factories.html#cb80-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-4"><a href="function-factories.html#cb80-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x) {</span>
+<span id="cb80-5"><a href="function-factories.html#cb80-5" aria-hidden="true" tabindex="-1"></a>    x<span class="sc">^</span>exp</span>
+<span id="cb80-6"><a href="function-factories.html#cb80-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb80-7"><a href="function-factories.html#cb80-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb80-8"><a href="function-factories.html#cb80-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-9"><a href="function-factories.html#cb80-9" aria-hidden="true" tabindex="-1"></a><span class="fu">power1</span>(<span class="dv">2</span>)</span>
+<span id="cb80-10"><a href="function-factories.html#cb80-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  exp </span></span>
+<span id="cb80-11"><a href="function-factories.html#cb80-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; TRUE</span></span>
+<span id="cb80-12"><a href="function-factories.html#cb80-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function(x) {</span></span>
+<span id="cb80-13"><a href="function-factories.html#cb80-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     x^exp</span></span>
+<span id="cb80-14"><a href="function-factories.html#cb80-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   }</span></span>
+<span id="cb80-15"><a href="function-factories.html#cb80-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x00000000183c0dc8&gt;</span></span></code></pre></div>
+<hr />
 <p><strong>Q2.</strong> Why might you formulate the Box-Cox transformation like this?</p>
-<div class="sourceCode" id="cb317"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">boxcox3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>      <span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="va">lambda</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="va">lambda</span></span>
-<span>    <span class="op">}</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="function-factories.html#cb81-1" aria-hidden="true" tabindex="-1"></a>boxcox3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb81-2"><a href="function-factories.html#cb81-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(lambda) {</span>
+<span id="cb81-3"><a href="function-factories.html#cb81-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (lambda <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb81-4"><a href="function-factories.html#cb81-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">log</span>(x)</span>
+<span id="cb81-5"><a href="function-factories.html#cb81-5" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb81-6"><a href="function-factories.html#cb81-6" aria-hidden="true" tabindex="-1"></a>      (x<span class="sc">^</span>lambda <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> lambda</span>
+<span id="cb81-7"><a href="function-factories.html#cb81-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb81-8"><a href="function-factories.html#cb81-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb81-9"><a href="function-factories.html#cb81-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><strong>A2.</strong> To see why we formulate this transformation like above by comparing it to the one mentioned in the book:</p>
-<div class="sourceCode" id="cb318"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">boxcox2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="va">lambda</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="va">lambda</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="function-factories.html#cb82-1" aria-hidden="true" tabindex="-1"></a>boxcox2 <span class="ot">&lt;-</span> <span class="cf">function</span>(lambda) {</span>
+<span id="cb82-2"><a href="function-factories.html#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (lambda <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb82-3"><a href="function-factories.html#cb82-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(x) <span class="fu">log</span>(x)</span>
+<span id="cb82-4"><a href="function-factories.html#cb82-4" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb82-5"><a href="function-factories.html#cb82-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(x) (x<span class="sc">^</span>lambda <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> lambda</span>
+<span id="cb82-6"><a href="function-factories.html#cb82-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb82-7"><a href="function-factories.html#cb82-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Let’s have a look at one example with each:</p>
-<div class="sourceCode" id="cb319"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">boxcox2</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; function(x) (x^lambda - 1) / lambda</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x00000000332e60d0&gt;</span></span>
-<span></span>
-<span><span class="fu">boxcox3</span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">)</span></span>
-<span><span class="co">#&gt; function(lambda) {</span></span>
-<span><span class="co">#&gt;     if (lambda == 0) {</span></span>
-<span><span class="co">#&gt;       log(x)</span></span>
-<span><span class="co">#&gt;     } else {</span></span>
-<span><span class="co">#&gt;       (x^lambda - 1) / lambda</span></span>
-<span><span class="co">#&gt;     }</span></span>
-<span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000000033345598&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="function-factories.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxcox2</span>(<span class="dv">1</span>)</span>
+<span id="cb83-2"><a href="function-factories.html#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function(x) (x^lambda - 1) / lambda</span></span>
+<span id="cb83-3"><a href="function-factories.html#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x00000000332f5398&gt;</span></span>
+<span id="cb83-4"><a href="function-factories.html#cb83-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-5"><a href="function-factories.html#cb83-5" aria-hidden="true" tabindex="-1"></a><span class="fu">boxcox3</span>(mtcars<span class="sc">$</span>wt)</span>
+<span id="cb83-6"><a href="function-factories.html#cb83-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function(lambda) {</span></span>
+<span id="cb83-7"><a href="function-factories.html#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     if (lambda == 0) {</span></span>
+<span id="cb83-8"><a href="function-factories.html#cb83-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       log(x)</span></span>
+<span id="cb83-9"><a href="function-factories.html#cb83-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     } else {</span></span>
+<span id="cb83-10"><a href="function-factories.html#cb83-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       (x^lambda - 1) / lambda</span></span>
+<span id="cb83-11"><a href="function-factories.html#cb83-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     }</span></span>
+<span id="cb83-12"><a href="function-factories.html#cb83-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   }</span></span>
+<span id="cb83-13"><a href="function-factories.html#cb83-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x0000000033354d78&gt;</span></span></code></pre></div>
 <p>As can be seen, in <code>boxcox2()</code>, we can vary <code>x</code> for the same value of <code>lambda</code>, while in <code>boxcox3()</code>, we can vary <code>lambda</code> for the same vector. This can be handy while exploring different transformations across inputs.</p>
-<hr>
+<hr />
 <p><strong>Q3.</strong> Why don’t you need to worry that <code>boot_permute()</code> stores a copy of the data inside the function that it generates?</p>
 <p><strong>A3.</strong> If we look at the source code generated by the function factory, we notice that the exact data frame (<code>mtcars</code>) is not referenced:</p>
-<div class="sourceCode" id="cb320"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">boot_permute</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">var</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">col</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">[[</span><span class="va">var</span><span class="op">]</span><span class="op">]</span></span>
-<span>    <span class="va">col</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">]</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu">boot_permute</span><span class="op">(</span><span class="va">mtcars</span>, <span class="st">"mpg"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; function() {</span></span>
-<span><span class="co">#&gt;     col &lt;- df[[var]]</span></span>
-<span><span class="co">#&gt;     col[sample(n, replace = TRUE)]</span></span>
-<span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000000033596290&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="function-factories.html#cb84-1" aria-hidden="true" tabindex="-1"></a>boot_permute <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var) {</span>
+<span id="cb84-2"><a href="function-factories.html#cb84-2" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb84-3"><a href="function-factories.html#cb84-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">force</span>(var)</span>
+<span id="cb84-4"><a href="function-factories.html#cb84-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-5"><a href="function-factories.html#cb84-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>() {</span>
+<span id="cb84-6"><a href="function-factories.html#cb84-6" aria-hidden="true" tabindex="-1"></a>    col <span class="ot">&lt;-</span> df[[var]]</span>
+<span id="cb84-7"><a href="function-factories.html#cb84-7" aria-hidden="true" tabindex="-1"></a>    col[<span class="fu">sample</span>(n, <span class="at">replace =</span> <span class="cn">TRUE</span>)]</span>
+<span id="cb84-8"><a href="function-factories.html#cb84-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb84-9"><a href="function-factories.html#cb84-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb84-10"><a href="function-factories.html#cb84-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-11"><a href="function-factories.html#cb84-11" aria-hidden="true" tabindex="-1"></a><span class="fu">boot_permute</span>(mtcars, <span class="st">&quot;mpg&quot;</span>)</span>
+<span id="cb84-12"><a href="function-factories.html#cb84-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function() {</span></span>
+<span id="cb84-13"><a href="function-factories.html#cb84-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     col &lt;- df[[var]]</span></span>
+<span id="cb84-14"><a href="function-factories.html#cb84-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     col[sample(n, replace = TRUE)]</span></span>
+<span id="cb84-15"><a href="function-factories.html#cb84-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   }</span></span>
+<span id="cb84-16"><a href="function-factories.html#cb84-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x00000000335a59c8&gt;</span></span></code></pre></div>
 <p>This is why we don’t need to worry about a copy being made because the <code>df</code> in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:</p>
-<div class="sourceCode" id="cb321"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">boot_permute_env</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/fn_env.html">fn_env</a></span><span class="op">(</span><span class="fu">boot_permute</span><span class="op">(</span><span class="va">mtcars</span>, <span class="st">"mpg"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_print.html">env_print</a></span><span class="op">(</span><span class="va">boot_permute_env</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x00000000338e0e08&gt;</span></span>
-<span><span class="co">#&gt; Parent: &lt;environment: global&gt;</span></span>
-<span><span class="co">#&gt; Bindings:</span></span>
-<span><span class="co">#&gt; * n: &lt;int&gt;</span></span>
-<span><span class="co">#&gt; * df: &lt;df[,11]&gt;</span></span>
-<span><span class="co">#&gt; * var: &lt;chr&gt;</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span></span>
-<span>  <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">boot_permute_env</span><span class="op">$</span><span class="va">df</span><span class="op">)</span>,</span>
-<span>  <span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addr</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="function-factories.html#cb85-1" aria-hidden="true" tabindex="-1"></a>boot_permute_env <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">fn_env</span>(<span class="fu">boot_permute</span>(mtcars, <span class="st">&quot;mpg&quot;</span>))</span>
+<span id="cb85-2"><a href="function-factories.html#cb85-2" aria-hidden="true" tabindex="-1"></a>rlang<span class="sc">::</span><span class="fu">env_print</span>(boot_permute_env)</span>
+<span id="cb85-3"><a href="function-factories.html#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x00000000338f08c0&gt;</span></span>
+<span id="cb85-4"><a href="function-factories.html#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Parent: &lt;environment: global&gt;</span></span>
+<span id="cb85-5"><a href="function-factories.html#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Bindings:</span></span>
+<span id="cb85-6"><a href="function-factories.html#cb85-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; * n: &lt;int&gt;</span></span>
+<span id="cb85-7"><a href="function-factories.html#cb85-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; * df: &lt;df[,11]&gt;</span></span>
+<span id="cb85-8"><a href="function-factories.html#cb85-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; * var: &lt;chr&gt;</span></span>
+<span id="cb85-9"><a href="function-factories.html#cb85-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-10"><a href="function-factories.html#cb85-10" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(</span>
+<span id="cb85-11"><a href="function-factories.html#cb85-11" aria-hidden="true" tabindex="-1"></a>  lobstr<span class="sc">::</span><span class="fu">obj_addr</span>(boot_permute_env<span class="sc">$</span>df),</span>
+<span id="cb85-12"><a href="function-factories.html#cb85-12" aria-hidden="true" tabindex="-1"></a>  lobstr<span class="sc">::</span><span class="fu">obj_addr</span>(mtcars)</span>
+<span id="cb85-13"><a href="function-factories.html#cb85-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb85-14"><a href="function-factories.html#cb85-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>We can also check that the values of these bindings are the same as what we entered into the function factory:</p>
-<div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">boot_permute_env</span><span class="op">$</span><span class="va">df</span>, <span class="va">mtcars</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">boot_permute_env</span><span class="op">$</span><span class="va">var</span>, <span class="st">"mpg"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
-<hr>
-<p><strong>Q4.</strong> How much time does <code>ll_poisson2()</code> save compared to <code>ll_poisson1()</code>? Use <code><a href="http://bench.r-lib.org/reference/mark.html">bench::mark()</a></code> to see how much faster the optimisation occurs. How does changing the length of <code>x</code> change the results?</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="function-factories.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(boot_permute_env<span class="sc">$</span>df, mtcars)</span>
+<span id="cb86-2"><a href="function-factories.html#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb86-3"><a href="function-factories.html#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(boot_permute_env<span class="sc">$</span>var, <span class="st">&quot;mpg&quot;</span>)</span>
+<span id="cb86-4"><a href="function-factories.html#cb86-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<hr />
+<p><strong>Q4.</strong> How much time does <code>ll_poisson2()</code> save compared to <code>ll_poisson1()</code>? Use <code>bench::mark()</code> to see how much faster the optimisation occurs. How does changing the length of <code>x</code> change the results?</p>
 <p><strong>A4.</strong> Let’s first compare the performance of these functions with the example in the book:</p>
-<div class="sourceCode" id="cb323"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ll_poisson1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">-</span> <span class="va">n</span> <span class="op">*</span> <span class="va">lambda</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">lfactorial</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">ll_poisson2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span>  <span class="va">sum_x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span>  <span class="va">c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">lfactorial</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">*</span> <span class="va">sum_x</span> <span class="op">-</span> <span class="va">n</span> <span class="op">*</span> <span class="va">lambda</span> <span class="op">-</span> <span class="va">c</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">41</span>, <span class="fl">30</span>, <span class="fl">31</span>, <span class="fl">38</span>, <span class="fl">29</span>, <span class="fl">24</span>, <span class="fl">30</span>, <span class="fl">29</span>, <span class="fl">31</span>, <span class="fl">38</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span></span>
-<span>  <span class="st">"LL1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/optimize.html">optimise</a></span><span class="op">(</span><span class="fu">ll_poisson1</span><span class="op">(</span><span class="va">x1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>, maximum <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>  <span class="st">"LL2"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/optimize.html">optimise</a></span><span class="op">(</span><span class="fu">ll_poisson2</span><span class="op">(</span><span class="va">x1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>, maximum <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 2 x 6</span></span>
-<span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
-<span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 LL1            29us   36.8us    25902.    12.8KB    10.4 </span></span>
-<span><span class="co">#&gt; 2 LL2          14.9us     20us    40689.        0B     8.14</span></span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="function-factories.html#cb87-1" aria-hidden="true" tabindex="-1"></a>ll_poisson1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb87-2"><a href="function-factories.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb87-3"><a href="function-factories.html#cb87-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-4"><a href="function-factories.html#cb87-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(lambda) {</span>
+<span id="cb87-5"><a href="function-factories.html#cb87-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(lambda) <span class="sc">*</span> <span class="fu">sum</span>(x) <span class="sc">-</span> n <span class="sc">*</span> lambda <span class="sc">-</span> <span class="fu">sum</span>(<span class="fu">lfactorial</span>(x))</span>
+<span id="cb87-6"><a href="function-factories.html#cb87-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb87-7"><a href="function-factories.html#cb87-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb87-8"><a href="function-factories.html#cb87-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-9"><a href="function-factories.html#cb87-9" aria-hidden="true" tabindex="-1"></a>ll_poisson2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb87-10"><a href="function-factories.html#cb87-10" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb87-11"><a href="function-factories.html#cb87-11" aria-hidden="true" tabindex="-1"></a>  sum_x <span class="ot">&lt;-</span> <span class="fu">sum</span>(x)</span>
+<span id="cb87-12"><a href="function-factories.html#cb87-12" aria-hidden="true" tabindex="-1"></a>  c <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">lfactorial</span>(x))</span>
+<span id="cb87-13"><a href="function-factories.html#cb87-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-14"><a href="function-factories.html#cb87-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(lambda) {</span>
+<span id="cb87-15"><a href="function-factories.html#cb87-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(lambda) <span class="sc">*</span> sum_x <span class="sc">-</span> n <span class="sc">*</span> lambda <span class="sc">-</span> c</span>
+<span id="cb87-16"><a href="function-factories.html#cb87-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb87-17"><a href="function-factories.html#cb87-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb87-18"><a href="function-factories.html#cb87-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-19"><a href="function-factories.html#cb87-19" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">41</span>, <span class="dv">30</span>, <span class="dv">31</span>, <span class="dv">38</span>, <span class="dv">29</span>, <span class="dv">24</span>, <span class="dv">30</span>, <span class="dv">29</span>, <span class="dv">31</span>, <span class="dv">38</span>)</span>
+<span id="cb87-20"><a href="function-factories.html#cb87-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-21"><a href="function-factories.html#cb87-21" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
+<span id="cb87-22"><a href="function-factories.html#cb87-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;LL1&quot;</span> <span class="ot">=</span> <span class="fu">optimise</span>(<span class="fu">ll_poisson1</span>(x1), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">maximum =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb87-23"><a href="function-factories.html#cb87-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;LL2&quot;</span> <span class="ot">=</span> <span class="fu">optimise</span>(<span class="fu">ll_poisson2</span>(x1), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">maximum =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb87-24"><a href="function-factories.html#cb87-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb87-25"><a href="function-factories.html#cb87-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 x 6</span></span>
+<span id="cb87-26"><a href="function-factories.html#cb87-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
+<span id="cb87-27"><a href="function-factories.html#cb87-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
+<span id="cb87-28"><a href="function-factories.html#cb87-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 LL1          27.8us   37.7us    24624.    12.8KB     9.85</span></span>
+<span id="cb87-29"><a href="function-factories.html#cb87-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 LL2          16.3us   19.6us    46855.        0B     9.37</span></span></code></pre></div>
 <p>As can be seen, the second version is much faster than the first version.</p>
 <p>We can also vary the length of the vector and confirm that across a wide range of vector lengths, this performance advantage is observed.</p>
-<div class="sourceCode" id="cb324"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">generate_ll_benches</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">x_vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">n</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span></span>
-<span>    <span class="st">"LL1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/optimize.html">optimise</a></span><span class="op">(</span><span class="fu">ll_poisson1</span><span class="op">(</span><span class="va">x_vec</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>, maximum <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>    <span class="st">"LL2"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/optimize.html">optimise</a></span><span class="op">(</span><span class="fu">ll_poisson2</span><span class="op">(</span><span class="va">x_vec</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>, maximum <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>length <span class="op">=</span> <span class="va">n</span>, .before <span class="op">=</span> <span class="va">expression</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="op">(</span><span class="va">df_bench</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span><span class="op">(</span></span>
-<span>  .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span>, <span class="fl">50</span>, <span class="fl">100</span>, <span class="fl">1000</span><span class="op">)</span>,</span>
-<span>  .f <span class="op">=</span> <span class="op">~</span> <span class="fu">generate_ll_benches</span><span class="op">(</span>n <span class="op">=</span> <span class="va">.x</span><span class="op">)</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 10 x 5</span></span>
-<span><span class="co">#&gt;    length expression      min   median `itr/sec`</span></span>
-<span><span class="co">#&gt;     &lt;dbl&gt; &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1     10 LL1          43.7us   55.8us    17592.</span></span>
-<span><span class="co">#&gt;  2     10 LL2          17.4us   22.6us    43306.</span></span>
-<span><span class="co">#&gt;  3     20 LL1          47.5us   61.9us    15901.</span></span>
-<span><span class="co">#&gt;  4     20 LL2          18.5us   22.4us    43169.</span></span>
-<span><span class="co">#&gt;  5     50 LL1          58.4us   75.5us    12931.</span></span>
-<span><span class="co">#&gt;  6     50 LL2          17.1us   23.3us    41926.</span></span>
-<span><span class="co">#&gt;  7    100 LL1          88.9us   99.8us     9638.</span></span>
-<span><span class="co">#&gt;  8    100 LL2          19.5us   22.9us    42124.</span></span>
-<span><span class="co">#&gt;  9   1000 LL1          1.68ms   2.12ms      475.</span></span>
-<span><span class="co">#&gt; 10   1000 LL2          76.2us   92.8us    10450.</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
-<span>  <span class="va">df_bench</span>,</span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
-<span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span>,</span>
-<span>    y <span class="op">=</span> <span class="va">median</span>,</span>
-<span>    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">expression</span><span class="op">)</span>,</span>
-<span>    color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">expression</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    x <span class="op">=</span> <span class="st">"Vector length"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"Median Execution Time"</span>,</span>
-<span>    colour <span class="op">=</span> <span class="st">"Function used"</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="Function-factories_files/figure-html/unnamed-chunk-29-1.png" width="100%"></div>
-<hr>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="function-factories.html#cb88-1" aria-hidden="true" tabindex="-1"></a>generate_ll_benches <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb88-2"><a href="function-factories.html#cb88-2" aria-hidden="true" tabindex="-1"></a>  x_vec <span class="ot">&lt;-</span> <span class="fu">sample.int</span>(n, n)</span>
+<span id="cb88-3"><a href="function-factories.html#cb88-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-4"><a href="function-factories.html#cb88-4" aria-hidden="true" tabindex="-1"></a>  bench<span class="sc">::</span><span class="fu">mark</span>(</span>
+<span id="cb88-5"><a href="function-factories.html#cb88-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;LL1&quot;</span> <span class="ot">=</span> <span class="fu">optimise</span>(<span class="fu">ll_poisson1</span>(x_vec), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">maximum =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb88-6"><a href="function-factories.html#cb88-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;LL2&quot;</span> <span class="ot">=</span> <span class="fu">optimise</span>(<span class="fu">ll_poisson2</span>(x_vec), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">maximum =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb88-7"><a href="function-factories.html#cb88-7" aria-hidden="true" tabindex="-1"></a>  )[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="sc">%&gt;%</span></span>
+<span id="cb88-8"><a href="function-factories.html#cb88-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">length =</span> n, <span class="at">.before =</span> expression)</span>
+<span id="cb88-9"><a href="function-factories.html#cb88-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb88-10"><a href="function-factories.html#cb88-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-11"><a href="function-factories.html#cb88-11" aria-hidden="true" tabindex="-1"></a>(df_bench <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dfr</span>(</span>
+<span id="cb88-12"><a href="function-factories.html#cb88-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">.x =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">1000</span>),</span>
+<span id="cb88-13"><a href="function-factories.html#cb88-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">.f =</span> <span class="sc">~</span> <span class="fu">generate_ll_benches</span>(<span class="at">n =</span> .x)</span>
+<span id="cb88-14"><a href="function-factories.html#cb88-14" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb88-15"><a href="function-factories.html#cb88-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 x 5</span></span>
+<span id="cb88-16"><a href="function-factories.html#cb88-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    length expression      min   median `itr/sec`</span></span>
+<span id="cb88-17"><a href="function-factories.html#cb88-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt; &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt;</span></span>
+<span id="cb88-18"><a href="function-factories.html#cb88-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1     10 LL1          44.3us   55.9us    17397.</span></span>
+<span id="cb88-19"><a href="function-factories.html#cb88-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2     10 LL2          17.9us     24us    35331.</span></span>
+<span id="cb88-20"><a href="function-factories.html#cb88-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3     20 LL1          46.2us   59.3us    16666.</span></span>
+<span id="cb88-21"><a href="function-factories.html#cb88-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4     20 LL2          19.3us   22.6us    42951.</span></span>
+<span id="cb88-22"><a href="function-factories.html#cb88-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5     50 LL1          62.2us   76.4us    12826.</span></span>
+<span id="cb88-23"><a href="function-factories.html#cb88-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6     50 LL2          18.9us   22.4us    43317.</span></span>
+<span id="cb88-24"><a href="function-factories.html#cb88-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7    100 LL1          91.6us  115.4us     8690.</span></span>
+<span id="cb88-25"><a href="function-factories.html#cb88-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8    100 LL2          19.5us   24.8us    39619.</span></span>
+<span id="cb88-26"><a href="function-factories.html#cb88-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9   1000 LL1          1.72ms   2.05ms      483.</span></span>
+<span id="cb88-27"><a href="function-factories.html#cb88-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10   1000 LL2          79.2us  100.8us     9666.</span></span>
+<span id="cb88-28"><a href="function-factories.html#cb88-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-29"><a href="function-factories.html#cb88-29" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb88-30"><a href="function-factories.html#cb88-30" aria-hidden="true" tabindex="-1"></a>  df_bench,</span>
+<span id="cb88-31"><a href="function-factories.html#cb88-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb88-32"><a href="function-factories.html#cb88-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">as.numeric</span>(length),</span>
+<span id="cb88-33"><a href="function-factories.html#cb88-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> median,</span>
+<span id="cb88-34"><a href="function-factories.html#cb88-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">as.character</span>(expression),</span>
+<span id="cb88-35"><a href="function-factories.html#cb88-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">as.character</span>(expression)</span>
+<span id="cb88-36"><a href="function-factories.html#cb88-36" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb88-37"><a href="function-factories.html#cb88-37" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb88-38"><a href="function-factories.html#cb88-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb88-39"><a href="function-factories.html#cb88-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb88-40"><a href="function-factories.html#cb88-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb88-41"><a href="function-factories.html#cb88-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Vector length&quot;</span>,</span>
+<span id="cb88-42"><a href="function-factories.html#cb88-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Median Execution Time&quot;</span>,</span>
+<span id="cb88-43"><a href="function-factories.html#cb88-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">&quot;Function used&quot;</span></span>
+<span id="cb88-44"><a href="function-factories.html#cb88-44" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="Function-factories_files/figure-html/unnamed-chunk-29-1.png" width="100%" /></p>
+<hr />
 </div>
-<div id="exercises-10.5.1" class="section level3" number="10.0.4">
-<h3>
-<span class="header-section-number">10.0.4</span> Exercises 10.5.1<a class="anchor" aria-label="anchor" href="#exercises-10.5.1"><i class="fas fa-link"></i></a>
-</h3>
+<div id="exercises-10.5.1" class="section level2" number="10.4">
+<h2><span class="header-section-number">10.4</span> Exercises 10.5.1</h2>
 <p><strong>Q1.</strong> Which of the following commands is equivalent to <code>with(x, f(z))</code>?</p>
 <pre><code>(a) `x$f(x$z)`.
 (b) `f(x$z)`.
 (c) `x$f(z)`.
 (d) `f(z)`.
 (e) It depends.</code></pre>
-<hr>
-<p><strong>Q2.</strong> Compare and contrast the effects of <code><a href="https://rlang.r-lib.org/reference/env_bind.html">env_bind()</a></code> vs. <code><a href="https://rdrr.io/r/base/attach.html">attach()</a></code> for the following code.</p>
+<hr />
+<p><strong>Q2.</strong> Compare and contrast the effects of <code>env_bind()</code> vs. <code>attach()</code> for the following code.</p>
 <p><strong>A2.</strong></p>
-<div class="sourceCode" id="cb326"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">funs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>  mean <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>  sum <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/attach.html">attach</a></span><span class="op">(</span><span class="va">funs</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The following objects are masked from package:base:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     mean, sum</span></span>
-<span><span class="va">mean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Hi!"</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/detach.html">detach</a></span><span class="op">(</span><span class="va">funs</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_bind.html">env_bind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/environment.html">globalenv</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">funs</span><span class="op">)</span></span>
-<span><span class="va">mean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Hi!"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_unbind.html">env_unbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/environment.html">globalenv</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">funs</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<hr>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="function-factories.html#cb90-1" aria-hidden="true" tabindex="-1"></a>funs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb90-2"><a href="function-factories.html#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean =</span> <span class="cf">function</span>(x) <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb90-3"><a href="function-factories.html#cb90-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sum =</span> <span class="cf">function</span>(x) <span class="fu">sum</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb90-4"><a href="function-factories.html#cb90-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb90-5"><a href="function-factories.html#cb90-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-6"><a href="function-factories.html#cb90-6" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(funs)</span>
+<span id="cb90-7"><a href="function-factories.html#cb90-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from package:base:</span></span>
+<span id="cb90-8"><a href="function-factories.html#cb90-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb90-9"><a href="function-factories.html#cb90-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     mean, sum</span></span>
+<span id="cb90-10"><a href="function-factories.html#cb90-10" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">stop</span>(<span class="st">&quot;Hi!&quot;</span>)</span>
+<span id="cb90-11"><a href="function-factories.html#cb90-11" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(funs)</span>
+<span id="cb90-12"><a href="function-factories.html#cb90-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-13"><a href="function-factories.html#cb90-13" aria-hidden="true" tabindex="-1"></a><span class="fu">env_bind</span>(<span class="fu">globalenv</span>(), <span class="sc">!!!</span>funs)</span>
+<span id="cb90-14"><a href="function-factories.html#cb90-14" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">stop</span>(<span class="st">&quot;Hi!&quot;</span>)</span>
+<span id="cb90-15"><a href="function-factories.html#cb90-15" aria-hidden="true" tabindex="-1"></a><span class="fu">env_unbind</span>(<span class="fu">globalenv</span>(), <span class="fu">names</span>(funs))</span></code></pre></div>
+<hr />
 </div>
-<div id="session-information-8" class="section level2" number="10.1">
-<h2>
-<span class="header-section-number">10.1</span> Session information<a class="anchor" aria-label="anchor" href="#session-information-8"><i class="fas fa-link"></i></a>
-</h2>
-<div class="sourceCode" id="cb327"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; - Session info -------------------------------------------</span></span>
-<span><span class="co">#&gt;  setting  value</span></span>
-<span><span class="co">#&gt;  version  R version 4.1.3 (2022-03-10)</span></span>
-<span><span class="co">#&gt;  os       Windows 10 x64 (build 22000)</span></span>
-<span><span class="co">#&gt;  system   x86_64, mingw32</span></span>
-<span><span class="co">#&gt;  ui       RTerm</span></span>
-<span><span class="co">#&gt;  language (EN)</span></span>
-<span><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
-<span><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
-<span><span class="co">#&gt;  tz       Europe/Berlin</span></span>
-<span><span class="co">#&gt;  date     2022-08-20</span></span>
-<span><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
-<span><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
-<span><span class="co">#&gt;    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    base        * 4.1.3      2022-03-10 [?] local</span></span>
-<span><span class="co">#&gt;    bench         1.1.2      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P compiler      4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;  P datasets    * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    DBI           1.1.3      2022-06-18 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    dplyr         1.0.9      2022-04-28 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.1.0)</span></span>
-<span><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    farver        2.1.1      2022-07-06 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    ggplot2     * 3.3.6      2022-05-03 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P graphics    * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;  P grDevices   * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;  P grid          4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    gtable        0.3.0      2019-03-25 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    highr         0.9        2021-04-16 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)</span></span>
-<span><span class="co">#&gt;    labeling      0.4.2      2020-10-20 [1] CRAN (R 4.1.0)</span></span>
-<span><span class="co">#&gt;    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    lobstr        1.1.2      2022-06-22 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P methods     * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    munsell       0.5.0      2018-06-12 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    profmem       0.6.0      2020-12-13 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
-<span><span class="co">#&gt;    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
-<span><span class="co">#&gt;    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    scales      * 1.2.0      2022-04-13 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P tools         4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;  P utils       * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1</span></span>
-<span><span class="co">#&gt;  [2] C:/Program Files/R/R-4.1.3/library</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  P -- Loaded and on-disk path mismatch.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ----------------------------------------------------------</span></span></code></pre></div>
+<div id="session-information-8" class="section level2" number="10.5">
+<h2><span class="header-section-number">10.5</span> Session information</h2>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="function-factories.html#cb91-1" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb91-2"><a href="function-factories.html#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - Session info -------------------------------------------</span></span>
+<span id="cb91-3"><a href="function-factories.html#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  setting  value</span></span>
+<span id="cb91-4"><a href="function-factories.html#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  version  R version 4.1.3 (2022-03-10)</span></span>
+<span id="cb91-5"><a href="function-factories.html#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  os       Windows 10 x64 (build 22000)</span></span>
+<span id="cb91-6"><a href="function-factories.html#cb91-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  system   x86_64, mingw32</span></span>
+<span id="cb91-7"><a href="function-factories.html#cb91-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ui       RTerm</span></span>
+<span id="cb91-8"><a href="function-factories.html#cb91-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  language (EN)</span></span>
+<span id="cb91-9"><a href="function-factories.html#cb91-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
+<span id="cb91-10"><a href="function-factories.html#cb91-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
+<span id="cb91-11"><a href="function-factories.html#cb91-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tz       Europe/Berlin</span></span>
+<span id="cb91-12"><a href="function-factories.html#cb91-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  date     2022-08-21</span></span>
+<span id="cb91-13"><a href="function-factories.html#cb91-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
+<span id="cb91-14"><a href="function-factories.html#cb91-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb91-15"><a href="function-factories.html#cb91-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
+<span id="cb91-16"><a href="function-factories.html#cb91-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
+<span id="cb91-17"><a href="function-factories.html#cb91-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb91-18"><a href="function-factories.html#cb91-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    base        * 4.1.3      2022-03-10 [?] local</span></span>
+<span id="cb91-19"><a href="function-factories.html#cb91-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    bench         1.1.2      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb91-20"><a href="function-factories.html#cb91-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-21"><a href="function-factories.html#cb91-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-22"><a href="function-factories.html#cb91-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb91-23"><a href="function-factories.html#cb91-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-24"><a href="function-factories.html#cb91-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb91-25"><a href="function-factories.html#cb91-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P compiler      4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb91-26"><a href="function-factories.html#cb91-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-27"><a href="function-factories.html#cb91-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P datasets    * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb91-28"><a href="function-factories.html#cb91-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    DBI           1.1.3      2022-06-18 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-29"><a href="function-factories.html#cb91-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb91-30"><a href="function-factories.html#cb91-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-31"><a href="function-factories.html#cb91-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    dplyr         1.0.9      2022-04-28 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-32"><a href="function-factories.html#cb91-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.1.0)</span></span>
+<span id="cb91-33"><a href="function-factories.html#cb91-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-34"><a href="function-factories.html#cb91-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-35"><a href="function-factories.html#cb91-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    farver        2.1.1      2022-07-06 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-36"><a href="function-factories.html#cb91-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb91-37"><a href="function-factories.html#cb91-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb91-38"><a href="function-factories.html#cb91-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-39"><a href="function-factories.html#cb91-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    ggplot2     * 3.3.6      2022-05-03 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-40"><a href="function-factories.html#cb91-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb91-41"><a href="function-factories.html#cb91-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P graphics    * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb91-42"><a href="function-factories.html#cb91-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P grDevices   * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb91-43"><a href="function-factories.html#cb91-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P grid          4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb91-44"><a href="function-factories.html#cb91-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    gtable        0.3.0      2019-03-25 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb91-45"><a href="function-factories.html#cb91-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    highr         0.9        2021-04-16 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb91-46"><a href="function-factories.html#cb91-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-47"><a href="function-factories.html#cb91-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb91-48"><a href="function-factories.html#cb91-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb91-49"><a href="function-factories.html#cb91-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)</span></span>
+<span id="cb91-50"><a href="function-factories.html#cb91-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    labeling      0.4.2      2020-10-20 [1] CRAN (R 4.1.0)</span></span>
+<span id="cb91-51"><a href="function-factories.html#cb91-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb91-52"><a href="function-factories.html#cb91-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    lobstr        1.1.2      2022-06-22 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-53"><a href="function-factories.html#cb91-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-54"><a href="function-factories.html#cb91-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb91-55"><a href="function-factories.html#cb91-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P methods     * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb91-56"><a href="function-factories.html#cb91-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    munsell       0.5.0      2018-06-12 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb91-57"><a href="function-factories.html#cb91-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-58"><a href="function-factories.html#cb91-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb91-59"><a href="function-factories.html#cb91-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    profmem       0.6.0      2020-12-13 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb91-60"><a href="function-factories.html#cb91-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb91-61"><a href="function-factories.html#cb91-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
+<span id="cb91-62"><a href="function-factories.html#cb91-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-63"><a href="function-factories.html#cb91-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
+<span id="cb91-64"><a href="function-factories.html#cb91-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb91-65"><a href="function-factories.html#cb91-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-66"><a href="function-factories.html#cb91-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    scales      * 1.2.1      2022-08-20 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-67"><a href="function-factories.html#cb91-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb91-68"><a href="function-factories.html#cb91-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb91-69"><a href="function-factories.html#cb91-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-70"><a href="function-factories.html#cb91-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-71"><a href="function-factories.html#cb91-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-72"><a href="function-factories.html#cb91-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb91-73"><a href="function-factories.html#cb91-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P tools         4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb91-74"><a href="function-factories.html#cb91-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)</span></span>
+<span id="cb91-75"><a href="function-factories.html#cb91-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P utils       * 4.1.3      2022-03-10 [2] local</span></span>
+<span id="cb91-76"><a href="function-factories.html#cb91-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-77"><a href="function-factories.html#cb91-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb91-78"><a href="function-factories.html#cb91-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)</span></span>
+<span id="cb91-79"><a href="function-factories.html#cb91-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb91-80"><a href="function-factories.html#cb91-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span id="cb91-81"><a href="function-factories.html#cb91-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb91-82"><a href="function-factories.html#cb91-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1</span></span>
+<span id="cb91-83"><a href="function-factories.html#cb91-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [2] C:/Program Files/R/R-4.1.3/library</span></span>
+<span id="cb91-84"><a href="function-factories.html#cb91-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb91-85"><a href="function-factories.html#cb91-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  P -- Loaded and on-disk path mismatch.</span></span>
+<span id="cb91-86"><a href="function-factories.html#cb91-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb91-87"><a href="function-factories.html#cb91-87" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------------------------</span></span></code></pre></div>
 
 </div>
 </div>
-  <div class="chapter-nav">
-<div class="prev"><a href="functionals.html"><span class="header-section-number">9</span> Functionals</a></div>
-<div class="next"><a href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li>
-<a class="nav-link" href="#function-factories"><span class="header-section-number">10</span> Function factories</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#exercises-10.2.6"><span class="header-section-number">10.0.1</span> Exercises 10.2.6</a></li>
-<li><a class="nav-link" href="#exercises-10.3.4"><span class="header-section-number">10.0.2</span> Exercises 10.3.4</a></li>
-<li><a class="nav-link" href="#exercises-10.4.4"><span class="header-section-number">10.0.3</span> Exercises 10.4.4</a></li>
-<li><a class="nav-link" href="#exercises-10.5.1"><span class="header-section-number">10.0.4</span> Exercises 10.5.1</a></li>
-</ul>
-</li>
-<li><a class="nav-link" href="#session-information-8"><span class="header-section-number">10.1</span> Session information</a></li>
-</ul>
+  </main>
+
+  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Function-factories.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Function-factories.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
-</div>
+      </div>
     </nav>
-</div>
+  </div>
 
 </div>
 </div> <!-- .container -->
 
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+<footer class="bg-primary text-light mt-5">
+  <div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
     <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-20.</p>
@@ -696,34 +650,9 @@
   </div>
 
 </div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-for (let popover of popovers) {
-  const div = document.createElement('div');
-  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-  div.innerHTML = popover.getAttribute('data-content');
+</footer>
 
-  var has_math = div.querySelector("span.math");
-  if (has_math) {
-    document.body.appendChild(div);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    MathJax.Hub.Queue(function() {
-      popover.setAttribute('data-content', div.innerHTML);
-      document.body.removeChild(div);
-    })
-  }
-}
-</script>
+
 </body>
+
 </html>
