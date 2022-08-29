@@ -1,13 +1,13 @@
 # Translation
 
-```{r, include = FALSE}
+```{r Translation-1, include = FALSE}
 source("common.R")
 source("dsl-html-attributes.R")
 ```
 
 Needed libraries:
 
-```{r, warning=FALSE,message=FALSE}
+```{r Translation-2, warning=FALSE,message=FALSE}
 library(rlang)
 library(purrr)
 ```
@@ -32,7 +32,7 @@ Adapt the `escape()` to follow these rules when a new argument `script` is set t
 
 **A1.** Let's first start with the boilerplate code included in the book:
 
-```{r}
+```{r Translation-3}
 escape <- function(x, ...) UseMethod("escape")
 
 escape.character <- function(x, script = FALSE) {
@@ -52,7 +52,7 @@ escape.advr_html <- function(x, ...) x
 
 We will also need to tweak the boilerplate to pass this additional parameter to `escape()`:
 
-```{r}
+```{r Translation-4}
 html <- function(x) structure(x, class = "advr_html")
 
 print.advr_html <- function(x, ...) {
@@ -114,7 +114,7 @@ p <- tag("p")
 script <- tag("script", script = TRUE)
 ```
 
-```{r}
+```{r Translation-5}
 script("'</script>'")
 ```
 
@@ -122,7 +122,7 @@ script("'</script>'")
 
 **Q2.** The use of `...` for all functions has some big downsides. There's no input validation and there will be little information in the documentation or autocomplete about how they are used in the function. Create a new function that, when given a named list of tags and their attribute names (like below), creates tag functions with named arguments.
 
-```{r, eval = FALSE}
+```{r Translation-6, eval = FALSE}
 list(
   a = c("href"),
   img = c("src", "width", "height")
@@ -135,7 +135,7 @@ All tags should get `class` and `id` attributes.
 
 **Q3.** Reason about the following code that calls `with_html()` referencing objects from the environment. Will it work or fail? Why? Run the code to verify your predictions.
 
-```{r, eval = FALSE}
+```{r Translation-7, eval = FALSE}
 greeting <- "Hello!"
 with_html(p(greeting))
 p <- function() "p"
@@ -145,7 +145,7 @@ with_html(p(address))
 
 **A3.** To work with this, we first need to copy-paste relevant code from the book:
 
-```{r}
+```{r Translation-8}
 tags <- c(
   "a", "abbr", "address", "article", "aside", "audio",
   "b", "bdi", "bdo", "blockquote", "body", "button", "canvas",
@@ -184,14 +184,14 @@ Note that `with_html()` uses `eval_tidy()`, and therefore `code` argument is eva
 
 For this reason, the first example code will work:
 
-```{r}
+```{r Translation-9}
 greeting <- "Hello!"
 with_html(p(greeting))
 ```
 
 The following code, however, is not going to work because there is already `address` element in the data mask, and so `p()` will take a function `address()` as an input, and `escape()` doesn't know how to deal with objects of `function` type:
 
-```{r, error=TRUE}
+```{r Translation-10, error=TRUE}
 "address" %in% names(html_tags)
 
 p <- function() "p"
@@ -205,7 +205,7 @@ with_html(p(address))
 
 **A4.** 
 
-```{r}
+```{r Translation-11}
 html_tags$p(
   "Some text. ",
   html_tags$b(html_tags$i("some bold italic text")),
@@ -230,6 +230,6 @@ html_tags$p(
 
 ## Session information
 
-```{r}
+```{r Translation-12}
 sessioninfo::session_info(include_base = TRUE)
 ```

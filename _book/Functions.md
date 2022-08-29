@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000017ff21c0>
+#> <bytecode: 0x0000000018001fa8>
 #> <environment: namespace:base>
 ```
 
@@ -346,7 +346,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000017ff21c0>
+#> <bytecode: 0x0000000018001fa8>
 #> <environment: namespace:base>
 
 # other package function
@@ -356,7 +356,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x000000003633dfc0>
+#> <bytecode: 0x0000000036fd11a0>
 #> <environment: namespace:purrr>
 ```
 
@@ -559,7 +559,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x36910a10" "0x36910a10"
+#> [1] "0x37a6c2a8" "0x37a6c2a8"
 #> [1] 100
 ```
 
@@ -630,7 +630,7 @@ Explain how `hist()` works to get a correct `xlim` value.
 hist(mtcars$wt, xlim = c(1, 6))
 ```
 
-<img src="Functions_files/figure-html/unnamed-chunk-36-1.png" width="100%" />
+<img src="Functions_files/figure-html/Functions-36-1.png" width="100%" />
 
 The default `xlim = range(breaks)` and `breaks = "Sturges"` arguments reveal that the function uses Sturges' algorithm to compute the number of breaks.
 
@@ -654,7 +654,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-08-29 09:49:44 CEST"
+#> [1] "2022-08-29 11:06:38 CEST"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -767,7 +767,7 @@ For `mean()` function, there is only one parameter (`x`) and it's matched by the
 plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
 ```
 
-<img src="Functions_files/figure-html/unnamed-chunk-43-1.png" width="100%" />
+<img src="Functions_files/figure-html/Functions-43-1.png" width="100%" />
 
 **A2.** Typing `?plot` in the console, we see its documentation, which also shows its signature:
 
@@ -874,7 +874,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x0000000032768040>
+#> <bytecode: 0x0000000035ac0548>
 #> <environment: namespace:withr>
 ```
 
@@ -911,7 +911,7 @@ capture.output2 <- function(code) {
 
 capture.output2(cat("a", "b", "c", sep = "\n"))
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpuUBpSy\file24ec45c134c9',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpwRZc4h\file579c61e35d8c',
 #> reason 'Permission denied'
 #> [1] "a" "b" "c"
 ```
@@ -961,7 +961,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x0000000034d49ac0>
+#> <bytecode: 0x00000000362f1380>
 #> <environment: namespace:utils>
 ```
 
@@ -976,7 +976,7 @@ capture.output(1)
 
 capture.output2(1)
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpuUBpSy\file24ec3852278c',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpwRZc4h\file579c3c8447a2',
 #> reason 'Permission denied'
 #> character(0)
 ```

@@ -15,7 +15,7 @@ code <- function(...) paste0("`", ..., "`")
 
 **A1.** Let's first create an instance of `Period` class:
 
-```{r}
+```{r S4-1}
 library(lubridate)
 x <- lubridate::period(c(2, 43, 6), c("hour", "second", "minute"))
 x
@@ -23,19 +23,19 @@ x
 
 It has the following slots:
 
-```{r}
+```{r S4-2}
 slotNames(x)
 ```
 
 Additionally, the base type of each slot (`numeric`) can be seen in `str()` output:
 
-```{r}
+```{r S4-3}
 str(x)
 ```
 
 The `{lubridate}` package provides accessors to access all of these slots:
 
-```{r}
+```{r S4-4}
 year(x)
 month(x)
 day(x)
@@ -50,7 +50,7 @@ second(x)
 
 **A2.** The `"?"` operator allows access to this documentation in three ways. To demonstrate different ways to access documentation, let's define a new `S4` class.
 
-```{r}
+```{r S4-5}
 pow <- function(x, exp) c(x, exp)
 setGeneric("pow")
 setMethod("pow", c("numeric", "numeric"), function(x, exp) x^exp)
@@ -60,13 +60,13 @@ Ways to access documentation:
 
 - The general documentation for a generic can be found with `?topic`:
 
-```{r, eval=FALSE}
+```{r S4-6, eval=FALSE}
 ?pow
 ```
 
 - The expression `type?topic` will look for the overall documentation methods for the function `f`.
 
-```{r, eval=FALSE}
+```{r S4-7, eval=FALSE}
 ?pow # produces the function documentation
 
 methods?pow # looks for the overall methods documentation
@@ -82,7 +82,7 @@ methods?pow # looks for the overall methods documentation
 
 **A1.** The code below extends the `Person` class described in the book to match more closely with `utils::person()`.
 
-```{r}
+```{r S4-8}
 setClass("Person",
   slots = c(
     age     = "numeric",
@@ -164,7 +164,7 @@ setValidity("Person", function(object) {
 
 Let's make sure that validation works as expected:
 
-```{r, error=TRUE}
+```{r S4-9, error=TRUE}
 Person(c("Indrajeet", "Surendra"), "Patil")
 Person("Indrajeet", "Patil", role = "xyz")
 Person("Indrajeet", "Patil", role = c("aut", "cph"))
@@ -176,7 +176,7 @@ Person("Indrajeet", "Patil", role = c("aut", "cph"))
 
 **A2.** If you define a new `S4` class that doesn't have any slots, it will create *virtual* classes:
 
-```{r, error=TRUE}
+```{r S4-10, error=TRUE}
 setClass("Empty")
 
 isVirtualClass("Empty")
@@ -184,7 +184,7 @@ isVirtualClass("Empty")
 
 You can't create an instance of this class:
 
-```{r, error=TRUE}
+```{r S4-11, error=TRUE}
 new("Empty")
 ```
 
@@ -196,7 +196,7 @@ So how is this useful? As mentioned in `?setClass` docs:
 
 So virtual classes can still be inherited:
 
-```{r, eval=FALSE}
+```{r S4-12, eval=FALSE}
 setClass("Nothing", contains = "Empty")
 ```
 
@@ -214,7 +214,7 @@ In addition to not specifying any slots, here is another way to create virtual c
 
 For simplicity, we won't provide all options that `factor()` provides. Note that `x` has pseudo-class `ANY` to accept objects of any type.
 
-```{r}
+```{r S4-13}
 setClass("Factor",
   slots = c(
     x       = "ANY",
@@ -239,7 +239,7 @@ new("Factor", x = c(TRUE, FALSE, TRUE), levels = c("x", "y", "x"))
 
 Just like the base-R version, this will have only integer values.
 
-```{r}
+```{r S4-14}
 setClass("Date2",
   slots = list(
     data = "integer"
@@ -256,7 +256,7 @@ new("Date2", data = 1342L)
 
 The tricky part is supporting the `...` argument of `data.frame()`. For this, we can let the users pass a (named) list.
 
-```{r}
+```{r S4-15}
 setClass("DataFrame",
   slots = c(
     data      = "list",
@@ -281,7 +281,7 @@ new("DataFrame", data = list(x = c("a", "b"), y = c(1L, 2L)))
 
 **A1.** We first should define a generic and then a method for our class:
 
-```{r}
+```{r S4-16}
 Indra <- Person("Indrajeet", "Patil", role = c("aut", "cph"), age = 34)
 
 setGeneric("age", function(x) standardGeneric("age"))
@@ -296,7 +296,7 @@ age(Indra)
 
 **A2.** Let's look at the generic we just defined; the generic name `"name"` is repeated twice.
 
-```{r, eval=FALSE}
+```{r S4-17, eval=FALSE}
 setGeneric(name = "age", def = function(x) standardGeneric("age"))
 ```
 
@@ -307,7 +307,7 @@ This is because:
 
 This is reminiscent of how we defined `S3` generic, where we also had to repeat the name twice:
 
-```{r, eval=FALSE}
+```{r S4-18, eval=FALSE}
 age <- function(x) {
   UseMethod("age")
 }
@@ -319,7 +319,7 @@ age <- function(x) {
 
 **A3.** Because we wish to define `show()` method for a specific class, we need to disregard the other super-/sub-classes. 
 
-```{r, echo=FALSE}
+```{r S4-19, echo=FALSE}
 setClass("Person",
   slots = c(
     name = "character",
@@ -344,7 +344,7 @@ setClass("Employee",
 
 Always using the first element ensures that the method will be defined for the class in question:
 
-```{r}
+```{r S4-20}
 Alice <- new("Employee")
 
 is(Alice)
@@ -360,13 +360,13 @@ is(Alice)[[1]]
 
 The original method that worked as expected since the argument name between generic and method matched:
 
-```{r}
+```{r S4-21}
 setMethod("age", "Person", function(x) x@age)
 ```
 
 If this is not the case, we either get a warning or get an error depending on which and how many arguments have been specified:
 
-```{r, error=TRUE}
+```{r S4-22, error=TRUE}
 setMethod("age", "Person", function(object) object@age)
 
 setMethod("age", "Person", function(object, x) object@age)
@@ -386,7 +386,7 @@ setMethod("age", "Person", function(x, ...) x@age)
 
 **A1.** I don't how to prepare the visual illustrations used in the book, so I am linking to the illustration in the [official solution manual](https://advanced-r-solutions.rbind.io/s4.html#method-dispatch):
 
-```{r, echo=FALSE}
+```{r S4-23, echo=FALSE}
 knitr::include_graphics("https://advanced-r-solutions.rbind.io/images/s4/method_dispatch1.png")
 ```
 
@@ -396,7 +396,7 @@ knitr::include_graphics("https://advanced-r-solutions.rbind.io/images/s4/method_
 
 **A2.** I don't how to prepare the visual illustrations used in the book, so I am linking to the illustration in the [official solution manual](https://advanced-r-solutions.rbind.io/s4.html#method-dispatch):
 
-```{r, echo=FALSE}
+```{r S4-24, echo=FALSE}
 knitr::include_graphics("https://advanced-r-solutions.rbind.io/images/s4/method_dispatch2.png")
 ```
 
@@ -418,7 +418,7 @@ Method dispatch not save us much work here because to resolve this ambiguity we 
 
 **A1.** We can register the old-style/`S3` `ordered` class to a formally defined class using `setOldClass()`.
 
-```{r}
+```{r S4-25}
 setClass("factor",
   contains = "integer",
   slots = c(
@@ -449,7 +449,7 @@ setOldClass("ordered", S4Class = "Ordered")
 
 Let's use it to see if it works as expected. 
 
-```{r}
+```{r S4-26}
 x <- new("Ordered", 1L:4L, levels = letters[1:4], ordered = TRUE)
 
 x
@@ -465,13 +465,13 @@ class(x)
 
 **A2.** Because our `Person` class can be used to create objects that represent multiple people, let's say the `length()` method returns how many persons are in the object.
 
-```{r}
+```{r S4-27}
 Friends <- new("Person", name = c("Vishu", "Aditi"))
 ```
 
 We can define an `S3` method for this class:
 
-```{r}
+```{r S4-28}
 length.Person <- function(x) length(x@name)
 
 length(Friends)
@@ -479,7 +479,7 @@ length(Friends)
 
 Alternatively, we can also write `S4` method:
 
-```{r}
+```{r S4-29}
 setMethod("length", "Person", function(x) length(x@name))
 
 length(Friends)
@@ -489,7 +489,7 @@ length(Friends)
 
 ## Session information
 
-```{r}
+```{r S4-30}
 sessioninfo::session_info(include_base = TRUE)
 ```
 

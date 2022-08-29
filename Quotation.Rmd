@@ -1,12 +1,12 @@
 # Quasiquotation
 
-```{r, include = FALSE}
+```{r Quotation-1, include = FALSE}
 source("common.R")
 ```
 
 Attaching the needed libraries:
 
-```{r, warning=FALSE, message=FALSE}
+```{r Quotation-2, warning=FALSE, message=FALSE}
 library(rlang)
 library(purrr)
 library(lobstr)
@@ -20,7 +20,7 @@ library(ggplot2)
 
 **Q1.** For each function in the following base R code, identify which arguments are quoted and which are evaluated.
 
-```{r, results = FALSE, message=FALSE, warning=FALSE}
+```{r Quotation-3, results = FALSE, message=FALSE, warning=FALSE}
 library(MASS)
 
 mtcars2 <- subset(mtcars, cyl == 4)
@@ -39,7 +39,7 @@ rm(mtcars2)
 
 The `package` argument in `library()` is quoted:
 
-```{r, error=TRUE}
+```{r Quotation-4, error=TRUE}
 library(MASS)
 
 MASS
@@ -49,7 +49,7 @@ MASS
 
 The argument `x` is evaluated, while the argument `subset` is quoted.
 
-```{r, error=TRUE}
+```{r Quotation-5, error=TRUE}
 mtcars2 <- subset(mtcars, cyl == 4)
 
 invisible(mtcars)
@@ -61,7 +61,7 @@ cyl == 4
 
 The argument `data` is evaluated, while `expr` argument is quoted.
 
-```{r, error=TRUE}
+```{r Quotation-6, error=TRUE}
 with(mtcars2, sum(vs))
 
 invisible(mtcars2)
@@ -73,7 +73,7 @@ sum(vs)
 
 The argument `...` is evaluated.
 
-```{r, error=TRUE}
+```{r Quotation-7, error=TRUE}
 sum(mtcars2$am)
 
 mtcars2$am
@@ -83,7 +83,7 @@ mtcars2$am
 
 The trick we are using so far won't work here since trying to print `mtcars2` will always fail after `rm()` has made a pass at it.
 
-```{r, error=TRUE}
+```{r Quotation-8, error=TRUE}
 rm(mtcars2)
 ```
 
@@ -97,7 +97,7 @@ Thus, this argument is not evaluated, but rather quoted.
 
 **Q2.** For each function in the following tidyverse code, identify which arguments are quoted and which are evaluated.
 
-```{r, eval = FALSE}
+```{r Quotation-9, eval = FALSE}
 library(dplyr)
 library(ggplot2)
 
@@ -111,7 +111,7 @@ ggplot(by_cyl, aes(cyl, mean)) +
 
 **A2.** As seen in the answer for **Q1.**, `library()` quotes its first argument:
 
-```{r, eval=FALSE}
+```{r Quotation-10, eval=FALSE}
 library(dplyr)
 library(ggplot2)
 ```
@@ -121,7 +121,7 @@ In the following code:
 - `%>%` (lazily) evaluates its argument
 - `group_by()` and `summarise()` quote their arguments
 
-```{r}
+```{r Quotation-11}
 by_cyl <- mtcars %>%
   group_by(cyl) %>%
   summarise(mean = mean(mpg))
@@ -132,7 +132,7 @@ In the following code:
 - `ggplot()` evaluates the `data` argument
 - `aes()` quotes its arguments
 
-```{r}
+```{r Quotation-12}
 ggplot(by_cyl, aes(cyl, mean)) +
   geom_point()
 ```
@@ -147,13 +147,13 @@ ggplot(by_cyl, aes(cyl, mean)) +
 
 **A1.** Looking at the source code, we can see that `expr()` is a simple wrapper around `enexpr()`, and captures and returns the user-entered expressions:
 
-```{r}
+```{r Quotation-13}
 rlang::expr
 ```
 
 For example:
 
-```{r}
+```{r Quotation-14}
 x <- expr(x <- 1)
 x
 ```
@@ -162,7 +162,7 @@ x
 
 **Q2.** Compare and contrast the following two functions. Can you predict the output before running them?
 
-```{r, results = FALSE}
+```{r Quotation-15, results = FALSE}
 f1 <- function(x, y) {
   exprs(x = x, y = y)
 }
@@ -175,7 +175,7 @@ f2(a + b, c + d)
 
 **A2.** The `exprs()` captures and returns the expressions specified by the developer instead of their values:
 
-```{r}
+```{r Quotation-16}
 f1 <- function(x, y) {
   exprs(x = x, y = y)
 }
@@ -185,7 +185,7 @@ f1(a + b, c + d)
 
 On the other hand, `enexprs()` captures the user-entered expressions and returns their values:
 
-```{r}
+```{r Quotation-17}
 f2 <- function(x, y) {
   enexprs(x = x, y = y)
 }
@@ -199,13 +199,13 @@ f2(a + b, c + d)
 
 **A3.** If you try to use `enexpr()` with an expression, it fails because it works only with types `symbol` and `character` (which is converted to `symbol`).
 
-```{r, error=TRUE}
+```{r Quotation-18, error=TRUE}
 enexpr(x + y)
 ```
 
 If `enexpr()` is passed a missing argument, it returns a missing argument:
 
-```{r, error=TRUE}
+```{r Quotation-19, error=TRUE}
 arg <- missing_arg()
 
 enexpr(arg)
@@ -219,7 +219,7 @@ is_missing(enexpr(arg))
 
 **A4.** The key difference here is that the former will return an unnamed list, while the latter will return a named list. This is because the former is interpreted as an unnamed argument, while the latter a named argument.
 
-```{r}
+```{r Quotation-20}
 exprs(a)
 
 exprs(a = )
@@ -227,7 +227,7 @@ exprs(a = )
 
 In both cases, `a` is treated as a symbol:
 
-```{r}
+```{r Quotation-21}
 purrr::map_lgl(exprs(a), is_symbol)
 
 purrr::map_lgl(exprs(a = ), is_symbol)
@@ -235,7 +235,7 @@ purrr::map_lgl(exprs(a = ), is_symbol)
 
 But, the argument is missing only in the latter case, since only the name but no corresponding value is provided:
 
-```{r}
+```{r Quotation-22}
 purrr::map_lgl(exprs(a), is_missing)
 
 purrr::map_lgl(exprs(a = ), is_missing)
@@ -249,7 +249,7 @@ purrr::map_lgl(exprs(a = ), is_missing)
 
 - Names: If the inputs are not named, `exprs()` provides a way to name them automatically using `.named` argument.
 
-```{r}
+```{r Quotation-23}
 alist("x" = 1, TRUE, "z" = expr(x + y))
 
 exprs("x" = 1, TRUE, "z" = expr(x + y), .named = TRUE)
@@ -257,7 +257,7 @@ exprs("x" = 1, TRUE, "z" = expr(x + y), .named = TRUE)
 
 - Ignoring empty arguments: The `.ignore_empty` argument in `exprs()` gives you a much finer control over what to do with the empty arguments, while `alist()` always ignores none of such arguments.
 
-```{r}
+```{r Quotation-24}
 alist("x" = 1, , TRUE, )
 
 exprs("x" = 1, , TRUE, , .ignore_empty = "trailing")
@@ -269,7 +269,7 @@ exprs("x" = 1, , TRUE, , .ignore_empty = "all")
 
 - Names injection: Using `.unquote_names` argument in `exprs()`, we can inject a name for the argument.
 
-```{r}
+```{r Quotation-25}
 alist(foo := bar)
 
 exprs(foo := bar, .unquote_names = FALSE)
@@ -298,14 +298,14 @@ Create examples that illustrate each of the above cases.
 
 Symbol `x` is not bound in `env`, so it remains unchanged. 
 
-```{r}
+```{r Quotation-26}
 substitute(x + y, env = list(y = 2))
 ```
 
 > If it is a promise object (i.e., a formal argument to a function) 
 > the expression slot of the promise replaces the symbol. 
 
-```{r}
+```{r Quotation-27}
 msg <- "old"
 delayedAssign("myVar", msg) # creates a promise
 substitute(myVar)
@@ -316,7 +316,7 @@ myVar
 > If it is an ordinary variable, its value is substituted, unless 
 > `env` is .GlobalEnv in which case the symbol is left unchanged.
 
-```{r}
+```{r Quotation-28}
 x <- 2
 y <- 1
 substitute(x + y, env = .GlobalEnv)
@@ -330,7 +330,7 @@ substitute(x + y, env = .GlobalEnv)
 
 **Q1.** Given the following components:
 
-```{r}
+```{r Quotation-29}
 xy <- expr(x + y)
 xz <- expr(x + z)
 yz <- expr(y + z)
@@ -339,7 +339,7 @@ abc <- exprs(a, b, c)
 
 Use quasiquotation to construct the following calls:
 
-```{r, eval = FALSE}
+```{r Quotation-30, eval = FALSE}
 (x + y) / (y + z)
 -(x + z)^(y + z)
 (x + y) + (y + z) - (x + y)
@@ -352,7 +352,7 @@ foo(a = x + y, b = y + z)
 
 **A1.** Using quasiquotation to construct the specified calls:
 
-```{r}
+```{r Quotation-31}
 xy <- expr(x + y)
 xz <- expr(x + z)
 yz <- expr(y + z)
@@ -379,7 +379,7 @@ call2("foo", a = expr(!!xy), b = expr(!!yz))
 
 **Q2.** The following two calls print the same, but are actually different:
 
-```{r}
+```{r Quotation-32}
 (a <- expr(mean(1:10)))
 (b <- expr(mean(!!(1:10))))
 identical(a, b)
@@ -389,7 +389,7 @@ What's the difference? Which one is more natural?
 
 **A2.** We can see the difference between these two expression if we convert them to lists:
 
-```{r}
+```{r Quotation-33}
 as.list(expr(mean(1:10)))
 
 as.list(expr(mean(!!(1:10))))
@@ -397,13 +397,13 @@ as.list(expr(mean(!!(1:10))))
 
 As can be seen, the second element of `a` is a `call` object, while that in `b` is an integer vector:
 
-```{r}
+```{r Quotation-34}
 waldo::compare(a, b)
 ```
 
 The same can also be noticed in ASTs for these expressions:
 
-```{r}
+```{r Quotation-35}
 ast(expr(mean(1:10)))
 
 ast(expr(mean(!!(1:10))))
@@ -419,7 +419,7 @@ The first call is more natural, since the second one inlines a vector directly i
 
 **Q1.** One way to implement `exec()` is shown below. Describe how it works. What are the key ideas?
 
-```{r}
+```{r Quotation-36}
 exec <- function(f, ..., .env = caller_env()) {
   args <- list2(...)
   do.call(f, args, envir = .env)
@@ -434,7 +434,7 @@ exec <- function(f, ..., .env = caller_env()) {
 
 Here is an example:
 
-```{r}
+```{r Quotation-37}
 vec <- c(1:5, NA)
 args_list <- list(trim = 0, na.rm = TRUE)
 
@@ -463,7 +463,7 @@ Using these dots, the functions check if a list was entered as an argument by ch
 
 **Q3.** Explain the problem with this definition of `set_attr()`
 
-```{r, error = TRUE}
+```{r Quotation-38, error = TRUE}
 set_attr <- function(x, ...) {
   attr <- rlang::list2(...)
   attributes(x) <- attr
@@ -476,7 +476,7 @@ set_attr(1:10, x = 10)
 
 But, as shown in the example, this creates a problem when the attribute is itself named `x`. Naming the arguments won't help either:
 
-```{r, error = TRUE}
+```{r Quotation-39, error = TRUE}
 set_attr <- function(x, ...) {
   attr <- rlang::list2(...)
   attributes(x) <- attr
@@ -487,7 +487,7 @@ set_attr(x = 1:10, x = 10)
 
 We can avoid these issues by renaming the parameter:
 
-```{r}
+```{r Quotation-40}
 set_attr <- function(.x, ...) {
   attr <- rlang::list2(...)
   attributes(.x) <- attr
@@ -507,7 +507,7 @@ set_attr(.x = 1:10, x = 10)
 
 **A1.** We can rewrite the `linear()` function from this chapter using `call2()` as follows:
 
-```{r}
+```{r Quotation-41}
 linear <- function(var, val) {
   var <- ensym(var)
   coef_name <- map(seq_along(val[-1]), ~ expr((!!var)[[!!.x]]))
@@ -527,7 +527,7 @@ I personally find the version with `call2()` to be much more readable since the 
 
 **Q2.** Re-implement the Box-Cox transform defined below using unquoting and `new_function()`:
 
-```{r}
+```{r Quotation-42}
 bc <- function(lambda) {
   if (lambda == 0) {
     function(x) log(x)
@@ -539,7 +539,7 @@ bc <- function(lambda) {
 
 **A2.** Re-implementation of the Box-Cox transform using unquoting and `new_function()`:
 
-```{r}
+```{r Quotation-43}
 bc_new <- function(lambda) {
   lambda <- enexpr(lambda)
 
@@ -559,7 +559,7 @@ bc_new <- function(lambda) {
 
 Let's try it out to see if it produces the same output as before:
 
-```{r}
+```{r Quotation-44}
 bc(0)(1)
 bc_new(0)(1)
 
@@ -571,7 +571,7 @@ bc_new(2)(2)
 
 **Q3.**  Re-implement the simple `compose()` defined below using quasiquotation and `new_function()`:
 
-```{r}
+```{r Quotation-45}
 compose <- function(f, g) {
   function(...) f(g(...))
 }
@@ -579,7 +579,7 @@ compose <- function(f, g) {
 
 **A3.** Following is a re-implementation of `compose()` using quasiquotation and `new_function()`:
 
-```{r}
+```{r Quotation-46}
 compose_new <- function(f, g) {
   f <- enexpr(f) # or ensym(f)
   g <- enexpr(g) # or ensym(g)
@@ -593,7 +593,7 @@ compose_new <- function(f, g) {
 
 Checking that the new version behaves the same way as the original version:
 
-```{r}
+```{r Quotation-47}
 not_null <- compose(`!`, is.null)
 not_null(4)
 
@@ -605,6 +605,6 @@ not_null2(4)
 
 ## Session information
 
-```{r}
+```{r Quotation-48}
 sessioninfo::session_info(include_base = TRUE)
 ```

@@ -21,7 +21,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x0000000017267130>
+#> <bytecode: 0x00000000172670f8>
 #> <environment: namespace:base>
 ```
 
@@ -47,15 +47,15 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x00000000346b4510>
-#> <environment: 0x00000000346b39e8>
+#> <bytecode: 0x0000000034703078>
+#> <environment: 0x0000000034702550>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
 curve(f(x), 0, 11)
 ```
 
-<img src="Function-factories_files/figure-html/unnamed-chunk-4-1.png" width="100%" />
+<img src="Function-factories_files/figure-html/Function-factories-4-1.png" width="100%" />
 
 - `ecdf()`
 
@@ -212,15 +212,15 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x00000000244a5588>
+#> <environment: 0x00000000322d7e40>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x0000000032e67990>
-#> <environment: 0x0000000032373fc0>
+#> <bytecode: 0x0000000032eca1c8>
+#> <environment: 0x0000000032746a20>
 ```
 
 ---
@@ -266,7 +266,7 @@ ggplot2::label_bquote
 #>     }
 #>     structure(fun, class = "labeller")
 #> }
-#> <bytecode: 0x000000003304f0d8>
+#> <bytecode: 0x00000000330a6938>
 #> <environment: namespace:ggplot2>
 ```
 
@@ -289,7 +289,7 @@ scales::number_format
 #>             scale_cut = scale_cut, trim = trim, ...)
 #>     }
 #> }
-#> <bytecode: 0x000000003320eca8>
+#> <bytecode: 0x000000003325e498>
 #> <environment: namespace:scales>
 ```
 
@@ -306,7 +306,7 @@ p <- ggplot(mtcars, aes(wt, mpg)) +
 p + facet_grid(. ~ vs, labeller = label_bquote(cols = alpha^.(vs)))
 ```
 
-<img src="Function-factories_files/figure-html/unnamed-chunk-18-1.png" width="100%" />
+<img src="Function-factories_files/figure-html/Function-factories-18-1.png" width="100%" />
 
 Or to display axes labels in the desired format:
 
@@ -319,7 +319,7 @@ ggplot(mtcars, aes(wt, mpg)) +
   scale_y_continuous(labels = number_format(accuracy = 0.01, decimal.mark = ","))
 ```
 
-<img src="Function-factories_files/figure-html/unnamed-chunk-19-1.png" width="100%" />
+<img src="Function-factories_files/figure-html/Function-factories-19-1.png" width="100%" />
 
 The `ggplot2::label_bquote()` adds an additional class to the returned function.
 
@@ -385,7 +385,7 @@ Let's have a look at one example with each:
 ```r
 boxcox2(1)
 #> function(x) (x^lambda - 1) / lambda
-#> <environment: 0x000000001a5ad1e0>
+#> <environment: 0x000000001a496b48>
 
 boxcox3(mtcars$wt)
 #> function(lambda) {
@@ -395,7 +395,7 @@ boxcox3(mtcars$wt)
 #>       (x^lambda - 1) / lambda
 #>     }
 #>   }
-#> <environment: 0x000000001a4a9310>
+#> <environment: 0x000000001a028fc0>
 ```
 
 As can be seen:
@@ -428,7 +428,7 @@ boot_permute(mtcars, "mpg")
 #>     col <- df[[var]]
 #>     col[sample(n, replace = TRUE)]
 #>   }
-#> <environment: 0x00000000322c97d8>
+#> <environment: 0x00000000322ce2d8>
 ```
 
 This is why we don't need to worry about a copy being made because the `df` in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:
@@ -437,7 +437,7 @@ This is why we don't need to worry about a copy being made because the `df` in t
 ```r
 boot_permute_env <- rlang::fn_env(boot_permute(mtcars, "mpg"))
 rlang::env_print(boot_permute_env)
-#> <environment: 0x0000000032efa850>
+#> <environment: 0x0000000032f7ead0>
 #> Parent: <environment: global>
 #> Bindings:
 #> * n: <int>
@@ -496,8 +496,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1          28.8us   38.7us    24669.    12.8KB     9.87
-#> 2 LL2          14.4us   19.4us    49298.        0B     9.86
+#> 1 LL1          28.9us   38.6us    23683.    12.8KB     9.70
+#> 2 LL2          14.4us   18.4us    51012.        0B    10.2
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -523,16 +523,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 x 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1          43.4us   57.3us    17299.
-#>  2     10 LL2          19.3us     24us    40693.
-#>  3     20 LL1          46.7us   62.3us    15831.
-#>  4     20 LL2          17.5us   22.8us    42994.
-#>  5     50 LL1            60us   77.2us    12798.
-#>  6     50 LL2            17us   21.9us    44740.
-#>  7    100 LL1          90.9us  115.9us     8460.
-#>  8    100 LL2          21.3us     26us    36251.
-#>  9   1000 LL1          1.85ms   2.21ms      452.
-#> 10   1000 LL2          79.6us  125.4us     7944.
+#>  1     10 LL1          42.6us   55.1us    17908.
+#>  2     10 LL2          17.6us   23.2us    42377.
+#>  3     20 LL1          46.6us   61.1us    16100.
+#>  4     20 LL2          19.7us   22.8us    42175.
+#>  5     50 LL1          62.5us   76.4us    12854.
+#>  6     50 LL2          18.5us   22.9us    42710.
+#>  7    100 LL1          91.5us  117.1us     8304.
+#>  8    100 LL2          19.6us   25.4us    38028.
+#>  9   1000 LL1          1.74ms   2.14ms      464.
+#> 10   1000 LL2          78.5us    101us     9706.
 
 ggplot(
   df_bench,
@@ -552,7 +552,7 @@ ggplot(
   )
 ```
 
-<img src="Function-factories_files/figure-html/unnamed-chunk-28-1.png" width="100%" />
+<img src="Function-factories_files/figure-html/Function-factories-28-1.png" width="100%" />
 
 ---
 

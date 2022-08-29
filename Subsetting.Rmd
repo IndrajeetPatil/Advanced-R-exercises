@@ -1,12 +1,12 @@
 # Subsetting
 
-```{r, include = FALSE}
+```{r Subsetting-1, include = FALSE}
 source("common.R")
 ```
 
 Attaching the needed libraries:
 
-```{r, warning=FALSE, message=FALSE}
+```{r Subsetting-2, warning=FALSE, message=FALSE}
 library(tibble)
 ```
 
@@ -14,7 +14,7 @@ library(tibble)
 
 **Q1.** Fix each of the following common data frame subsetting errors:
 
-```{r, eval = FALSE}
+```{r Subsetting-3, eval = FALSE}
 mtcars[mtcars$cyl = 4, ]
 mtcars[-1:4, ]
 mtcars[mtcars$cyl <= 5]
@@ -23,7 +23,7 @@ mtcars[mtcars$cyl == 4 | 6, ]
 
 **A1.** Fixed versions of these commands:
 
-```{r, eval=FALSE}
+```{r Subsetting-4, eval=FALSE}
 # `==` instead of `=`
 mtcars[mtcars$cyl == 4, ]
 
@@ -40,7 +40,7 @@ mtcars[mtcars$cyl %in% c(4, 6), ]
 
 **Q2.** Why does the following code yield five missing values?
 
-```{r}
+```{r Subsetting-5}
 x <- 1:5
 x[NA]
 ```
@@ -49,20 +49,20 @@ x[NA]
 
 - The default type of `NA` in R is of `logical` type.
 
-```{r}
+```{r Subsetting-6}
 typeof(NA)
 ```
 
 - R recycles indexes to match the length of the vector.
 
-```{r}
+```{r Subsetting-7}
 x <- 1:5
 x[c(TRUE, FALSE)] # recycled to c(TRUE, FALSE, TRUE, FALSE, TRUE)
 ```
 
 **Q3.** What does `upper.tri()` return? How does subsetting a matrix with it work? Do we need any additional subsetting rules to describe its behaviour?
 
-```{r, eval = FALSE}
+```{r Subsetting-8, eval = FALSE}
 x <- outer(1:5, 1:5, FUN = "*")
 x[upper.tri(x)]
 ```
@@ -71,7 +71,7 @@ A3. The documentation for `upper.tri()` states-
 
 > Returns a matrix of logicals the same size of a given matrix with entries `TRUE` in the **upper triangle**
 
-```{r}
+```{r Subsetting-9}
 (x <- outer(1:5, 1:5, FUN = "*"))
 
 upper.tri(x)
@@ -79,7 +79,7 @@ upper.tri(x)
 
 When used with a matrix for subsetting, elements corresponding to `TRUE` in the subsetting matrix are selected. But, instead of a matrix, this returns a vector:
 
-```{r}
+```{r Subsetting-10}
 x[upper.tri(x)]
 ```
 
@@ -87,7 +87,7 @@ x[upper.tri(x)]
 
 **A4.** When indexed like a list, data frame columns at given indices will be selected.
 
-```{r}
+```{r Subsetting-11}
 head(mtcars[1:2])
 ```
 
@@ -95,7 +95,7 @@ head(mtcars[1:2])
 
 On the other hand, `mtcars[1:20, ]` indexes a dataframe like a matrix, and because there are indeed 20 rows in `mtcars`, all columns with these rows are selected.
 
-```{r}
+```{r Subsetting-12}
 nrow(mtcars[1:20, ])
 ```
 
@@ -103,7 +103,7 @@ nrow(mtcars[1:20, ])
 
 **A5.** We can combine the existing functions to our advantage:
 
-```{r}
+```{r Subsetting-13}
 x[!upper.tri(x) & !lower.tri(x)]
 
 diag(x)
@@ -115,7 +115,7 @@ diag(x)
 
 `is.na(df)` produces a matrix of logical values, which provides a way of subsetting.
 
-```{r}
+```{r Subsetting-14}
 (df <- tibble(x = c(1, 2, NA), y = c(NA, 5, NA)))
 
 is.na(df)
@@ -129,7 +129,7 @@ class(is.na(df))
 
 **A1.** Possible ways to to extract the third value from the `cyl` variable in the `mtcars` dataset:
 
-```{r}
+```{r Subsetting-15}
 mtcars[["cyl"]][[3]]
 mtcars[[c(2, 3)]]
 mtcars[3, ][["cyl"]]
@@ -144,7 +144,7 @@ mtcars$cyl[[3]]
 
 **A2.** Given that objects of class `lm` are lists, we can use subsetting operators to extract elements we want.
 
-```{r}
+```{r Subsetting-16}
 mod <- lm(mpg ~ wt, data = mtcars)
 class(mod)
 typeof(mod)
@@ -152,14 +152,14 @@ typeof(mod)
 
 - extracting the residual degrees of freedom
 
-```{r}
+```{r Subsetting-17}
 mod$df.residual 
 mod[["df.residual"]]
 ```
 
 - extracting the R squared from the model summary
 
-```{r}
+```{r Subsetting-18}
 summary(mod)$r.squared
 summary(mod)[["r.squared"]]
 ```
@@ -170,7 +170,7 @@ summary(mod)[["r.squared"]]
 
 **A1.** Let's create a small data frame to work with.
 
-```{r}
+```{r Subsetting-19}
 df <- head(mtcars)
 
 # original
@@ -181,19 +181,19 @@ To randomly permute the columns of a data frame, we can combine `[` and `sample(
 
 - randomly permute columns
 
-```{r}
+```{r Subsetting-20}
 df[sample.int(ncol(df))]
 ```
 
 - randomly permute rows
 
-```{r}
+```{r Subsetting-21}
 df[sample.int(nrow(df)), ]
 ```
 
 - randomly permute columns and rows
 
-```{r}
+```{r Subsetting-22}
 df[sample.int(nrow(df)), sample.int(ncol(df))]
 ```
 
@@ -201,7 +201,7 @@ df[sample.int(nrow(df)), sample.int(ncol(df))]
 
 **A2.**  Let's create a small data frame to work with.
 
-```{r}
+```{r Subsetting-23}
 df <- head(mtcars)
 
 # original
@@ -215,13 +215,13 @@ To  select a random sample of `m` rows from a data frame, we can combine `[` and
 
 - random and non-contiguous sample of `m` rows from a data frame
 
-```{r}
+```{r Subsetting-24}
 df[sample(nrow(df), m), ]
 ```
 
 - random and contiguous sample of `m` rows from a data frame
 
-```{r}
+```{r Subsetting-25}
 # select a random starting position from available number of rows
 start_row <- sample(nrow(df) - m + 1, size = 1)
 
@@ -235,7 +235,7 @@ df[start_row:end_row, ]
 
 **A3.** we can sort columns in a data frame in the alphabetical order using `[` with `order()`:
 
-```{r}
+```{r Subsetting-26}
 # columns in original order
 names(mtcars)
 
@@ -245,6 +245,6 @@ names(mtcars[order(names(mtcars))])
 
 ## Session information
 
-```{r}
+```{r Subsetting-27}
 sessioninfo::session_info(include_base = TRUE)
 ```

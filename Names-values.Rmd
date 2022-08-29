@@ -1,12 +1,12 @@
 # Names and values
 
-```{r, include = FALSE}
+```{r Names-values-1, include = FALSE}
 source("common.R")
 ```
 
 Loading the needed libraries:
 
-```{r, warning=FALSE, message=FALSE}
+```{r Names-values-2, warning=FALSE, message=FALSE}
 library(lobstr)
 ```
 
@@ -16,7 +16,7 @@ library(lobstr)
 
 **Q1.** Explain the relationship between `a`, `b`, `c` and `d` in the following code:
 
-```{r}
+```{r Names-values-3}
 a <- 1:10
 b <- a
 c <- b
@@ -25,14 +25,14 @@ d <- 1:10
 
 **A1.** The names (`a`, `b`, and `c`) have same values and point to the same object in memory, as can be seen by their identical memory addresses:
 
-```{r}
+```{r Names-values-4}
 obj_addrs <- obj_addrs(list(a, b, c))
 unique(obj_addrs)
 ```
 
 Except `d`, which is a different object, even if it has the same value as `a`, `b`, and `c`:
 
-```{r}
+```{r Names-values-5}
 obj_addr(d)
 ```
 
@@ -40,7 +40,7 @@ obj_addr(d)
 
 **Q2.** The following code accesses the mean function in multiple ways. Do they all point to the same underlying function object? Verify this with `lobstr::obj_addr()`.
 
-```{r, eval = FALSE}
+```{r Names-values-6, eval = FALSE}
 mean
 base::mean
 get("mean")
@@ -50,7 +50,7 @@ match.fun("mean")
 
 **A2.** All listed function calls point to the same underlying function object in memory, as shown by this object's memory address:
 
-```{r}
+```{r Names-values-7}
 obj_addrs <- obj_addrs(list(
   mean,
   base::mean,
@@ -80,7 +80,7 @@ To suppress this behavior, one can set `check.names = FALSE`.
 - it converts invalid characters (like `@`) to `.`
 - it adds a `.` as a suffix if the name is a [reserved keyword](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Reserved.html)
 
-```{r}
+```{r Names-values-8}
 make.names(c("123abc", "@me", "_yu", "  gh", "else"))
 ```
 
@@ -90,7 +90,7 @@ make.names(c("123abc", "@me", "_yu", "  gh", "else"))
 
 **A5.** `.123e1` is not a syntacti name because it is parsed as a number, and not as a string:
 
-```{r}
+```{r Names-values-9}
 typeof(.123e1)
 ```
 
@@ -108,7 +108,7 @@ And as the docs mention (emphasis mine):
 
 **A1.** `tracemem()` traces copying of objects in R. For example:
 
-```{r}
+```{r Names-values-10}
 x <- 1:10
 
 tracemem(x)
@@ -120,7 +120,7 @@ untracemem(x)
 
 But since the object created in memory by `1:10` is not assigned a name, it can't be addressed or modified from R, and so there is nothing to trace. 
 
-```{r}
+```{r Names-values-11}
 obj_addr(1:10)
 
 tracemem(1:10)
@@ -130,7 +130,7 @@ tracemem(1:10)
 
 **Q2.** Explain why `tracemem()` shows two copies when you run this code. Hint: carefully look at the difference between this code and the code shown earlier in the section.
      
-```{r, results = FALSE}
+```{r Names-values-12, results = FALSE}
 x <- c(1L, 2L, 3L)
 tracemem(x)
 
@@ -140,7 +140,7 @@ untracemem(x)
 
 **A2.** This is because the initial atomic vector is of type `integer`, but `4` (and not `4L`) is of type `double`. This is why a new copy is created.
 
-```{r}
+```{r Names-values-13}
 x <- c(1L, 2L, 3L)
 typeof(x)
 tracemem(x)
@@ -153,7 +153,7 @@ typeof(x)
 
 Trying with an integer should not create another copy:
 
-```{r}
+```{r Names-values-14}
 x <- c(1L, 2L, 3L)
 typeof(x)
 tracemem(x)
@@ -172,7 +172,7 @@ To understand why this still produces a copy, here is an explanation from the [o
 
 **Q3.** Sketch out the relationship between the following objects:
 
-```{r}
+```{r Names-values-15}
 a <- 1:10
 b <- list(a, a)
 c <- list(b, a, 1:10)
@@ -180,7 +180,7 @@ c <- list(b, a, 1:10)
 
 **A3.** We can understand the relationship between these objects by looking at their memory addresses:
 
-```{r}
+```{r Names-values-16}
 a <- 1:10
 b <- list(a, a)
 c <- list(b, a, 1:10)
@@ -202,7 +202,7 @@ Here is what we learn:
 
 **Q4.** What happens when you run this code?
 
-```{r, eval=FALSE}
+```{r Names-values-17, eval=FALSE}
 x <- list(1:10)
 x[[2]] <- x
 ```
@@ -211,7 +211,7 @@ Draw a picture.
 
 **A4.**
 
-```{r}
+```{r Names-values-18}
 x <- list(1:10)
 x
 obj_addr(x)
@@ -225,7 +225,7 @@ ref(x)
 
 I don't have access to OmniGraffle software, so I am including here the figure from the [official solution manual](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify):
 
-```{r, echo=FALSE, out.width='180pt'}
+```{r Names-values-19, echo=FALSE, out.width='180pt'}
 knitr::include_graphics("https://advanced-r-solutions.rbind.io/images/names_values/copy_on_modify_fig2.png")
 ```
 
@@ -237,7 +237,7 @@ knitr::include_graphics("https://advanced-r-solutions.rbind.io/images/names_valu
 
 **Q1.** In the following example, why are `object.size(y)` and `obj_size(y)` so radically different? Consult the documentation of `object.size()`.
 
-```{r, eval=FALSE}
+```{r Names-values-20, eval=FALSE}
 y <- rep(list(runif(1e4)), 100)
 
 object.size(y)
@@ -250,7 +250,7 @@ obj_size(y)
 
 This is why the sizes are so different:
 
-```{r}
+```{r Names-values-21}
 y <- rep(list(runif(1e4)), 100)
 
 object.size(y)
@@ -262,14 +262,14 @@ obj_size(y)
 
 **Q2.**  Take the following list. Why is its size somewhat misleading?
 
-```{r, eval=FALSE}
+```{r Names-values-22, eval=FALSE}
 funs <- list(mean, sd, var)
 obj_size(funs)
 ```
 
 **A2.** These functions are not externally created objects in R, but are always available as part of base packages, so doesn't make much sense to measure their size because they are never going to be *not* available.
 
-```{r}
+```{r Names-values-23}
 funs <- list(mean, sd, var)
 obj_size(funs)
 ```
@@ -278,7 +278,7 @@ obj_size(funs)
 
 **Q3.** Predict the output of the following code:
 
-```{r, eval = FALSE}
+```{r Names-values-24, eval = FALSE}
 a <- runif(1e6)
 obj_size(a)
 
@@ -297,7 +297,7 @@ obj_size(a, b)
 
 **A3.** Correctly predicted 😉
 
-```{r}
+```{r Names-values-25}
 a <- runif(1e6)
 obj_size(a)
 
@@ -318,13 +318,13 @@ Key pieces of information to keep in mind to make correct predictions:
 
 - Size of empty vector
 
-```{r}
+```{r Names-values-26}
 obj_size(double())
 ```
 
 - Size of a single double: 8 bytes
 
-```{r}
+```{r Names-values-27}
 obj_size(double(1))
 ```
 
@@ -338,14 +338,14 @@ obj_size(double(1))
 
 **Q1.** Explain why the following code doesn't create a circular list.
 
-```{r, eval = FALSE}
+```{r Names-values-28, eval = FALSE}
 x <- list()
 x[[1]] <- x
 ```
 
 **A1.** Copy-on-modify prevents the creation of a circular list.
 
-```{r}
+```{r Names-values-29}
 x <- list()
 
 obj_addr(x)
@@ -363,7 +363,7 @@ obj_addr(x[[1]])
 
 **A2.** Let's first microbenchmark functions that do and do not create copies for varying lengths of number of columns.
 
-```{r, message=FALSE, warning=FALSE}
+```{r Names-values-30, message=FALSE, warning=FALSE}
 library(bench)
 library(tidyverse)
 
@@ -418,7 +418,7 @@ benchDf <- purrr::map_dfr(
 
 Plotting these benchmarks reveals how the performance gets increasingly worse as the number of data frames increases:
 
-```{r}
+```{r Names-values-31}
 ggplot(
   benchDf,
   aes(
@@ -444,7 +444,7 @@ ggplot(
 
 > It is not useful to trace `NULL`, environments, promises, weak references, or external pointer objects, as these are not duplicated
 
-```{r, error=TRUE}
+```{r Names-values-32, error=TRUE}
 e <- rlang::env(a = 1, b = "3")
 tracemem(e)
 ```
@@ -453,6 +453,6 @@ tracemem(e)
 
 ## Session information
 
-```{r}
+```{r Names-values-33}
 sessioninfo::session_info(include_base = TRUE)
 ```

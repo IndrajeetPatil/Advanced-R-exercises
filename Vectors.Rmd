@@ -1,6 +1,6 @@
 # Vectors
 
-```{r, include = FALSE}
+```{r Vectors-1, include = FALSE}
 source("common.R")
 ```
 
@@ -14,7 +14,7 @@ source("common.R")
 
 The raw type holds raw bytes, and can be created using `charToRaw()`. For example,
 
-```{r}
+```{r Vectors-2}
 x <- "A string"
 
 (y <- charToRaw(x))
@@ -24,7 +24,7 @@ typeof(y)
 
 An alternative is to use `as.raw()`:
 
-```{r}
+```{r Vectors-3}
 as.raw("–") # en-dash
 as.raw("—") # em-dash
 ```
@@ -35,7 +35,7 @@ Complex vectors are used to represent (surprise!) complex numbers.
 
 Example of a complex scalar:
 
-```{r}
+```{r Vectors-4}
 (x <- complex(length.out = 1, real = 1, imaginary = 8))
 
 typeof(x)
@@ -43,7 +43,7 @@ typeof(x)
 
 **Q2.** Test your knowledge of the vector coercion rules by predicting the output of the following uses of `c()`:
 
-```{r, eval=FALSE}
+```{r Vectors-5, eval=FALSE}
 c(1, FALSE)
 c("a", 1)
 c(TRUE, 1L)
@@ -51,7 +51,7 @@ c(TRUE, 1L)
 
 **A2.** The vector coercion rules dictate that the data type with smaller size will be converted to data type with bigger size.
 
-```{r}
+```{r Vectors-6}
 c(1, FALSE)
 
 c("a", 1)
@@ -63,19 +63,19 @@ c(TRUE, 1L)
 
 **A3.** The coercion rules for vectors reveal why some of these comparisons return the results that they do.
 
-```{r}
+```{r Vectors-7}
 1 == "1"
 
 c(1, "1")
 ```
 
-```{r}
+```{r Vectors-8}
 -1 < FALSE
 
 c(-1, FALSE)
 ```
 
-```{r}
+```{r Vectors-9}
 "one" < 2
 
 c("one", 2)
@@ -89,7 +89,7 @@ sort(c("one", 2))
 
 So `NA` defaulting to any other type (e.g. `"numeric"`) would mean that any time there is a missing element in a vector, rest of the elements would be converted to a type higher in hierarchy, which would be problematic for types lower in hierarchy.
 
-```{r}
+```{r Vectors-10}
 typeof(NA)
 
 c(FALSE, NA_character_)
@@ -107,7 +107,7 @@ Quoting docs:
 
 > `is.atomic` is true for the atomic types ("logical", "integer", "numeric", "complex", "character" and "raw") and `NULL`.
 
-```{r}
+```{r Vectors-11}
 is.atomic(NULL)
 
 is.atomic(list(NULL))
@@ -121,7 +121,7 @@ Its documentation says:
 
 Therefore, this function only checks for `double` and `integer` base types and not other types based on top of these types (`factor`, `Date`, `POSIXt`, or `difftime`).
 
-```{r}
+```{r Vectors-12}
 is.numeric(1L)
 
 is.numeric(factor(1L))
@@ -135,7 +135,7 @@ As per its documentation:
 
 Thus, the function can be incorrectif the object has attributes other than `names`.
 
-```{r}
+```{r Vectors-13}
 x <- c("x" = 1, "y" = 2)
 
 is.vector(x)
@@ -147,7 +147,7 @@ is.vector(x)
 
 A better way to check for a vector:
 
-```{r}
+```{r Vectors-14}
 is.null(dim(x))
 ```
 
@@ -159,13 +159,13 @@ is.null(dim(x))
 
 - `setNames()`
 
-```{r}
+```{r Vectors-15}
 setNames
 ```
 
 Given this function signature, we can see why, when no first argument is given, the result is still a named vector.
 
-```{r}
+```{r Vectors-16}
 setNames(, c("a", "b"))
 
 setNames(c(1, 2), c("a", "b"))
@@ -173,13 +173,13 @@ setNames(c(1, 2), c("a", "b"))
 
 - `unname()`
 
-```{r}
+```{r Vectors-17}
 unname
 ```
 
 `unname()` removes existing names (or dimnames) by setting them to `NULL`.
 
-```{r}
+```{r Vectors-18}
 unname(setNames(, c("a", "b")))
 ```
 
@@ -187,14 +187,14 @@ unname(setNames(, c("a", "b")))
 
 **A2.** Dimensions for a 1-dimensional vector are `NULL`. For example,
 
-```{r}
+```{r Vectors-19}
 dim(c(1, 2))
 ```
 
 
 `NROW()` and `NCOL()` are helpful for getting dimensions for 1D vectors by treating them as if they were matrices or dataframes.
 
-```{r}
+```{r Vectors-20}
 # example-1
 x <- character(0)
 
@@ -220,7 +220,7 @@ NCOL(y)
 
 **Q3.** How would you describe the following three objects? What makes them different from `1:5`?
 
-```{r}
+```{r Vectors-21}
 x1 <- array(1:5, c(1, 1, 5))
 x2 <- array(1:5, c(1, 5, 1))
 x3 <- array(1:5, c(5, 1, 1))
@@ -232,7 +232,7 @@ x3 <- array(1:5, c(5, 1, 1))
 
 **Q4.** An early draft used this code to illustrate `structure()`:
 
-```{r}
+```{r Vectors-22}
 structure(1:5, comment = "my attribute")
 ```
 
@@ -242,7 +242,7 @@ But when you print that object you don't see the comment attribute. Why? Is the 
 
 > Note that some attributes (namely class, **comment**, dim, dimnames, names, row.names and tsp) are treated specially and have restrictions on the values which can be set.
 
-```{r}
+```{r Vectors-23}
 structure(1:5, x = "my attribute")
 
 structure(1:5, comment = "my attribute")
@@ -254,7 +254,7 @@ structure(1:5, comment = "my attribute")
 
 **A1.** `table()` returns an array of `integer` type and its dimensions scale with the number of variables present.
 
-```{r}
+```{r Vectors-24}
 (x <- table(mtcars$am))
 (y <- table(mtcars$am, mtcars$cyl))
 (z <- table(mtcars$am, mtcars$cyl, mtcars$vs))
@@ -268,14 +268,14 @@ purrr::map(list(x, y, z), attributes)
 
 **Q2.** What happens to a factor when you modify its levels? 
 
-```{r, results = FALSE}
+```{r Vectors-25, results = FALSE}
 f1 <- factor(letters)
 levels(f1) <- rev(levels(f1))
 ```
 
 **A2.** Its levels change but the underlying integer values remain the same.
 
-```{r}
+```{r Vectors-26}
 f1 <- factor(letters)
 f1
 as.integer(f1)
@@ -287,7 +287,7 @@ as.integer(f1)
 
 **Q3.** What does this code do? How do `f2` and `f3` differ from `f1`?
 
-```{r, results = FALSE}
+```{r Vectors-27, results = FALSE}
 f2 <- rev(factor(letters))
 f3 <- factor(letters, levels = rev(letters))
 ```
@@ -296,7 +296,7 @@ f3 <- factor(letters, levels = rev(letters))
 
 - `f2`: Only the underlying integers are reversed, but levels remain unchanged.
 
-```{r}
+```{r Vectors-28}
 f2 <- rev(factor(letters))
 f2
 as.integer(f2)
@@ -304,7 +304,7 @@ as.integer(f2)
 
 - `f3`: Both the levels and the underlying integers are reversed.
 
-```{r}
+```{r Vectors-29}
 f3 <- factor(letters, levels = rev(letters))
 f3
 as.integer(f3)
@@ -327,7 +327,7 @@ as.integer(f3)
 
 **A2.** A list already *is* a (generic) vector, so `as.vector()` is not going to change anything, and there is no `as.atomic.vector`. Thus, we need to use `unlist()`.
 
-```{r}
+```{r Vectors-30}
 x <- list(a = 1, b = 2)
 
 is.vector(x)
@@ -344,14 +344,14 @@ unlist(x)
 
 **A3.** Let's first create a date and datetime object
 
-```{r}
+```{r Vectors-31}
 date <- as.Date("1947-08-15")
 datetime <- as.POSIXct("1950-01-26 00:01", tz = "UTC")
 ```
 
 And check their attributes and underlying `double` representation:
 
-```{r}
+```{r Vectors-32}
 attributes(date)
 attributes(datetime)
 
@@ -363,7 +363,7 @@ as.double(datetime) # number of seconds since then
 
 Since `S3` method for `c()` dispatches on the first argument, the resulting class of the vector is going to be the same as the first argument. Because of this, some attributes will be lost.
 
-```{r}
+```{r Vectors-33}
 c(date, datetime)
 
 attributes(c(date, datetime))
@@ -377,7 +377,7 @@ attributes(c(datetime, date))
 
 It removes all attributes and we are left only with the underlying double representations of these objects.
 
-```{r}
+```{r Vectors-34}
 unlist(list(date, datetime))
 
 unlist(list(datetime, date))
@@ -389,19 +389,19 @@ unlist(list(datetime, date))
 
 **A1.** Data frame with 0 rows is possible. This is basically a list with a vector of length 0.
 
-```{r}
+```{r Vectors-35}
 data.frame(x = numeric(0))
 ```
 
 Data frame with 0 columns is also possible. This will be an empty list.
 
-```{r}
+```{r Vectors-36}
 data.frame(row.names = 1)
 ```
 
 And, finally, data frame with 0 rows *and* columns is also possible:
 
-```{r}
+```{r Vectors-37}
 data.frame()
 
 dim(data.frame())
@@ -409,7 +409,7 @@ dim(data.frame())
 
 Although, it might not be common to *create* such data frames, they can be results of subsetting. For example,
 
-```{r}
+```{r Vectors-38}
 BOD[0, ]
 
 BOD[, 0]
@@ -421,7 +421,7 @@ BOD[0, 0]
 
 **A2.** If you attempt to set data frame rownames that are not unique, it will not work.
 
-```{r, error=TRUE}
+```{r Vectors-39, error=TRUE}
 data.frame(row.names = c(1, 1))
 ```
 
@@ -432,7 +432,7 @@ data.frame(row.names = c(1, 1))
 - transforms it into a matrix 
 - coerces all its elements to be of the same type
 
-```{r}
+```{r Vectors-40}
 # original
 (df <- head(iris))
 
@@ -468,7 +468,7 @@ As docs for `as.matrix()` mention:
 
 Let's experiment:
 
-```{r}
+```{r Vectors-41}
 # example with mixed types (coerced to character)
 (df <- head(iris))
 
@@ -490,7 +490,7 @@ From documentation of `data.matrix()`:
 
 Let's experiment:
 
-```{r}
+```{r Vectors-42}
 data.matrix(df)
 
 str(data.matrix(df))
@@ -498,6 +498,6 @@ str(data.matrix(df))
 
 ## Session information
 
-```{r}
+```{r Vectors-43}
 sessioninfo::session_info(include_base = TRUE)
 ```

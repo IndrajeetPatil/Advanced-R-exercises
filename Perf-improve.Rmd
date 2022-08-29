@@ -1,12 +1,12 @@
 # Improving performance
 
-```{r, include = FALSE}
+```{r Perf-improve-1, include = FALSE}
 source("common.R")
 ```
 
 Attaching the needed libraries:
 
-```{r, warning=FALSE, message=FALSE}
+```{r Perf-improve-2, warning=FALSE, message=FALSE}
 library(ggplot2)
 ```
 
@@ -26,7 +26,7 @@ Here are some of the available options:
 
 High performances can be obtained with these packages especially if R is linked against an optimized BLAS, such as ATLAS. You can check this information using `sessionInfo()`:
 
-```{r}
+```{r Perf-improve-3}
 sessInfo <- sessionInfo()
 sessInfo$matprod
 sessInfo$LAPACK
@@ -34,7 +34,7 @@ sessInfo$LAPACK
 
 Comparing performance of different alternatives:
 
-```{r}
+```{r Perf-improve-4}
 library(gapminder)
 
 # having a look at the data
@@ -64,7 +64,7 @@ Let's try.
 
 With a small vector, `fmatch()` is only slightly faster, but of the same order of magnitude.
 
-```{r}
+```{r Perf-improve-5}
 library(fastmatch, warn.conflicts = FALSE)
 
 small_vec <- c("a", "b", "x", "m", "n", "y")
@@ -79,7 +79,7 @@ bench::mark(
 
 But, with a larger vector, `fmatch()` is only orders of magnitude faster! ⚡
 
-```{r}
+```{r Perf-improve-6}
 large_vec <- c(rep(c("a", "b"), 1e4), "x", rep(c("m", "n"), 1e6), "y")
 
 length(large_vec)
@@ -92,13 +92,13 @@ bench::mark(
 
 We can also look at the hash table:
 
-```{r}
+```{r Perf-improve-7}
 fmatch.hash(c("x", "y"), small_vec)
 ```
 
 Additionally, `{fastmatch}` also provides a similar infix operator:
 
-```{r}
+```{r Perf-improve-8}
 library(fastmatch)
 
 small_vec <- c("a", "b", "x", "m", "n", "y")
@@ -114,31 +114,31 @@ c("x", "y") %fin% small_vec
 
 - `base::as.POSIXct()`
 
-```{r}
+```{r Perf-improve-9}
 base::as.POSIXct("2022-05-05 09:23:22")
 ```
 
 - `base::as.POSIXlt()`
 
-```{r}
+```{r Perf-improve-10}
 base::as.POSIXlt("2022-05-05 09:23:22")
 ```
 
 - `lubridate::ymd_hms()`
 
-```{r}
+```{r Perf-improve-11}
 lubridate::ymd_hms("2022-05-05-09-23-22")
 ```
 
 - `fasttime::fastPOSIXct()`
 
-```{r}
+```{r Perf-improve-12}
 fasttime::fastPOSIXct("2022-05-05 09:23:22")
 ```
 
 Comparing them, we can see that `fasttime::fastPOSIXct()` has the best performance:
 
-```{r}
+```{r Perf-improve-13}
 bench::mark(
   "as.POSIXct" = base::as.POSIXct("2022-05-05 09:23:22"),
   "as.POSIXlt" = base::as.POSIXlt("2022-05-05 09:23:22"),
@@ -184,19 +184,19 @@ Looking at the source code,
 
 - `rowSums()` function does a number of checks to validate if the arguments are acceptable
 
-```{r}
+```{r Perf-improve-14}
 rowSums
 ```
 
 - `.rowSums()` directly proceeds to computation using an internal code which is built in to the R interpreter
 
-```{r}
+```{r Perf-improve-15}
 .rowSums
 ```
 
 But they have comparable performance:
 
-```{r}
+```{r Perf-improve-16}
 x <- cbind(x1 = 3, x2 = c(4:1e4, 2:1e5))
 
 bench::mark(
@@ -216,7 +216,7 @@ bench::mark(
 
 This leaves us with a much simpler, bare bones implementation:
 
-```{r}
+```{r Perf-improve-17}
 my_chisq_test <- function(x, y) {
   x <- table(x, y)
   n <- sum(x)
@@ -256,7 +256,7 @@ my_chisq_test <- function(x, y) {
 
 And, indeed, this custom function performs slightly better^[Deliberately choosing a larger dataset to stress test the new function.] than its base equivalent:
 
-```{r, warning=FALSE}
+```{r Perf-improve-18, warning=FALSE}
 m <- c(rep("a", 1000), rep("b", 9000))
 n <- c(rep(c("x", "y"), 5000))
 
@@ -276,7 +276,7 @@ bench::mark(
 
 In addition to this removal, we can also use `fastmatch::fmatch()` instead of `match()`:
 
-```{r}
+```{r Perf-improve-19}
 my_table <- function(x, y) {
   x_sorted <- sort(unique(x))
   y_sorted <- sort(unique(y))
@@ -301,7 +301,7 @@ my_table <- function(x, y) {
 
 The custom does perform slightly better:
 
-```{r}
+```{r Perf-improve-20}
 x <- c(rep("a", 1000), rep("b", 9000))
 y <- c(rep(c("x", "y"), 5000))
 
@@ -315,7 +315,7 @@ bench::mark(
 
 We can also use this function in our custom chi-squared test function and see if the performance improves any further:
 
-```{r}
+```{r Perf-improve-21}
 my_chisq_test2 <- function(x, y) {
   x <- my_table(x, y)
   n <- sum(x)
@@ -355,7 +355,7 @@ my_chisq_test2 <- function(x, y) {
 
 And, indeed, this new version of the custom function performs even better than it previously did:
 
-```{r, warning=FALSE}
+```{r Perf-improve-22, warning=FALSE}
 m <- c(rep("a", 1000), rep("b", 9000))
 n <- c(rep(c("x", "y"), 5000))
 
@@ -371,7 +371,7 @@ bench::mark(
 
 **A1.** The density function family has the following interface:
 
-```{r, eval=FALSE}
+```{r Perf-improve-23, eval=FALSE}
 dnorm(x, mean = 0, sd = 1, log = FALSE)
 pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
 qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
@@ -383,19 +383,19 @@ Reading the documentation reveals that the following parameters are vectorized:
 
 This means that something like the following will work:
 
-```{r}
+```{r Perf-improve-24}
 rnorm(c(1, 2, 3), mean = c(0, -1, 5))
 ```
 
 But, for functions that don't have multiple vectorized parameters, it won't. For example,
 
-```{r, error=TRUE}
+```{r Perf-improve-25, error=TRUE}
 trimws(c("  a ", " bc", "  abc  "), which = c("left", "right"))
 ```
 
 The following function call generates 10 random numbers (since `n = 10`) with 10 different distributions with means supplied by the vector `10:1`.
 
-```{r}
+```{r Perf-improve-26}
 rnorm(n = 10, mean = 10:1)
 ```
 
@@ -403,7 +403,7 @@ rnorm(n = 10, mean = 10:1)
 
 **A2.** We can write a custom function to vary number of rows in a matrix and extract a data frame comparing performance of these two functions.
 
-```{r}
+```{r Perf-improve-27}
 benchPerform <- function(nRow, nCol = 100) {
   x <- matrix(data = rnorm(nRow * nCol), nrow = nRow, ncol = nCol)
 
@@ -427,7 +427,7 @@ benchDF <- purrr::map_dfr(
 
 Plotting this data reveals that `rowSums(x)` has *O*(1) behavior, while *O*(n) (?) behavior.
 
-```{r}
+```{r Perf-improve-28}
 ggplot(
   benchDF,
   aes(
@@ -450,7 +450,7 @@ ggplot(
 
 **A3.** Both of these functions provide a way to compute a weighted sum:
 
-```{r}
+```{r Perf-improve-29}
 x <- c(1:6, 2, 3)
 w <- rnorm(length(x))
 
@@ -460,7 +460,7 @@ sum(x * w)[[1]]
 
 But benchmarking their performance reveals that the latter is almost twice as fast as the former!
 
-```{r}
+```{r Perf-improve-30}
 bench::mark(
   crossprod(x, w)[[1]],
   sum(x * w)[[1]],

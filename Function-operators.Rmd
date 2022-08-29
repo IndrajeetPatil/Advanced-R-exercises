@@ -1,12 +1,12 @@
 # Function operators
 
-```{r, include = FALSE}
+```{r Function-operators-1, include = FALSE}
 source("common.R")
 ```
 
 Attaching the needed libraries:
 
-```{r, warning=FALSE, message=FALSE}
+```{r Function-operators-2, warning=FALSE, message=FALSE}
 library(purrr, warn.conflicts = FALSE)
 ```
 
@@ -25,7 +25,7 @@ The problem is to build a hybrid between the following functions:
 
 in order to find indices of matching numeric values for the given threshold.
 
-```{r}
+```{r Function-operators-3}
 which_near <- function(x, y, tolerance) {
   # Vectorize `dplyr::near()` function only over the `y` argument.
   # Note that that `Vectorize()` is a function operator and will return a function.
@@ -50,7 +50,7 @@ which_near <- function(x, y, tolerance) {
  
 Let's use it:
 
-```{r}
+```{r Function-operators-4}
 x1 <- c(2.1, 3.3, 8.45, 8, 6)
 x2 <- c(6, 8.40, 3)
 
@@ -69,7 +69,7 @@ We solved a complex task here using the `Vectorize()` function!
 
 **A2.** Let's have a look at the source code for this function:
 
-```{r}
+```{r Function-operators-5}
 possibly
 ```
 
@@ -85,7 +85,7 @@ Looking at this code, we can see that `possibly()`:
 
 **A3.** Let's have a look at the source code for this function:
 
-```{r}
+```{r Function-operators-6}
 safely
 
 purrr:::capture_error
@@ -132,7 +132,7 @@ Here, the first dot is printed after the 9th download is finished, and the 10th 
 
 **A3.** First, let's create helper functions to compare and print added or removed filenames:
 
-```{r}
+```{r Function-operators-7}
 print_multiple_entries <- function(header, entries) {
   message(paste0(header, ":\n"), paste0(entries, collapse = "\n"))
 }
@@ -152,7 +152,7 @@ file_comparator <- function(old, new) {
 
 We can then write a function operator and use it to create functions that will do the necessary tracking:
 
-```{r}
+```{r Function-operators-8}
 dir_tracker <- function(f) {
   force(f)
   function(...) {
@@ -169,7 +169,7 @@ file_deletion_tracker <- dir_tracker(file.remove)
 
 Let's try it out:
 
-```{r}
+```{r Function-operators-9}
 file_creation_tracker(c("a.txt", "b.txt"))
 
 file_deletion_tracker(c("a.txt", "b.txt"))
@@ -190,7 +190,7 @@ Other global function effects we might want to track:
 
 **A4.** The following function operator logs a timestamp and message to a file every time a function is run:
 
-```{r}
+```{r Function-operators-10}
 # helper function to write to a file connection
 write_line <- function(filepath, ...) {
   cat(..., "\n", sep = "", file = filepath, append = TRUE)
@@ -232,7 +232,7 @@ withr::with_tempfile("logfile", code = {
 
 **A5.** Modified version of the function meeting the specified requirements:
 
-```{r}
+```{r Function-operators-11}
 delay_by_atleast <- function(f, amount) {
   force(f)
   force(amount)
@@ -259,6 +259,6 @@ delay_by_atleast <- function(f, amount) {
 
 ## Session information
 
-```{r}
+```{r Function-operators-12}
 sessioninfo::session_info(include_base = TRUE)
 ```

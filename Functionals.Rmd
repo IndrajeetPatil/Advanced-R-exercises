@@ -1,12 +1,12 @@
 # Functionals
 
-```{r, include = FALSE}
+```{r Functionals-1, include = FALSE}
 source("common.R")
 ```
 
 Attaching the needed libraries:
 
-```{r, warning=FALSE, message=FALSE}
+```{r Functionals-2, warning=FALSE, message=FALSE}
 library(purrr, warn.conflicts = FALSE)
 ```
 
@@ -22,7 +22,7 @@ library(purrr, warn.conflicts = FALSE)
 
 Looking at the experimentation below with `map()` and `as_mapper()`, we can see that, depending on the type of the input, `as_mapper()` creates an extractor function using `pluck()`.
 
-```{r}
+```{r Functionals-3}
 # mapping by position -----------------------
 
 x <- list(1, list(2, 3, list(1, 2)))
@@ -55,7 +55,7 @@ as_mapper(~ length(.x))
 
 - You can extract attributes using `purrr::attr_getter()`:
 
-```{r}
+```{r Functionals-4}
 pluck(Titanic, attr_getter("class"))
 ```
 
@@ -65,7 +65,7 @@ pluck(Titanic, attr_getter("class"))
 
 **A2.** As shown by `as_mapper()` outputs below, the second call is not appropriate for generating random numbers because it translates to `pluck()` function where the indices for plucking are taken to be randomly generated numbers, and these are not valid accessors and so we get `NULL`s in return.
 
-```{r}
+```{r Functionals-5}
 map(1:3, ~ runif(2))
 as_mapper(~ runif(2))
 
@@ -87,20 +87,20 @@ as_mapper(runif(2))
 
 - Compute the standard deviation of every column in a numeric data frame:
 
-```{r}
+```{r Functionals-6}
 map_dbl(mtcars, sd)
 ```
 
 - Compute the standard deviation of every numeric column in a mixed data frame:
 
-```{r}
+```{r Functionals-7}
 keep(iris, is.numeric) %>%
   map_dbl(sd)
 ```
 
 - Compute the number of levels for every factor in a data frame:
 
-```{r}
+```{r Functionals-8}
 modify_if(dplyr::starwars, is.character, as.factor) %>%
   keep(is.factor) %>%
   map_int(~ length(levels(.)))
@@ -110,7 +110,7 @@ modify_if(dplyr::starwars, is.character, as.factor) %>%
 
 **Q4.** The following code simulates the performance of a *t*-test for non-normal data. Extract the *p*-value from each test, then visualise.
 
-```{r}
+```{r Functionals-9}
 trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(7, 10)))
 ```
 
@@ -118,7 +118,7 @@ trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(7, 10)))
 
 - Extract the *p*-value from each test:
 
-```{r}
+```{r Functionals-10}
 trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(7, 10)))
 
 (p <- map_dbl(trials, "p.value"))
@@ -126,7 +126,7 @@ trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(7, 10)))
 
 - Visualise the extracted *p*-values:
 
-```{r}
+```{r Functionals-11}
 plot(p)
 
 hist(p)
@@ -136,7 +136,7 @@ hist(p)
 
 **Q5.** The following code uses a map nested inside another map to apply a function to every element of a nested list. Why does it fail, and  what do you need to do to make it work?
 
-```{r, error = TRUE}
+```{r Functionals-12, error = TRUE}
 x <- list(
   list(1, c(3, 9)),
   list(c(3, 6), 7, c(4, 7, 6))
@@ -148,7 +148,7 @@ map(x, map, .f = triple)
 
 **A5.** This function fails because this call effectively evaluates to the following:
 
-```{r, eval=FALSE}
+```{r Functionals-13, eval=FALSE}
 map(.x = x, .f = ~ triple(x = .x, map))
 ```
 
@@ -156,7 +156,7 @@ But `triple()` has only one parameter (`x`), and so the execution fails.
 
 Here is the fixed version:
 
-```{r}
+```{r Functionals-14}
 x <- list(
   list(1, c(3, 9)),
   list(c(3, 6), 7, c(4, 7, 6))
@@ -170,7 +170,7 @@ map(x, .f = ~ map(.x, ~ triple(.x)))
 
 **Q6.** Use `map()` to fit linear models to the `mtcars` dataset using the formulas stored in this list:
 
-```{r}
+```{r Functionals-15}
 formulas <- list(
   mpg ~ disp,
   mpg ~ I(1 / disp),
@@ -181,7 +181,7 @@ formulas <- list(
 
 **A6.** Fitting linear models to the `mtcars` dataset using the provided formulas:
 
-```{r}
+```{r Functionals-16}
 formulas <- list(
   mpg ~ disp,
   mpg ~ I(1 / disp),
@@ -196,7 +196,7 @@ map(formulas, ~ lm(formula = ., data = mtcars))
 
 **Q7.** Fit the model `mpg ~ disp` to each of the bootstrap replicates of `mtcars` in the list below, then extract the $R^2$ of the model fit (Hint: you can compute the $R^2$ with `summary()`.)
 
-```{r, eval=FALSE}
+```{r Functionals-17, eval=FALSE}
 bootstrap <- function(df) {
   df[sample(nrow(df), replace = TRUE), , drop = FALSE]
 }
@@ -206,7 +206,7 @@ bootstraps <- map(1:10, ~ bootstrap(mtcars))
 
 **A7.** This can be done using `map_dbl()`:
 
-```{r}
+```{r Functionals-18}
 bootstrap <- function(df) {
   df[sample(nrow(df), replace = TRUE), , drop = FALSE]
 }
@@ -229,7 +229,7 @@ bootstraps %>%
 
 **A1.** `modify()` returns the object of type same as the input. Since the input here is a data frame of certain dimensions and `.f = 1` translates to plucking the first element in each column, it returns a data frame with the same dimensions with the plucked element recycled across rows.
 
-```{r}
+```{r Functionals-19}
 head(modify(mtcars, 1))
 ```
 
@@ -237,7 +237,7 @@ head(modify(mtcars, 1))
 
 **Q2.** Rewrite the following code to use `iwalk()` instead of `walk2()`. What are the advantages and disadvantages?
 
-```{r, eval = FALSE}
+```{r Functionals-20, eval = FALSE}
 cyls <- split(mtcars, mtcars$cyl)
 paths <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
 walk2(cyls, paths, write.csv)
@@ -245,7 +245,7 @@ walk2(cyls, paths, write.csv)
 
 **A2.** Let's first rewrite provided code using `iwalk()`:
 
-```{r, eval=FALSE}
+```{r Functionals-21, eval=FALSE}
 cyls <- split(mtcars, mtcars$cyl)
 names(cyls) <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
 iwalk(cyls, ~ write.csv(.x, .y))
@@ -260,7 +260,7 @@ In `walk2()`, it's explicit what `.x` (`= cyls`) and `.y` (`= paths`) correspond
 
 **Q3.** Explain how the following code transforms a data frame using functions stored in a list.
 
-```{r}
+```{r Functionals-22}
 trans <- list(
   disp = function(x) x * 0.0163871,
   am = function(x) factor(x, labels = c("auto", "manual"))
@@ -272,13 +272,13 @@ mtcars[nm] <- map2(trans, mtcars[nm], function(f, var) f(var))
 
 Compare and contrast the `map2()` approach to this `map()` approach:
 
-```{r, eval = FALSE}
+```{r Functionals-23, eval = FALSE}
 mtcars[nm] <- map(nm, ~ trans[[.x]](mtcars[[.x]]))
 ```
 
 **A3.** `map2()` supplies the functions stored in `trans` as anonymous functions via placeholder `f`, while the names of the columns specified in `mtcars[nm]` are supplied as `var` argument to the anonymous function. Note that the function is iterating over indices for vectors of transformations and column names.
 
-```{r, eval=FALSE}
+```{r Functionals-24, eval=FALSE}
 trans <- list(
   disp = function(x) x * 0.0163871,
   am = function(x) factor(x, labels = c("auto", "manual"))
@@ -290,7 +290,7 @@ mtcars[nm] <- map2(trans, mtcars[nm], function(f, var) f(var))
 
 In the `map()` approach, the function is iterating over indices for vectors of column names.
 
-```{r, eval=FALSE}
+```{r Functionals-25, eval=FALSE}
 mtcars[nm] <- map(nm, ~ trans[[.x]](mtcars[[.x]]))
 ```
 
@@ -302,7 +302,7 @@ The latter approach can't afford passing arguments to placeholders in an anonymo
 
 **A4.** If we use `map2()`, it will work, but it will print `NULL`s to the console for every list element.
 
-```{r}
+```{r Functionals-26}
 withr::with_tempdir(
   code = {
     ls <- split(mtcars, mtcars$cyl)
@@ -326,7 +326,7 @@ withr::with_tempdir(
 
 The `is.na()` function does not return a `logical` scalar, but instead returns a vector and thus isn't a predicate function.
 
-```{r}
+```{r Functionals-27}
 # contrast the following behavior of predicate functions
 is.character(c("x", 2))
 is.null(c(3, NULL))
@@ -337,7 +337,7 @@ is.na(c(NA, 1))
 
 The closest equivalent of a predicate function in base-R is `anyNA()` function.
 
-```{r}
+```{r Functionals-28}
 anyNA(c(NA, 1))
 ```
 
@@ -345,7 +345,7 @@ anyNA(c(NA, 1))
 
 **Q2.** `simple_reduce()` has a problem when `x` is length 0 or length 1. Describe the source of the problem and how you might go about fixing it.
 
-```{r}
+```{r Functionals-29}
 simple_reduce <- function(x, f) {
   out <- x[[1]]
   for (i in seq(2, length(x))) {
@@ -357,7 +357,7 @@ simple_reduce <- function(x, f) {
 
 **A2.** The supplied function struggles with inputs of length 0 and 1 because function tries to subscript out-of-bound values.
 
-```{r, error=TRUE}
+```{r Functionals-30, error=TRUE}
 simple_reduce(numeric(), sum)
 simple_reduce(1, sum)
 simple_reduce(1:3, sum)
@@ -365,7 +365,7 @@ simple_reduce(1:3, sum)
 
 This problem can be solved by adding `init` argument, which supplies the default or initial value:
 
-```{r}
+```{r Functionals-31}
 simple_reduce2 <- function(x, f, init = 0) {
   # initializer will become the first value
   if (length(x) == 0L) {
@@ -388,7 +388,7 @@ simple_reduce2 <- function(x, f, init = 0) {
 
 Let's try it out:
 
-```{r}
+```{r Functionals-32}
 simple_reduce2(numeric(), sum)
 simple_reduce2(1, sum)
 simple_reduce2(1:3, sum)
@@ -396,7 +396,7 @@ simple_reduce2(1:3, sum)
 
 Depending on the function, we can provide a different `init` argument:
 
-```{r}
+```{r Functionals-33}
 simple_reduce2(numeric(), `*`, init = 1)
 simple_reduce2(1, `*`, init = 1)
 simple_reduce2(1:3, `*`, init = 1)
@@ -408,7 +408,7 @@ simple_reduce2(1:3, `*`, init = 1)
 
 **A3.** Implementation of `span()`:
 
-```{r}
+```{r Functionals-34}
 span <- function(x, f) {
   running_lengths <- purrr::map_lgl(x, ~ f(.x)) %>% rle()
 
@@ -439,7 +439,7 @@ span <- function(x, f) {
 
 Testing it once:
 
-```{r}
+```{r Functionals-35}
 span(c(0, 0, 0, 0, 0), is.na)
 span(c(NA, 0, NA, NA, NA), is.na)
 span(c(NA, 0, 0, 0, 0), is.na)
@@ -448,7 +448,7 @@ span(c(NA, NA, 0, 0, 0), is.na)
 
 Testing it twice:
 
-```{r}
+```{r Functionals-36}
 span(c(3, 1, 2, 4, 5, 6), function(x) x > 3)
 span(c(3, 1, 2, 4, 5, 6), function(x) x > 9)
 span(c(3, 1, 2, 4, 5, 6), function(x) x == 3)
@@ -463,7 +463,7 @@ span(c(3, 1, 2, 4, 5, 6), function(x) x %in% c(2, 4))
 
 - Implementing `arg_max()`
 
-```{r}
+```{r Functionals-37}
 arg_max <- function(.x, .f) {
   df <- dplyr::tibble(
     original = .x,
@@ -479,7 +479,7 @@ arg_max(-5:5, function(x) x^2)
 
 - Implementing `arg_min()`
 
-```{r}
+```{r Functionals-38}
 arg_min <- function(.x, .f) {
   df <- dplyr::tibble(
     original = .x,
@@ -497,7 +497,7 @@ arg_min(-5:5, function(x) x^2)
 
 **Q5.** The function below scales a vector so it falls in the range [0, 1]. How would you apply it to every column of a data frame? How would you apply it to every numeric column in a data frame?
 
-```{r}
+```{r Functionals-39}
 scale01 <- function(x) {
   rng <- range(x, na.rm = TRUE)
   (x - rng[1]) / (rng[2] - rng[1])
@@ -508,13 +508,13 @@ scale01 <- function(x) {
 
 - Applying function to every column in a data frame: We will use `anscombe` as example since it has all numeric columns.
 
-```{r}
+```{r Functionals-40}
 purrr::map_df(head(anscombe), .f = scale01)
 ```
 
 - Applying function to every numeric column in a data frame: We will use `iris` as example since not all of its columns are of numeric type.
 
-```{r}
+```{r Functionals-41}
 purrr::modify_if(head(iris), .p = is.numeric, .f = scale01)
 ```
 
@@ -528,7 +528,7 @@ purrr::modify_if(head(iris), .p = is.numeric, .f = scale01)
 
 **A1.** Let's prepare an array and apply a function over different margins:
 
-```{r}
+```{r Functionals-42}
 (m <- as.array(table(mtcars$cyl, mtcars$am, mtcars$vs)))
 
 # rows
@@ -557,7 +557,7 @@ As mentioned in its documentation:
 
 Here is an example:
 
-```{r}
+```{r Functionals-43}
 library(rlang)
 
 e <- env("x" = 1, "y" = 2)
@@ -574,7 +574,7 @@ eapply(e, as.character)
 
 Here is an example:
 
-```{r}
+```{r Functionals-44}
 X <- list(list(a = TRUE, b = list(c = c(4L, 3.2))), d = 9.0)
 
 rapply(X, as.character, classes = "numeric", how = "replace")
@@ -582,7 +582,7 @@ rapply(X, as.character, classes = "numeric", how = "replace")
 
 `{purrr}` has something similar in `modify_depth()`.
 
-```{r}
+```{r Functionals-45}
 X <- list(list(a = TRUE, b = list(c = c(4L, 3.2))), d = 9.0)
 
 purrr::modify_depth(X, .depth = 2L, .f = length)
@@ -598,7 +598,7 @@ purrr::modify_depth(X, .depth = 2L, .f = length)
 
 Let's first implement a fixed-point algorithm:
 
-```{r}
+```{r Functionals-46}
 close_enough <- function(x1, x2, tolerance = 0.001) {
   if (abs(x1 - x2) < tolerance) {
     return(TRUE)
@@ -621,7 +621,7 @@ find_fixed_point <- function(.f, .guess, tolerance = 0.001) {
 
 Let's check if it works as expected:
 
-```{r}
+```{r Functionals-47}
 find_fixed_point(cos, 1.0)
 
 # cos(x) = x
@@ -632,7 +632,7 @@ We will solve only one exercise from the reading material. Rest are beyond the s
 
 > Show that the golden ratio $\phi$ is a fixed point of the transformation $x \mapsto 1 + 1/x$, and use this fact to compute $\phi$ by means of the fixed-point procedure.
 
-```{r}
+```{r Functionals-48}
 golden_ratio_f <- function(x) 1 + (1 / x)
 
 find_fixed_point(golden_ratio_f, 1.0)
@@ -642,6 +642,6 @@ find_fixed_point(golden_ratio_f, 1.0)
 
 ## Session information
 
-```{r}
+```{r Functionals-49}
 sessioninfo::session_info(include_base = TRUE)
 ```

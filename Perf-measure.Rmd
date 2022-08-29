@@ -1,12 +1,12 @@
 # Measuring performance
 
-```{r, include = FALSE}
+```{r Perf-measure-1, include = FALSE}
 source("common.R")
 ```
 
 Attaching the needed libraries:
 
-```{r, warning=FALSE, message=FALSE}
+```{r Perf-measure-2, warning=FALSE, message=FALSE}
 library(profvis, warn.conflicts = FALSE)
 library(dplyr, warn.conflicts = FALSE)
 ```
@@ -17,7 +17,7 @@ library(dplyr, warn.conflicts = FALSE)
 
 **Q1.** Profile the following function with `torture = TRUE`. What is surprising? Read the source code of `rm()` to figure out what's going on.
 
-```{r, eval = FALSE}
+```{r Perf-measure-3, eval = FALSE}
 f <- function(n = 1e5) {
   x <- rep(1, n)
   rm(x)
@@ -26,19 +26,19 @@ f <- function(n = 1e5) {
 
 **A1.** Let's first source the functions mentioned in exercises.
 
-```{r, warning=FALSE}
+```{r Perf-measure-4, warning=FALSE}
 source("profiling-exercises.R")
 ```
 
 First, we try without `torture = TRUE`: it returns no meaningful results. 
 
-```{r, error=TRUE}
+```{r Perf-measure-5, error=TRUE}
 profvis(f())
 ```
 
 Maybe because the function runs too fast?
 
-```{r}
+```{r Perf-measure-6}
 bench::mark(f(), check = FALSE, iterations = 1000)
 ```
 
@@ -48,13 +48,13 @@ As mentioned in the docs, setting `torture = TRUE`
 
 This process somehow never seems to finish and crashes the RStudio session when it stops!
 
-```{r, eval = FALSE}
+```{r Perf-measure-7, eval = FALSE}
 profvis(f(), torture = TRUE)
 ```
 
 The question says that documentation for `rm()` may provide clues:
 
-```{r}
+```{r Perf-measure-8}
 rm
 ```
 
@@ -68,7 +68,7 @@ I still couldn't figure out why. I would recommend checking out the [official an
 
 **Q1.** Instead of using `bench::mark()`, you could use the built-in function `system.time()`. But `system.time()` is much less precise, so you'll need to repeat each operation many times with a loop, and then divide to find the average time of each operation, as in the code below.
 
-```{r, eval = FALSE}
+```{r Perf-measure-9, eval = FALSE}
 n <- 1e6
 system.time(for (i in 1:n) sqrt(x)) / n
 system.time(for (i in 1:n) x^0.5) / n
@@ -78,7 +78,7 @@ How do the estimates from `system.time()` compare to those from `bench::mark()`?
 
 **A1.** Let's benchmark first:
 
-```{r}
+```{r Perf-measure-10}
 n <- 1e6
 x <- runif(100)
 
@@ -120,7 +120,7 @@ t_systime_df <- tibble(
 
 Compare results from these alternatives:
 
-```{r}
+```{r Perf-measure-11}
 t_bench_df
 
 t_systime_df
@@ -132,7 +132,7 @@ The comparison reveals that these two approaches yield quite similar results.
 
 **Q2.** Here are two other ways to compute the square root of a vector. Which do you think will be fastest? Which will be slowest? Use microbenchmarking to test your answers.
 
-```{r, eval = FALSE}
+```{r Perf-measure-12, eval = FALSE}
 x^(1 / 2)
 exp(log(x) / 2)
 ```
@@ -141,7 +141,7 @@ exp(log(x) / 2)
 
 **A2.** Microbenchmarking all ways to compute square root of a vector mentioned in this chapter.
 
-```{r}
+```{r Perf-measure-13}
 x <- runif(1000)
 
 bench::mark(
@@ -160,6 +160,6 @@ The specialized primitive function `sqrt()` (written in `C`) is the fastest way 
 
 ## Session information
 
-```{r}
+```{r Perf-measure-14}
 sessioninfo::session_info(include_base = TRUE)
 ```

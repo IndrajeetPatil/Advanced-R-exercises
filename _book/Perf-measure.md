@@ -36,7 +36,11 @@ First, we try without `torture = TRUE`: it returns no meaningful results.
 
 ```r
 profvis(f())
-#> Error in parse_rprof(prof_output, expr_source): No parsing data available. Maybe your function was too fast?
+```
+
+```{=html}
+<div id="htmlwidget-d4d5348c5feeb7ac0f86" style="width:100%;height:600px;" class="profvis html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d4d5348c5feeb7ac0f86">{"x":{"message":{"prof":{"time":[1,1,1,1,1,1,1,1,1,1],"depth":[10,9,8,7,6,5,4,3,2,1],"label":["doTryCatch","tryCatchOne","tryCatchList","tryCatchList","tryCatch","profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null,null,null,null,null,null],"linenum":[null,null,null,null,null,null,null,null,null,null],"memalloc":[10.7704849243164,10.7704849243164,10.7704849243164,10.7704849243164,10.7704849243164,10.7704849243164,10.7704849243164,10.7704849243164,10.7704849243164,10.7704849243164],"meminc":[0,0,0,0,0,0,0,0,0,0],"filename":[null,null,null,null,null,null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\RtmpuOlitY\\file3d606ee43379.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script>
 ```
 
 Maybe because the function runs too fast?
@@ -47,7 +51,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           199us    284us     3489.     801KB     49.5
+#> 1 f()           211us    257us     3831.     801KB     54.4
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -153,15 +157,15 @@ t_bench_df
 #> # A tibble: 2 x 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)      1.06us
-#> 2 x^0.5        3.64us
+#> 1 sqrt(x)      1.12us
+#> 2 x^0.5        3.73us
 
 t_systime_df
 #> # A tibble: 2 x 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                  0.98                0.640
-#> 2 x^0.5                    3.42                3.36
+#> 1 sqrt(x)                  1.07                0.670
+#> 2 x^0.5                    3.31                3.3
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -195,10 +199,10 @@ bench::mark(
 #> # A tibble: 4 x 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)          4.5us      5us   152987.    7.86KB
-#> 2 x^(1/2)         25.2us   29.4us    28902.    7.86KB
-#> 3 x^0.5           27.5us     30us    32539.    7.86KB
-#> 4 exp(log(x)/2)   77.4us   96.6us    10477.    7.86KB
+#> 1 sqrt(x)          4.7us    5.7us   139511.    7.86KB
+#> 2 x^(1/2)         27.7us   31.6us    26306.    7.86KB
+#> 3 x^0.5           30.7us   47.4us    21953.    7.86KB
+#> 4 exp(log(x)/2)   78.9us     99us    10132.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0

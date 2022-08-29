@@ -22,7 +22,9 @@
 <link href="libs/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="libs/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
+<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
+<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -92,7 +94,7 @@
 <hr>
 <p><strong>Q1.</strong> <code><a href="https://lubridate.tidyverse.org/reference/period.html">lubridate::period()</a></code> returns an S4 class. What slots does it have? What class is each slot? What accessors does it provide?</p>
 <p><strong>A1.</strong> Let’s first create an instance of <code>Period</code> class:</p>
-<div class="sourceCode" id="cb446"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb447"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org">lubridate</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'lubridate'</span></span>
@@ -103,11 +105,11 @@
 <span><span class="va">x</span></span>
 <span><span class="co">#&gt; [1] "2H 6M 43S"</span></span></code></pre></div>
 <p>It has the following slots:</p>
-<div class="sourceCode" id="cb447"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb448"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/methods/slot.html">slotNames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] ".Data"  "year"   "month"  "day"    "hour"   "minute"</span></span></code></pre></div>
 <p>Additionally, the base type of each slot (<code>numeric</code>) can be seen in <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> output:</p>
-<div class="sourceCode" id="cb448"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb449"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Formal class 'Period' [package "lubridate"] with 6 slots</span></span>
 <span><span class="co">#&gt;   ..@ .Data : num 43</span></span>
@@ -117,7 +119,7 @@
 <span><span class="co">#&gt;   ..@ hour  : num 2</span></span>
 <span><span class="co">#&gt;   ..@ minute: num 6</span></span></code></pre></div>
 <p>The <a href="https://lubridate.tidyverse.org">lubridate</a> package provides accessors to access all of these slots:</p>
-<div class="sourceCode" id="cb449"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb450"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
@@ -133,7 +135,7 @@
 <hr>
 <p><strong>Q2.</strong> What other ways can you find help for a method? Read <code><a href="https://rdrr.io/r/utils/Question.html">?"?"</a></code> and summarise the details.</p>
 <p><strong>A2.</strong> The <code>"?"</code> operator allows access to this documentation in three ways. To demonstrate different ways to access documentation, let’s define a new <code>S4</code> class.</p>
-<div class="sourceCode" id="cb450"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb451"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pow</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">exp</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">exp</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/methods/setGeneric.html">setGeneric</a></span><span class="op">(</span><span class="st">"pow"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "pow"</span></span>
@@ -142,12 +144,12 @@
 <ul>
 <li>The general documentation for a generic can be found with <code>?topic</code>:</li>
 </ul>
-<div class="sourceCode" id="cb451"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb452"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">?</span><span class="va">pow</span></span></code></pre></div>
 <ul>
 <li>The expression <code>type?topic</code> will look for the overall documentation methods for the function <code>f</code>.</li>
 </ul>
-<div class="sourceCode" id="cb452"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb453"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">?</span><span class="va">pow</span> <span class="co"># produces the function documentation</span></span>
 <span></span>
 <span><span class="va">methods</span><span class="op">?</span><span class="va">pow</span> <span class="co"># looks for the overall methods documentation</span></span></code></pre></div>
@@ -160,7 +162,7 @@
 <hr>
 <p><strong>Q1.</strong> Extend the Person class with fields to match <code><a href="https://rdrr.io/r/utils/person.html">utils::person()</a></code>. Think about what slots you will need, what class each slot should have, and what you’ll need to check in your validity method.</p>
 <p><strong>A1.</strong> The code below extends the <code>Person</code> class described in the book to match more closely with <code><a href="https://rdrr.io/r/utils/person.html">utils::person()</a></code>.</p>
-<div class="sourceCode" id="cb453"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb454"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Person"</span>,</span>
 <span>  slots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
 <span>    age     <span class="op">=</span> <span class="st">"numeric"</span>,</span>
@@ -248,7 +250,7 @@
 <span><span class="co">#&gt; Name:       role   comment</span></span>
 <span><span class="co">#&gt; Class: character character</span></span></code></pre></div>
 <p>Let’s make sure that validation works as expected:</p>
-<div class="sourceCode" id="cb454"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb455"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">Person</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Indrajeet"</span>, <span class="st">"Surendra"</span><span class="op">)</span>, <span class="st">"Patil"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in validObject(.Object): invalid class "Person" object: Slots @age, @given, @family, @middle, @email, @comment must be of length 1.</span></span>
 <span><span class="fu">Person</span><span class="op">(</span><span class="st">"Indrajeet"</span>, <span class="st">"Patil"</span>, role <span class="op">=</span> <span class="st">"xyz"</span><span class="op">)</span></span>
@@ -279,13 +281,13 @@
 <hr>
 <p><strong>Q2.</strong> What happens if you define a new S4 class that doesn’t have any slots? (Hint: read about virtual classes in <code><a href="https://rdrr.io/r/methods/setClass.html">?setClass</a></code>.)</p>
 <p><strong>A2.</strong> If you define a new <code>S4</code> class that doesn’t have any slots, it will create <em>virtual</em> classes:</p>
-<div class="sourceCode" id="cb455"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb456"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Empty"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/methods/RClassUtils.html">isVirtualClass</a></span><span class="op">(</span><span class="st">"Empty"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>You can’t create an instance of this class:</p>
-<div class="sourceCode" id="cb456"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb457"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Empty"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in new("Empty"): trying to generate an object from a virtual class ("Empty")</span></span></code></pre></div>
 <p>So how is this useful? As mentioned in <code><a href="https://rdrr.io/r/methods/setClass.html">?setClass</a></code> docs:</p>
@@ -294,7 +296,7 @@
 <p>The most common and useful form of virtual class is the class union, a virtual class that is defined in a call to <code><a href="https://rdrr.io/r/methods/setClassUnion.html">setClassUnion()</a></code> rather than a call to <code><a href="https://rdrr.io/r/methods/setClass.html">setClass()</a></code>.</p>
 </blockquote>
 <p>So virtual classes can still be inherited:</p>
-<div class="sourceCode" id="cb457"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb458"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Nothing"</span>, contains <span class="op">=</span> <span class="st">"Empty"</span><span class="op">)</span></span></code></pre></div>
 <p>In addition to not specifying any slots, here is another way to create virtual classes:</p>
 <blockquote>
@@ -307,7 +309,7 @@
 <li><code>factor</code></li>
 </ul>
 <p>For simplicity, we won’t provide all options that <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code> provides. Note that <code>x</code> has pseudo-class <code>ANY</code> to accept objects of any type.</p>
-<div class="sourceCode" id="cb458"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb459"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Factor"</span>,</span>
 <span>  slots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
 <span>    x       <span class="op">=</span> <span class="st">"ANY"</span>,</span>
@@ -357,7 +359,7 @@
 <li><code>Date</code></li>
 </ul>
 <p>Just like the base-R version, this will have only integer values.</p>
-<div class="sourceCode" id="cb459"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb460"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"Date2"</span>,</span>
 <span>  slots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="st">"integer"</span></span>
@@ -375,7 +377,7 @@
 <li><code>data.frame</code></li>
 </ul>
 <p>The tricky part is supporting the <code>...</code> argument of <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>. For this, we can let the users pass a (named) list.</p>
-<div class="sourceCode" id="cb460"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb461"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"DataFrame"</span>,</span>
 <span>  slots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
 <span>    data      <span class="op">=</span> <span class="st">"list"</span>,</span>
@@ -408,7 +410,7 @@
 <hr>
 <p><strong>Q1.</strong> Add <code>age()</code> accessors for the <code>Person</code> class.</p>
 <p><strong>A1.</strong> We first should define a generic and then a method for our class:</p>
-<div class="sourceCode" id="cb461"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb462"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Indra</span> <span class="op">&lt;-</span> <span class="fu">Person</span><span class="op">(</span><span class="st">"Indrajeet"</span>, <span class="st">"Patil"</span>, role <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"aut"</span>, <span class="st">"cph"</span><span class="op">)</span>, age <span class="op">=</span> <span class="fl">34</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/methods/setGeneric.html">setGeneric</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/standardGeneric.html">standardGeneric</a></span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span>
@@ -420,7 +422,7 @@
 <hr>
 <p><strong>Q2.</strong> In the definition of the generic, why is it necessary to repeat the name of the generic twice?</p>
 <p><strong>A2.</strong> Let’s look at the generic we just defined; the generic name <code>"name"</code> is repeated twice.</p>
-<div class="sourceCode" id="cb462"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb463"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setGeneric.html">setGeneric</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"age"</span>, def <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/standardGeneric.html">standardGeneric</a></span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>This is because:</p>
 <ul>
@@ -428,7 +430,7 @@
 <li>the <code>"age"</code> in argument <code>def</code> supplies the method dispatch</li>
 </ul>
 <p>This is reminiscent of how we defined <code>S3</code> generic, where we also had to repeat the name twice:</p>
-<div class="sourceCode" id="cb463"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb464"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">age</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/UseMethod.html">UseMethod</a></span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
@@ -436,7 +438,7 @@
 <p><strong>Q3.</strong> Why does the <code><a href="https://rdrr.io/r/methods/show.html">show()</a></code> method defined in Section <a href="https://adv-r.hadley.nz/s4.html#show-method">Show method</a> use <code>is(object)[[1]]</code>? (Hint: try printing the employee subclass.)</p>
 <p><strong>A3.</strong> Because we wish to define <code><a href="https://rdrr.io/r/methods/show.html">show()</a></code> method for a specific class, we need to disregard the other super-/sub-classes.</p>
 <p>Always using the first element ensures that the method will be defined for the class in question:</p>
-<div class="sourceCode" id="cb464"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb465"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Alice</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Employee"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/methods/is.html">is</a></span><span class="op">(</span><span class="va">Alice</span><span class="op">)</span></span>
@@ -448,10 +450,10 @@
 <p><strong>Q4.</strong> What happens if you define a method with different argument names to the generic?</p>
 <p><strong>A4.</strong> Let’s experiment with the method we defined in <strong>Q1.</strong> to study this behavior.</p>
 <p>The original method that worked as expected since the argument name between generic and method matched:</p>
-<div class="sourceCode" id="cb465"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb466"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">@</span><span class="va">age</span><span class="op">)</span></span></code></pre></div>
 <p>If this is not the case, we either get a warning or get an error depending on which and how many arguments have been specified:</p>
-<div class="sourceCode" id="cb466"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb467"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">object</span><span class="op">)</span> <span class="va">object</span><span class="op">@</span><span class="va">age</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: For function 'age', signature 'Person': argument in</span></span>
 <span><span class="co">#&gt; method definition changed from (object) to (x)</span></span>
@@ -492,7 +494,7 @@
 <hr>
 <p><strong>Q1.</strong> What would a full <code><a href="https://rdrr.io/r/methods/setOldClass.html">setOldClass()</a></code> definition look like for an ordered factor (i.e. add <code>slots</code> and <code>prototype</code> the definition above)?</p>
 <p><strong>A1.</strong> We can register the old-style/<code>S3</code> <code>ordered</code> class to a formally defined class using <code><a href="https://rdrr.io/r/methods/setOldClass.html">setOldClass()</a></code>.</p>
-<div class="sourceCode" id="cb467"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb468"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setClass.html">setClass</a></span><span class="op">(</span><span class="st">"factor"</span>,</span>
 <span>  contains <span class="op">=</span> <span class="st">"integer"</span>,</span>
 <span>  slots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
@@ -522,7 +524,7 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/methods/setOldClass.html">setOldClass</a></span><span class="op">(</span><span class="st">"ordered"</span>, S4Class <span class="op">=</span> <span class="st">"Ordered"</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s use it to see if it works as expected.</p>
-<div class="sourceCode" id="cb468"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb469"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Ordered"</span>, <span class="fl">1L</span><span class="op">:</span><span class="fl">4L</span>, levels <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">x</span></span>
@@ -546,16 +548,16 @@
 <hr>
 <p><strong>Q2.</strong> Define a <code>length</code> method for the <code>Person</code> class.</p>
 <p><strong>A2.</strong> Because our <code>Person</code> class can be used to create objects that represent multiple people, let’s say the <code><a href="https://rdrr.io/r/base/length.html">length()</a></code> method returns how many persons are in the object.</p>
-<div class="sourceCode" id="cb469"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb470"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Friends</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html">new</a></span><span class="op">(</span><span class="st">"Person"</span>, name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Vishu"</span>, <span class="st">"Aditi"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We can define an <code>S3</code> method for this class:</p>
-<div class="sourceCode" id="cb470"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb471"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">length.Person</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">@</span><span class="va">name</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">Friends</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 2</span></span></code></pre></div>
 <p>Alternatively, we can also write <code>S4</code> method:</p>
-<div class="sourceCode" id="cb471"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb472"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/methods/setMethod.html">setMethod</a></span><span class="op">(</span><span class="st">"length"</span>, <span class="st">"Person"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">@</span><span class="va">name</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">Friends</span><span class="op">)</span></span>
@@ -566,7 +568,7 @@
 <h2>
 <span class="header-section-number">15.6</span> Session information<a class="anchor" aria-label="anchor" href="#session-information-12"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb472"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb473"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; - Session info -------------------------------------------</span></span>
 <span><span class="co">#&gt;  setting  value</span></span>

@@ -8,7 +8,7 @@
 
 Loading the needed libraries:
 
-```{r, warning=FALSE, message=FALSE}
+```{r Environments-1, warning=FALSE, message=FALSE}
 library(rlang, warn.conflicts = FALSE)
 ```
 
@@ -28,13 +28,13 @@ library(rlang, warn.conflicts = FALSE)
 
 **Q2.** Create an environment as illustrated by this picture.
 
-```{r, echo = FALSE, out.width = NULL}
+```{r Environments-2, echo = FALSE, out.width = NULL}
 knitr::include_graphics("diagrams/environments/recursive-1.png")
 ```
 
 **A2.** Creating the environment illustrated in the picture:
 
-```{r}
+```{r Environments-3}
 library(rlang)
 
 e <- env()
@@ -44,19 +44,19 @@ env_print(e)
 
 The binding `loop` should have the same memory address as the environment `e`:
 
-```{r}
+```{r Environments-4}
 lobstr::ref(e$loop)
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
 
-```{r, echo = FALSE, out.width = NULL}
+```{r Environments-5, echo = FALSE, out.width = NULL}
 knitr::include_graphics("diagrams/environments/recursive-2.png")
 ```
 
 **A3.** Creating the specified environment:
 
-```{r}
+```{r Environments-6}
 e1 <- env()
 e2 <- env()
 
@@ -78,7 +78,7 @@ Subsetting a list or a vector returns a subset of the underlying data structure.
 
 **A5.** Create a version of `env_poke()` that doesn't allow re-binding old names:
 
-```{r}
+```{r Environments-7}
 env_poke2 <- function(env, nm, value) {
   if (env_has(env, nm)) {
     abort("Can't re-bind existing names.")
@@ -90,7 +90,7 @@ env_poke2 <- function(env, nm, value) {
 
 Making sure that it behaves as expected:
 
-```{r, error=TRUE}
+```{r Environments-8, error=TRUE}
 e <- env(a = 1, b = 2, c = 3)
 
 # re-binding old names not allowed
@@ -103,7 +103,7 @@ e$d
 
 Contrast this behavior with the following:
 
-```{r}
+```{r Environments-9}
 e <- env(a = 1, b = 2, c = 3)
 
 e$b
@@ -115,7 +115,7 @@ e$b
 
 **Q6.** What does this function do? How does it differ from `<<-` and why might you prefer it?
 
-```{r, error = TRUE}
+```{r Environments-10, error = TRUE}
 rebind <- function(name, value, env = caller_env()) {
   if (identical(env, empty_env())) {
     stop("Can't find `", name, "`", call. = FALSE)
@@ -133,7 +133,7 @@ a
 
 **A6.** The downside of `<<-` is that it will create a new binding if it doesn't exist in the given environment, which is something that we may not wish:
 
-```{r}
+```{r Environments-11}
 # `x` doesn't exist
 exists("x")
 
@@ -149,7 +149,7 @@ x
 
 But `rebind()` function will let us know if the binding doesn't exist, which is much safer:
 
-```{r, error=TRUE}
+```{r Environments-12, error=TRUE}
 rebind <- function(name, value, env = caller_env()) {
   if (identical(env, empty_env())) {
     stop("Can't find `", name, "`", call. = FALSE)
@@ -180,7 +180,7 @@ abc
 
 Since we anticipate more than one environment, we dynamically update a list each time an environment with the specified binding is found. It is important to initialize to an empty list since that signifies that given binding is not found in any of the environments.
 
-```{r}
+```{r Environments-13}
 where <- function(name, env = caller_env()) {
   env_list <- list()
 
@@ -198,7 +198,7 @@ where <- function(name, env = caller_env()) {
 
 Let's try it out:
 
-```{r}
+```{r Environments-14}
 where("yyy")
 
 x <- 5
@@ -215,7 +215,7 @@ detach("package:dplyr")
 
 **A2.** Here is a function that recursively looks for function objects:
 
-```{r}
+```{r Environments-15}
 fget <- function(name, env = caller_env(), inherits = FALSE) {
   # we need only function objects
   f_value <- mget(name,
@@ -243,7 +243,7 @@ fget <- function(name, env = caller_env(), inherits = FALSE) {
 
 Let's try it out:
 
-```{r, error=TRUE}
+```{r Environments-16, error=TRUE}
 fget("mean", inherits = FALSE)
 
 fget("mean", inherits = TRUE)
@@ -262,19 +262,19 @@ rm("mean")
 
 **A1.** The `search_envs()` lists a chain of environments currently attached to the search path and contains exported functions from these packages. The search path always ends at the `{base}` package environment. The search path also includes the global environment.
 
-```{r}
+```{r Environments-17}
 search_envs()
 ```
 
 The `env_parents()` lists all parent environments up until the empty environment. Of course, the global environment itself is not included in this list.
 
-```{r}
+```{r Environments-18}
 env_parents(global_env())
 ```
 
 **Q2.** Draw a diagram that shows the enclosing environments of this function:
 
-```{r, eval = FALSE}
+```{r Environments-19, eval = FALSE}
 f1 <- function(x1) {
   f2 <- function(x2) {
     f3 <- function(x3) {
@@ -289,7 +289,7 @@ f1(1)
 
 **A2.** I don't have access to the graphics software used to create diagrams in the book, so I am linking the diagram from the [official solutions manual](https://advanced-r-solutions.rbind.io/environments.html#special-environments), where you will also find a more detailed description for the figure:
 
-```{r, echo=FALSE, out.width = '100%'}
+```{r Environments-20, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("https://raw.githubusercontent.com/Tazinho/Advanced-R-Solutions/main/images/environments/function_environments_corrected.png")
 ```
 
@@ -297,7 +297,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/Tazinho/Advanced-R-So
 
 **A3.** To write the required function, we can first re-purpose the `fget()` function we wrote above to return the environment in which it was found and its enclosing environment:
 
-```{r}
+```{r Environments-21}
 fget2 <- function(name, env = caller_env()) {
   # we need only function objects
   f_value <- mget(name,
@@ -328,7 +328,7 @@ fget2 <- function(name, env = caller_env()) {
 
 Let's try it out:
 
-```{r}
+```{r Environments-22}
 fget2("mean")
 
 mean <- function() NULL
@@ -338,7 +338,7 @@ rm("mean")
 
 We can now write the new version of `str()` as a wrapper around this function. We only need to foresee that the users might enter the function name either as a symbol or a string.
 
-```{r}
+```{r Environments-23}
 str_function <- function(.f) {
   fget2(as_string(ensym(.f)))
 }
@@ -346,7 +346,7 @@ str_function <- function(.f) {
 
 Let's first try it with `base::mean()`:
 
-```{r}
+```{r Environments-24}
 str_function(mean)
 
 str_function("mean")
@@ -354,7 +354,7 @@ str_function("mean")
 
 And then with our variant present in the global environment:
 
-```{r}
+```{r Environments-25}
 mean <- function() NULL
 
 str_function(mean)
@@ -370,7 +370,7 @@ rm("mean")
 
 **A1.** Here is a function that lists all the variables defined in the environment in which it was called:
 
-```{r}
+```{r Environments-26}
 # let's first remove everything that exists in the global environment right now
 # to test with only newly defined objects
 rm(list = ls())
@@ -383,7 +383,7 @@ ls_env <- function(env = rlang::caller_env()) {
 
 The workhorse here is `rlang::caller_env()`, so let's also have a look at its definition:
 
-```{r}
+```{r Environments-27}
 rlang::caller_env
 ```
 
@@ -391,7 +391,7 @@ Let's try it out:
 
 - In global environment:
 
-```{r}
+```{r Environments-28}
 x <- "a"
 y <- 1
 
@@ -402,7 +402,7 @@ ls()
 
 - In function environment:
 
-```{r}
+```{r Environments-29}
 foo <- function() {
   a <- "x"
   b <- 2
@@ -417,7 +417,7 @@ foo()
 
 ## Session information
 
-```{r}
+```{r Environments-30}
 sessioninfo::session_info(include_base = TRUE)
 ```
 

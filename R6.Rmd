@@ -1,12 +1,12 @@
 # R6
 
-```{r, include = FALSE}
+```{r R6-1, include = FALSE}
 source("common.R")
 ```
 
 Loading the needed libraries:
 
-```{r, warning=FALSE, message=FALSE}
+```{r R6-2, warning=FALSE, message=FALSE}
 library(R6)
 ```
 
@@ -16,7 +16,7 @@ library(R6)
 
 **A1.** First, let's create a bank account R6 class that stores a balance and allows you to deposit and withdraw money:
 
-```{r}
+```{r R6-3}
 library(R6)
 
 bankAccount <- R6::R6Class(
@@ -42,7 +42,7 @@ bankAccount <- R6::R6Class(
 
 Let's try it out:
 
-```{r}
+```{r R6-4}
 indra <- bankAccount$new(balance = 100)
 
 indra$deposit(20)
@@ -52,7 +52,7 @@ indra$withdraw(10)
 
 Create a subclass that errors if you attempt to overdraw:
 
-```{r, error=TRUE}
+```{r R6-5, error=TRUE}
 bankAccountStrict <- R6::R6Class(
   "bankAccountStrict",
   inherit = bankAccount,
@@ -73,7 +73,7 @@ bankAccountStrict <- R6::R6Class(
 
 Let's try it out:
 
-```{r, error=TRUE}
+```{r R6-6, error=TRUE}
 Pritesh <- bankAccountStrict$new(balance = 100)
 
 Pritesh$deposit(20)
@@ -83,7 +83,7 @@ Pritesh$withdraw(150)
 
 Now let's create a subclass that charges a fee if account is overdrawn:
 
-```{r}
+```{r R6-7}
 bankAccountFee <- R6::R6Class(
   "bankAccountFee",
   inherit = bankAccount,
@@ -102,7 +102,7 @@ bankAccountFee <- R6::R6Class(
 
 Let's try it out:
 
-```{r}
+```{r R6-8}
 Mangesh <- bankAccountFee$new(balance = 100)
 
 Mangesh$deposit(20)
@@ -112,7 +112,7 @@ Mangesh$withdraw(150)
 
 **Q2.** Create an R6 class that represents a shuffled deck of cards. You should be able to draw cards from the deck with `$draw(n)`, and return all cards to the deck and reshuffle with `$reshuffle()`. Use the following code to make a vector of cards.
 
-```{r}
+```{r R6-9}
 suit <- c("♠", "♥", "♦", "♣")
 value <- c("A", 2:10, "J", "Q", "K")
 cards <- paste0(rep(value, 4), suit)
@@ -120,7 +120,7 @@ cards <- paste0(rep(value, 4), suit)
 
 **A2.** Let's create needed class that represents a shuffled deck of cards:
 
-```{r}
+```{r R6-10}
 suit <- c("♠", "♥", "♦", "♣")
 value <- c("A", 2:10, "J", "Q", "K")
 cards <- paste(rep(value, 4), suit)
@@ -158,7 +158,7 @@ Deck <- R6::R6Class(
 
 Let's try it out:
 
-```{r, error=TRUE}
+```{r R6-11, error=TRUE}
 myDeck <- Deck$new(cards)
 
 myDeck$draw(4)
@@ -176,7 +176,7 @@ myDeck$draw(50)
 
 **A4.** Here is an R6 class that manages the current time zone:
 
-```{r}
+```{r R6-12}
 CurrentTimeZone <- R6::R6Class("CurrentTimeZone",
   public = list(
     setTimeZone = function(tz) {
@@ -192,7 +192,7 @@ CurrentTimeZone <- R6::R6Class("CurrentTimeZone",
 
 Let's try it out:
 
-```{r}
+```{r R6-13}
 myCurrentTimeZone <- CurrentTimeZone$new()
 
 myCurrentTimeZone$getTimeZone()
@@ -207,7 +207,7 @@ myCurrentTimeZone$setTimeZone("Europe/Berlin")
 
 **A5.** Here is an R6 class that manages the current working directory:
 
-```{r}
+```{r R6-14}
 ManageDirectory <- R6::R6Class("ManageDirectory",
   public = list(
     setWorkingDirectory = function(dir) {
@@ -222,7 +222,7 @@ ManageDirectory <- R6::R6Class("ManageDirectory",
 
 Let's create an instance of this class and check if the methods work as expected:
 
-```{r, eval=FALSE}
+```{r R6-15, eval=FALSE}
 myDirManager <- ManageDirectory$new()
 
 # current working directory
@@ -246,14 +246,14 @@ We can't model a bank account or a deck of cards with an S3 class because instan
 
 **A7.** Let's create an example class and create instance of that class:
 
-```{r}
+```{r R6-16}
 Example <- R6::R6Class("Example")
 myExample <- Example$new()
 ```
 
 The `R6` objects are built on top of environment:
 
-```{r}
+```{r R6-17}
 typeof(myExample)
 
 rlang::env_print(myExample)
@@ -261,7 +261,7 @@ rlang::env_print(myExample)
 
 And it has only `class` attribute, which is a character vector with the `"R6"` being the last element and the superclasses being other elements:
 
-```{r}
+```{r R6-18}
 attributes(myExample)
 ```
 
@@ -271,7 +271,7 @@ attributes(myExample)
 
 **A1.** Here is a bank account class that satisfied the specified requirements:
 
-```{r}
+```{r R6-19}
 SafeBankAccount <- R6::R6Class(
   classname = "SafeBankAccount",
   public = list(
@@ -300,7 +300,7 @@ SafeBankAccount <- R6::R6Class(
 
 Let's check if it works as expected:
 
-```{r, error=TRUE}
+```{r R6-20, error=TRUE}
 mySafeBankAccount <- SafeBankAccount$new()
 
 mySafeBankAccount$deposit(100)
@@ -314,7 +314,7 @@ mySafeBankAccount$withdraw(100)
 
 **A2.** Here is an implementation of the class with the needed properties:
 
-```{r}
+```{r R6-21}
 library(R6)
 
 checkCredentials <- R6Class(
@@ -358,7 +358,7 @@ myCheck$check_password("1234")
 
 But, of course, everything is possible:
 
-```{r}
+```{r R6-22}
 myCheck$.__enclos_env__$private$.password
 ```
 
@@ -366,7 +366,7 @@ myCheck$.__enclos_env__$private$.password
 
 **A3.** Here is a modified version of the `Rando` class to meet the specified requirements:
 
-```{r}
+```{r R6-23}
 Rando <- R6::R6Class("Rando",
   active = list(
     random = function(value) {
@@ -400,7 +400,7 @@ Rando <- R6::R6Class("Rando",
 
 Let's try it out:
 
-```{r}
+```{r R6-24}
 myRando <- Rando$new()
 
 # first time
@@ -422,7 +422,7 @@ myRando$previousRandom
 
 For instance, in the following example, the `Duck` class has a private method `$quack()`, but its subclass `Mallard` can access it using `super$quack()`.
 
-```{r}
+```{r R6-25}
 Duck <- R6Class("Duck",
   private = list(quack = function() print("Quack Quack"))
 )
@@ -442,7 +442,7 @@ myMallard$quack()
 
 **A1.** Here is a class that allows you to write a line to a specified file:
 
-```{r}
+```{r R6-26}
 fileEditor <- R6Class(
   "fileEditor",
   public = list(
@@ -471,7 +471,7 @@ fileEditor <- R6Class(
 
 Let's check if it works as expected:
 
-```{r}
+```{r R6-27}
 greetMom <- function() {
   f <- tempfile()
   myfileEditor <- fileEditor$new(f)
@@ -492,6 +492,6 @@ gc()
 
 ## Session information
 
-```{r}
+```{r R6-28}
 sessioninfo::session_info(include_base = TRUE)
 ```

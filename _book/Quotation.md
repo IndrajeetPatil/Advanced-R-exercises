@@ -152,7 +152,7 @@ ggplot(by_cyl, aes(cyl, mean)) +
   geom_point()
 ```
 
-<img src="Quotation_files/figure-html/unnamed-chunk-12-1.png" width="100%" />
+<img src="Quotation_files/figure-html/Quotation-12-1.png" width="100%" />
 
 ---
 
@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x0000000032ff8e28>
+#> <bytecode: 0x0000000033003158>
 #> <environment: namespace:rlang>
 ```
 

@@ -1,10 +1,10 @@
 # Rewriting R code in C++
 
-```{r, include = FALSE}
+```{r Rcpp-1, include = FALSE}
 source("common.R")
 ```
 
-```{r, warning=FALSE,message=FALSE}
+```{r Rcpp-2, warning=FALSE,message=FALSE}
 library(Rcpp, warn.conflicts = FALSE)
 ```
 
@@ -12,7 +12,7 @@ library(Rcpp, warn.conflicts = FALSE)
 
 **Q1.** With the basics of C++ in hand, it's now a great time to practice by reading and writing some simple C++ functions. For each of the following functions, read the code and figure out what the corresponding base R function is. You might not understand every part of the code yet, but you should be able to figure out the basics of what the function does.
 
-```{Rcpp}
+```{Rcpp Rcpp-3}
 #include <Rcpp.h>
 using namespace Rcpp;
 
@@ -80,7 +80,7 @@ NumericVector f5(NumericVector x, NumericVector y) {
 
 `f1()` is the same as `mean()`:
 
-```{r}
+```{r Rcpp-4}
 x <- c(1, 2, 3, 4, 5, 6)
 
 f1(x)
@@ -89,7 +89,7 @@ mean(x)
 
 `f2()` is the same as `cumsum()`:
 
-```{r}
+```{r Rcpp-5}
 x <- c(1, 3, 5, 6)
 
 f2(x)
@@ -98,7 +98,7 @@ cumsum(x)
 
 `f3()` is the same as `any()`:
 
-```{r}
+```{r Rcpp-6}
 x1 <- c(TRUE, FALSE, FALSE, TRUE)
 x2 <- c(FALSE, FALSE)
 
@@ -111,7 +111,7 @@ any(x2)
 
 `f4()` is the same as `Position()`:
 
-```{r}
+```{r Rcpp-7}
 x <- list("a", TRUE, "m", 2)
 
 f4(is.numeric, x)
@@ -120,7 +120,7 @@ Position(is.numeric, x)
 
 `f5()` is the same as `pmin()`:
 
-```{r}
+```{r Rcpp-8}
 v1 <- c(1, 3, 4, 5, 6, 7)
 v2 <- c(1, 2, 7, 2, 8, 1)
 
@@ -142,7 +142,7 @@ pmin(v1, v2)
 
 **A2.** The performance benefits are not going to be observed if the function is primitive since those are already tuned to the max in R for performance. So, expect performance gain only for `diff()` and `var()`.
 
-```{r}
+```{r Rcpp-9}
 is.primitive(all)
 is.primitive(cumprod)
 is.primitive(diff)
@@ -152,7 +152,7 @@ is.primitive(var)
 
 - `all()`
 
-```{Rcpp}
+```{Rcpp Rcpp-10}
 #include <vector>
 // [[Rcpp::plugins(cpp11)]]
 
@@ -168,7 +168,7 @@ bool allC(std::vector<bool> x)
 }
 ```
 
-```{r}
+```{r Rcpp-11}
 v1 <- rep(TRUE, 10)
 v2 <- c(rep(TRUE, 5), rep(FALSE, 5))
 
@@ -188,7 +188,7 @@ bench::mark(
 
 - `cumprod()`
 
-```{Rcpp}
+```{Rcpp Rcpp-12}
 #include <vector>
 
 // [[Rcpp::export]]
@@ -206,7 +206,7 @@ std::vector<double> cumprodC(const std::vector<double> &x)
 ```
 
 
-```{r}
+```{r Rcpp-13}
 v1 <- c(10, 4, 6, 8)
 
 cumprod(v1)
@@ -222,7 +222,7 @@ bench::mark(
 
 - `cumminC()`
 
-```{Rcpp}
+```{Rcpp Rcpp-14}
 #include <vector>
 // [[Rcpp::plugins(cpp11)]]
 
@@ -240,7 +240,7 @@ std::vector<double> cumminC(const std::vector<double> &x)
 }
 ```
 
-```{r}
+```{r Rcpp-15}
 v1 <- c(3:1, 2:0, 4:2)
 
 cummin(v1)
@@ -256,7 +256,7 @@ bench::mark(
 
 - `cummaxC()`
 
-```{Rcpp}
+```{Rcpp Rcpp-16}
 #include <vector>
 // [[Rcpp::plugins(cpp11)]]
 
@@ -274,7 +274,7 @@ std::vector<double> cummaxC(const std::vector<double> &x)
 }
 ```
 
-```{r}
+```{r Rcpp-17}
 v1 <- c(3:1, 2:0, 4:2)
 
 cummax(v1)
@@ -290,7 +290,7 @@ bench::mark(
 
 - `diff()`
 
-```{Rcpp}
+```{Rcpp Rcpp-18}
 #include <vector>
 #include <functional>
 #include <algorithm>
@@ -323,7 +323,7 @@ std::vector<double> diffC(const std::vector<double> &x, int lag)
 }
 ```
 
-```{r}
+```{r Rcpp-19}
 v1 <- c(1, 2, 4, 8, 13)
 v2 <- c(1, 2, NA, 8, 13)
 
@@ -343,7 +343,7 @@ bench::mark(
 
 - `range()`
 
-```{Rcpp}
+```{Rcpp Rcpp-20}
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -361,7 +361,7 @@ std::vector<double> rangeC(std::vector<double> x)
 }
 ```
 
-```{r}
+```{r Rcpp-21}
 v1 <- c(10, 4, 6, 8)
 
 range(v1)
@@ -377,7 +377,7 @@ bench::mark(
 
 - `var()`
 
-```{Rcpp}
+```{Rcpp Rcpp-22}
 #include <vector>
 #include <cmath>
 #include <numeric>
@@ -401,7 +401,7 @@ double variance(std::vector<double> x)
 ```
 
 
-```{r}
+```{r Rcpp-23}
 v1 <- c(1, 4, 7, 8)
 
 var(v1)
@@ -421,7 +421,7 @@ bench::mark(
 
 **A1.** We will only create a version of `range()` that deals with missing values. The same principle applies to others:
 
-```{Rcpp}
+```{Rcpp Rcpp-24}
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -463,7 +463,7 @@ std::vector<double> rangeC_NA(std::vector<double> x, bool removeNA = true)
 }
 ```
 
-```{r}
+```{r Rcpp-25}
 v1 <- c(10, 4, NA, 6, 8)
 
 range(v1, na.rm = FALSE)
@@ -489,7 +489,7 @@ As seen from the examples above, `diffC()` already behaves this way.
 
 Similarly, `cumsumC()` propagates `NA`s as well.
 
-```{Rcpp}
+```{Rcpp Rcpp-26}
 #include <Rcpp.h>
 using namespace Rcpp;
 // [[Rcpp::plugins(cpp11)]]
@@ -508,7 +508,7 @@ NumericVector cumsumC(NumericVector x) {
 }
 ```
 
-```{r}
+```{r Rcpp-27}
 v1 <- c(1, 2, 3, 4)
 v2 <- c(1, 2, NA, 4)
 
@@ -527,7 +527,7 @@ cumsumC(v2)
 
 1. `median.default()` using `partial_sort`.
 
-```{Rcpp}
+```{Rcpp Rcpp-28}
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -552,7 +552,7 @@ double medianC(std::vector<double> &x)
 ```
 
 
-```{r}
+```{r Rcpp-29}
 v1 <- c(1, 3, 3, 6, 7, 8, 9)
 v2 <- c(1, 2, 3, 4, 5, 6, 8, 9)
 
@@ -572,7 +572,7 @@ bench::mark(
 
 1. `%in%` using `unordered_set` and the `find()` or `count()` methods.
 
-```{Rcpp}
+```{Rcpp Rcpp-30}
 #include <vector>
 #include <unordered_set>
 using namespace std;
@@ -593,7 +593,7 @@ std::vector<bool> matchC(const std::vector<double> &x, const std::vector<double>
 }
 ```
 
-```{r}
+```{r Rcpp-31}
 x1 <- c(3, 4, 8)
 x2 <- c(1, 2, 3, 3, 4, 4, 5, 6)
 
@@ -610,7 +610,7 @@ bench::mark(
 
 1. `unique()` using an `unordered_set` (challenge: do it in one line!).
 
-```{Rcpp}
+```{Rcpp Rcpp-32}
 #include <unordered_set>
 #include <vector>
 #include <iostream>
@@ -628,7 +628,7 @@ std::unordered_set<double> uniqueC(const std::vector<double> &x)
 
 Note that these functions are **not** comparable. As far as I can see, there is no way to get the same output as the R version of the function using the `unordered_set` data structure.
 
-```{r}
+```{r Rcpp-33}
 v1 <- c(1, 3, 3, 6, 7, 8, 9)
 
 unique(v1)
@@ -637,7 +637,7 @@ uniqueC(v1)
 
 We can make comparable version using `set` data structure:
 
-```{Rcpp}
+```{Rcpp Rcpp-34}
 #include <set>
 #include <vector>
 #include <iostream>
@@ -653,7 +653,7 @@ std::set<double> uniqueC2(const std::vector<double> &x)
 }
 ```
 
-```{r}
+```{r Rcpp-35}
 v1 <- c(1, 3, 3, 6, 7, 8, 9)
 
 unique(v1)
@@ -669,7 +669,7 @@ bench::mark(
 
 1. `min()` using `std::min()`, or `max()` using `std::max()`.
 
-```{Rcpp}
+```{Rcpp Rcpp-36}
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -689,7 +689,7 @@ const double maxC(std::vector<double> x)
 }
 ```
 
-```{r}
+```{r Rcpp-37}
 v1 <- c(3, 3, 6, 1, 9, 7, 8)
 
 min(v1)
@@ -715,7 +715,7 @@ bench::mark(
 
 1. `which.min()` using `min_element`, or `which.max()` using `max_element`.
 
-```{Rcpp}
+```{Rcpp Rcpp-38}
 #include <vector>
 #include <algorithm>
 using namespace std;
@@ -741,7 +741,7 @@ int which_minC(std::vector<double> &x)
 ```
 
 
-```{r}
+```{r Rcpp-39}
 v1 <- c(3, 3, 6, 1, 9, 7, 8)
 
 which.min(v1)
@@ -771,7 +771,7 @@ Note that the following C++ implementations of given functions are not strictly 
 
 - `union()`
 
-```{Rcpp}
+```{Rcpp Rcpp-40}
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -795,7 +795,7 @@ std::set<int> unionC(std::vector<int> &v1, std::vector<int> &v2)
 }
 ```
 
-```{r}
+```{r Rcpp-41}
 v1 <- c(1, 4, 5, 5, 5, 6, 2)
 v2 <- c(4, 1, 6, 8)
 
@@ -805,7 +805,7 @@ unionC(v1, v2)
 
 - `intersect()`
 
-```{Rcpp}
+```{Rcpp Rcpp-42}
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -829,7 +829,7 @@ std::set<int> intersectC(std::vector<int> &v1, std::vector<int> &v2)
 }
 ```
 
-```{r}
+```{r Rcpp-43}
 v1 <- c(1, 4, 5, 5, 5, 6, 2)
 v2 <- c(4, 1, 6, 8)
 
@@ -839,7 +839,7 @@ intersectC(v1, v2)
 
 - `setdiff()`
 
-```{Rcpp}
+```{Rcpp Rcpp-44}
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -863,7 +863,7 @@ std::set<int> setdiffC(std::vector<int> &v1, std::vector<int> &v2)
 }
 ```
 
-```{r}
+```{r Rcpp-45}
 v1 <- c(1, 4, 5, 5, 5, 6, 2)
 v2 <- c(4, 1, 6, 8)
 
@@ -873,7 +873,7 @@ setdiffC(v1, v2)
 
 ## Session information
 
-```{r}
+```{r Rcpp-46}
 sessioninfo::session_info(include_base = TRUE)
 ```
 

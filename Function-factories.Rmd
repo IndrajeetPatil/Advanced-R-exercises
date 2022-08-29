@@ -1,12 +1,12 @@
 # Function factories
 
-```{r, include = FALSE}
+```{r Function-factories-1, include = FALSE}
 source("common.R")
 ```
 
 Attaching the needed libraries:
 
-```{r, warning=FALSE, message=FALSE}
+```{r Function-factories-2, warning=FALSE, message=FALSE}
 library(rlang, warn.conflicts = FALSE)
 library(ggplot2, warn.conflicts = FALSE)
 ```
@@ -17,7 +17,7 @@ library(ggplot2, warn.conflicts = FALSE)
 
 **Q1.** The definition of `force()` is simple:
 
-```{r}
+```{r Function-factories-3}
 force
 ```
 
@@ -35,7 +35,7 @@ Why is it better to `force(x)` instead of just `x`?
 
 This function factory returns a function performing the linear (or constant) interpolation.
 
-```{r}
+```{r Function-factories-4}
 x <- 1:10
 y <- rnorm(10)
 f <- approxfun(x, y)
@@ -48,7 +48,7 @@ curve(f(x), 0, 11)
 
 This function factory computes an empirical cumulative distribution function.
 
-```{r}
+```{r Function-factories-5}
 x <- rnorm(12)
 f <- ecdf(x)
 f
@@ -59,7 +59,7 @@ f(seq(-2, 2, by = 0.1))
 
 **Q3.** Create a function `pick()` that takes an index, `i`, as an argument and returns a function with an argument `x` that subsets `x` with `i`.
 
-```{r, eval = FALSE}
+```{r Function-factories-6, eval = FALSE}
 pick(1)(x)
 # should be equivalent to
 x[[1]]
@@ -71,7 +71,7 @@ lapply(mtcars, function(x) x[[5]])
 
 **A3.** To write desired function, we just need to make sure that the argument `i` is eagerly evaluated.
 
-```{r}
+```{r Function-factories-7}
 pick <- function(i) {
   force(i)
   function(x) x[[i]]
@@ -80,7 +80,7 @@ pick <- function(i) {
 
 Testing it with specified test cases:
 
-```{r}
+```{r Function-factories-8}
 x <- list("a", "b", "c")
 identical(x[[1]], pick(1)(x))
 
@@ -94,7 +94,7 @@ identical(
 
 **Q4.** Create a function that creates functions that compute the i^th^ [central moment](http://en.wikipedia.org/wiki/Central_moment) of a numeric vector. You can test it by running the following code:
 
-```{r, eval = FALSE}
+```{r Function-factories-9, eval = FALSE}
 m1 <- moment(1)
 m2 <- moment(2)
 x <- runif(100)
@@ -104,7 +104,7 @@ stopifnot(all.equal(m2(x), var(x) * 99 / 100))
 
 **A4.** The following function satisfied the specified requirements:
 
-```{r}
+```{r Function-factories-10}
 moment <- function(k) {
   force(k)
 
@@ -114,7 +114,7 @@ moment <- function(k) {
 
 Testing it with specified test cases:
 
-```{r}
+```{r Function-factories-11}
 m1 <- moment(1)
 m2 <- moment(2)
 x <- runif(100)
@@ -127,7 +127,7 @@ stopifnot(all.equal(m2(x), var(x) * 99 / 100))
 
 **Q5.** What happens if you don't use a closure? Make predictions, then verify with the code below.
 
-```{r}
+```{r Function-factories-12}
 i <- 0
 new_counter2 <- function() {
   i <<- i + 1
@@ -137,7 +137,7 @@ new_counter2 <- function() {
 
 **A5.** In case closures are not used in this context, the counts are stored in a global variable, which can be modified by other processes or even deleted.
 
-```{r}
+```{r Function-factories-13}
 new_counter2()
 
 new_counter2()
@@ -152,7 +152,7 @@ new_counter2()
 
 **Q6.** What happens if you use `<-` instead of `<<-`? Make predictions, then verify with the code below.
 
-```{r}
+```{r Function-factories-14}
 new_counter3 <- function() {
   i <- 0
   function() {
@@ -164,7 +164,7 @@ new_counter3 <- function() {
 
 **A6.**  In this case, the function will always return `1`.
 
-```{r}
+```{r Function-factories-15}
 new_counter3()
 
 new_counter3()
@@ -182,13 +182,13 @@ new_counter3()
 
 - `ggplot2::label_bquote()`
 
-```{r}
+```{r Function-factories-16}
 ggplot2::label_bquote
 ```
 
 - `scales::number_format()`
 
-```{r}
+```{r Function-factories-17}
 scales::number_format
 ```
 
@@ -196,7 +196,7 @@ Both of these functions return formatting functions used to style the facets lab
 
 For example, using plotmath expression in the facet label:
 
-```{r}
+```{r Function-factories-18}
 library(ggplot2)
 
 p <- ggplot(mtcars, aes(wt, mpg)) +
@@ -206,7 +206,7 @@ p + facet_grid(. ~ vs, labeller = label_bquote(cols = alpha^.(vs)))
 
 Or to display axes labels in the desired format:
 
-```{r}
+```{r Function-factories-19}
 library(scales)
 
 ggplot(mtcars, aes(wt, mpg)) +
@@ -228,7 +228,7 @@ The `scales::number_format()` function is a simple pass-through method that forc
 
 **A1.** We don’t need to force the evaluation of `df` or `model` because these arguments are automatically evaluated by `lm()`:
 
-```{r}
+```{r Function-factories-20}
 boot_model <- function(df, formula) {
   mod <- lm(formula, data = df)
   fitted <- unname(fitted(mod))
@@ -245,7 +245,7 @@ boot_model <- function(df, formula) {
 
 **Q2.** Why might you formulate the Box-Cox transformation like this?
 
-```{r}
+```{r Function-factories-21}
 boxcox3 <- function(x) {
   function(lambda) {
     if (lambda == 0) {
@@ -259,7 +259,7 @@ boxcox3 <- function(x) {
 
 **A2.** To see why we formulate this transformation like above, we can compare it to the one mentioned in the book:
 
-```{r}
+```{r Function-factories-22}
 boxcox2 <- function(lambda) {
   if (lambda == 0) {
     function(x) log(x)
@@ -271,7 +271,7 @@ boxcox2 <- function(lambda) {
 
 Let's have a look at one example with each:
 
-```{r}
+```{r Function-factories-23}
 boxcox2(1)
 
 boxcox3(mtcars$wt)
@@ -290,7 +290,7 @@ Thus, `boxcox3()` can be handy while exploring different transformations across 
 
 **A3.** If we look at the source code generated by the function factory, we notice that the exact data frame (`mtcars`) is not referenced:
 
-```{r}
+```{r Function-factories-24}
 boot_permute <- function(df, var) {
   n <- nrow(df)
   force(var)
@@ -306,7 +306,7 @@ boot_permute(mtcars, "mpg")
 
 This is why we don't need to worry about a copy being made because the `df` in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:
 
-```{r}
+```{r Function-factories-25}
 boot_permute_env <- rlang::fn_env(boot_permute(mtcars, "mpg"))
 rlang::env_print(boot_permute_env)
 
@@ -318,7 +318,7 @@ identical(
 
 We can also check that the values of these bindings are the same as what we entered into the function factory:
 
-```{r}
+```{r Function-factories-26}
 identical(boot_permute_env$df, mtcars)
 identical(boot_permute_env$var, "mpg")
 ```
@@ -329,7 +329,7 @@ identical(boot_permute_env$var, "mpg")
 
 **A4.** Let's first compare the performance of these functions with the example in the book:
 
-```{r}
+```{r Function-factories-27}
 ll_poisson1 <- function(x) {
   n <- length(x)
 
@@ -360,7 +360,7 @@ As can be seen, the second version is much faster than the first version.
 
 We can also vary the length of the vector and confirm that across a wide range of vector lengths, this performance advantage is observed.
 
-```{r}
+```{r Function-factories-28}
 generate_ll_benches <- function(n) {
   x_vec <- sample.int(n, n)
 
@@ -408,7 +408,7 @@ ggplot(
 
 **A1.** It depends on whether `with()` is used with a data frame or a list.
 
-```{r}
+```{r Function-factories-29}
 f <- mean
 z <- 1
 x <- list(f = mean, z = 1)
@@ -430,7 +430,7 @@ identical(with(x, f(z)), f(z))
 
 - `attach()` adds `funs` to the search path. Since these functions have the same names as functions in `{base}` package, the attached names mask the ones in the `{base}` package.
 
-```{r}
+```{r Function-factories-30}
 funs <- list(
   mean = function(x) mean(x, na.rm = TRUE),
   sum = function(x) sum(x, na.rm = TRUE)
@@ -450,7 +450,7 @@ detach(funs)
 
 - `env_bind()` adds the functions in `funs` to the global environment, instead of masking the names in the `{base}` package.
 
-```{r}
+```{r Function-factories-31}
 env_bind(globalenv(), !!!funs)
 mean
 
@@ -465,7 +465,7 @@ Note that there is no `"funs"` in this output.
 
 ## Session information
 
-```{r}
+```{r Function-factories-32}
 sessioninfo::session_info(include_base = TRUE)
 ```
 
