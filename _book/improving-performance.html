@@ -22,9 +22,7 @@
 <link href="libs/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="libs/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
-<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
-<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -135,10 +133,10 @@
 <span><span class="co">#&gt; # A tibble: 4 x 5</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span><span class="co">#&gt; 1 lm           1.14ms   1.36ms      689.    1.27MB</span></span>
-<span><span class="co">#&gt; 2 speedglm     1.37ms   1.56ms      612.   61.39MB</span></span>
-<span><span class="co">#&gt; 3 biglm       949.7us   1.09ms      887.  943.38KB</span></span>
-<span><span class="co">#&gt; 4 fastLm       1.45ms   1.69ms      566.    3.25MB</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 lm           1.01ms   1.26ms      772.    1.27MB</span></span>
+<span><span class="co">#&gt; 2 speedglm     1.15ms   1.51ms      640.   61.39MB</span></span>
+<span><span class="co">#&gt; 3 biglm         777us   1.01ms      953.  943.38KB</span></span>
+<span><span class="co">#&gt; 4 fastLm       1.24ms   1.49ms      652.    3.25MB</span></span></code></pre></div>
 <p>The results might change depending on the size of the dataset, so you will have to experiment with different algorithms and find the one that fits the needs of your dataset the best.</p>
 <p><strong>Q2.</strong> What package implements a version of <code><a href="https://rdrr.io/r/base/match.html">match()</a></code> that’s faster for repeated look ups? How much faster is it?</p>
 <p><strong>A2.</strong> The package (and the respective function) is <code><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fastmatch::fmatch()</a></code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;In addition to Google search, you can also try &lt;a href="https://www.zuckarelli.de/packagefinder/tutorial.html"&gt;packagefinder&lt;/a&gt; to search for CRAN packages.&lt;/p&gt;'><sup>7</sup></a>.</p>
@@ -163,8 +161,8 @@
 <span><span class="co">#&gt; # A tibble: 2 x 5</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span><span class="co">#&gt; 1 base          1.1us    1.5us   571847.        0B</span></span>
-<span><span class="co">#&gt; 2 fastmatch    1000ns    1.3us   634024.    2.66KB</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 base          1.7us    2.5us   377139.        0B</span></span>
+<span><span class="co">#&gt; 2 fastmatch     800ns    1.2us   659274.    2.66KB</span></span></code></pre></div>
 <p>But, with a larger vector, <code><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fmatch()</a></code> is only orders of magnitude faster! ⚡</p>
 <div class="sourceCode" id="cb645"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">large_vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span>, <span class="fl">1e4</span><span class="op">)</span>, <span class="st">"x"</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"m"</span>, <span class="st">"n"</span><span class="op">)</span>, <span class="fl">1e6</span><span class="op">)</span>, <span class="st">"y"</span><span class="op">)</span></span>
@@ -181,8 +179,8 @@
 <span><span class="co">#&gt; # A tibble: 2 x 5</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span><span class="co">#&gt; 1 base         36.1ms   37.6ms      26.0    31.4MB</span></span>
-<span><span class="co">#&gt; 2 fastmatch     1.1us    1.4us  625469.         0B</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 base         33.6ms   35.7ms      19.9    31.4MB</span></span>
+<span><span class="co">#&gt; 2 fastmatch       1us    1.3us  727829.         0B</span></span></code></pre></div>
 <p>We can also look at the hash table:</p>
 <div class="sourceCode" id="cb646"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fmatch.hash</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, <span class="va">small_vec</span><span class="op">)</span></span>
@@ -239,10 +237,10 @@
 <span><span class="co">#&gt; # A tibble: 4 x 6</span></span>
 <span><span class="co">#&gt;   expression       min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 as.POSIXct      73us  87.65us    11069.        0B     0   </span></span>
-<span><span class="co">#&gt; 2 as.POSIXlt    57.5us   70.9us    13148.        0B    13.2 </span></span>
-<span><span class="co">#&gt; 3 ymd_hms       3.92ms   4.72ms      208.    23.6KB     1.89</span></span>
-<span><span class="co">#&gt; 4 fastPOSIXct    1.4us    1.9us   381883.        0B     0</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 as.POSIXct    73.8us 143.25us     7519.        0B     0   </span></span>
+<span><span class="co">#&gt; 2 as.POSIXlt    51.7us   97.6us    11405.        0B    11.4 </span></span>
+<span><span class="co">#&gt; 3 ymd_hms       3.39ms   4.21ms      232.    23.6KB     2.11</span></span>
+<span><span class="co">#&gt; 4 fastPOSIXct    1.6us    2.5us   405927.        0B     0</span></span></code></pre></div>
 <p>There are many more packages that implement a way to convert from string to a date time object. For more, see <a href="https://cran.r-project.org/web/views/TimeSeries.html">CRAN Task View: Time Series Analysis</a></p>
 <p><strong>Q4.</strong> Which packages provide the ability to compute a rolling mean?</p>
 <p><strong>A4.</strong> Here are a few packages and respective functions that provide a way to compute a rolling mean:</p>
@@ -298,7 +296,7 @@
 <span><span class="co">#&gt;     else names(z) &lt;- dimnames(x)[[1L]]</span></span>
 <span><span class="co">#&gt;     z</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x000000003a7c5ea0&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x0000000038e2f460&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <ul>
 <li>
@@ -308,7 +306,7 @@
 <code class="sourceCode R"><span><span class="va">.rowSums</span></span>
 <span><span class="co">#&gt; function (x, m, n, na.rm = FALSE) </span></span>
 <span><span class="co">#&gt; .Internal(rowSums(x, m, n, na.rm))</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x000000003e369120&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x0000000039d06118&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>But they have comparable performance:</p>
 <div class="sourceCode" id="cb655"><pre class="downlit sourceCode r">
@@ -321,12 +319,12 @@
 <span><span class="co">#&gt; # A tibble: 2 x 5</span></span>
 <span><span class="co">#&gt;   expression                                 min   median</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt;                            &lt;bch:tm&gt; &lt;bch:tm&gt;</span></span>
-<span><span class="co">#&gt; 1 rowSums(x)                             928.5us   1.25ms</span></span>
-<span><span class="co">#&gt; 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])    1.1ms   1.26ms</span></span>
+<span><span class="co">#&gt; 1 rowSums(x)                             904.2us   1.31ms</span></span>
+<span><span class="co">#&gt; 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])   1.06ms    1.3ms</span></span>
 <span><span class="co">#&gt;   `itr/sec` mem_alloc</span></span>
 <span><span class="co">#&gt;       &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span><span class="co">#&gt; 1      749.     859KB</span></span>
-<span><span class="co">#&gt; 2      740.     859KB</span></span></code></pre></div>
+<span><span class="co">#&gt; 1      736.     859KB</span></span>
+<span><span class="co">#&gt; 2      762.     859KB</span></span></code></pre></div>
 <p><strong>Q2.</strong> Make a faster version of <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code> that only computes the chi-square test statistic when the input is two numeric vectors with no missing values. You can try simplifying <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code> or by coding from the <a href="http://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test">mathematical definition</a>.</p>
 <p><strong>A2.</strong> If the function is supposed to accept only two numeric vectors without missing values, then we can make <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code> do less work by removing code corresponding to the following :</p>
 <ul>
@@ -384,8 +382,8 @@
 <span><span class="co">#&gt; # A tibble: 2 x 5</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span><span class="co">#&gt; 1 base          826us   1.11ms      853.    1.57MB</span></span>
-<span><span class="co">#&gt; 2 custom        725us  842.8us     1147.    1.13MB</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 base          804us      1ms      935.    1.57MB</span></span>
+<span><span class="co">#&gt; 2 custom        564us    712us     1370.    1.13MB</span></span></code></pre></div>
 <p><strong>Q3.</strong> Can you make a faster version of <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> for the case of an input of two integer vectors with no missing values? Can you use it to speed up your chi-square test?</p>
 <p><strong>A3.</strong> In order to make a leaner version of <code><a href="https://rdrr.io/r/base/table.html">table()</a></code>, we can take a similar approach and trim the unnecessary fat in light of our new API of accepting just two vectors without missing values. We can remove the following components from the code:</p>
 <ul>
@@ -429,8 +427,8 @@
 <span><span class="co">#&gt; # A tibble: 2 x 5</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span><span class="co">#&gt; 1 base          547us    707us     1375.     960KB</span></span>
-<span><span class="co">#&gt; 2 custom        321us    392us     2484.     488KB</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 base          478us    621us     1623.     960KB</span></span>
+<span><span class="co">#&gt; 2 custom        322us    370us     2618.     488KB</span></span></code></pre></div>
 <p>We can also use this function in our custom chi-squared test function and see if the performance improves any further:</p>
 <div class="sourceCode" id="cb660"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_chisq_test2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
@@ -480,8 +478,8 @@
 <span><span class="co">#&gt; # A tibble: 2 x 5</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span><span class="co">#&gt; 1 base          858us   1.11ms      868.    1.28MB</span></span>
-<span><span class="co">#&gt; 2 custom        413us  493.3us     1963.  594.27KB</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 base          771us   1.02ms      898.    1.28MB</span></span>
+<span><span class="co">#&gt; 2 custom        348us  462.4us     2118.  594.27KB</span></span></code></pre></div>
 </div>
 <div id="exercises-24.5.1" class="section level2" number="24.3">
 <h2>
@@ -575,8 +573,8 @@
 <span><span class="co">#&gt; # A tibble: 2 x 5</span></span>
 <span><span class="co">#&gt;   expression                min   median `itr/sec` mem_alloc</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt;           &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;</span></span>
-<span><span class="co">#&gt; 1 crossprod(x, w)[[1]]    700ns    1.2us   727837.        0B</span></span>
-<span><span class="co">#&gt; 2 sum(x * w)[[1]]         400ns    800ns  1098483.        0B</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 crossprod(x, w)[[1]]    700ns    1.1us   750691.        0B</span></span>
+<span><span class="co">#&gt; 2 sum(x * w)[[1]]         400ns    700ns  1266514.        0B</span></span></code></pre></div>
 
 </div>
 </div>
@@ -608,7 +606,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-21.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-29.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

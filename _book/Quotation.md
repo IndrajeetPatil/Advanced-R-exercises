@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x0000000032fe0950>
+#> <bytecode: 0x0000000032ff8e28>
 #> <environment: namespace:rlang>
 ```
 
@@ -804,7 +804,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-21
+#>  date     2022-08-29
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -840,7 +840,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)
 #>    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)
 #>    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
-#>    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)
+#>    knitr         1.40       2022-08-24 [1] CRAN (R 4.1.3)
 #>    labeling      0.4.2      2020-10-20 [1] CRAN (R 4.1.0)
 #>    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)
 #>    lobstr      * 1.1.2      2022-06-22 [1] CRAN (R 4.1.3)
@@ -855,8 +855,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)
 #>    rematch2      2.1.2      2020-05-01 [1] CRAN (R 4.1.1)
 #>    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)
-#>    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)
-#>    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)
+#>    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.1.3)
+#>    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.1.3)
 #>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)
 #>    scales        1.2.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)

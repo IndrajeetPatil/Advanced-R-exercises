@@ -23,9 +23,7 @@ force
 
 Why is it better to `force(x)` instead of just `x`?
 
-**A1.** Because of lazy evaluation, argument to a function won't be evaluated until its value is needed, but sometimes we may want to have eager evaluation.
-
-Using `force()` makes this intent clearer.
+**A1.** Due to lazy evaluation, argument to a function won't be evaluated until its value is needed. But sometimes we may want to have eager evaluation, and using `force()` makes this intent clearer.
 
 ---
 
@@ -71,7 +69,7 @@ lapply(mtcars, pick(5))
 lapply(mtcars, function(x) x[[5]])
 ```
 
-**A3.** The desired function:
+**A3.** To write desired function, we just need to make sure that the argument `i` is eagerly evaluated.
 
 ```{r}
 pick <- function(i) {
@@ -137,7 +135,7 @@ new_counter2 <- function() {
 }
 ```
 
-**A5.** In case closures are not used, the counts are stored in the global variable, which can be modified by other processes or even deleted.
+**A5.** In case closures are not used in this context, the counts are stored in a global variable, which can be modified by other processes or even deleted.
 
 ```{r}
 new_counter2()
@@ -164,7 +162,7 @@ new_counter3 <- function() {
 }
 ```
 
-**A6.**  In this case, the function will always return 1.
+**A6.**  In this case, the function will always return `1`.
 
 ```{r}
 new_counter3()
@@ -182,13 +180,19 @@ new_counter3()
 
 **A1.** To compare and contrast, let's first look at the source code for these functions:
 
+- `ggplot2::label_bquote()`
+
 ```{r}
 ggplot2::label_bquote
+```
 
+- `scales::number_format()`
+
+```{r}
 scales::number_format
 ```
 
-Both of these functions returns formatting functions used to style the facets labels and other labels to have the desired format. 
+Both of these functions return formatting functions used to style the facets labels and other labels to have the desired format in `{ggplot2}` plots.
 
 For example, using plotmath expression in the facet label:
 
@@ -222,39 +226,19 @@ The `scales::number_format()` function is a simple pass-through method that forc
 
 **Q1.** In `boot_model()`, why don't I need to force the evaluation of `df` or `model`?
 
+**A1.** We don’t need to force the evaluation of `df` or `model` because these arguments are automatically evaluated by `lm()`:
+
 ```{r}
 boot_model <- function(df, formula) {
   mod <- lm(formula, data = df)
   fitted <- unname(fitted(mod))
   resid <- unname(resid(mod))
   rm(mod)
-
-  print(env_binding_are_lazy(current_env()))
-
+  
   function() {
     fitted + sample(resid)
   }
-}
-```
-
-We can also confirm that there are no lazy bindings in the function environment:
-
-```{r}
-boot_model(mtcars, mpg ~ wt)
-```
-
-Contrast this with the first function we saw in the chapter which *did* have a lazy binding:
-
-```{r}
-power1 <- function(exp) {
-  print(env_binding_are_lazy(current_env()))
-
-  function(x) {
-    x^exp
-  }
-}
-
-power1(2)
+} 
 ```
 
 ---
@@ -273,7 +257,7 @@ boxcox3 <- function(x) {
 }
 ```
 
-**A2.** To see why we formulate this transformation like above by comparing it to the one mentioned in the book:
+**A2.** To see why we formulate this transformation like above, we can compare it to the one mentioned in the book:
 
 ```{r}
 boxcox2 <- function(lambda) {
@@ -293,7 +277,12 @@ boxcox2(1)
 boxcox3(mtcars$wt)
 ```
 
-As can be seen, in `boxcox2()`, we can vary `x` for the same value of `lambda`, while in `boxcox3()`, we can vary `lambda` for the same vector. This can be handy while exploring different transformations across inputs.
+As can be seen:
+
+- in `boxcox2()`, we can vary `x` for the same value of `lambda`, while 
+- in `boxcox3()`, we can vary `lambda` for the same vector. 
+
+Thus, `boxcox3()` can be handy while exploring different transformations across inputs.
 
 ---
 
@@ -333,7 +322,6 @@ We can also check that the values of these bindings are the same as what we ente
 identical(boot_permute_env$df, mtcars)
 identical(boot_permute_env$var, "mpg")
 ```
-
 
 ---
 
@@ -418,11 +406,29 @@ ggplot(
     (d) `f(z)`.
     (e) It depends.
 
+**A1.** It depends on whether `with()` is used with a data frame or a list.
+
+```{r}
+f <- mean
+z <- 1
+x <- list(f = mean, z = 1)
+
+identical(with(x, f(z)), x$f(x$z))
+
+identical(with(x, f(z)), f(x$z))
+
+identical(with(x, f(z)), x$f(z))
+
+identical(with(x, f(z)), f(z))
+```
+
 ---
 
-**Q2.** Compare and contrast the effects of `env_bind()` vs. `attach()` for the  following code.
+**Q2.** Compare and contrast the effects of `env_bind()` vs. `attach()` for the following code.
 
-**A2.**
+**A2.** Let's compare and contrast the effects of `env_bind()` vs. `attach()`.
+
+- `attach()` adds `funs` to the search path. Since these functions have the same names as functions in `{base}` package, the attached names mask the ones in the `{base}` package.
 
 ```{r}
 funs <- list(
@@ -431,13 +437,29 @@ funs <- list(
 )
 
 attach(funs)
-mean <- function(x) stop("Hi!")
-detach(funs)
 
-env_bind(globalenv(), !!!funs)
+mean
+head(search())
+
 mean <- function(x) stop("Hi!")
+mean
+head(search())
+
+detach(funs)
+```
+
+- `env_bind()` adds the functions in `funs` to the global environment, instead of masking the names in the `{base}` package.
+
+```{r}
+env_bind(globalenv(), !!!funs)
+mean
+
+mean <- function(x) stop("Hi!")
+mean
 env_unbind(globalenv(), names(funs))
 ```
+
+Note that there is no `"funs"` in this output.
 
 ---
 

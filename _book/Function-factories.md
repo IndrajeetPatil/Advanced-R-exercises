@@ -21,15 +21,13 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x0000000017267330>
+#> <bytecode: 0x0000000017267130>
 #> <environment: namespace:base>
 ```
 
 Why is it better to `force(x)` instead of just `x`?
 
-**A1.** Because of lazy evaluation, argument to a function won't be evaluated until its value is needed, but sometimes we may want to have eager evaluation.
-
-Using `force()` makes this intent clearer.
+**A1.** Due to lazy evaluation, argument to a function won't be evaluated until its value is needed. But sometimes we may want to have eager evaluation, and using `force()` makes this intent clearer.
 
 ---
 
@@ -49,8 +47,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x00000000346b79b8>
-#> <environment: 0x00000000346b7088>
+#> <bytecode: 0x00000000346b4510>
+#> <environment: 0x00000000346b39e8>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -98,7 +96,7 @@ lapply(mtcars, pick(5))
 lapply(mtcars, function(x) x[[5]])
 ```
 
-**A3.** The desired function:
+**A3.** To write desired function, we just need to make sure that the argument `i` is eagerly evaluated.
 
 
 ```r
@@ -172,7 +170,7 @@ new_counter2 <- function() {
 }
 ```
 
-**A5.** In case closures are not used, the counts are stored in the global variable, which can be modified by other processes or even deleted.
+**A5.** In case closures are not used in this context, the counts are stored in a global variable, which can be modified by other processes or even deleted.
 
 
 ```r
@@ -205,7 +203,7 @@ new_counter3 <- function() {
 }
 ```
 
-**A6.**  In this case, the function will always return 1.
+**A6.**  In this case, the function will always return `1`.
 
 
 ```r
@@ -214,15 +212,15 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x000000003231a6c8>
+#> <environment: 0x00000000244a5588>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x0000000032e69490>
-#> <environment: 0x0000000032373710>
+#> <bytecode: 0x0000000032e67990>
+#> <environment: 0x0000000032373fc0>
 ```
 
 ---
@@ -234,6 +232,8 @@ new_counter3()
 **Q1.** Compare and contrast `ggplot2::label_bquote()` with `scales::number_format()`.
 
 **A1.** To compare and contrast, let's first look at the source code for these functions:
+
+- `ggplot2::label_bquote()`
 
 
 ```r
@@ -266,9 +266,14 @@ ggplot2::label_bquote
 #>     }
 #>     structure(fun, class = "labeller")
 #> }
-#> <bytecode: 0x00000000330ad468>
+#> <bytecode: 0x000000003304f0d8>
 #> <environment: namespace:ggplot2>
+```
 
+- `scales::number_format()`
+
+
+```r
 scales::number_format
 #> function (accuracy = NULL, scale = 1, prefix = "", suffix = "", 
 #>     big.mark = " ", decimal.mark = ".", style_positive = c("none", 
@@ -284,11 +289,11 @@ scales::number_format
 #>             scale_cut = scale_cut, trim = trim, ...)
 #>     }
 #> }
-#> <bytecode: 0x0000000033139a10>
+#> <bytecode: 0x000000003320eca8>
 #> <environment: namespace:scales>
 ```
 
-Both of these functions returns formatting functions used to style the facets labels and other labels to have the desired format. 
+Both of these functions return formatting functions used to style the facets labels and other labels to have the desired format in `{ggplot2}` plots.
 
 For example, using plotmath expression in the facet label:
 
@@ -301,7 +306,7 @@ p <- ggplot(mtcars, aes(wt, mpg)) +
 p + facet_grid(. ~ vs, labeller = label_bquote(cols = alpha^.(vs)))
 ```
 
-<img src="Function-factories_files/figure-html/unnamed-chunk-17-1.png" width="100%" />
+<img src="Function-factories_files/figure-html/unnamed-chunk-18-1.png" width="100%" />
 
 Or to display axes labels in the desired format:
 
@@ -314,7 +319,7 @@ ggplot(mtcars, aes(wt, mpg)) +
   scale_y_continuous(labels = number_format(accuracy = 0.01, decimal.mark = ","))
 ```
 
-<img src="Function-factories_files/figure-html/unnamed-chunk-18-1.png" width="100%" />
+<img src="Function-factories_files/figure-html/unnamed-chunk-19-1.png" width="100%" />
 
 The `ggplot2::label_bquote()` adds an additional class to the returned function.
 
@@ -328,6 +333,8 @@ The `scales::number_format()` function is a simple pass-through method that forc
 
 **Q1.** In `boot_model()`, why don't I need to force the evaluation of `df` or `model`?
 
+**A1.** We don’t need to force the evaluation of `df` or `model` because these arguments are automatically evaluated by `lm()`:
+
 
 ```r
 boot_model <- function(df, formula) {
@@ -335,47 +342,11 @@ boot_model <- function(df, formula) {
   fitted <- unname(fitted(mod))
   resid <- unname(resid(mod))
   rm(mod)
-
-  print(env_binding_are_lazy(current_env()))
-
+  
   function() {
     fitted + sample(resid)
   }
-}
-```
-
-We can also confirm that there are no lazy bindings in the function environment:
-
-
-```r
-boot_model(mtcars, mpg ~ wt)
-#>   resid  fitted      df formula 
-#>   FALSE   FALSE   FALSE   FALSE
-#> function() {
-#>     fitted + sample(resid)
-#>   }
-#> <environment: 0x0000000033b5e6d0>
-```
-
-Contrast this with the first function we saw in the chapter which *did* have a lazy binding:
-
-
-```r
-power1 <- function(exp) {
-  print(env_binding_are_lazy(current_env()))
-
-  function(x) {
-    x^exp
-  }
-}
-
-power1(2)
-#>  exp 
-#> TRUE
-#> function(x) {
-#>     x^exp
-#>   }
-#> <environment: 0x000000001a7cccc8>
+} 
 ```
 
 ---
@@ -395,7 +366,7 @@ boxcox3 <- function(x) {
 }
 ```
 
-**A2.** To see why we formulate this transformation like above by comparing it to the one mentioned in the book:
+**A2.** To see why we formulate this transformation like above, we can compare it to the one mentioned in the book:
 
 
 ```r
@@ -414,7 +385,7 @@ Let's have a look at one example with each:
 ```r
 boxcox2(1)
 #> function(x) (x^lambda - 1) / lambda
-#> <environment: 0x0000000032ade2b8>
+#> <environment: 0x000000001a5ad1e0>
 
 boxcox3(mtcars$wt)
 #> function(lambda) {
@@ -424,10 +395,15 @@ boxcox3(mtcars$wt)
 #>       (x^lambda - 1) / lambda
 #>     }
 #>   }
-#> <environment: 0x0000000032e9aa28>
+#> <environment: 0x000000001a4a9310>
 ```
 
-As can be seen, in `boxcox2()`, we can vary `x` for the same value of `lambda`, while in `boxcox3()`, we can vary `lambda` for the same vector. This can be handy while exploring different transformations across inputs.
+As can be seen:
+
+- in `boxcox2()`, we can vary `x` for the same value of `lambda`, while 
+- in `boxcox3()`, we can vary `lambda` for the same vector. 
+
+Thus, `boxcox3()` can be handy while exploring different transformations across inputs.
 
 ---
 
@@ -452,7 +428,7 @@ boot_permute(mtcars, "mpg")
 #>     col <- df[[var]]
 #>     col[sample(n, replace = TRUE)]
 #>   }
-#> <environment: 0x00000000331b90f8>
+#> <environment: 0x00000000322c97d8>
 ```
 
 This is why we don't need to worry about a copy being made because the `df` in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:
@@ -461,7 +437,7 @@ This is why we don't need to worry about a copy being made because the `df` in t
 ```r
 boot_permute_env <- rlang::fn_env(boot_permute(mtcars, "mpg"))
 rlang::env_print(boot_permute_env)
-#> <environment: 0x00000000334ec0b0>
+#> <environment: 0x0000000032efa850>
 #> Parent: <environment: global>
 #> Bindings:
 #> * n: <int>
@@ -484,7 +460,6 @@ identical(boot_permute_env$df, mtcars)
 identical(boot_permute_env$var, "mpg")
 #> [1] TRUE
 ```
-
 
 ---
 
@@ -521,8 +496,8 @@ bench::mark(
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1          29.4us   39.3us    22492.    12.8KB    10.1 
-#> 2 LL2          15.7us   20.9us    42636.        0B     4.26
+#> 1 LL1          28.8us   38.7us    24669.    12.8KB     9.87
+#> 2 LL2          14.4us   19.4us    49298.        0B     9.86
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -548,16 +523,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 x 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1          44.8us   59.4us    16342.
-#>  2     10 LL2          19.4us   24.7us    38391.
-#>  3     20 LL1          53.8us   65.2us    14859.
-#>  4     20 LL2          20.3us   24.4us    38747.
-#>  5     50 LL1          70.1us     83us    11715.
-#>  6     50 LL2          17.1us   23.9us    40093.
-#>  7    100 LL1         101.9us  124.2us     7965.
-#>  8    100 LL2          22.3us   27.9us    33903.
-#>  9   1000 LL1           1.8ms   2.17ms      463.
-#> 10   1000 LL2          89.7us  107.8us     9107.
+#>  1     10 LL1          43.4us   57.3us    17299.
+#>  2     10 LL2          19.3us     24us    40693.
+#>  3     20 LL1          46.7us   62.3us    15831.
+#>  4     20 LL2          17.5us   22.8us    42994.
+#>  5     50 LL1            60us   77.2us    12798.
+#>  6     50 LL2            17us   21.9us    44740.
+#>  7    100 LL1          90.9us  115.9us     8460.
+#>  8    100 LL2          21.3us     26us    36251.
+#>  9   1000 LL1          1.85ms   2.21ms      452.
+#> 10   1000 LL2          79.6us  125.4us     7944.
 
 ggplot(
   df_bench,
@@ -577,7 +552,7 @@ ggplot(
   )
 ```
 
-<img src="Function-factories_files/figure-html/unnamed-chunk-29-1.png" width="100%" />
+<img src="Function-factories_files/figure-html/unnamed-chunk-28-1.png" width="100%" />
 
 ---
 
@@ -591,11 +566,34 @@ ggplot(
     (d) `f(z)`.
     (e) It depends.
 
+**A1.** It depends on whether `with()` is used with a data frame or a list.
+
+
+```r
+f <- mean
+z <- 1
+x <- list(f = mean, z = 1)
+
+identical(with(x, f(z)), x$f(x$z))
+#> [1] TRUE
+
+identical(with(x, f(z)), f(x$z))
+#> [1] TRUE
+
+identical(with(x, f(z)), x$f(z))
+#> [1] TRUE
+
+identical(with(x, f(z)), f(z))
+#> [1] TRUE
+```
+
 ---
 
-**Q2.** Compare and contrast the effects of `env_bind()` vs. `attach()` for the  following code.
+**Q2.** Compare and contrast the effects of `env_bind()` vs. `attach()` for the following code.
 
-**A2.**
+**A2.** Let's compare and contrast the effects of `env_bind()` vs. `attach()`.
+
+- `attach()` adds `funs` to the search path. Since these functions have the same names as functions in `{base}` package, the attached names mask the ones in the `{base}` package.
 
 
 ```r
@@ -608,13 +606,38 @@ attach(funs)
 #> The following objects are masked from package:base:
 #> 
 #>     mean, sum
-mean <- function(x) stop("Hi!")
-detach(funs)
 
-env_bind(globalenv(), !!!funs)
+mean
+#> function(x) mean(x, na.rm = TRUE)
+head(search())
+#> [1] ".GlobalEnv"       "funs"             "package:scales"  
+#> [4] "package:ggplot2"  "package:rlang"    "package:magrittr"
+
 mean <- function(x) stop("Hi!")
+mean
+#> function(x) stop("Hi!")
+head(search())
+#> [1] ".GlobalEnv"       "funs"             "package:scales"  
+#> [4] "package:ggplot2"  "package:rlang"    "package:magrittr"
+
+detach(funs)
+```
+
+- `env_bind()` adds the functions in `funs` to the global environment, instead of masking the names in the `{base}` package.
+
+
+```r
+env_bind(globalenv(), !!!funs)
+mean
+#> function(x) mean(x, na.rm = TRUE)
+
+mean <- function(x) stop("Hi!")
+mean
+#> function(x) stop("Hi!")
 env_unbind(globalenv(), names(funs))
 ```
+
+Note that there is no `"funs"` in this output.
 
 ---
 
@@ -633,7 +656,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-21
+#>  date     2022-08-29
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -670,7 +693,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)
 #>    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)
 #>    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
-#>    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)
+#>    knitr         1.40       2022-08-24 [1] CRAN (R 4.1.3)
 #>    labeling      0.4.2      2020-10-20 [1] CRAN (R 4.1.0)
 #>    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)
 #>    lobstr        1.1.2      2022-06-22 [1] CRAN (R 4.1.3)
@@ -684,8 +707,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.1)
 #>    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)
 #>    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)
-#>    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)
-#>    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)
+#>    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.1.3)
+#>    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.1.3)
 #>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)
 #>    scales      * 1.2.1      2022-08-20 [1] CRAN (R 4.1.3)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)

@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000017ff2088>
+#> <bytecode: 0x0000000017ff21c0>
 #> <environment: namespace:base>
 ```
 
@@ -346,7 +346,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000017ff2088>
+#> <bytecode: 0x0000000017ff21c0>
 #> <environment: namespace:base>
 
 # other package function
@@ -356,7 +356,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x0000000036508570>
+#> <bytecode: 0x000000003633dfc0>
 #> <environment: namespace:purrr>
 ```
 
@@ -559,7 +559,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x36b09b30" "0x36b09b30"
+#> [1] "0x36910a10" "0x36910a10"
 #> [1] 100
 ```
 
@@ -654,7 +654,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-08-21 13:20:59 CEST"
+#> [1] "2022-08-29 09:49:44 CEST"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -874,7 +874,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x00000000323c5a58>
+#> <bytecode: 0x0000000032768040>
 #> <environment: namespace:withr>
 ```
 
@@ -911,7 +911,7 @@ capture.output2 <- function(code) {
 
 capture.output2(cat("a", "b", "c", sep = "\n"))
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\Rtmpgpd8C3\file4bf41ac05754',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpuUBpSy\file24ec45c134c9',
 #> reason 'Permission denied'
 #> [1] "a" "b" "c"
 ```
@@ -961,7 +961,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x00000000355bd080>
+#> <bytecode: 0x0000000034d49ac0>
 #> <environment: namespace:utils>
 ```
 
@@ -976,7 +976,7 @@ capture.output(1)
 
 capture.output2(1)
 #> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\Rtmpgpd8C3\file4bf4675d358f',
+#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpuUBpSy\file24ec3852278c',
 #> reason 'Permission denied'
 #> character(0)
 ```
@@ -1304,7 +1304,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-21
+#>  date     2022-08-29
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -1343,14 +1343,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  P grDevices     * 4.1.3      2022-03-10 [2] local
 #>  P grid            4.1.3      2022-03-10 [2] local
 #>    gtable          0.3.0      2019-03-25 [1] CRAN (R 4.1.1)
-#>    haven           2.5.0      2022-04-15 [1] CRAN (R 4.1.3)
+#>    haven           2.5.1      2022-08-22 [1] CRAN (R 4.1.3)
 #>    highr           0.9        2021-04-16 [1] CRAN (R 4.1.1)
 #>    hms             1.1.2      2022-08-19 [1] CRAN (R 4.1.3)
 #>    htmltools       0.5.3      2022-07-18 [1] CRAN (R 4.1.3)
 #>    httr            1.4.4      2022-08-17 [1] CRAN (R 4.1.3)
 #>    jquerylib       0.1.4      2021-04-26 [1] CRAN (R 4.1.1)
 #>    jsonlite        1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
-#>    knitr           1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)
+#>    knitr           1.40       2022-08-24 [1] CRAN (R 4.1.3)
 #>    lifecycle       1.0.1      2021-09-24 [1] CRAN (R 4.1.1)
 #>    lobstr          1.1.2      2022-06-22 [1] CRAN (R 4.1.3)
 #>    lubridate       1.8.0      2021-10-07 [1] CRAN (R 4.1.1)
@@ -1367,8 +1367,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>    readxl          1.4.1      2022-08-17 [1] CRAN (R 4.1.3)
 #>    reprex          2.0.2      2022-08-17 [1] CRAN (R 4.1.3)
 #>    rlang           1.0.4      2022-07-12 [1] CRAN (R 4.1.3)
-#>    rmarkdown       2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)
-#>    rstudioapi      0.13       2020-11-12 [1] CRAN (R 4.1.1)
+#>    rmarkdown       2.16       2022-08-24 [1] CRAN (R 4.1.3)
+#>    rstudioapi      0.14       2022-08-22 [1] CRAN (R 4.1.3)
 #>    rvest           1.0.3      2022-08-19 [1] CRAN (R 4.1.3)
 #>    sass            0.4.2      2022-07-16 [1] CRAN (R 4.1.3)
 #>    scales          1.2.1      2022-08-20 [1] CRAN (R 4.1.3)

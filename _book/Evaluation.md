@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x0000000032dae910>
+#> <environment: 0x0000000032dbcec0>
 #> Parent: <environment: global>
 ```
 
@@ -250,17 +250,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x0000000032e18c08
+#> env:  0x0000000032e25fb8
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x00000000337c50a8
+#> env:  0x00000000337dec70
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x0000000033c0bf58
+#> env:  0x0000000033c27a70
 ```
 
 **A1.** Correctly predicted 😉
@@ -298,7 +298,7 @@ enenv(x)
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x00000000172d47a0>
+#> <environment: 0x00000000172d9e70>
 ```
 
 ---
@@ -670,7 +670,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-21
+#>  date     2022-08-29
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -695,7 +695,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)
 #>    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)
 #>    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
-#>    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)
+#>    knitr         1.40       2022-08-24 [1] CRAN (R 4.1.3)
 #>    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)
 #>    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)
 #>    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)
@@ -704,8 +704,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.1)
 #>    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)
 #>    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)
-#>    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)
-#>    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)
+#>    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.1.3)
+#>    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.1.3)
 #>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local

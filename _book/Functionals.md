@@ -11,6 +11,8 @@ library(purrr, warn.conflicts = FALSE)
 
 ## My first functional: `map()` (Exercises 9.2.6)
 
+---
+
 **Q1.** Use `as_mapper()` to explore how `{purrr}` generates anonymous functions for the integer, character, and list helpers. What helper allows you to extract attributes? Read the documentation to find out.
 
 **A1.** Let's handle the two parts of the question separately.
@@ -34,7 +36,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck(x, 1, .default = NULL)
-#> <environment: 0x0000000032245a18>
+#> <environment: 0x0000000016ca8b08>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -45,7 +47,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck(x, 2, 1, .default = NULL)
-#> <environment: 0x0000000032332028>
+#> <environment: 0x000000002d6f8e88>
 
 # mapping by name -----------------------
 
@@ -63,7 +65,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck(x, "m", .default = NULL)
-#> <environment: 0x000000003246cc68>
+#> <environment: 0x000000002d8359e8>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -75,7 +77,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck(x, 2, "m", .default = NULL)
-#> <environment: 0x0000000032547388>
+#> <environment: 0x000000002d90c2c8>
 
 # compact functions ----------------------------
 
@@ -100,6 +102,8 @@ as_mapper(~ length(.x))
 pluck(Titanic, attr_getter("class"))
 #> [1] "table"
 ```
+
+---
 
 **Q2.** `map(1:3, ~ runif(2))` is a useful pattern for generating random numbers, but `map(1:3, runif(2))` is not. Why not? Can you explain why it returns the result that it does?
 
@@ -135,8 +139,10 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck(x, 0.597890264587477, 0.587997315218672, .default = NULL)
-#> <environment: 0x000000003316d2b8>
+#> <environment: 0x000000002e530028>
 ```
+
+---
 
 **Q3.** Use the appropriate `map()` function to:
 
@@ -183,6 +189,8 @@ modify_if(dplyr::starwars, is.character, as.factor) %>%
 #>     gender  homeworld    species 
 #>          2         48         37
 ```
+
+---
 
 **Q4.** The following code simulates the performance of a *t*-test for non-normal data. Extract the *p*-value from each test, then visualise.
 
@@ -237,6 +245,8 @@ hist(p)
 ```
 
 <img src="Functionals_files/figure-html/unnamed-chunk-11-2.png" width="100%" />
+
+---
 
 **Q5.** The following code uses a map nested inside another map to apply a function to every element of a nested list. Why does it fail, and  what do you need to do to make it work?
 
@@ -294,6 +304,8 @@ map(x, .f = ~ map(.x, ~ triple(.x)))
 #> [[2]][[3]]
 #> [1] 12 21 18
 ```
+
+---
 
 **Q6.** Use `map()` to fit linear models to the `mtcars` dataset using the formulas stored in this list:
 
@@ -359,6 +371,8 @@ map(formulas, ~ lm(formula = ., data = mtcars))
 #>      19.024     1142.560       -1.798
 ```
 
+---
+
 **Q7.** Fit the model `mpg ~ disp` to each of the bootstrap replicates of `mtcars` in the list below, then extract the $R^2$ of the model fit (Hint: you can compute the $R^2$ with `summary()`.)
 
 
@@ -388,7 +402,11 @@ bootstraps %>%
 #>  [6] 0.7364226 0.7203027 0.6653252 0.7732780 0.6753329
 ```
 
+---
+
 ## Map variants (Exercises 9.4.6)
+
+---
 
 **Q1.** Explain the results of `modify(mtcars, 1)`.
 
@@ -413,6 +431,8 @@ head(modify(mtcars, 1))
 #> Valiant              4    4
 ```
 
+---
+
 **Q2.** Rewrite the following code to use `iwalk()` instead of `walk2()`. What are the advantages and disadvantages?
 
 
@@ -435,6 +455,8 @@ The advantage of using `iwalk()` is that we need to now deal with only a single 
 
 The disadvantage is that the code is difficult to reason about: 
 In `walk2()`, it's explicit what `.x` (`= cyls`) and `.y` (`= paths`) correspond to, while this is not so for `iwalk()` (i.e., `.x = cyls` and `.y = names(cyls)`) with the `.y` argument being "invisible".
+
+---
 
 **Q3.** Explain how the following code transforms a data frame using functions stored in a list.
 
@@ -478,6 +500,8 @@ mtcars[nm] <- map(nm, ~ trans[[.x]](mtcars[[.x]]))
 
 The latter approach can't afford passing arguments to placeholders in an anonymous function.
 
+---
+
 **Q4.** What does `write.csv()` return, i.e. what happens if you use it with `map2()` instead of `walk2()`?
 
 **A4.** If we use `map2()`, it will work, but it will print `NULL`s to the console for every list element.
@@ -501,7 +525,11 @@ withr::with_tempdir(
 #> NULL
 ```
 
+---
+
 ## Predicate functionals (Exercises 9.6.3)
+
+---
 
 **Q1.** Why isn't `is.na()` a predicate function? What base R function is closest to being a predicate version of `is.na()`?
 
@@ -531,6 +559,8 @@ The closest equivalent of a predicate function in base-R is `anyNA()` function.
 anyNA(c(NA, 1))
 #> [1] TRUE
 ```
+
+---
 
 **Q2.** `simple_reduce()` has a problem when `x` is length 0 or length 1. Describe the source of the problem and how you might go about fixing it.
 
@@ -605,6 +635,8 @@ simple_reduce2(1:3, `*`, init = 1)
 #> [1] 6
 ```
 
+---
+
 **Q3.** Implement the `span()` function from Haskell: given a list `x` and a predicate function `f`, `span(x, f)` returns the location of the longest sequential run of elements where the predicate is true. (Hint: you might find `rle()` helpful.)
 
 **A3.** Implementation of `span()`:
@@ -667,6 +699,8 @@ span(c(3, 1, 2, 4, 5, 6), function(x) x %in% c(2, 4))
 #> [1] 2 3
 ```
 
+---
+
 **Q4.** Implement `arg_max()`. It should take a function and a vector of inputs, and return the elements of the input where the function returns the highest value. For example, `arg_max(-10:5, function(x) x ^ 2)` should return -10. `arg_max(-5:5, function(x) x ^ 2)` should return `c(-5, 5)`. Also implement the matching `arg_min()` function.
 
 **A4.** Here are implementations for the specified functions:
@@ -708,6 +742,8 @@ arg_min(-10:5, function(x) x^2)
 arg_min(-5:5, function(x) x^2)
 #> [1] 0
 ```
+
+---
 
 **Q5.** The function below scales a vector so it falls in the range [0, 1]. How would you apply it to every column of a data frame? How would you apply it to every numeric column in a data frame?
 
@@ -751,7 +787,11 @@ purrr::modify_if(head(iris), .p = is.numeric, .f = scale01)
 #> 6        1.000   1.0000000         1.00           1  setosa
 ```
 
+---
+
 ## Base functionals (Exercises 9.7.3)
+
+---
 
 **Q1.** How does `apply()` arrange the output? Read the documentation and perform some experiments.
 
@@ -815,6 +855,8 @@ apply(m, c(1, 2), function(x) x^2)
 
 As can be seen, `apply()` returns outputs organised first by the margins being operated over, and only then the results. 
 
+---
+
 **Q2.** What do `eapply()` and `rapply()` do? Does purrr have equivalents?
 
 **A2.** Let's consider them one-by-one.
@@ -843,7 +885,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x000000001a5bc618>
+#> <environment: 0x00000000123a8418>
 #> Parent: <environment: global>
 #> Bindings:
 #> * x: <dbl>
@@ -903,6 +945,8 @@ purrr::modify_depth(X, .depth = 2L, .f = length)
 #> [1] 1
 ```
 
+---
+
 **Q3.** Challenge: read about the [fixed point algorithm](https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-12.html#%25_idx_1096). Complete the exercises using R.
 
 **A3.** As mentioned in the suggested reading material:
@@ -957,6 +1001,8 @@ find_fixed_point(golden_ratio_f, 1.0)
 #> [1] 1.618182
 ```
 
+---
+
 ## Session information
 
 
@@ -972,7 +1018,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-21
+#>  date     2022-08-29
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -1002,7 +1048,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)
 #>    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)
 #>    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
-#>    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)
+#>    knitr         1.40       2022-08-24 [1] CRAN (R 4.1.3)
 #>    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)
 #>    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)
 #>    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)
@@ -1012,8 +1058,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>    purrr       * 0.3.4      2020-04-17 [1] CRAN (R 4.1.1)
 #>    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)
 #>    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)
-#>    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)
-#>    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)
+#>    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.1.3)
+#>    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.1.3)
 #>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local

@@ -22,9 +22,7 @@
 <link href="libs/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="libs/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
-<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
-<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -94,6 +92,7 @@
 <h2>
 <span class="header-section-number">9.1</span> My first functional: <code>map()</code> (Exercises 9.2.6)<a class="anchor" aria-label="anchor" href="#my-first-functional-map-exercises-9.2.6"><i class="fas fa-link"></i></a>
 </h2>
+<hr>
 <p><strong>Q1.</strong> Use <code><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper()</a></code> to explore how <a href="http://purrr.tidyverse.org">purrr</a> generates anonymous functions for the integer, character, and list helpers. What helper allows you to extract attributes? Read the documentation to find out.</p>
 <p><strong>A1.</strong> Let’s handle the two parts of the question separately.</p>
 <ul>
@@ -115,7 +114,7 @@
 <span><span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; pluck(x, 1, .default = NULL)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000000032245a18&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x0000000016ca8b08&gt;</span></span>
 <span></span>
 <span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
@@ -126,7 +125,7 @@
 <span><span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; pluck(x, 2, 1, .default = NULL)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000000032332028&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x000000002d6f8e88&gt;</span></span>
 <span></span>
 <span><span class="co"># mapping by name -----------------------</span></span>
 <span></span>
@@ -144,7 +143,7 @@
 <span><span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; pluck(x, "m", .default = NULL)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000000003246cc68&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x000000002d8359e8&gt;</span></span>
 <span></span>
 <span><span class="co"># mixing position and name</span></span>
 <span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">y</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"m"</span><span class="op">)</span><span class="op">)</span></span>
@@ -156,7 +155,7 @@
 <span><span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"m"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; pluck(x, 2, "m", .default = NULL)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x0000000032547388&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x000000002d90c2c8&gt;</span></span>
 <span></span>
 <span><span class="co"># compact functions ----------------------------</span></span>
 <span></span>
@@ -178,6 +177,7 @@
 <div class="sourceCode" id="cb253"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck</a></span><span class="op">(</span><span class="va">Titanic</span>, <span class="fu"><a href="https://purrr.tidyverse.org/reference/attr_getter.html">attr_getter</a></span><span class="op">(</span><span class="st">"class"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "table"</span></span></code></pre></div>
+<hr>
 <p><strong>Q2.</strong> <code>map(1:3, ~ runif(2))</code> is a useful pattern for generating random numbers, but <code>map(1:3, runif(2))</code> is not. Why not? Can you explain why it returns the result that it does?</p>
 <p><strong>A2.</strong> As shown by <code><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper()</a></code> outputs below, the second call is not appropriate for generating random numbers because it translates to <code><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck()</a></code> function where the indices for plucking are taken to be randomly generated numbers, and these are not valid accessors and so we get <code>NULL</code>s in return.</p>
 <div class="sourceCode" id="cb254"><pre class="downlit sourceCode r">
@@ -209,7 +209,8 @@
 <span><span class="fu"><a href="https://purrr.tidyverse.org/reference/as_mapper.html">as_mapper</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; pluck(x, 0.597890264587477, 0.587997315218672, .default = NULL)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000000003316d2b8&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x000000002e530028&gt;</span></span></code></pre></div>
+<hr>
 <p><strong>Q3.</strong> Use the appropriate <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> function to:</p>
 <pre><code>a) Compute the standard deviation of every column in a numeric data frame.
 
@@ -247,6 +248,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span><span class="co">#&gt;         87         12         31         15          4 </span></span>
 <span><span class="co">#&gt;     gender  homeworld    species </span></span>
 <span><span class="co">#&gt;          2         48         37</span></span></code></pre></div>
+<hr>
 <p><strong>Q4.</strong> The following code simulates the performance of a <em>t</em>-test for non-normal data. Extract the <em>p</em>-value from each test, then visualise.</p>
 <div class="sourceCode" id="cb259"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trials</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -288,6 +290,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="Functionals_files/figure-html/unnamed-chunk-11-2.png" width="100%"></div>
+<hr>
 <p><strong>Q5.</strong> The following code uses a map nested inside another map to apply a function to every element of a nested list. Why does it fail, and what do you need to do to make it work?</p>
 <div class="sourceCode" id="cb263"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
@@ -332,6 +335,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]][[3]]</span></span>
 <span><span class="co">#&gt; [1] 12 21 18</span></span></code></pre></div>
+<hr>
 <p><strong>Q6.</strong> Use <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> to fit linear models to the <code>mtcars</code> dataset using the formulas stored in this list:</p>
 <div class="sourceCode" id="cb266"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">formulas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
@@ -388,6 +392,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt; (Intercept)    I(1/disp)           wt  </span></span>
 <span><span class="co">#&gt;      19.024     1142.560       -1.798</span></span></code></pre></div>
+<hr>
 <p><strong>Q7.</strong> Fit the model <code>mpg ~ disp</code> to each of the bootstrap replicates of <code>mtcars</code> in the list below, then extract the <span class="math inline">\(R^2\)</span> of the model fit (Hint: you can compute the <span class="math inline">\(R^2\)</span> with <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>.)</p>
 <div class="sourceCode" id="cb268"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bootstrap</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
@@ -409,11 +414,13 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="st">"r.squared"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] 0.7864562 0.8110818 0.7956331 0.7632399 0.7967824</span></span>
 <span><span class="co">#&gt;  [6] 0.7364226 0.7203027 0.6653252 0.7732780 0.6753329</span></span></code></pre></div>
+<hr>
 </div>
 <div id="map-variants-exercises-9.4.6" class="section level2" number="9.2">
 <h2>
 <span class="header-section-number">9.2</span> Map variants (Exercises 9.4.6)<a class="anchor" aria-label="anchor" href="#map-variants-exercises-9.4.6"><i class="fas fa-link"></i></a>
 </h2>
+<hr>
 <p><strong>Q1.</strong> Explain the results of <code>modify(mtcars, 1)</code>.</p>
 <p><strong>A1.</strong> <code><a href="https://purrr.tidyverse.org/reference/modify.html">modify()</a></code> returns the object of type same as the input. Since the input here is a data frame of certain dimensions and <code>.f = 1</code> translates to plucking the first element in each column, it returns a data frame with the same dimensions with the plucked element recycled across rows.</p>
 <div class="sourceCode" id="cb270"><pre class="downlit sourceCode r">
@@ -432,6 +439,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <span><span class="co">#&gt; Hornet 4 Drive       4    4</span></span>
 <span><span class="co">#&gt; Hornet Sportabout    4    4</span></span>
 <span><span class="co">#&gt; Valiant              4    4</span></span></code></pre></div>
+<hr>
 <p><strong>Q2.</strong> Rewrite the following code to use <code><a href="https://purrr.tidyverse.org/reference/imap.html">iwalk()</a></code> instead of <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></code>. What are the advantages and disadvantages?</p>
 <div class="sourceCode" id="cb271"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cyls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span></span>
@@ -445,6 +453,7 @@ a) Compute the number of levels for every factor in a data frame.</code></pre>
 <p>The advantage of using <code><a href="https://purrr.tidyverse.org/reference/imap.html">iwalk()</a></code> is that we need to now deal with only a single variable (<code>cyls</code>) instead of two (<code>cyls</code> and <code>paths</code>).</p>
 <p>The disadvantage is that the code is difficult to reason about:
 In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></code>, it’s explicit what <code>.x</code> (<code>= cyls</code>) and <code>.y</code> (<code>= paths</code>) correspond to, while this is not so for <code><a href="https://purrr.tidyverse.org/reference/imap.html">iwalk()</a></code> (i.e., <code>.x = cyls</code> and <code>.y = names(cyls)</code>) with the <code>.y</code> argument being “invisible”.</p>
+<hr>
 <p><strong>Q3.</strong> Explain how the following code transforms a data frame using functions stored in a list.</p>
 <div class="sourceCode" id="cb273"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
@@ -470,6 +479,7 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <div class="sourceCode" id="cb276"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mtcars</span><span class="op">[</span><span class="va">nm</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">nm</span>, <span class="op">~</span> <span class="va">trans</span><span class="op">[[</span><span class="va">.x</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[[</span><span class="va">.x</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The latter approach can’t afford passing arguments to placeholders in an anonymous function.</p>
+<hr>
 <p><strong>Q4.</strong> What does <code><a href="https://rdrr.io/r/utils/write.table.html">write.csv()</a></code> return, i.e. what happens if you use it with <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code> instead of <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></code>?</p>
 <p><strong>A4.</strong> If we use <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code>, it will work, but it will print <code>NULL</code>s to the console for every list element.</p>
 <div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
@@ -488,11 +498,13 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`8`</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<hr>
 </div>
 <div id="predicate-functionals-exercises-9.6.3" class="section level2" number="9.3">
 <h2>
 <span class="header-section-number">9.3</span> Predicate functionals (Exercises 9.6.3)<a class="anchor" aria-label="anchor" href="#predicate-functionals-exercises-9.6.3"><i class="fas fa-link"></i></a>
 </h2>
+<hr>
 <p><strong>Q1.</strong> Why isn’t <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code> a predicate function? What base R function is closest to being a predicate version of <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code>?</p>
 <p><strong>A1.</strong> As mentioned in the docs:</p>
 <blockquote>
@@ -513,6 +525,7 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <div class="sourceCode" id="cb279"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">anyNA</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<hr>
 <p><strong>Q2.</strong> <code>simple_reduce()</code> has a problem when <code>x</code> is length 0 or length 1. Describe the source of the problem and how you might go about fixing it.</p>
 <div class="sourceCode" id="cb280"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simple_reduce</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span><span class="op">)</span> <span class="op">{</span></span>
@@ -566,6 +579,7 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <span><span class="co">#&gt; [1] 1</span></span>
 <span><span class="fu">simple_reduce2</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">`*`</span>, init <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 6</span></span></code></pre></div>
+<hr>
 <p><strong>Q3.</strong> Implement the <code>span()</code> function from Haskell: given a list <code>x</code> and a predicate function <code>f</code>, <code>span(x, f)</code> returns the location of the longest sequential run of elements where the predicate is true. (Hint: you might find <code><a href="https://rdrr.io/r/base/rle.html">rle()</a></code> helpful.)</p>
 <p><strong>A3.</strong> Implementation of <code>span()</code>:</p>
 <div class="sourceCode" id="cb285"><pre class="downlit sourceCode r">
@@ -615,6 +629,7 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <span><span class="co">#&gt; [1] 1</span></span>
 <span><span class="fu">span</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 2 3</span></span></code></pre></div>
+<hr>
 <p><strong>Q4.</strong> Implement <code>arg_max()</code>. It should take a function and a vector of inputs, and return the elements of the input where the function returns the highest value. For example, <code>arg_max(-10:5, function(x) x ^ 2)</code> should return -10. <code>arg_max(-5:5, function(x) x ^ 2)</code> should return <code>c(-5, 5)</code>. Also implement the matching <code>arg_min()</code> function.</p>
 <p><strong>A4.</strong> Here are implementations for the specified functions:</p>
 <ul>
@@ -653,6 +668,7 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <span><span class="co">#&gt; [1] 0</span></span>
 <span><span class="fu">arg_min</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span></code></pre></div>
+<hr>
 <p><strong>Q5.</strong> The function below scales a vector so it falls in the range [0, 1]. How would you apply it to every column of a data frame? How would you apply it to every numeric column in a data frame?</p>
 <div class="sourceCode" id="cb290"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scale01</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
@@ -686,11 +702,13 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <span><span class="co">#&gt; 4        0.000   0.1111111         0.50           0  setosa</span></span>
 <span><span class="co">#&gt; 5        0.500   0.6666667         0.25           0  setosa</span></span>
 <span><span class="co">#&gt; 6        1.000   1.0000000         1.00           1  setosa</span></span></code></pre></div>
+<hr>
 </div>
 <div id="base-functionals-exercises-9.7.3" class="section level2" number="9.4">
 <h2>
 <span class="header-section-number">9.4</span> Base functionals (Exercises 9.7.3)<a class="anchor" aria-label="anchor" href="#base-functionals-exercises-9.7.3"><i class="fas fa-link"></i></a>
 </h2>
+<hr>
 <p><strong>Q1.</strong> How does <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> arrange the output? Read the documentation and perform some experiments.</p>
 <p><strong>A1.</strong> Let’s prepare an array and apply a function over different margins:</p>
 <div class="sourceCode" id="cb293"><pre class="downlit sourceCode r">
@@ -747,6 +765,7 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <span><span class="co">#&gt;   0  1 9 4</span></span>
 <span><span class="co">#&gt;   1 49 0 0</span></span></code></pre></div>
 <p>As can be seen, <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> returns outputs organised first by the margins being operated over, and only then the results.</p>
+<hr>
 <p><strong>Q2.</strong> What do <code><a href="https://rdrr.io/r/base/eapply.html">eapply()</a></code> and <code><a href="https://rdrr.io/r/base/rapply.html">rapply()</a></code> do? Does purrr have equivalents?</p>
 <p><strong>A2.</strong> Let’s consider them one-by-one.</p>
 <ul>
@@ -772,7 +791,7 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <span></span>
 <span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_print.html">env_print</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000000001a5bc618&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x00000000123a8418&gt;</span></span>
 <span><span class="co">#&gt; Parent: &lt;environment: global&gt;</span></span>
 <span><span class="co">#&gt; Bindings:</span></span>
 <span><span class="co">#&gt; * x: &lt;dbl&gt;</span></span>
@@ -823,6 +842,7 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $d</span></span>
 <span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<hr>
 <p><strong>Q3.</strong> Challenge: read about the <a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-12.html#%25_idx_1096">fixed point algorithm</a>. Complete the exercises using R.</p>
 <p><strong>A3.</strong> As mentioned in the suggested reading material:</p>
 <blockquote>
@@ -865,6 +885,7 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <span></span>
 <span><span class="fu">find_fixed_point</span><span class="op">(</span><span class="va">golden_ratio_f</span>, <span class="fl">1.0</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1.618182</span></span></code></pre></div>
+<hr>
 </div>
 <div id="session-information-7" class="section level2" number="9.5">
 <h2>
@@ -882,7 +903,7 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <span><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
 <span><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
 <span><span class="co">#&gt;  tz       Europe/Berlin</span></span>
-<span><span class="co">#&gt;  date     2022-08-21</span></span>
+<span><span class="co">#&gt;  date     2022-08-29</span></span>
 <span><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
@@ -912,7 +933,7 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <span><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
 <span><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
 <span><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)</span></span>
+<span><span class="co">#&gt;    knitr         1.40       2022-08-24 [1] CRAN (R 4.1.3)</span></span>
 <span><span class="co">#&gt;    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)</span></span>
 <span><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
 <span><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
@@ -922,8 +943,8 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <span><span class="co">#&gt;    purrr       * 0.3.4      2020-04-17 [1] CRAN (R 4.1.1)</span></span>
 <span><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
 <span><span class="co">#&gt;    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)</span></span>
-<span><span class="co">#&gt;    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)</span></span>
+<span><span class="co">#&gt;    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.1.3)</span></span>
+<span><span class="co">#&gt;    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.1.3)</span></span>
 <span><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
 <span><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
 <span><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
@@ -978,7 +999,7 @@ In <code><a href="https://purrr.tidyverse.org/reference/map2.html">walk2()</a></
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-21.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-29.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

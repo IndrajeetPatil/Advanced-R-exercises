@@ -36,11 +36,7 @@ First, we try without `torture = TRUE`: it returns no meaningful results.
 
 ```r
 profvis(f())
-```
-
-```{=html}
-<div id="htmlwidget-d4d5348c5feeb7ac0f86" style="width:100%;height:600px;" class="profvis html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d4d5348c5feeb7ac0f86">{"x":{"message":{"prof":{"time":[1,1,1,1,1,1],"depth":[6,5,4,3,2,1],"label":["tryCatch","profvis","eval","eval","eval.parent","local"],"filenum":[null,null,null,null,null,null],"linenum":[null,null,null,null,null,null],"memalloc":[10.7711944580078,10.7711944580078,10.7711944580078,10.7711944580078,10.7711944580078,10.7711944580078],"meminc":[0,0,0,0,0,0],"filename":[null,null,null,null,null,null]},"interval":10,"files":[],"prof_output":"C:\\Users\\INDRAJ~1\\AppData\\Local\\Temp\\RtmpQ5niFH\\file87c3e0b2288.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script>
+#> Error in parse_rprof(prof_output, expr_source): No parsing data available. Maybe your function was too fast?
 ```
 
 Maybe because the function runs too fast?
@@ -51,7 +47,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           211us    276us     3488.     801KB     49.5
+#> 1 f()           199us    284us     3489.     801KB     49.5
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -83,7 +79,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x00000000172a15c8>
+#> <bytecode: 0x00000000172a15e0>
 #> <environment: namespace:base>
 ```
 
@@ -157,15 +153,15 @@ t_bench_df
 #> # A tibble: 2 x 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)      1.34us
-#> 2 x^0.5        4.17us
+#> 1 sqrt(x)      1.06us
+#> 2 x^0.5        3.64us
 
 t_systime_df
 #> # A tibble: 2 x 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                  1.14                0.720
-#> 2 x^0.5                    3.69                3.59
+#> 1 sqrt(x)                  0.98                0.640
+#> 2 x^0.5                    3.42                3.36
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -199,10 +195,10 @@ bench::mark(
 #> # A tibble: 4 x 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)          4.8us    5.3us   177708.    7.86KB
-#> 2 x^0.5           27.7us   31.8us    30939.    7.86KB
-#> 3 x^(1/2)           28us   31.9us    30952.    7.86KB
-#> 4 exp(log(x)/2)   70.3us   86.4us    11550.    7.86KB
+#> 1 sqrt(x)          4.5us      5us   152987.    7.86KB
+#> 2 x^(1/2)         25.2us   29.4us    28902.    7.86KB
+#> 3 x^0.5           27.5us     30us    32539.    7.86KB
+#> 4 exp(log(x)/2)   77.4us   96.6us    10477.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -230,7 +226,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-21
+#>  date     2022-08-29
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------
@@ -261,7 +257,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    htmlwidgets   1.5.4      2021-09-08 [1] CRAN (R 4.1.1)
 #>    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)
 #>    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
-#>    knitr         1.39.9     2022-08-18 [1] Github (yihui/knitr@9e36e9c)
+#>    knitr         1.40       2022-08-24 [1] CRAN (R 4.1.3)
 #>    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)
 #>    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)
 #>    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)
@@ -273,8 +269,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.1)
 #>    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)
 #>    rlang         1.0.4      2022-07-12 [1] CRAN (R 4.1.3)
-#>    rmarkdown     2.15.1     2022-08-18 [1] Github (rstudio/rmarkdown@b86f18b)
-#>    rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.1)
+#>    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.1.3)
+#>    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.1.3)
 #>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
 #>  P stats       * 4.1.3      2022-03-10 [2] local
