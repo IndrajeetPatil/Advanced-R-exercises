@@ -15,23 +15,21 @@ library(purrr, warn.conflicts = FALSE)
 
 **Q1.** Base R provides a function operator in the form of `Vectorize()`. What does it do? When might you use it?
 
-**A1.** `Vectorize()` function creates a function that vectorizes the action of the provided function over specified arguments. We will see its utility by solving a problem that otherwise couldn't be solved.
+**A1.** `Vectorize()` function creates a function that vectorizes the action of the provided function over specified arguments (i.e., it acts on each element of the vector). We will see its utility by solving a problem that otherwise would be difficult to solve.
 
-The problem is to build a hybrid between the following functions:
+The problem is to find indices of matching numeric values for the given threshold by creating a hybrid of the following functions:
 
 - `%in%` (which doesn't provide any way to provide tolerance when comparing numeric values),
 - `dplyr::near()` (which is vectorized element-wise and thus expects two vectors of equal length)
-
-in order to find indices of matching numeric values for the given threshold.
 
 
 ```r
 which_near <- function(x, y, tolerance) {
   # Vectorize `dplyr::near()` function only over the `y` argument.
-  # Note that that `Vectorize()` is a function operator and will return a function.
+  # `Vectorize()` is a function operator and will return a function.
   customNear <- Vectorize(dplyr::near, vectorize.args = c("y"), SIMPLIFY = FALSE)
 
-  # Apply the vectorized function to the two vectors and then check where the
+  # Apply the vectorized function to vector arguments and then check where the
   # comparisons are equal (i.e. `TRUE`) using `which()`.
   #
   # Use `compact()` to remove empty elements from the resulting list.
@@ -55,6 +53,14 @@ Let's use it:
 x1 <- c(2.1, 3.3, 8.45, 8, 6)
 x2 <- c(6, 8.40, 3)
 
+which_near(x1, x2, tolerance = 0.1)
+#> [1] 5 3
+```
+
+Note that we needed to create a new function for this because neither of the existing functions do what we want.
+
+
+```r
 which(x1 %in% x2)
 #> [1] 5
 
@@ -62,9 +68,6 @@ which(dplyr::near(x1, x2, tol = 0.1))
 #> Warning in x - y: longer object length is not a multiple of
 #> shorter object length
 #> integer(0)
-
-which_near(x1, x2, tolerance = 0.1)
-#> [1] 5 3
 ```
 
 We solved a complex task here using the `Vectorize()` function!
@@ -92,7 +95,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x0000000032b6aae0>
+#> <bytecode: 0x0000000032c33488>
 #> <environment: namespace:purrr>
 ```
 
@@ -116,7 +119,7 @@ safely
 #>     .f <- as_mapper(.f)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x0000000032d2ad68>
+#> <bytecode: 0x0000000032dfd418>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -130,7 +133,7 @@ purrr:::capture_error
 #>         stop("Terminated by user", call. = FALSE)
 #>     })
 #> }
-#> <bytecode: 0x0000000032dafd80>
+#> <bytecode: 0x0000000032e514c0>
 #> <environment: namespace:purrr>
 ```
 
@@ -165,7 +168,7 @@ Here, the first dot is printed after the 9th download is finished, and the 10th 
 
 **A2.** Since `download.file()` is meant to download files from the Internet, memoising it is not recommended for the following reasons:
 
-- Memoization is helpful when giving the same input the function returns the same output. This is not necessary the case for webpages since they constantly change. This means that you may continue to "download" an outdated version of the webpage.
+- Memoization is helpful when giving the same input the function returns the same output. This is not necessarily the case for webpages since they constantly change, and you may continue to "download" an outdated version of the webpage.
 
 - Memoization works by caching results, which can take up a significant amount of memory. 
 
@@ -279,10 +282,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2022-08-29 11:07:05
-#> Function called at:  2022-08-29 11:07:10
-#> Function called at:  2022-08-29 11:07:15
-#> Function called at:  2022-08-29 11:07:23
+#> Function created at: 2022-08-30 09:39:10
+#> Function called at:  2022-08-30 09:39:15
+#> Function called at:  2022-08-30 09:39:20
+#> Function called at:  2022-08-30 09:39:28
 ```
 
 ---
@@ -306,8 +309,7 @@ delay_by_atleast <- function(f, amount) {
       if (wait > 0) Sys.sleep(wait)
     }
 
-    # update the time in the parent environment when the function finishes
-    # for the next run
+    # update the time in the parent frame for the next run when the function finishes
     on.exit(last_time <<- Sys.time())
 
     f(...)
@@ -332,7 +334,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  English_United Kingdom.1252
 #>  ctype    English_United Kingdom.1252
 #>  tz       Europe/Berlin
-#>  date     2022-08-29
+#>  date     2022-08-30
 #>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
 #> 
 #> - Packages -----------------------------------------------

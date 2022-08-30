@@ -4,22 +4,29 @@
 source("common.R")
 ```
 
+Attaching the needed libraries:
+
+```{r, warning=FALSE, message=FALSE}
+library(sloop, warn.conflicts = FALSE)
+library(dplyr, warn.conflicts = FALSE)
+library(purrr, warn.conflicts = FALSE)
+```
+
 ## Basics (Exercises 13.2.1)
 
 ---
 
 **Q1.** Describe the difference between `t.test()` and `t.data.frame()`. When is each function called?
 
-**A1.** 
+**A1.** The difference between `t.test()` and `t.data.frame()` is the following:
 
 - `t.test()` is a **generic** function to perform a *t*-test.
 
-- `t.data.frame` is a **method** for generic `t()` (a matrix transform function) and will be dispatched for `data.frame` class objects/instances that need to be transformed.
+- `t.data.frame()` is a **method** for generic `t()` (a matrix transform function) and will be dispatched for `data.frame` objects.
+
+We can also confirm these function types using `ftype()`:
 
 ```{r S3-2}
-library(sloop)
-
-# function type
 ftype(t.test)
 ftype(t.data.frame)
 ```
@@ -36,13 +43,13 @@ ftype(t.data.frame)
 - `on.exit()`
 etc.
 
-For full list, you could do:
+<!-- For full list, you could do: -->
 
-```{r S3-3, eval=FALSE}
-base_functions <- getNamespaceExports("base")
+<!-- ```{r S3-3, eval=FALSE} -->
+<!-- base_functions <- getNamespaceExports("base") -->
 
-base_functions[grepl("(\\w+)(\\.)(\\w+)", base_functions)]
-```
+<!-- base_functions[grepl("(\\w+)(\\.)(\\w+)", base_functions)] -->
+<!-- ``` -->
 
 For example,
 
@@ -68,6 +75,8 @@ s3_methods_generic("as.data.frame") %>%
   dplyr::filter(class == "data.frame")
 ```
 
+Given the number of `.`s in this name, it is quite confusing to figure out what is the name of the generic and the name of the class.
+
 ---
 
 **Q4.** Describe the difference in behaviour in these two calls.
@@ -79,7 +88,7 @@ mean(some_days)
 mean(unclass(some_days))
 ```
 
-**A4.** 
+**A4.** The difference in behaviour in the specified calls.
 
 - Before unclassing, the `mean` generic dispatches `.Date` method:
 
@@ -378,7 +387,7 @@ new_factor <- function(x = integer(),
 
 **Q5.** Read the documentation for `utils::as.roman()`. How would you write a constructor for this class? Does it need a validator? What might a helper do?
 
-**A5.** `utils::as.roman()` converts Hindu-Arabic numerals to Roman numerals. Removing its class also reveals that it is implemented using the base type `integer`:
+**A5.** `utils::as.roman()` converts Indo-Arabic numerals to Roman numerals. Removing its class also reveals that it is implemented using the base type `integer`:
 
 ```{r S3-29}
 as.roman(1)
@@ -386,7 +395,7 @@ as.roman(1)
 typeof(unclass(as.roman(1)))
 ```
 
-Therefore, we can create a simple constructor to create instance of this class:
+Therefore, we can create a simple constructor to create a new instance of this class:
 
 ```{r S3-30}
 new_roman <- function(x = integer()) {
@@ -493,9 +502,6 @@ s3_methods_class("ecdf")
 **A4.** To answer this question, first, let's list all functions base has and only retain the generics.
 
 ```{r S3-41}
-library(purrr)
-library(dplyr)
-
 # getting all functions names
 objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
 funs <- Filter(is.function, objs)
@@ -533,9 +539,28 @@ y <- 1
 g(x)
 ```
 
-**A5.** 
+**A5.** If called directly, `g.default()` method takes `x` value from argument and `y` from the global environment:
 
-Two 
+```{r}
+g.default(x)
+```
+
+But, if `g()` function is called, it takes the `x` from argument, but comes from function environment:
+
+```{r}
+g(x)
+```
+
+The docs for `?UseMethod()` clarify why this is the case:
+
+> Any local variables defined before the call to UseMethod are retained
+
+That is, when `UseMethod()` calls `g.default()`, variables defined inside the generic are also available to `g.default()` method. The arguments supplied to the function are passed on as is, however, and cannot be affected by code inside the generic.
+
+Two rules of function evaluation violated by `UseMethod()`:
+
+- Name masking
+- A fresh start
 
 **Q6.** What are the arguments to `[`? Why is this a hard question to answer?
 
@@ -546,7 +571,7 @@ s3_methods_generic("[") %>%
   dplyr::filter(source == "base")
 ```
 
-We can sample a few of them to see the diversity in the number of formal arguments:
+We can sample a few of them to see the wide variation in the number of formal arguments:
 
 ```{r S3-45}
 # table
@@ -767,8 +792,6 @@ Remember that the way `S3` method dispatch works, if a generic has a method for 
 We can extract a vector of all generics supported by both sub- and super-classes:
 
 ```{r S3-60}
-library(sloop)
-
 (t_generics <- s3_methods_class("POSIXt")$generic)
 
 (lt_generics <- s3_methods_class("POSIXlt")$generic)
@@ -836,7 +859,7 @@ generic2.b <- function(x) {
 generic2(structure(list(), class = c("b", "a2")))
 ```
 
-Looking at the dispatches explains why:
+`S3` dispatch explains why:
 
 ```{r S3-67}
 sloop::s3_dispatch(generic2(structure(list(), class = c("b", "a2"))))
@@ -850,7 +873,7 @@ This special variable is `.Class`:
 
 > `.Class` is a character vector of classes used to find the next method. `NextMethod` adds an attribute "previous" to `.Class` giving the `.Class` last used for dispatch, and shifts `.Class` along to that used for dispatch.
 
-So, we can print `.Class` in method environment to confirm that adding a new class to `x` indeed doesn't change `.Class`, and therefore dispatch occurs on `"a2"` class:
+So, we can print `.Class` to confirm that adding a new class to `x` indeed doesn't change `.Class`, and therefore dispatch occurs on `"a2"` class:
 
 ```{r S3-68}
 generic2.b <- function(x) {
@@ -880,7 +903,7 @@ class(x2)
 s3_dispatch(length(x2))
 ```
 
-**A1.** The differences in the dispatch are due to the classes:
+**A1.** The differences in the dispatch are due to classes of arguments:
 
 ```{r S3-70}
 s3_class(x1)
