@@ -21,10 +21,8 @@
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Roboto-0.4.2/font.css" rel="stylesheet">
 <link href="libs/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="libs/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/d3-3.5.6/d3.min.js"></script><link href="libs/profvis-0.3.6.9000/profvis.css" rel="stylesheet">
-<script src="libs/profvis-0.3.6.9000/profvis.js"></script><script src="libs/profvis-0.3.6.9000/scroll.js"></script><link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet">
-<script src="libs/highlight-6.2.0/highlight.js"></script><script src="libs/profvis-binding-0.3.7/profvis.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs3compat-0.4.0.9000/transition.js"></script><script src="libs/bs3compat-0.4.0.9000/tabs.js"></script><script src="libs/bs3compat-0.4.0.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -144,15 +142,15 @@
 <span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">e</span><span class="op">$</span><span class="va">loop</span> <span class="op">&lt;-</span> <span class="va">e</span></span>
 <span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_print.html">env_print</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x000000001a3fe268&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x107224d80&gt;</span></span>
 <span><span class="co">#&gt; Parent: &lt;environment: global&gt;</span></span>
 <span><span class="co">#&gt; Bindings:</span></span>
-<span><span class="co">#&gt; * loop: &lt;env&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; • loop: &lt;env&gt;</span></span></code></pre></div>
 <p>The binding <code>loop</code> should have the same memory address as the environment <code>e</code>:</p>
 <div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ref.html">ref</a></span><span class="op">(</span><span class="va">e</span><span class="op">$</span><span class="va">loop</span><span class="op">)</span></span>
-<span><span class="co">#&gt; o [1:0x1a3fe268] &lt;env&gt; </span></span>
-<span><span class="co">#&gt; \-loop = [1:0x1a3fe268]</span></span></code></pre></div>
+<span><span class="co">#&gt; █ [1:0x107224d80] &lt;env&gt; </span></span>
+<span><span class="co">#&gt; └─loop = [1:0x107224d80]</span></span></code></pre></div>
 <p><strong>Q3.</strong> Create a pair of environments as illustrated by this picture.</p>
 <div class="inline-figure"><img src="diagrams/environments/recursive-2.png" width="307"></div>
 <p><strong>A3.</strong> Creating the specified environment:</p>
@@ -165,9 +163,9 @@
 <span></span>
 <span><span class="co"># following should be the same</span></span>
 <span><span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span><span class="op">$</span><span class="va">deloop</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "0x338c6098" "0x338c6098"</span></span>
+<span><span class="co">#&gt; [1] "0x103e56e80" "0x103e56e80"</span></span>
 <span><span class="fu">lobstr</span><span class="fu">::</span><span class="fu"><a href="https://lobstr.r-lib.org/reference/obj_addr.html">obj_addrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">e2</span>, <span class="va">e1</span><span class="op">$</span><span class="va">loop</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "0x3391dec0" "0x3391dec0"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "0x103ec5648" "0x103ec5648"</span></span></code></pre></div>
 <p><strong>Q4.</strong> Explain why <code>e[[1]]</code> and <code>e[c("a", "b")]</code> don’t make sense when <code>e</code> is an environment.</p>
 <p><strong>A4.</strong> An environment is a non-linear data structure, and has no concept of ordered elements. Therefore, indexing it (e.g. <code>e[[1]]</code>) doesn’t make sense.</p>
 <p>Subsetting a list or a vector returns a subset of the underlying data structure. For example, subsetting a vector returns another vector. But it’s unclear what subsetting an environment (e.g. <code>e[c("a", "b")]</code>) should return because there is no data structure to contain its returns. It can’t be another environment since environments have reference semantics.</p>
@@ -307,14 +305,14 @@
 <span><span class="co">#&gt; attr(,"name")</span></span>
 <span><span class="co">#&gt; [1] "package:dplyr"</span></span>
 <span><span class="co">#&gt; attr(,"path")</span></span>
-<span><span class="co">#&gt; [1] "C:/Users/IndrajeetPatil/Documents/R/win-library/4.1/dplyr"</span></span>
+<span><span class="co">#&gt; [1] "/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library/dplyr"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
 <span><span class="co">#&gt; &lt;environment: package:stats&gt;</span></span>
 <span><span class="co">#&gt; attr(,"name")</span></span>
 <span><span class="co">#&gt; [1] "package:stats"</span></span>
 <span><span class="co">#&gt; attr(,"path")</span></span>
-<span><span class="co">#&gt; [1] "C:/Program Files/R/R-4.1.3/library/stats"</span></span>
+<span><span class="co">#&gt; [1] "/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library/stats"</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/detach.html">detach</a></span><span class="op">(</span><span class="st">"package:dplyr"</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Q2.</strong> Write a function called <code>fget()</code> that finds only function objects. It should have two arguments, <code>name</code> and <code>env</code>, and should obey the regular scoping rules for functions: if there’s an object with a matching name that’s not a function, look in the parent. For an added challenge, also add an <code>inherits</code> argument which controls whether the function recurses up the parents or only looks in one environment.</p>
 <p><strong>A2.</strong> Here is a function that recursively looks for function objects:</p>
@@ -350,7 +348,7 @@
 <span><span class="fu">fget</span><span class="op">(</span><span class="st">"mean"</span>, inherits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; UseMethod("mean")</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x0000000017ff20e8&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x10431fb58&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span>
 <span></span>
 <span><span class="va">mean</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
@@ -519,7 +517,7 @@
 <span><span class="co">#&gt; {</span></span>
 <span><span class="co">#&gt;     parent.frame(n + 1)</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x00000000182bff28&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x10473aa18&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:rlang&gt;</span></span></code></pre></div>
 <p>Let’s try it out:</p>
 <ul>
@@ -557,83 +555,81 @@
 </h2>
 <div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; - Session info -------------------------------------------</span></span>
+<span><span class="co">#&gt; ─ Session info ───────────────────────────────────────────</span></span>
 <span><span class="co">#&gt;  setting  value</span></span>
-<span><span class="co">#&gt;  version  R version 4.1.3 (2022-03-10)</span></span>
-<span><span class="co">#&gt;  os       Windows 10 x64 (build 22000)</span></span>
-<span><span class="co">#&gt;  system   x86_64, mingw32</span></span>
-<span><span class="co">#&gt;  ui       RTerm</span></span>
+<span><span class="co">#&gt;  version  R version 4.2.1 (2022-06-23)</span></span>
+<span><span class="co">#&gt;  os       macOS Monterey 12.5.1</span></span>
+<span><span class="co">#&gt;  system   aarch64, darwin20</span></span>
+<span><span class="co">#&gt;  ui       X11</span></span>
 <span><span class="co">#&gt;  language (EN)</span></span>
-<span><span class="co">#&gt;  collate  English_United Kingdom.1252</span></span>
-<span><span class="co">#&gt;  ctype    English_United Kingdom.1252</span></span>
+<span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
+<span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       Europe/Berlin</span></span>
-<span><span class="co">#&gt;  date     2022-08-29</span></span>
-<span><span class="co">#&gt;  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)</span></span>
+<span><span class="co">#&gt;  date     2022-09-07</span></span>
+<span><span class="co">#&gt;  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Packages -----------------------------------------------</span></span>
+<span><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
-<span><span class="co">#&gt;    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    base        * 4.1.3      2022-03-10 [?] local</span></span>
-<span><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;  P compiler      4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;  P datasets    * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    DBI           1.1.3      2022-06-18 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    dplyr         1.0.9      2022-04-28 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P graphics    * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;  P grDevices   * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    highr         0.9        2021-04-16 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    knitr         1.40       2022-08-24 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    lobstr        1.1.2      2022-06-22 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P methods     * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    png           0.1-7      2013-12-03 [1] CRAN (R 4.1.0)</span></span>
-<span><span class="co">#&gt;    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)</span></span>
-<span><span class="co">#&gt;    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P stats       * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;  P tools         4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)</span></span>
-<span><span class="co">#&gt;  P utils       * 4.1.3      2022-03-10 [2] local</span></span>
-<span><span class="co">#&gt;    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    winch         0.0.8      2022-03-17 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)</span></span>
-<span><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)</span></span>
-<span><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)</span></span>
+<span><span class="co">#&gt;    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    base        * 4.2.1      2022-06-24 [?] local</span></span>
+<span><span class="co">#&gt;    bookdown      0.28       2022-08-09 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    bslib         0.4.0.9000 2022-08-20 [1] Github (rstudio/bslib@fa2e03c)</span></span>
+<span><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    cli           3.3.0      2022-04-25 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;  P compiler      4.2.1      2022-06-24 [1] local</span></span>
+<span><span class="co">#&gt;    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;  P datasets    * 4.2.1      2022-06-24 [1] local</span></span>
+<span><span class="co">#&gt;    DBI           1.1.3      2022-06-18 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    dplyr         1.0.10     2022-09-01 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    evaluate      0.16       2022-08-09 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    generics      0.1.3      2022-07-05 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    glue          1.6.2      2022-02-24 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;  P graphics    * 4.2.1      2022-06-24 [1] local</span></span>
+<span><span class="co">#&gt;  P grDevices   * 4.2.1      2022-06-24 [1] local</span></span>
+<span><span class="co">#&gt;    highr         0.9        2021-04-16 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    knitr         1.40       2022-08-24 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    lobstr        1.1.2      2022-06-22 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;  P methods     * 4.2.1      2022-06-24 [1] local</span></span>
+<span><span class="co">#&gt;    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    png           0.1-7      2013-12-03 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    R6            2.5.1.9000 2022-08-06 [1] Github (r-lib/R6@87d5e45)</span></span>
+<span><span class="co">#&gt;    rlang       * 1.0.5      2022-08-31 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;  P stats       * 4.2.1      2022-06-24 [1] local</span></span>
+<span><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;  P tools         4.2.1      2022-06-24 [1] local</span></span>
+<span><span class="co">#&gt;    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;  P utils       * 4.2.1      2022-06-24 [1] local</span></span>
+<span><span class="co">#&gt;    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    xfun          0.32       2022-08-10 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.2.0)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1</span></span>
-<span><span class="co">#&gt;  [2] C:/Program Files/R/R-4.1.3/library</span></span>
+<span><span class="co">#&gt;  [1] /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  P -- Loaded and on-disk path mismatch.</span></span>
+<span><span class="co">#&gt;  P ── Loaded and on-disk path mismatch.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ----------------------------------------------------------</span></span></code></pre></div>
+<span><span class="co">#&gt; ──────────────────────────────────────────────────────────</span></span></code></pre></div>
 
 </div>
 </div>
@@ -666,7 +662,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-08-29.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-09-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

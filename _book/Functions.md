@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000018001fa8>
+#> <bytecode: 0x11e23b158>
 #> <environment: namespace:base>
 ```
 
@@ -171,7 +171,7 @@ df_formals <- purrr::map_df(funs, ~ length(formals(.))) %>%
   dplyr::arrange(desc(argumentCount))
 
 df_formals
-#> # A tibble: 1,124 x 2
+#> # A tibble: 1,125 × 2
 #>    `function`       argumentCount
 #>    <chr>                    <int>
 #>  1 scan                        22
@@ -184,32 +184,32 @@ df_formals
 #>  8 system2                     11
 #>  9 print.default               10
 #> 10 save                        10
-#> # ... with 1,114 more rows
+#> # … with 1,115 more rows
 ```
 
 b. How many base functions have no arguments? What’s special about those functions?
 
 
 
-At the time of writing, 49 base (non-primitive) functions have no arguments. 
+At the time of writing, 47 base (non-primitive) functions have no arguments. 
 
 
 ```r
 dplyr::filter(df_formals, argumentCount == 0)
-#> # A tibble: 49 x 2
-#>    `function`           argumentCount
-#>    <chr>                        <int>
-#>  1 .First.sys                       0
-#>  2 .fixupGFortranStderr             0
-#>  3 .fixupGFortranStdout             0
-#>  4 .NotYetImplemented               0
-#>  5 .OptRequireMethods               0
-#>  6 .standard_regexps                0
-#>  7 .tryResumeInterrupt              0
-#>  8 closeAllConnections              0
-#>  9 contributors                     0
-#> 10 Cstack_info                      0
-#> # ... with 39 more rows
+#> # A tibble: 47 × 2
+#>    `function`               argumentCount
+#>    <chr>                            <int>
+#>  1 .First.sys                           0
+#>  2 .NotYetImplemented                   0
+#>  3 .OptRequireMethods                   0
+#>  4 .standard_regexps                    0
+#>  5 .tryResumeInterrupt                  0
+#>  6 closeAllConnections                  0
+#>  7 contributors                         0
+#>  8 Cstack_info                          0
+#>  9 date                                 0
+#> 10 default.stringsAsFactors             0
+#> # … with 37 more rows
 ```
 
 c. How could you adapt the code to find all primitive functions?
@@ -224,34 +224,34 @@ length(primitives)
 #> [1] 204
 
 names(primitives)
-#>   [1] "-"                    "!"                   
-#>   [3] "!="                   "$"                   
-#>   [5] "$<-"                  "%%"                  
-#>   [7] "%*%"                  "%/%"                 
-#>   [9] "&"                    "&&"                  
-#>  [11] "("                    "*"                   
-#>  [13] "...elt"               "...length"           
-#>  [15] "...names"             ".C"                  
-#>  [17] ".cache_class"         ".Call"               
-#>  [19] ".Call.graphics"       ".class2"             
-#>  [21] ".External"            ".External.graphics"  
-#>  [23] ".External2"           ".Fortran"            
-#>  [25] ".Internal"            ".isMethodsDispatchOn"
-#>  [27] ".Primitive"           ".primTrace"          
-#>  [29] ".primUntrace"         ".subset"             
-#>  [31] ".subset2"             "/"                   
-#>  [33] ":"                    "::"                  
-#>  [35] ":::"                  "@"                   
-#>  [37] "@<-"                  "["                   
-#>  [39] "[["                   "[[<-"                
-#>  [41] "[<-"                  "^"                   
-#>  [43] "{"                    "|"                   
-#>  [45] "||"                   "~"                   
-#>  [47] "+"                    "<"                   
-#>  [49] "<-"                   "<<-"                 
-#>  [51] "<="                   "="                   
-#>  [53] "=="                   ">"                   
-#>  [55] ">="                   "abs"                 
+#>   [1] "-"                    ":"                   
+#>   [3] "::"                   ":::"                 
+#>   [5] "!"                    "!="                  
+#>   [7] "...elt"               "...length"           
+#>   [9] "...names"             ".C"                  
+#>  [11] ".cache_class"         ".Call"               
+#>  [13] ".Call.graphics"       ".class2"             
+#>  [15] ".External"            ".External.graphics"  
+#>  [17] ".External2"           ".Fortran"            
+#>  [19] ".Internal"            ".isMethodsDispatchOn"
+#>  [21] ".Primitive"           ".primTrace"          
+#>  [23] ".primUntrace"         ".subset"             
+#>  [25] ".subset2"             "("                   
+#>  [27] "["                    "[["                  
+#>  [29] "[[<-"                 "[<-"                 
+#>  [31] "{"                    "@"                   
+#>  [33] "@<-"                  "*"                   
+#>  [35] "/"                    "&"                   
+#>  [37] "&&"                   "%*%"                 
+#>  [39] "%/%"                  "%%"                  
+#>  [41] "^"                    "+"                   
+#>  [43] "<"                    "<-"                  
+#>  [45] "<<-"                  "<="                  
+#>  [47] "="                    "=="                  
+#>  [49] ">"                    ">="                  
+#>  [51] "|"                    "||"                  
+#>  [53] "~"                    "$"                   
+#>  [55] "$<-"                  "abs"                 
 #>  [57] "acos"                 "acosh"               
 #>  [59] "all"                  "any"                 
 #>  [61] "anyNA"                "Arg"                 
@@ -313,8 +313,8 @@ names(primitives)
 #> [173] "range"                "Re"                  
 #> [175] "rep"                  "repeat"              
 #> [177] "retracemem"           "return"              
-#> [179] "round"                "seq.int"             
-#> [181] "seq_along"            "seq_len"             
+#> [179] "round"                "seq_along"           
+#> [181] "seq_len"              "seq.int"             
 #> [183] "sign"                 "signif"              
 #> [185] "sin"                  "sinh"                
 #> [187] "sinpi"                "sqrt"                
@@ -346,7 +346,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x0000000018001fa8>
+#> <bytecode: 0x11e23b158>
 #> <environment: namespace:base>
 
 # other package function
@@ -356,7 +356,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x0000000036fd11a0>
+#> <bytecode: 0x12be572a0>
 #> <environment: namespace:purrr>
 ```
 
@@ -559,7 +559,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x37a6c2a8" "0x37a6c2a8"
+#> [1] "0x12bd61158" "0x12bd61158"
 #> [1] 100
 ```
 
@@ -654,7 +654,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-08-29 11:06:38 CEST"
+#> [1] "2022-09-07 13:30:24 CEST"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -874,7 +874,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x0000000035ac0548>
+#> <bytecode: 0x12a115f90>
 #> <environment: namespace:withr>
 ```
 
@@ -910,9 +910,6 @@ capture.output2 <- function(code) {
 }
 
 capture.output2(cat("a", "b", "c", sep = "\n"))
-#> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpwRZc4h\file579c61e35d8c',
-#> reason 'Permission denied'
 #> [1] "a" "b" "c"
 ```
 
@@ -961,7 +958,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x00000000362f1380>
+#> <bytecode: 0x14d46bb70>
 #> <environment: namespace:utils>
 ```
 
@@ -975,9 +972,6 @@ capture.output(1)
 #> [1] "[1] 1"
 
 capture.output2(1)
-#> Warning in file.remove(temp): cannot remove file 'C:
-#> \Users\INDRAJ~1\AppData\Local\Temp\RtmpwRZc4h\file579c3c8447a2',
-#> reason 'Permission denied'
 #> character(0)
 ```
 
@@ -1168,16 +1162,16 @@ base_index <- which(grepl("base", searchpaths()))
 ls_replacement <- ls_replacement[which(names(ls_replacement) == as.character(base_index))]
 
 unname(ls_replacement)
-#>  [1] "$<-"                     "$<-.data.frame"         
-#>  [3] ".rowNamesDF<-"           "@<-"                    
-#>  [5] "[[<-"                    "[[<-.data.frame"        
-#>  [7] "[[<-.factor"             "[[<-.numeric_version"   
-#>  [9] "[[<-.POSIXlt"            "[<-"                    
-#> [11] "[<-.data.frame"          "[<-.Date"               
-#> [13] "[<-.difftime"            "[<-.factor"             
-#> [15] "[<-.numeric_version"     "[<-.POSIXct"            
-#> [17] "[<-.POSIXlt"             "<-"                     
-#> [19] "<<-"                     "attr<-"                 
+#>  [1] ".rowNamesDF<-"           "[[<-"                   
+#>  [3] "[[<-.data.frame"         "[[<-.factor"            
+#>  [5] "[[<-.numeric_version"    "[[<-.POSIXlt"           
+#>  [7] "[<-"                     "[<-.data.frame"         
+#>  [9] "[<-.Date"                "[<-.difftime"           
+#> [11] "[<-.factor"              "[<-.numeric_version"    
+#> [13] "[<-.POSIXct"             "[<-.POSIXlt"            
+#> [15] "@<-"                     "<-"                     
+#> [17] "<<-"                     "$<-"                    
+#> [19] "$<-.data.frame"          "attr<-"                 
 #> [21] "attributes<-"            "body<-"                 
 #> [23] "class<-"                 "colnames<-"             
 #> [25] "comment<-"               "diag<-"                 
@@ -1209,8 +1203,8 @@ The primitive replacement functions can be listed using `is.primitive()`:
 mget(ls_replacement, envir = baseenv()) %>%
   purrr::keep(is.primitive) %>%
   names()
-#>  [1] "$<-"            "@<-"            "[[<-"          
-#>  [4] "[<-"            "<-"             "<<-"           
+#>  [1] "[[<-"           "[<-"            "@<-"           
+#>  [4] "<-"             "<<-"            "$<-"           
 #>  [7] "attr<-"         "attributes<-"   "class<-"       
 #> [10] "dim<-"          "dimnames<-"     "environment<-" 
 #> [13] "length<-"       "levels<-"       "names<-"       
@@ -1294,107 +1288,106 @@ identical(setdiff(x, y), x %/% y)
 
 ```r
 sessioninfo::session_info(include_base = TRUE)
-#> - Session info -------------------------------------------
+#> ─ Session info ───────────────────────────────────────────
 #>  setting  value
-#>  version  R version 4.1.3 (2022-03-10)
-#>  os       Windows 10 x64 (build 22000)
-#>  system   x86_64, mingw32
-#>  ui       RTerm
+#>  version  R version 4.2.1 (2022-06-23)
+#>  os       macOS Monterey 12.5.1
+#>  system   aarch64, darwin20
+#>  ui       X11
 #>  language (EN)
-#>  collate  English_United Kingdom.1252
-#>  ctype    English_United Kingdom.1252
+#>  collate  en_US.UTF-8
+#>  ctype    en_US.UTF-8
 #>  tz       Europe/Berlin
-#>  date     2022-08-29
-#>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
+#>  date     2022-09-07
+#>  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)
 #> 
-#> - Packages -----------------------------------------------
+#> ─ Packages ───────────────────────────────────────────────
 #>  ! package       * version    date (UTC) lib source
-#>    assertthat      0.2.1      2019-03-21 [1] CRAN (R 4.1.1)
-#>    backports       1.4.1      2021-12-13 [1] CRAN (R 4.1.2)
-#>    base          * 4.1.3      2022-03-10 [?] local
-#>    bookdown        0.28       2022-08-09 [1] CRAN (R 4.1.3)
-#>    broom           1.0.0      2022-07-01 [1] CRAN (R 4.1.3)
-#>    bslib           0.4.0      2022-07-16 [1] CRAN (R 4.1.3)
-#>    cachem          1.0.6      2021-08-19 [1] CRAN (R 4.1.1)
-#>    cellranger      1.1.0      2016-07-27 [1] CRAN (R 4.1.1)
-#>    cli             3.3.0      2022-04-25 [1] CRAN (R 4.1.3)
-#>    colorspace      2.0-3      2022-02-21 [1] CRAN (R 4.1.2)
-#>  P compiler        4.1.3      2022-03-10 [2] local
-#>    crayon          1.5.1      2022-03-26 [1] CRAN (R 4.1.3)
-#>  P datasets      * 4.1.3      2022-03-10 [2] local
-#>    DBI             1.1.3      2022-06-18 [1] CRAN (R 4.1.3)
-#>    dbplyr          2.2.1      2022-06-27 [1] CRAN (R 4.1.3)
-#>    digest          0.6.29     2021-12-01 [1] CRAN (R 4.1.2)
-#>    downlit         0.4.2      2022-07-05 [1] CRAN (R 4.1.3)
-#>    dplyr         * 1.0.9      2022-04-28 [1] CRAN (R 4.1.3)
-#>    ellipsis        0.3.2      2021-04-29 [1] CRAN (R 4.1.0)
-#>    evaluate        0.16       2022-08-09 [1] CRAN (R 4.1.3)
-#>    fansi           1.0.3      2022-03-24 [1] CRAN (R 4.1.3)
-#>    fastmap         1.1.0      2021-01-25 [1] CRAN (R 4.1.1)
-#>    forcats       * 0.5.2      2022-08-19 [1] CRAN (R 4.1.3)
-#>    fs              1.5.2      2021-12-08 [1] CRAN (R 4.1.2)
-#>    gargle          1.2.0      2021-07-02 [1] CRAN (R 4.1.1)
-#>    generics        0.1.3      2022-07-05 [1] CRAN (R 4.1.3)
-#>    ggplot2       * 3.3.6      2022-05-03 [1] CRAN (R 4.1.3)
-#>    glue            1.6.2      2022-02-24 [1] CRAN (R 4.1.2)
-#>    googledrive     2.0.0      2021-07-08 [1] CRAN (R 4.1.1)
-#>    googlesheets4   1.0.1      2022-08-13 [1] CRAN (R 4.1.3)
-#>  P graphics      * 4.1.3      2022-03-10 [2] local
-#>  P grDevices     * 4.1.3      2022-03-10 [2] local
-#>  P grid            4.1.3      2022-03-10 [2] local
-#>    gtable          0.3.0      2019-03-25 [1] CRAN (R 4.1.1)
-#>    haven           2.5.1      2022-08-22 [1] CRAN (R 4.1.3)
-#>    highr           0.9        2021-04-16 [1] CRAN (R 4.1.1)
-#>    hms             1.1.2      2022-08-19 [1] CRAN (R 4.1.3)
-#>    htmltools       0.5.3      2022-07-18 [1] CRAN (R 4.1.3)
-#>    httr            1.4.4      2022-08-17 [1] CRAN (R 4.1.3)
-#>    jquerylib       0.1.4      2021-04-26 [1] CRAN (R 4.1.1)
-#>    jsonlite        1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
-#>    knitr           1.40       2022-08-24 [1] CRAN (R 4.1.3)
-#>    lifecycle       1.0.1      2021-09-24 [1] CRAN (R 4.1.1)
-#>    lobstr          1.1.2      2022-06-22 [1] CRAN (R 4.1.3)
-#>    lubridate       1.8.0      2021-10-07 [1] CRAN (R 4.1.1)
-#>    magrittr      * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)
-#>    memoise         2.0.1      2021-11-26 [1] CRAN (R 4.1.2)
-#>  P methods       * 4.1.3      2022-03-10 [2] local
-#>    modelr          0.1.9      2022-08-19 [1] CRAN (R 4.1.3)
-#>    munsell         0.5.0      2018-06-12 [1] CRAN (R 4.1.1)
-#>    pillar          1.8.1      2022-08-19 [1] CRAN (R 4.1.3)
-#>    pkgconfig       2.0.3      2019-09-22 [1] CRAN (R 4.1.1)
-#>    purrr         * 0.3.4      2020-04-17 [1] CRAN (R 4.1.1)
-#>    R6              2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)
-#>    readr         * 2.1.2      2022-01-30 [1] CRAN (R 4.1.2)
-#>    readxl          1.4.1      2022-08-17 [1] CRAN (R 4.1.3)
-#>    reprex          2.0.2      2022-08-17 [1] CRAN (R 4.1.3)
-#>    rlang           1.0.4      2022-07-12 [1] CRAN (R 4.1.3)
-#>    rmarkdown       2.16       2022-08-24 [1] CRAN (R 4.1.3)
-#>    rstudioapi      0.14       2022-08-22 [1] CRAN (R 4.1.3)
-#>    rvest           1.0.3      2022-08-19 [1] CRAN (R 4.1.3)
-#>    sass            0.4.2      2022-07-16 [1] CRAN (R 4.1.3)
-#>    scales          1.2.1      2022-08-20 [1] CRAN (R 4.1.3)
-#>    sessioninfo     1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
-#>  P stats         * 4.1.3      2022-03-10 [2] local
-#>    stringi         1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       * 1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
-#>    tibble        * 3.1.8      2022-07-22 [1] CRAN (R 4.1.3)
-#>    tidyr         * 1.2.0      2022-02-01 [1] CRAN (R 4.1.2)
-#>    tidyselect      1.1.2      2022-02-21 [1] CRAN (R 4.1.2)
-#>    tidyverse     * 1.3.2      2022-07-18 [1] CRAN (R 4.1.3)
-#>  P tools           4.1.3      2022-03-10 [2] local
-#>    tzdb            0.3.0      2022-03-28 [1] CRAN (R 4.1.3)
-#>    utf8            1.2.2      2021-07-24 [1] CRAN (R 4.1.1)
-#>  P utils         * 4.1.3      2022-03-10 [2] local
-#>    vctrs           0.4.1      2022-04-13 [1] CRAN (R 4.1.3)
-#>    withr           2.5.0      2022-03-03 [1] CRAN (R 4.1.2)
-#>    xfun            0.32       2022-08-10 [1] CRAN (R 4.1.3)
-#>    xml2            1.3.3      2021-11-30 [1] CRAN (R 4.1.2)
-#>    yaml            2.3.5      2022-02-21 [1] CRAN (R 4.1.2)
+#>    assertthat      0.2.1      2019-03-21 [1] CRAN (R 4.2.0)
+#>    backports       1.4.1      2021-12-13 [1] CRAN (R 4.2.0)
+#>    base          * 4.2.1      2022-06-24 [?] local
+#>    bookdown        0.28       2022-08-09 [1] CRAN (R 4.2.1)
+#>    broom           1.0.1      2022-08-29 [1] CRAN (R 4.2.0)
+#>    bslib           0.4.0.9000 2022-08-20 [1] Github (rstudio/bslib@fa2e03c)
+#>    cachem          1.0.6      2021-08-19 [1] CRAN (R 4.2.0)
+#>    cellranger      1.1.0      2016-07-27 [1] CRAN (R 4.2.0)
+#>    cli             3.3.0      2022-04-25 [1] CRAN (R 4.2.0)
+#>    colorspace      2.0-3      2022-02-21 [1] CRAN (R 4.2.0)
+#>  P compiler        4.2.1      2022-06-24 [1] local
+#>    crayon          1.5.1      2022-03-26 [1] CRAN (R 4.2.0)
+#>  P datasets      * 4.2.1      2022-06-24 [1] local
+#>    DBI             1.1.3      2022-06-18 [1] CRAN (R 4.2.0)
+#>    dbplyr          2.2.1      2022-06-27 [1] CRAN (R 4.2.0)
+#>    digest          0.6.29     2021-12-01 [1] CRAN (R 4.2.0)
+#>    downlit         0.4.2      2022-07-05 [1] CRAN (R 4.2.1)
+#>    dplyr         * 1.0.10     2022-09-01 [1] CRAN (R 4.2.1)
+#>    ellipsis        0.3.2      2021-04-29 [1] CRAN (R 4.2.0)
+#>    evaluate        0.16       2022-08-09 [1] CRAN (R 4.2.1)
+#>    fansi           1.0.3      2022-03-24 [1] CRAN (R 4.2.0)
+#>    fastmap         1.1.0      2021-01-25 [1] CRAN (R 4.2.0)
+#>    forcats       * 0.5.2      2022-08-19 [1] CRAN (R 4.2.1)
+#>    fs              1.5.2      2021-12-08 [1] CRAN (R 4.2.0)
+#>    gargle          1.2.0      2021-07-02 [1] CRAN (R 4.2.0)
+#>    generics        0.1.3      2022-07-05 [1] CRAN (R 4.2.1)
+#>    ggplot2       * 3.3.6      2022-05-03 [1] CRAN (R 4.2.0)
+#>    glue            1.6.2      2022-02-24 [1] CRAN (R 4.2.0)
+#>    googledrive     2.0.0      2021-07-08 [1] CRAN (R 4.2.0)
+#>    googlesheets4   1.0.1      2022-08-13 [1] CRAN (R 4.2.0)
+#>  P graphics      * 4.2.1      2022-06-24 [1] local
+#>  P grDevices     * 4.2.1      2022-06-24 [1] local
+#>  P grid            4.2.1      2022-06-24 [1] local
+#>    gtable          0.3.1      2022-09-01 [1] CRAN (R 4.2.1)
+#>    haven           2.5.1      2022-08-22 [1] CRAN (R 4.2.0)
+#>    highr           0.9        2021-04-16 [1] CRAN (R 4.2.0)
+#>    hms             1.1.2      2022-08-19 [1] CRAN (R 4.2.0)
+#>    htmltools       0.5.3      2022-07-18 [1] CRAN (R 4.2.1)
+#>    httr            1.4.4      2022-08-17 [1] CRAN (R 4.2.0)
+#>    jquerylib       0.1.4      2021-04-26 [1] CRAN (R 4.2.0)
+#>    jsonlite        1.8.0      2022-02-22 [1] CRAN (R 4.2.0)
+#>    knitr           1.40       2022-08-24 [1] CRAN (R 4.2.1)
+#>    lifecycle       1.0.1      2021-09-24 [1] CRAN (R 4.2.0)
+#>    lobstr          1.1.2      2022-06-22 [1] CRAN (R 4.2.0)
+#>    lubridate       1.8.0      2021-10-07 [1] CRAN (R 4.2.0)
+#>    magrittr      * 2.0.3      2022-03-30 [1] CRAN (R 4.2.0)
+#>    memoise         2.0.1      2021-11-26 [1] CRAN (R 4.2.0)
+#>  P methods       * 4.2.1      2022-06-24 [1] local
+#>    modelr          0.1.9      2022-08-19 [1] CRAN (R 4.2.0)
+#>    munsell         0.5.0      2018-06-12 [1] CRAN (R 4.2.0)
+#>    pillar          1.8.1      2022-08-19 [1] CRAN (R 4.2.1)
+#>    pkgconfig       2.0.3      2019-09-22 [1] CRAN (R 4.2.0)
+#>    purrr         * 0.3.4      2020-04-17 [1] CRAN (R 4.2.0)
+#>    R6              2.5.1.9000 2022-08-06 [1] Github (r-lib/R6@87d5e45)
+#>    readr         * 2.1.2      2022-01-30 [1] CRAN (R 4.2.0)
+#>    readxl          1.4.1      2022-08-17 [1] CRAN (R 4.2.0)
+#>    reprex          2.0.2      2022-08-17 [1] CRAN (R 4.2.1)
+#>    rlang           1.0.5      2022-08-31 [1] CRAN (R 4.2.1)
+#>    rmarkdown       2.16       2022-08-24 [1] CRAN (R 4.2.1)
+#>    rstudioapi      0.14       2022-08-22 [1] CRAN (R 4.2.1)
+#>    rvest           1.0.3      2022-08-19 [1] CRAN (R 4.2.1)
+#>    sass            0.4.2      2022-07-16 [1] CRAN (R 4.2.1)
+#>    scales          1.2.1      2022-08-20 [1] CRAN (R 4.2.1)
+#>    sessioninfo     1.2.2      2021-12-06 [1] CRAN (R 4.2.0)
+#>  P stats         * 4.2.1      2022-06-24 [1] local
+#>    stringi         1.7.8      2022-07-11 [1] CRAN (R 4.2.1)
+#>    stringr       * 1.4.1      2022-08-20 [1] CRAN (R 4.2.1)
+#>    tibble        * 3.1.8      2022-07-22 [1] CRAN (R 4.2.1)
+#>    tidyr         * 1.2.0      2022-02-01 [1] CRAN (R 4.2.0)
+#>    tidyselect      1.1.2      2022-02-21 [1] CRAN (R 4.2.0)
+#>    tidyverse     * 1.3.2      2022-07-18 [1] CRAN (R 4.2.1)
+#>  P tools           4.2.1      2022-06-24 [1] local
+#>    tzdb            0.3.0      2022-03-28 [1] CRAN (R 4.2.0)
+#>    utf8            1.2.2      2021-07-24 [1] CRAN (R 4.2.0)
+#>  P utils         * 4.2.1      2022-06-24 [1] local
+#>    vctrs           0.4.1      2022-04-13 [1] CRAN (R 4.2.0)
+#>    withr           2.5.0      2022-03-03 [1] CRAN (R 4.2.0)
+#>    xfun            0.32       2022-08-10 [1] CRAN (R 4.2.1)
+#>    xml2            1.3.3      2021-11-30 [1] CRAN (R 4.2.0)
+#>    yaml            2.3.5      2022-02-21 [1] CRAN (R 4.2.0)
 #> 
-#>  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1
-#>  [2] C:/Program Files/R/R-4.1.3/library
+#>  [1] /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library
 #> 
-#>  P -- Loaded and on-disk path mismatch.
+#>  P ── Loaded and on-disk path mismatch.
 #> 
-#> ----------------------------------------------------------
+#> ──────────────────────────────────────────────────────────
 ```
 

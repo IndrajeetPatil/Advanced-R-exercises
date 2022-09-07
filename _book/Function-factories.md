@@ -21,7 +21,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x00000000172670f8>
+#> <bytecode: 0x15294a708>
 #> <environment: namespace:base>
 ```
 
@@ -47,8 +47,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x0000000034703078>
-#> <environment: 0x0000000034702550>
+#> <bytecode: 0x12358d9e0>
+#> <environment: 0x12358d0b0>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -212,15 +212,15 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x00000000322d7e40>
+#> <environment: 0x1239338c8>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x0000000032eca1c8>
-#> <environment: 0x0000000032746a20>
+#> <bytecode: 0x123b377b0>
+#> <environment: 0x12399ab70>
 ```
 
 ---
@@ -266,7 +266,7 @@ ggplot2::label_bquote
 #>     }
 #>     structure(fun, class = "labeller")
 #> }
-#> <bytecode: 0x00000000330a6938>
+#> <bytecode: 0x123d77628>
 #> <environment: namespace:ggplot2>
 ```
 
@@ -289,7 +289,7 @@ scales::number_format
 #>             scale_cut = scale_cut, trim = trim, ...)
 #>     }
 #> }
-#> <bytecode: 0x000000003325e498>
+#> <bytecode: 0x123f6c0e0>
 #> <environment: namespace:scales>
 ```
 
@@ -385,7 +385,7 @@ Let's have a look at one example with each:
 ```r
 boxcox2(1)
 #> function(x) (x^lambda - 1) / lambda
-#> <environment: 0x000000001a496b48>
+#> <environment: 0x122e54658>
 
 boxcox3(mtcars$wt)
 #> function(lambda) {
@@ -395,7 +395,7 @@ boxcox3(mtcars$wt)
 #>       (x^lambda - 1) / lambda
 #>     }
 #>   }
-#> <environment: 0x000000001a028fc0>
+#> <environment: 0x122f1f3a8>
 ```
 
 As can be seen:
@@ -428,7 +428,7 @@ boot_permute(mtcars, "mpg")
 #>     col <- df[[var]]
 #>     col[sample(n, replace = TRUE)]
 #>   }
-#> <environment: 0x00000000322ce2d8>
+#> <environment: 0x123244240>
 ```
 
 This is why we don't need to worry about a copy being made because the `df` in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:
@@ -437,12 +437,12 @@ This is why we don't need to worry about a copy being made because the `df` in t
 ```r
 boot_permute_env <- rlang::fn_env(boot_permute(mtcars, "mpg"))
 rlang::env_print(boot_permute_env)
-#> <environment: 0x0000000032f7ead0>
+#> <environment: 0x123453d28>
 #> Parent: <environment: global>
 #> Bindings:
-#> * n: <int>
-#> * df: <df[,11]>
-#> * var: <chr>
+#> • n: <int>
+#> • df: <df[,11]>
+#> • var: <chr>
 
 identical(
   lobstr::obj_addr(boot_permute_env$df),
@@ -493,11 +493,11 @@ bench::mark(
   "LL1" = optimise(ll_poisson1(x1), c(0, 100), maximum = TRUE),
   "LL2" = optimise(ll_poisson2(x1), c(0, 100), maximum = TRUE)
 )
-#> # A tibble: 2 x 6
+#> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1          28.9us   38.6us    23683.    12.8KB     9.70
-#> 2 LL2          14.4us   18.4us    51012.        0B    10.2
+#> 1 LL1         13.28µs  14.92µs    47146.    12.8KB     66.1
+#> 2 LL2          7.01µs   7.83µs   119789.        0B     83.9
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -520,19 +520,19 @@ generate_ll_benches <- function(n) {
   .x = c(10, 20, 50, 100, 1000),
   .f = ~ generate_ll_benches(n = .x)
 ))
-#> # A tibble: 10 x 5
+#> # A tibble: 10 × 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1          42.6us   55.1us    17908.
-#>  2     10 LL2          17.6us   23.2us    42377.
-#>  3     20 LL1          46.6us   61.1us    16100.
-#>  4     20 LL2          19.7us   22.8us    42175.
-#>  5     50 LL1          62.5us   76.4us    12854.
-#>  6     50 LL2          18.5us   22.9us    42710.
-#>  7    100 LL1          91.5us  117.1us     8304.
-#>  8    100 LL2          19.6us   25.4us    38028.
-#>  9   1000 LL1          1.74ms   2.14ms      464.
-#> 10   1000 LL2          78.5us    101us     9706.
+#>  1     10 LL1         20.38µs  22.22µs    43365.
+#>  2     10 LL2          8.45µs   9.02µs   109148.
+#>  3     20 LL1         22.43µs  23.78µs    41439.
+#>  4     20 LL2          8.32µs   8.81µs   111965.
+#>  5     50 LL1         26.32µs  28.17µs    34825.
+#>  6     50 LL2          8.04µs   8.61µs   113848.
+#>  7    100 LL1         36.78µs  38.79µs    25480.
+#>  8    100 LL2          8.94µs   9.47µs   103651.
+#>  9   1000 LL1        508.44µs 535.09µs     1868.
+#> 10   1000 LL2         29.44µs  31.04µs    31781.
 
 ggplot(
   df_bench,
@@ -646,91 +646,89 @@ Note that there is no `"funs"` in this output.
 
 ```r
 sessioninfo::session_info(include_base = TRUE)
-#> - Session info -------------------------------------------
+#> ─ Session info ───────────────────────────────────────────
 #>  setting  value
-#>  version  R version 4.1.3 (2022-03-10)
-#>  os       Windows 10 x64 (build 22000)
-#>  system   x86_64, mingw32
-#>  ui       RTerm
+#>  version  R version 4.2.1 (2022-06-23)
+#>  os       macOS Monterey 12.5.1
+#>  system   aarch64, darwin20
+#>  ui       X11
 #>  language (EN)
-#>  collate  English_United Kingdom.1252
-#>  ctype    English_United Kingdom.1252
+#>  collate  en_US.UTF-8
+#>  ctype    en_US.UTF-8
 #>  tz       Europe/Berlin
-#>  date     2022-08-29
-#>  pandoc   2.19 @ C:/PROGRA~1/Pandoc/ (via rmarkdown)
+#>  date     2022-09-07
+#>  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)
 #> 
-#> - Packages -----------------------------------------------
+#> ─ Packages ───────────────────────────────────────────────
 #>  ! package     * version    date (UTC) lib source
-#>    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.1)
-#>    base        * 4.1.3      2022-03-10 [?] local
-#>    bench         1.1.2      2021-11-30 [1] CRAN (R 4.1.2)
-#>    bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.3)
-#>    bslib         0.4.0      2022-07-16 [1] CRAN (R 4.1.3)
-#>    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.1)
-#>    cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.3)
-#>    colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.1.2)
-#>  P compiler      4.1.3      2022-03-10 [2] local
-#>    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.3)
-#>  P datasets    * 4.1.3      2022-03-10 [2] local
-#>    DBI           1.1.3      2022-06-18 [1] CRAN (R 4.1.3)
-#>    digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.2)
-#>    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.1.3)
-#>    dplyr         1.0.9      2022-04-28 [1] CRAN (R 4.1.3)
-#>    ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.1.0)
-#>    evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.3)
-#>    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.3)
-#>    farver        2.1.1      2022-07-06 [1] CRAN (R 4.1.3)
-#>    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.1)
-#>    fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.2)
-#>    generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.3)
-#>    ggplot2     * 3.3.6      2022-05-03 [1] CRAN (R 4.1.3)
-#>    glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)
-#>  P graphics    * 4.1.3      2022-03-10 [2] local
-#>  P grDevices   * 4.1.3      2022-03-10 [2] local
-#>  P grid          4.1.3      2022-03-10 [2] local
-#>    gtable        0.3.0      2019-03-25 [1] CRAN (R 4.1.1)
-#>    highr         0.9        2021-04-16 [1] CRAN (R 4.1.1)
-#>    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.3)
-#>    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.1)
-#>    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
-#>    knitr         1.40       2022-08-24 [1] CRAN (R 4.1.3)
-#>    labeling      0.4.2      2020-10-20 [1] CRAN (R 4.1.0)
-#>    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.1)
-#>    lobstr        1.1.2      2022-06-22 [1] CRAN (R 4.1.3)
-#>    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.1.3)
-#>    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.2)
-#>  P methods     * 4.1.3      2022-03-10 [2] local
-#>    munsell       0.5.0      2018-06-12 [1] CRAN (R 4.1.1)
-#>    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.3)
-#>    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.1)
-#>    profmem       0.6.0      2020-12-13 [1] CRAN (R 4.1.1)
-#>    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.1)
-#>    R6            2.5.1.9000 2022-08-04 [1] Github (r-lib/R6@87d5e45)
-#>    rlang       * 1.0.4      2022-07-12 [1] CRAN (R 4.1.3)
-#>    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.1.3)
-#>    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.1.3)
-#>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.3)
-#>    scales      * 1.2.1      2022-08-20 [1] CRAN (R 4.1.3)
-#>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.2)
-#>  P stats       * 4.1.3      2022-03-10 [2] local
-#>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.3)
-#>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.3)
-#>    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.3)
-#>    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)
-#>  P tools         4.1.3      2022-03-10 [2] local
-#>    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.1)
-#>  P utils       * 4.1.3      2022-03-10 [2] local
-#>    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.1.3)
-#>    withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.2)
-#>    xfun          0.32       2022-08-10 [1] CRAN (R 4.1.3)
-#>    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.1.2)
-#>    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)
+#>    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.2.0)
+#>    base        * 4.2.1      2022-06-24 [?] local
+#>    bench         1.1.2      2021-11-30 [1] CRAN (R 4.2.0)
+#>    bookdown      0.28       2022-08-09 [1] CRAN (R 4.2.1)
+#>    bslib         0.4.0.9000 2022-08-20 [1] Github (rstudio/bslib@fa2e03c)
+#>    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.2.0)
+#>    cli           3.3.0      2022-04-25 [1] CRAN (R 4.2.0)
+#>    colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.2.0)
+#>  P compiler      4.2.1      2022-06-24 [1] local
+#>  P datasets    * 4.2.1      2022-06-24 [1] local
+#>    DBI           1.1.3      2022-06-18 [1] CRAN (R 4.2.0)
+#>    digest        0.6.29     2021-12-01 [1] CRAN (R 4.2.0)
+#>    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.2.1)
+#>    dplyr         1.0.10     2022-09-01 [1] CRAN (R 4.2.1)
+#>    ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.2.0)
+#>    evaluate      0.16       2022-08-09 [1] CRAN (R 4.2.1)
+#>    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.2.0)
+#>    farver        2.1.1      2022-07-06 [1] CRAN (R 4.2.1)
+#>    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.2.0)
+#>    fs            1.5.2      2021-12-08 [1] CRAN (R 4.2.0)
+#>    generics      0.1.3      2022-07-05 [1] CRAN (R 4.2.1)
+#>    ggplot2     * 3.3.6      2022-05-03 [1] CRAN (R 4.2.0)
+#>    glue          1.6.2      2022-02-24 [1] CRAN (R 4.2.0)
+#>  P graphics    * 4.2.1      2022-06-24 [1] local
+#>  P grDevices   * 4.2.1      2022-06-24 [1] local
+#>  P grid          4.2.1      2022-06-24 [1] local
+#>    gtable        0.3.1      2022-09-01 [1] CRAN (R 4.2.1)
+#>    highr         0.9        2021-04-16 [1] CRAN (R 4.2.0)
+#>    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.2.1)
+#>    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.2.0)
+#>    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.2.0)
+#>    knitr         1.40       2022-08-24 [1] CRAN (R 4.2.1)
+#>    labeling      0.4.2      2020-10-20 [1] CRAN (R 4.2.0)
+#>    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.2.0)
+#>    lobstr        1.1.2      2022-06-22 [1] CRAN (R 4.2.0)
+#>    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.2.0)
+#>    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.2.0)
+#>  P methods     * 4.2.1      2022-06-24 [1] local
+#>    munsell       0.5.0      2018-06-12 [1] CRAN (R 4.2.0)
+#>    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.2.1)
+#>    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.2.0)
+#>    profmem       0.6.0      2020-12-13 [1] CRAN (R 4.2.0)
+#>    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.2.0)
+#>    R6            2.5.1.9000 2022-08-06 [1] Github (r-lib/R6@87d5e45)
+#>    rlang       * 1.0.5      2022-08-31 [1] CRAN (R 4.2.1)
+#>    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.2.1)
+#>    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.2.1)
+#>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.2.1)
+#>    scales      * 1.2.1      2022-08-20 [1] CRAN (R 4.2.1)
+#>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.2.0)
+#>  P stats       * 4.2.1      2022-06-24 [1] local
+#>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.2.1)
+#>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.2.1)
+#>    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.2.1)
+#>    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.2.0)
+#>  P tools         4.2.1      2022-06-24 [1] local
+#>    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.2.0)
+#>  P utils       * 4.2.1      2022-06-24 [1] local
+#>    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.2.0)
+#>    withr         2.5.0      2022-03-03 [1] CRAN (R 4.2.0)
+#>    xfun          0.32       2022-08-10 [1] CRAN (R 4.2.1)
+#>    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.2.0)
+#>    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.2.0)
 #> 
-#>  [1] C:/Users/IndrajeetPatil/Documents/R/win-library/4.1
-#>  [2] C:/Program Files/R/R-4.1.3/library
+#>  [1] /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library
 #> 
-#>  P -- Loaded and on-disk path mismatch.
+#>  P ── Loaded and on-disk path mismatch.
 #> 
-#> ----------------------------------------------------------
+#> ──────────────────────────────────────────────────────────
 ```
 
