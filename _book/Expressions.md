@@ -15,21 +15,21 @@ library(lobstr, warn.conflicts = FALSE)
 **Q1.** Reconstruct the code represented by the trees below:
 
 
-```r
-#> ¦-f
-#> +-¦-g
-#>   +-¦-h
-#> ¦-`+`
-#> +-¦-`+`
-#> ¦ +-1
-#> ¦ +-2
-#> +-3
-#> ¦-`*`
-#> +-¦-`(`
-#> ¦ +-¦-`+`
-#> ¦   +-x
-#> ¦   +-y
-#> +-z
+```
+#> █─f 
+#> └─█─g 
+#>   └─█─h
+#> █─`+` 
+#> ├─█─`+` 
+#> │ ├─1 
+#> │ └─2 
+#> └─3
+#> █─`*` 
+#> ├─█─`(` 
+#> │ └─█─`+` 
+#> │   ├─x 
+#> │   └─y 
+#> └─z
 ```
 
 **A1.** Below is the reconstructed code.
@@ -202,7 +202,7 @@ Complex numbers are created via a **function call** (using `+`), as can be seen 
 
 
 ```r
-x_complex <- rlang::expr(1 + 1i)
+x_complex <- expr(1 + 1i)
 typeof(x_complex)
 #> [1] "language"
 
@@ -216,7 +216,7 @@ Similarly, for raw vectors (using `raw()`):
 
 
 ```r
-x_raw <- rlang::expr(raw(2))
+x_raw <- expr(raw(2))
 typeof(x_raw)
 #> [1] "language"
 
@@ -229,7 +229,7 @@ Contrast this with other atomic vectors:
 
 
 ```r
-x_int <- rlang::expr(2L)
+x_int <- expr(2L)
 typeof(x_int)
 #> [1] "integer"
 
@@ -241,7 +241,7 @@ For the same reason, you can't you create an expression that contains an atomic 
 
 
 ```r
-x_vec <- rlang::expr(c(1, 2))
+x_vec <- expr(c(1, 2))
 typeof(x_vec)
 #> [1] "language"
 
@@ -289,7 +289,7 @@ call2(expr(median), expr(x), na.rm = TRUE)
 
 **A4.** The differences in the constructed call objects are due to the different *type* of arguments supplied to first two parameters in the `call2()` function.
 
-In terms of provided `.fn`:
+Types of arguments supplied to `.fn`:
 
 
 ```r
@@ -299,7 +299,7 @@ typeof(expr(median))
 #> [1] "symbol"
 ```
 
-And, in terms of arguments provided to dynamic dots:
+Types of arguments supplied to the dynamic dots:
 
 
 ```r
@@ -310,7 +310,10 @@ typeof(expr(x))
 #> [1] "symbol"
 ```
 
-When `.fn` argument is a `closure`, that function is inlined in the constructed function call, while when `x` is not a symbol, its value is passed to the function call:
+The following outputs can be understood using the following properties:
+
+- when `.fn` argument is a `closure`, that function is inlined in the constructed function call
+- when `x` is not a symbol, its value is passed to the function call
 
 
 ```r
@@ -350,7 +353,7 @@ eval(call2(expr(median), expr(x), na.rm = TRUE))
 #> [1] 5.5
 ```
 
-**Q4.** `rlang::call_standardise()` doesn't work so well for the following calls. Why? What makes `mean()` special?
+**Q4.** `call_standardise()` doesn't work so well for the following calls. Why? What makes `mean()` special?
 
 
 ```r
@@ -369,7 +372,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x12dc30338>
+#> <bytecode: 0x137b35d38>
 #> <environment: namespace:base>
 ```
 
@@ -383,7 +386,7 @@ So, the output can be improved using a specific method. For example:
 
 
 ```r
-rlang::call_standardise(quote(mean.default(n = T, 1:10)))
+call_standardise(quote(mean.default(n = T, 1:10)))
 #> mean.default(x = 1:10, na.rm = T)
 ```
 
@@ -415,11 +418,11 @@ x
 
 ```r
 x <- 5
-call_obj1 <- rlang::call2(">", expr(x), 1)
+call_obj1 <- call2(">", expr(x), 1)
 call_obj1
 #> x > 1
 
-call_obj2 <- rlang::call2("if", cond = call_obj1, cons.expr = "a", alt.expr = "b")
+call_obj2 <- call2("if", cond = call_obj1, cons.expr = "a", alt.expr = "b")
 call_obj2
 #> if (x > 1) "a" else "b"
 ```
@@ -617,8 +620,8 @@ we can say that the custom infix operator `%+%` has:
 
 
 ```r
-rlang::parse_expr("x + 1; y + 1")
-#> Error in `rlang::parse_expr()`:
+parse_expr("x + 1; y + 1")
+#> Error in `parse_expr()`:
 #> ! `x` must contain exactly 1 expression, not 2.
 ```
 
@@ -626,11 +629,11 @@ This is expected based on the docs:
 
 > parse_expr() returns one expression. If the text contains more than one expression (separated by semicolons or new lines), an error is issued. 
 
-We instead need to use `rlang::parse_exprs()`:
+We instead need to use `parse_exprs()`:
 
 
 ```r
-rlang::parse_exprs("x + 1; y + 1")
+parse_exprs("x + 1; y + 1")
 #> [[1]]
 #> x + 1
 #> 
@@ -644,12 +647,12 @@ rlang::parse_exprs("x + 1; y + 1")
 
 
 ```r
-rlang::parse_expr("a +")
+parse_expr("a +")
 #> Error in parse(text = elt): <text>:2:0: unexpected end of input
 #> 1: a +
 #>    ^
 
-rlang::parse_expr("f())")
+parse_expr("f())")
 #> Error in parse(text = elt): <text>:1:4: unexpected ')'
 #> 1: f())
 #>        ^
@@ -685,14 +688,14 @@ What does `expr_text()` do instead?
 
 
 ```r
-expr <- rlang::expr(g(a + b + c + d + e + f + g + h + i + j + k + l +
+expr <- expr(g(a + b + c + d + e + f + g + h + i + j + k + l +
   m + n + o + p + q + r + s + t + u + v + w + x + y + z))
 
 deparse(expr)
 #> [1] "g(a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + "
 #> [2] "    p + q + r + s + t + u + v + w + x + y + z)"
 
-rlang::expr_text(expr)
+expr_text(expr)
 #> [1] "g(a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + \n    p + q + r + s + t + u + v + w + x + y + z)"
 ```
 
@@ -745,8 +748,8 @@ To see why, let's see what type of object is produced when we capture user provi
 
 ```r
 print_enexpr <- function(.f) {
-  print(typeof(rlang::enexpr(.f)))
-  print(is.call(rlang::enexpr(.f)))
+  print(typeof(enexpr(.f)))
+  print(is.call(enexpr(.f)))
 }
 
 print_enexpr(function(x = TRUE) {
@@ -816,7 +819,7 @@ That's how we can detect this kind of assignment by checking if the second eleme
 
 ```r
 expr_type <- function(x) {
-  if (rlang::is_syntactic_literal(x)) {
+  if (is_syntactic_literal(x)) {
     "constant"
   } else if (is.symbol(x)) {
     "symbol"
