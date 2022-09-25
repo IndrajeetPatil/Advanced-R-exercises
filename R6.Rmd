@@ -52,7 +52,7 @@ indra$withdraw(10)
 
 Create a subclass that errors if you attempt to overdraw:
 
-```{r R6-5, error=TRUE}
+```{r R6-5}
 bankAccountStrict <- R6::R6Class(
   "bankAccountStrict",
   inherit = bankAccount,
@@ -170,11 +170,13 @@ myDeck$draw(50)
 
 **Q3.** Why can't you model a bank account or a deck of cards with an S3 class?
 
-**A3.** We can't model a bank account or a deck of cards with an S3 class because instances of these classes are not *mutable*. On the other hand, R6 classes encapsulate data and represent its *state*, which can change over the course of object's lifecycle.
+**A3.** We can't model a bank account or a deck of cards with an `S3` class because instances of these classes are *immutable*.
+
+On the other hand, `R6` classes encapsulate data and represent its *state*, which can change over the course of object's lifecycle. In other words, these objects are *mutable* and well-suited to model a bank account.
 
 **Q4.** Create an R6 class that allows you to get and set the current time zone. You can access the current time zone with `Sys.timezone()` and set it with `Sys.setenv(TZ = "newtimezone")`. When setting the time zone, make sure the new time zone is in the list provided by `OlsonNames()`.
 
-**A4.** Here is an R6 class that manages the current time zone:
+**A4.** Here is an `R6` class that manages the current time zone:
 
 ```{r R6-12}
 CurrentTimeZone <- R6::R6Class("CurrentTimeZone",
@@ -205,7 +207,7 @@ myCurrentTimeZone$setTimeZone("Europe/Berlin")
 
 **Q5.** Create an R6 class that manages the current working directory. It should have `$get()` and `$set()` methods.
 
-**A5.** Here is an R6 class that manages the current working directory:
+**A5.** Here is an `R6` class that manages the current working directory:
 
 ```{r R6-14}
 ManageDirectory <- R6::R6Class("ManageDirectory",
@@ -240,7 +242,7 @@ myDirManager$setWorkingDirectory("/Advanced-R-exercises")
 
 **A6.** Same as answer to **Q3**:
 
-We can't model a bank account or a deck of cards with an S3 class because instances of these classes are not *mutable*. On the other hand, R6 classes encapsulate data and represent its *state*, which can change over the course of object's lifecycle.
+Objects that represent these real-life entities need to be mutable and `S3` class instances are not mutable.
 
 **Q7.** What base type are R6 objects built on top of? What attributes do they have?
 
@@ -269,7 +271,7 @@ attributes(myExample)
 
 **Q1.** Create a bank account class that prevents you from directly setting the  account balance, but you can still withdraw from and deposit to. Throw an error if you attempt to go into overdraft.
 
-**A1.** Here is a bank account class that satisfied the specified requirements:
+**A1.** Here is a bank account class that satisfies the specified requirements:
 
 ```{r R6-19}
 SafeBankAccount <- R6::R6Class(
@@ -336,7 +338,7 @@ checkCredentials <- R6Class(
 
     # the default print method prints the private fields as well
     print = function() {
-      "Password: XXXX"
+      cat("Password: XXXX")
 
       # for method chaining
       invisible(self)
@@ -348,9 +350,9 @@ checkCredentials <- R6Class(
 )
 
 myCheck <- checkCredentials$new()
-myCheck
 
 myCheck$set_password("1234")
+print(myCheck)
 
 myCheck$check_password("abcd")
 myCheck$check_password("1234")

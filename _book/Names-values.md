@@ -29,7 +29,7 @@ d <- 1:10
 ```r
 obj_addrs <- obj_addrs(list(a, b, c))
 unique(obj_addrs)
-#> [1] "0x105bbeba0"
+#> [1] "0x11327a6e8"
 ```
 
 Except `d`, which is a different object, even if it has the same value as `a`, `b`, and `c`:
@@ -37,7 +37,7 @@ Except `d`, which is a different object, even if it has the same value as `a`, `
 
 ```r
 obj_addr(d)
-#> [1] "0x10cfd8f88"
+#> [1] "0x1129e8e70"
 ```
 
 ---
@@ -66,7 +66,7 @@ obj_addrs <- obj_addrs(list(
 ))
 
 unique(obj_addrs)
-#> [1] "0x11d72c400"
+#> [1] "0x1128adfe0"
 ```
 
 ---
@@ -124,7 +124,7 @@ And as the docs mention (emphasis mine):
 x <- 1:10
 
 tracemem(x)
-#> [1] "<0x107d5e750>"
+#> [1] "<0x1127c7c10>"
 
 x <- x + 1
 
@@ -136,10 +136,10 @@ But since the object created in memory by `1:10` is not assigned a name, it can'
 
 ```r
 obj_addr(1:10)
-#> [1] "0x10b0bfd60"
+#> [1] "0x107a8d510"
 
 tracemem(1:10)
-#> [1] "<0x10b1194a0>"
+#> [1] "<0x107ae6c50>"
 ```
 
 ---
@@ -163,11 +163,11 @@ x <- c(1L, 2L, 3L)
 typeof(x)
 #> [1] "integer"
 tracemem(x)
-#> [1] "<0x106b41748>"
+#> [1] "<0x113842348>"
 
 x[[3]] <- 4
-#> tracemem[0x106b41748 -> 0x1071cd548]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
-#> tracemem[0x1071cd548 -> 0x107253be8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x113842348 -> 0x11395a948]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
+#> tracemem[0x11395a948 -> 0x113968a28]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 untracemem(x)
 
 typeof(x)
@@ -182,10 +182,10 @@ x <- c(1L, 2L, 3L)
 typeof(x)
 #> [1] "integer"
 tracemem(x)
-#> [1] "<0x1075ace48>"
+#> [1] "<0x113d37f48>"
 
 x[[3]] <- 4L
-#> tracemem[0x1075ace48 -> 0x1076dd4c8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x113d37f48 -> 0x113dba6c8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 untracemem(x)
 
 typeof(x)
@@ -216,20 +216,20 @@ b <- list(a, a)
 c <- list(b, a, 1:10)
 
 ref(a)
-#> [1:0x10b613a88] <int>
+#> [1:0x114b77238] <int>
 
 ref(b)
-#> █ [1:0x10b5f8988] <list> 
-#> ├─[2:0x10b613a88] <int> 
-#> └─[2:0x10b613a88]
+#> █ [1:0x114b9da88] <list> 
+#> ├─[2:0x114b77238] <int> 
+#> └─[2:0x114b77238]
 
 ref(c)
-#> █ [1:0x106c524c8] <list> 
-#> ├─█ [2:0x10b5f8988] <list> 
-#> │ ├─[3:0x10b613a88] <int> 
-#> │ └─[3:0x10b613a88] 
-#> ├─[3:0x10b613a88] 
-#> └─[4:0x106c56398] <int>
+#> █ [1:0x114bba618] <list> 
+#> ├─█ [2:0x114b9da88] <list> 
+#> │ ├─[3:0x114b77238] <int> 
+#> │ └─[3:0x114b77238] 
+#> ├─[3:0x114b77238] 
+#> └─[4:0x114c1d548] <int>
 ```
 
 Here is what we learn:
@@ -259,7 +259,7 @@ x
 #> [[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x106ab7918"
+#> [1] "0x1121d6d30"
 
 x[[2]] <- x
 x
@@ -270,13 +270,13 @@ x
 #> [[2]][[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x107ff3688"
+#> [1] "0x107a246c8"
 
 ref(x)
-#> █ [1:0x107ff3688] <list> 
-#> ├─[2:0x106aa4db8] <int> 
-#> └─█ [3:0x106ab7918] <list> 
-#>   └─[2:0x106aa4db8]
+#> █ [1:0x107a246c8] <list> 
+#> ├─[2:0x1121e7938] <int> 
+#> └─█ [3:0x1121d6d30] <list> 
+#>   └─[2:0x1121e7938]
 ```
 
 I don't have access to OmniGraffle software, so I am including here the figure from the [official solution manual](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify):
@@ -425,16 +425,16 @@ x[[1]] <- x
 x <- list()
 
 obj_addr(x)
-#> [1] "0x10b177318"
+#> [1] "0x112760f60"
 
 tracemem(x)
-#> [1] "<0x10b177318>"
+#> [1] "<0x112760f60>"
 
 x[[1]] <- x
-#> tracemem[0x10b177318 -> 0x107f90830]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x112760f60 -> 0x1079397e8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 
 obj_addr(x[[1]])
-#> [1] "0x10b177318"
+#> [1] "0x112760f60"
 ```
 
 ---
@@ -552,7 +552,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  en_US.UTF-8
 #>  ctype    en_US.UTF-8
 #>  tz       Europe/Berlin
-#>  date     2022-09-07
+#>  date     2022-09-25
 #>  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -561,12 +561,12 @@ sessioninfo::session_info(include_base = TRUE)
 #>    backports       1.4.1      2021-12-13 [1] CRAN (R 4.2.0)
 #>    base          * 4.2.1      2022-06-24 [?] local
 #>    bench         * 1.1.2      2021-11-30 [1] CRAN (R 4.2.0)
-#>    bookdown        0.28       2022-08-09 [1] CRAN (R 4.2.1)
+#>    bookdown        0.29       2022-09-12 [1] CRAN (R 4.2.1)
 #>    broom           1.0.1      2022-08-29 [1] CRAN (R 4.2.0)
 #>    bslib           0.4.0.9000 2022-08-20 [1] Github (rstudio/bslib@fa2e03c)
 #>    cachem          1.0.6      2021-08-19 [1] CRAN (R 4.2.0)
 #>    cellranger      1.1.0      2016-07-27 [1] CRAN (R 4.2.0)
-#>    cli             3.3.0      2022-04-25 [1] CRAN (R 4.2.0)
+#>    cli             3.4.1      2022-09-23 [1] CRAN (R 4.2.1)
 #>    colorspace      2.0-3      2022-02-21 [1] CRAN (R 4.2.0)
 #>  P compiler        4.2.1      2022-06-24 [1] local
 #>    crayon          1.5.1      2022-03-26 [1] CRAN (R 4.2.0)
@@ -583,7 +583,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    fastmap         1.1.0      2021-01-25 [1] CRAN (R 4.2.0)
 #>    forcats       * 0.5.2      2022-08-19 [1] CRAN (R 4.2.1)
 #>    fs              1.5.2      2021-12-08 [1] CRAN (R 4.2.0)
-#>    gargle          1.2.0      2021-07-02 [1] CRAN (R 4.2.0)
+#>    gargle          1.2.1      2022-09-08 [1] CRAN (R 4.2.1)
 #>    generics        0.1.3      2022-07-05 [1] CRAN (R 4.2.1)
 #>    ggplot2       * 3.3.6      2022-05-03 [1] CRAN (R 4.2.0)
 #>    glue            1.6.2      2022-02-24 [1] CRAN (R 4.2.0)
@@ -602,7 +602,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    jsonlite        1.8.0      2022-02-22 [1] CRAN (R 4.2.0)
 #>    knitr           1.40       2022-08-24 [1] CRAN (R 4.2.1)
 #>    labeling        0.4.2      2020-10-20 [1] CRAN (R 4.2.0)
-#>    lifecycle       1.0.1      2021-09-24 [1] CRAN (R 4.2.0)
+#>    lifecycle       1.0.2      2022-09-09 [1] CRAN (R 4.2.1)
 #>    lobstr        * 1.1.2      2022-06-22 [1] CRAN (R 4.2.0)
 #>    lubridate       1.8.0      2021-10-07 [1] CRAN (R 4.2.0)
 #>    magrittr      * 2.0.3      2022-03-30 [1] CRAN (R 4.2.0)
@@ -619,7 +619,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    readr         * 2.1.2      2022-01-30 [1] CRAN (R 4.2.0)
 #>    readxl          1.4.1      2022-08-17 [1] CRAN (R 4.2.0)
 #>    reprex          2.0.2      2022-08-17 [1] CRAN (R 4.2.1)
-#>    rlang           1.0.5      2022-08-31 [1] CRAN (R 4.2.1)
+#>    rlang           1.0.6      2022-09-24 [1] CRAN (R 4.2.1)
 #>    rmarkdown       2.16       2022-08-24 [1] CRAN (R 4.2.1)
 #>    rstudioapi      0.14       2022-08-22 [1] CRAN (R 4.2.1)
 #>    rvest           1.0.3      2022-08-19 [1] CRAN (R 4.2.1)
@@ -630,7 +630,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    stringi         1.7.8      2022-07-11 [1] CRAN (R 4.2.1)
 #>    stringr       * 1.4.1      2022-08-20 [1] CRAN (R 4.2.1)
 #>    tibble        * 3.1.8      2022-07-22 [1] CRAN (R 4.2.1)
-#>    tidyr         * 1.2.0      2022-02-01 [1] CRAN (R 4.2.0)
+#>    tidyr         * 1.2.1      2022-09-08 [1] CRAN (R 4.2.1)
 #>    tidyselect      1.1.2      2022-02-21 [1] CRAN (R 4.2.0)
 #>    tidyverse     * 1.3.2      2022-07-18 [1] CRAN (R 4.2.1)
 #>  P tools           4.2.1      2022-06-24 [1] local
@@ -639,7 +639,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  P utils         * 4.2.1      2022-06-24 [1] local
 #>    vctrs           0.4.1      2022-04-13 [1] CRAN (R 4.2.0)
 #>    withr           2.5.0      2022-03-03 [1] CRAN (R 4.2.0)
-#>    xfun            0.32       2022-08-10 [1] CRAN (R 4.2.1)
+#>    xfun            0.33       2022-09-12 [1] CRAN (R 4.2.1)
 #>    xml2            1.3.3      2021-11-30 [1] CRAN (R 4.2.0)
 #>    yaml            2.3.5      2022-02-21 [1] CRAN (R 4.2.0)
 #> 

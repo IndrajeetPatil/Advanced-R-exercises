@@ -290,7 +290,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x114bc86d8>
+#> <bytecode: 0x11785f190>
 #> <environment: namespace:rlang>
 ```
 
@@ -688,22 +688,22 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  en_US.UTF-8
 #>  ctype    en_US.UTF-8
 #>  tz       Europe/Berlin
-#>  date     2022-09-07
+#>  date     2022-09-25
 #>  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  ! package     * version    date (UTC) lib source
 #>    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.2.0)
 #>    base        * 4.2.1      2022-06-24 [?] local
-#>    bookdown      0.28       2022-08-09 [1] CRAN (R 4.2.1)
+#>    bookdown      0.29       2022-09-12 [1] CRAN (R 4.2.1)
 #>    brio          1.1.3      2021-11-30 [1] CRAN (R 4.2.0)
 #>    bslib         0.4.0.9000 2022-08-20 [1] Github (rstudio/bslib@fa2e03c)
 #>    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.2.0)
-#>    cli           3.3.0      2022-04-25 [1] CRAN (R 4.2.0)
+#>    cli           3.4.1      2022-09-23 [1] CRAN (R 4.2.1)
 #>  P compiler      4.2.1      2022-06-24 [1] local
 #>  P datasets    * 4.2.1      2022-06-24 [1] local
 #>    DBI           1.1.3      2022-06-18 [1] CRAN (R 4.2.0)
-#>    desc          1.4.1      2022-03-06 [1] CRAN (R 4.2.0)
+#>    desc          1.4.2      2022-09-08 [1] CRAN (R 4.2.1)
 #>    digest        0.6.29     2021-12-01 [1] CRAN (R 4.2.0)
 #>    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.2.1)
 #>    dplyr         1.0.10     2022-09-01 [1] CRAN (R 4.2.1)
@@ -719,7 +719,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.2.0)
 #>    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.2.0)
 #>    knitr         1.40       2022-08-24 [1] CRAN (R 4.2.1)
-#>    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.2.0)
+#>    lifecycle     1.0.2      2022-09-09 [1] CRAN (R 4.2.1)
 #>    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.2.0)
 #>    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.2.0)
 #>  P methods     * 4.2.1      2022-06-24 [1] local
@@ -728,7 +728,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    pkgload       1.3.0      2022-06-27 [1] CRAN (R 4.2.0)
 #>    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.2.0)
 #>    R6            2.5.1.9000 2022-08-06 [1] Github (r-lib/R6@87d5e45)
-#>    rlang       * 1.0.5      2022-08-31 [1] CRAN (R 4.2.1)
+#>    rlang       * 1.0.6      2022-09-24 [1] CRAN (R 4.2.1)
 #>    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.2.1)
 #>    rprojroot     2.0.3      2022-04-02 [1] CRAN (R 4.2.0)
 #>    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.2.1)
@@ -737,7 +737,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  P stats       * 4.2.1      2022-06-24 [1] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.2.1)
 #>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.2.1)
-#>    testthat    * 3.1.4      2022-04-26 [1] CRAN (R 4.2.0)
+#>    testthat    * 3.1.4.9000 2022-09-22 [1] Github (r-lib/testthat@81dfbed)
 #>    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.2.1)
 #>    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.2.0)
 #>  P tools         4.2.1      2022-06-24 [1] local
@@ -745,7 +745,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  P utils       * 4.2.1      2022-06-24 [1] local
 #>    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.2.0)
 #>    withr         2.5.0      2022-03-03 [1] CRAN (R 4.2.0)
-#>    xfun          0.32       2022-08-10 [1] CRAN (R 4.2.1)
+#>    xfun          0.33       2022-09-12 [1] CRAN (R 4.2.1)
 #>    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.2.0)
 #>    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.2.0)
 #> 

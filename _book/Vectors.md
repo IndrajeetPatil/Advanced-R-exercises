@@ -208,7 +208,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x137339238>
+#> <bytecode: 0x12626da80>
 #> <environment: namespace:stats>
 ```
 
@@ -238,7 +238,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x1400347b0>
+#> <bytecode: 0x135e100c0>
 #> <environment: namespace:base>
 ```
 
@@ -836,16 +836,16 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  en_US.UTF-8
 #>  ctype    en_US.UTF-8
 #>  tz       Europe/Berlin
-#>  date     2022-09-07
+#>  date     2022-09-25
 #>  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  ! package     * version    date (UTC) lib source
 #>    base        * 4.2.1      2022-06-24 [?] local
-#>    bookdown      0.28       2022-08-09 [1] CRAN (R 4.2.1)
+#>    bookdown      0.29       2022-09-12 [1] CRAN (R 4.2.1)
 #>    bslib         0.4.0.9000 2022-08-20 [1] Github (rstudio/bslib@fa2e03c)
 #>    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.2.0)
-#>    cli           3.3.0      2022-04-25 [1] CRAN (R 4.2.0)
+#>    cli           3.4.1      2022-09-23 [1] CRAN (R 4.2.1)
 #>  P compiler      4.2.1      2022-06-24 [1] local
 #>  P datasets    * 4.2.1      2022-06-24 [1] local
 #>    digest        0.6.29     2021-12-01 [1] CRAN (R 4.2.0)
@@ -864,7 +864,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  P methods     * 4.2.1      2022-06-24 [1] local
 #>    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.2.0)
 #>    R6            2.5.1.9000 2022-08-06 [1] Github (r-lib/R6@87d5e45)
-#>    rlang         1.0.5      2022-08-31 [1] CRAN (R 4.2.1)
+#>    rlang         1.0.6      2022-09-24 [1] CRAN (R 4.2.1)
 #>    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.2.1)
 #>    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.2.1)
 #>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.2.1)
@@ -875,7 +875,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  P tools         4.2.1      2022-06-24 [1] local
 #>  P utils       * 4.2.1      2022-06-24 [1] local
 #>    withr         2.5.0      2022-03-03 [1] CRAN (R 4.2.0)
-#>    xfun          0.32       2022-08-10 [1] CRAN (R 4.2.1)
+#>    xfun          0.33       2022-09-12 [1] CRAN (R 4.2.1)
 #>    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.2.0)
 #>    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.2.0)
 #> 

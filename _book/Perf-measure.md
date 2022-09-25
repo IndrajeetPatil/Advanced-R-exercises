@@ -47,7 +47,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()          99.7µs    150µs     6424.     801KB     91.2
+#> 1 f()           103µs    148µs     6194.     801KB     88.0
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -79,7 +79,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x134358a98>
+#> <bytecode: 0x13c1a1d90>
 #> <environment: namespace:base>
 ```
 
@@ -153,15 +153,15 @@ t_bench_df
 #> # A tibble: 2 × 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)    411.37ns
-#> 2 x^0.5        1.26µs
+#> 1 sqrt(x)    402.57ns
+#> 2 x^0.5        1.25µs
 
 t_systime_df
 #> # A tibble: 2 × 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                 0.394                0.376
-#> 2 x^0.5                   1.23                 1.23
+#> 1 sqrt(x)                 0.395                0.426
+#> 2 x^0.5                   1.22                 1.21
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -195,14 +195,14 @@ bench::mark(
 #> # A tibble: 4 × 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)         1.07µs   1.48µs   505923.    7.86KB
-#> 2 exp(log(x)/2)   6.15µs   7.07µs   142641.    7.86KB
-#> 3 x^0.5           9.27µs   9.51µs   100562.    7.86KB
-#> 4 x^(1/2)         9.31µs   9.76µs    99271.    7.86KB
+#> 1 sqrt(x)         1.07µs   1.39µs   577857.    7.86KB
+#> 2 exp(log(x)/2)   6.15µs   6.64µs   143114.    7.86KB
+#> 3 x^0.5           9.18µs  10.04µs   100034.    7.86KB
+#> 4 x^(1/2)         9.31µs  10.23µs    99666.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
-#> 1     506.
-#> 2       0 
+#> 1       0 
+#> 2     143.
 #> 3       0 
 #> 4       0
 ```
@@ -226,7 +226,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  en_US.UTF-8
 #>  ctype    en_US.UTF-8
 #>  tz       Europe/Berlin
-#>  date     2022-09-07
+#>  date     2022-09-25
 #>  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -234,10 +234,10 @@ sessioninfo::session_info(include_base = TRUE)
 #>    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.2.0)
 #>    base        * 4.2.1      2022-06-24 [?] local
 #>    bench         1.1.2      2021-11-30 [1] CRAN (R 4.2.0)
-#>    bookdown      0.28       2022-08-09 [1] CRAN (R 4.2.1)
+#>    bookdown      0.29       2022-09-12 [1] CRAN (R 4.2.1)
 #>    bslib         0.4.0.9000 2022-08-20 [1] Github (rstudio/bslib@fa2e03c)
 #>    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.2.0)
-#>    cli           3.3.0      2022-04-25 [1] CRAN (R 4.2.0)
+#>    cli           3.4.1      2022-09-23 [1] CRAN (R 4.2.1)
 #>  P compiler      4.2.1      2022-06-24 [1] local
 #>  P datasets    * 4.2.1      2022-06-24 [1] local
 #>    DBI           1.1.3      2022-06-18 [1] CRAN (R 4.2.0)
@@ -258,7 +258,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.2.0)
 #>    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.2.0)
 #>    knitr         1.40       2022-08-24 [1] CRAN (R 4.2.1)
-#>    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.2.0)
+#>    lifecycle     1.0.2      2022-09-09 [1] CRAN (R 4.2.1)
 #>    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.2.0)
 #>    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.2.0)
 #>  P methods     * 4.2.1      2022-06-24 [1] local
@@ -268,7 +268,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    profvis     * 0.3.7      2020-11-02 [1] CRAN (R 4.2.0)
 #>    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.2.0)
 #>    R6            2.5.1.9000 2022-08-06 [1] Github (r-lib/R6@87d5e45)
-#>    rlang         1.0.5      2022-08-31 [1] CRAN (R 4.2.1)
+#>    rlang         1.0.6      2022-09-24 [1] CRAN (R 4.2.1)
 #>    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.2.1)
 #>    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.2.1)
 #>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.2.1)
@@ -283,7 +283,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  P utils       * 4.2.1      2022-06-24 [1] local
 #>    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.2.0)
 #>    withr         2.5.0      2022-03-03 [1] CRAN (R 4.2.0)
-#>    xfun          0.32       2022-08-10 [1] CRAN (R 4.2.1)
+#>    xfun          0.33       2022-09-12 [1] CRAN (R 4.2.1)
 #>    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.2.0)
 #>    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.2.0)
 #> 

@@ -21,7 +21,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x15294a708>
+#> <bytecode: 0x11f0fed08>
 #> <environment: namespace:base>
 ```
 
@@ -47,8 +47,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x12358d9e0>
-#> <environment: 0x12358d0b0>
+#> <bytecode: 0x10a0ee748>
+#> <environment: 0x10a0f1d28>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -212,15 +212,15 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x1239338c8>
+#> <environment: 0x10a5e17b0>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x123b377b0>
-#> <environment: 0x12399ab70>
+#> <bytecode: 0x10a8acd08>
+#> <environment: 0x10a692940>
 ```
 
 ---
@@ -266,7 +266,7 @@ ggplot2::label_bquote
 #>     }
 #>     structure(fun, class = "labeller")
 #> }
-#> <bytecode: 0x123d77628>
+#> <bytecode: 0x10aa7f560>
 #> <environment: namespace:ggplot2>
 ```
 
@@ -289,7 +289,7 @@ scales::number_format
 #>             scale_cut = scale_cut, trim = trim, ...)
 #>     }
 #> }
-#> <bytecode: 0x123f6c0e0>
+#> <bytecode: 0x10524bad0>
 #> <environment: namespace:scales>
 ```
 
@@ -385,7 +385,7 @@ Let's have a look at one example with each:
 ```r
 boxcox2(1)
 #> function(x) (x^lambda - 1) / lambda
-#> <environment: 0x122e54658>
+#> <environment: 0x10a257938>
 
 boxcox3(mtcars$wt)
 #> function(lambda) {
@@ -395,7 +395,7 @@ boxcox3(mtcars$wt)
 #>       (x^lambda - 1) / lambda
 #>     }
 #>   }
-#> <environment: 0x122f1f3a8>
+#> <environment: 0x10a2e2a90>
 ```
 
 As can be seen:
@@ -428,7 +428,7 @@ boot_permute(mtcars, "mpg")
 #>     col <- df[[var]]
 #>     col[sample(n, replace = TRUE)]
 #>   }
-#> <environment: 0x123244240>
+#> <environment: 0x103b3fb70>
 ```
 
 This is why we don't need to worry about a copy being made because the `df` in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:
@@ -437,7 +437,7 @@ This is why we don't need to worry about a copy being made because the `df` in t
 ```r
 boot_permute_env <- rlang::fn_env(boot_permute(mtcars, "mpg"))
 rlang::env_print(boot_permute_env)
-#> <environment: 0x123453d28>
+#> <environment: 0x103f6f2e8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • n: <int>
@@ -496,8 +496,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1         13.28µs  14.92µs    47146.    12.8KB     66.1
-#> 2 LL2          7.01µs   7.83µs   119789.        0B     83.9
+#> 1 LL1         12.96µs  14.31µs    66378.    12.8KB     93.1
+#> 2 LL2          7.05µs   7.79µs   119328.        0B     95.5
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -523,16 +523,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 × 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1         20.38µs  22.22µs    43365.
-#>  2     10 LL2          8.45µs   9.02µs   109148.
-#>  3     20 LL1         22.43µs  23.78µs    41439.
-#>  4     20 LL2          8.32µs   8.81µs   111965.
-#>  5     50 LL1         26.32µs  28.17µs    34825.
-#>  6     50 LL2          8.04µs   8.61µs   113848.
-#>  7    100 LL1         36.78µs  38.79µs    25480.
-#>  8    100 LL2          8.94µs   9.47µs   103651.
-#>  9   1000 LL1        508.44µs 535.09µs     1868.
-#> 10   1000 LL2         29.44µs  31.04µs    31781.
+#>  1     10 LL1         20.38µs  21.85µs    44819.
+#>  2     10 LL2           8.4µs   8.94µs   110352.
+#>  3     20 LL1         22.47µs   23.7µs    41722.
+#>  4     20 LL2          8.24µs   8.73µs   113254.
+#>  5     50 LL1          26.4µs  28.13µs    35025.
+#>  6     50 LL2          8.12µs   8.57µs   115291.
+#>  7    100 LL1         36.74µs  38.83µs    25452.
+#>  8    100 LL2          9.06µs  10.09µs    94798.
+#>  9   1000 LL1        508.07µs 530.05µs     1879.
+#> 10   1000 LL2         29.52µs  30.63µs    32394.
 
 ggplot(
   df_bench,
@@ -656,7 +656,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  en_US.UTF-8
 #>  ctype    en_US.UTF-8
 #>  tz       Europe/Berlin
-#>  date     2022-09-07
+#>  date     2022-09-25
 #>  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -664,10 +664,10 @@ sessioninfo::session_info(include_base = TRUE)
 #>    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.2.0)
 #>    base        * 4.2.1      2022-06-24 [?] local
 #>    bench         1.1.2      2021-11-30 [1] CRAN (R 4.2.0)
-#>    bookdown      0.28       2022-08-09 [1] CRAN (R 4.2.1)
+#>    bookdown      0.29       2022-09-12 [1] CRAN (R 4.2.1)
 #>    bslib         0.4.0.9000 2022-08-20 [1] Github (rstudio/bslib@fa2e03c)
 #>    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.2.0)
-#>    cli           3.3.0      2022-04-25 [1] CRAN (R 4.2.0)
+#>    cli           3.4.1      2022-09-23 [1] CRAN (R 4.2.1)
 #>    colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.2.0)
 #>  P compiler      4.2.1      2022-06-24 [1] local
 #>  P datasets    * 4.2.1      2022-06-24 [1] local
@@ -694,7 +694,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.2.0)
 #>    knitr         1.40       2022-08-24 [1] CRAN (R 4.2.1)
 #>    labeling      0.4.2      2020-10-20 [1] CRAN (R 4.2.0)
-#>    lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.2.0)
+#>    lifecycle     1.0.2      2022-09-09 [1] CRAN (R 4.2.1)
 #>    lobstr        1.1.2      2022-06-22 [1] CRAN (R 4.2.0)
 #>    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.2.0)
 #>    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.2.0)
@@ -705,7 +705,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>    profmem       0.6.0      2020-12-13 [1] CRAN (R 4.2.0)
 #>    purrr         0.3.4      2020-04-17 [1] CRAN (R 4.2.0)
 #>    R6            2.5.1.9000 2022-08-06 [1] Github (r-lib/R6@87d5e45)
-#>    rlang       * 1.0.5      2022-08-31 [1] CRAN (R 4.2.1)
+#>    rlang       * 1.0.6      2022-09-24 [1] CRAN (R 4.2.1)
 #>    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.2.1)
 #>    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.2.1)
 #>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.2.1)
@@ -721,7 +721,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  P utils       * 4.2.1      2022-06-24 [1] local
 #>    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.2.0)
 #>    withr         2.5.0      2022-03-03 [1] CRAN (R 4.2.0)
-#>    xfun          0.32       2022-08-10 [1] CRAN (R 4.2.1)
+#>    xfun          0.33       2022-09-12 [1] CRAN (R 4.2.1)
 #>    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.2.0)
 #>    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.2.0)
 #> 
