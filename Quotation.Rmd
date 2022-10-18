@@ -158,6 +158,13 @@ x <- expr(x <- 1)
 x
 ```
 
+In its turn, `enexpr()` calls native code:
+
+```{r}
+rlang::enexpr
+```
+
+
 ---
 
 **Q2.** Compare and contrast the following two functions. Can you predict the output before running them?
@@ -197,7 +204,7 @@ f2(a + b, c + d)
 
 **Q3.** What happens if you try to use `enexpr()` with an expression (i.e. `enexpr(x + y)`? What happens if `enexpr()` is passed a missing argument?
 
-**A3.** If you try to use `enexpr()` with an expression, it fails because it works only with types `symbol` and `character` (which is converted to `symbol`).
+**A3.** If you try to use `enexpr()` with an expression, it fails because it works only with `symbol`.
 
 ```{r Quotation-18, error=TRUE}
 enexpr(x + y)
@@ -217,7 +224,7 @@ is_missing(enexpr(arg))
 
 **Q4.** How are `exprs(a)` and `exprs(a = )` different? Think about both the input and the output.
 
-**A4.** The key difference here is that the former will return an unnamed list, while the latter will return a named list. This is because the former is interpreted as an unnamed argument, while the latter a named argument.
+**A4.** The key difference between `exprs(a)` and `exprs(a = )` is that the former will return an unnamed list, while the latter will return a named list. This is because the former is interpreted as an unnamed argument, while the latter a named argument.
 
 ```{r Quotation-20}
 exprs(a)
@@ -228,17 +235,17 @@ exprs(a = )
 In both cases, `a` is treated as a symbol:
 
 ```{r Quotation-21}
-purrr::map_lgl(exprs(a), is_symbol)
+map_lgl(exprs(a), is_symbol)
 
-purrr::map_lgl(exprs(a = ), is_symbol)
+map_lgl(exprs(a = ), is_symbol)
 ```
 
 But, the argument is missing only in the latter case, since only the name but no corresponding value is provided:
 
 ```{r Quotation-22}
-purrr::map_lgl(exprs(a), is_missing)
+map_lgl(exprs(a), is_missing)
 
-purrr::map_lgl(exprs(a = ), is_missing)
+map_lgl(exprs(a = ), is_missing)
 ```
 
 ---
@@ -255,7 +262,7 @@ alist("x" = 1, TRUE, "z" = expr(x + y))
 exprs("x" = 1, TRUE, "z" = expr(x + y), .named = TRUE)
 ```
 
-- Ignoring empty arguments: The `.ignore_empty` argument in `exprs()` gives you a much finer control over what to do with the empty arguments, while `alist()` always ignores none of such arguments.
+- Ignoring empty arguments: The `.ignore_empty` argument in `exprs()` gives you a much finer control over what to do with the empty arguments, while `alist()` doesn't provide a way to ignore such arguments.
 
 ```{r Quotation-24}
 alist("x" = 1, , TRUE, )
@@ -281,14 +288,14 @@ exprs(foo := bar, .unquote_names = TRUE)
 
 **Q6.** The documentation for `substitute()` says:
 
-    > Substitution takes place by examining each component of the parse tree 
-    > as follows: 
-    > 
-    > * If it is not a bound symbol in `env`, it is unchanged. 
-    > * If it is a promise object (i.e., a formal argument to a function) 
-    >   the expression slot of the promise replaces the symbol. 
-    > * If it is an ordinary variable, its value is substituted, unless 
-    > `env` is .GlobalEnv in which case the symbol is left unchanged.
+> Substitution takes place by examining each component of the parse tree 
+> as follows: 
+> 
+> * If it is not a bound symbol in `env`, it is unchanged. 
+> * If it is a promise object (i.e., a formal argument to a function) 
+>   the expression slot of the promise replaces the symbol. 
+> * If it is an ordinary variable, its value is substituted, unless 
+> `env` is .GlobalEnv in which case the symbol is left unchanged.
   
 Create examples that illustrate each of the above cases.
 
@@ -317,6 +324,8 @@ myVar
 > `env` is .GlobalEnv in which case the symbol is left unchanged.
 
 ```{r Quotation-28}
+substitute(x + y, env = env(x = 2, y = 1))
+
 x <- 2
 y <- 1
 substitute(x + y, env = .GlobalEnv)
@@ -426,11 +435,11 @@ exec <- function(f, ..., .env = caller_env()) {
 }
 ```
 
-**A1.** The keys ideas that underlie the `exec()` function 
+**A1.** The keys ideas that underlie this implementation of `exec()` function are the following:
 
-- The function constructs a call using function `f` and its argument `...`, and evaluates the call in the environment `.env`.
+- It constructs a call using function `f` and its argument `...`, and evaluates the call in the environment `.env`.
 
-- The function uses [dynamic dots](https://rlang.r-lib.org/reference/dyn-dots.html) via `list2()`, which means that you ca splice argument using `!!!`, you can inject names using `:=`, and trailing commas are not a problem.
+- It uses [dynamic dots](https://rlang.r-lib.org/reference/dyn-dots.html) via `list2()`, which means that you can splice arguments using `!!!`, you can inject names using `:=`, and trailing commas are not a problem.
 
 Here is an example:
 
@@ -457,7 +466,10 @@ rm("exec")
 
 All functions capture the dots in a list.
 
-Using these dots, the functions check if a list was entered as an argument by checking the number of arguments and, if the count is 1, checking if the argument is a list.
+Using these dots, the functions check:
+
+  - if a list was entered as an argument by checking the number of arguments
+  - if the count is 1, by checking if the argument is a list
 
 ---
 

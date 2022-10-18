@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x10bfa7b30>
+#> <bytecode: 0x120b65120>
 #> <environment: namespace:rlang>
 ```
 
@@ -183,6 +183,20 @@ x <- expr(x <- 1)
 x
 #> x <- 1
 ```
+
+In its turn, `enexpr()` calls native code:
+
+
+```r
+rlang::enexpr
+#> function (arg) 
+#> {
+#>     .Call(ffi_enexpr, substitute(arg), parent.frame())
+#> }
+#> <bytecode: 0x127a89768>
+#> <environment: namespace:rlang>
+```
+
 
 ---
 
@@ -236,7 +250,7 @@ f2(a + b, c + d)
 
 **Q3.** What happens if you try to use `enexpr()` with an expression (i.e. `enexpr(x + y)`? What happens if `enexpr()` is passed a missing argument?
 
-**A3.** If you try to use `enexpr()` with an expression, it fails because it works only with types `symbol` and `character` (which is converted to `symbol`).
+**A3.** If you try to use `enexpr()` with an expression, it fails because it works only with `symbol`.
 
 
 ```r
@@ -261,7 +275,7 @@ is_missing(enexpr(arg))
 
 **Q4.** How are `exprs(a)` and `exprs(a = )` different? Think about both the input and the output.
 
-**A4.** The key difference here is that the former will return an unnamed list, while the latter will return a named list. This is because the former is interpreted as an unnamed argument, while the latter a named argument.
+**A4.** The key difference between `exprs(a)` and `exprs(a = )` is that the former will return an unnamed list, while the latter will return a named list. This is because the former is interpreted as an unnamed argument, while the latter a named argument.
 
 
 ```r
@@ -277,11 +291,11 @@ In both cases, `a` is treated as a symbol:
 
 
 ```r
-purrr::map_lgl(exprs(a), is_symbol)
+map_lgl(exprs(a), is_symbol)
 #>      
 #> TRUE
 
-purrr::map_lgl(exprs(a = ), is_symbol)
+map_lgl(exprs(a = ), is_symbol)
 #>    a 
 #> TRUE
 ```
@@ -290,11 +304,11 @@ But, the argument is missing only in the latter case, since only the name but no
 
 
 ```r
-purrr::map_lgl(exprs(a), is_missing)
+map_lgl(exprs(a), is_missing)
 #>       
 #> FALSE
 
-purrr::map_lgl(exprs(a = ), is_missing)
+map_lgl(exprs(a = ), is_missing)
 #>    a 
 #> TRUE
 ```
@@ -330,7 +344,7 @@ exprs("x" = 1, TRUE, "z" = expr(x + y), .named = TRUE)
 #> expr(x + y)
 ```
 
-- Ignoring empty arguments: The `.ignore_empty` argument in `exprs()` gives you a much finer control over what to do with the empty arguments, while `alist()` always ignores none of such arguments.
+- Ignoring empty arguments: The `.ignore_empty` argument in `exprs()` gives you a much finer control over what to do with the empty arguments, while `alist()` doesn't provide a way to ignore such arguments.
 
 
 ```r
@@ -397,14 +411,14 @@ exprs(foo := bar, .unquote_names = TRUE)
 
 **Q6.** The documentation for `substitute()` says:
 
-    > Substitution takes place by examining each component of the parse tree 
-    > as follows: 
-    > 
-    > * If it is not a bound symbol in `env`, it is unchanged. 
-    > * If it is a promise object (i.e., a formal argument to a function) 
-    >   the expression slot of the promise replaces the symbol. 
-    > * If it is an ordinary variable, its value is substituted, unless 
-    > `env` is .GlobalEnv in which case the symbol is left unchanged.
+> Substitution takes place by examining each component of the parse tree 
+> as follows: 
+> 
+> * If it is not a bound symbol in `env`, it is unchanged. 
+> * If it is a promise object (i.e., a formal argument to a function) 
+>   the expression slot of the promise replaces the symbol. 
+> * If it is an ordinary variable, its value is substituted, unless 
+> `env` is .GlobalEnv in which case the symbol is left unchanged.
   
 Create examples that illustrate each of the above cases.
 
@@ -439,6 +453,9 @@ myVar
 
 
 ```r
+substitute(x + y, env = env(x = 2, y = 1))
+#> 2 + 1
+
 x <- 2
 y <- 1
 substitute(x + y, env = .GlobalEnv)
@@ -588,11 +605,11 @@ exec <- function(f, ..., .env = caller_env()) {
 }
 ```
 
-**A1.** The keys ideas that underlie the `exec()` function 
+**A1.** The keys ideas that underlie this implementation of `exec()` function are the following:
 
-- The function constructs a call using function `f` and its argument `...`, and evaluates the call in the environment `.env`.
+- It constructs a call using function `f` and its argument `...`, and evaluates the call in the environment `.env`.
 
-- The function uses [dynamic dots](https://rlang.r-lib.org/reference/dyn-dots.html) via `list2()`, which means that you ca splice argument using `!!!`, you can inject names using `:=`, and trailing commas are not a problem.
+- It uses [dynamic dots](https://rlang.r-lib.org/reference/dyn-dots.html) via `list2()`, which means that you can splice arguments using `!!!`, you can inject names using `:=`, and trailing commas are not a problem.
 
 Here is an example:
 
@@ -621,7 +638,10 @@ rm("exec")
 
 All functions capture the dots in a list.
 
-Using these dots, the functions check if a list was entered as an argument by checking the number of arguments and, if the count is 1, checking if the argument is a list.
+Using these dots, the functions check:
+
+  - if a list was entered as an argument by checking the number of arguments
+  - if the count is 1, by checking if the argument is a list
 
 ---
 
@@ -797,14 +817,14 @@ sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
 #>  version  R version 4.2.1 (2022-06-23)
-#>  os       macOS Monterey 12.5.1
+#>  os       macOS Monterey 12.6
 #>  system   aarch64, darwin20
 #>  ui       X11
 #>  language (EN)
 #>  collate  en_US.UTF-8
 #>  ctype    en_US.UTF-8
 #>  tz       Europe/Berlin
-#>  date     2022-09-25
+#>  date     2022-10-18
 #>  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -814,17 +834,17 @@ sessioninfo::session_info(include_base = TRUE)
 #>    bookdown      0.29       2022-09-12 [1] CRAN (R 4.2.1)
 #>    bslib         0.4.0.9000 2022-08-20 [1] Github (rstudio/bslib@fa2e03c)
 #>    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.2.0)
-#>    cli           3.4.1      2022-09-23 [1] CRAN (R 4.2.1)
+#>    cli           3.4.1      2022-09-23 [1] CRAN (R 4.2.0)
 #>    colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.2.0)
 #>  P compiler      4.2.1      2022-06-24 [1] local
-#>    crayon        1.5.1      2022-03-26 [1] CRAN (R 4.2.0)
+#>    crayon        1.5.2      2022-09-29 [1] CRAN (R 4.2.1)
 #>  P datasets    * 4.2.1      2022-06-24 [1] local
-#>    DBI           1.1.3      2022-06-18 [1] CRAN (R 4.2.0)
+#>    DBI           1.1.3.9002 2022-10-17 [1] Github (r-dbi/DBI@2aec388)
 #>    diffobj       0.3.5      2021-10-05 [1] CRAN (R 4.2.0)
 #>    digest        0.6.29     2021-12-01 [1] CRAN (R 4.2.0)
 #>    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.2.1)
 #>    dplyr       * 1.0.10     2022-09-01 [1] CRAN (R 4.2.1)
-#>    evaluate      0.16       2022-08-09 [1] CRAN (R 4.2.1)
+#>    evaluate      0.17       2022-10-07 [1] CRAN (R 4.2.1)
 #>    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.2.0)
 #>    farver        2.1.1      2022-07-06 [1] CRAN (R 4.2.1)
 #>    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.2.0)
@@ -839,10 +859,10 @@ sessioninfo::session_info(include_base = TRUE)
 #>    highr         0.9        2021-04-16 [1] CRAN (R 4.2.0)
 #>    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.2.1)
 #>    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.2.0)
-#>    jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.2.0)
+#>    jsonlite      1.8.2      2022-10-02 [1] CRAN (R 4.2.1)
 #>    knitr         1.40       2022-08-24 [1] CRAN (R 4.2.1)
 #>    labeling      0.4.2      2020-10-20 [1] CRAN (R 4.2.0)
-#>    lifecycle     1.0.2      2022-09-09 [1] CRAN (R 4.2.1)
+#>    lifecycle     1.0.3      2022-10-07 [1] CRAN (R 4.2.1)
 #>    lobstr      * 1.1.2      2022-06-22 [1] CRAN (R 4.2.0)
 #>    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.2.0)
 #>    MASS        * 7.3-58.1   2022-08-03 [1] CRAN (R 4.2.1)
@@ -851,11 +871,11 @@ sessioninfo::session_info(include_base = TRUE)
 #>    munsell       0.5.0      2018-06-12 [1] CRAN (R 4.2.0)
 #>    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.2.1)
 #>    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.2.0)
-#>    purrr       * 0.3.4      2020-04-17 [1] CRAN (R 4.2.0)
+#>    purrr       * 0.3.5      2022-10-06 [1] CRAN (R 4.2.1)
 #>    R6            2.5.1.9000 2022-08-06 [1] Github (r-lib/R6@87d5e45)
 #>    rematch2      2.1.2      2020-05-01 [1] CRAN (R 4.2.0)
 #>    rlang       * 1.0.6      2022-09-24 [1] CRAN (R 4.2.1)
-#>    rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.2.1)
+#>    rmarkdown     2.17       2022-10-07 [1] CRAN (R 4.2.1)
 #>    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.2.1)
 #>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.2.1)
 #>    scales        1.2.1      2022-08-20 [1] CRAN (R 4.2.1)
@@ -863,16 +883,16 @@ sessioninfo::session_info(include_base = TRUE)
 #>  P stats       * 4.2.1      2022-06-24 [1] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.2.1)
 #>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.2.1)
-#>    tibble        3.1.8      2022-07-22 [1] CRAN (R 4.2.1)
-#>    tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.2.0)
+#>    tibble        3.1.8.9002 2022-10-16 [1] local
+#>    tidyselect    1.2.0      2022-10-10 [1] CRAN (R 4.2.1)
 #>  P tools         4.2.1      2022-06-24 [1] local
 #>    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.2.0)
 #>  P utils       * 4.2.1      2022-06-24 [1] local
-#>    vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.2.0)
+#>    vctrs         0.4.2.9000 2022-10-17 [1] Github (r-lib/vctrs@e04fef0)
 #>    waldo         0.4.0      2022-03-16 [1] CRAN (R 4.2.0)
 #>    withr         2.5.0      2022-03-03 [1] CRAN (R 4.2.0)
 #>    xfun          0.33       2022-09-12 [1] CRAN (R 4.2.1)
-#>    xml2          1.3.3      2021-11-30 [1] CRAN (R 4.2.0)
+#>    xml2          1.3.3.9000 2022-10-10 [1] local
 #>    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.2.0)
 #> 
 #>  [1] /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library
