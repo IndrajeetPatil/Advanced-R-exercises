@@ -7,6 +7,8 @@ Attaching the needed libraries:
 
 ```r
 library(ggplot2)
+library(dplyr)
+library(purrr)
 ```
 
 ## Exercises 24.3.1
@@ -41,7 +43,7 @@ Comparing performance of different alternatives:
 library(gapminder)
 
 # having a look at the data
-dplyr::glimpse(gapminder)
+glimpse(gapminder)
 #> Rows: 1,704
 #> Columns: 6
 #> $ country   <fct> "Afghanistan", "Afghanistan", "Afghanist…
@@ -62,13 +64,15 @@ bench::mark(
 #> # A tibble: 4 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 lm            627µs    919µs      868.    1.25MB
-#> 2 speedglm      677µs    965µs      816.   66.37MB
-#> 3 biglm         543µs    740µs     1109.  936.35KB
-#> 4 fastLm        614µs    879µs      877.    4.21MB
+#> 1 lm            648µs    915µs      978.    1.25MB
+#> 2 speedglm      680µs    960µs      899.   66.37MB
+#> 3 biglm         558µs    776µs     1163.  936.54KB
+#> 4 fastLm        658µs    863µs     1043.    4.21MB
 ```
 
-The results might change depending on the size of the dataset, so you will have to experiment with different algorithms and find the one that fits the needs of your dataset the best.
+The results might change depending on the size of the dataset, with the performance benefits accruing bigger the dataset.
+
+You will have to experiment with different algorithms and find the one that fits the needs of your dataset the best.
 
 **Q2.** What package implements a version of `match()` that's faster for repeated look ups? How much faster is it?
 
@@ -77,8 +81,6 @@ The results might change depending on the size of the dataset, so you will have 
 The documentation for this function notes:
 
 > It is slightly faster than the built-in version because it uses more specialized code, but in addition it retains the hash table within the table object such that it can be re-used, dramatically reducing the look-up time especially for large table.
-
-Let's try. 
 
 With a small vector, `fmatch()` is only slightly faster, but of the same order of magnitude.
 
@@ -98,11 +100,11 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          574ns    738ns   427330.    2.77KB
-#> 2 fastmatch     533ns    615ns   460027.    2.66KB
+#> 1 base          574ns    779ns   799716.    2.77KB
+#> 2 fastmatch     533ns    656ns   943941.    2.66KB
 ```
 
-But, with a larger vector, `fmatch()` is only orders of magnitude faster! ⚡
+But, with a larger vector, `fmatch()` is orders of magnitude faster! ⚡
 
 
 ```r
@@ -118,8 +120,8 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base         23.1ms   25.2ms      39.7    31.4MB
-#> 2 fastmatch     451ns    615ns  818233.         0B
+#> 1 base         20.4ms   24.3ms      39.9    31.4MB
+#> 2 fastmatch     451ns    615ns 1055707.         0B
 ```
 
 We can also look at the hash table:
@@ -132,7 +134,7 @@ fmatch.hash(c("x", "y"), small_vec)
 #> <hash table>
 ```
 
-Additionally, `{fastmatch}` also provides a similar infix operator:
+Additionally, `{fastmatch}` provides equivalent of the familiar infix operator:
 
 
 ```r
@@ -183,7 +185,7 @@ fasttime::fastPOSIXct("2022-05-05 09:23:22")
 #> [1] "2022-05-05 11:23:22 CEST"
 ```
 
-Comparing them, we can see that `fasttime::fastPOSIXct()` has the best performance:
+We can also compare their performance:
 
 
 ```r
@@ -198,12 +200,11 @@ bench::mark(
 #> # A tibble: 4 × 6
 #>   expression       min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>  <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 as.POSIXct   38.25µs  58.59µs    10889.        0B    10.9 
-#> 2 as.POSIXlt   28.62µs  41.88µs    14982.        0B     0   
-#> 3 ymd_hms       1.37ms   2.17ms      371.    21.5KB     3.00
-#> 4 fastPOSIXct 573.93ns    656ns  1172577.        0B     0
+#> 1 as.POSIXct    38.5µs   53.2µs    15134.        0B     0   
+#> 2 as.POSIXlt    28.7µs  43.38µs    18642.        0B    18.7 
+#> 3 ymd_hms       1.46ms   1.91ms      456.    21.5KB     3.68
+#> 4 fastPOSIXct 615.02ns   2.38µs   536468.        0B     0
 ```
-
 
 There are many more packages that implement a way to convert from string to a date time object. For more, see [CRAN Task View: Time Series Analysis](https://cran.r-project.org/web/views/TimeSeries.html)
 
@@ -263,7 +264,7 @@ rowSums
 #>     else names(z) <- dimnames(x)[[1L]]
 #>     z
 #> }
-#> <bytecode: 0x124c17d28>
+#> <bytecode: 0x142f4b148>
 #> <environment: namespace:base>
 ```
 
@@ -274,7 +275,7 @@ rowSums
 .rowSums
 #> function (x, m, n, na.rm = FALSE) 
 #> .Internal(rowSums(x, m, n, na.rm))
-#> <bytecode: 0x14232b7f0>
+#> <bytecode: 0x115bfd628>
 #> <environment: namespace:base>
 ```
 
@@ -285,18 +286,14 @@ But they have comparable performance:
 x <- cbind(x1 = 3, x2 = c(4:1e4, 2:1e5))
 
 bench::mark(
-  rowSums(x),
-  .rowSums(x, dim(x)[[1]], dim(x)[[2]])
+  "rowSums" = rowSums(x),
+  ".rowSums" = .rowSums(x, dim(x)[[1]], dim(x)[[2]])
 )[1:5]
 #> # A tibble: 2 × 5
-#>   expression                                 min   median
-#>   <bch:expr>                            <bch:tm> <bch:tm>
-#> 1 rowSums(x)                               117µs    313µs
-#> 2 .rowSums(x, dim(x)[[1]], dim(x)[[2]])    109µs    203µs
-#>   `itr/sec` mem_alloc
-#>       <dbl> <bch:byt>
-#> 1     2358.     859KB
-#> 2     4094.     859KB
+#>   expression      min   median `itr/sec` mem_alloc
+#>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
+#> 1 rowSums       116µs    207µs     4322.     859KB
+#> 2 .rowSums      117µs    203µs     4544.     859KB
 ```
 
 **Q2.** Make a faster version of `chisq.test()` that only computes the chi-square test statistic when the input is two numeric vectors with no missing values. You can try simplifying `chisq.test()` or by coding from the [mathematical definition](http://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test).
@@ -363,13 +360,13 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          748µs   1.07ms      744.    1.47MB
-#> 2 custom        571µs 808.44µs     1000.    1.13MB
+#> 1 base          849µs   1.18ms      777.    1.47MB
+#> 2 custom        655µs 911.39µs     1012.    1.13MB
 ```
 
 **Q3.** Can you make a faster version of `table()` for the case of an input of two integer vectors with no missing values? Can you use it to speed up your chi-square test?
 
-**A3.** In order to make a leaner version of `table()`, we can take a similar approach and trim the unnecessary fat in light of our new API of accepting just two vectors without missing values. We can remove the following components from the code:
+**A3.** In order to make a leaner version of `table()`, we can take a similar approach and trim the unnecessary input checks in light of our new API of accepting just two vectors without missing values. We can remove the following components from the code:
 
 - extracting data from objects entered in `...` argument
 - dealing with missing values
@@ -386,7 +383,10 @@ my_table <- function(x, y) {
   x_length <- length(x_sorted)
   y_length <- length(y_sorted)
 
-  bin <- fastmatch::fmatch(x, x_sorted) + x_length * fastmatch::fmatch(y, y_sorted) - x_length
+  bin <- 
+    fastmatch::fmatch(x, x_sorted) + 
+    x_length * fastmatch::fmatch(y, y_sorted) - 
+    x_length
 
   y <- tabulate(bin, x_length * y_length)
 
@@ -401,14 +401,15 @@ my_table <- function(x, y) {
 }
 ```
 
-The custom does perform slightly better:
+The custom function indeed performs slightly better:
 
 
 ```r
 x <- c(rep("a", 1000), rep("b", 9000))
 y <- c(rep(c("x", "y"), 5000))
 
-# check is set to FALSE because the custom function has an additional attribute: `'.match.hash'`
+# `check = FALSE` because the custom function has an additional attribute: 
+# ".match.hash"
 bench::mark(
   "base" = table(x, y),
   "custom" = my_table(x, y),
@@ -417,8 +418,8 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          551µs    814µs      976.     960KB
-#> 2 custom        279µs    407µs     1984.     488KB
+#> 1 base          590µs    827µs     1112.     960KB
+#> 2 custom        321µs    446µs     1968.     488KB
 ```
 
 We can also use this function in our custom chi-squared test function and see if the performance improves any further:
@@ -476,8 +477,8 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression      min   median `itr/sec` mem_alloc
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 base          745µs   1.23ms      606.    1.28MB
-#> 2 custom        308µs 444.03µs     1755.  594.27KB
+#> 1 base          840µs   1.24ms      740.    1.28MB
+#> 2 custom        356µs 505.94µs     1760.  594.45KB
 ```
 
 ## Exercises 24.5.1
@@ -509,8 +510,8 @@ But, for functions that don't have multiple vectorized parameters, it won't. For
 
 
 ```r
-trimws(c("  a ", " bc", "  abc  "), which = c("left", "right"))
-#> Error in match.arg(which): 'arg' must be of length 1
+pnorm(c(1, 2, 3), mean = c(0, -1, 5), log.p = c(FALSE, TRUE, TRUE))
+#> [1] 0.84134475 0.99865010 0.02275013
 ```
 
 The following function call generates 10 random numbers (since `n = 10`) with 10 different distributions with means supplied by the vector `10:1`.
@@ -528,7 +529,7 @@ rnorm(n = 10, mean = 10:1)
 
 
 ```r
-benchPerform <- function(nRow, nCol = 100) {
+benc_perform <- function(nRow, nCol = 100) {
   x <- matrix(data = rnorm(nRow * nCol), nrow = nRow, ncol = nCol)
 
   bench::mark(
@@ -541,20 +542,15 @@ nRowList <- list(10, 100, 500, 1000, 5000, 10000, 50000, 100000)
 
 names(nRowList) <- as.character(nRowList)
 
-benchDF <- purrr::map_dfr(
+benchDF <- map_dfr(
   .x = nRowList,
-  .f = ~ benchPerform(.x),
+  .f = ~ benc_perform(.x),
   .id = "nRows"
 ) %>%
-  dplyr::mutate(nRows = as.numeric(nRows))
-#> Warning: Some expressions had a GC in every iteration; so
-#> filtering is disabled.
-
-#> Warning: Some expressions had a GC in every iteration; so
-#> filtering is disabled.
+  mutate(nRows = as.numeric(nRows))
 ```
 
-Plotting this data reveals that `rowSums(x)` has *O*(1) behavior, while *O*(n) (?) behavior.
+Plotting this data reveals that `rowSums(x)` has *O*(1) behavior, while *O*(n) behavior.
 
 
 ```r
@@ -593,7 +589,7 @@ sum(x * w)[[1]]
 #> [1] 15.94691
 ```
 
-But benchmarking their performance reveals that the latter is almost twice as fast as the former!
+But benchmarking their performance reveals that the latter is significantly faster than the former!
 
 
 ```r
@@ -605,6 +601,6 @@ bench::mark(
 #> # A tibble: 2 × 5
 #>   expression                min   median `itr/sec` mem_alloc
 #>   <bch:expr>           <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 crossprod(x, w)[[1]]    328ns    451ns   984296.        0B
-#> 2 sum(x * w)[[1]]         123ns    246ns  1785985.        0B
+#> 1 crossprod(x, w)[[1]]    328ns    533ns   917822.        0B
+#> 2 sum(x * w)[[1]]         164ns    287ns  1587581.        0B
 ```
