@@ -213,23 +213,86 @@ with_html(p(address))
 
 **Q4.** Currently the HTML doesn't look terribly pretty, and it's hard to see the structure. How could you adapt `tag()` to do indenting and formatting? (You may need to do some research into block and inline tags.)
 
-**A4.** 
+**A4.** Let's first have a look at what it currently looks like:
 
 
 ```r
-html_tags$p(
-  "Some text. ",
-  html_tags$b(html_tags$i("some bold italic text")),
-  class = "mypara"
+with_html(
+  body(
+    h1("A heading", id = "first"),
+    p("Some text &", b("some bold text.")),
+    img(src = "myimg.png", width = 100, height = 100)
+  )
 )
-#> <HTML> <p class='mypara'>Some text. <b><i>some bold
-#> italic text</i></b></p>
+#> <HTML> <body><h1 id='first'>A heading</h1><p>Some
+#> text &amp;<b>some bold text.</b></p><img
+#> src='myimg.png' width='100' height='100' /></body>
 ```
 
+We can improve this to follow the [Google HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html#HTML_Formatting_Rules).
+
+For this, we need to create a new function to indent the code conditionally:
+
+
+```r
+print.advr_html <- function(x, ...) {
+  cat(paste("<HTML>", x, sep = "\n"))
+}
+
+indent <- function(x) {
+  paste0("  ", gsub("\n", "\n  ", x))
+}
+
+format_code <- function(children, indent = FALSE) {
+  if (indent) {
+    paste0("\n", paste0(indent(children), collapse = "\n"), "\n")
+  } else {
+    paste(children, collapse = "") 
+  }
+}
+```
+
+We can then update the `body()` function to use this new helper:
+
+
+```r
+html_tags$body <- function(...) {
+  dots <- dots_partition(...)
+  attribs <- html_attributes(dots$named)
+  children <- map_chr(dots$unnamed, escape)
+  
+  html(paste0(
+    "<body", attribs, ">",
+    format_code(children, indent = TRUE),  
+    "</body>"
+  ))
+}
+```
+
+The new formatting looks much better:
+
+
+```r
+with_html(
+  body(
+    h1("A heading", id = "first"),
+    p("Some text &", b("some bold text.")),
+    img(src = "myimg.png", width = 100, height = 100)
+  )
+)
+#> <HTML>
+#> <body>
+#>   <h1 id='first'>A heading</h1>
+#>   <p>Some text &amp;<b>some bold text.</b></p>
+#>   <img src='myimg.png' width='100' height='100' />
+#> </body>
+```
 
 ---
 
 ## LaTeX (Exercises 21.3.8)
+
+I didn't manage to solve these exercises, and so I'd recommend checking out the solutions in the [official solutions manual](https://advanced-r-solutions.rbind.io/translating-r-code.html#latex).
 
 ---
 

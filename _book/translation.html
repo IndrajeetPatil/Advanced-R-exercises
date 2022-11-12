@@ -47,34 +47,7 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">About</a></li>
-<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
-<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
-<li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
-<li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
-<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
-<li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
-<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
-<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
-<li><a class="" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
-<li><a class="" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
-<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
-<li><a class="" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
-<li><a class="" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
-<li><a class="" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
-<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
-<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
-<li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
-<li><a class="" href="quasiquotation.html"><span class="header-section-number">19</span> Quasiquotation</a></li>
-<li><a class="" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
-<li><a class="active" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
-<li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
-<li><a class="" href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></li>
-<li><a class="" href="improving-performance.html"><span class="header-section-number">24</span> Improving performance</a></li>
-<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></li>
-</ul>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 21</span> Translation</a></li></ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
@@ -86,7 +59,7 @@
 <span class="header-section-number">21</span> Translation<a class="anchor" aria-label="anchor" href="#translation"><i class="fas fa-link"></i></a>
 </h1>
 <p>Needed libraries:</p>
-<div class="sourceCode" id="cb619"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/">purrr</a></span><span class="op">)</span></span></code></pre></div>
 <div id="html-exercises-21.2.6" class="section level2" number="21.1">
@@ -95,12 +68,12 @@
 </h2>
 <hr>
 <p><strong>Q1.</strong> The escaping rules for <code>&lt;script&gt;</code> tags are different because they contain JavaScript, not HTML. Instead of escaping angle brackets or ampersands, you need to escape <code>&lt;/script&gt;</code> so that the tag isn’t closed too early. For example, <code>script("'&lt;/script&gt;'")</code>, shouldn’t generate this:</p>
-<div class="sourceCode" id="cb620"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb620-1"><a href="translation.html#cb620-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">'&lt;/script&gt;'</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="translation.html#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">'&lt;/script&gt;'</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
 <p>But</p>
-<div class="sourceCode" id="cb621"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb621-1"><a href="translation.html#cb621-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">'&lt;</span><span class="sc">\/</span><span class="st">script&gt;'</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="translation.html#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;script&gt;</span><span class="st">'&lt;</span><span class="sc">\/</span><span class="st">script&gt;'</span><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
 <p>Adapt the <code>escape()</code> to follow these rules when a new argument <code>script</code> is set to <code>TRUE</code>.</p>
 <p><strong>A1.</strong> Let’s first start with the boilerplate code included in the book:</p>
-<div class="sourceCode" id="cb622"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">escape</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/UseMethod.html">UseMethod</a></span><span class="op">(</span><span class="st">"escape"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">escape.character</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">script</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
@@ -117,7 +90,7 @@
 <span></span>
 <span><span class="va">escape.advr_html</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="va">x</span></span></code></pre></div>
 <p>We will also need to tweak the boilerplate to pass this additional parameter to <code>escape()</code>:</p>
-<div class="sourceCode" id="cb623"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">html</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span><span class="va">x</span>, class <span class="op">=</span> <span class="st">"advr_html"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">print.advr_html</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
@@ -177,12 +150,12 @@
 <span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">tag</span><span class="op">(</span><span class="st">"p"</span><span class="op">)</span></span>
 <span><span class="va">script</span> <span class="op">&lt;-</span> <span class="fu">tag</span><span class="op">(</span><span class="st">"script"</span>, script <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb624"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">script</span><span class="op">(</span><span class="st">"'&lt;/script&gt;'"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;HTML&gt; &lt;script&gt;'&lt;\/script&gt;'&lt;/script&gt;</span></span></code></pre></div>
 <hr>
 <p><strong>Q2.</strong> The use of <code>...</code> for all functions has some big downsides. There’s no input validation and there will be little information in the documentation or autocomplete about how they are used in the function. Create a new function that, when given a named list of tags and their attribute names (like below), creates tag functions with named arguments.</p>
-<div class="sourceCode" id="cb625"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"href"</span><span class="op">)</span>,</span>
 <span>  img <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"src"</span>, <span class="st">"width"</span>, <span class="st">"height"</span><span class="op">)</span></span>
@@ -190,14 +163,14 @@
 <p>All tags should get <code>class</code> and <code>id</code> attributes.</p>
 <hr>
 <p><strong>Q3.</strong> Reason about the following code that calls <code>with_html()</code> referencing objects from the environment. Will it work or fail? Why? Run the code to verify your predictions.</p>
-<div class="sourceCode" id="cb626"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">greeting</span> <span class="op">&lt;-</span> <span class="st">"Hello!"</span></span>
 <span><span class="fu">with_html</span><span class="op">(</span><span class="fu">p</span><span class="op">(</span><span class="va">greeting</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="st">"p"</span></span>
 <span><span class="va">address</span> <span class="op">&lt;-</span> <span class="st">"123 anywhere street"</span></span>
 <span><span class="fu">with_html</span><span class="op">(</span><span class="fu">p</span><span class="op">(</span><span class="va">address</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><strong>A3.</strong> To work with this, we first need to copy-paste relevant code from the book:</p>
-<div class="sourceCode" id="cb627"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">"a"</span>, <span class="st">"abbr"</span>, <span class="st">"address"</span>, <span class="st">"article"</span>, <span class="st">"aside"</span>, <span class="st">"audio"</span>,</span>
 <span>  <span class="st">"b"</span>, <span class="st">"bdi"</span>, <span class="st">"bdo"</span>, <span class="st">"blockquote"</span>, <span class="st">"body"</span>, <span class="st">"button"</span>, <span class="st">"canvas"</span>,</span>
@@ -232,12 +205,12 @@
 <span><span class="op">}</span></span></code></pre></div>
 <p>Note that <code>with_html()</code> uses <code><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy()</a></code>, and therefore <code>code</code> argument is evaluated first in the <code>html_tags</code> named list, which acts as a data mask, and if no object is found in the data mask, searches in the caller environment.</p>
 <p>For this reason, the first example code will work:</p>
-<div class="sourceCode" id="cb628"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">greeting</span> <span class="op">&lt;-</span> <span class="st">"Hello!"</span></span>
 <span><span class="fu">with_html</span><span class="op">(</span><span class="fu">p</span><span class="op">(</span><span class="va">greeting</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;HTML&gt; &lt;p&gt;Hello!&lt;/p&gt;</span></span></code></pre></div>
 <p>The following code, however, is not going to work because there is already <code>address</code> element in the data mask, and so <code>p()</code> will take a function <code>address()</code> as an input, and <code>escape()</code> doesn’t know how to deal with objects of <code>function</code> type:</p>
-<div class="sourceCode" id="cb629"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="st">"address"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">html_tags</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span>
 <span></span>
@@ -247,21 +220,71 @@
 <span><span class="co">#&gt; Error in UseMethod("escape"): no applicable method for 'escape' applied to an object of class "function"</span></span></code></pre></div>
 <hr>
 <p><strong>Q4.</strong> Currently the HTML doesn’t look terribly pretty, and it’s hard to see the structure. How could you adapt <code>tag()</code> to do indenting and formatting? (You may need to do some research into block and inline tags.)</p>
-<p><strong>A4.</strong></p>
-<div class="sourceCode" id="cb630"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">html_tags</span><span class="op">$</span><span class="fu">p</span><span class="op">(</span></span>
-<span>  <span class="st">"Some text. "</span>,</span>
-<span>  <span class="va">html_tags</span><span class="op">$</span><span class="fu">b</span><span class="op">(</span><span class="va">html_tags</span><span class="op">$</span><span class="fu">i</span><span class="op">(</span><span class="st">"some bold italic text"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  class <span class="op">=</span> <span class="st">"mypara"</span></span>
+<p><strong>A4.</strong> Let’s first have a look at what it currently looks like:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">with_html</span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/body.html">body</a></span><span class="op">(</span></span>
+<span>    <span class="fu">h1</span><span class="op">(</span><span class="st">"A heading"</span>, id <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span>,</span>
+<span>    <span class="fu">p</span><span class="op">(</span><span class="st">"Some text &amp;"</span>, <span class="fu">b</span><span class="op">(</span><span class="st">"some bold text."</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="fu">img</span><span class="op">(</span>src <span class="op">=</span> <span class="st">"myimg.png"</span>, width <span class="op">=</span> <span class="fl">100</span>, height <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;HTML&gt; &lt;p class='mypara'&gt;Some text. &lt;b&gt;&lt;i&gt;some bold</span></span>
-<span><span class="co">#&gt; italic text&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;HTML&gt; &lt;body&gt;&lt;h1 id='first'&gt;A heading&lt;/h1&gt;&lt;p&gt;Some</span></span>
+<span><span class="co">#&gt; text &amp;amp;&lt;b&gt;some bold text.&lt;/b&gt;&lt;/p&gt;&lt;img</span></span>
+<span><span class="co">#&gt; src='myimg.png' width='100' height='100' /&gt;&lt;/body&gt;</span></span></code></pre></div>
+<p>We can improve this to follow the <a href="https://google.github.io/styleguide/htmlcssguide.html#HTML_Formatting_Rules">Google HTML/CSS Style Guide</a>.</p>
+<p>For this, we need to create a new function to indent the code conditionally:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">print.advr_html</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"&lt;HTML&gt;"</span>, <span class="va">x</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">indent</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"  "</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"\n"</span>, <span class="st">"\n  "</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">format_code</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">children</span>, <span class="va">indent</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">indent</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"\n"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu">indent</span><span class="op">(</span><span class="va">children</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">children</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span> </span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>We can then update the <code><a href="https://rdrr.io/r/base/body.html">body()</a></code> function to use this new helper:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">html_tags</span><span class="op">$</span><span class="va">body</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu">dots_partition</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span>  <span class="va">attribs</span> <span class="op">&lt;-</span> <span class="fu">html_attributes</span><span class="op">(</span><span class="va">dots</span><span class="op">$</span><span class="va">named</span><span class="op">)</span></span>
+<span>  <span class="va">children</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span><span class="op">(</span><span class="va">dots</span><span class="op">$</span><span class="va">unnamed</span>, <span class="va">escape</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="fu">html</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span></span>
+<span>    <span class="st">"&lt;body"</span>, <span class="va">attribs</span>, <span class="st">"&gt;"</span>,</span>
+<span>    <span class="fu">format_code</span><span class="op">(</span><span class="va">children</span>, indent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,  </span>
+<span>    <span class="st">"&lt;/body&gt;"</span></span>
+<span>  <span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>The new formatting looks much better:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">with_html</span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/body.html">body</a></span><span class="op">(</span></span>
+<span>    <span class="fu">h1</span><span class="op">(</span><span class="st">"A heading"</span>, id <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span>,</span>
+<span>    <span class="fu">p</span><span class="op">(</span><span class="st">"Some text &amp;"</span>, <span class="fu">b</span><span class="op">(</span><span class="st">"some bold text."</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="fu">img</span><span class="op">(</span>src <span class="op">=</span> <span class="st">"myimg.png"</span>, width <span class="op">=</span> <span class="fl">100</span>, height <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;HTML&gt;</span></span>
+<span><span class="co">#&gt; &lt;body&gt;</span></span>
+<span><span class="co">#&gt;   &lt;h1 id='first'&gt;A heading&lt;/h1&gt;</span></span>
+<span><span class="co">#&gt;   &lt;p&gt;Some text &amp;amp;&lt;b&gt;some bold text.&lt;/b&gt;&lt;/p&gt;</span></span>
+<span><span class="co">#&gt;   &lt;img src='myimg.png' width='100' height='100' /&gt;</span></span>
+<span><span class="co">#&gt; &lt;/body&gt;</span></span></code></pre></div>
 <hr>
 </div>
 <div id="latex-exercises-21.3.8" class="section level2" number="21.2">
 <h2>
 <span class="header-section-number">21.2</span> LaTeX (Exercises 21.3.8)<a class="anchor" aria-label="anchor" href="#latex-exercises-21.3.8"><i class="fas fa-link"></i></a>
 </h2>
+<p>I didn’t manage to solve these exercises, and so I’d recommend checking out the solutions in the <a href="https://advanced-r-solutions.rbind.io/translating-r-code.html#latex">official solutions manual</a>.</p>
 <hr>
 <p><strong>Q1.</strong> Add escaping. The special symbols that should be escaped by adding a backslash in front of them are <code>\</code>, <code>$</code>, and <code>%</code>. Just as with HTML, you’ll need to make sure you don’t end up double-escaping. So you’ll need to create a small S3 class and then use that in function operators. That will also allow you to embed arbitrary LaTeX if needed.</p>
 <hr>
@@ -272,7 +295,7 @@
 <h2>
 <span class="header-section-number">21.3</span> Session information<a class="anchor" aria-label="anchor" href="#session-information-16"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb631"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ─ Session info ───────────────────────────────────────────</span></span>
 <span><span class="co">#&gt;  setting  value</span></span>
@@ -336,21 +359,15 @@
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></div>
-<div class="next"><a href="debugging.html"><span class="header-section-number">22</span> Debugging</a></div>
+<div class="empty"></div>
+<div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#translation"><span class="header-section-number">21</span> Translation</a></li>
-<li><a class="nav-link" href="#html-exercises-21.2.6"><span class="header-section-number">21.1</span> HTML (Exercises 21.2.6)</a></li>
-<li><a class="nav-link" href="#latex-exercises-21.3.8"><span class="header-section-number">21.2</span> LaTeX (Exercises 21.3.8)</a></li>
-<li><a class="nav-link" href="#session-information-16"><span class="header-section-number">21.3</span> Session information</a></li>
-</ul>
+      <div id="book-on-this-page"></div>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Translation.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Translation.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+          
         </ul>
 </div>
     </nav>
@@ -370,34 +387,6 @@
   </div>
 
 </div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-for (let popover of popovers) {
-  const div = document.createElement('div');
-  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-  div.innerHTML = popover.getAttribute('data-content');
-
-  var has_math = div.querySelector("span.math");
-  if (has_math) {
-    document.body.appendChild(div);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    MathJax.Hub.Queue(function() {
-      popover.setAttribute('data-content', div.innerHTML);
-      document.body.removeChild(div);
-    })
-  }
-}
-</script>
+</footer>
 </body>
 </html>
