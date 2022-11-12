@@ -285,9 +285,9 @@ my_table <- function(x, y) {
   x_length <- length(x_sorted)
   y_length <- length(y_sorted)
 
-  bin <- 
-    fastmatch::fmatch(x, x_sorted) + 
-    x_length * fastmatch::fmatch(y, y_sorted) - 
+  bin <-
+    fastmatch::fmatch(x, x_sorted) +
+    x_length * fastmatch::fmatch(y, y_sorted) -
     x_length
 
   y <- tabulate(bin, x_length * y_length)
@@ -309,7 +309,7 @@ The custom function indeed performs slightly better:
 x <- c(rep("a", 1000), rep("b", 9000))
 y <- c(rep(c("x", "y"), 5000))
 
-# `check = FALSE` because the custom function has an additional attribute: 
+# `check = FALSE` because the custom function has an additional attribute:
 # ".match.hash"
 bench::mark(
   "base" = table(x, y),

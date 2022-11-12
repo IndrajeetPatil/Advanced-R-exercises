@@ -372,7 +372,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x12d48c830>
+#> <bytecode: 0x11a599c30>
 #> <environment: namespace:base>
 ```
 

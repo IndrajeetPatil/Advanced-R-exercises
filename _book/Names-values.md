@@ -29,7 +29,7 @@ d <- 1:10
 ```r
 obj_addrs <- obj_addrs(list(a, b, c))
 unique(obj_addrs)
-#> [1] "0x131401e10"
+#> [1] "0x125b012f0"
 ```
 
 Except `d`, which is a different object, even if it has the same value as `a`, `b`, and `c`:
@@ -37,7 +37,7 @@ Except `d`, which is a different object, even if it has the same value as `a`, `
 
 ```r
 obj_addr(d)
-#> [1] "0x152250378"
+#> [1] "0x124034148"
 ```
 
 ---
@@ -66,7 +66,7 @@ obj_addrs <- obj_addrs(list(
 ))
 
 unique(obj_addrs)
-#> [1] "0x152ec4cd8"
+#> [1] "0x10411fcd8"
 ```
 
 ---
@@ -124,7 +124,7 @@ And as the docs mention (emphasis mine):
 x <- 1:10
 
 tracemem(x)
-#> [1] "<0x1123cd460>"
+#> [1] "<0x1052c22e8>"
 
 x <- x + 1
 
@@ -136,10 +136,10 @@ But since the object created in memory by `1:10` is not assigned a name, it can'
 
 ```r
 obj_addr(1:10)
-#> [1] "0x10687c070"
+#> [1] "0x1146444f8"
 
 tracemem(1:10)
-#> [1] "<0x1068d97b0>"
+#> [1] "<0x11468dc38>"
 ```
 
 ---
@@ -163,11 +163,11 @@ x <- c(1L, 2L, 3L)
 typeof(x)
 #> [1] "integer"
 tracemem(x)
-#> [1] "<0x10706a648>"
+#> [1] "<0x1345c9448>"
 
 x[[3]] <- 4
-#> tracemem[0x10706a648 -> 0x10718cc48]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
-#> tracemem[0x10718cc48 -> 0x1071a0e88]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x1345c9448 -> 0x114755648]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
+#> tracemem[0x114755648 -> 0x114769888]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 untracemem(x)
 
 typeof(x)
@@ -182,10 +182,10 @@ x <- c(1L, 2L, 3L)
 typeof(x)
 #> [1] "integer"
 tracemem(x)
-#> [1] "<0x1074dc348>"
+#> [1] "<0x104ff8d48>"
 
 x[[3]] <- 4L
-#> tracemem[0x1074dc348 -> 0x1526217c8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x104ff8d48 -> 0x1078729c8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 untracemem(x)
 
 typeof(x)
@@ -216,20 +216,20 @@ b <- list(a, a)
 c <- list(b, a, 1:10)
 
 ref(a)
-#> [1:0x106a8fd98] <int>
+#> [1:0x1120bb820] <int>
 
 ref(b)
-#> █ [1:0x106ad1d88] <list> 
-#> ├─[2:0x106a8fd98] <int> 
-#> └─[2:0x106a8fd98]
+#> █ [1:0x1120f9d88] <list> 
+#> ├─[2:0x1120bb820] <int> 
+#> └─[2:0x1120bb820]
 
 ref(c)
-#> █ [1:0x106adaa78] <list> 
-#> ├─█ [2:0x106ad1d88] <list> 
-#> │ ├─[3:0x106a8fd98] <int> 
-#> │ └─[3:0x106a8fd98] 
-#> ├─[3:0x106a8fd98] 
-#> └─[4:0x106b340a8] <int>
+#> █ [1:0x112104a78] <list> 
+#> ├─█ [2:0x1120f9d88] <list> 
+#> │ ├─[3:0x1120bb820] <int> 
+#> │ └─[3:0x1120bb820] 
+#> ├─[3:0x1120bb820] 
+#> └─[4:0x107bb5b30] <int>
 ```
 
 Here is what we learn:
@@ -259,7 +259,7 @@ x
 #> [[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x131521b98"
+#> [1] "0x1145769c8"
 
 x[[2]] <- x
 x
@@ -270,13 +270,13 @@ x
 #> [[2]][[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x10687f148"
+#> [1] "0x114647b48"
 
 ref(x)
-#> █ [1:0x10687f148] <list> 
-#> ├─[2:0x131536fc8] <int> 
-#> └─█ [3:0x131521b98] <list> 
-#>   └─[2:0x131536fc8]
+#> █ [1:0x114647b48] <list> 
+#> ├─[2:0x114589f80] <int> 
+#> └─█ [3:0x1145769c8] <list> 
+#>   └─[2:0x114589f80]
 ```
 
 I don't have access to OmniGraffle software, so I am including here the figure from the [official solution manual](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify):
@@ -425,16 +425,16 @@ x[[1]] <- x
 x <- list()
 
 obj_addr(x)
-#> [1] "0x112aa75c8"
+#> [1] "0x104c25650"
 
 tracemem(x)
-#> [1] "<0x112aa75c8>"
+#> [1] "<0x104c25650>"
 
 x[[1]] <- x
-#> tracemem[0x112aa75c8 -> 0x112f75fe0]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x104c25650 -> 0x1145e4140]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 
 obj_addr(x[[1]])
-#> [1] "0x112aa75c8"
+#> [1] "0x104c25650"
 ```
 
 ---

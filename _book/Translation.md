@@ -247,7 +247,7 @@ format_code <- function(children, indent = FALSE) {
   if (indent) {
     paste0("\n", paste0(indent(children), collapse = "\n"), "\n")
   } else {
-    paste(children, collapse = "") 
+    paste(children, collapse = "")
   }
 }
 ```
@@ -260,10 +260,10 @@ html_tags$body <- function(...) {
   dots <- dots_partition(...)
   attribs <- html_attributes(dots$named)
   children <- map_chr(dots$unnamed, escape)
-  
+
   html(paste0(
     "<body", attribs, ">",
-    format_code(children, indent = TRUE),  
+    format_code(children, indent = TRUE),
     "</body>"
   ))
 }
