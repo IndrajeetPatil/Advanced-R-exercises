@@ -68,7 +68,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x11b929198>
+#> <bytecode: 0x14ed91b98>
 #> <environment: namespace:base>
 ```
 
@@ -144,8 +144,8 @@ full_join(t_bench_df, t_systime_df, by = "expression")
 #> # A tibble: 2 × 4
 #>   expression bench_mean systime_with_gc systime_with_nogc
 #>   <bch:expr>   <bch:tm>           <dbl>             <dbl>
-#> 1 sqrt(x)       749.5ns           0.703             0.726
-#> 2 x^0.5          3.12µs           2.58              2.86
+#> 1 sqrt(x)      767.29ns           0.632             0.665
+#> 2 x^0.5          2.45µs           2.27              2.33
 ```
 
 The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.
@@ -180,10 +180,10 @@ bench::mark(
 #> # A tibble: 4 × 2
 #>   expression      median
 #>   <bch:expr>    <bch:tm>
-#> 1 sqrt(x)         2.87µs
-#> 2 exp(log(x)/2)  13.16µs
-#> 3 x^0.5          15.62µs
-#> 4 x^(1/2)         16.4µs
+#> 1 sqrt(x)         2.79µs
+#> 2 exp(log(x)/2)   9.51µs
+#> 3 x^(1/2)         17.9µs
+#> 4 x^0.5          18.53µs
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.
