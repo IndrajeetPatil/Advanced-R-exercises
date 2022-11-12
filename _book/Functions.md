@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x123c77a30>
+#> <bytecode: 0x13d0cbc30>
 #> <environment: namespace:base>
 ```
 
@@ -346,7 +346,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x123c77a30>
+#> <bytecode: 0x13d0cbc30>
 #> <environment: namespace:base>
 
 # other package function
@@ -356,7 +356,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x125cabba0>
+#> <bytecode: 0x11fc907a0>
 #> <environment: namespace:purrr>
 ```
 
@@ -559,7 +559,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x156505e08" "0x156505e08"
+#> [1] "0x11d482e08" "0x11d482e08"
 #> [1] 100
 ```
 
@@ -654,7 +654,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-11-12 08:37:54 CET"
+#> [1] "2022-11-12 11:09:34 CET"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -874,7 +874,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x120d7ed98>
+#> <bytecode: 0x11f8af5a0>
 #> <environment: namespace:withr>
 ```
 
@@ -958,7 +958,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x12160cfc8>
+#> <bytecode: 0x12804c8e0>
 #> <environment: namespace:utils>
 ```
 
