@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x1123e3898>
+#> <bytecode: 0x123c77a30>
 #> <environment: namespace:base>
 ```
 
@@ -346,7 +346,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x1123e3898>
+#> <bytecode: 0x123c77a30>
 #> <environment: namespace:base>
 
 # other package function
@@ -356,7 +356,7 @@ purrr::map
 #>     .f <- as_mapper(.f, ...)
 #>     .Call(map_impl, environment(), ".x", ".f", "list")
 #> }
-#> <bytecode: 0x1228f52a8>
+#> <bytecode: 0x125cabba0>
 #> <environment: namespace:purrr>
 ```
 
@@ -559,7 +559,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x12045aaf0" "0x12045aaf0"
+#> [1] "0x156505e08" "0x156505e08"
 #> [1] 100
 ```
 
@@ -654,7 +654,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2022-10-18 10:42:27 CEST"
+#> [1] "2022-11-12 08:37:54 CET"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -874,7 +874,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x116f1b0d0>
+#> <bytecode: 0x120d7ed98>
 #> <environment: namespace:withr>
 ```
 
@@ -958,7 +958,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x117a27300>
+#> <bytecode: 0x12160cfc8>
 #> <environment: namespace:utils>
 ```
 
@@ -1290,52 +1290,52 @@ identical(setdiff(x, y), x %/% y)
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
-#>  version  R version 4.2.1 (2022-06-23)
-#>  os       macOS Monterey 12.6
+#>  version  R version 4.2.2 (2022-10-31)
+#>  os       macOS Ventura 13.0
 #>  system   aarch64, darwin20
 #>  ui       X11
 #>  language (EN)
 #>  collate  en_US.UTF-8
 #>  ctype    en_US.UTF-8
 #>  tz       Europe/Berlin
-#>  date     2022-10-18
-#>  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)
+#>  date     2022-11-12
+#>  pandoc   2.19.2 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  ! package       * version    date (UTC) lib source
 #>    assertthat      0.2.1      2019-03-21 [1] CRAN (R 4.2.0)
 #>    backports       1.4.1      2021-12-13 [1] CRAN (R 4.2.0)
-#>    base          * 4.2.1      2022-06-24 [?] local
-#>    bookdown        0.29       2022-09-12 [1] CRAN (R 4.2.1)
+#>    base          * 4.2.2      2022-10-31 [?] local
+#>    bookdown        0.30       2022-11-09 [1] CRAN (R 4.2.2)
 #>    broom           1.0.1      2022-08-29 [1] CRAN (R 4.2.0)
-#>    bslib           0.4.0.9000 2022-08-20 [1] Github (rstudio/bslib@fa2e03c)
+#>    bslib           0.4.1      2022-11-02 [1] CRAN (R 4.2.2)
 #>    cachem          1.0.6      2021-08-19 [1] CRAN (R 4.2.0)
 #>    cellranger      1.1.0      2016-07-27 [1] CRAN (R 4.2.0)
 #>    cli             3.4.1      2022-09-23 [1] CRAN (R 4.2.0)
 #>    colorspace      2.0-3      2022-02-21 [1] CRAN (R 4.2.0)
-#>  P compiler        4.2.1      2022-06-24 [1] local
+#>  P compiler        4.2.2      2022-10-31 [1] local
 #>    crayon          1.5.2      2022-09-29 [1] CRAN (R 4.2.1)
-#>  P datasets      * 4.2.1      2022-06-24 [1] local
+#>  P datasets      * 4.2.2      2022-10-31 [1] local
 #>    DBI             1.1.3.9002 2022-10-17 [1] Github (r-dbi/DBI@2aec388)
 #>    dbplyr          2.2.1      2022-06-27 [1] CRAN (R 4.2.0)
-#>    digest          0.6.29     2021-12-01 [1] CRAN (R 4.2.0)
+#>    digest          0.6.30     2022-10-18 [1] CRAN (R 4.2.1)
 #>    downlit         0.4.2      2022-07-05 [1] CRAN (R 4.2.1)
 #>    dplyr         * 1.0.10     2022-09-01 [1] CRAN (R 4.2.1)
 #>    ellipsis        0.3.2      2021-04-29 [1] CRAN (R 4.2.0)
-#>    evaluate        0.17       2022-10-07 [1] CRAN (R 4.2.1)
+#>    evaluate        0.18       2022-11-07 [1] CRAN (R 4.2.2)
 #>    fansi           1.0.3      2022-03-24 [1] CRAN (R 4.2.0)
 #>    fastmap         1.1.0      2021-01-25 [1] CRAN (R 4.2.0)
 #>    forcats       * 0.5.2      2022-08-19 [1] CRAN (R 4.2.1)
 #>    fs              1.5.2      2021-12-08 [1] CRAN (R 4.2.0)
 #>    gargle          1.2.1      2022-09-08 [1] CRAN (R 4.2.1)
 #>    generics        0.1.3      2022-07-05 [1] CRAN (R 4.2.1)
-#>    ggplot2       * 3.3.6      2022-05-03 [1] CRAN (R 4.2.0)
+#>    ggplot2       * 3.4.0      2022-11-04 [1] CRAN (R 4.2.2)
 #>    glue            1.6.2      2022-02-24 [1] CRAN (R 4.2.0)
 #>    googledrive     2.0.0      2021-07-08 [1] CRAN (R 4.2.0)
 #>    googlesheets4   1.0.1      2022-08-13 [1] CRAN (R 4.2.0)
-#>  P graphics      * 4.2.1      2022-06-24 [1] local
-#>  P grDevices     * 4.2.1      2022-06-24 [1] local
-#>  P grid            4.2.1      2022-06-24 [1] local
+#>  P graphics      * 4.2.2      2022-10-31 [1] local
+#>  P grDevices     * 4.2.2      2022-10-31 [1] local
+#>  P grid            4.2.2      2022-10-31 [1] local
 #>    gtable          0.3.1      2022-09-01 [1] CRAN (R 4.2.1)
 #>    haven           2.5.1      2022-08-22 [1] CRAN (R 4.2.0)
 #>    highr           0.9        2021-04-16 [1] CRAN (R 4.2.0)
@@ -1343,46 +1343,47 @@ sessioninfo::session_info(include_base = TRUE)
 #>    htmltools       0.5.3      2022-07-18 [1] CRAN (R 4.2.1)
 #>    httr            1.4.4      2022-08-17 [1] CRAN (R 4.2.0)
 #>    jquerylib       0.1.4      2021-04-26 [1] CRAN (R 4.2.0)
-#>    jsonlite        1.8.2      2022-10-02 [1] CRAN (R 4.2.1)
+#>    jsonlite        1.8.3      2022-10-21 [1] CRAN (R 4.2.1)
 #>    knitr           1.40       2022-08-24 [1] CRAN (R 4.2.1)
 #>    lifecycle       1.0.3      2022-10-07 [1] CRAN (R 4.2.1)
 #>    lobstr          1.1.2      2022-06-22 [1] CRAN (R 4.2.0)
-#>    lubridate       1.8.0      2021-10-07 [1] CRAN (R 4.2.0)
+#>    lubridate       1.9.0      2022-11-06 [1] CRAN (R 4.2.2)
 #>    magrittr      * 2.0.3      2022-03-30 [1] CRAN (R 4.2.0)
 #>    memoise         2.0.1      2021-11-26 [1] CRAN (R 4.2.0)
-#>  P methods       * 4.2.1      2022-06-24 [1] local
-#>    modelr          0.1.9      2022-08-19 [1] CRAN (R 4.2.0)
+#>  P methods       * 4.2.2      2022-10-31 [1] local
+#>    modelr          0.1.10     2022-11-11 [1] CRAN (R 4.2.2)
 #>    munsell         0.5.0      2018-06-12 [1] CRAN (R 4.2.0)
 #>    pillar          1.8.1      2022-08-19 [1] CRAN (R 4.2.1)
 #>    pkgconfig       2.0.3      2019-09-22 [1] CRAN (R 4.2.0)
 #>    purrr         * 0.3.5      2022-10-06 [1] CRAN (R 4.2.1)
-#>    R6              2.5.1.9000 2022-08-06 [1] Github (r-lib/R6@87d5e45)
+#>    R6              2.5.1.9000 2022-10-27 [1] local
 #>    readr         * 2.1.3      2022-10-01 [1] CRAN (R 4.2.1)
 #>    readxl          1.4.1      2022-08-17 [1] CRAN (R 4.2.0)
 #>    reprex          2.0.2      2022-08-17 [1] CRAN (R 4.2.1)
 #>    rlang           1.0.6      2022-09-24 [1] CRAN (R 4.2.1)
-#>    rmarkdown       2.17       2022-10-07 [1] CRAN (R 4.2.1)
+#>    rmarkdown       2.18       2022-11-09 [1] CRAN (R 4.2.2)
 #>    rstudioapi      0.14       2022-08-22 [1] CRAN (R 4.2.1)
 #>    rvest           1.0.3      2022-08-19 [1] CRAN (R 4.2.1)
 #>    sass            0.4.2      2022-07-16 [1] CRAN (R 4.2.1)
 #>    scales          1.2.1      2022-08-20 [1] CRAN (R 4.2.1)
 #>    sessioninfo     1.2.2      2021-12-06 [1] CRAN (R 4.2.0)
-#>  P stats         * 4.2.1      2022-06-24 [1] local
+#>  P stats         * 4.2.2      2022-10-31 [1] local
 #>    stringi         1.7.8      2022-07-11 [1] CRAN (R 4.2.1)
 #>    stringr       * 1.4.1      2022-08-20 [1] CRAN (R 4.2.1)
 #>    tibble        * 3.1.8.9002 2022-10-16 [1] local
 #>    tidyr         * 1.2.1      2022-09-08 [1] CRAN (R 4.2.1)
 #>    tidyselect      1.2.0      2022-10-10 [1] CRAN (R 4.2.1)
-#>    tidyverse     * 1.3.2      2022-07-18 [1] CRAN (R 4.2.1)
-#>  P tools           4.2.1      2022-06-24 [1] local
+#>    tidyverse     * 1.3.2      2022-07-18 [1] CRAN (R 4.2.0)
+#>    timechange      0.1.1      2022-11-04 [1] CRAN (R 4.2.2)
+#>  P tools           4.2.2      2022-10-31 [1] local
 #>    tzdb            0.3.0      2022-03-28 [1] CRAN (R 4.2.0)
 #>    utf8            1.2.2      2021-07-24 [1] CRAN (R 4.2.0)
-#>  P utils         * 4.2.1      2022-06-24 [1] local
-#>    vctrs           0.4.2.9000 2022-10-17 [1] Github (r-lib/vctrs@e04fef0)
+#>  P utils         * 4.2.2      2022-10-31 [1] local
+#>    vctrs           0.5.0      2022-10-22 [1] CRAN (R 4.2.1)
 #>    withr           2.5.0      2022-03-03 [1] CRAN (R 4.2.0)
-#>    xfun            0.33       2022-09-12 [1] CRAN (R 4.2.1)
+#>    xfun            0.34       2022-10-18 [1] CRAN (R 4.2.1)
 #>    xml2            1.3.3.9000 2022-10-10 [1] local
-#>    yaml            2.3.5      2022-02-21 [1] CRAN (R 4.2.0)
+#>    yaml            2.3.6      2022-10-18 [1] CRAN (R 4.2.1)
 #> 
 #>  [1] /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library
 #> 

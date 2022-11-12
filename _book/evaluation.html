@@ -7,7 +7,7 @@
 <title>Chapter 20 Evaluation | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
 <meta name="description" content="Attaching the needed libraries: library(rlang)  20.1 Evaluation basics (Exercises 20.2.4) Q1. Carefully read the documentation for source(). What environment does it use by default? What if you...">
-<meta name="generator" content="bookdown 0.29 with bs4_book()">
+<meta name="generator" content="bookdown 0.30 with bs4_book()">
 <meta property="og:title" content="Chapter 20 Evaluation | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/cover.png">
@@ -21,7 +21,7 @@
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Roboto-0.4.2/font.css" rel="stylesheet">
 <link href="libs/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="libs/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.4.0.9000/transition.js"></script><script src="libs/bs3compat-0.4.0.9000/tabs.js"></script><script src="libs/bs3compat-0.4.0.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -121,7 +121,7 @@
 <span>    <span class="fu">foo</span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x12173ee60&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x106d91330&gt;</span></span>
 <span><span class="co">#&gt; Parent: &lt;environment: global&gt;</span></span></code></pre></div>
 <p>To specify a custom environment, the <code><a href="https://rdrr.io/r/base/sys.source.html">sys.source()</a></code> function can be used, which provides an <code>envir</code> parameter.</p>
 <hr>
@@ -274,17 +274,17 @@
 <span><span class="va">q1</span></span>
 <span><span class="co">#&gt; &lt;quosure&gt;</span></span>
 <span><span class="co">#&gt; expr: ^x</span></span>
-<span><span class="co">#&gt; env:  0x121418e60</span></span>
+<span><span class="co">#&gt; env:  0x10c06a978</span></span>
 <span><span class="va">q2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="op">!</span><span class="op">!</span><span class="va">q1</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">q2</span></span>
 <span><span class="co">#&gt; &lt;quosure&gt;</span></span>
 <span><span class="co">#&gt; expr: ^x + (^x)</span></span>
-<span><span class="co">#&gt; env:  0x121aa9ac0</span></span>
+<span><span class="co">#&gt; env:  0x109d18da0</span></span>
 <span><span class="va">q3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="op">!</span><span class="op">!</span><span class="va">q2</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">q3</span></span>
 <span><span class="co">#&gt; &lt;quosure&gt;</span></span>
 <span><span class="co">#&gt; expr: ^x + (^x + (^x))</span></span>
-<span><span class="co">#&gt; env:  0x121d75698</span></span></code></pre></div>
+<span><span class="co">#&gt; env:  0x10c2e5778</span></span></code></pre></div>
 <p><strong>A1.</strong> Correctly predicted 😉</p>
 <div class="sourceCode" id="cb598"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">q1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
@@ -312,7 +312,7 @@
 <span></span>
 <span><span class="va">foo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">enenv</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="fu">foo</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x122bcfd20&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x10550bc68&gt;</span></span></code></pre></div>
 <hr>
 </div>
 <div id="data-masks-exercises-20.4.6" class="section level2" number="20.3">
@@ -595,62 +595,62 @@
 <code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ─ Session info ───────────────────────────────────────────</span></span>
 <span><span class="co">#&gt;  setting  value</span></span>
-<span><span class="co">#&gt;  version  R version 4.2.1 (2022-06-23)</span></span>
-<span><span class="co">#&gt;  os       macOS Monterey 12.6</span></span>
+<span><span class="co">#&gt;  version  R version 4.2.2 (2022-10-31)</span></span>
+<span><span class="co">#&gt;  os       macOS Ventura 13.0</span></span>
 <span><span class="co">#&gt;  system   aarch64, darwin20</span></span>
 <span><span class="co">#&gt;  ui       X11</span></span>
 <span><span class="co">#&gt;  language (EN)</span></span>
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       Europe/Berlin</span></span>
-<span><span class="co">#&gt;  date     2022-10-18</span></span>
-<span><span class="co">#&gt;  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)</span></span>
+<span><span class="co">#&gt;  date     2022-11-12</span></span>
+<span><span class="co">#&gt;  pandoc   2.19.2 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt;  ! package     * version    date (UTC) lib source</span></span>
-<span><span class="co">#&gt;    base        * 4.2.1      2022-06-24 [?] local</span></span>
-<span><span class="co">#&gt;    bookdown      0.29       2022-09-12 [1] CRAN (R 4.2.1)</span></span>
-<span><span class="co">#&gt;    bslib         0.4.0.9000 2022-08-20 [1] Github (rstudio/bslib@fa2e03c)</span></span>
+<span><span class="co">#&gt;    base        * 4.2.2      2022-10-31 [?] local</span></span>
+<span><span class="co">#&gt;    bookdown      0.30       2022-11-09 [1] CRAN (R 4.2.2)</span></span>
+<span><span class="co">#&gt;    bslib         0.4.1      2022-11-02 [1] CRAN (R 4.2.2)</span></span>
 <span><span class="co">#&gt;    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.2.0)</span></span>
 <span><span class="co">#&gt;    cli           3.4.1      2022-09-23 [1] CRAN (R 4.2.0)</span></span>
-<span><span class="co">#&gt;  P compiler      4.2.1      2022-06-24 [1] local</span></span>
-<span><span class="co">#&gt;  P datasets    * 4.2.1      2022-06-24 [1] local</span></span>
-<span><span class="co">#&gt;    digest        0.6.29     2021-12-01 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;  P compiler      4.2.2      2022-10-31 [1] local</span></span>
+<span><span class="co">#&gt;  P datasets    * 4.2.2      2022-10-31 [1] local</span></span>
+<span><span class="co">#&gt;    digest        0.6.30     2022-10-18 [1] CRAN (R 4.2.1)</span></span>
 <span><span class="co">#&gt;    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.2.1)</span></span>
-<span><span class="co">#&gt;    evaluate      0.17       2022-10-07 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    evaluate      0.18       2022-11-07 [1] CRAN (R 4.2.2)</span></span>
 <span><span class="co">#&gt;    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.2.0)</span></span>
 <span><span class="co">#&gt;    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.2.0)</span></span>
 <span><span class="co">#&gt;    fs            1.5.2      2021-12-08 [1] CRAN (R 4.2.0)</span></span>
 <span><span class="co">#&gt;    glue          1.6.2      2022-02-24 [1] CRAN (R 4.2.0)</span></span>
-<span><span class="co">#&gt;  P graphics    * 4.2.1      2022-06-24 [1] local</span></span>
-<span><span class="co">#&gt;  P grDevices   * 4.2.1      2022-06-24 [1] local</span></span>
+<span><span class="co">#&gt;  P graphics    * 4.2.2      2022-10-31 [1] local</span></span>
+<span><span class="co">#&gt;  P grDevices   * 4.2.2      2022-10-31 [1] local</span></span>
 <span><span class="co">#&gt;    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.2.1)</span></span>
 <span><span class="co">#&gt;    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.2.0)</span></span>
-<span><span class="co">#&gt;    jsonlite      1.8.2      2022-10-02 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    jsonlite      1.8.3      2022-10-21 [1] CRAN (R 4.2.1)</span></span>
 <span><span class="co">#&gt;    knitr         1.40       2022-08-24 [1] CRAN (R 4.2.1)</span></span>
 <span><span class="co">#&gt;    lifecycle     1.0.3      2022-10-07 [1] CRAN (R 4.2.1)</span></span>
 <span><span class="co">#&gt;    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.2.0)</span></span>
 <span><span class="co">#&gt;    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.2.0)</span></span>
-<span><span class="co">#&gt;  P methods     * 4.2.1      2022-06-24 [1] local</span></span>
+<span><span class="co">#&gt;  P methods     * 4.2.2      2022-10-31 [1] local</span></span>
 <span><span class="co">#&gt;    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.2.1)</span></span>
 <span><span class="co">#&gt;    purrr         0.3.5      2022-10-06 [1] CRAN (R 4.2.1)</span></span>
-<span><span class="co">#&gt;    R6            2.5.1.9000 2022-08-06 [1] Github (r-lib/R6@87d5e45)</span></span>
+<span><span class="co">#&gt;    R6            2.5.1.9000 2022-10-27 [1] local</span></span>
 <span><span class="co">#&gt;    rlang       * 1.0.6      2022-09-24 [1] CRAN (R 4.2.1)</span></span>
-<span><span class="co">#&gt;    rmarkdown     2.17       2022-10-07 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    rmarkdown     2.18       2022-11-09 [1] CRAN (R 4.2.2)</span></span>
 <span><span class="co">#&gt;    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.2.1)</span></span>
 <span><span class="co">#&gt;    sass          0.4.2      2022-07-16 [1] CRAN (R 4.2.1)</span></span>
 <span><span class="co">#&gt;    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.2.0)</span></span>
-<span><span class="co">#&gt;  P stats       * 4.2.1      2022-06-24 [1] local</span></span>
+<span><span class="co">#&gt;  P stats       * 4.2.2      2022-10-31 [1] local</span></span>
 <span><span class="co">#&gt;    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.2.1)</span></span>
 <span><span class="co">#&gt;    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.2.1)</span></span>
-<span><span class="co">#&gt;  P tools         4.2.1      2022-06-24 [1] local</span></span>
+<span><span class="co">#&gt;  P tools         4.2.2      2022-10-31 [1] local</span></span>
 <span><span class="co">#&gt;    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.2.0)</span></span>
-<span><span class="co">#&gt;  P utils       * 4.2.1      2022-06-24 [1] local</span></span>
-<span><span class="co">#&gt;    vctrs         0.4.2.9000 2022-10-17 [1] Github (r-lib/vctrs@e04fef0)</span></span>
+<span><span class="co">#&gt;  P utils       * 4.2.2      2022-10-31 [1] local</span></span>
+<span><span class="co">#&gt;    vctrs         0.5.0      2022-10-22 [1] CRAN (R 4.2.1)</span></span>
 <span><span class="co">#&gt;    withr         2.5.0      2022-03-03 [1] CRAN (R 4.2.0)</span></span>
-<span><span class="co">#&gt;    xfun          0.33       2022-09-12 [1] CRAN (R 4.2.1)</span></span>
+<span><span class="co">#&gt;    xfun          0.34       2022-10-18 [1] CRAN (R 4.2.1)</span></span>
 <span><span class="co">#&gt;    xml2          1.3.3.9000 2022-10-10 [1] local</span></span>
-<span><span class="co">#&gt;    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.2.0)</span></span>
+<span><span class="co">#&gt;    yaml          2.3.6      2022-10-18 [1] CRAN (R 4.2.1)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  [1] /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -690,7 +690,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-10-18.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2022-11-12.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

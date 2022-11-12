@@ -47,7 +47,7 @@ bench::mark(f(), check = FALSE, iterations = 1000)
 #> # A tibble: 1 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           104µs    165µs     5788.     801KB     82.2
+#> 1 f()           117µs    279µs     2538.     801KB     36.0
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -79,7 +79,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x134ffdc00>
+#> <bytecode: 0x1181c1198>
 #> <environment: namespace:base>
 ```
 
@@ -153,15 +153,15 @@ t_bench_df
 #> # A tibble: 2 × 2
 #>   expression     mean
 #>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)    417.31ns
-#> 2 x^0.5        1.27µs
+#> 1 sqrt(x)    775.88ns
+#> 2 x^0.5        2.69µs
 
 t_systime_df
 #> # A tibble: 2 × 3
 #>   expression systime_with_gc_us systime_with_nogc_us
 #>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                 0.401                0.402
-#> 2 x^0.5                   1.23                 1.37
+#> 1 sqrt(x)                 0.696                0.698
+#> 2 x^0.5                   2.48                 2.46
 ```
 
 The comparison reveals that these two approaches yield quite similar results.
@@ -195,10 +195,10 @@ bench::mark(
 #> # A tibble: 4 × 6
 #>   expression         min   median `itr/sec` mem_alloc
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)         1.07µs   1.39µs   558480.    7.86KB
-#> 2 exp(log(x)/2)   6.19µs   7.54µs   132197.    7.86KB
-#> 3 x^0.5           9.55µs   9.88µs    97194.    7.86KB
-#> 4 x^(1/2)         9.63µs     10µs    95751.    7.86KB
+#> 1 sqrt(x)         1.15µs   1.56µs   385546.    7.86KB
+#> 2 exp(log(x)/2)   7.42µs   9.47µs    41470.    7.86KB
+#> 3 x^(1/2)         10.5µs  16.59µs    36314.    7.86KB
+#> 4 x^0.5          10.46µs  39.52µs    29236.    7.86KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -218,72 +218,72 @@ The specialized primitive function `sqrt()` (written in `C`) is the fastest way 
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
-#>  version  R version 4.2.1 (2022-06-23)
-#>  os       macOS Monterey 12.6
+#>  version  R version 4.2.2 (2022-10-31)
+#>  os       macOS Ventura 13.0
 #>  system   aarch64, darwin20
 #>  ui       X11
 #>  language (EN)
 #>  collate  en_US.UTF-8
 #>  ctype    en_US.UTF-8
 #>  tz       Europe/Berlin
-#>  date     2022-10-18
-#>  pandoc   2.19.2 @ /usr/local/bin/ (via rmarkdown)
+#>  date     2022-11-12
+#>  pandoc   2.19.2 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  ! package     * version    date (UTC) lib source
 #>    assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.2.0)
-#>    base        * 4.2.1      2022-06-24 [?] local
+#>    base        * 4.2.2      2022-10-31 [?] local
 #>    bench         1.1.2      2021-11-30 [1] CRAN (R 4.2.0)
-#>    bookdown      0.29       2022-09-12 [1] CRAN (R 4.2.1)
-#>    bslib         0.4.0.9000 2022-08-20 [1] Github (rstudio/bslib@fa2e03c)
+#>    bookdown      0.30       2022-11-09 [1] CRAN (R 4.2.2)
+#>    bslib         0.4.1      2022-11-02 [1] CRAN (R 4.2.2)
 #>    cachem        1.0.6      2021-08-19 [1] CRAN (R 4.2.0)
 #>    cli           3.4.1      2022-09-23 [1] CRAN (R 4.2.0)
-#>  P compiler      4.2.1      2022-06-24 [1] local
-#>  P datasets    * 4.2.1      2022-06-24 [1] local
+#>  P compiler      4.2.2      2022-10-31 [1] local
+#>  P datasets    * 4.2.2      2022-10-31 [1] local
 #>    DBI           1.1.3.9002 2022-10-17 [1] Github (r-dbi/DBI@2aec388)
-#>    digest        0.6.29     2021-12-01 [1] CRAN (R 4.2.0)
+#>    digest        0.6.30     2022-10-18 [1] CRAN (R 4.2.1)
 #>    downlit       0.4.2      2022-07-05 [1] CRAN (R 4.2.1)
 #>    dplyr       * 1.0.10     2022-09-01 [1] CRAN (R 4.2.1)
-#>    evaluate      0.17       2022-10-07 [1] CRAN (R 4.2.1)
+#>    evaluate      0.18       2022-11-07 [1] CRAN (R 4.2.2)
 #>    fansi         1.0.3      2022-03-24 [1] CRAN (R 4.2.0)
 #>    fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.2.0)
 #>    fs            1.5.2      2021-12-08 [1] CRAN (R 4.2.0)
 #>    generics      0.1.3      2022-07-05 [1] CRAN (R 4.2.1)
 #>    glue          1.6.2      2022-02-24 [1] CRAN (R 4.2.0)
-#>  P graphics    * 4.2.1      2022-06-24 [1] local
-#>  P grDevices   * 4.2.1      2022-06-24 [1] local
+#>  P graphics    * 4.2.2      2022-10-31 [1] local
+#>  P grDevices   * 4.2.2      2022-10-31 [1] local
 #>    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.2.1)
 #>    htmlwidgets   1.5.4      2021-09-08 [1] CRAN (R 4.2.0)
 #>    jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.2.0)
-#>    jsonlite      1.8.2      2022-10-02 [1] CRAN (R 4.2.1)
+#>    jsonlite      1.8.3      2022-10-21 [1] CRAN (R 4.2.1)
 #>    knitr         1.40       2022-08-24 [1] CRAN (R 4.2.1)
 #>    lifecycle     1.0.3      2022-10-07 [1] CRAN (R 4.2.1)
 #>    magrittr    * 2.0.3      2022-03-30 [1] CRAN (R 4.2.0)
 #>    memoise       2.0.1      2021-11-26 [1] CRAN (R 4.2.0)
-#>  P methods     * 4.2.1      2022-06-24 [1] local
+#>  P methods     * 4.2.2      2022-10-31 [1] local
 #>    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.2.1)
 #>    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.2.0)
 #>    profmem       0.6.0      2020-12-13 [1] CRAN (R 4.2.0)
 #>    profvis     * 0.3.7      2020-11-02 [1] CRAN (R 4.2.0)
-#>    R6            2.5.1.9000 2022-08-06 [1] Github (r-lib/R6@87d5e45)
+#>    R6            2.5.1.9000 2022-10-27 [1] local
 #>    rlang         1.0.6      2022-09-24 [1] CRAN (R 4.2.1)
-#>    rmarkdown     2.17       2022-10-07 [1] CRAN (R 4.2.1)
+#>    rmarkdown     2.18       2022-11-09 [1] CRAN (R 4.2.2)
 #>    rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.2.1)
 #>    sass          0.4.2      2022-07-16 [1] CRAN (R 4.2.1)
 #>    sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.2.0)
-#>  P stats       * 4.2.1      2022-06-24 [1] local
+#>  P stats       * 4.2.2      2022-10-31 [1] local
 #>    stringi       1.7.8      2022-07-11 [1] CRAN (R 4.2.1)
 #>    stringr       1.4.1      2022-08-20 [1] CRAN (R 4.2.1)
 #>    tibble        3.1.8.9002 2022-10-16 [1] local
 #>    tidyselect    1.2.0      2022-10-10 [1] CRAN (R 4.2.1)
-#>  P tools         4.2.1      2022-06-24 [1] local
+#>  P tools         4.2.2      2022-10-31 [1] local
 #>    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.2.0)
-#>  P utils       * 4.2.1      2022-06-24 [1] local
-#>    vctrs         0.4.2.9000 2022-10-17 [1] Github (r-lib/vctrs@e04fef0)
+#>  P utils       * 4.2.2      2022-10-31 [1] local
+#>    vctrs         0.5.0      2022-10-22 [1] CRAN (R 4.2.1)
 #>    withr         2.5.0      2022-03-03 [1] CRAN (R 4.2.0)
-#>    xfun          0.33       2022-09-12 [1] CRAN (R 4.2.1)
+#>    xfun          0.34       2022-10-18 [1] CRAN (R 4.2.1)
 #>    xml2          1.3.3.9000 2022-10-10 [1] local
-#>    yaml          2.3.5      2022-02-21 [1] CRAN (R 4.2.0)
+#>    yaml          2.3.6      2022-10-18 [1] CRAN (R 4.2.1)
 #> 
 #>  [1] /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library
 #> 
