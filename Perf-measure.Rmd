@@ -24,7 +24,7 @@ f <- function(n = 1e5) {
 }
 ```
 
-**A1.** Let's first source the functions mentioned in exercises.
+**A1.** Let's source the functions mentioned in exercises.
 
 ```{r Perf-measure-4, warning=FALSE}
 source("profiling-exercises.R")
@@ -34,12 +34,6 @@ First, we try without `torture = TRUE`: it returns no meaningful results.
 
 ```{r Perf-measure-5, error=TRUE}
 profvis(f())
-```
-
-Maybe because the function runs too fast?
-
-```{r Perf-measure-6}
-bench::mark(f(), check = FALSE, iterations = 1000)
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -76,7 +70,7 @@ system.time(for (i in 1:n) x^0.5) / n
 
 How do the estimates from `system.time()` compare to those from `bench::mark()`? Why are they different?
 
-**A1.** Let's benchmark first:
+**A1.** Let's benchmark first using these two approaches:
 
 ```{r Perf-measure-10}
 n <- 1e6
@@ -87,15 +81,16 @@ x <- runif(100)
 bench_df <- bench::mark(
   sqrt(x),
   x^0.5,
-  iterations = n
+  iterations = n,
+  time_unit = "us"
 )
 
 t_bench_df <- bench_df %>%
-  dplyr::select(expression, time) %>%
-  dplyr::rowwise() %>%
-  dplyr::mutate(mean = mean(unlist(time))) %>%
-  dplyr::ungroup() %>%
-  dplyr::select(-time)
+  select(expression, time) %>%
+  rowwise() %>%
+  mutate(bench_mean = mean(unlist(time))) %>%
+  ungroup() %>%
+  select(-time)
 
 # system.time -------------------
 
@@ -109,24 +104,23 @@ t2_systime_nogc <- system.time(for (i in 1:n) x^0.5, gcFirst = FALSE) / n
 
 t_systime_df <- tibble(
   "expression" = bench_df$expression,
-  "systime_with_gc_us" = c(t1_systime_gc["elapsed"], t2_systime_gc["elapsed"]),
-  "systime_with_nogc_us" = c(t1_systime_nogc["elapsed"], t2_systime_nogc["elapsed"])
+  "systime_with_gc" = c(t1_systime_gc["elapsed"], t2_systime_gc["elapsed"]),
+  "systime_with_nogc" = c(t1_systime_nogc["elapsed"], t2_systime_nogc["elapsed"])
 ) %>%
-  dplyr::mutate(
-    systime_with_gc_us = systime_with_gc_us * 1e6,
-    systime_with_nogc_us = systime_with_nogc_us * 1e6
+  mutate(
+    systime_with_gc = systime_with_gc * 1e6, # in microseconds
+    systime_with_nogc = systime_with_nogc * 1e6 # in microseconds
   )
 ```
 
-Compare results from these alternatives:
+Now we can compare results from these alternatives:
 
 ```{r Perf-measure-11}
-t_bench_df
-
-t_systime_df
+# note that system time columns report time in microseconds
+full_join(t_bench_df, t_systime_df, by = "expression")
 ```
 
-The comparison reveals that these two approaches yield quite similar results.
+The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.
 
 ---
 
@@ -151,7 +145,8 @@ bench::mark(
   exp(log(x) / 2),
   iterations = 1000
 ) %>%
-  dplyr::arrange(median)
+  select(expression, median) %>%
+  arrange(median)
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.

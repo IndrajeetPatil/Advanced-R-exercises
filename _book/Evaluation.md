@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x106d91330>
+#> <environment: 0x106cc3b30>
 #> Parent: <environment: global>
 ```
 
@@ -234,7 +234,7 @@ eval(
 )
 ```
 
-Note here that the bindings for `x` and `y` are found in the inner environment, while bindings for functions `eval()`, `quote`, etc. are found in the outer environment. 
+Note here that the bindings for `x` and `y` are found in the inner environment, while bindings for functions `eval()`, `quote()`, etc. are found in the outer environment. 
 
 ---
 
@@ -250,17 +250,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x10c06a978
+#> env:  0x106994978
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x109d18da0
+#> env:  0x104f57fa0
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x10c2e5778
+#> env:  0x1054b1778
 ```
 
 **A1.** Correctly predicted 😉
@@ -298,7 +298,7 @@ enenv(x)
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x10550bc68>
+#> <environment: 0x107c86c68>
 ```
 
 ---

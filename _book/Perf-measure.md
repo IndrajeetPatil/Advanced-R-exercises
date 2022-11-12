@@ -24,7 +24,7 @@ f <- function(n = 1e5) {
 }
 ```
 
-**A1.** Let's first source the functions mentioned in exercises.
+**A1.** Let's source the functions mentioned in exercises.
 
 
 ```r
@@ -37,17 +37,6 @@ First, we try without `torture = TRUE`: it returns no meaningful results.
 ```r
 profvis(f())
 #> Error in parse_rprof(prof_output, expr_source): No parsing data available. Maybe your function was too fast?
-```
-
-Maybe because the function runs too fast?
-
-
-```r
-bench::mark(f(), check = FALSE, iterations = 1000)
-#> # A tibble: 1 × 6
-#>   expression      min   median `itr/sec` mem_alloc `gc/sec`
-#>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 f()           117µs    279µs     2538.     801KB     36.0
 ```
 
 As mentioned in the docs, setting `torture = TRUE`
@@ -79,7 +68,7 @@ rm
 #>     list <- .Primitive("c")(list, names)
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x1181c1198>
+#> <bytecode: 0x1563ca998>
 #> <environment: namespace:base>
 ```
 
@@ -102,7 +91,7 @@ system.time(for (i in 1:n) x^0.5) / n
 
 How do the estimates from `system.time()` compare to those from `bench::mark()`? Why are they different?
 
-**A1.** Let's benchmark first:
+**A1.** Let's benchmark first using these two approaches:
 
 
 ```r
@@ -114,15 +103,16 @@ x <- runif(100)
 bench_df <- bench::mark(
   sqrt(x),
   x^0.5,
-  iterations = n
+  iterations = n,
+  time_unit = "us"
 )
 
 t_bench_df <- bench_df %>%
-  dplyr::select(expression, time) %>%
-  dplyr::rowwise() %>%
-  dplyr::mutate(mean = mean(unlist(time))) %>%
-  dplyr::ungroup() %>%
-  dplyr::select(-time)
+  select(expression, time) %>%
+  rowwise() %>%
+  mutate(bench_mean = mean(unlist(time))) %>%
+  ungroup() %>%
+  select(-time)
 
 # system.time -------------------
 
@@ -136,35 +126,29 @@ t2_systime_nogc <- system.time(for (i in 1:n) x^0.5, gcFirst = FALSE) / n
 
 t_systime_df <- tibble(
   "expression" = bench_df$expression,
-  "systime_with_gc_us" = c(t1_systime_gc["elapsed"], t2_systime_gc["elapsed"]),
-  "systime_with_nogc_us" = c(t1_systime_nogc["elapsed"], t2_systime_nogc["elapsed"])
+  "systime_with_gc" = c(t1_systime_gc["elapsed"], t2_systime_gc["elapsed"]),
+  "systime_with_nogc" = c(t1_systime_nogc["elapsed"], t2_systime_nogc["elapsed"])
 ) %>%
-  dplyr::mutate(
-    systime_with_gc_us = systime_with_gc_us * 1e6,
-    systime_with_nogc_us = systime_with_nogc_us * 1e6
+  mutate(
+    systime_with_gc = systime_with_gc * 1e6, # in microseconds
+    systime_with_nogc = systime_with_nogc * 1e6 # in microseconds
   )
 ```
 
-Compare results from these alternatives:
+Now we can compare results from these alternatives:
 
 
 ```r
-t_bench_df
-#> # A tibble: 2 × 2
-#>   expression     mean
-#>   <bch:expr> <bch:tm>
-#> 1 sqrt(x)    775.88ns
-#> 2 x^0.5        2.69µs
-
-t_systime_df
-#> # A tibble: 2 × 3
-#>   expression systime_with_gc_us systime_with_nogc_us
-#>   <bch:expr>              <dbl>                <dbl>
-#> 1 sqrt(x)                 0.696                0.698
-#> 2 x^0.5                   2.48                 2.46
+# note that system time columns report time in microseconds
+full_join(t_bench_df, t_systime_df, by = "expression")
+#> # A tibble: 2 × 4
+#>   expression bench_mean systime_with_gc systime_with_nogc
+#>   <bch:expr>   <bch:tm>           <dbl>             <dbl>
+#> 1 sqrt(x)      727.12ns           0.651             0.681
+#> 2 x^0.5          2.35µs           2.34              2.23
 ```
 
-The comparison reveals that these two approaches yield quite similar results.
+The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.
 
 ---
 
@@ -191,20 +175,15 @@ bench::mark(
   exp(log(x) / 2),
   iterations = 1000
 ) %>%
-  dplyr::arrange(median)
-#> # A tibble: 4 × 6
-#>   expression         min   median `itr/sec` mem_alloc
-#>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 sqrt(x)         1.15µs   1.56µs   385546.    7.86KB
-#> 2 exp(log(x)/2)   7.42µs   9.47µs    41470.    7.86KB
-#> 3 x^(1/2)         10.5µs  16.59µs    36314.    7.86KB
-#> 4 x^0.5          10.46µs  39.52µs    29236.    7.86KB
-#>   `gc/sec`
-#>      <dbl>
-#> 1        0
-#> 2        0
-#> 3        0
-#> 4        0
+  select(expression, median) %>%
+  arrange(median)
+#> # A tibble: 4 × 2
+#>   expression      median
+#>   <bch:expr>    <bch:tm>
+#> 1 sqrt(x)         2.71µs
+#> 2 exp(log(x)/2)   9.43µs
+#> 3 x^0.5          14.72µs
+#> 4 x^(1/2)        19.21µs
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.
