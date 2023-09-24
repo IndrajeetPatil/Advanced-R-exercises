@@ -1,4 +1,3 @@
-
 emoji <- function(x) {
   x <- emo::ji(x)
 

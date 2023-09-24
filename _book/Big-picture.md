@@ -1,3 +1,0 @@
-# Big Picture
-
-No exercises.
