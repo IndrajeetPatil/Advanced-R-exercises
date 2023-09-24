@@ -1,3 +1,0 @@
-# Debugging
-
-No exercises.
