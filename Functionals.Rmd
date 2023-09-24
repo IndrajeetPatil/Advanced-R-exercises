@@ -580,12 +580,12 @@ X <- list(list(a = TRUE, b = list(c = c(4L, 3.2))), d = 9.0)
 rapply(X, as.character, classes = "numeric", how = "replace")
 ```
 
-`{purrr}` has something similar in `modify_depth()`.
+`{purrr}` has something similar in `modify_tree()`.
 
 ```{r Functionals-45}
 X <- list(list(a = TRUE, b = list(c = c(4L, 3.2))), d = 9.0)
 
-purrr::modify_depth(X, .depth = 2L, .f = length)
+purrr::modify_tree(X, leaf = length)
 ```
 
 ---
