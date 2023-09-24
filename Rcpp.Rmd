@@ -196,7 +196,7 @@ std::vector<double> cumprodC(const std::vector<double> &x)
 {
     std::vector<double> out{x};
 
-    for (size_t i = 1; i < x.size(); i++)
+    for (std::size_t i = 1; i < x.size(); i++)
     {
         out[i] = out[i - 1] * x[i];
     }
@@ -231,7 +231,7 @@ std::vector<double> cumminC(const std::vector<double> &x)
 {
     std::vector<double> out{x};
 
-    for (size_t i = 1; i < x.size(); i++)
+    for (std::size_t i = 1; i < x.size(); i++)
     {
         out[i] = (out[i] < out[i - 1]) ? out[i] : out[i - 1];
     }
@@ -265,7 +265,7 @@ std::vector<double> cummaxC(const std::vector<double> &x)
 {
     std::vector<double> out{x};
 
-    for (size_t i = 1; i < x.size(); i++)
+    for (std::size_t i = 1; i < x.size(); i++)
     {
         out[i] = (out[i] > out[i - 1]) ? out[i] : out[i - 1];
     }
@@ -304,12 +304,12 @@ std::vector<double> diffC(const std::vector<double> &x, int lag)
     std::vector<double> vec_lagged;
     std::vector<double> vec_diff;
 
-    for (size_t i = lag; i < x.size(); i++)
+    for (std::size_t i = lag; i < x.size(); i++)
     {
         vec_lagged.push_back(x[i]);
     }
 
-    for (size_t i = 0; i < (x.size() - lag); i++)
+    for (std::size_t i = 0; i < (x.size() - lag); i++)
     {
         vec_start.push_back(x[i]);
     }
