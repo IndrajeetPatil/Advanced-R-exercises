@@ -94,7 +94,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x55cb1b432378>
+#> <bytecode: 0x55791b2585c8>
 #> <environment: namespace:purrr>
 ```
 
@@ -120,7 +120,7 @@ safely
 #>     check_bool(quiet)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x55cb1b5c5448>
+#> <bytecode: 0x55791b3eb698>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -132,7 +132,7 @@ purrr:::capture_error
 #>         list(result = otherwise, error = e)
 #>     })
 #> }
-#> <bytecode: 0x55cb1b61ced0>
+#> <bytecode: 0x55791b443120>
 #> <environment: namespace:purrr>
 ```
 
@@ -281,10 +281,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2023-09-24 11:53:33.680791
-#> Function called at:  2023-09-24 11:53:38.688471
-#> Function called at:  2023-09-24 11:53:43.694023
-#> Function called at:  2023-09-24 11:53:51.707351
+#> Function created at: 2023-09-24 12:41:33.207565
+#> Function called at:  2023-09-24 12:41:38.215132
+#> Function called at:  2023-09-24 12:41:43.220666
+#> Function called at:  2023-09-24 12:41:51.227672
 ```
 
 ---
