@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 19 Quasiquotation | Advanced R Exercises</title>
+<meta name="author" content="Indrajeet Patil">
+<meta name="description" content="Attaching the needed libraries: library(rlang) library(purrr) library(lobstr) library(dplyr) library(ggplot2)  19.1 Motivation (Exercises 19.2.2) Q1. For each function in the following base R...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="Chapter 19 Quasiquotation | Advanced R Exercises">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://bookdown.org/IndrajeetPatil/Advanced-R-exercises/quasiquotation.html">
+<meta property="og:image" content="https://bookdown.org/IndrajeetPatil/Advanced-R-exercises/cover.png">
+<meta property="og:description" content="Attaching the needed libraries: library(rlang) library(purrr) library(lobstr) library(dplyr) library(ggplot2)  19.1 Motivation (Exercises 19.2.2) Q1. For each function in the following base R...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 19 Quasiquotation | Advanced R Exercises">
+<meta name="twitter:description" content="Attaching the needed libraries: library(rlang) library(purrr) library(lobstr) library(dplyr) library(ggplot2)  19.1 Motivation (Exercises 19.2.2) Q1. For each function in the following base R...">
+<meta name="twitter:image" content="https://bookdown.org/IndrajeetPatil/Advanced-R-exercises/cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Roboto-0.4.7/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
+<link href="libs/Roboto_Slab-0.4.7/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Advanced R Exercises</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="names-and-values.html"><span class="header-section-number">2</span> Names and values</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">3</span> Vectors</a></li>
+<li><a class="" href="subsetting.html"><span class="header-section-number">4</span> Subsetting</a></li>
+<li><a class="" href="control-flow.html"><span class="header-section-number">5</span> Control flow</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
+<li><a class="" href="environments.html"><span class="header-section-number">7</span> Environments</a></li>
+<li><a class="" href="conditions.html"><span class="header-section-number">8</span> Conditions</a></li>
+<li><a class="" href="functionals.html"><span class="header-section-number">9</span> Functionals</a></li>
+<li><a class="" href="function-factories.html"><span class="header-section-number">10</span> Function factories</a></li>
+<li><a class="" href="function-operators.html"><span class="header-section-number">11</span> Function operators</a></li>
+<li><a class="" href="base-types.html"><span class="header-section-number">12</span> Base Types</a></li>
+<li><a class="" href="s3.html"><span class="header-section-number">13</span> S3</a></li>
+<li><a class="" href="r6.html"><span class="header-section-number">14</span> R6</a></li>
+<li><a class="" href="s4.html"><span class="header-section-number">15</span> S4</a></li>
+<li><a class="" href="trade-offs.html"><span class="header-section-number">16</span> Trade-offs</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">17</span> Big Picture</a></li>
+<li><a class="" href="expressions.html"><span class="header-section-number">18</span> Expressions</a></li>
+<li><a class="active" href="quasiquotation.html"><span class="header-section-number">19</span> Quasiquotation</a></li>
+<li><a class="" href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></li>
+<li><a class="" href="translation.html"><span class="header-section-number">21</span> Translation</a></li>
+<li><a class="" href="debugging.html"><span class="header-section-number">22</span> Debugging</a></li>
+<li><a class="" href="measuring-performance.html"><span class="header-section-number">23</span> Measuring performance</a></li>
+<li><a class="" href="improving-performance.html"><span class="header-section-number">24</span> Improving performance</a></li>
+<li><a class="" href="rewriting-r-code-in-c.html"><span class="header-section-number">25</span> Rewriting R code in C++</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/IndrajeetPatil/Advanced-R-exercises">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="quasiquotation" class="section level1" number="19">
+<h1>
+<span class="header-section-number">19</span> Quasiquotation<a class="anchor" aria-label="anchor" href="#quasiquotation"><i class="fas fa-link"></i></a>
+</h1>
+<p>Attaching the needed libraries:</p>
+<div class="sourceCode" id="cb536"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/">purrr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lobstr.r-lib.org/">lobstr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
+<div id="motivation-exercises-19.2.2" class="section level2" number="19.1">
+<h2>
+<span class="header-section-number">19.1</span> Motivation (Exercises 19.2.2)<a class="anchor" aria-label="anchor" href="#motivation-exercises-19.2.2"><i class="fas fa-link"></i></a>
+</h2>
+<hr>
+<p><strong>Q1.</strong> For each function in the following base R code, identify which arguments are quoted and which are evaluated.</p>
+<div class="sourceCode" id="cb537"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mtcars2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">mtcars2</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">am</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">)</span></span></code></pre></div>
+<p><strong>A1.</strong> To identify which arguments are quoted and which are evaluated, we can use the trick mentioned in the book:</p>
+<blockquote>
+<p>If you’re ever unsure about whether an argument is quoted or evaluated, try executing the code outside of the function. If it doesn’t work or does something different, then that argument is quoted.</p>
+</blockquote>
+<ul>
+<li><code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library(MASS)</a></code></li>
+</ul>
+<p>The <code>package</code> argument in <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> is quoted:</p>
+<div class="sourceCode" id="cb538"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">MASS</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'MASS' not found</span></span></code></pre></div>
+<ul>
+<li><code>subset(mtcars, cyl == 4)</code></li>
+</ul>
+<p>The argument <code>x</code> is evaluated, while the argument <code>subset</code> is quoted.</p>
+<div class="sourceCode" id="cb539"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'cyl' not found</span></span></code></pre></div>
+<ul>
+<li><code>with(mtcars2, sum(vs))</code></li>
+</ul>
+<p>The argument <code>data</code> is evaluated, while <code>expr</code> argument is quoted.</p>
+<div class="sourceCode" id="cb540"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">mtcars2</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 10</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'vs' not found</span></span></code></pre></div>
+<ul>
+<li><code>sum(mtcars2$am)</code></li>
+</ul>
+<p>The argument <code>...</code> is evaluated.</p>
+<div class="sourceCode" id="cb541"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">am</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 8</span></span>
+<span></span>
+<span><span class="va">mtcars2</span><span class="op">$</span><span class="va">am</span></span>
+<span><span class="co">#&gt;  [1] 1 0 0 1 1 1 0 1 1 1 1</span></span></code></pre></div>
+<ul>
+<li><code>rm(mtcars2)</code></li>
+</ul>
+<p>The trick we are using so far won’t work here since trying to print <code>mtcars2</code> will always fail after <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code> has made a pass at it.</p>
+<div class="sourceCode" id="cb542"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">)</span></span></code></pre></div>
+<p>We can instead look at the docs for <code>...</code>:</p>
+<blockquote>
+<p>… the objects to be removed, as names (unquoted) or character strings (quoted).</p>
+</blockquote>
+<p>Thus, this argument is not evaluated, but rather quoted.</p>
+<hr>
+<p><strong>Q2.</strong> For each function in the following tidyverse code, identify which arguments are quoted and which are evaluated.</p>
+<div class="sourceCode" id="cb543"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">by_cyl</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">by_cyl</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><strong>A2.</strong> As seen in the answer for <strong>Q1.</strong>, <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> quotes its first argument:</p>
+<div class="sourceCode" id="cb544"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
+<p>In the following code:</p>
+<ul>
+<li>
+<code>%&gt;%</code> (lazily) evaluates its argument</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> quote their arguments</li>
+</ul>
+<div class="sourceCode" id="cb545"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">by_cyl</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>In the following code:</p>
+<ul>
+<li>
+<code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> evaluates the <code>data</code> argument</li>
+<li>
+<code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> quotes its arguments</li>
+</ul>
+<div class="sourceCode" id="cb546"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">by_cyl</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="Quotation_files/figure-html/Quotation-12-1.png" width="100%"></div>
+<hr>
+</div>
+<div id="quoting-exercises-19.3.6" class="section level2" number="19.2">
+<h2>
+<span class="header-section-number">19.2</span> Quoting (Exercises 19.3.6)<a class="anchor" aria-label="anchor" href="#quoting-exercises-19.3.6"><i class="fas fa-link"></i></a>
+</h2>
+<hr>
+<p><strong>Q1.</strong> How is <code><a href="https://rlang.r-lib.org/reference/expr.html">expr()</a></code> implemented? Look at its source code.</p>
+<p><strong>A1.</strong> Looking at the source code, we can see that <code><a href="https://rlang.r-lib.org/reference/expr.html">expr()</a></code> is a simple wrapper around <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr()</a></code>, and captures and returns the user-entered expressions:</p>
+<div class="sourceCode" id="cb547"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">rlang</span><span class="fu">::</span><span class="va"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span></span>
+<span><span class="co">#&gt; function (expr) </span></span>
+<span><span class="co">#&gt; {</span></span>
+<span><span class="co">#&gt;     enexpr(expr)</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x564721e345d0&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: namespace:rlang&gt;</span></span></code></pre></div>
+<p>For example:</p>
+<div class="sourceCode" id="cb548"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">x</span></span>
+<span><span class="co">#&gt; x &lt;- 1</span></span></code></pre></div>
+<p>In its turn, <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr()</a></code> calls native code:</p>
+<div class="sourceCode" id="cb549"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">rlang</span><span class="fu">::</span><span class="va"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span></span>
+<span><span class="co">#&gt; function (arg) </span></span>
+<span><span class="co">#&gt; {</span></span>
+<span><span class="co">#&gt;     .Call(ffi_enexpr, substitute(arg), parent.frame())</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x56471ecc2920&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: namespace:rlang&gt;</span></span></code></pre></div>
+<hr>
+<p><strong>Q2.</strong> Compare and contrast the following two functions. Can you predict the output before running them?</p>
+<div class="sourceCode" id="cb550"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">f2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">f1</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span>, <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span></span>
+<span><span class="fu">f2</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span>, <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span></span></code></pre></div>
+<p><strong>A2.</strong> The <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> captures and returns the expressions specified by the developer instead of their values:</p>
+<div class="sourceCode" id="cb551"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">f1</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span>, <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $x</span></span>
+<span><span class="co">#&gt; x</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $y</span></span>
+<span><span class="co">#&gt; y</span></span></code></pre></div>
+<p>On the other hand, <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexprs()</a></code> captures the user-entered expressions and returns their values:</p>
+<div class="sourceCode" id="cb552"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">f2</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span>, <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $x</span></span>
+<span><span class="co">#&gt; a + b</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $y</span></span>
+<span><span class="co">#&gt; c + d</span></span></code></pre></div>
+<hr>
+<p><strong>Q3.</strong> What happens if you try to use <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr()</a></code> with an expression (i.e. <code>enexpr(x + y)</code>? What happens if <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr()</a></code> is passed a missing argument?</p>
+<p><strong>A3.</strong> If you try to use <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr()</a></code> with an expression, it fails because it works only with <code>symbol</code>.</p>
+<div class="sourceCode" id="cb553"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `enexpr()`:</span></span>
+<span><span class="co">#&gt; ! `arg` must be a symbol</span></span></code></pre></div>
+<p>If <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr()</a></code> is passed a missing argument, it returns a missing argument:</p>
+<div class="sourceCode" id="cb554"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">arg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/missing_arg.html">missing_arg</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">arg</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/missing_arg.html">is_missing</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">arg</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<hr>
+<p><strong>Q4.</strong> How are <code>exprs(a)</code> and <code>exprs(a = )</code> different? Think about both the input and the output.</p>
+<p><strong>A4.</strong> The key difference between <code>exprs(a)</code> and <code>exprs(a = )</code> is that the former will return an unnamed list, while the latter will return a named list. This is because the former is interpreted as an unnamed argument, while the latter a named argument.</p>
+<div class="sourceCode" id="cb555"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; a</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>a <span class="op">=</span> <span class="op">)</span></span>
+<span><span class="co">#&gt; $a</span></span></code></pre></div>
+<p>In both cases, <code>a</code> is treated as a symbol:</p>
+<div class="sourceCode" id="cb556"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="va">is_symbol</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      </span></span>
+<span><span class="co">#&gt; TRUE</span></span>
+<span></span>
+<span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>a <span class="op">=</span> <span class="op">)</span>, <span class="va">is_symbol</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    a </span></span>
+<span><span class="co">#&gt; TRUE</span></span></code></pre></div>
+<p>But, the argument is missing only in the latter case, since only the name but no corresponding value is provided:</p>
+<div class="sourceCode" id="cb557"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="va">is_missing</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       </span></span>
+<span><span class="co">#&gt; FALSE</span></span>
+<span></span>
+<span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>a <span class="op">=</span> <span class="op">)</span>, <span class="va">is_missing</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    a </span></span>
+<span><span class="co">#&gt; TRUE</span></span></code></pre></div>
+<hr>
+<p><strong>Q5.</strong> What are other differences between <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> and <code><a href="https://rdrr.io/r/base/list.html">alist()</a></code>? Read the documentation for the named arguments of <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> to find out.</p>
+<p><strong>A5.</strong> Here are some additional differences between <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> and <code><a href="https://rdrr.io/r/base/list.html">alist()</a></code>.</p>
+<ul>
+<li>Names: If the inputs are not named, <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> provides a way to name them automatically using <code>.named</code> argument.</li>
+</ul>
+<div class="sourceCode" id="cb558"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html">alist</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, <span class="cn">TRUE</span>, <span class="st">"z"</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $x</span></span>
+<span><span class="co">#&gt; [1] 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $z</span></span>
+<span><span class="co">#&gt; expr(x + y)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, <span class="cn">TRUE</span>, <span class="st">"z"</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span>, .named <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $x</span></span>
+<span><span class="co">#&gt; [1] 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`TRUE`</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $z</span></span>
+<span><span class="co">#&gt; expr(x + y)</span></span></code></pre></div>
+<ul>
+<li>Ignoring empty arguments: The <code>.ignore_empty</code> argument in <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code> gives you a much finer control over what to do with the empty arguments, while <code><a href="https://rdrr.io/r/base/list.html">alist()</a></code> doesn’t provide a way to ignore such arguments.</li>
+</ul>
+<div class="sourceCode" id="cb559"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html">alist</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, , <span class="cn">TRUE</span>, <span class="op">)</span></span>
+<span><span class="co">#&gt; $x</span></span>
+<span><span class="co">#&gt; [1] 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[3]]</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[4]]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, , <span class="cn">TRUE</span>, , .ignore_empty <span class="op">=</span> <span class="st">"trailing"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $x</span></span>
+<span><span class="co">#&gt; [1] 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[3]]</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, , <span class="cn">TRUE</span>, , .ignore_empty <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $x</span></span>
+<span><span class="co">#&gt; [1] 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[3]]</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[4]]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, , <span class="cn">TRUE</span>, , .ignore_empty <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $x</span></span>
+<span><span class="co">#&gt; [1] 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<ul>
+<li>Names injection: Using <code>.unquote_names</code> argument in <code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs()</a></code>, we can inject a name for the argument.</li>
+</ul>
+<div class="sourceCode" id="cb560"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html">alist</a></span><span class="op">(</span><span class="va">foo</span> <span class="op">:=</span> <span class="va">bar</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; `:=`(foo, bar)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">foo</span> <span class="op">:=</span> <span class="va">bar</span>, .unquote_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; `:=`(foo, bar)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">foo</span> <span class="op">:=</span> <span class="va">bar</span>, .unquote_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $foo</span></span>
+<span><span class="co">#&gt; bar</span></span></code></pre></div>
+<hr>
+<p><strong>Q6.</strong> The documentation for <code><a href="https://rdrr.io/r/base/substitute.html">substitute()</a></code> says:</p>
+<blockquote>
+<p>Substitution takes place by examining each component of the parse tree
+as follows:</p>
+<ul>
+<li>If it is not a bound symbol in <code>env</code>, it is unchanged.</li>
+<li>If it is a promise object (i.e., a formal argument to a function)
+the expression slot of the promise replaces the symbol.</li>
+<li>If it is an ordinary variable, its value is substituted, unless
+<code>env</code> is .GlobalEnv in which case the symbol is left unchanged.</li>
+</ul>
+</blockquote>
+<p>Create examples that illustrate each of the above cases.</p>
+<p><strong>A6.</strong> See below examples that illustrate each of the above-mentioned cases.</p>
+<blockquote>
+<p>If it is not a bound symbol in <code>env</code>, it is unchanged.</p>
+</blockquote>
+<p>Symbol <code>x</code> is not bound in <code>env</code>, so it remains unchanged.</p>
+<div class="sourceCode" id="cb561"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">substitute</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, env <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; x + 2</span></span></code></pre></div>
+<blockquote>
+<p>If it is a promise object (i.e., a formal argument to a function)
+the expression slot of the promise replaces the symbol.</p>
+</blockquote>
+<div class="sourceCode" id="cb562"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">msg</span> <span class="op">&lt;-</span> <span class="st">"old"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/delayedAssign.html">delayedAssign</a></span><span class="op">(</span><span class="st">"myVar"</span>, <span class="va">msg</span><span class="op">)</span> <span class="co"># creates a promise</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">substitute</a></span><span class="op">(</span><span class="va">myVar</span><span class="op">)</span></span>
+<span><span class="co">#&gt; myVar</span></span>
+<span><span class="va">msg</span> <span class="op">&lt;-</span> <span class="st">"new!"</span></span>
+<span><span class="va">myVar</span></span>
+<span><span class="co">#&gt; [1] "new!"</span></span></code></pre></div>
+<blockquote>
+<p>If it is an ordinary variable, its value is substituted, unless
+<code>env</code> is .GlobalEnv in which case the symbol is left unchanged.</p>
+</blockquote>
+<div class="sourceCode" id="cb563"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">substitute</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, env <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">2</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 2 + 1</span></span>
+<span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">substitute</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, env <span class="op">=</span> <span class="va">.GlobalEnv</span><span class="op">)</span></span>
+<span><span class="co">#&gt; x + y</span></span></code></pre></div>
+<hr>
+</div>
+<div id="unquoting-exercises-19.4.8" class="section level2" number="19.3">
+<h2>
+<span class="header-section-number">19.3</span> Unquoting (Exercises 19.4.8)<a class="anchor" aria-label="anchor" href="#unquoting-exercises-19.4.8"><i class="fas fa-link"></i></a>
+</h2>
+<hr>
+<p><strong>Q1.</strong> Given the following components:</p>
+<div class="sourceCode" id="cb564"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">xy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span></span>
+<span><span class="va">xz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
+<span><span class="va">yz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
+<span><span class="va">abc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span></span></code></pre></div>
+<p>Use quasiquotation to construct the following calls:</p>
+<div class="sourceCode" id="cb565"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
+<span><span class="op">-</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span> <span class="op">-</span> <span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">atan2</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, <span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, <span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">foo</span><span class="op">(</span>a <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, b <span class="op">=</span> <span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span></code></pre></div>
+<p><strong>A1.</strong> Using quasiquotation to construct the specified calls:</p>
+<div class="sourceCode" id="cb566"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">xy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span></span>
+<span><span class="va">xz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
+<span><span class="va">yz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">y</span> <span class="op">+</span> <span class="va">z</span><span class="op">)</span></span>
+<span><span class="va">abc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; (x + y)/(y + z)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">-</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xz</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; -(x + z)^(y + z)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span> <span class="op">-</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; (x + y) + (y + z) - (x + y)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="st">"atan2"</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; atan2(x + y, y + z)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="st">"sum"</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; sum(x + y, x + y, y + z)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="st">"sum"</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">abc</span><span class="op">)</span></span>
+<span><span class="co">#&gt; sum(a, b, c)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">abc</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; mean(c(a, b, c), na.rm = TRUE)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="st">"foo"</span>, a <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">xy</span><span class="op">)</span>, b <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">yz</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; foo(a = x + y, b = y + z)</span></span></code></pre></div>
+<hr>
+<p><strong>Q2.</strong> The following two calls print the same, but are actually different:</p>
+<div class="sourceCode" id="cb567"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; mean(1:10)</span></span>
+<span><span class="op">(</span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; mean(1:10)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
+<p>What’s the difference? Which one is more natural?</p>
+<p><strong>A2.</strong> We can see the difference between these two expression if we convert them to lists:</p>
+<div class="sourceCode" id="cb568"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; mean</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt; 1:10</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; mean</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></span></code></pre></div>
+<p>As can be seen, the second element of <code>a</code> is a <code>call</code> object, while that in <code>b</code> is an integer vector:</p>
+<div class="sourceCode" id="cb569"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">waldo</span><span class="fu">::</span><span class="fu"><a href="https://waldo.r-lib.org/reference/compare.html">compare</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span></span>
+<span><span class="co">#&gt; `old[[2]]` is a call</span></span>
+<span><span class="co">#&gt; `new[[2]]` is an integer vector (1, 2, 3, 4, 5, ...)</span></span></code></pre></div>
+<p>The same can also be noticed in ASTs for these expressions:</p>
+<div class="sourceCode" id="cb570"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; █─expr </span></span>
+<span><span class="co">#&gt; └─█─mean </span></span>
+<span><span class="co">#&gt;   └─█─`:` </span></span>
+<span><span class="co">#&gt;     ├─1 </span></span>
+<span><span class="co">#&gt;     └─10</span></span>
+<span></span>
+<span><span class="fu"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; █─expr </span></span>
+<span><span class="co">#&gt; └─█─mean </span></span>
+<span><span class="co">#&gt;   └─&lt;inline integer&gt;</span></span></code></pre></div>
+<p>The first call is more natural, since the second one inlines a vector directly into the call, something that is rarely done.</p>
+<hr>
+</div>
+<div id="dot-dot-dot-exercises-19.6.5" class="section level2" number="19.4">
+<h2>
+<span class="header-section-number">19.4</span> <code>...</code> (dot-dot-dot) (Exercises 19.6.5)<a class="anchor" aria-label="anchor" href="#dot-dot-dot-exercises-19.6.5"><i class="fas fa-link"></i></a>
+</h2>
+<hr>
+<p><strong>Q1.</strong> One way to implement <code><a href="https://rlang.r-lib.org/reference/exec.html">exec()</a></code> is shown below. Describe how it works. What are the key ideas?</p>
+<div class="sourceCode" id="cb571"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">exec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">...</span>, <span class="va">.env</span> <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">args</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">f</span>, <span class="va">args</span>, envir <span class="op">=</span> <span class="va">.env</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p><strong>A1.</strong> The keys ideas that underlie this implementation of <code><a href="https://rlang.r-lib.org/reference/exec.html">exec()</a></code> function are the following:</p>
+<ul>
+<li><p>It constructs a call using function <code>f</code> and its argument <code>...</code>, and evaluates the call in the environment <code>.env</code>.</p></li>
+<li><p>It uses <a href="https://rlang.r-lib.org/reference/dyn-dots.html">dynamic dots</a> via <code><a href="https://rlang.r-lib.org/reference/list2.html">list2()</a></code>, which means that you can splice arguments using <code>!!!</code>, you can inject names using <code>:=</code>, and trailing commas are not a problem.</p></li>
+</ul>
+<p>Here is an example:</p>
+<div class="sourceCode" id="cb572"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="cn">NA</span><span class="op">)</span></span>
+<span><span class="va">args_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>trim <span class="op">=</span> <span class="fl">0</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rlang.r-lib.org/reference/exec.html">exec</a></span><span class="op">(</span><span class="va">mean</span>, <span class="va">vec</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">args_list</span>, , .env <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 3</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="st">"exec"</span><span class="op">)</span></span></code></pre></div>
+<hr>
+<p><strong>Q2.</strong> Carefully read the source code for <code><a href="https://rdrr.io/r/base/interaction.html">interaction()</a></code>, <code><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid()</a></code>, and <code><a href="https://rdrr.io/r/graphics/par.html">par()</a></code>. Compare and contrast the techniques they use for switching between dots and list behaviour.</p>
+<p><strong>A2.</strong> Source code reveals the following comparison table:</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="14%">
+<col width="18%">
+<col width="66%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Function</th>
+<th align="left">Capture the dots</th>
+<th align="left">Handle list input</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code><a href="https://rdrr.io/r/base/interaction.html">interaction()</a></code></td>
+<td align="left"><code>args &lt;- list(...)</code></td>
+<td align="left"><code>length(args) == 1L &amp;&amp; is.list(args[[1L]])</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid()</a></code></td>
+<td align="left"><code>args &lt;- list(...)</code></td>
+<td align="left"><code>length(args) == 1L &amp;&amp; is.list(args[[1L]])</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code><a href="https://rdrr.io/r/graphics/par.html">par()</a></code></td>
+<td align="left"><code>args &lt;- list(...)</code></td>
+<td align="left"><code>length(args) == 1L &amp;&amp; (is.list(args[[1L]] || is.null(args[[1L]])))</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>All functions capture the dots in a list.</p>
+<p>Using these dots, the functions check:</p>
+<ul>
+<li>if a list was entered as an argument by checking the number of arguments</li>
+<li>if the count is 1, by checking if the argument is a list</li>
+</ul>
+<hr>
+<p><strong>Q3.</strong> Explain the problem with this definition of <code>set_attr()</code></p>
+<div class="sourceCode" id="cb573"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">set_attr</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">attr</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">attr</span></span>
+<span>  <span class="va">x</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">set_attr</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, x <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in attributes(x) &lt;- attr: attributes must be named</span></span></code></pre></div>
+<p><strong>A3.</strong> The <code>set_attr()</code> function signature has a parameter called <code>x</code>, and additionally it uses dynamic dots to pass multiple arguments to specify additional attributes for <code>x</code>.</p>
+<p>But, as shown in the example, this creates a problem when the attribute is itself named <code>x</code>. Naming the arguments won’t help either:</p>
+<div class="sourceCode" id="cb574"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">set_attr</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">attr</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">attr</span></span>
+<span>  <span class="va">x</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">set_attr</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, x <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in set_attr(x = 1:10, x = 10): formal argument "x" matched by multiple actual arguments</span></span></code></pre></div>
+<p>We can avoid these issues by renaming the parameter:</p>
+<div class="sourceCode" id="cb575"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">set_attr</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">.x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">attr</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">attr</span></span>
+<span>  <span class="va">.x</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">set_attr</span><span class="op">(</span>.x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, x <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></span>
+<span><span class="co">#&gt; attr(,"x")</span></span>
+<span><span class="co">#&gt; [1] 10</span></span></code></pre></div>
+<hr>
+</div>
+<div id="case-studies-exercises-19.7.5" class="section level2" number="19.5">
+<h2>
+<span class="header-section-number">19.5</span> Case studies (Exercises 19.7.5)<a class="anchor" aria-label="anchor" href="#case-studies-exercises-19.7.5"><i class="fas fa-link"></i></a>
+</h2>
+<hr>
+<p><strong>Q1.</strong> In the linear-model example, we could replace the <code><a href="https://rlang.r-lib.org/reference/expr.html">expr()</a></code> in <code>reduce(summands, ~ expr(!!.x + !!.y))</code> with <code><a href="https://rlang.r-lib.org/reference/call2.html">call2()</a></code>: <code>reduce(summands, call2, "+")</code>. Compare and contrast the two approaches. Which do you think is easier to read?</p>
+<p><strong>A1.</strong> We can rewrite the <code>linear()</code> function from this chapter using <code><a href="https://rlang.r-lib.org/reference/call2.html">call2()</a></code> as follows:</p>
+<div class="sourceCode" id="cb576"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linear</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">var</span>, <span class="va">val</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">ensym</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span></span>
+<span>  <span class="va">coef_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">val</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">var</span><span class="op">)</span><span class="op">[[</span><span class="op">!</span><span class="op">!</span><span class="va">.x</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">summands</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span><span class="va">val</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>, <span class="va">coef_name</span>, <span class="op">~</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">.x</span> <span class="op">*</span> <span class="op">!</span><span class="op">!</span><span class="va">.y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">summands</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">val</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">summands</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce</a></span><span class="op">(</span><span class="va">summands</span>, <span class="op">~</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/call2.html">call2</a></span><span class="op">(</span><span class="st">"+"</span>, <span class="va">.x</span>, <span class="va">.y</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">linear</span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span>, <span class="op">-</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 10 + (5 * x[[1L]]) + (-4 * x[[2L]])</span></span></code></pre></div>
+<p>I personally find the version with <code><a href="https://rlang.r-lib.org/reference/call2.html">call2()</a></code> to be much more readable since the <code>!!</code> syntax is a bit esoteric.</p>
+<hr>
+<p><strong>Q2.</strong> Re-implement the Box-Cox transform defined below using unquoting and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
+<div class="sourceCode" id="cb577"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bc</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="va">lambda</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="va">lambda</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p><strong>A2.</strong> Re-implementation of the Box-Cox transform using unquoting and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
+<div class="sourceCode" id="cb578"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bc_new</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">lambda</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rlang.r-lib.org/reference/new_function.html">new_function</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rlang.r-lib.org/reference/new_function.html">new_function</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">lambda</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">lambda</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Let’s try it out to see if it produces the same output as before:</p>
+<div class="sourceCode" id="cb579"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">bc</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0</span></span>
+<span><span class="fu">bc_new</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0</span></span>
+<span></span>
+<span><span class="fu">bc</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1.5</span></span>
+<span><span class="fu">bc_new</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1.5</span></span></code></pre></div>
+<hr>
+<p><strong>Q3.</strong> Re-implement the simple <code><a href="https://purrr.tidyverse.org/reference/compose.html">compose()</a></code> defined below using quasiquotation and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
+<div class="sourceCode" id="cb580"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">compose</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">g</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p><strong>A3.</strong> Following is a re-implementation of <code><a href="https://purrr.tidyverse.org/reference/compose.html">compose()</a></code> using quasiquotation and <code><a href="https://rlang.r-lib.org/reference/new_function.html">new_function()</a></code>:</p>
+<div class="sourceCode" id="cb581"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">compose_new</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">g</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span> <span class="co"># or ensym(f)</span></span>
+<span>  <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">enexpr</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="co"># or ensym(g)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/new_function.html">new_function</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html">exprs</a></span><span class="op">(</span>... <span class="op">=</span> <span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">f</span><span class="op">)</span><span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">g</span><span class="op">)</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Checking that the new version behaves the same way as the original version:</p>
+<div class="sourceCode" id="cb582"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">not_null</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/compose.html">compose</a></span><span class="op">(</span><span class="va">`!`</span>, <span class="va">is.null</span><span class="op">)</span></span>
+<span><span class="fu">not_null</span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span></span>
+<span><span class="va">not_null2</span> <span class="op">&lt;-</span> <span class="fu">compose_new</span><span class="op">(</span><span class="va">`!`</span>, <span class="va">is.null</span><span class="op">)</span></span>
+<span><span class="fu">not_null2</span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<hr>
+</div>
+<div id="session-information-14" class="section level2" number="19.6">
+<h2>
+<span class="header-section-number">19.6</span> Session information<a class="anchor" aria-label="anchor" href="#session-information-14"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb583"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ─ Session info ───────────────────────────────────────────</span></span>
+<span><span class="co">#&gt;  setting  value</span></span>
+<span><span class="co">#&gt;  version  R version 4.3.1 (2023-06-16)</span></span>
+<span><span class="co">#&gt;  os       Ubuntu 22.04.3 LTS</span></span>
+<span><span class="co">#&gt;  system   x86_64, linux-gnu</span></span>
+<span><span class="co">#&gt;  ui       X11</span></span>
+<span><span class="co">#&gt;  language (EN)</span></span>
+<span><span class="co">#&gt;  collate  C.UTF-8</span></span>
+<span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
+<span><span class="co">#&gt;  tz       UTC</span></span>
+<span><span class="co">#&gt;  date     2023-09-24</span></span>
+<span><span class="co">#&gt;  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt;  package     * version date (UTC) lib source</span></span>
+<span><span class="co">#&gt;  base        * 4.3.1   2023-08-04 [3] local</span></span>
+<span><span class="co">#&gt;  bookdown      0.35    2023-08-09 [1] RSPM</span></span>
+<span><span class="co">#&gt;  bslib         0.5.1   2023-08-11 [1] RSPM</span></span>
+<span><span class="co">#&gt;  cachem        1.0.8   2023-05-01 [1] RSPM</span></span>
+<span><span class="co">#&gt;  cli           3.6.1   2023-03-23 [1] RSPM</span></span>
+<span><span class="co">#&gt;  colorspace    2.1-0   2023-01-23 [1] RSPM</span></span>
+<span><span class="co">#&gt;  compiler      4.3.1   2023-08-04 [3] local</span></span>
+<span><span class="co">#&gt;  crayon        1.5.2   2022-09-29 [1] RSPM</span></span>
+<span><span class="co">#&gt;  datasets    * 4.3.1   2023-08-04 [3] local</span></span>
+<span><span class="co">#&gt;  diffobj       0.3.5   2021-10-05 [1] RSPM</span></span>
+<span><span class="co">#&gt;  digest        0.6.33  2023-07-07 [1] RSPM</span></span>
+<span><span class="co">#&gt;  downlit       0.4.3   2023-06-29 [1] RSPM</span></span>
+<span><span class="co">#&gt;  dplyr       * 1.1.3   2023-09-03 [1] RSPM</span></span>
+<span><span class="co">#&gt;  evaluate      0.21    2023-05-05 [1] RSPM</span></span>
+<span><span class="co">#&gt;  fansi         1.0.4   2023-01-22 [1] RSPM</span></span>
+<span><span class="co">#&gt;  farver        2.1.1   2022-07-06 [1] RSPM</span></span>
+<span><span class="co">#&gt;  fastmap       1.1.1   2023-02-24 [1] RSPM</span></span>
+<span><span class="co">#&gt;  fs            1.6.3   2023-07-20 [1] RSPM</span></span>
+<span><span class="co">#&gt;  generics      0.1.3   2022-07-05 [1] RSPM</span></span>
+<span><span class="co">#&gt;  ggplot2     * 3.4.3   2023-08-14 [1] RSPM</span></span>
+<span><span class="co">#&gt;  glue          1.6.2   2022-02-24 [1] RSPM</span></span>
+<span><span class="co">#&gt;  graphics    * 4.3.1   2023-08-04 [3] local</span></span>
+<span><span class="co">#&gt;  grDevices   * 4.3.1   2023-08-04 [3] local</span></span>
+<span><span class="co">#&gt;  grid          4.3.1   2023-08-04 [3] local</span></span>
+<span><span class="co">#&gt;  gtable        0.3.4   2023-08-21 [1] RSPM</span></span>
+<span><span class="co">#&gt;  htmltools     0.5.6   2023-08-10 [1] RSPM</span></span>
+<span><span class="co">#&gt;  jquerylib     0.1.4   2021-04-26 [1] RSPM</span></span>
+<span><span class="co">#&gt;  jsonlite      1.8.7   2023-06-29 [1] RSPM</span></span>
+<span><span class="co">#&gt;  knitr         1.44    2023-09-11 [1] RSPM</span></span>
+<span><span class="co">#&gt;  labeling      0.4.3   2023-08-29 [1] RSPM</span></span>
+<span><span class="co">#&gt;  lifecycle     1.0.3   2022-10-07 [1] RSPM</span></span>
+<span><span class="co">#&gt;  lobstr      * 1.1.2   2022-06-22 [1] RSPM</span></span>
+<span><span class="co">#&gt;  magrittr    * 2.0.3   2022-03-30 [1] RSPM</span></span>
+<span><span class="co">#&gt;  MASS        * 7.3-60  2023-05-04 [3] CRAN (R 4.3.1)</span></span>
+<span><span class="co">#&gt;  memoise       2.0.1   2021-11-26 [1] RSPM</span></span>
+<span><span class="co">#&gt;  methods     * 4.3.1   2023-08-04 [3] local</span></span>
+<span><span class="co">#&gt;  munsell       0.5.0   2018-06-12 [1] RSPM</span></span>
+<span><span class="co">#&gt;  pillar        1.9.0   2023-03-22 [1] RSPM</span></span>
+<span><span class="co">#&gt;  pkgconfig     2.0.3   2019-09-22 [1] RSPM</span></span>
+<span><span class="co">#&gt;  purrr       * 1.0.2   2023-08-10 [1] RSPM</span></span>
+<span><span class="co">#&gt;  R6            2.5.1   2021-08-19 [1] RSPM</span></span>
+<span><span class="co">#&gt;  rematch2      2.1.2   2020-05-01 [1] RSPM</span></span>
+<span><span class="co">#&gt;  rlang       * 1.1.1   2023-04-28 [1] RSPM</span></span>
+<span><span class="co">#&gt;  rmarkdown     2.25    2023-09-18 [1] RSPM</span></span>
+<span><span class="co">#&gt;  sass          0.4.7   2023-07-15 [1] RSPM</span></span>
+<span><span class="co">#&gt;  scales        1.2.1   2022-08-20 [1] RSPM</span></span>
+<span><span class="co">#&gt;  sessioninfo   1.2.2   2021-12-06 [1] RSPM</span></span>
+<span><span class="co">#&gt;  stats       * 4.3.1   2023-08-04 [3] local</span></span>
+<span><span class="co">#&gt;  tibble        3.2.1   2023-03-20 [1] RSPM</span></span>
+<span><span class="co">#&gt;  tidyselect    1.2.0   2022-10-10 [1] RSPM</span></span>
+<span><span class="co">#&gt;  tools         4.3.1   2023-08-04 [3] local</span></span>
+<span><span class="co">#&gt;  utf8          1.2.3   2023-01-31 [1] RSPM</span></span>
+<span><span class="co">#&gt;  utils       * 4.3.1   2023-08-04 [3] local</span></span>
+<span><span class="co">#&gt;  vctrs         0.6.3   2023-06-14 [1] RSPM</span></span>
+<span><span class="co">#&gt;  waldo         0.5.1   2023-05-08 [1] RSPM</span></span>
+<span><span class="co">#&gt;  withr         2.5.0   2022-03-03 [1] RSPM</span></span>
+<span><span class="co">#&gt;  xfun          0.40    2023-08-09 [1] RSPM</span></span>
+<span><span class="co">#&gt;  xml2          1.3.5   2023-07-06 [1] RSPM</span></span>
+<span><span class="co">#&gt;  yaml          2.3.7   2023-01-23 [1] RSPM</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  [1] /home/runner/work/_temp/Library</span></span>
+<span><span class="co">#&gt;  [2] /opt/R/4.3.1/lib/R/site-library</span></span>
+<span><span class="co">#&gt;  [3] /opt/R/4.3.1/lib/R/library</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ──────────────────────────────────────────────────────────</span></span></code></pre></div>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="expressions.html"><span class="header-section-number">18</span> Expressions</a></div>
+<div class="next"><a href="evaluation.html"><span class="header-section-number">20</span> Evaluation</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#quasiquotation"><span class="header-section-number">19</span> Quasiquotation</a></li>
+<li><a class="nav-link" href="#motivation-exercises-19.2.2"><span class="header-section-number">19.1</span> Motivation (Exercises 19.2.2)</a></li>
+<li><a class="nav-link" href="#quoting-exercises-19.3.6"><span class="header-section-number">19.2</span> Quoting (Exercises 19.3.6)</a></li>
+<li><a class="nav-link" href="#unquoting-exercises-19.4.8"><span class="header-section-number">19.3</span> Unquoting (Exercises 19.4.8)</a></li>
+<li><a class="nav-link" href="#dot-dot-dot-exercises-19.6.5"><span class="header-section-number">19.4</span> ... (dot-dot-dot) (Exercises 19.6.5)</a></li>
+<li><a class="nav-link" href="#case-studies-exercises-19.7.5"><span class="header-section-number">19.5</span> Case studies (Exercises 19.7.5)</a></li>
+<li><a class="nav-link" href="#session-information-14"><span class="header-section-number">19.6</span> Session information</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/blob/master/Quotation.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/IndrajeetPatil/Advanced-R-exercises/edit/master/Quotation.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2023-09-24.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
