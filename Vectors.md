@@ -210,7 +210,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x55f0f6565628>
+#> <bytecode: 0x55deb14601e8>
 #> <environment: namespace:stats>
 ```
 
@@ -240,7 +240,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x55f0f57d8f40>
+#> <bytecode: 0x55deb06d3f88>
 #> <environment: namespace:base>
 ```
 
@@ -841,7 +841,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-09-24
+#>  date     2023-10-01
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -878,7 +878,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  tools         4.3.1   2023-08-04 [3] local
 #>  utils       * 4.3.1   2023-08-04 [3] local
 #>  vctrs         0.6.3   2023-06-14 [1] RSPM
-#>  withr         2.5.0   2022-03-03 [1] RSPM
+#>  withr         2.5.1   2023-09-26 [1] RSPM
 #>  xfun          0.40    2023-08-09 [1] RSPM
 #>  xml2          1.3.5   2023-07-06 [1] RSPM
 #>  yaml          2.3.7   2023-01-23 [1] RSPM
