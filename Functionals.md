@@ -36,7 +36,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck_raw(x, list(1), .default = NULL)
-#> <environment: 0x5611f037b4d0>
+#> <environment: 0x5628e8cdffa0>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -47,7 +47,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, 1), .default = NULL)
-#> <environment: 0x5611f045ca18>
+#> <environment: 0x5628e8dc37f8>
 
 # mapping by name -----------------------
 
@@ -65,7 +65,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck_raw(x, list("m"), .default = NULL)
-#> <environment: 0x5611f059d570>
+#> <environment: 0x5628e8f01a30>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -77,7 +77,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, "m"), .default = NULL)
-#> <environment: 0x5611f067a5a8>
+#> <environment: 0x5628e8fdea68>
 
 # compact functions ----------------------------
 
@@ -139,7 +139,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck_raw(x, list(0.597890264587477, 0.587997315218672), .default = NULL)
-#> <environment: 0x5611f15e4ff8>
+#> <environment: 0x5628e9f496a8>
 ```
 
 ---
@@ -880,7 +880,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x5611f022f128>
+#> <environment: 0x5628e9084a08>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>
@@ -1015,29 +1015,29 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-10-01
+#>  date     2023-10-08
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
-#>  base        * 4.3.1   2023-08-04 [3] local
+#>  base        * 4.3.1   2023-10-03 [3] local
 #>  bookdown      0.35    2023-08-09 [1] RSPM
 #>  bslib         0.5.1   2023-08-11 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.1   2023-03-23 [1] RSPM
-#>  compiler      4.3.1   2023-08-04 [3] local
-#>  datasets    * 4.3.1   2023-08-04 [3] local
+#>  compiler      4.3.1   2023-10-03 [3] local
+#>  datasets    * 4.3.1   2023-10-03 [3] local
 #>  digest        0.6.33  2023-07-07 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr         1.1.3   2023-09-03 [1] RSPM
-#>  evaluate      0.21    2023-05-05 [1] RSPM
+#>  evaluate      0.22    2023-09-29 [1] RSPM
 #>  fansi         1.0.4   2023-01-22 [1] RSPM
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM
 #>  fs            1.6.3   2023-07-20 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
 #>  glue          1.6.2   2022-02-24 [1] RSPM
-#>  graphics    * 4.3.1   2023-08-04 [3] local
-#>  grDevices   * 4.3.1   2023-08-04 [3] local
+#>  graphics    * 4.3.1   2023-10-03 [3] local
+#>  grDevices   * 4.3.1   2023-10-03 [3] local
 #>  htmltools     0.5.6   2023-08-10 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.7   2023-06-29 [1] RSPM
@@ -1045,7 +1045,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  lifecycle     1.0.3   2022-10-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM
-#>  methods     * 4.3.1   2023-08-04 [3] local
+#>  methods     * 4.3.1   2023-10-03 [3] local
 #>  pillar        1.9.0   2023-03-22 [1] RSPM
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
 #>  purrr       * 1.0.2   2023-08-10 [1] RSPM
@@ -1054,12 +1054,12 @@ sessioninfo::session_info(include_base = TRUE)
 #>  rmarkdown     2.25    2023-09-18 [1] RSPM
 #>  sass          0.4.7   2023-07-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
-#>  stats       * 4.3.1   2023-08-04 [3] local
+#>  stats       * 4.3.1   2023-10-03 [3] local
 #>  tibble        3.2.1   2023-03-20 [1] RSPM
 #>  tidyselect    1.2.0   2022-10-10 [1] RSPM
-#>  tools         4.3.1   2023-08-04 [3] local
+#>  tools         4.3.1   2023-10-03 [3] local
 #>  utf8          1.2.3   2023-01-31 [1] RSPM
-#>  utils       * 4.3.1   2023-08-04 [3] local
+#>  utils       * 4.3.1   2023-10-03 [3] local
 #>  vctrs         0.6.3   2023-06-14 [1] RSPM
 #>  withr         2.5.1   2023-09-26 [1] RSPM
 #>  xfun          0.40    2023-08-09 [1] RSPM
