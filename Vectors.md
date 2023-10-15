@@ -210,7 +210,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x55f726889628>
+#> <bytecode: 0x5642d57e31e8>
 #> <environment: namespace:stats>
 ```
 
@@ -240,7 +240,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x55f725afd020>
+#> <bytecode: 0x5642d4a57030>
 #> <environment: namespace:base>
 ```
 
@@ -841,7 +841,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-10-08
+#>  date     2023-10-15
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -860,7 +860,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  fs            1.6.3   2023-07-20 [1] RSPM
 #>  graphics    * 4.3.1   2023-10-03 [3] local
 #>  grDevices   * 4.3.1   2023-10-03 [3] local
-#>  htmltools     0.5.6   2023-08-10 [1] RSPM
+#>  htmltools     0.5.6.1 2023-10-06 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.7   2023-06-29 [1] RSPM
 #>  knitr         1.44    2023-09-11 [1] RSPM
@@ -877,7 +877,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  stats       * 4.3.1   2023-10-03 [3] local
 #>  tools         4.3.1   2023-10-03 [3] local
 #>  utils       * 4.3.1   2023-10-03 [3] local
-#>  vctrs         0.6.3   2023-06-14 [1] RSPM
+#>  vctrs         0.6.4   2023-10-12 [1] RSPM
 #>  withr         2.5.1   2023-09-26 [1] RSPM
 #>  xfun          0.40    2023-08-09 [1] RSPM
 #>  xml2          1.3.5   2023-07-06 [1] RSPM

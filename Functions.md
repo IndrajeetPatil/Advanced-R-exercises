@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x560ff6cd98b8>
+#> <bytecode: 0x55f56918b8b8>
 #> <environment: namespace:base>
 ```
 
@@ -347,7 +347,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x560ff6cd98b8>
+#> <bytecode: 0x55f56918b8b8>
 #> <environment: namespace:base>
 
 # other package function
@@ -356,7 +356,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x560ff98d2d90>
+#> <bytecode: 0x55f56bd75748>
 #> <environment: namespace:purrr>
 ```
 
@@ -559,7 +559,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x560ff9f03b88" "0x560ff9f03b88"
+#> [1] "0x55f56c027e38" "0x55f56c027e38"
 #> [1] 100
 ```
 
@@ -654,7 +654,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2023-10-08 00:41:04 UTC"
+#> [1] "2023-10-15 00:41:23 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -874,7 +874,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x560fffee1d00>
+#> <bytecode: 0x55f572399260>
 #> <environment: namespace:withr>
 ```
 
@@ -958,7 +958,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x561000367eb8>
+#> <bytecode: 0x55f57281f148>
 #> <environment: namespace:utils>
 ```
 
@@ -1298,7 +1298,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-10-08
+#>  date     2023-10-15
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1315,19 +1315,19 @@ sessioninfo::session_info(include_base = TRUE)
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr       * 1.1.3   2023-09-03 [1] RSPM
 #>  evaluate      0.22    2023-09-29 [1] RSPM
-#>  fansi         1.0.4   2023-01-22 [1] RSPM
+#>  fansi         1.0.5   2023-10-08 [1] RSPM
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM
 #>  forcats     * 1.0.0   2023-01-29 [1] RSPM
 #>  fs            1.6.3   2023-07-20 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
-#>  ggplot2     * 3.4.3   2023-08-14 [1] RSPM
+#>  ggplot2     * 3.4.4   2023-10-12 [1] RSPM
 #>  glue          1.6.2   2022-02-24 [1] RSPM
 #>  graphics    * 4.3.1   2023-10-03 [3] local
 #>  grDevices   * 4.3.1   2023-10-03 [3] local
 #>  grid          4.3.1   2023-10-03 [3] local
 #>  gtable        0.3.4   2023-08-21 [1] RSPM
 #>  hms           1.1.3   2023-03-21 [1] RSPM
-#>  htmltools     0.5.6   2023-08-10 [1] RSPM
+#>  htmltools     0.5.6.1 2023-10-06 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.7   2023-06-29 [1] RSPM
 #>  knitr         1.44    2023-09-11 [1] RSPM
@@ -1360,7 +1360,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  tzdb          0.4.0   2023-05-12 [1] RSPM
 #>  utf8          1.2.3   2023-01-31 [1] RSPM
 #>  utils       * 4.3.1   2023-10-03 [3] local
-#>  vctrs         0.6.3   2023-06-14 [1] RSPM
+#>  vctrs         0.6.4   2023-10-12 [1] RSPM
 #>  withr         2.5.1   2023-09-26 [1] RSPM
 #>  xfun          0.40    2023-08-09 [1] RSPM
 #>  xml2          1.3.5   2023-07-06 [1] RSPM

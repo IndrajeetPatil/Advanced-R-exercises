@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x563373c2e2e8>
+#> <environment: 0x5629ba16fea8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ```r
 lobstr::ref(e$loop)
-#> █ [1:0x563373c2e2e8] <env> 
-#> └─loop = [1:0x563373c2e2e8]
+#> █ [1:0x5629ba16fea8] <env> 
+#> └─loop = [1:0x5629ba16fea8]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x563375ad33c8" "0x563375ad33c8"
+#> [1] "0x5629bc0152d8" "0x5629bc0152d8"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x563375b22798" "0x563375b22798"
+#> [1] "0x5629bc0646a8" "0x5629bc0646a8"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x5633710ee8b8>
+#> <bytecode: 0x5629b76308b8>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -506,7 +506,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x563371c06210>
+#> <bytecode: 0x5629b8148240>
 #> <environment: namespace:rlang>
 ```
 
@@ -559,7 +559,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-10-08
+#>  date     2023-10-15
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -576,14 +576,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr         1.1.3   2023-09-03 [1] RSPM
 #>  evaluate      0.22    2023-09-29 [1] RSPM
-#>  fansi         1.0.4   2023-01-22 [1] RSPM
+#>  fansi         1.0.5   2023-10-08 [1] RSPM
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM
 #>  fs            1.6.3   2023-07-20 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
 #>  glue          1.6.2   2022-02-24 [1] RSPM
 #>  graphics    * 4.3.1   2023-10-03 [3] local
 #>  grDevices   * 4.3.1   2023-10-03 [3] local
-#>  htmltools     0.5.6   2023-08-10 [1] RSPM
+#>  htmltools     0.5.6.1 2023-10-06 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.7   2023-06-29 [1] RSPM
 #>  knitr         1.44    2023-09-11 [1] RSPM
@@ -606,7 +606,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  tools         4.3.1   2023-10-03 [3] local
 #>  utf8          1.2.3   2023-01-31 [1] RSPM
 #>  utils       * 4.3.1   2023-10-03 [3] local
-#>  vctrs         0.6.3   2023-06-14 [1] RSPM
+#>  vctrs         0.6.4   2023-10-12 [1] RSPM
 #>  withr         2.5.1   2023-09-26 [1] RSPM
 #>  xfun          0.40    2023-08-09 [1] RSPM
 #>  xml2          1.3.5   2023-07-06 [1] RSPM

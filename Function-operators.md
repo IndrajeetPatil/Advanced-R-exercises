@@ -94,7 +94,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x55976e01da60>
+#> <bytecode: 0x56364c310128>
 #> <environment: namespace:purrr>
 ```
 
@@ -120,7 +120,7 @@ safely
 #>     check_bool(quiet)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x55976e1b0b30>
+#> <bytecode: 0x56364c4a5118>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -132,7 +132,7 @@ purrr:::capture_error
 #>         list(result = otherwise, error = e)
 #>     })
 #> }
-#> <bytecode: 0x55976e2085b8>
+#> <bytecode: 0x56364c4fac80>
 #> <environment: namespace:purrr>
 ```
 
@@ -281,10 +281,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2023-10-08 00:41:20.567656
-#> Function called at:  2023-10-08 00:41:25.57566
-#> Function called at:  2023-10-08 00:41:30.576823
-#> Function called at:  2023-10-08 00:41:38.591761
+#> Function created at: 2023-10-15 00:41:39.627159
+#> Function called at:  2023-10-15 00:41:44.634861
+#> Function called at:  2023-10-15 00:41:49.640401
+#> Function called at:  2023-10-15 00:41:57.653947
 ```
 
 ---
@@ -333,7 +333,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-10-08
+#>  date     2023-10-15
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -349,14 +349,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr         1.1.3   2023-09-03 [1] RSPM
 #>  evaluate      0.22    2023-09-29 [1] RSPM
-#>  fansi         1.0.4   2023-01-22 [1] RSPM
+#>  fansi         1.0.5   2023-10-08 [1] RSPM
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM
 #>  fs            1.6.3   2023-07-20 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
 #>  glue          1.6.2   2022-02-24 [1] RSPM
 #>  graphics    * 4.3.1   2023-10-03 [3] local
 #>  grDevices   * 4.3.1   2023-10-03 [3] local
-#>  htmltools     0.5.6   2023-08-10 [1] RSPM
+#>  htmltools     0.5.6.1 2023-10-06 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.7   2023-06-29 [1] RSPM
 #>  knitr         1.44    2023-09-11 [1] RSPM
@@ -378,7 +378,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  tools         4.3.1   2023-10-03 [3] local
 #>  utf8          1.2.3   2023-01-31 [1] RSPM
 #>  utils       * 4.3.1   2023-10-03 [3] local
-#>  vctrs         0.6.3   2023-06-14 [1] RSPM
+#>  vctrs         0.6.4   2023-10-12 [1] RSPM
 #>  withr         2.5.1   2023-09-26 [1] RSPM
 #>  xfun          0.40    2023-08-09 [1] RSPM
 #>  xml2          1.3.5   2023-07-06 [1] RSPM
