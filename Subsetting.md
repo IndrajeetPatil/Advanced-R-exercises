@@ -418,7 +418,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-10-22
+#>  date     2023-10-29
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -457,7 +457,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  stats       * 4.3.1   2023-10-03 [3] local
 #>  tibble      * 3.2.1   2023-03-20 [1] RSPM
 #>  tools         4.3.1   2023-10-03 [3] local
-#>  utf8          1.2.3   2023-01-31 [1] RSPM
+#>  utf8          1.2.4   2023-10-22 [1] RSPM
 #>  utils       * 4.3.1   2023-10-03 [3] local
 #>  vctrs         0.6.4   2023-10-12 [1] RSPM
 #>  withr         2.5.1   2023-09-26 [1] RSPM

@@ -374,7 +374,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55dfe6bb98b8>
+#> <bytecode: 0x55a7e4397d48>
 #> <environment: namespace:base>
 ```
 
@@ -993,7 +993,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-10-22
+#>  date     2023-10-29
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1033,7 +1033,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.3.1   2023-10-03 [3] local
 #>  tools         4.3.1   2023-10-03 [3] local
-#>  utf8          1.2.3   2023-01-31 [1] RSPM
+#>  utf8          1.2.4   2023-10-22 [1] RSPM
 #>  utils       * 4.3.1   2023-10-03 [3] local
 #>  vctrs         0.6.4   2023-10-12 [1] RSPM
 #>  withr         2.5.1   2023-09-26 [1] RSPM

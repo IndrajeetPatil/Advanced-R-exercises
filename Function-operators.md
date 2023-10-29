@@ -94,7 +94,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x55ee360a19a0>
+#> <bytecode: 0x5592479f68f8>
 #> <environment: namespace:purrr>
 ```
 
@@ -120,7 +120,7 @@ safely
 #>     check_bool(quiet)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x55ee36236990>
+#> <bytecode: 0x559247b8b8e8>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -132,7 +132,7 @@ purrr:::capture_error
 #>         list(result = otherwise, error = e)
 #>     })
 #> }
-#> <bytecode: 0x55ee3628c4f8>
+#> <bytecode: 0x559247be1450>
 #> <environment: namespace:purrr>
 ```
 
@@ -281,10 +281,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2023-10-22 00:41:22.272988
-#> Function called at:  2023-10-22 00:41:27.28018
-#> Function called at:  2023-10-22 00:41:32.285563
-#> Function called at:  2023-10-22 00:41:40.29779
+#> Function created at: 2023-10-29 00:41:25.952978
+#> Function called at:  2023-10-29 00:41:30.960816
+#> Function called at:  2023-10-29 00:41:35.966434
+#> Function called at:  2023-10-29 00:41:43.976406
 ```
 
 ---
@@ -333,7 +333,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-10-22
+#>  date     2023-10-29
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -376,7 +376,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  tibble        3.2.1   2023-03-20 [1] RSPM
 #>  tidyselect    1.2.0   2022-10-10 [1] RSPM
 #>  tools         4.3.1   2023-10-03 [3] local
-#>  utf8          1.2.3   2023-01-31 [1] RSPM
+#>  utf8          1.2.4   2023-10-22 [1] RSPM
 #>  utils       * 4.3.1   2023-10-03 [3] local
 #>  vctrs         0.6.4   2023-10-12 [1] RSPM
 #>  withr         2.5.1   2023-09-26 [1] RSPM
