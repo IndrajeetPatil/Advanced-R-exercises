@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x560098f7fd48>
+#> <bytecode: 0x55c26e5ef240>
 #> <environment: namespace:base>
 ```
 
@@ -347,7 +347,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x560098f7fd48>
+#> <bytecode: 0x55c26e5ef240>
 #> <environment: namespace:base>
 
 # other package function
@@ -356,7 +356,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x56009bbc5b08>
+#> <bytecode: 0x55c271425b08>
 #> <environment: namespace:purrr>
 ```
 
@@ -559,7 +559,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x56009c8125f8" "0x56009c8125f8"
+#> [1] "0x55c275ef23f8" "0x55c275ef23f8"
 #> [1] 100
 ```
 
@@ -654,7 +654,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2023-10-29 00:41:09 UTC"
+#> [1] "2023-11-05 00:43:27 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -874,7 +874,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x5600a2117e98>
+#> <bytecode: 0x55c2726fc608>
 #> <environment: namespace:withr>
 ```
 
@@ -958,7 +958,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x5600a25739d8>
+#> <bytecode: 0x55c27081c3c0>
 #> <environment: namespace:utils>
 ```
 
@@ -1290,7 +1290,7 @@ identical(setdiff(x, y), x %/% y)
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
-#>  version  R version 4.3.1 (2023-06-16)
+#>  version  R version 4.3.2 (2023-10-31)
 #>  os       Ubuntu 22.04.3 LTS
 #>  system   x86_64, linux-gnu
 #>  ui       X11
@@ -1298,23 +1298,23 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-10-29
+#>  date     2023-11-05
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
-#>  base        * 4.3.1   2023-10-03 [3] local
+#>  base        * 4.3.2   2023-11-01 [3] local
 #>  bookdown      0.36    2023-10-16 [1] RSPM
 #>  bslib         0.5.1   2023-08-11 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.1   2023-03-23 [1] RSPM
 #>  colorspace    2.1-0   2023-01-23 [1] RSPM
-#>  compiler      4.3.1   2023-10-03 [3] local
-#>  datasets    * 4.3.1   2023-10-03 [3] local
+#>  compiler      4.3.2   2023-11-01 [3] local
+#>  datasets    * 4.3.2   2023-11-01 [3] local
 #>  digest        0.6.33  2023-07-07 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr       * 1.1.3   2023-09-03 [1] RSPM
-#>  evaluate      0.22    2023-09-29 [1] RSPM
+#>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.5   2023-10-08 [1] RSPM
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM
 #>  forcats     * 1.0.0   2023-01-29 [1] RSPM
@@ -1322,21 +1322,22 @@ sessioninfo::session_info(include_base = TRUE)
 #>  generics      0.1.3   2022-07-05 [1] RSPM
 #>  ggplot2     * 3.4.4   2023-10-12 [1] RSPM
 #>  glue          1.6.2   2022-02-24 [1] RSPM
-#>  graphics    * 4.3.1   2023-10-03 [3] local
-#>  grDevices   * 4.3.1   2023-10-03 [3] local
-#>  grid          4.3.1   2023-10-03 [3] local
+#>  graphics    * 4.3.2   2023-11-01 [3] local
+#>  grDevices   * 4.3.2   2023-11-01 [3] local
+#>  grid          4.3.2   2023-11-01 [3] local
 #>  gtable        0.3.4   2023-08-21 [1] RSPM
+#>  highr         0.10    2022-12-22 [1] RSPM
 #>  hms           1.1.3   2023-03-21 [1] RSPM
 #>  htmltools     0.5.6.1 2023-10-06 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.7   2023-06-29 [1] RSPM
-#>  knitr         1.44    2023-09-11 [1] RSPM
+#>  knitr         1.45    2023-10-30 [1] RSPM
 #>  lifecycle     1.0.3   2022-10-07 [1] RSPM
 #>  lobstr        1.1.2   2022-06-22 [1] RSPM
 #>  lubridate   * 1.9.3   2023-09-27 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM
-#>  methods     * 4.3.1   2023-10-03 [3] local
+#>  methods     * 4.3.2   2023-11-01 [3] local
 #>  munsell       0.5.0   2018-06-12 [1] RSPM
 #>  pillar        1.9.0   2023-03-22 [1] RSPM
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
@@ -1348,7 +1349,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  sass          0.4.7   2023-07-15 [1] RSPM
 #>  scales        1.2.1   2022-08-20 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
-#>  stats       * 4.3.1   2023-10-03 [3] local
+#>  stats       * 4.3.2   2023-11-01 [3] local
 #>  stringi       1.7.12  2023-01-11 [1] RSPM
 #>  stringr     * 1.5.0   2022-12-02 [1] RSPM
 #>  tibble      * 3.2.1   2023-03-20 [1] RSPM
@@ -1356,19 +1357,19 @@ sessioninfo::session_info(include_base = TRUE)
 #>  tidyselect    1.2.0   2022-10-10 [1] RSPM
 #>  tidyverse   * 2.0.0   2023-02-22 [1] RSPM
 #>  timechange    0.2.0   2023-01-11 [1] RSPM
-#>  tools         4.3.1   2023-10-03 [3] local
+#>  tools         4.3.2   2023-11-01 [3] local
 #>  tzdb          0.4.0   2023-05-12 [1] RSPM
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
-#>  utils       * 4.3.1   2023-10-03 [3] local
+#>  utils       * 4.3.2   2023-11-01 [3] local
 #>  vctrs         0.6.4   2023-10-12 [1] RSPM
-#>  withr         2.5.1   2023-09-26 [1] RSPM
-#>  xfun          0.40    2023-08-09 [1] RSPM
+#>  withr         2.5.2   2023-10-30 [1] RSPM
+#>  xfun          0.41    2023-11-01 [1] RSPM
 #>  xml2          1.3.5   2023-07-06 [1] RSPM
 #>  yaml          2.3.7   2023-01-23 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library
-#>  [2] /opt/R/4.3.1/lib/R/site-library
-#>  [3] /opt/R/4.3.1/lib/R/library
+#>  [2] /opt/R/4.3.2/lib/R/site-library
+#>  [3] /opt/R/4.3.2/lib/R/library
 #> 
 #> ──────────────────────────────────────────────────────────
 ```
