@@ -131,7 +131,7 @@
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt;     .Internal(remove(list, envir, inherits))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x55a2ab9acfe8&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x55c9caf6adf0&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>I still couldn’t figure out why. I would recommend checking out the <a href="https://advanced-r-solutions.rbind.io/measuring-performance.html#profiling">official answer</a>.</p>
 <hr>
@@ -194,8 +194,8 @@
 <span><span class="co">#&gt; # A tibble: 2 × 4</span></span>
 <span><span class="co">#&gt;   expression bench_mean systime_with_gc systime_with_nogc</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt;           &lt;dbl&gt;             &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 sqrt(x)      660.38ns           0.432             0.439</span></span>
-<span><span class="co">#&gt; 2 x^0.5          2.14µs           1.98              1.98</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 sqrt(x)      680.76ns           0.441             0.436</span></span>
+<span><span class="co">#&gt; 2 x^0.5          2.14µs           1.99              1.99</span></span></code></pre></div>
 <p>The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.</p>
 <hr>
 <p><strong>Q2.</strong> Here are two other ways to compute the square root of a vector. Which do you think will be fastest? Which will be slowest? Use microbenchmarking to test your answers.</p>
@@ -219,10 +219,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span><span class="co">#&gt;   expression      median</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt;    &lt;bch:tm&gt;</span></span>
-<span><span class="co">#&gt; 1 sqrt(x)         3.03µs</span></span>
-<span><span class="co">#&gt; 2 exp(log(x)/2)  12.63µs</span></span>
+<span><span class="co">#&gt; 1 sqrt(x)         3.02µs</span></span>
+<span><span class="co">#&gt; 2 exp(log(x)/2)   12.6µs</span></span>
 <span><span class="co">#&gt; 3 x^0.5          18.86µs</span></span>
-<span><span class="co">#&gt; 4 x^(1/2)        19.02µs</span></span></code></pre></div>
+<span><span class="co">#&gt; 4 x^(1/2)           19µs</span></span></code></pre></div>
 <p>The specialized primitive function <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code> (written in <code>C</code>) is the fastest way to compute square root.</p>
 <hr>
 </div>
@@ -242,7 +242,7 @@
 <span><span class="co">#&gt;  collate  C.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2023-11-05</span></span>
+<span><span class="co">#&gt;  date     2023-11-12</span></span>
 <span><span class="co">#&gt;  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────</span></span>
@@ -266,12 +266,12 @@
 <span><span class="co">#&gt;  glue          1.6.2   2022-02-24 [1] RSPM</span></span>
 <span><span class="co">#&gt;  graphics    * 4.3.2   2023-11-01 [3] local</span></span>
 <span><span class="co">#&gt;  grDevices   * 4.3.2   2023-11-01 [3] local</span></span>
-<span><span class="co">#&gt;  htmltools     0.5.6.1 2023-10-06 [1] RSPM</span></span>
+<span><span class="co">#&gt;  htmltools     0.5.7   2023-11-03 [1] RSPM</span></span>
 <span><span class="co">#&gt;  htmlwidgets   1.6.2   2023-03-17 [1] RSPM</span></span>
 <span><span class="co">#&gt;  jquerylib     0.1.4   2021-04-26 [1] RSPM</span></span>
 <span><span class="co">#&gt;  jsonlite      1.8.7   2023-06-29 [1] RSPM</span></span>
 <span><span class="co">#&gt;  knitr         1.45    2023-10-30 [1] RSPM</span></span>
-<span><span class="co">#&gt;  lifecycle     1.0.3   2022-10-07 [1] RSPM</span></span>
+<span><span class="co">#&gt;  lifecycle     1.0.4   2023-11-07 [1] RSPM</span></span>
 <span><span class="co">#&gt;  magrittr    * 2.0.3   2022-03-30 [1] RSPM</span></span>
 <span><span class="co">#&gt;  memoise       2.0.1   2021-11-26 [1] RSPM</span></span>
 <span><span class="co">#&gt;  methods     * 4.3.2   2023-11-01 [3] local</span></span>
@@ -281,7 +281,7 @@
 <span><span class="co">#&gt;  profvis     * 0.3.8   2023-05-02 [1] RSPM</span></span>
 <span><span class="co">#&gt;  purrr         1.0.2   2023-08-10 [1] RSPM</span></span>
 <span><span class="co">#&gt;  R6            2.5.1   2021-08-19 [1] RSPM</span></span>
-<span><span class="co">#&gt;  rlang         1.1.1   2023-04-28 [1] RSPM</span></span>
+<span><span class="co">#&gt;  rlang         1.1.2   2023-11-04 [1] RSPM</span></span>
 <span><span class="co">#&gt;  rmarkdown     2.25    2023-09-18 [1] RSPM</span></span>
 <span><span class="co">#&gt;  sass          0.4.7   2023-07-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  sessioninfo   1.2.2   2021-12-06 [1] RSPM</span></span>
@@ -334,7 +334,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2023-11-05.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2023-11-12.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -36,7 +36,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck_raw(x, list(1), .default = NULL)
-#> <environment: 0x559198f0cf20>
+#> <environment: 0x55c0a0239768>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -47,7 +47,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, 1), .default = NULL)
-#> <environment: 0x559198fee038>
+#> <environment: 0x55c0a0319c20>
 
 # mapping by name -----------------------
 
@@ -65,7 +65,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck_raw(x, list("m"), .default = NULL)
-#> <environment: 0x55919913e130>
+#> <environment: 0x55c0a046db48>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -77,7 +77,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, "m"), .default = NULL)
-#> <environment: 0x559199224208>
+#> <environment: 0x55c0a0553c20>
 
 # compact functions ----------------------------
 
@@ -139,7 +139,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck_raw(x, list(0.597890264587477, 0.587997315218672), .default = NULL)
-#> <environment: 0x55919a1b2568>
+#> <environment: 0x55c0a14e4ee0>
 ```
 
 ---
@@ -880,7 +880,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x559198a74eb8>
+#> <environment: 0x55c09ff75b70>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>
@@ -1015,7 +1015,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-11-05
+#>  date     2023-11-12
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1039,11 +1039,11 @@ sessioninfo::session_info(include_base = TRUE)
 #>  graphics    * 4.3.2   2023-11-01 [3] local
 #>  grDevices   * 4.3.2   2023-11-01 [3] local
 #>  highr         0.10    2022-12-22 [1] RSPM
-#>  htmltools     0.5.6.1 2023-10-06 [1] RSPM
+#>  htmltools     0.5.7   2023-11-03 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.7   2023-06-29 [1] RSPM
 #>  knitr         1.45    2023-10-30 [1] RSPM
-#>  lifecycle     1.0.3   2022-10-07 [1] RSPM
+#>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM
 #>  methods     * 4.3.2   2023-11-01 [3] local
@@ -1051,7 +1051,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
 #>  purrr       * 1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
-#>  rlang       * 1.1.1   2023-04-28 [1] RSPM
+#>  rlang       * 1.1.2   2023-11-04 [1] RSPM
 #>  rmarkdown     2.25    2023-09-18 [1] RSPM
 #>  sass          0.4.7   2023-07-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM

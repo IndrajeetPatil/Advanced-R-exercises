@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x55f29be4a5c0>
+#> <bytecode: 0x564ec97cf7a8>
 #> <environment: namespace:rlang>
 ```
 
@@ -193,7 +193,7 @@ rlang::enexpr
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x55f298c12cd8>
+#> <bytecode: 0x564ec658dae0>
 #> <environment: namespace:rlang>
 ```
 
@@ -824,7 +824,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-11-05
+#>  date     2023-11-12
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -855,12 +855,12 @@ sessioninfo::session_info(include_base = TRUE)
 #>  grid          4.3.2   2023-11-01 [3] local
 #>  gtable        0.3.4   2023-08-21 [1] RSPM
 #>  highr         0.10    2022-12-22 [1] RSPM
-#>  htmltools     0.5.6.1 2023-10-06 [1] RSPM
+#>  htmltools     0.5.7   2023-11-03 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.7   2023-06-29 [1] RSPM
 #>  knitr         1.45    2023-10-30 [1] RSPM
 #>  labeling      0.4.3   2023-08-29 [1] RSPM
-#>  lifecycle     1.0.3   2022-10-07 [1] RSPM
+#>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  lobstr      * 1.1.2   2022-06-22 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  MASS        * 7.3-60  2023-05-04 [3] CRAN (R 4.3.2)
@@ -872,7 +872,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  purrr       * 1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rematch2      2.1.2   2020-05-01 [1] RSPM
-#>  rlang       * 1.1.1   2023-04-28 [1] RSPM
+#>  rlang       * 1.1.2   2023-11-04 [1] RSPM
 #>  rmarkdown     2.25    2023-09-18 [1] RSPM
 #>  sass          0.4.7   2023-07-15 [1] RSPM
 #>  scales        1.2.1   2022-08-20 [1] RSPM
