@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x563af17885a8>
+#> <bytecode: 0x5624ee0ea5a8>
 #> <environment: namespace:base>
 ```
 
@@ -347,7 +347,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x563af17885a8>
+#> <bytecode: 0x5624ee0ea5a8>
 #> <environment: namespace:base>
 
 # other package function
@@ -356,7 +356,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x563af466f918>
+#> <bytecode: 0x5624f0fd1c60>
 #> <environment: namespace:purrr>
 ```
 
@@ -559,7 +559,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x563af8b4af60" "0x563af8b4af60"
+#> [1] "0x5624f54a5258" "0x5624f54a5258"
 #> [1] 100
 ```
 
@@ -654,7 +654,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2023-11-12 00:42:26 UTC"
+#> [1] "2023-11-19 00:42:35 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -874,7 +874,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x563af5c3db58>
+#> <bytecode: 0x5624f25a5d50>
 #> <environment: namespace:withr>
 ```
 
@@ -958,7 +958,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x563af4f3b1f8>
+#> <bytecode: 0x5624f18aa2d0>
 #> <environment: namespace:utils>
 ```
 
@@ -1298,7 +1298,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-11-12
+#>  date     2023-11-19
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1350,8 +1350,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  scales        1.2.1   2022-08-20 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.3.2   2023-11-01 [3] local
-#>  stringi       1.7.12  2023-01-11 [1] RSPM
-#>  stringr     * 1.5.0   2022-12-02 [1] RSPM
+#>  stringi       1.8.1   2023-11-13 [1] RSPM
+#>  stringr     * 1.5.1   2023-11-14 [1] RSPM
 #>  tibble      * 3.2.1   2023-03-20 [1] RSPM
 #>  tidyr       * 1.3.0   2023-01-24 [1] RSPM
 #>  tidyselect    1.2.0   2022-10-10 [1] RSPM

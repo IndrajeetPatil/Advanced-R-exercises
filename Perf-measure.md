@@ -68,7 +68,7 @@ rm
 #>     }
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x55c9caf6adf0>
+#> <bytecode: 0x55ee654e9df0>
 #> <environment: namespace:base>
 ```
 
@@ -144,8 +144,8 @@ full_join(t_bench_df, t_systime_df, by = "expression")
 #> # A tibble: 2 × 4
 #>   expression bench_mean systime_with_gc systime_with_nogc
 #>   <bch:expr>   <bch:tm>           <dbl>             <dbl>
-#> 1 sqrt(x)      680.76ns           0.441             0.436
-#> 2 x^0.5          2.14µs           1.99              1.99
+#> 1 sqrt(x)      666.41ns           0.440             0.448
+#> 2 x^0.5          2.14µs           1.99              2.00
 ```
 
 The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.
@@ -180,10 +180,10 @@ bench::mark(
 #> # A tibble: 4 × 2
 #>   expression      median
 #>   <bch:expr>    <bch:tm>
-#> 1 sqrt(x)         3.02µs
-#> 2 exp(log(x)/2)   12.6µs
-#> 3 x^0.5          18.86µs
-#> 4 x^(1/2)           19µs
+#> 1 sqrt(x)         3.05µs
+#> 2 exp(log(x)/2)  12.62µs
+#> 3 x^0.5          18.88µs
+#> 4 x^(1/2)        18.98µs
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.
@@ -205,7 +205,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-11-12
+#>  date     2023-11-19
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -249,8 +249,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  sass          0.4.7   2023-07-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.3.2   2023-11-01 [3] local
-#>  stringi       1.7.12  2023-01-11 [1] RSPM
-#>  stringr       1.5.0   2022-12-02 [1] RSPM
+#>  stringi       1.8.1   2023-11-13 [1] RSPM
+#>  stringr       1.5.1   2023-11-14 [1] RSPM
 #>  tibble        3.2.1   2023-03-20 [1] RSPM
 #>  tidyselect    1.2.0   2022-10-10 [1] RSPM
 #>  tools         4.3.2   2023-11-01 [3] local
