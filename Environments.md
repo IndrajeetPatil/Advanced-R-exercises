@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x555704c58498>
+#> <environment: 0x55e5259f4650>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ```r
 lobstr::ref(e$loop)
-#> █ [1:0x555704c58498] <env> 
-#> └─loop = [1:0x555704c58498]
+#> █ [1:0x55e5259f4650] <env> 
+#> └─loop = [1:0x55e5259f4650]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x555706dc1e28" "0x555706dc1e28"
+#> [1] "0x55e52808c6f8" "0x55e52808c6f8"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x555706e133c8" "0x555706e133c8"
+#> [1] "0x55e5280ddc98" "0x55e5280ddc98"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x5557022cd5a8>
+#> <bytecode: 0x55e52344d5a8>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -506,7 +506,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x555702dec8d0>
+#> <bytecode: 0x55e523f6c8d0>
 #> <environment: namespace:rlang>
 ```
 
@@ -559,14 +559,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-11-19
+#>  date     2023-11-26
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
 #>  base        * 4.3.2   2023-11-01 [3] local
 #>  bookdown      0.36    2023-10-16 [1] RSPM
-#>  bslib         0.5.1   2023-08-11 [1] RSPM
+#>  bslib         0.6.0   2023-11-21 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.1   2023-03-23 [1] RSPM
 #>  compiler      4.3.2   2023-11-01 [3] local
@@ -574,7 +574,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  datasets    * 4.3.2   2023-11-01 [3] local
 #>  digest        0.6.33  2023-07-07 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
-#>  dplyr         1.1.3   2023-09-03 [1] RSPM
+#>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.5   2023-10-08 [1] RSPM
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM

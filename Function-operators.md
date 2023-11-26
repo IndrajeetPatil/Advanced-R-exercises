@@ -94,7 +94,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x56176c203580>
+#> <bytecode: 0x55556b0656d8>
 #> <environment: namespace:purrr>
 ```
 
@@ -120,7 +120,7 @@ safely
 #>     check_bool(quiet)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x56176c3a0ee0>
+#> <bytecode: 0x55556b2043e8>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -132,7 +132,7 @@ purrr:::capture_error
 #>         list(result = otherwise, error = e)
 #>     })
 #> }
-#> <bytecode: 0x56176c3fb718>
+#> <bytecode: 0x55556b25c7b0>
 #> <environment: namespace:purrr>
 ```
 
@@ -281,10 +281,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2023-11-19 00:42:48.534073
-#> Function called at:  2023-11-19 00:42:53.541095
-#> Function called at:  2023-11-19 00:42:58.546445
-#> Function called at:  2023-11-19 00:43:06.554884
+#> Function created at: 2023-11-26 00:43:19.686687
+#> Function called at:  2023-11-26 00:43:24.693907
+#> Function called at:  2023-11-26 00:43:29.699333
+#> Function called at:  2023-11-26 00:43:37.707853
 ```
 
 ---
@@ -333,21 +333,21 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-11-19
+#>  date     2023-11-26
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
 #>  base        * 4.3.2   2023-11-01 [3] local
 #>  bookdown      0.36    2023-10-16 [1] RSPM
-#>  bslib         0.5.1   2023-08-11 [1] RSPM
+#>  bslib         0.6.0   2023-11-21 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.1   2023-03-23 [1] RSPM
 #>  compiler      4.3.2   2023-11-01 [3] local
 #>  datasets    * 4.3.2   2023-11-01 [3] local
 #>  digest        0.6.33  2023-07-07 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
-#>  dplyr         1.1.3   2023-09-03 [1] RSPM
+#>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.5   2023-10-08 [1] RSPM
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM

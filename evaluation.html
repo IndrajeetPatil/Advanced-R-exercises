@@ -22,7 +22,7 @@
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Roboto-0.4.7/font.css" rel="stylesheet">
 <link href="libs/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
 <link href="libs/Roboto_Slab-0.4.7/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs3compat-0.6.0/transition.js"></script><script src="libs/bs3compat-0.6.0/tabs.js"></script><script src="libs/bs3compat-0.6.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -122,7 +122,7 @@
 <span>    <span class="fu">foo</span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x5640427e44f8&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x561e384082a8&gt;</span></span>
 <span><span class="co">#&gt; Parent: &lt;environment: global&gt;</span></span></code></pre></div>
 <p>To specify a custom environment, the <code><a href="https://rdrr.io/r/base/sys.source.html">sys.source()</a></code> function can be used, which provides an <code>envir</code> parameter.</p>
 <hr>
@@ -275,17 +275,17 @@
 <span><span class="va">q1</span></span>
 <span><span class="co">#&gt; &lt;quosure&gt;</span></span>
 <span><span class="co">#&gt; expr: ^x</span></span>
-<span><span class="co">#&gt; env:  0x564042616ad0</span></span>
+<span><span class="co">#&gt; env:  0x561e382664c8</span></span>
 <span><span class="va">q2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="op">!</span><span class="op">!</span><span class="va">q1</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">q2</span></span>
 <span><span class="co">#&gt; &lt;quosure&gt;</span></span>
 <span><span class="co">#&gt; expr: ^x + (^x)</span></span>
-<span><span class="co">#&gt; env:  0x564042c68db8</span></span>
+<span><span class="co">#&gt; env:  0x561e388b90c8</span></span>
 <span><span class="va">q3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="op">!</span><span class="op">!</span><span class="va">q2</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">q3</span></span>
 <span><span class="co">#&gt; &lt;quosure&gt;</span></span>
 <span><span class="co">#&gt; expr: ^x + (^x + (^x))</span></span>
-<span><span class="co">#&gt; env:  0x564042f27560</span></span></code></pre></div>
+<span><span class="co">#&gt; env:  0x561e38b830c8</span></span></code></pre></div>
 <p><strong>A1.</strong> Correctly predicted 😉</p>
 <div class="sourceCode" id="cb598"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">q1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
@@ -313,7 +313,7 @@
 <span></span>
 <span><span class="va">foo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">enenv</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="fu">foo</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x564043e93c78&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x561e39ae8958&gt;</span></span></code></pre></div>
 <hr>
 </div>
 <div id="data-masks-exercises-20.4.6" class="section level2" number="20.3">
@@ -608,14 +608,14 @@
 <span><span class="co">#&gt;  collate  C.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2023-11-19</span></span>
+<span><span class="co">#&gt;  date     2023-11-26</span></span>
 <span><span class="co">#&gt;  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt;  package     * version date (UTC) lib source</span></span>
 <span><span class="co">#&gt;  base        * 4.3.2   2023-11-01 [3] local</span></span>
 <span><span class="co">#&gt;  bookdown      0.36    2023-10-16 [1] RSPM</span></span>
-<span><span class="co">#&gt;  bslib         0.5.1   2023-08-11 [1] RSPM</span></span>
+<span><span class="co">#&gt;  bslib         0.6.0   2023-11-21 [1] RSPM</span></span>
 <span><span class="co">#&gt;  cachem        1.0.8   2023-05-01 [1] RSPM</span></span>
 <span><span class="co">#&gt;  cli           3.6.1   2023-03-23 [1] RSPM</span></span>
 <span><span class="co">#&gt;  compiler      4.3.2   2023-11-01 [3] local</span></span>
@@ -692,7 +692,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2023-11-19.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2023-11-26.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

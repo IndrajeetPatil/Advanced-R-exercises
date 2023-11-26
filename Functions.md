@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x5624ee0ea5a8>
+#> <bytecode: 0x55efa23a75a8>
 #> <environment: namespace:base>
 ```
 
@@ -347,7 +347,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x5624ee0ea5a8>
+#> <bytecode: 0x55efa23a75a8>
 #> <environment: namespace:base>
 
 # other package function
@@ -356,7 +356,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x5624f0fd1c60>
+#> <bytecode: 0x55efa4a2d618>
 #> <environment: namespace:purrr>
 ```
 
@@ -559,7 +559,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x5624f54a5258" "0x5624f54a5258"
+#> [1] "0x55efa2ee6348" "0x55efa2ee6348"
 #> [1] 100
 ```
 
@@ -654,7 +654,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2023-11-19 00:42:35 UTC"
+#> [1] "2023-11-26 00:43:04 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -874,7 +874,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x5624f25a5d50>
+#> <bytecode: 0x55efab756400>
 #> <environment: namespace:withr>
 ```
 
@@ -958,7 +958,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x5624f18aa2d0>
+#> <bytecode: 0x55efabf01070>
 #> <environment: namespace:utils>
 ```
 
@@ -1298,14 +1298,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-11-19
+#>  date     2023-11-26
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
 #>  base        * 4.3.2   2023-11-01 [3] local
 #>  bookdown      0.36    2023-10-16 [1] RSPM
-#>  bslib         0.5.1   2023-08-11 [1] RSPM
+#>  bslib         0.6.0   2023-11-21 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.1   2023-03-23 [1] RSPM
 #>  colorspace    2.1-0   2023-01-23 [1] RSPM
@@ -1313,7 +1313,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  datasets    * 4.3.2   2023-11-01 [3] local
 #>  digest        0.6.33  2023-07-07 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
-#>  dplyr       * 1.1.3   2023-09-03 [1] RSPM
+#>  dplyr       * 1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.5   2023-10-08 [1] RSPM
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM
