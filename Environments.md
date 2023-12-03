@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x55e5259f4650>
+#> <environment: 0x5637be838650>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ```r
 lobstr::ref(e$loop)
-#> █ [1:0x55e5259f4650] <env> 
-#> └─loop = [1:0x55e5259f4650]
+#> █ [1:0x5637be838650] <env> 
+#> └─loop = [1:0x5637be838650]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x55e52808c6f8" "0x55e52808c6f8"
+#> [1] "0x5637c0ed0cd8" "0x5637c0ed0cd8"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x55e5280ddc98" "0x55e5280ddc98"
+#> [1] "0x5637c0f22278" "0x5637c0f22278"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55e52344d5a8>
+#> <bytecode: 0x5637bc2915a8>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -506,7 +506,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x55e523f6c8d0>
+#> <bytecode: 0x5637bcdb08d0>
 #> <environment: namespace:rlang>
 ```
 
@@ -559,14 +559,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-11-26
+#>  date     2023-12-03
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
 #>  base        * 4.3.2   2023-11-01 [3] local
 #>  bookdown      0.36    2023-10-16 [1] RSPM
-#>  bslib         0.6.0   2023-11-21 [1] RSPM
+#>  bslib         0.6.1   2023-11-28 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.1   2023-03-23 [1] RSPM
 #>  compiler      4.3.2   2023-11-01 [3] local

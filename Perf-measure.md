@@ -68,7 +68,7 @@ rm
 #>     }
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x563ea7f42df0>
+#> <bytecode: 0x55e01f6e7df0>
 #> <environment: namespace:base>
 ```
 
@@ -144,8 +144,8 @@ full_join(t_bench_df, t_systime_df, by = "expression")
 #> # A tibble: 2 × 4
 #>   expression bench_mean systime_with_gc systime_with_nogc
 #>   <bch:expr>   <bch:tm>           <dbl>             <dbl>
-#> 1 sqrt(x)      741.15ns           0.662             0.464
-#> 2 x^0.5          2.28µs           2.04              2.02
+#> 1 sqrt(x)      682.38ns           0.629             0.437
+#> 2 x^0.5          2.22µs           2.04              1.99
 ```
 
 The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.
@@ -180,10 +180,10 @@ bench::mark(
 #> # A tibble: 4 × 2
 #>   expression      median
 #>   <bch:expr>    <bch:tm>
-#> 1 sqrt(x)         3.06µs
-#> 2 exp(log(x)/2)  12.64µs
-#> 3 x^0.5          18.89µs
-#> 4 x^(1/2)        19.04µs
+#> 1 sqrt(x)         3.04µs
+#> 2 exp(log(x)/2)  12.63µs
+#> 3 x^0.5          18.86µs
+#> 4 x^(1/2)           19µs
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.
@@ -205,7 +205,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-11-26
+#>  date     2023-12-03
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -213,7 +213,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  base        * 4.3.2   2023-11-01 [3] local
 #>  bench         1.1.3   2023-05-04 [1] RSPM
 #>  bookdown      0.36    2023-10-16 [1] RSPM
-#>  bslib         0.6.0   2023-11-21 [1] RSPM
+#>  bslib         0.6.1   2023-11-28 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.1   2023-03-23 [1] RSPM
 #>  compiler      4.3.2   2023-11-01 [3] local
@@ -249,7 +249,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  sass          0.4.7   2023-07-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.3.2   2023-11-01 [3] local
-#>  stringi       1.8.1   2023-11-13 [1] RSPM
+#>  stringi       1.8.2   2023-11-23 [1] RSPM
 #>  stringr       1.5.1   2023-11-14 [1] RSPM
 #>  tibble        3.2.1   2023-03-20 [1] RSPM
 #>  tidyselect    1.2.0   2022-10-10 [1] RSPM
