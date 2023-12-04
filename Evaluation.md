@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x561496527388>
+#> <environment: 0x55f5f777b9f8>
 #> Parent: <environment: global>
 ```
 
@@ -250,17 +250,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x5614963855a8
+#> env:  0x55f5f75dc170
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x5614969d81a8
+#> env:  0x55f5f7c2ec08
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x561496ca21a8
+#> env:  0x55f5f7ef2e80
 ```
 
 **A1.** Correctly predicted 😉
@@ -298,7 +298,7 @@ enenv(x)
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x561497c07758>
+#> <environment: 0x55f5f8e5ccc0>
 ```
 
 ---
@@ -674,13 +674,13 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-12-03
+#>  date     2023-12-04
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
 #>  base        * 4.3.2   2023-11-01 [3] local
-#>  bookdown      0.36    2023-10-16 [1] RSPM
+#>  bookdown      0.37    2023-12-01 [1] RSPM
 #>  bslib         0.6.1   2023-11-28 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.1   2023-03-23 [1] RSPM
@@ -714,7 +714,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  tools         4.3.2   2023-11-01 [3] local
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
 #>  utils       * 4.3.2   2023-11-01 [3] local
-#>  vctrs         0.6.4   2023-10-12 [1] RSPM
+#>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         2.5.2   2023-10-30 [1] RSPM
 #>  xfun          0.41    2023-11-01 [1] RSPM
 #>  xml2          1.3.5   2023-07-06 [1] RSPM

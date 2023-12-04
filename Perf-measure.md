@@ -68,7 +68,7 @@ rm
 #>     }
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x55e01f6e7df0>
+#> <bytecode: 0x55bed70f6de0>
 #> <environment: namespace:base>
 ```
 
@@ -144,8 +144,8 @@ full_join(t_bench_df, t_systime_df, by = "expression")
 #> # A tibble: 2 × 4
 #>   expression bench_mean systime_with_gc systime_with_nogc
 #>   <bch:expr>   <bch:tm>           <dbl>             <dbl>
-#> 1 sqrt(x)      682.38ns           0.629             0.437
-#> 2 x^0.5          2.22µs           2.04              1.99
+#> 1 sqrt(x)      677.71ns           0.621             0.436
+#> 2 x^0.5          2.21µs           2.03              2.01
 ```
 
 The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.
@@ -181,9 +181,9 @@ bench::mark(
 #>   expression      median
 #>   <bch:expr>    <bch:tm>
 #> 1 sqrt(x)         3.04µs
-#> 2 exp(log(x)/2)  12.63µs
-#> 3 x^0.5          18.86µs
-#> 4 x^(1/2)           19µs
+#> 2 exp(log(x)/2)  12.62µs
+#> 3 x^0.5          18.84µs
+#> 4 x^(1/2)        19.02µs
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.
@@ -205,14 +205,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-12-03
+#>  date     2023-12-04
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
 #>  base        * 4.3.2   2023-11-01 [3] local
 #>  bench         1.1.3   2023-05-04 [1] RSPM
-#>  bookdown      0.36    2023-10-16 [1] RSPM
+#>  bookdown      0.37    2023-12-01 [1] RSPM
 #>  bslib         0.6.1   2023-11-28 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.1   2023-03-23 [1] RSPM
@@ -256,7 +256,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  tools         4.3.2   2023-11-01 [3] local
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
 #>  utils       * 4.3.2   2023-11-01 [3] local
-#>  vctrs         0.6.4   2023-10-12 [1] RSPM
+#>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         2.5.2   2023-10-30 [1] RSPM
 #>  xfun          0.41    2023-11-01 [1] RSPM
 #>  xml2          1.3.5   2023-07-06 [1] RSPM

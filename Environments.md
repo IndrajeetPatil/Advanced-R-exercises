@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x5637be838650>
+#> <environment: 0x55a9636d4478>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ```r
 lobstr::ref(e$loop)
-#> █ [1:0x5637be838650] <env> 
-#> └─loop = [1:0x5637be838650]
+#> █ [1:0x55a9636d4478] <env> 
+#> └─loop = [1:0x55a9636d4478]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x5637c0ed0cd8" "0x5637c0ed0cd8"
+#> [1] "0x55a965d776d8" "0x55a965d776d8"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x5637c0f22278" "0x5637c0f22278"
+#> [1] "0x55a965dc6d58" "0x55a965dc6d58"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x5637bc2915a8>
+#> <bytecode: 0x55a961134578>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -506,7 +506,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x5637bcdb08d0>
+#> <bytecode: 0x55a961c538e0>
 #> <environment: namespace:rlang>
 ```
 
@@ -559,13 +559,13 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-12-03
+#>  date     2023-12-04
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
 #>  base        * 4.3.2   2023-11-01 [3] local
-#>  bookdown      0.36    2023-10-16 [1] RSPM
+#>  bookdown      0.37    2023-12-01 [1] RSPM
 #>  bslib         0.6.1   2023-11-28 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.1   2023-03-23 [1] RSPM
@@ -607,7 +607,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  tools         4.3.2   2023-11-01 [3] local
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
 #>  utils       * 4.3.2   2023-11-01 [3] local
-#>  vctrs         0.6.4   2023-10-12 [1] RSPM
+#>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         2.5.2   2023-10-30 [1] RSPM
 #>  xfun          0.41    2023-11-01 [1] RSPM
 #>  xml2          1.3.5   2023-07-06 [1] RSPM

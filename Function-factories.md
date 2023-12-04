@@ -21,7 +21,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x557fb57d4ab0>
+#> <bytecode: 0x562b7a7e7a80>
 #> <environment: namespace:base>
 ```
 
@@ -47,8 +47,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x557fb9a96ab0>
-#> <environment: 0x557fb9a96180>
+#> <bytecode: 0x562b7eab9300>
+#> <environment: 0x562b7eab89d0>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -212,15 +212,15 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x557fb9c576b8>
+#> <environment: 0x562b7ec7d750>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x557fb9e10d40>
-#> <environment: 0x557fb9cc60e8>
+#> <bytecode: 0x562b7ee36d30>
+#> <environment: 0x562b7ecec0d8>
 ```
 
 ---
@@ -258,7 +258,7 @@ ggplot2::label_bquote
 #>     }
 #>     structure(fun, class = "labeller")
 #> }
-#> <bytecode: 0x557fb9fa63f0>
+#> <bytecode: 0x562b7efc8738>
 #> <environment: namespace:ggplot2>
 ```
 
@@ -281,7 +281,7 @@ scales::number_format
 #>             scale_cut = scale_cut, trim = trim, ...)
 #>     }
 #> }
-#> <bytecode: 0x557fba20bb68>
+#> <bytecode: 0x562b7f231830>
 #> <environment: namespace:scales>
 ```
 
@@ -377,7 +377,7 @@ Let's have a look at one example with each:
 ```r
 boxcox2(1)
 #> function(x) (x^lambda - 1) / lambda
-#> <environment: 0x557fb995e300>
+#> <environment: 0x562b7e979320>
 
 boxcox3(mtcars$wt)
 #> function(lambda) {
@@ -387,7 +387,7 @@ boxcox3(mtcars$wt)
 #>       (x^lambda - 1) / lambda
 #>     }
 #>   }
-#> <environment: 0x557fb99dc828>
+#> <environment: 0x562b7e9f4f50>
 ```
 
 As can be seen:
@@ -420,7 +420,7 @@ boot_permute(mtcars, "mpg")
 #>     col <- df[[var]]
 #>     col[sample(n, replace = TRUE)]
 #>   }
-#> <environment: 0x557fb9cf7d08>
+#> <environment: 0x562b7ed07f98>
 ```
 
 This is why we don't need to worry about a copy being made because the `df` in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:
@@ -429,7 +429,7 @@ This is why we don't need to worry about a copy being made because the `df` in t
 ```r
 boot_permute_env <- rlang::fn_env(boot_permute(mtcars, "mpg"))
 rlang::env_print(boot_permute_env)
-#> <environment: 0x557fb9f67180>
+#> <environment: 0x562b7ef81170>
 #> Parent: <environment: global>
 #> Bindings:
 #> • n: <int>
@@ -488,8 +488,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1          27.9µs   29.7µs    32288.    12.9KB     45.3
-#> 2 LL2          14.6µs   15.4µs    61979.        0B     43.4
+#> 1 LL1          28.4µs   30.7µs    31334.    12.9KB     43.9
+#> 2 LL2          14.8µs     16µs    58970.        0B     41.3
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -515,16 +515,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 × 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1          39.9µs   41.8µs    22757.
-#>  2     10 LL2          17.4µs   18.2µs    53941.
-#>  3     20 LL1          42.7µs   44.5µs    22143.
-#>  4     20 LL2            17µs   17.9µs    54445.
-#>  5     50 LL1          46.9µs   48.9µs    20132.
-#>  6     50 LL2          16.3µs   17.2µs    57256.
-#>  7    100 LL1          62.4µs   64.8µs    15117.
-#>  8    100 LL2          17.6µs   18.5µs    53085.
-#>  9   1000 LL1         855.8µs  968.5µs     1056.
-#> 10   1000 LL2          54.5µs     56µs    17566.
+#>  1     10 LL1          39.9µs   41.7µs    22718.
+#>  2     10 LL2          17.7µs   18.5µs    53217.
+#>  3     20 LL1          42.5µs   44.5µs    22068.
+#>  4     20 LL2          17.1µs     18µs    54727.
+#>  5     50 LL1          46.9µs   48.9µs    20167.
+#>  6     50 LL2          16.5µs   17.3µs    56950.
+#>  7    100 LL1          62.6µs   64.7µs    15153.
+#>  8    100 LL2          17.9µs   18.8µs    52294.
+#>  9   1000 LL1         855.4µs  968.1µs     1057.
+#> 10   1000 LL2            55µs   56.5µs    17385.
 
 ggplot(
   df_bench,
@@ -648,14 +648,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-12-03
+#>  date     2023-12-04
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
 #>  base        * 4.3.2   2023-11-01 [3] local
 #>  bench         1.1.3   2023-05-04 [1] RSPM
-#>  bookdown      0.36    2023-10-16 [1] RSPM
+#>  bookdown      0.37    2023-12-01 [1] RSPM
 #>  bslib         0.6.1   2023-11-28 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.1   2023-03-23 [1] RSPM
@@ -705,7 +705,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  tools         4.3.2   2023-11-01 [3] local
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
 #>  utils       * 4.3.2   2023-11-01 [3] local
-#>  vctrs         0.6.4   2023-10-12 [1] RSPM
+#>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         2.5.2   2023-10-30 [1] RSPM
 #>  xfun          0.41    2023-11-01 [1] RSPM
 #>  xml2          1.3.5   2023-07-06 [1] RSPM
