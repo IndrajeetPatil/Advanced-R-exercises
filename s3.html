@@ -512,7 +512,7 @@ etc.</li>
 <code class="sourceCode R"><span><span class="va">t</span></span>
 <span><span class="co">#&gt; function (x) </span></span>
 <span><span class="co">#&gt; UseMethod("t")</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x5601dbedaf30&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x56131f1d3a68&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span>
 <span><span class="fu">sloop</span><span class="fu">::</span><span class="fu"><a href="https://sloop.r-lib.org/reference/is_s3_generic.html">is_s3_generic</a></span><span class="op">(</span><span class="st">"t"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span>
@@ -520,7 +520,7 @@ etc.</li>
 <span><span class="va">t.test</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; UseMethod("t.test")</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x5601d6f84130&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x56131a26f120&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:stats&gt;</span></span>
 <span><span class="fu">sloop</span><span class="fu">::</span><span class="fu"><a href="https://sloop.r-lib.org/reference/is_s3_generic.html">is_s3_generic</a></span><span class="op">(</span><span class="st">"t.test"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
@@ -848,14 +848,14 @@ It just adds a new class to the object to indicate that it should be treated <em
 <span><span class="co">#&gt; {</span></span>
 <span><span class="co">#&gt;     .Date(NextMethod("["), oldClass(x))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x5601dc27e078&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x56131f55a5d8&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>The <code>.Date</code> function looks like this:</p>
 <div class="sourceCode" id="cb402"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">.Date</span></span>
 <span><span class="co">#&gt; function (xx, cl = "Date") </span></span>
 <span><span class="co">#&gt; `class&lt;-`(xx, cl)</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x5601d9ddd388&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x56131d0ae4a0&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>Here, <code>oldClass</code> is the same as <code><a href="https://rdrr.io/r/base/class.html">class()</a></code>.</p>
 <p>Therefore, by reading this code, we can surmise that:</p>
@@ -875,7 +875,7 @@ It just adds a new class to the object to indicate that it should be treated <em
 <span><span class="co">#&gt; [1] "subDate" "Date"</span></span>
 <span></span>
 <span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] "2023-12-10"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2023-12-17"</span></span></code></pre></div>
 <p><strong>Q2.</strong> R has two classes for representing date time data, <code>POSIXct</code> and <code>POSIXlt</code>, which both inherit from <code>POSIXt</code>. Which generics have different behaviours for the two classes? Which generics share the same behaviour?</p>
 <p><strong>A2.</strong> First, let’s demonstrate that <code>POSIXct</code> and <code>POSIXlt</code> are indeed subclasses and <code>POSIXt</code> is the superclass.</p>
 <div class="sourceCode" id="cb404"><pre class="downlit sourceCode r">
@@ -1166,7 +1166,7 @@ It just adds a new class to the object to indicate that it should be treated <em
 <span><span class="co">#&gt;  collate  C.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2023-12-10</span></span>
+<span><span class="co">#&gt;  date     2023-12-17</span></span>
 <span><span class="co">#&gt;  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────</span></span>
@@ -1175,7 +1175,7 @@ It just adds a new class to the object to indicate that it should be treated <em
 <span><span class="co">#&gt;  bookdown      0.37    2023-12-01 [1] RSPM</span></span>
 <span><span class="co">#&gt;  bslib         0.6.1   2023-11-28 [1] RSPM</span></span>
 <span><span class="co">#&gt;  cachem        1.0.8   2023-05-01 [1] RSPM</span></span>
-<span><span class="co">#&gt;  cli           3.6.1   2023-03-23 [1] RSPM</span></span>
+<span><span class="co">#&gt;  cli           3.6.2   2023-12-11 [1] RSPM</span></span>
 <span><span class="co">#&gt;  codetools     0.2-19  2023-02-01 [3] CRAN (R 4.3.2)</span></span>
 <span><span class="co">#&gt;  compiler      4.3.2   2023-11-01 [3] local</span></span>
 <span><span class="co">#&gt;  crayon        1.5.2   2022-09-29 [1] RSPM</span></span>
@@ -1184,7 +1184,7 @@ It just adds a new class to the object to indicate that it should be treated <em
 <span><span class="co">#&gt;  downlit       0.4.3   2023-06-29 [1] RSPM</span></span>
 <span><span class="co">#&gt;  dplyr       * 1.1.4   2023-11-17 [1] RSPM</span></span>
 <span><span class="co">#&gt;  evaluate      0.23    2023-11-01 [1] RSPM</span></span>
-<span><span class="co">#&gt;  fansi         1.0.5   2023-10-08 [1] RSPM</span></span>
+<span><span class="co">#&gt;  fansi         1.0.6   2023-12-08 [1] RSPM</span></span>
 <span><span class="co">#&gt;  fastmap       1.1.1   2023-02-24 [1] RSPM</span></span>
 <span><span class="co">#&gt;  fs            1.6.3   2023-07-20 [1] RSPM</span></span>
 <span><span class="co">#&gt;  generics      0.1.3   2022-07-05 [1] RSPM</span></span>
@@ -1218,7 +1218,7 @@ It just adds a new class to the object to indicate that it should be treated <em
 <span><span class="co">#&gt;  withr         2.5.2   2023-10-30 [1] RSPM</span></span>
 <span><span class="co">#&gt;  xfun          0.41    2023-11-01 [1] RSPM</span></span>
 <span><span class="co">#&gt;  xml2          1.3.6   2023-12-04 [1] RSPM</span></span>
-<span><span class="co">#&gt;  yaml          2.3.7   2023-01-23 [1] RSPM</span></span>
+<span><span class="co">#&gt;  yaml          2.3.8   2023-12-11 [1] RSPM</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  [1] /home/runner/work/_temp/Library</span></span>
 <span><span class="co">#&gt;  [2] /opt/R/4.3.2/lib/R/site-library</span></span>
@@ -1260,7 +1260,7 @@ It just adds a new class to the object to indicate that it should be treated <em
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2023-12-10.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2023-12-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

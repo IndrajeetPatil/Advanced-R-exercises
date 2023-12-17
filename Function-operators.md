@@ -94,7 +94,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x55ccb07dc378>
+#> <bytecode: 0x55beb1025de8>
 #> <environment: namespace:purrr>
 ```
 
@@ -120,7 +120,7 @@ safely
 #>     check_bool(quiet)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x55ccb0979168>
+#> <bytecode: 0x55beb11c2bd8>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -132,7 +132,7 @@ purrr:::capture_error
 #>         list(result = otherwise, error = e)
 #>     })
 #> }
-#> <bytecode: 0x55ccb09cf620>
+#> <bytecode: 0x55beb121cec0>
 #> <environment: namespace:purrr>
 ```
 
@@ -281,10 +281,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2023-12-10 00:43:29.808205
-#> Function called at:  2023-12-10 00:43:34.815129
-#> Function called at:  2023-12-10 00:43:39.820489
-#> Function called at:  2023-12-10 00:43:47.828912
+#> Function created at: 2023-12-17 00:44:05.745231
+#> Function called at:  2023-12-17 00:44:10.75212
+#> Function called at:  2023-12-17 00:44:15.757477
+#> Function called at:  2023-12-17 00:44:23.766188
 ```
 
 ---
@@ -333,7 +333,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-12-10
+#>  date     2023-12-17
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -342,14 +342,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  bookdown      0.37    2023-12-01 [1] RSPM
 #>  bslib         0.6.1   2023-11-28 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
-#>  cli           3.6.1   2023-03-23 [1] RSPM
+#>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.3.2   2023-11-01 [3] local
 #>  datasets    * 4.3.2   2023-11-01 [3] local
 #>  digest        0.6.33  2023-07-07 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
-#>  fansi         1.0.5   2023-10-08 [1] RSPM
+#>  fansi         1.0.6   2023-12-08 [1] RSPM
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM
 #>  fs            1.6.3   2023-07-20 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
@@ -382,7 +382,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  withr         2.5.2   2023-10-30 [1] RSPM
 #>  xfun          0.41    2023-11-01 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
-#>  yaml          2.3.7   2023-01-23 [1] RSPM
+#>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library
 #>  [2] /opt/R/4.3.2/lib/R/site-library

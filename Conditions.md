@@ -292,7 +292,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x558f0b3f2ef0>
+#> <bytecode: 0x55863cafcb28>
 #> <environment: namespace:rlang>
 ```
 
@@ -691,25 +691,25 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2023-12-10
+#>  date     2023-12-17
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
 #>  base        * 4.3.2   2023-11-01 [3] local
 #>  bookdown      0.37    2023-12-01 [1] RSPM
-#>  brio          1.1.3   2021-11-30 [1] RSPM
+#>  brio          1.1.4   2023-12-10 [1] RSPM
 #>  bslib         0.6.1   2023-11-28 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
-#>  cli           3.6.1   2023-03-23 [1] RSPM
+#>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.3.2   2023-11-01 [3] local
 #>  datasets    * 4.3.2   2023-11-01 [3] local
-#>  desc          1.4.2   2022-09-08 [1] RSPM
+#>  desc          1.4.3   2023-12-10 [1] RSPM
 #>  digest        0.6.33  2023-07-07 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
-#>  fansi         1.0.5   2023-10-08 [1] RSPM
+#>  fansi         1.0.6   2023-12-08 [1] RSPM
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM
 #>  fs            1.6.3   2023-07-20 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
@@ -744,7 +744,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  withr         2.5.2   2023-10-30 [1] RSPM
 #>  xfun          0.41    2023-11-01 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
-#>  yaml          2.3.7   2023-01-23 [1] RSPM
+#>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library
 #>  [2] /opt/R/4.3.2/lib/R/site-library
