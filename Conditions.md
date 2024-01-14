@@ -292,7 +292,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x55f2c19fa068>
+#> <bytecode: 0x5605664637c0>
 #> <environment: namespace:rlang>
 ```
 
@@ -691,7 +691,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-01-07
+#>  date     2024-01-14
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -705,7 +705,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  compiler      4.3.2   2023-11-01 [3] local
 #>  datasets    * 4.3.2   2023-11-01 [3] local
 #>  desc          1.4.3   2023-12-10 [1] RSPM
-#>  digest        0.6.33  2023-07-07 [1] RSPM
+#>  digest        0.6.34  2024-01-11 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
@@ -713,7 +713,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM
 #>  fs            1.6.3   2023-07-20 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
-#>  glue          1.6.2   2022-02-24 [1] RSPM
+#>  glue          1.7.0   2024-01-09 [1] RSPM
 #>  graphics    * 4.3.2   2023-11-01 [3] local
 #>  grDevices   * 4.3.2   2023-11-01 [3] local
 #>  htmltools     0.5.7   2023-11-03 [1] RSPM
@@ -728,7 +728,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
 #>  pkgload       1.3.3   2023-09-22 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
-#>  rlang       * 1.1.2   2023-11-04 [1] RSPM
+#>  rlang       * 1.1.3   2024-01-10 [1] RSPM
 #>  rmarkdown     2.25    2023-09-18 [1] RSPM
 #>  rprojroot     2.0.4   2023-11-05 [1] RSPM
 #>  sass          0.4.8   2023-12-06 [1] RSPM

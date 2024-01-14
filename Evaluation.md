@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x564fa1bed6a8>
+#> <environment: 0x556694e969e0>
 #> Parent: <environment: global>
 ```
 
@@ -250,17 +250,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x564fa1a3e9a0
+#> env:  0x556694cebe60
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x564fa20915d8
+#> env:  0x55669533ac58
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x564fa23500b0
+#> env:  0x5566955fd570
 ```
 
 **A1.** Correctly predicted 😉
@@ -298,7 +298,7 @@ enenv(x)
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x564fa32bc708>
+#> <environment: 0x55669656a448>
 ```
 
 ---
@@ -674,7 +674,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-01-07
+#>  date     2024-01-14
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -686,13 +686,13 @@ sessioninfo::session_info(include_base = TRUE)
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.3.2   2023-11-01 [3] local
 #>  datasets    * 4.3.2   2023-11-01 [3] local
-#>  digest        0.6.33  2023-07-07 [1] RSPM
+#>  digest        0.6.34  2024-01-11 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM
 #>  fs            1.6.3   2023-07-20 [1] RSPM
-#>  glue          1.6.2   2022-02-24 [1] RSPM
+#>  glue          1.7.0   2024-01-09 [1] RSPM
 #>  graphics    * 4.3.2   2023-11-01 [3] local
 #>  grDevices   * 4.3.2   2023-11-01 [3] local
 #>  htmltools     0.5.7   2023-11-03 [1] RSPM
@@ -706,7 +706,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  pillar        1.9.0   2023-03-22 [1] RSPM
 #>  purrr         1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
-#>  rlang       * 1.1.2   2023-11-04 [1] RSPM
+#>  rlang       * 1.1.3   2024-01-10 [1] RSPM
 #>  rmarkdown     2.25    2023-09-18 [1] RSPM
 #>  sass          0.4.8   2023-12-06 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM

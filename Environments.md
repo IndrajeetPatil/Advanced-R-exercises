@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x5592b255c2e8>
+#> <environment: 0x5653c4908508>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ```r
 lobstr::ref(e$loop)
-#> █ [1:0x5592b255c2e8] <env> 
-#> └─loop = [1:0x5592b255c2e8]
+#> █ [1:0x5653c4908508] <env> 
+#> └─loop = [1:0x5653c4908508]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x5592b4bbb1e8" "0x5592b4bbb1e8"
+#> [1] "0x5653c6f66620" "0x5653c6f66620"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x5592b4c08948" "0x5592b4c08948"
+#> [1] "0x5653c6fbb9f0" "0x5653c6fbb9f0"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x5592aff915a8>
+#> <bytecode: 0x5653c233ea20>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -506,7 +506,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x5592b0ab08d0>
+#> <bytecode: 0x5653c2e5d500>
 #> <environment: namespace:rlang>
 ```
 
@@ -559,7 +559,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-01-07
+#>  date     2024-01-14
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -572,7 +572,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  compiler      4.3.2   2023-11-01 [3] local
 #>  crayon        1.5.2   2022-09-29 [1] RSPM
 #>  datasets    * 4.3.2   2023-11-01 [3] local
-#>  digest        0.6.33  2023-07-07 [1] RSPM
+#>  digest        0.6.34  2024-01-11 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
@@ -580,7 +580,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM
 #>  fs            1.6.3   2023-07-20 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
-#>  glue          1.6.2   2022-02-24 [1] RSPM
+#>  glue          1.7.0   2024-01-09 [1] RSPM
 #>  graphics    * 4.3.2   2023-11-01 [3] local
 #>  grDevices   * 4.3.2   2023-11-01 [3] local
 #>  highr         0.10    2022-12-22 [1] RSPM
@@ -597,7 +597,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
 #>  png           0.1-8   2022-11-29 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
-#>  rlang       * 1.1.2   2023-11-04 [1] RSPM
+#>  rlang       * 1.1.3   2024-01-10 [1] RSPM
 #>  rmarkdown     2.25    2023-09-18 [1] RSPM
 #>  sass          0.4.8   2023-12-06 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
