@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x5595ec2478b0>
+#> <bytecode: 0x5560cd276810>
 #> <environment: namespace:rlang>
 ```
 
@@ -193,7 +193,7 @@ rlang::enexpr
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x5595e8d9f6f0>
+#> <bytecode: 0x5560c92096f0>
 #> <environment: namespace:rlang>
 ```
 
@@ -824,7 +824,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-01-14
+#>  date     2024-01-21
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -885,7 +885,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.3.2   2023-11-01 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  waldo         0.5.2   2023-11-02 [1] RSPM
-#>  withr         2.5.2   2023-10-30 [1] RSPM
+#>  withr         3.0.0   2024-01-16 [1] RSPM
 #>  xfun          0.41    2023-11-01 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM

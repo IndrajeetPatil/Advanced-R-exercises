@@ -292,7 +292,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x5605664637c0>
+#> <bytecode: 0x55c8bf4c42b8>
 #> <environment: namespace:rlang>
 ```
 
@@ -691,7 +691,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-01-14
+#>  date     2024-01-21
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -726,7 +726,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  methods     * 4.3.2   2023-11-01 [3] local
 #>  pillar        1.9.0   2023-03-22 [1] RSPM
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
-#>  pkgload       1.3.3   2023-09-22 [1] RSPM
+#>  pkgload       1.3.4   2024-01-16 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang       * 1.1.3   2024-01-10 [1] RSPM
 #>  rmarkdown     2.25    2023-09-18 [1] RSPM
@@ -741,7 +741,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
 #>  utils       * 4.3.2   2023-11-01 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
-#>  withr         2.5.2   2023-10-30 [1] RSPM
+#>  withr         3.0.0   2024-01-16 [1] RSPM
 #>  xfun          0.41    2023-11-01 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
