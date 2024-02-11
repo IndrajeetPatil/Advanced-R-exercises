@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x560b54eda500>
+#> <environment: 0x557ea59d5ff8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ```r
 lobstr::ref(e$loop)
-#> █ [1:0x560b54eda500] <env> 
-#> └─loop = [1:0x560b54eda500]
+#> █ [1:0x557ea59d5ff8] <env> 
+#> └─loop = [1:0x557ea59d5ff8]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x560b56269b60" "0x560b56269b60"
+#> [1] "0x557ea72e5270" "0x557ea72e5270"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x560b562bd010" "0x560b562bd010"
+#> [1] "0x557ea7336380" "0x557ea7336380"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x560b50d81a20>
+#> <bytecode: 0x557ea1d354a0>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -506,7 +506,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x560b518a0500>
+#> <bytecode: 0x557ea24ed508>
 #> <environment: namespace:rlang>
 ```
 
@@ -559,7 +559,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-02-04
+#>  date     2024-02-11
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -609,7 +609,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.3.2   2023-11-01 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.41    2023-11-01 [1] RSPM
+#>  xfun          0.42    2024-02-08 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 
