@@ -68,7 +68,7 @@ rm
 #>     }
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x55b7a84b5ed8>
+#> <bytecode: 0x55bbb6ae0ed8>
 #> <environment: namespace:base>
 ```
 
@@ -144,8 +144,8 @@ full_join(t_bench_df, t_systime_df, by = "expression")
 #> # A tibble: 2 × 4
 #>   expression bench_mean systime_with_gc systime_with_nogc
 #>   <bch:expr>   <bch:tm>           <dbl>             <dbl>
-#> 1 sqrt(x)      833.99ns            0.68             0.433
-#> 2 x^0.5          2.17µs            2.02             2
+#> 1 sqrt(x)      826.22ns           0.701             0.440
+#> 2 x^0.5          2.16µs           2.02              2.00
 ```
 
 The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.
@@ -180,10 +180,10 @@ bench::mark(
 #> # A tibble: 4 × 2
 #>   expression      median
 #>   <bch:expr>    <bch:tm>
-#> 1 sqrt(x)         3.12µs
-#> 2 exp(log(x)/2)  12.59µs
-#> 3 x^0.5          18.86µs
-#> 4 x^(1/2)           19µs
+#> 1 sqrt(x)         3.02µs
+#> 2 exp(log(x)/2)  12.62µs
+#> 3 x^0.5          18.84µs
+#> 4 x^(1/2)        18.99µs
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.
@@ -198,26 +198,26 @@ sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
 #>  version  R version 4.3.2 (2023-10-31)
-#>  os       Ubuntu 22.04.3 LTS
+#>  os       Ubuntu 22.04.4 LTS
 #>  system   x86_64, linux-gnu
 #>  ui       X11
 #>  language (EN)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-02-18
+#>  date     2024-02-25
 #>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
-#>  base        * 4.3.2   2023-11-01 [3] local
+#>  base        * 4.3.2   2024-02-24 [3] local
 #>  bench         1.1.3   2023-05-04 [1] RSPM
 #>  bookdown      0.37    2023-12-01 [1] RSPM
 #>  bslib         0.6.1   2023-11-28 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
-#>  compiler      4.3.2   2023-11-01 [3] local
-#>  datasets    * 4.3.2   2023-11-01 [3] local
+#>  compiler      4.3.2   2024-02-24 [3] local
+#>  datasets    * 4.3.2   2024-02-24 [3] local
 #>  digest        0.6.34  2024-01-11 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr       * 1.1.4   2023-11-17 [1] RSPM
@@ -227,8 +227,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  fs            1.6.3   2023-07-20 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
 #>  glue          1.7.0   2024-01-09 [1] RSPM
-#>  graphics    * 4.3.2   2023-11-01 [3] local
-#>  grDevices   * 4.3.2   2023-11-01 [3] local
+#>  graphics    * 4.3.2   2024-02-24 [3] local
+#>  grDevices   * 4.3.2   2024-02-24 [3] local
 #>  htmltools     0.5.7   2023-11-03 [1] RSPM
 #>  htmlwidgets   1.6.4   2023-12-06 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
@@ -237,7 +237,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM
-#>  methods     * 4.3.2   2023-11-01 [3] local
+#>  methods     * 4.3.2   2024-02-24 [3] local
 #>  pillar        1.9.0   2023-03-22 [1] RSPM
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
 #>  profmem       0.6.0   2020-12-13 [1] RSPM
@@ -248,14 +248,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  rmarkdown     2.25    2023-09-18 [1] RSPM
 #>  sass          0.4.8   2023-12-06 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
-#>  stats       * 4.3.2   2023-11-01 [3] local
+#>  stats       * 4.3.2   2024-02-24 [3] local
 #>  stringi       1.8.3   2023-12-11 [1] RSPM
 #>  stringr       1.5.1   2023-11-14 [1] RSPM
 #>  tibble        3.2.1   2023-03-20 [1] RSPM
 #>  tidyselect    1.2.0   2022-10-10 [1] RSPM
-#>  tools         4.3.2   2023-11-01 [3] local
+#>  tools         4.3.2   2024-02-24 [3] local
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
-#>  utils       * 4.3.2   2023-11-01 [3] local
+#>  utils       * 4.3.2   2024-02-24 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
 #>  xfun          0.42    2024-02-08 [1] RSPM
