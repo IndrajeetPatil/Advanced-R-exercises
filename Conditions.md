@@ -292,7 +292,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x55be00b5a740>
+#> <bytecode: 0x55dfd75e8008>
 #> <environment: namespace:rlang>
 ```
 
@@ -683,7 +683,7 @@ This shows why catching `interrupt` is dangerous and can result in poor user exp
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
-#>  version  R version 4.3.2 (2023-10-31)
+#>  version  R version 4.3.3 (2024-02-29)
 #>  os       Ubuntu 22.04.4 LTS
 #>  system   x86_64, linux-gnu
 #>  ui       X11
@@ -691,19 +691,19 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-02-25
-#>  pandoc   3.1.8 @ /usr/bin/ (via rmarkdown)
+#>  date     2024-03-03
+#>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
-#>  base        * 4.3.2   2024-02-24 [3] local
+#>  base        * 4.3.3   2024-03-01 [3] local
 #>  bookdown      0.37    2023-12-01 [1] RSPM
 #>  brio          1.1.4   2023-12-10 [1] RSPM
 #>  bslib         0.6.1   2023-11-28 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
-#>  compiler      4.3.2   2024-02-24 [3] local
-#>  datasets    * 4.3.2   2024-02-24 [3] local
+#>  compiler      4.3.3   2024-03-01 [3] local
+#>  datasets    * 4.3.3   2024-03-01 [3] local
 #>  desc          1.4.3   2023-12-10 [1] RSPM
 #>  digest        0.6.34  2024-01-11 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
@@ -714,8 +714,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  fs            1.6.3   2023-07-20 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
 #>  glue          1.7.0   2024-01-09 [1] RSPM
-#>  graphics    * 4.3.2   2024-02-24 [3] local
-#>  grDevices   * 4.3.2   2024-02-24 [3] local
+#>  graphics    * 4.3.3   2024-03-01 [3] local
+#>  grDevices   * 4.3.3   2024-03-01 [3] local
 #>  htmltools     0.5.7   2023-11-03 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
@@ -723,7 +723,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM
-#>  methods     * 4.3.2   2024-02-24 [3] local
+#>  methods     * 4.3.3   2024-03-01 [3] local
 #>  pillar        1.9.0   2023-03-22 [1] RSPM
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
 #>  pkgload       1.3.4   2024-01-16 [1] RSPM
@@ -733,13 +733,13 @@ sessioninfo::session_info(include_base = TRUE)
 #>  rprojroot     2.0.4   2023-11-05 [1] RSPM
 #>  sass          0.4.8   2023-12-06 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
-#>  stats       * 4.3.2   2024-02-24 [3] local
+#>  stats       * 4.3.3   2024-03-01 [3] local
 #>  testthat    * 3.2.1   2023-12-02 [1] RSPM
 #>  tibble        3.2.1   2023-03-20 [1] RSPM
 #>  tidyselect    1.2.0   2022-10-10 [1] RSPM
-#>  tools         4.3.2   2024-02-24 [3] local
+#>  tools         4.3.3   2024-03-01 [3] local
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
-#>  utils       * 4.3.2   2024-02-24 [3] local
+#>  utils       * 4.3.3   2024-03-01 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
 #>  xfun          0.42    2024-02-08 [1] RSPM
@@ -747,8 +747,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library
-#>  [2] /opt/R/4.3.2/lib/R/site-library
-#>  [3] /opt/R/4.3.2/lib/R/library
+#>  [2] /opt/R/4.3.3/lib/R/site-library
+#>  [3] /opt/R/4.3.3/lib/R/library
 #> 
 #> ──────────────────────────────────────────────────────────
 ```
