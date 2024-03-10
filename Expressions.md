@@ -374,7 +374,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x556f38c24ad0>
+#> <bytecode: 0x562867c03520>
 #> <environment: namespace:base>
 ```
 
@@ -993,19 +993,19 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-03
+#>  date     2024-03-10
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
-#>  base        * 4.3.3   2024-03-01 [3] local
-#>  bookdown      0.37    2023-12-01 [1] RSPM
+#>  base        * 4.3.3   2024-03-04 [3] local
+#>  bookdown      0.38    2024-03-04 [1] RSPM
 #>  bslib         0.6.1   2023-11-28 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
-#>  compiler      4.3.3   2024-03-01 [3] local
+#>  compiler      4.3.3   2024-03-04 [3] local
 #>  crayon        1.5.2   2022-09-29 [1] RSPM
-#>  datasets    * 4.3.3   2024-03-01 [3] local
+#>  datasets    * 4.3.3   2024-03-04 [3] local
 #>  digest        0.6.34  2024-01-11 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
@@ -1013,8 +1013,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM
 #>  fs            1.6.3   2023-07-20 [1] RSPM
 #>  glue          1.7.0   2024-01-09 [1] RSPM
-#>  graphics    * 4.3.3   2024-03-01 [3] local
-#>  grDevices   * 4.3.3   2024-03-01 [3] local
+#>  graphics    * 4.3.3   2024-03-04 [3] local
+#>  grDevices   * 4.3.3   2024-03-04 [3] local
 #>  htmltools     0.5.7   2023-11-03 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
@@ -1023,18 +1023,18 @@ sessioninfo::session_info(include_base = TRUE)
 #>  lobstr      * 1.1.2   2022-06-22 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM
-#>  methods     * 4.3.3   2024-03-01 [3] local
+#>  methods     * 4.3.3   2024-03-04 [3] local
 #>  pillar        1.9.0   2023-03-22 [1] RSPM
 #>  purrr         1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang       * 1.1.3   2024-01-10 [1] RSPM
-#>  rmarkdown     2.25    2023-09-18 [1] RSPM
+#>  rmarkdown     2.26    2024-03-05 [1] RSPM
 #>  sass          0.4.8   2023-12-06 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
-#>  stats       * 4.3.3   2024-03-01 [3] local
-#>  tools         4.3.3   2024-03-01 [3] local
+#>  stats       * 4.3.3   2024-03-04 [3] local
+#>  tools         4.3.3   2024-03-04 [3] local
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
-#>  utils       * 4.3.3   2024-03-01 [3] local
+#>  utils       * 4.3.3   2024-03-04 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
 #>  xfun          0.42    2024-02-08 [1] RSPM
