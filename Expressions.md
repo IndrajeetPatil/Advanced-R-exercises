@@ -374,7 +374,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x562867c03520>
+#> <bytecode: 0x5953b09e1510>
 #> <environment: namespace:base>
 ```
 
@@ -993,7 +993,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-10
+#>  date     2024-03-17
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1006,7 +1006,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  compiler      4.3.3   2024-03-04 [3] local
 #>  crayon        1.5.2   2022-09-29 [1] RSPM
 #>  datasets    * 4.3.3   2024-03-04 [3] local
-#>  digest        0.6.34  2024-01-11 [1] RSPM
+#>  digest        0.6.35  2024-03-11 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
@@ -1029,7 +1029,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang       * 1.1.3   2024-01-10 [1] RSPM
 #>  rmarkdown     2.26    2024-03-05 [1] RSPM
-#>  sass          0.4.8   2023-12-06 [1] RSPM
+#>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.3.3   2024-03-04 [3] local
 #>  tools         4.3.3   2024-03-04 [3] local

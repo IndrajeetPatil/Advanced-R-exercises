@@ -36,7 +36,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck_raw(x, list(1), .default = NULL)
-#> <environment: 0x55bbfdd0ea80>
+#> <environment: 0x58b65e4e1d78>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -47,7 +47,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, 1), .default = NULL)
-#> <environment: 0x55bbfddf1978>
+#> <environment: 0x58b65e5c54e0>
 
 # mapping by name -----------------------
 
@@ -65,7 +65,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck_raw(x, list("m"), .default = NULL)
-#> <environment: 0x55bbfdf46b40>
+#> <environment: 0x58b65e7155c8>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -77,7 +77,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, "m"), .default = NULL)
-#> <environment: 0x55bbfe02b5f8>
+#> <environment: 0x58b65e7fd330>
 
 # compact functions ----------------------------
 
@@ -139,7 +139,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck_raw(x, list(0.597890264587477, 0.587997315218672), .default = NULL)
-#> <environment: 0x55bbf9ff1c50>
+#> <environment: 0x58b65c39d408>
 ```
 
 ---
@@ -880,7 +880,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x55bbfa3a93e8>
+#> <environment: 0x58b65dae52a8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>
@@ -1015,7 +1015,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-10
+#>  date     2024-03-17
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1027,7 +1027,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.3.3   2024-03-04 [3] local
 #>  datasets    * 4.3.3   2024-03-04 [3] local
-#>  digest        0.6.34  2024-01-11 [1] RSPM
+#>  digest        0.6.35  2024-03-11 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
@@ -1053,11 +1053,11 @@ sessioninfo::session_info(include_base = TRUE)
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang       * 1.1.3   2024-01-10 [1] RSPM
 #>  rmarkdown     2.26    2024-03-05 [1] RSPM
-#>  sass          0.4.8   2023-12-06 [1] RSPM
+#>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.3.3   2024-03-04 [3] local
 #>  tibble        3.2.1   2023-03-20 [1] RSPM
-#>  tidyselect    1.2.0   2022-10-10 [1] RSPM
+#>  tidyselect    1.2.1   2024-03-11 [1] RSPM
 #>  tools         4.3.3   2024-03-04 [3] local
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
 #>  utils       * 4.3.3   2024-03-04 [3] local

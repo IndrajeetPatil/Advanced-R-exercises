@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x56179c956520>
+#> <bytecode: 0x55a6d0a01510>
 #> <environment: namespace:base>
 ```
 
@@ -347,7 +347,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x56179c956520>
+#> <bytecode: 0x55a6d0a01510>
 #> <environment: namespace:base>
 
 # other package function
@@ -356,7 +356,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x56179fcb2e40>
+#> <bytecode: 0x55a6d5a97848>
 #> <environment: namespace:purrr>
 ```
 
@@ -559,7 +559,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x5617a2a70d60" "0x5617a2a70d60"
+#> [1] "0x55a6d5ab3828" "0x55a6d5ab3828"
 #> [1] 100
 ```
 
@@ -654,7 +654,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2024-03-10 00:41:25 UTC"
+#> [1] "2024-03-17 00:42:38 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -874,7 +874,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x5617a61284d8>
+#> <bytecode: 0x55a6d62c0cd0>
 #> <environment: namespace:withr>
 ```
 
@@ -958,7 +958,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x5617a22297d8>
+#> <bytecode: 0x55a6d596ce28>
 #> <environment: namespace:utils>
 ```
 
@@ -1298,7 +1298,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-10
+#>  date     2024-03-17
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1311,7 +1311,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  colorspace    2.1-0   2023-01-23 [1] RSPM
 #>  compiler      4.3.3   2024-03-04 [3] local
 #>  datasets    * 4.3.3   2024-03-04 [3] local
-#>  digest        0.6.34  2024-01-11 [1] RSPM
+#>  digest        0.6.35  2024-03-11 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr       * 1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
@@ -1346,7 +1346,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  readr       * 2.1.5   2024-01-10 [1] RSPM
 #>  rlang         1.1.3   2024-01-10 [1] RSPM
 #>  rmarkdown     2.26    2024-03-05 [1] RSPM
-#>  sass          0.4.8   2023-12-06 [1] RSPM
+#>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  scales        1.3.0   2023-11-28 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.3.3   2024-03-04 [3] local
@@ -1354,7 +1354,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  stringr     * 1.5.1   2023-11-14 [1] RSPM
 #>  tibble      * 3.2.1   2023-03-20 [1] RSPM
 #>  tidyr       * 1.3.1   2024-01-24 [1] RSPM
-#>  tidyselect    1.2.0   2022-10-10 [1] RSPM
+#>  tidyselect    1.2.1   2024-03-11 [1] RSPM
 #>  tidyverse   * 2.0.0   2023-02-22 [1] RSPM
 #>  timechange    0.3.0   2024-01-18 [1] RSPM
 #>  tools         4.3.3   2024-03-04 [3] local

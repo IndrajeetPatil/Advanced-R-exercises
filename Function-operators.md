@@ -94,7 +94,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x564d347fe688>
+#> <bytecode: 0x598a67ef09e8>
 #> <environment: namespace:purrr>
 ```
 
@@ -120,7 +120,7 @@ safely
 #>     check_bool(quiet)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x564d3499de00>
+#> <bytecode: 0x598a677aff60>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -132,7 +132,7 @@ purrr:::capture_error
 #>         list(result = otherwise, error = e)
 #>     })
 #> }
-#> <bytecode: 0x564d349fa558>
+#> <bytecode: 0x598a67615008>
 #> <environment: namespace:purrr>
 ```
 
@@ -281,10 +281,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2024-03-10 00:41:38.659809
-#> Function called at:  2024-03-10 00:41:43.666778
-#> Function called at:  2024-03-10 00:41:48.672195
-#> Function called at:  2024-03-10 00:41:56.680642
+#> Function created at: 2024-03-17 00:42:51.318574
+#> Function called at:  2024-03-17 00:42:56.325527
+#> Function called at:  2024-03-17 00:43:01.330905
+#> Function called at:  2024-03-17 00:43:09.339367
 ```
 
 ---
@@ -333,7 +333,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-10
+#>  date     2024-03-17
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -345,7 +345,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.3.3   2024-03-04 [3] local
 #>  datasets    * 4.3.3   2024-03-04 [3] local
-#>  digest        0.6.34  2024-01-11 [1] RSPM
+#>  digest        0.6.35  2024-03-11 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
@@ -370,11 +370,11 @@ sessioninfo::session_info(include_base = TRUE)
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang         1.1.3   2024-01-10 [1] RSPM
 #>  rmarkdown     2.26    2024-03-05 [1] RSPM
-#>  sass          0.4.8   2023-12-06 [1] RSPM
+#>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.3.3   2024-03-04 [3] local
 #>  tibble        3.2.1   2023-03-20 [1] RSPM
-#>  tidyselect    1.2.0   2022-10-10 [1] RSPM
+#>  tidyselect    1.2.1   2024-03-11 [1] RSPM
 #>  tools         4.3.3   2024-03-04 [3] local
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
 #>  utils       * 4.3.3   2024-03-04 [3] local

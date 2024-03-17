@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x56054ac73568>
+#> <environment: 0x55b03d0eec70>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ```r
 lobstr::ref(e$loop)
-#> █ [1:0x56054ac73568] <env> 
-#> └─loop = [1:0x56054ac73568]
+#> █ [1:0x55b03d0eec70] <env> 
+#> └─loop = [1:0x55b03d0eec70]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x56054c587d98" "0x56054c587d98"
+#> [1] "0x55b03ec66c40" "0x55b03ec66c40"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x56054c5d8eb8" "0x56054c5d8eb8"
+#> [1] "0x55b03ecb81e0" "0x55b03ecb81e0"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x560546fd6520>
+#> <bytecode: 0x55b03944f510>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -506,7 +506,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x560547792698>
+#> <bytecode: 0x55b039c0b6d8>
 #> <environment: namespace:rlang>
 ```
 
@@ -559,7 +559,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-10
+#>  date     2024-03-17
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -572,7 +572,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  compiler      4.3.3   2024-03-04 [3] local
 #>  crayon        1.5.2   2022-09-29 [1] RSPM
 #>  datasets    * 4.3.3   2024-03-04 [3] local
-#>  digest        0.6.34  2024-01-11 [1] RSPM
+#>  digest        0.6.35  2024-03-11 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
@@ -599,11 +599,11 @@ sessioninfo::session_info(include_base = TRUE)
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang       * 1.1.3   2024-01-10 [1] RSPM
 #>  rmarkdown     2.26    2024-03-05 [1] RSPM
-#>  sass          0.4.8   2023-12-06 [1] RSPM
+#>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.3.3   2024-03-04 [3] local
 #>  tibble        3.2.1   2023-03-20 [1] RSPM
-#>  tidyselect    1.2.0   2022-10-10 [1] RSPM
+#>  tidyselect    1.2.1   2024-03-11 [1] RSPM
 #>  tools         4.3.3   2024-03-04 [3] local
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
 #>  utils       * 4.3.3   2024-03-04 [3] local

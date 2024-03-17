@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x56266559cee0>
+#> <bytecode: 0x61f27ba6d070>
 #> <environment: namespace:rlang>
 ```
 
@@ -193,7 +193,7 @@ rlang::enexpr
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x5626614906f0>
+#> <bytecode: 0x61f27b1db6f0>
 #> <environment: namespace:rlang>
 ```
 
@@ -824,7 +824,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-10
+#>  date     2024-03-17
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -839,7 +839,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  crayon        1.5.2      2022-09-29 [1] RSPM
 #>  datasets    * 4.3.3      2024-03-04 [3] local
 #>  diffobj       0.3.5      2021-10-05 [1] RSPM
-#>  digest        0.6.34     2024-01-11 [1] RSPM
+#>  digest        0.6.35     2024-03-11 [1] RSPM
 #>  downlit       0.4.3      2023-06-29 [1] RSPM
 #>  dplyr       * 1.1.4      2023-11-17 [1] RSPM
 #>  evaluate      0.23       2023-11-01 [1] RSPM
@@ -874,12 +874,12 @@ sessioninfo::session_info(include_base = TRUE)
 #>  rematch2      2.1.2      2020-05-01 [1] RSPM
 #>  rlang       * 1.1.3      2024-01-10 [1] RSPM
 #>  rmarkdown     2.26       2024-03-05 [1] RSPM
-#>  sass          0.4.8      2023-12-06 [1] RSPM
+#>  sass          0.4.9      2024-03-15 [1] RSPM
 #>  scales        1.3.0      2023-11-28 [1] RSPM
 #>  sessioninfo   1.2.2      2021-12-06 [1] RSPM
 #>  stats       * 4.3.3      2024-03-04 [3] local
 #>  tibble        3.2.1      2023-03-20 [1] RSPM
-#>  tidyselect    1.2.0      2022-10-10 [1] RSPM
+#>  tidyselect    1.2.1      2024-03-11 [1] RSPM
 #>  tools         4.3.3      2024-03-04 [3] local
 #>  utf8          1.2.4      2023-10-22 [1] RSPM
 #>  utils       * 4.3.3      2024-03-04 [3] local
