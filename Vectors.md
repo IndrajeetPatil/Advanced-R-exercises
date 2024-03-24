@@ -210,7 +210,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x5e940dd6e6d8>
+#> <bytecode: 0x55661366e6d8>
 #> <environment: namespace:stats>
 ```
 
@@ -240,7 +240,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x5e940d1dd348>
+#> <bytecode: 0x556612add348>
 #> <environment: namespace:base>
 ```
 
@@ -841,14 +841,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-17
+#>  date     2024-03-24
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
 #>  base        * 4.3.3   2024-03-04 [3] local
 #>  bookdown      0.38    2024-03-04 [1] RSPM
-#>  bslib         0.6.1   2023-11-28 [1] RSPM
+#>  bslib         0.6.2   2024-03-22 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.3.3   2024-03-04 [3] local

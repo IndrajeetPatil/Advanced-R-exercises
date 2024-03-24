@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x55b03d0eec70>
+#> <environment: 0x557bf0754b40>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ```r
 lobstr::ref(e$loop)
-#> █ [1:0x55b03d0eec70] <env> 
-#> └─loop = [1:0x55b03d0eec70]
+#> █ [1:0x557bf0754b40] <env> 
+#> └─loop = [1:0x557bf0754b40]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x55b03ec66c40" "0x55b03ec66c40"
+#> [1] "0x557bf22cc600" "0x557bf22cc600"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x55b03ecb81e0" "0x55b03ecb81e0"
+#> [1] "0x557bf231dba0" "0x557bf231dba0"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55b03944f510>
+#> <bytecode: 0x557becab3500>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -506,7 +506,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x55b039c0b6d8>
+#> <bytecode: 0x557bed26f6b8>
 #> <environment: namespace:rlang>
 ```
 
@@ -559,14 +559,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-17
+#>  date     2024-03-24
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
 #>  base        * 4.3.3   2024-03-04 [3] local
 #>  bookdown      0.38    2024-03-04 [1] RSPM
-#>  bslib         0.6.1   2023-11-28 [1] RSPM
+#>  bslib         0.6.2   2024-03-22 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.3.3   2024-03-04 [3] local

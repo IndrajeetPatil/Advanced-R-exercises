@@ -68,7 +68,7 @@ rm
 #>     }
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x631ccbfa4ef8>
+#> <bytecode: 0x562cd2fe1ed8>
 #> <environment: namespace:base>
 ```
 
@@ -144,8 +144,8 @@ full_join(t_bench_df, t_systime_df, by = "expression")
 #> # A tibble: 2 × 4
 #>   expression bench_mean systime_with_gc systime_with_nogc
 #>   <bch:expr>   <bch:tm>           <dbl>             <dbl>
-#> 1 sqrt(x)      819.94ns           0.535             0.392
-#> 2 x^0.5          2.17µs           2.01              1.99
+#> 1 sqrt(x)      829.27ns           0.530             0.398
+#> 2 x^0.5          2.17µs           2.02              1.99
 ```
 
 The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.
@@ -180,10 +180,10 @@ bench::mark(
 #> # A tibble: 4 × 2
 #>   expression      median
 #>   <bch:expr>    <bch:tm>
-#> 1 sqrt(x)            3µs
-#> 2 exp(log(x)/2)   12.3µs
-#> 3 x^0.5           18.8µs
-#> 4 x^(1/2)           19µs
+#> 1 sqrt(x)         3.02µs
+#> 2 exp(log(x)/2)  12.25µs
+#> 3 x^0.5          18.82µs
+#> 4 x^(1/2)        18.97µs
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.
@@ -205,7 +205,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-17
+#>  date     2024-03-24
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -213,7 +213,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  base        * 4.3.3   2024-03-04 [3] local
 #>  bench         1.1.3   2023-05-04 [1] RSPM
 #>  bookdown      0.38    2024-03-04 [1] RSPM
-#>  bslib         0.6.1   2023-11-28 [1] RSPM
+#>  bslib         0.6.2   2024-03-22 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.3.3   2024-03-04 [3] local

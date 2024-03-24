@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x61f27ba6d070>
+#> <bytecode: 0x55b2f1889e08>
 #> <environment: namespace:rlang>
 ```
 
@@ -193,7 +193,7 @@ rlang::enexpr
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x61f27b1db6f0>
+#> <bytecode: 0x55b2f0ff86f0>
 #> <environment: namespace:rlang>
 ```
 
@@ -824,14 +824,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-17
+#>  date     2024-03-24
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version    date (UTC) lib source
 #>  base        * 4.3.3      2024-03-04 [3] local
 #>  bookdown      0.38       2024-03-04 [1] RSPM
-#>  bslib         0.6.1      2023-11-28 [1] RSPM
+#>  bslib         0.6.2      2024-03-22 [1] RSPM
 #>  cachem        1.0.8      2023-05-01 [1] RSPM
 #>  cli           3.6.2      2023-12-11 [1] RSPM
 #>  colorspace    2.1-0      2023-01-23 [1] RSPM
