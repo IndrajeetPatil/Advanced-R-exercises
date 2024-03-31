@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x5564af48d500>
+#> <bytecode: 0x556cc0912368>
 #> <environment: namespace:base>
 ```
 
@@ -347,7 +347,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x5564af48d500>
+#> <bytecode: 0x556cc0912368>
 #> <environment: namespace:base>
 
 # other package function
@@ -356,7 +356,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x5564b4524370>
+#> <bytecode: 0x556cc5ad7970>
 #> <environment: namespace:purrr>
 ```
 
@@ -559,7 +559,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x5564b4542040" "0x5564b4542040"
+#> [1] "0x556cc49147f8" "0x556cc49147f8"
 #> [1] 100
 ```
 
@@ -654,7 +654,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2024-03-24 00:43:05 UTC"
+#> [1] "2024-03-31 00:43:46 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -874,7 +874,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x5564b4d4c990>
+#> <bytecode: 0x556cc6141910>
 #> <environment: namespace:withr>
 ```
 
@@ -958,7 +958,7 @@ capture.output
 #>         invisible(NULL)
 #>     else rval
 #> }
-#> <bytecode: 0x5564b43f8f60>
+#> <bytecode: 0x556cc58c37e0>
 #> <environment: namespace:utils>
 ```
 
@@ -1298,14 +1298,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-24
+#>  date     2024-03-31
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
 #>  base        * 4.3.3   2024-03-04 [3] local
 #>  bookdown      0.38    2024-03-04 [1] RSPM
-#>  bslib         0.6.2   2024-03-22 [1] RSPM
+#>  bslib         0.7.0   2024-03-29 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  colorspace    2.1-0   2023-01-23 [1] RSPM
@@ -1328,7 +1328,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  gtable        0.3.4   2023-08-21 [1] RSPM
 #>  highr         0.10    2022-12-22 [1] RSPM
 #>  hms           1.1.3   2023-03-21 [1] RSPM
-#>  htmltools     0.5.7   2023-11-03 [1] RSPM
+#>  htmltools     0.5.8   2024-03-25 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
 #>  knitr         1.45    2023-10-30 [1] RSPM
@@ -1363,7 +1363,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.3.3   2024-03-04 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.42    2024-02-08 [1] RSPM
+#>  xfun          0.43    2024-03-25 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 

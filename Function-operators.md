@@ -94,7 +94,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x5651e3052978>
+#> <bytecode: 0x5580d1d06d00>
 #> <environment: namespace:purrr>
 ```
 
@@ -120,7 +120,7 @@ safely
 #>     check_bool(quiet)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x5651e2911f28>
+#> <bytecode: 0x5580d155ada8>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -132,7 +132,7 @@ purrr:::capture_error
 #>         list(result = otherwise, error = e)
 #>     })
 #> }
-#> <bytecode: 0x5651e2776fd0>
+#> <bytecode: 0x5580d13fcd10>
 #> <environment: namespace:purrr>
 ```
 
@@ -281,10 +281,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2024-03-24 00:43:19.075647
-#> Function called at:  2024-03-24 00:43:24.082572
-#> Function called at:  2024-03-24 00:43:29.08567
-#> Function called at:  2024-03-24 00:43:37.094154
+#> Function created at: 2024-03-31 00:44:00.139817
+#> Function called at:  2024-03-31 00:44:05.14691
+#> Function called at:  2024-03-31 00:44:10.152296
+#> Function called at:  2024-03-31 00:44:18.160806
 ```
 
 ---
@@ -333,14 +333,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-24
+#>  date     2024-03-31
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
 #>  base        * 4.3.3   2024-03-04 [3] local
 #>  bookdown      0.38    2024-03-04 [1] RSPM
-#>  bslib         0.6.2   2024-03-22 [1] RSPM
+#>  bslib         0.7.0   2024-03-29 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.3.3   2024-03-04 [3] local
@@ -356,7 +356,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  glue          1.7.0   2024-01-09 [1] RSPM
 #>  graphics    * 4.3.3   2024-03-04 [3] local
 #>  grDevices   * 4.3.3   2024-03-04 [3] local
-#>  htmltools     0.5.7   2023-11-03 [1] RSPM
+#>  htmltools     0.5.8   2024-03-25 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
 #>  knitr         1.45    2023-10-30 [1] RSPM
@@ -380,7 +380,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.3.3   2024-03-04 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.42    2024-02-08 [1] RSPM
+#>  xfun          0.43    2024-03-25 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 
