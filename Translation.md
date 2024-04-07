@@ -322,7 +322,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-31
+#>  date     2024-04-07
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -343,7 +343,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  glue          1.7.0   2024-01-09 [1] RSPM
 #>  graphics    * 4.3.3   2024-03-04 [3] local
 #>  grDevices   * 4.3.3   2024-03-04 [3] local
-#>  htmltools     0.5.8   2024-03-25 [1] RSPM
+#>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
 #>  knitr         1.45    2023-10-30 [1] RSPM

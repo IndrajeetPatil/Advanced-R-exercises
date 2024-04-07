@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x565074e05220>
+#> <bytecode: 0x555cec234e20>
 #> <environment: namespace:rlang>
 ```
 
@@ -193,7 +193,7 @@ rlang::enexpr
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x5650747a6c28>
+#> <bytecode: 0x555cebbd6c38>
 #> <environment: namespace:rlang>
 ```
 
@@ -824,7 +824,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-03-31
+#>  date     2024-04-07
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -855,7 +855,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  grid          4.3.3      2024-03-04 [3] local
 #>  gtable        0.3.4      2023-08-21 [1] RSPM
 #>  highr         0.10       2022-12-22 [1] RSPM
-#>  htmltools     0.5.8      2024-03-25 [1] RSPM
+#>  htmltools     0.5.8.1    2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4      2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8      2023-12-04 [1] RSPM
 #>  knitr         1.45       2023-10-30 [1] RSPM
@@ -866,7 +866,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  MASS        * 7.3-60.0.1 2024-01-13 [3] CRAN (R 4.3.3)
 #>  memoise       2.0.1      2021-11-26 [1] RSPM
 #>  methods     * 4.3.3      2024-03-04 [3] local
-#>  munsell       0.5.0      2018-06-12 [1] RSPM
+#>  munsell       0.5.1      2024-04-01 [1] RSPM
 #>  pillar        1.9.0      2023-03-22 [1] RSPM
 #>  pkgconfig     2.0.3      2019-09-22 [1] RSPM
 #>  purrr       * 1.0.2      2023-08-10 [1] RSPM
