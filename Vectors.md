@@ -34,7 +34,6 @@ as.raw("–") # en-dash
 #> [1] 00
 as.raw("—") # em-dash
 #> Warning: NAs introduced by coercion
-
 #> Warning: out-of-range values treated as 0 in coercion to
 #> raw
 #> [1] 00
@@ -210,7 +209,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x558697e9f7f8>
+#> <bytecode: 0x55754554eb10>
 #> <environment: namespace:stats>
 ```
 
@@ -240,7 +239,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x55869742d3a8>
+#> <bytecode: 0x557544afa110>
 #> <environment: namespace:base>
 ```
 
@@ -841,7 +840,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-04-07
+#>  date     2024-04-14
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -863,7 +862,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.45    2023-10-30 [1] RSPM
+#>  knitr         1.46    2024-04-06 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM

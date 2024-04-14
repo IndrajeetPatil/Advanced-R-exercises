@@ -68,7 +68,7 @@ rm
 #>     }
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x5615741b1610>
+#> <bytecode: 0x55a7299fce88>
 #> <environment: namespace:base>
 ```
 
@@ -144,8 +144,8 @@ full_join(t_bench_df, t_systime_df, by = "expression")
 #> # A tibble: 2 × 4
 #>   expression bench_mean systime_with_gc systime_with_nogc
 #>   <bch:expr>   <bch:tm>           <dbl>             <dbl>
-#> 1 sqrt(x)      828.85ns           0.536             0.396
-#> 2 x^0.5          2.19µs           2.01              2.00
+#> 1 sqrt(x)      812.55ns           0.531             0.398
+#> 2 x^0.5          2.16µs           2.03              1.98
 ```
 
 The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.
@@ -180,10 +180,10 @@ bench::mark(
 #> # A tibble: 4 × 2
 #>   expression      median
 #>   <bch:expr>    <bch:tm>
-#> 1 sqrt(x)         3.05µs
-#> 2 exp(log(x)/2)  12.24µs
-#> 3 x^0.5          19.06µs
-#> 4 x^(1/2)        19.14µs
+#> 1 sqrt(x)         3.03µs
+#> 2 exp(log(x)/2)  12.22µs
+#> 3 x^0.5           18.8µs
+#> 4 x^(1/2)        18.93µs
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.
@@ -205,7 +205,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-04-07
+#>  date     2024-04-14
 #>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -233,7 +233,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmlwidgets   1.6.4   2023-12-06 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.45    2023-10-30 [1] RSPM
+#>  knitr         1.46    2024-04-06 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM
