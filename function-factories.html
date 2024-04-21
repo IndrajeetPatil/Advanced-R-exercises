@@ -7,7 +7,7 @@
 <title>Chapter 10 Function factories | Advanced R Exercises</title>
 <meta name="author" content="Indrajeet Patil">
 <meta name="description" content="Attaching the needed libraries: library(rlang, warn.conflicts = FALSE) library(ggplot2, warn.conflicts = FALSE)  10.1 Factory fundamentals (Exercises 10.2.6) Q1. The definition of force() is...">
-<meta name="generator" content="bookdown 0.38 with bs4_book()">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="Chapter 10 Function factories | Advanced R Exercises">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://bookdown.org/IndrajeetPatil/Advanced-R-exercises/function-factories.html">
@@ -100,7 +100,7 @@
 <code class="sourceCode R"><span><span class="va">force</span></span>
 <span><span class="co">#&gt; function (x) </span></span>
 <span><span class="co">#&gt; x</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x55c6072d2750&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x56443a9c1750&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>Why is it better to <code>force(x)</code> instead of just <code>x</code>?</p>
 <p><strong>A1.</strong> Due to lazy evaluation, argument to a function won’t be evaluated until its value is needed. But sometimes we may want to have eager evaluation, and using <code><a href="https://rdrr.io/r/base/force.html">force()</a></code> makes this intent clearer.</p>
@@ -118,8 +118,8 @@
 <span><span class="va">f</span></span>
 <span><span class="co">#&gt; function (v) </span></span>
 <span><span class="co">#&gt; .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x55c609120720&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55c60910f238&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x56443c80e498&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x56443c7fcfb0&gt;</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901</span></span>
 <span><span class="co">#&gt;  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142</span></span>
@@ -235,15 +235,15 @@
 <span><span class="co">#&gt;     i &lt;- i + 1</span></span>
 <span><span class="co">#&gt;     i</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55c60c3149f0&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x56443fa04308&gt;</span></span>
 <span></span>
 <span><span class="fu">new_counter3</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function() {</span></span>
 <span><span class="co">#&gt;     i &lt;- i + 1</span></span>
 <span><span class="co">#&gt;     i</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x55c60c56c3e8&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55c60c38b3f8&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;bytecode: 0x56443fc5bd00&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x56443fa7ad10&gt;</span></span></code></pre></div>
 <hr>
 </div>
 <div id="graphical-factories-exercises-10.3.4" class="section level2" number="10.2">
@@ -278,7 +278,7 @@
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt;     structure(fun, class = "labeller")</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x55c60c79acd8&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x56443fe8a5f0&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:ggplot2&gt;</span></span></code></pre></div>
 <ul>
 <li><code><a href="https://scales.r-lib.org/reference/comma.html">scales::number_format()</a></code></li>
@@ -299,7 +299,7 @@
 <span><span class="co">#&gt;             scale_cut = scale_cut, trim = trim, ...)</span></span>
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x55c609fef268&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x56443d6de708&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:scales&gt;</span></span></code></pre></div>
 <p>Both of these functions return formatting functions used to style the facets labels and other labels to have the desired format in <a href="https://ggplot2.tidyverse.org">ggplot2</a> plots.</p>
 <p>For example, using plotmath expression in the facet label:</p>
@@ -365,7 +365,7 @@
 <div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">boxcox2</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function(x) (x^lambda - 1) / lambda</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55c60dfa7e40&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x56444169fc08&gt;</span></span>
 <span></span>
 <span><span class="fu">boxcox3</span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function(lambda) {</span></span>
@@ -375,7 +375,7 @@
 <span><span class="co">#&gt;       (x^lambda - 1) / lambda</span></span>
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55c60e00a138&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x564441701f00&gt;</span></span></code></pre></div>
 <p>As can be seen:</p>
 <ul>
 <li>in <code>boxcox2()</code>, we can vary <code>x</code> for the same value of <code>lambda</code>, while</li>
@@ -401,12 +401,12 @@
 <span><span class="co">#&gt;     col &lt;- df[[var]]</span></span>
 <span><span class="co">#&gt;     col[sample(n, replace = TRUE)]</span></span>
 <span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55c60e2275a0&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x56444191f368&gt;</span></span></code></pre></div>
 <p>This is why we don’t need to worry about a copy being made because the <code>df</code> in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:</p>
 <div class="sourceCode" id="cb324"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">boot_permute_env</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/fn_env.html">fn_env</a></span><span class="op">(</span><span class="fu">boot_permute</span><span class="op">(</span><span class="va">mtcars</span>, <span class="st">"mpg"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/env_print.html">env_print</a></span><span class="op">(</span><span class="va">boot_permute_env</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55c60e40b8e8&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x564441b036b0&gt;</span></span>
 <span><span class="co">#&gt; Parent: &lt;environment: global&gt;</span></span>
 <span><span class="co">#&gt; Bindings:</span></span>
 <span><span class="co">#&gt; • n: &lt;int&gt;</span></span>
@@ -455,8 +455,8 @@
 <span><span class="co">#&gt; # A tibble: 2 × 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 LL1            28µs   29.8µs    32612.    12.9KB     9.79</span></span>
-<span><span class="co">#&gt; 2 LL2            14µs   14.9µs    65626.        0B    19.7</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 LL1          26.7µs   28.7µs    33808.    12.9KB     10.1</span></span>
+<span><span class="co">#&gt; 2 LL2          14.1µs   14.9µs    65851.        0B     19.8</span></span></code></pre></div>
 <p>As can be seen, the second version is much faster than the first version.</p>
 <p>We can also vary the length of the vector and confirm that across a wide range of vector lengths, this performance advantage is observed.</p>
 <div class="sourceCode" id="cb327"><pre class="downlit sourceCode r">
@@ -477,16 +477,16 @@
 <span><span class="co">#&gt; # A tibble: 10 × 5</span></span>
 <span><span class="co">#&gt;    length expression      min   median `itr/sec`</span></span>
 <span><span class="co">#&gt;     &lt;dbl&gt; &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1     10 LL1          39.7µs   41.6µs    23805.</span></span>
-<span><span class="co">#&gt;  2     10 LL2            17µs   17.9µs    55068.</span></span>
-<span><span class="co">#&gt;  3     20 LL1          42.2µs   43.9µs    22487.</span></span>
-<span><span class="co">#&gt;  4     20 LL2          16.4µs   17.4µs    56569.</span></span>
-<span><span class="co">#&gt;  5     50 LL1          46.3µs   48.1µs    20383.</span></span>
-<span><span class="co">#&gt;  6     50 LL2          15.8µs   16.7µs    58836.</span></span>
-<span><span class="co">#&gt;  7    100 LL1          62.1µs   67.9µs    14756.</span></span>
-<span><span class="co">#&gt;  8    100 LL2          17.1µs   18.1µs    54116.</span></span>
-<span><span class="co">#&gt;  9   1000 LL1         859.8µs  971.4µs     1064.</span></span>
-<span><span class="co">#&gt; 10   1000 LL2          53.6µs   55.3µs    17676.</span></span>
+<span><span class="co">#&gt;  1     10 LL1          38.7µs   40.6µs    24394.</span></span>
+<span><span class="co">#&gt;  2     10 LL2          16.9µs   17.8µs    55273.</span></span>
+<span><span class="co">#&gt;  3     20 LL1          40.7µs   42.9µs    22996.</span></span>
+<span><span class="co">#&gt;  4     20 LL2          16.3µs   17.2µs    57316.</span></span>
+<span><span class="co">#&gt;  5     50 LL1          45.6µs   47.3µs    20808.</span></span>
+<span><span class="co">#&gt;  6     50 LL2          15.4µs   16.4µs    58722.</span></span>
+<span><span class="co">#&gt;  7    100 LL1            61µs   62.9µs    15579.</span></span>
+<span><span class="co">#&gt;  8    100 LL2          16.9µs   17.8µs    55424.</span></span>
+<span><span class="co">#&gt;  9   1000 LL1           856µs  965.2µs     1083.</span></span>
+<span><span class="co">#&gt; 10   1000 LL2          53.4µs   54.8µs    17871.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
 <span>  <span class="va">df_bench</span>,</span>
@@ -598,20 +598,20 @@
 <span><span class="co">#&gt;  collate  C.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-04-14</span></span>
+<span><span class="co">#&gt;  date     2024-04-21</span></span>
 <span><span class="co">#&gt;  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt;  package     * version date (UTC) lib source</span></span>
-<span><span class="co">#&gt;  base        * 4.3.3   2024-03-04 [3] local</span></span>
+<span><span class="co">#&gt;  base        * 4.3.3   2024-04-18 [3] local</span></span>
 <span><span class="co">#&gt;  bench         1.1.3   2023-05-04 [1] RSPM</span></span>
-<span><span class="co">#&gt;  bookdown      0.38    2024-03-04 [1] RSPM</span></span>
+<span><span class="co">#&gt;  bookdown      0.39    2024-04-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  bslib         0.7.0   2024-03-29 [1] RSPM</span></span>
 <span><span class="co">#&gt;  cachem        1.0.8   2023-05-01 [1] RSPM</span></span>
 <span><span class="co">#&gt;  cli           3.6.2   2023-12-11 [1] RSPM</span></span>
 <span><span class="co">#&gt;  colorspace    2.1-0   2023-01-23 [1] RSPM</span></span>
-<span><span class="co">#&gt;  compiler      4.3.3   2024-03-04 [3] local</span></span>
-<span><span class="co">#&gt;  datasets    * 4.3.3   2024-03-04 [3] local</span></span>
+<span><span class="co">#&gt;  compiler      4.3.3   2024-04-18 [3] local</span></span>
+<span><span class="co">#&gt;  datasets    * 4.3.3   2024-04-18 [3] local</span></span>
 <span><span class="co">#&gt;  digest        0.6.35  2024-03-11 [1] RSPM</span></span>
 <span><span class="co">#&gt;  downlit       0.4.3   2023-06-29 [1] RSPM</span></span>
 <span><span class="co">#&gt;  dplyr         1.1.4   2023-11-17 [1] RSPM</span></span>
@@ -623,9 +623,9 @@
 <span><span class="co">#&gt;  generics      0.1.3   2022-07-05 [1] RSPM</span></span>
 <span><span class="co">#&gt;  ggplot2     * 3.5.0   2024-02-23 [1] RSPM</span></span>
 <span><span class="co">#&gt;  glue          1.7.0   2024-01-09 [1] RSPM</span></span>
-<span><span class="co">#&gt;  graphics    * 4.3.3   2024-03-04 [3] local</span></span>
-<span><span class="co">#&gt;  grDevices   * 4.3.3   2024-03-04 [3] local</span></span>
-<span><span class="co">#&gt;  grid          4.3.3   2024-03-04 [3] local</span></span>
+<span><span class="co">#&gt;  graphics    * 4.3.3   2024-04-18 [3] local</span></span>
+<span><span class="co">#&gt;  grDevices   * 4.3.3   2024-04-18 [3] local</span></span>
+<span><span class="co">#&gt;  grid          4.3.3   2024-04-18 [3] local</span></span>
 <span><span class="co">#&gt;  gtable        0.3.4   2023-08-21 [1] RSPM</span></span>
 <span><span class="co">#&gt;  highr         0.10    2022-12-22 [1] RSPM</span></span>
 <span><span class="co">#&gt;  htmltools     0.5.8.1 2024-04-04 [1] RSPM</span></span>
@@ -637,7 +637,7 @@
 <span><span class="co">#&gt;  lobstr        1.1.2   2022-06-22 [1] RSPM</span></span>
 <span><span class="co">#&gt;  magrittr    * 2.0.3   2022-03-30 [1] RSPM</span></span>
 <span><span class="co">#&gt;  memoise       2.0.1   2021-11-26 [1] RSPM</span></span>
-<span><span class="co">#&gt;  methods     * 4.3.3   2024-03-04 [3] local</span></span>
+<span><span class="co">#&gt;  methods     * 4.3.3   2024-04-18 [3] local</span></span>
 <span><span class="co">#&gt;  munsell       0.5.1   2024-04-01 [1] RSPM</span></span>
 <span><span class="co">#&gt;  pillar        1.9.0   2023-03-22 [1] RSPM</span></span>
 <span><span class="co">#&gt;  pkgconfig     2.0.3   2019-09-22 [1] RSPM</span></span>
@@ -649,12 +649,12 @@
 <span><span class="co">#&gt;  sass          0.4.9   2024-03-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  scales      * 1.3.0   2023-11-28 [1] RSPM</span></span>
 <span><span class="co">#&gt;  sessioninfo   1.2.2   2021-12-06 [1] RSPM</span></span>
-<span><span class="co">#&gt;  stats       * 4.3.3   2024-03-04 [3] local</span></span>
+<span><span class="co">#&gt;  stats       * 4.3.3   2024-04-18 [3] local</span></span>
 <span><span class="co">#&gt;  tibble        3.2.1   2023-03-20 [1] RSPM</span></span>
 <span><span class="co">#&gt;  tidyselect    1.2.1   2024-03-11 [1] RSPM</span></span>
-<span><span class="co">#&gt;  tools         4.3.3   2024-03-04 [3] local</span></span>
+<span><span class="co">#&gt;  tools         4.3.3   2024-04-18 [3] local</span></span>
 <span><span class="co">#&gt;  utf8          1.2.4   2023-10-22 [1] RSPM</span></span>
-<span><span class="co">#&gt;  utils       * 4.3.3   2024-03-04 [3] local</span></span>
+<span><span class="co">#&gt;  utils       * 4.3.3   2024-04-18 [3] local</span></span>
 <span><span class="co">#&gt;  vctrs         0.6.5   2023-12-01 [1] RSPM</span></span>
 <span><span class="co">#&gt;  withr         3.0.0   2024-01-16 [1] RSPM</span></span>
 <span><span class="co">#&gt;  xfun          0.43    2024-03-25 [1] RSPM</span></span>
@@ -698,7 +698,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2024-04-14.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2024-04-21.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
