@@ -29,7 +29,7 @@ d <- 1:10
 ```r
 obj_addrs <- obj_addrs(list(a, b, c))
 unique(obj_addrs)
-#> [1] "0x561ed51c0718"
+#> [1] "0x55ae9b032960"
 ```
 
 Except `d`, which is a different object, even if it has the same value as `a`, `b`, and `c`:
@@ -37,7 +37,7 @@ Except `d`, which is a different object, even if it has the same value as `a`, `
 
 ```r
 obj_addr(d)
-#> [1] "0x561ed52e7620"
+#> [1] "0x55ae9b15b8d8"
 ```
 
 ---
@@ -66,7 +66,7 @@ obj_addrs <- obj_addrs(list(
 ))
 
 unique(obj_addrs)
-#> [1] "0x561ed15bc398"
+#> [1] "0x55ae97430398"
 ```
 
 ---
@@ -124,7 +124,7 @@ And as the docs mention (emphasis mine):
 x <- 1:10
 
 tracemem(x)
-#> [1] "<0x561ed60bfb40>"
+#> [1] "<0x55ae9bf39738>"
 
 x <- x + 1
 
@@ -136,10 +136,10 @@ But since the object created in memory by `1:10` is not assigned a name, it can'
 
 ```r
 obj_addr(1:10)
-#> [1] "0x561ed64b1b68"
+#> [1] "0x55ae9c3210b0"
 
 tracemem(1:10)
-#> [1] "<0x561ed651a3d0>"
+#> [1] "<0x55ae9c38f668>"
 ```
 
 ---
@@ -163,11 +163,11 @@ x <- c(1L, 2L, 3L)
 typeof(x)
 #> [1] "integer"
 tracemem(x)
-#> [1] "<0x561ed465bd78>"
+#> [1] "<0x55ae9a372358>"
 
 x[[3]] <- 4
-#> tracemem[0x561ed465bd78 -> 0x561ed1b5dfa8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
-#> tracemem[0x561ed1b5dfa8 -> 0x561ed481b328]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x55ae9a372358 -> 0x55ae979d1be8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
+#> tracemem[0x55ae979d1be8 -> 0x55ae9a7bf998]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 untracemem(x)
 
 typeof(x)
@@ -182,10 +182,10 @@ x <- c(1L, 2L, 3L)
 typeof(x)
 #> [1] "integer"
 tracemem(x)
-#> [1] "<0x561ed4aa91e8>"
+#> [1] "<0x55ae9aa127d8>"
 
 x[[3]] <- 4L
-#> tracemem[0x561ed4aa91e8 -> 0x561ed4fd3348]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x55ae9aa127d8 -> 0x55ae9ae5c578]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 untracemem(x)
 
 typeof(x)
@@ -216,20 +216,20 @@ b <- list(a, a)
 c <- list(b, a, 1:10)
 
 ref(a)
-#> [1:0x561ed5124d50] <int>
+#> [1:0x55ae9af9a230] <int>
 
 ref(b)
-#> █ [1:0x561ed4d2f038] <list> 
-#> ├─[2:0x561ed5124d50] <int> 
-#> └─[2:0x561ed5124d50]
+#> █ [1:0x55ae9ab83028] <list> 
+#> ├─[2:0x55ae9af9a230] <int> 
+#> └─[2:0x55ae9af9a230]
 
 ref(c)
-#> █ [1:0x561ed521e368] <list> 
-#> ├─█ [2:0x561ed4d2f038] <list> 
-#> │ ├─[3:0x561ed5124d50] <int> 
-#> │ └─[3:0x561ed5124d50] 
-#> ├─[3:0x561ed5124d50] 
-#> └─[4:0x561ed51da3d8] <int>
+#> █ [1:0x55ae9b093128] <list> 
+#> ├─█ [2:0x55ae9ab83028] <list> 
+#> │ ├─[3:0x55ae9af9a230] <int> 
+#> │ └─[3:0x55ae9af9a230] 
+#> ├─[3:0x55ae9af9a230] 
+#> └─[4:0x55ae9b04f8b8] <int>
 ```
 
 Here is what we learn:
@@ -259,7 +259,7 @@ x
 #> [[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x561ed60b2208"
+#> [1] "0x55ae9bf2ab68"
 
 x[[2]] <- x
 x
@@ -270,13 +270,13 @@ x
 #> [[2]][[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x561ed604cb28"
+#> [1] "0x55ae9bec11d8"
 
 ref(x)
-#> █ [1:0x561ed604cb28] <list> 
-#> ├─[2:0x561ed5ef62b0] <int> 
-#> └─█ [3:0x561ed60b2208] <list> 
-#>   └─[2:0x561ed5ef62b0]
+#> █ [1:0x55ae9bec11d8] <list> 
+#> ├─[2:0x55ae9bd679d8] <int> 
+#> └─█ [3:0x55ae9bf2ab68] <list> 
+#>   └─[2:0x55ae9bd679d8]
 ```
 
 I don't have access to OmniGraffle software, so I am including here the figure from the [official solution manual](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify):
@@ -425,16 +425,16 @@ x[[1]] <- x
 x <- list()
 
 obj_addr(x)
-#> [1] "0x561ed56db510"
+#> [1] "0x55ae9b54b600"
 
 tracemem(x)
-#> [1] "<0x561ed56db510>"
+#> [1] "<0x55ae9b54b600>"
 
 x[[1]] <- x
-#> tracemem[0x561ed56db510 -> 0x561ed50e0b80]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x55ae9b54b600 -> 0x55ae9af53df8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 
 obj_addr(x[[1]])
-#> [1] "0x561ed56db510"
+#> [1] "0x55ae9b54b600"
 ```
 
 ---
@@ -558,8 +558,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-04-21
-#>  pandoc   3.1.8 @ /opt/hostedtoolcache/pandoc/3.1.8/x64/ (via rmarkdown)
+#>  date     2024-04-22
+#>  pandoc   3.1.13 @ /opt/hostedtoolcache/pandoc/3.1.13/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
