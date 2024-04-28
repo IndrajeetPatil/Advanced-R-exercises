@@ -99,7 +99,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/match.fun.html">match.fun</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; UseMethod("mean")</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x55913defa440&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x55975a93bf98&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>But, given a function, it doesn’t make sense to find its name because there can be multiple names bound to the same function.</p>
 <div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
@@ -202,20 +202,20 @@
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">argumentCount</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">df_formals</span></span>
-<span><span class="co">#&gt; # A tibble: 1,139 × 2</span></span>
-<span><span class="co">#&gt;    `function`       argumentCount</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;                    &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1 scan                        22</span></span>
-<span><span class="co">#&gt;  2 format.default              16</span></span>
-<span><span class="co">#&gt;  3 source                      16</span></span>
-<span><span class="co">#&gt;  4 formatC                     15</span></span>
-<span><span class="co">#&gt;  5 library                     13</span></span>
-<span><span class="co">#&gt;  6 merge.data.frame            13</span></span>
-<span><span class="co">#&gt;  7 prettyNum                   13</span></span>
-<span><span class="co">#&gt;  8 system2                     11</span></span>
-<span><span class="co">#&gt;  9 print.default               10</span></span>
-<span><span class="co">#&gt; 10 save                        10</span></span>
-<span><span class="co">#&gt; # ℹ 1,129 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 1,145 × 2</span></span>
+<span><span class="co">#&gt;    `function`        argumentCount</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;                     &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 scan                         22</span></span>
+<span><span class="co">#&gt;  2 source                       17</span></span>
+<span><span class="co">#&gt;  3 format.default               16</span></span>
+<span><span class="co">#&gt;  4 formatC                      15</span></span>
+<span><span class="co">#&gt;  5 library                      13</span></span>
+<span><span class="co">#&gt;  6 merge.data.frame             13</span></span>
+<span><span class="co">#&gt;  7 prettyNum                    13</span></span>
+<span><span class="co">#&gt;  8 system2                      12</span></span>
+<span><span class="co">#&gt;  9 system                       11</span></span>
+<span><span class="co">#&gt; 10 all.equal.numeric            10</span></span>
+<span><span class="co">#&gt; # ℹ 1,135 more rows</span></span></code></pre></div>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>How many base functions have no arguments? What’s special about those functions?</li>
 </ol>
@@ -245,7 +245,7 @@
 <span><span class="va">primitives</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Filter</a></span><span class="op">(</span><span class="va">is.primitive</span>, <span class="va">funs</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">primitives</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 205</span></span>
+<span><span class="co">#&gt; [1] 210</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">primitives</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   [1] "-"                    ":"                   </span></span>
@@ -293,64 +293,66 @@
 <span><span class="co">#&gt;  [85] "ceiling"              "class"               </span></span>
 <span><span class="co">#&gt;  [87] "class&lt;-"              "Conj"                </span></span>
 <span><span class="co">#&gt;  [89] "cos"                  "cosh"                </span></span>
-<span><span class="co">#&gt;  [91] "cospi"                "cummax"              </span></span>
-<span><span class="co">#&gt;  [93] "cummin"               "cumprod"             </span></span>
-<span><span class="co">#&gt;  [95] "cumsum"               "digamma"             </span></span>
-<span><span class="co">#&gt;  [97] "dim"                  "dim&lt;-"               </span></span>
-<span><span class="co">#&gt;  [99] "dimnames"             "dimnames&lt;-"          </span></span>
-<span><span class="co">#&gt; [101] "emptyenv"             "enc2native"          </span></span>
-<span><span class="co">#&gt; [103] "enc2utf8"             "environment&lt;-"       </span></span>
-<span><span class="co">#&gt; [105] "exp"                  "expm1"               </span></span>
-<span><span class="co">#&gt; [107] "expression"           "floor"               </span></span>
-<span><span class="co">#&gt; [109] "for"                  "forceAndCall"        </span></span>
-<span><span class="co">#&gt; [111] "function"             "gamma"               </span></span>
-<span><span class="co">#&gt; [113] "gc.time"              "globalenv"           </span></span>
-<span><span class="co">#&gt; [115] "if"                   "Im"                  </span></span>
-<span><span class="co">#&gt; [117] "interactive"          "invisible"           </span></span>
-<span><span class="co">#&gt; [119] "is.array"             "is.atomic"           </span></span>
-<span><span class="co">#&gt; [121] "is.call"              "is.character"        </span></span>
-<span><span class="co">#&gt; [123] "is.complex"           "is.double"           </span></span>
-<span><span class="co">#&gt; [125] "is.environment"       "is.expression"       </span></span>
-<span><span class="co">#&gt; [127] "is.finite"            "is.function"         </span></span>
-<span><span class="co">#&gt; [129] "is.infinite"          "is.integer"          </span></span>
-<span><span class="co">#&gt; [131] "is.language"          "is.list"             </span></span>
-<span><span class="co">#&gt; [133] "is.logical"           "is.matrix"           </span></span>
-<span><span class="co">#&gt; [135] "is.na"                "is.name"             </span></span>
-<span><span class="co">#&gt; [137] "is.nan"               "is.null"             </span></span>
-<span><span class="co">#&gt; [139] "is.numeric"           "is.object"           </span></span>
-<span><span class="co">#&gt; [141] "is.pairlist"          "is.raw"              </span></span>
-<span><span class="co">#&gt; [143] "is.recursive"         "is.single"           </span></span>
-<span><span class="co">#&gt; [145] "is.symbol"            "isS4"                </span></span>
-<span><span class="co">#&gt; [147] "lazyLoadDBfetch"      "length"              </span></span>
-<span><span class="co">#&gt; [149] "length&lt;-"             "levels&lt;-"            </span></span>
-<span><span class="co">#&gt; [151] "lgamma"               "list"                </span></span>
-<span><span class="co">#&gt; [153] "log"                  "log10"               </span></span>
-<span><span class="co">#&gt; [155] "log1p"                "log2"                </span></span>
-<span><span class="co">#&gt; [157] "max"                  "min"                 </span></span>
-<span><span class="co">#&gt; [159] "missing"              "Mod"                 </span></span>
-<span><span class="co">#&gt; [161] "names"                "names&lt;-"             </span></span>
-<span><span class="co">#&gt; [163] "nargs"                "next"                </span></span>
-<span><span class="co">#&gt; [165] "nzchar"               "oldClass"            </span></span>
-<span><span class="co">#&gt; [167] "oldClass&lt;-"           "on.exit"             </span></span>
-<span><span class="co">#&gt; [169] "pos.to.env"           "proc.time"           </span></span>
-<span><span class="co">#&gt; [171] "prod"                 "quote"               </span></span>
-<span><span class="co">#&gt; [173] "range"                "Re"                  </span></span>
-<span><span class="co">#&gt; [175] "rep"                  "repeat"              </span></span>
-<span><span class="co">#&gt; [177] "retracemem"           "return"              </span></span>
-<span><span class="co">#&gt; [179] "round"                "seq_along"           </span></span>
-<span><span class="co">#&gt; [181] "seq_len"              "seq.int"             </span></span>
-<span><span class="co">#&gt; [183] "sign"                 "signif"              </span></span>
-<span><span class="co">#&gt; [185] "sin"                  "sinh"                </span></span>
-<span><span class="co">#&gt; [187] "sinpi"                "sqrt"                </span></span>
-<span><span class="co">#&gt; [189] "standardGeneric"      "storage.mode&lt;-"      </span></span>
-<span><span class="co">#&gt; [191] "substitute"           "sum"                 </span></span>
-<span><span class="co">#&gt; [193] "switch"               "tan"                 </span></span>
-<span><span class="co">#&gt; [195] "tanh"                 "tanpi"               </span></span>
-<span><span class="co">#&gt; [197] "tracemem"             "trigamma"            </span></span>
-<span><span class="co">#&gt; [199] "trunc"                "unCfillPOSIXlt"      </span></span>
-<span><span class="co">#&gt; [201] "unclass"              "untracemem"          </span></span>
-<span><span class="co">#&gt; [203] "UseMethod"            "while"               </span></span>
-<span><span class="co">#&gt; [205] "xtfrm"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [91] "cospi"                "crossprod"           </span></span>
+<span><span class="co">#&gt;  [93] "cummax"               "cummin"              </span></span>
+<span><span class="co">#&gt;  [95] "cumprod"              "cumsum"              </span></span>
+<span><span class="co">#&gt;  [97] "declare"              "digamma"             </span></span>
+<span><span class="co">#&gt;  [99] "dim"                  "dim&lt;-"               </span></span>
+<span><span class="co">#&gt; [101] "dimnames"             "dimnames&lt;-"          </span></span>
+<span><span class="co">#&gt; [103] "emptyenv"             "enc2native"          </span></span>
+<span><span class="co">#&gt; [105] "enc2utf8"             "environment&lt;-"       </span></span>
+<span><span class="co">#&gt; [107] "Exec"                 "exp"                 </span></span>
+<span><span class="co">#&gt; [109] "expm1"                "expression"          </span></span>
+<span><span class="co">#&gt; [111] "floor"                "for"                 </span></span>
+<span><span class="co">#&gt; [113] "forceAndCall"         "function"            </span></span>
+<span><span class="co">#&gt; [115] "gamma"                "gc.time"             </span></span>
+<span><span class="co">#&gt; [117] "globalenv"            "if"                  </span></span>
+<span><span class="co">#&gt; [119] "Im"                   "interactive"         </span></span>
+<span><span class="co">#&gt; [121] "invisible"            "is.array"            </span></span>
+<span><span class="co">#&gt; [123] "is.atomic"            "is.call"             </span></span>
+<span><span class="co">#&gt; [125] "is.character"         "is.complex"          </span></span>
+<span><span class="co">#&gt; [127] "is.double"            "is.environment"      </span></span>
+<span><span class="co">#&gt; [129] "is.expression"        "is.finite"           </span></span>
+<span><span class="co">#&gt; [131] "is.function"          "is.infinite"         </span></span>
+<span><span class="co">#&gt; [133] "is.integer"           "is.language"         </span></span>
+<span><span class="co">#&gt; [135] "is.list"              "is.logical"          </span></span>
+<span><span class="co">#&gt; [137] "is.matrix"            "is.na"               </span></span>
+<span><span class="co">#&gt; [139] "is.name"              "is.nan"              </span></span>
+<span><span class="co">#&gt; [141] "is.null"              "is.numeric"          </span></span>
+<span><span class="co">#&gt; [143] "is.object"            "is.pairlist"         </span></span>
+<span><span class="co">#&gt; [145] "is.raw"               "is.recursive"        </span></span>
+<span><span class="co">#&gt; [147] "is.single"            "is.symbol"           </span></span>
+<span><span class="co">#&gt; [149] "isS4"                 "lazyLoadDBfetch"     </span></span>
+<span><span class="co">#&gt; [151] "length"               "length&lt;-"            </span></span>
+<span><span class="co">#&gt; [153] "levels&lt;-"             "lgamma"              </span></span>
+<span><span class="co">#&gt; [155] "list"                 "log"                 </span></span>
+<span><span class="co">#&gt; [157] "log10"                "log1p"               </span></span>
+<span><span class="co">#&gt; [159] "log2"                 "max"                 </span></span>
+<span><span class="co">#&gt; [161] "min"                  "missing"             </span></span>
+<span><span class="co">#&gt; [163] "Mod"                  "names"               </span></span>
+<span><span class="co">#&gt; [165] "names&lt;-"              "nargs"               </span></span>
+<span><span class="co">#&gt; [167] "next"                 "nzchar"              </span></span>
+<span><span class="co">#&gt; [169] "oldClass"             "oldClass&lt;-"          </span></span>
+<span><span class="co">#&gt; [171] "on.exit"              "pos.to.env"          </span></span>
+<span><span class="co">#&gt; [173] "proc.time"            "prod"                </span></span>
+<span><span class="co">#&gt; [175] "quote"                "range"               </span></span>
+<span><span class="co">#&gt; [177] "Re"                   "rep"                 </span></span>
+<span><span class="co">#&gt; [179] "repeat"               "retracemem"          </span></span>
+<span><span class="co">#&gt; [181] "return"               "round"               </span></span>
+<span><span class="co">#&gt; [183] "seq_along"            "seq_len"             </span></span>
+<span><span class="co">#&gt; [185] "seq.int"              "sign"                </span></span>
+<span><span class="co">#&gt; [187] "signif"               "sin"                 </span></span>
+<span><span class="co">#&gt; [189] "sinh"                 "sinpi"               </span></span>
+<span><span class="co">#&gt; [191] "sqrt"                 "standardGeneric"     </span></span>
+<span><span class="co">#&gt; [193] "storage.mode&lt;-"       "substitute"          </span></span>
+<span><span class="co">#&gt; [195] "sum"                  "switch"              </span></span>
+<span><span class="co">#&gt; [197] "Tailcall"             "tan"                 </span></span>
+<span><span class="co">#&gt; [199] "tanh"                 "tanpi"               </span></span>
+<span><span class="co">#&gt; [201] "tcrossprod"           "tracemem"            </span></span>
+<span><span class="co">#&gt; [203] "trigamma"             "trunc"               </span></span>
+<span><span class="co">#&gt; [205] "unCfillPOSIXlt"       "unclass"             </span></span>
+<span><span class="co">#&gt; [207] "untracemem"           "UseMethod"           </span></span>
+<span><span class="co">#&gt; [209] "while"                "xtfrm"</span></span></code></pre></div>
 <p><strong>Q6.</strong> What are the three important components of a function?</p>
 <p><strong>A6.</strong> Except for primitive functions, all functions have 3 important components:</p>
 <ul>
@@ -365,7 +367,7 @@
 <span><span class="va">mean</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; UseMethod("mean")</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x55913defa440&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x55975a93bf98&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span>
 <span></span>
 <span><span class="co"># other package function</span></span>
@@ -374,7 +376,7 @@
 <span><span class="co">#&gt; {</span></span>
 <span><span class="co">#&gt;     map_("list", .x, .f, ..., .progress = .progress)</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x559143094390&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x55975efeb300&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:purrr&gt;</span></span></code></pre></div>
 <p>There are two exceptions where the enclosing environment won’t be printed:</p>
 <ul>
@@ -530,7 +532,7 @@
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu">f2</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "0x559141016b68" "0x559141016b68"</span></span>
+<span><span class="co">#&gt; [1] "0x5597644fecc0" "0x5597644fecc0"</span></span>
 <span><span class="co">#&gt; [1] 100</span></span></code></pre></div>
 <p><strong>Q3.</strong> What does this function return? Why? Which principle does it illustrate?</p>
 <div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
@@ -591,7 +593,7 @@
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu">show_time</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2024-04-22 16:58:19 UTC"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2024-04-28 00:45:50 UTC"</span></span></code></pre></div>
 <p><strong>A5.</strong> Let’s take this step-by-step.</p>
 <p>The function argument <code>x</code> is missing in the function call. This means that <code>stop("Error!")</code> is evaluated in the function environment, and not global environment.</p>
 <p>But, due to lazy evaluation, the promise <code>stop("Error!")</code> is evaluated only when <code>x</code> is accessed. This happens only when <code>print(x)</code> is called.</p>
@@ -742,7 +744,7 @@
 <span><span class="co">#&gt;     on.exit(setwd(old))</span></span>
 <span><span class="co">#&gt;     force(code)</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x5591436c0678&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x55976261e1f0&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:withr&gt;</span></span></code></pre></div>
 <p>More importantly, its parameters <code>dir</code> allows temporarily changing working directory to <em>any</em> directory.</p>
 <p><strong>Q4.</strong> Write a function that opens a graphics device, runs the supplied code, and closes the graphics device (always, regardless of whether or not the plotting code works).</p>
@@ -807,11 +809,9 @@
 <span><span class="co">#&gt;     sink(type = type, split = split)</span></span>
 <span><span class="co">#&gt;     if (closeit) </span></span>
 <span><span class="co">#&gt;         close(file)</span></span>
-<span><span class="co">#&gt;     if (is.null(rval)) </span></span>
-<span><span class="co">#&gt;         invisible(NULL)</span></span>
-<span><span class="co">#&gt;     else rval</span></span>
+<span><span class="co">#&gt;     rval %||% invisible(NULL)</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x559142e097d0&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x5597629e66f0&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:utils&gt;</span></span></code></pre></div>
 <p>Here are few key differences:</p>
 <ul>
@@ -1062,7 +1062,7 @@
 <code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ─ Session info ───────────────────────────────────────────</span></span>
 <span><span class="co">#&gt;  setting  value</span></span>
-<span><span class="co">#&gt;  version  R version 4.3.3 (2024-02-29)</span></span>
+<span><span class="co">#&gt;  version  R version 4.4.0 (2024-04-24)</span></span>
 <span><span class="co">#&gt;  os       Ubuntu 22.04.4 LTS</span></span>
 <span><span class="co">#&gt;  system   x86_64, linux-gnu</span></span>
 <span><span class="co">#&gt;  ui       X11</span></span>
@@ -1070,19 +1070,19 @@
 <span><span class="co">#&gt;  collate  C.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-04-22</span></span>
+<span><span class="co">#&gt;  date     2024-04-28</span></span>
 <span><span class="co">#&gt;  pandoc   3.1.13 @ /opt/hostedtoolcache/pandoc/3.1.13/x64/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt;  package     * version date (UTC) lib source</span></span>
-<span><span class="co">#&gt;  base        * 4.3.3   2024-04-18 [3] local</span></span>
+<span><span class="co">#&gt;  base        * 4.4.0   2024-04-24 [3] local</span></span>
 <span><span class="co">#&gt;  bookdown      0.39    2024-04-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  bslib         0.7.0   2024-03-29 [1] RSPM</span></span>
 <span><span class="co">#&gt;  cachem        1.0.8   2023-05-01 [1] RSPM</span></span>
 <span><span class="co">#&gt;  cli           3.6.2   2023-12-11 [1] RSPM</span></span>
 <span><span class="co">#&gt;  colorspace    2.1-0   2023-01-23 [1] RSPM</span></span>
-<span><span class="co">#&gt;  compiler      4.3.3   2024-04-18 [3] local</span></span>
-<span><span class="co">#&gt;  datasets    * 4.3.3   2024-04-18 [3] local</span></span>
+<span><span class="co">#&gt;  compiler      4.4.0   2024-04-24 [3] local</span></span>
+<span><span class="co">#&gt;  datasets    * 4.4.0   2024-04-24 [3] local</span></span>
 <span><span class="co">#&gt;  digest        0.6.35  2024-03-11 [1] RSPM</span></span>
 <span><span class="co">#&gt;  downlit       0.4.3   2023-06-29 [1] RSPM</span></span>
 <span><span class="co">#&gt;  dplyr       * 1.1.4   2023-11-17 [1] RSPM</span></span>
@@ -1090,14 +1090,14 @@
 <span><span class="co">#&gt;  fansi         1.0.6   2023-12-08 [1] RSPM</span></span>
 <span><span class="co">#&gt;  fastmap       1.1.1   2023-02-24 [1] RSPM</span></span>
 <span><span class="co">#&gt;  forcats     * 1.0.0   2023-01-29 [1] RSPM</span></span>
-<span><span class="co">#&gt;  fs            1.6.3   2023-07-20 [1] RSPM</span></span>
+<span><span class="co">#&gt;  fs            1.6.4   2024-04-25 [1] RSPM</span></span>
 <span><span class="co">#&gt;  generics      0.1.3   2022-07-05 [1] RSPM</span></span>
-<span><span class="co">#&gt;  ggplot2     * 3.5.0   2024-02-23 [1] RSPM</span></span>
+<span><span class="co">#&gt;  ggplot2     * 3.5.1   2024-04-23 [1] RSPM</span></span>
 <span><span class="co">#&gt;  glue          1.7.0   2024-01-09 [1] RSPM</span></span>
-<span><span class="co">#&gt;  graphics    * 4.3.3   2024-04-18 [3] local</span></span>
-<span><span class="co">#&gt;  grDevices   * 4.3.3   2024-04-18 [3] local</span></span>
-<span><span class="co">#&gt;  grid          4.3.3   2024-04-18 [3] local</span></span>
-<span><span class="co">#&gt;  gtable        0.3.4   2023-08-21 [1] RSPM</span></span>
+<span><span class="co">#&gt;  graphics    * 4.4.0   2024-04-24 [3] local</span></span>
+<span><span class="co">#&gt;  grDevices   * 4.4.0   2024-04-24 [3] local</span></span>
+<span><span class="co">#&gt;  grid          4.4.0   2024-04-24 [3] local</span></span>
+<span><span class="co">#&gt;  gtable        0.3.5   2024-04-22 [1] RSPM</span></span>
 <span><span class="co">#&gt;  highr         0.10    2022-12-22 [1] RSPM</span></span>
 <span><span class="co">#&gt;  hms           1.1.3   2023-03-21 [1] RSPM</span></span>
 <span><span class="co">#&gt;  htmltools     0.5.8.1 2024-04-04 [1] RSPM</span></span>
@@ -1109,7 +1109,7 @@
 <span><span class="co">#&gt;  lubridate   * 1.9.3   2023-09-27 [1] RSPM</span></span>
 <span><span class="co">#&gt;  magrittr    * 2.0.3   2022-03-30 [1] RSPM</span></span>
 <span><span class="co">#&gt;  memoise       2.0.1   2021-11-26 [1] RSPM</span></span>
-<span><span class="co">#&gt;  methods     * 4.3.3   2024-04-18 [3] local</span></span>
+<span><span class="co">#&gt;  methods     * 4.4.0   2024-04-24 [3] local</span></span>
 <span><span class="co">#&gt;  munsell       0.5.1   2024-04-01 [1] RSPM</span></span>
 <span><span class="co">#&gt;  pillar        1.9.0   2023-03-22 [1] RSPM</span></span>
 <span><span class="co">#&gt;  pkgconfig     2.0.3   2019-09-22 [1] RSPM</span></span>
@@ -1121,7 +1121,7 @@
 <span><span class="co">#&gt;  sass          0.4.9   2024-03-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  scales        1.3.0   2023-11-28 [1] RSPM</span></span>
 <span><span class="co">#&gt;  sessioninfo   1.2.2   2021-12-06 [1] RSPM</span></span>
-<span><span class="co">#&gt;  stats       * 4.3.3   2024-04-18 [3] local</span></span>
+<span><span class="co">#&gt;  stats       * 4.4.0   2024-04-24 [3] local</span></span>
 <span><span class="co">#&gt;  stringi       1.8.3   2023-12-11 [1] RSPM</span></span>
 <span><span class="co">#&gt;  stringr     * 1.5.1   2023-11-14 [1] RSPM</span></span>
 <span><span class="co">#&gt;  tibble      * 3.2.1   2023-03-20 [1] RSPM</span></span>
@@ -1129,10 +1129,10 @@
 <span><span class="co">#&gt;  tidyselect    1.2.1   2024-03-11 [1] RSPM</span></span>
 <span><span class="co">#&gt;  tidyverse   * 2.0.0   2023-02-22 [1] RSPM</span></span>
 <span><span class="co">#&gt;  timechange    0.3.0   2024-01-18 [1] RSPM</span></span>
-<span><span class="co">#&gt;  tools         4.3.3   2024-04-18 [3] local</span></span>
+<span><span class="co">#&gt;  tools         4.4.0   2024-04-24 [3] local</span></span>
 <span><span class="co">#&gt;  tzdb          0.4.0   2023-05-12 [1] RSPM</span></span>
 <span><span class="co">#&gt;  utf8          1.2.4   2023-10-22 [1] RSPM</span></span>
-<span><span class="co">#&gt;  utils       * 4.3.3   2024-04-18 [3] local</span></span>
+<span><span class="co">#&gt;  utils       * 4.4.0   2024-04-24 [3] local</span></span>
 <span><span class="co">#&gt;  vctrs         0.6.5   2023-12-01 [1] RSPM</span></span>
 <span><span class="co">#&gt;  withr         3.0.0   2024-01-16 [1] RSPM</span></span>
 <span><span class="co">#&gt;  xfun          0.43    2024-03-25 [1] RSPM</span></span>
@@ -1140,8 +1140,8 @@
 <span><span class="co">#&gt;  yaml          2.3.8   2023-12-11 [1] RSPM</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  [1] /home/runner/work/_temp/Library</span></span>
-<span><span class="co">#&gt;  [2] /opt/R/4.3.3/lib/R/site-library</span></span>
-<span><span class="co">#&gt;  [3] /opt/R/4.3.3/lib/R/library</span></span>
+<span><span class="co">#&gt;  [2] /opt/R/4.4.0/lib/R/site-library</span></span>
+<span><span class="co">#&gt;  [3] /opt/R/4.4.0/lib/R/library</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ──────────────────────────────────────────────────────────</span></span></code></pre></div>
 
@@ -1178,7 +1178,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2024-04-22.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2024-04-28.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

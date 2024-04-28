@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55913defa440>
+#> <bytecode: 0x55975a93bf98>
 #> <environment: namespace:base>
 ```
 
@@ -171,20 +171,20 @@ df_formals <- purrr::map_df(funs, ~ length(formals(.))) %>%
   dplyr::arrange(desc(argumentCount))
 
 df_formals
-#> # A tibble: 1,139 × 2
-#>    `function`       argumentCount
-#>    <chr>                    <int>
-#>  1 scan                        22
-#>  2 format.default              16
-#>  3 source                      16
-#>  4 formatC                     15
-#>  5 library                     13
-#>  6 merge.data.frame            13
-#>  7 prettyNum                   13
-#>  8 system2                     11
-#>  9 print.default               10
-#> 10 save                        10
-#> # ℹ 1,129 more rows
+#> # A tibble: 1,145 × 2
+#>    `function`        argumentCount
+#>    <chr>                     <int>
+#>  1 scan                         22
+#>  2 source                       17
+#>  3 format.default               16
+#>  4 formatC                      15
+#>  5 library                      13
+#>  6 merge.data.frame             13
+#>  7 prettyNum                    13
+#>  8 system2                      12
+#>  9 system                       11
+#> 10 all.equal.numeric            10
+#> # ℹ 1,135 more rows
 ```
 
 b. How many base functions have no arguments? What’s special about those functions?
@@ -221,7 +221,7 @@ funs <- Filter(is.function, objs)
 primitives <- Filter(is.primitive, funs)
 
 length(primitives)
-#> [1] 205
+#> [1] 210
 
 names(primitives)
 #>   [1] "-"                    ":"                   
@@ -269,64 +269,66 @@ names(primitives)
 #>  [85] "ceiling"              "class"               
 #>  [87] "class<-"              "Conj"                
 #>  [89] "cos"                  "cosh"                
-#>  [91] "cospi"                "cummax"              
-#>  [93] "cummin"               "cumprod"             
-#>  [95] "cumsum"               "digamma"             
-#>  [97] "dim"                  "dim<-"               
-#>  [99] "dimnames"             "dimnames<-"          
-#> [101] "emptyenv"             "enc2native"          
-#> [103] "enc2utf8"             "environment<-"       
-#> [105] "exp"                  "expm1"               
-#> [107] "expression"           "floor"               
-#> [109] "for"                  "forceAndCall"        
-#> [111] "function"             "gamma"               
-#> [113] "gc.time"              "globalenv"           
-#> [115] "if"                   "Im"                  
-#> [117] "interactive"          "invisible"           
-#> [119] "is.array"             "is.atomic"           
-#> [121] "is.call"              "is.character"        
-#> [123] "is.complex"           "is.double"           
-#> [125] "is.environment"       "is.expression"       
-#> [127] "is.finite"            "is.function"         
-#> [129] "is.infinite"          "is.integer"          
-#> [131] "is.language"          "is.list"             
-#> [133] "is.logical"           "is.matrix"           
-#> [135] "is.na"                "is.name"             
-#> [137] "is.nan"               "is.null"             
-#> [139] "is.numeric"           "is.object"           
-#> [141] "is.pairlist"          "is.raw"              
-#> [143] "is.recursive"         "is.single"           
-#> [145] "is.symbol"            "isS4"                
-#> [147] "lazyLoadDBfetch"      "length"              
-#> [149] "length<-"             "levels<-"            
-#> [151] "lgamma"               "list"                
-#> [153] "log"                  "log10"               
-#> [155] "log1p"                "log2"                
-#> [157] "max"                  "min"                 
-#> [159] "missing"              "Mod"                 
-#> [161] "names"                "names<-"             
-#> [163] "nargs"                "next"                
-#> [165] "nzchar"               "oldClass"            
-#> [167] "oldClass<-"           "on.exit"             
-#> [169] "pos.to.env"           "proc.time"           
-#> [171] "prod"                 "quote"               
-#> [173] "range"                "Re"                  
-#> [175] "rep"                  "repeat"              
-#> [177] "retracemem"           "return"              
-#> [179] "round"                "seq_along"           
-#> [181] "seq_len"              "seq.int"             
-#> [183] "sign"                 "signif"              
-#> [185] "sin"                  "sinh"                
-#> [187] "sinpi"                "sqrt"                
-#> [189] "standardGeneric"      "storage.mode<-"      
-#> [191] "substitute"           "sum"                 
-#> [193] "switch"               "tan"                 
-#> [195] "tanh"                 "tanpi"               
-#> [197] "tracemem"             "trigamma"            
-#> [199] "trunc"                "unCfillPOSIXlt"      
-#> [201] "unclass"              "untracemem"          
-#> [203] "UseMethod"            "while"               
-#> [205] "xtfrm"
+#>  [91] "cospi"                "crossprod"           
+#>  [93] "cummax"               "cummin"              
+#>  [95] "cumprod"              "cumsum"              
+#>  [97] "declare"              "digamma"             
+#>  [99] "dim"                  "dim<-"               
+#> [101] "dimnames"             "dimnames<-"          
+#> [103] "emptyenv"             "enc2native"          
+#> [105] "enc2utf8"             "environment<-"       
+#> [107] "Exec"                 "exp"                 
+#> [109] "expm1"                "expression"          
+#> [111] "floor"                "for"                 
+#> [113] "forceAndCall"         "function"            
+#> [115] "gamma"                "gc.time"             
+#> [117] "globalenv"            "if"                  
+#> [119] "Im"                   "interactive"         
+#> [121] "invisible"            "is.array"            
+#> [123] "is.atomic"            "is.call"             
+#> [125] "is.character"         "is.complex"          
+#> [127] "is.double"            "is.environment"      
+#> [129] "is.expression"        "is.finite"           
+#> [131] "is.function"          "is.infinite"         
+#> [133] "is.integer"           "is.language"         
+#> [135] "is.list"              "is.logical"          
+#> [137] "is.matrix"            "is.na"               
+#> [139] "is.name"              "is.nan"              
+#> [141] "is.null"              "is.numeric"          
+#> [143] "is.object"            "is.pairlist"         
+#> [145] "is.raw"               "is.recursive"        
+#> [147] "is.single"            "is.symbol"           
+#> [149] "isS4"                 "lazyLoadDBfetch"     
+#> [151] "length"               "length<-"            
+#> [153] "levels<-"             "lgamma"              
+#> [155] "list"                 "log"                 
+#> [157] "log10"                "log1p"               
+#> [159] "log2"                 "max"                 
+#> [161] "min"                  "missing"             
+#> [163] "Mod"                  "names"               
+#> [165] "names<-"              "nargs"               
+#> [167] "next"                 "nzchar"              
+#> [169] "oldClass"             "oldClass<-"          
+#> [171] "on.exit"              "pos.to.env"          
+#> [173] "proc.time"            "prod"                
+#> [175] "quote"                "range"               
+#> [177] "Re"                   "rep"                 
+#> [179] "repeat"               "retracemem"          
+#> [181] "return"               "round"               
+#> [183] "seq_along"            "seq_len"             
+#> [185] "seq.int"              "sign"                
+#> [187] "signif"               "sin"                 
+#> [189] "sinh"                 "sinpi"               
+#> [191] "sqrt"                 "standardGeneric"     
+#> [193] "storage.mode<-"       "substitute"          
+#> [195] "sum"                  "switch"              
+#> [197] "Tailcall"             "tan"                 
+#> [199] "tanh"                 "tanpi"               
+#> [201] "tcrossprod"           "tracemem"            
+#> [203] "trigamma"             "trunc"               
+#> [205] "unCfillPOSIXlt"       "unclass"             
+#> [207] "untracemem"           "UseMethod"           
+#> [209] "while"                "xtfrm"
 ```
 
 **Q6.** What are the three important components of a function?
@@ -347,7 +349,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55913defa440>
+#> <bytecode: 0x55975a93bf98>
 #> <environment: namespace:base>
 
 # other package function
@@ -356,7 +358,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x559143094390>
+#> <bytecode: 0x55975efeb300>
 #> <environment: namespace:purrr>
 ```
 
@@ -559,7 +561,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x559141016b68" "0x559141016b68"
+#> [1] "0x5597644fecc0" "0x5597644fecc0"
 #> [1] 100
 ```
 
@@ -654,7 +656,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2024-04-22 16:58:19 UTC"
+#> [1] "2024-04-28 00:45:50 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -874,7 +876,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x5591436c0678>
+#> <bytecode: 0x55976261e1f0>
 #> <environment: namespace:withr>
 ```
 
@@ -954,11 +956,9 @@ capture.output
 #>     sink(type = type, split = split)
 #>     if (closeit) 
 #>         close(file)
-#>     if (is.null(rval)) 
-#>         invisible(NULL)
-#>     else rval
+#>     rval %||% invisible(NULL)
 #> }
-#> <bytecode: 0x559142e097d0>
+#> <bytecode: 0x5597629e66f0>
 #> <environment: namespace:utils>
 ```
 
@@ -1290,7 +1290,7 @@ identical(setdiff(x, y), x %/% y)
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
-#>  version  R version 4.3.3 (2024-02-29)
+#>  version  R version 4.4.0 (2024-04-24)
 #>  os       Ubuntu 22.04.4 LTS
 #>  system   x86_64, linux-gnu
 #>  ui       X11
@@ -1298,19 +1298,19 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-04-22
+#>  date     2024-04-28
 #>  pandoc   3.1.13 @ /opt/hostedtoolcache/pandoc/3.1.13/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
-#>  base        * 4.3.3   2024-04-18 [3] local
+#>  base        * 4.4.0   2024-04-24 [3] local
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  colorspace    2.1-0   2023-01-23 [1] RSPM
-#>  compiler      4.3.3   2024-04-18 [3] local
-#>  datasets    * 4.3.3   2024-04-18 [3] local
+#>  compiler      4.4.0   2024-04-24 [3] local
+#>  datasets    * 4.4.0   2024-04-24 [3] local
 #>  digest        0.6.35  2024-03-11 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr       * 1.1.4   2023-11-17 [1] RSPM
@@ -1318,14 +1318,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
 #>  fastmap       1.1.1   2023-02-24 [1] RSPM
 #>  forcats     * 1.0.0   2023-01-29 [1] RSPM
-#>  fs            1.6.3   2023-07-20 [1] RSPM
+#>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
-#>  ggplot2     * 3.5.0   2024-02-23 [1] RSPM
+#>  ggplot2     * 3.5.1   2024-04-23 [1] RSPM
 #>  glue          1.7.0   2024-01-09 [1] RSPM
-#>  graphics    * 4.3.3   2024-04-18 [3] local
-#>  grDevices   * 4.3.3   2024-04-18 [3] local
-#>  grid          4.3.3   2024-04-18 [3] local
-#>  gtable        0.3.4   2023-08-21 [1] RSPM
+#>  graphics    * 4.4.0   2024-04-24 [3] local
+#>  grDevices   * 4.4.0   2024-04-24 [3] local
+#>  grid          4.4.0   2024-04-24 [3] local
+#>  gtable        0.3.5   2024-04-22 [1] RSPM
 #>  highr         0.10    2022-12-22 [1] RSPM
 #>  hms           1.1.3   2023-03-21 [1] RSPM
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
@@ -1337,7 +1337,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  lubridate   * 1.9.3   2023-09-27 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM
-#>  methods     * 4.3.3   2024-04-18 [3] local
+#>  methods     * 4.4.0   2024-04-24 [3] local
 #>  munsell       0.5.1   2024-04-01 [1] RSPM
 #>  pillar        1.9.0   2023-03-22 [1] RSPM
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
@@ -1349,7 +1349,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  scales        1.3.0   2023-11-28 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
-#>  stats       * 4.3.3   2024-04-18 [3] local
+#>  stats       * 4.4.0   2024-04-24 [3] local
 #>  stringi       1.8.3   2023-12-11 [1] RSPM
 #>  stringr     * 1.5.1   2023-11-14 [1] RSPM
 #>  tibble      * 3.2.1   2023-03-20 [1] RSPM
@@ -1357,10 +1357,10 @@ sessioninfo::session_info(include_base = TRUE)
 #>  tidyselect    1.2.1   2024-03-11 [1] RSPM
 #>  tidyverse   * 2.0.0   2023-02-22 [1] RSPM
 #>  timechange    0.3.0   2024-01-18 [1] RSPM
-#>  tools         4.3.3   2024-04-18 [3] local
+#>  tools         4.4.0   2024-04-24 [3] local
 #>  tzdb          0.4.0   2023-05-12 [1] RSPM
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
-#>  utils       * 4.3.3   2024-04-18 [3] local
+#>  utils       * 4.4.0   2024-04-24 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
 #>  xfun          0.43    2024-03-25 [1] RSPM
@@ -1368,8 +1368,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library
-#>  [2] /opt/R/4.3.3/lib/R/site-library
-#>  [3] /opt/R/4.3.3/lib/R/library
+#>  [2] /opt/R/4.4.0/lib/R/site-library
+#>  [3] /opt/R/4.4.0/lib/R/library
 #> 
 #> ──────────────────────────────────────────────────────────
 ```
