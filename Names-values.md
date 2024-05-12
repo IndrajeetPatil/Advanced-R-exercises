@@ -29,7 +29,7 @@ d <- 1:10
 ```r
 obj_addrs <- obj_addrs(list(a, b, c))
 unique(obj_addrs)
-#> [1] "0x558d3e661d90"
+#> [1] "0x55dd568c7030"
 ```
 
 Except `d`, which is a different object, even if it has the same value as `a`, `b`, and `c`:
@@ -37,7 +37,7 @@ Except `d`, which is a different object, even if it has the same value as `a`, `
 
 ```r
 obj_addr(d)
-#> [1] "0x558d3e4e88a0"
+#> [1] "0x55dd5674d8a0"
 ```
 
 ---
@@ -66,7 +66,7 @@ obj_addrs <- obj_addrs(list(
 ))
 
 unique(obj_addrs)
-#> [1] "0x558d3bc9cef0"
+#> [1] "0x55dd53f01ef0"
 ```
 
 ---
@@ -124,7 +124,7 @@ And as the docs mention (emphasis mine):
 x <- 1:10
 
 tracemem(x)
-#> [1] "<0x558d3ffed910>"
+#> [1] "<0x55dd5824ec18>"
 
 x <- x + 1
 
@@ -136,10 +136,10 @@ But since the object created in memory by `1:10` is not assigned a name, it can'
 
 ```r
 obj_addr(1:10)
-#> [1] "0x558d3fba9238"
+#> [1] "0x55dd57e0e380"
 
 tracemem(1:10)
-#> [1] "<0x558d3fc15410>"
+#> [1] "<0x55dd57e7a558>"
 ```
 
 ---
@@ -163,11 +163,11 @@ x <- c(1L, 2L, 3L)
 typeof(x)
 #> [1] "integer"
 tracemem(x)
-#> [1] "<0x558d40380e48>"
+#> [1] "<0x55dd585e21c8>"
 
 x[[3]] <- 4
-#> tracemem[0x558d40380e48 -> 0x558d404b8388]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
-#> tracemem[0x558d404b8388 -> 0x558d404aa3f8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x55dd585e21c8 -> 0x55dd58719708]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
+#> tracemem[0x55dd58719708 -> 0x55dd5870b788]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 untracemem(x)
 
 typeof(x)
@@ -182,10 +182,10 @@ x <- c(1L, 2L, 3L)
 typeof(x)
 #> [1] "integer"
 tracemem(x)
-#> [1] "<0x558d40983228>"
+#> [1] "<0x55dd58be45a8>"
 
 x[[3]] <- 4L
-#> tracemem[0x558d40983228 -> 0x558d40ab8a48]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x55dd58be45a8 -> 0x55dd58d19dc8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 untracemem(x)
 
 typeof(x)
@@ -216,20 +216,20 @@ b <- list(a, a)
 c <- list(b, a, 1:10)
 
 ref(a)
-#> [1:0x558d41163dc0] <int>
+#> [1:0x55dd593c50c8] <int>
 
 ref(b)
-#> █ [1:0x558d416c0448] <list> 
-#> ├─[2:0x558d41163dc0] <int> 
-#> └─[2:0x558d41163dc0]
+#> █ [1:0x55dd599217c8] <list> 
+#> ├─[2:0x55dd593c50c8] <int> 
+#> └─[2:0x55dd593c50c8]
 
 ref(c)
-#> █ [1:0x558d416c8bf8] <list> 
-#> ├─█ [2:0x558d416c0448] <list> 
-#> │ ├─[3:0x558d41163dc0] <int> 
-#> │ └─[3:0x558d41163dc0] 
-#> ├─[3:0x558d41163dc0] 
-#> └─[4:0x558d41728280] <int>
+#> █ [1:0x55dd59929fd8] <list> 
+#> ├─█ [2:0x55dd599217c8] <list> 
+#> │ ├─[3:0x55dd593c50c8] <int> 
+#> │ └─[3:0x55dd593c50c8] 
+#> ├─[3:0x55dd593c50c8] 
+#> └─[4:0x55dd59989588] <int>
 ```
 
 Here is what we learn:
@@ -259,7 +259,7 @@ x
 #> [[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x558d418cddf0"
+#> [1] "0x55dd59b3e7f0"
 
 x[[2]] <- x
 x
@@ -270,13 +270,13 @@ x
 #> [[2]][[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x558d40bdc648"
+#> [1] "0x55dd58e3d9c8"
 
 ref(x)
-#> █ [1:0x558d40bdc648] <list> 
-#> ├─[2:0x558d41749340] <int> 
-#> └─█ [3:0x558d418cddf0] <list> 
-#>   └─[2:0x558d41749340]
+#> █ [1:0x55dd58e3d9c8] <list> 
+#> ├─[2:0x55dd599aa290] <int> 
+#> └─█ [3:0x55dd59b3e7f0] <list> 
+#>   └─[2:0x55dd599aa290]
 ```
 
 I don't have access to OmniGraffle software, so I am including here the figure from the [official solution manual](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify):
@@ -425,16 +425,16 @@ x[[1]] <- x
 x <- list()
 
 obj_addr(x)
-#> [1] "0x558d41c4d590"
+#> [1] "0x55dd59eb57c8"
 
 tracemem(x)
-#> [1] "<0x558d41c4d590>"
+#> [1] "<0x55dd59eb57c8>"
 
 x[[1]] <- x
-#> tracemem[0x558d41c4d590 -> 0x558d41d5ea80]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x55dd59eb57c8 -> 0x55dd59fc4cc8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 
 obj_addr(x[[1]])
-#> [1] "0x558d41c4d590"
+#> [1] "0x55dd59eb57c8"
 ```
 
 ---
@@ -558,21 +558,21 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-05
-#>  pandoc   3.1.13 @ /opt/hostedtoolcache/pandoc/3.1.13/x64/ (via rmarkdown)
+#>  date     2024-05-12
+#>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
-#>  base        * 4.4.0   2024-04-24 [3] local
+#>  base        * 4.4.0   2024-05-06 [3] local
 #>  bench       * 1.1.3   2023-05-04 [1] RSPM
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
 #>  cachem        1.0.8   2023-05-01 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  colorspace    2.1-0   2023-01-23 [1] RSPM
-#>  compiler      4.4.0   2024-04-24 [3] local
+#>  compiler      4.4.0   2024-05-06 [3] local
 #>  crayon        1.5.2   2022-09-29 [1] RSPM
-#>  datasets    * 4.4.0   2024-04-24 [3] local
+#>  datasets    * 4.4.0   2024-05-06 [3] local
 #>  digest        0.6.35  2024-03-11 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  dplyr       * 1.1.4   2023-11-17 [1] RSPM
@@ -585,9 +585,9 @@ sessioninfo::session_info(include_base = TRUE)
 #>  generics      0.1.3   2022-07-05 [1] RSPM
 #>  ggplot2     * 3.5.1   2024-04-23 [1] RSPM
 #>  glue          1.7.0   2024-01-09 [1] RSPM
-#>  graphics    * 4.4.0   2024-04-24 [3] local
-#>  grDevices   * 4.4.0   2024-04-24 [3] local
-#>  grid          4.4.0   2024-04-24 [3] local
+#>  graphics    * 4.4.0   2024-05-06 [3] local
+#>  grDevices   * 4.4.0   2024-05-06 [3] local
+#>  grid          4.4.0   2024-05-06 [3] local
 #>  gtable        0.3.5   2024-04-22 [1] RSPM
 #>  highr         0.10    2022-12-22 [1] RSPM
 #>  hms           1.1.3   2023-03-21 [1] RSPM
@@ -601,7 +601,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  lubridate   * 1.9.3   2023-09-27 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM
-#>  methods     * 4.4.0   2024-04-24 [3] local
+#>  methods     * 4.4.0   2024-05-06 [3] local
 #>  munsell       0.5.1   2024-04-01 [1] RSPM
 #>  pillar        1.9.0   2023-03-22 [1] RSPM
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
@@ -615,18 +615,18 @@ sessioninfo::session_info(include_base = TRUE)
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  scales        1.3.0   2023-11-28 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
-#>  stats       * 4.4.0   2024-04-24 [3] local
-#>  stringi       1.8.3   2023-12-11 [1] RSPM
+#>  stats       * 4.4.0   2024-05-06 [3] local
+#>  stringi       1.8.4   2024-05-06 [1] RSPM
 #>  stringr     * 1.5.1   2023-11-14 [1] RSPM
 #>  tibble      * 3.2.1   2023-03-20 [1] RSPM
 #>  tidyr       * 1.3.1   2024-01-24 [1] RSPM
 #>  tidyselect    1.2.1   2024-03-11 [1] RSPM
 #>  tidyverse   * 2.0.0   2023-02-22 [1] RSPM
 #>  timechange    0.3.0   2024-01-18 [1] RSPM
-#>  tools         4.4.0   2024-04-24 [3] local
+#>  tools         4.4.0   2024-05-06 [3] local
 #>  tzdb          0.4.0   2023-05-12 [1] RSPM
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
-#>  utils       * 4.4.0   2024-04-24 [3] local
+#>  utils       * 4.4.0   2024-05-06 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
 #>  xfun          0.43    2024-03-25 [1] RSPM
