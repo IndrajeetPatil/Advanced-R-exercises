@@ -5,7 +5,7 @@
 Attaching the needed libraries:
 
 
-```r
+``` r
 library(tibble)
 ```
 
@@ -14,7 +14,7 @@ library(tibble)
 **Q1.** Fix each of the following common data frame subsetting errors:
 
 
-```r
+``` r
 mtcars[mtcars$cyl = 4, ]
 mtcars[-1:4, ]
 mtcars[mtcars$cyl <= 5]
@@ -24,7 +24,7 @@ mtcars[mtcars$cyl == 4 | 6, ]
 **A1.** Fixed versions of these commands:
 
 
-```r
+``` r
 # `==` instead of `=`
 mtcars[mtcars$cyl == 4, ]
 
@@ -42,7 +42,7 @@ mtcars[mtcars$cyl %in% c(4, 6), ]
 **Q2.** Why does the following code yield five missing values?
 
 
-```r
+``` r
 x <- 1:5
 x[NA]
 #> [1] NA NA NA NA NA
@@ -53,7 +53,7 @@ x[NA]
 - The default type of `NA` in R is of `logical` type.
 
 
-```r
+``` r
 typeof(NA)
 #> [1] "logical"
 ```
@@ -61,7 +61,7 @@ typeof(NA)
 - R recycles indexes to match the length of the vector.
 
 
-```r
+``` r
 x <- 1:5
 x[c(TRUE, FALSE)] # recycled to c(TRUE, FALSE, TRUE, FALSE, TRUE)
 #> [1] 1 3 5
@@ -70,7 +70,7 @@ x[c(TRUE, FALSE)] # recycled to c(TRUE, FALSE, TRUE, FALSE, TRUE)
 **Q3.** What does `upper.tri()` return? How does subsetting a matrix with it work? Do we need any additional subsetting rules to describe its behaviour?
 
 
-```r
+``` r
 x <- outer(1:5, 1:5, FUN = "*")
 x[upper.tri(x)]
 ```
@@ -80,7 +80,7 @@ A3. The documentation for `upper.tri()` states-
 > Returns a matrix of logicals the same size of a given matrix with entries `TRUE` in the **upper triangle**
 
 
-```r
+``` r
 (x <- outer(1:5, 1:5, FUN = "*"))
 #>      [,1] [,2] [,3] [,4] [,5]
 #> [1,]    1    2    3    4    5
@@ -88,6 +88,9 @@ A3. The documentation for `upper.tri()` states-
 #> [3,]    3    6    9   12   15
 #> [4,]    4    8   12   16   20
 #> [5,]    5   10   15   20   25
+```
+
+``` r
 
 upper.tri(x)
 #>       [,1]  [,2]  [,3]  [,4]  [,5]
@@ -101,7 +104,7 @@ upper.tri(x)
 When used with a matrix for subsetting, elements corresponding to `TRUE` in the subsetting matrix are selected. But, instead of a matrix, this returns a vector:
 
 
-```r
+``` r
 x[upper.tri(x)]
 #>  [1]  2  3  6  4  8 12  5 10 15 20
 ```
@@ -111,7 +114,7 @@ x[upper.tri(x)]
 **A4.** When indexed like a list, data frame columns at given indices will be selected.
 
 
-```r
+``` r
 head(mtcars[1:2])
 #>                    mpg cyl
 #> Mazda RX4         21.0   6
@@ -127,7 +130,7 @@ head(mtcars[1:2])
 On the other hand, `mtcars[1:20, ]` indexes a dataframe like a matrix, and because there are indeed 20 rows in `mtcars`, all columns with these rows are selected.
 
 
-```r
+``` r
 nrow(mtcars[1:20, ])
 #> [1] 20
 ```
@@ -137,9 +140,12 @@ nrow(mtcars[1:20, ])
 **A5.** We can combine the existing functions to our advantage:
 
 
-```r
+``` r
 x[!upper.tri(x) & !lower.tri(x)]
 #> [1]  1  4  9 16 25
+```
+
+``` r
 
 diag(x)
 #> [1]  1  4  9 16 25
@@ -152,7 +158,7 @@ diag(x)
 `is.na(df)` produces a matrix of logical values, which provides a way of subsetting.
 
 
-```r
+``` r
 (df <- tibble(x = c(1, 2, NA), y = c(NA, 5, NA)))
 #> # A tibble: 3 × 2
 #>       x     y
@@ -160,12 +166,18 @@ diag(x)
 #> 1     1    NA
 #> 2     2     5
 #> 3    NA    NA
+```
+
+``` r
 
 is.na(df)
 #>          x     y
 #> [1,] FALSE  TRUE
 #> [2,] FALSE FALSE
 #> [3,]  TRUE  TRUE
+```
+
+``` r
 
 class(is.na(df))
 #> [1] "matrix" "array"
@@ -178,21 +190,42 @@ class(is.na(df))
 **A1.** Possible ways to to extract the third value from the `cyl` variable in the `mtcars` dataset:
 
 
-```r
+``` r
 mtcars[["cyl"]][[3]]
 #> [1] 4
+```
+
+``` r
 mtcars[[c(2, 3)]]
 #> [1] 4
+```
+
+``` r
 mtcars[3, ][["cyl"]]
 #> [1] 4
+```
+
+``` r
 mtcars[3, ]$cyl
 #> [1] 4
+```
+
+``` r
 mtcars[3, "cyl"]
 #> [1] 4
+```
+
+``` r
 mtcars[, "cyl"][[3]]
 #> [1] 4
+```
+
+``` r
 mtcars[3, 2]
 #> [1] 4
+```
+
+``` r
 mtcars$cyl[[3]]
 #> [1] 4
 ```
@@ -202,10 +235,13 @@ mtcars$cyl[[3]]
 **A2.** Given that objects of class `lm` are lists, we can use subsetting operators to extract elements we want.
 
 
-```r
+``` r
 mod <- lm(mpg ~ wt, data = mtcars)
 class(mod)
 #> [1] "lm"
+```
+
+``` r
 typeof(mod)
 #> [1] "list"
 ```
@@ -213,9 +249,12 @@ typeof(mod)
 - extracting the residual degrees of freedom
 
 
-```r
+``` r
 mod$df.residual 
 #> [1] 30
+```
+
+``` r
 mod[["df.residual"]]
 #> [1] 30
 ```
@@ -223,9 +262,12 @@ mod[["df.residual"]]
 - extracting the R squared from the model summary
 
 
-```r
+``` r
 summary(mod)$r.squared
 #> [1] 0.7528328
+```
+
+``` r
 summary(mod)[["r.squared"]]
 #> [1] 0.7528328
 ```
@@ -237,7 +279,7 @@ summary(mod)[["r.squared"]]
 **A1.** Let's create a small data frame to work with.
 
 
-```r
+``` r
 df <- head(mtcars)
 
 # original
@@ -263,7 +305,7 @@ To randomly permute the columns of a data frame, we can combine `[` and `sample(
 - randomly permute columns
 
 
-```r
+``` r
 df[sample.int(ncol(df))]
 #>                   drat    wt carb am  qsec vs  hp  mpg disp
 #> Mazda RX4         3.90 2.620    4  1 16.46  0 110 21.0  160
@@ -284,7 +326,7 @@ df[sample.int(ncol(df))]
 - randomly permute rows
 
 
-```r
+``` r
 df[sample.int(nrow(df)), ]
 #>                    mpg cyl disp  hp drat    wt  qsec vs am
 #> Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1
@@ -305,7 +347,7 @@ df[sample.int(nrow(df)), ]
 - randomly permute columns and rows
 
 
-```r
+``` r
 df[sample.int(nrow(df)), sample.int(ncol(df))]
 #>                    qsec vs gear am    wt drat carb disp  hp
 #> Mazda RX4         16.46  0    4  1 2.620 3.90    4  160 110
@@ -328,7 +370,7 @@ df[sample.int(nrow(df)), sample.int(ncol(df))]
 **A2.**  Let's create a small data frame to work with.
 
 
-```r
+``` r
 df <- head(mtcars)
 
 # original
@@ -347,6 +389,9 @@ df
 #> Hornet 4 Drive       3    1
 #> Hornet Sportabout    3    2
 #> Valiant              3    1
+```
+
+``` r
 
 # number of rows to sample
 m <- 2L
@@ -357,7 +402,7 @@ To  select a random sample of `m` rows from a data frame, we can combine `[` and
 - random and non-contiguous sample of `m` rows from a data frame
 
 
-```r
+``` r
 df[sample(nrow(df), m), ]
 #>                mpg cyl disp  hp drat    wt  qsec vs am gear
 #> Valiant       18.1   6  225 105 2.76 3.460 20.22  1  0    3
@@ -370,7 +415,7 @@ df[sample(nrow(df), m), ]
 - random and contiguous sample of `m` rows from a data frame
 
 
-```r
+``` r
 # select a random starting position from available number of rows
 start_row <- sample(nrow(df) - m + 1, size = 1)
 
@@ -391,11 +436,14 @@ df[start_row:end_row, ]
 **A3.** we can sort columns in a data frame in the alphabetical order using `[` with `order()`:
 
 
-```r
+``` r
 # columns in original order
 names(mtcars)
 #>  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"  
 #>  [9] "am"   "gear" "carb"
+```
+
+``` r
 
 # columns in alphabetical order
 names(mtcars[order(names(mtcars))])
@@ -406,7 +454,7 @@ names(mtcars[order(names(mtcars))])
 ## Session information
 
 
-```r
+``` r
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
@@ -418,7 +466,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-12
+#>  date     2024-05-19
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -426,7 +474,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  base        * 4.4.0   2024-05-06 [3] local
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
-#>  cachem        1.0.8   2023-05-01 [1] RSPM
+#>  cachem        1.1.0   2024-05-16 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.4.0   2024-05-06 [3] local
 #>  datasets    * 4.4.0   2024-05-06 [3] local
@@ -434,7 +482,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
-#>  fastmap       1.1.1   2023-02-24 [1] RSPM
+#>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  glue          1.7.0   2024-01-09 [1] RSPM
 #>  graphics    * 4.4.0   2024-05-06 [3] local
@@ -451,7 +499,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang         1.1.3   2024-01-10 [1] RSPM
-#>  rmarkdown     2.26    2024-03-05 [1] RSPM
+#>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.4.0   2024-05-06 [3] local
@@ -461,7 +509,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.0   2024-05-06 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.43    2024-03-25 [1] RSPM
+#>  xfun          0.44    2024-05-15 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 

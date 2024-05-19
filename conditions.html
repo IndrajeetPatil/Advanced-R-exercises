@@ -87,7 +87,7 @@
 <span class="header-section-number">8</span> Conditions<a class="anchor" aria-label="anchor" href="#conditions"><i class="fas fa-link"></i></a>
 </h1>
 <p>Attaching the needed libraries:</p>
-<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb387"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://testthat.r-lib.org">testthat</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div id="signalling-conditions-exercises-8.2.4" class="section level2" number="8.1">
@@ -97,7 +97,7 @@
 <hr>
 <p><strong>Q1.</strong> Write a wrapper around <code><a href="https://rdrr.io/r/base/files.html">file.remove()</a></code> that throws an error if the file to be deleted does not exist.</p>
 <p><strong>A1.</strong> Let’s first create a wrapper function around <code><a href="https://rdrr.io/r/base/files.html">file.remove()</a></code> that throws an error if the file to be deleted does not exist.</p>
-<div class="sourceCode" id="cb219"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb388"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fileRemove</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">existing_files</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/file_access.html">file_exists</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -115,16 +115,16 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/files.html">file.remove</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Let’s first create a file that we can delete immediately.</p>
-<div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb389"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/create.html">file_create</a></span><span class="op">(</span><span class="st">"random.R"</span><span class="op">)</span></span></code></pre></div>
 <p>The function should fail if there are any other files provided that don’t exist:</p>
-<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb390"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fileRemove</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"random.R"</span>, <span class="st">"XYZ.csv"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; The following files to be deleted don't exist:</span></span>
 <span><span class="co">#&gt; XYZ.csv</span></span>
 <span><span class="co">#&gt; Error:</span></span></code></pre></div>
 <p>But it does work as expected when the file exists:</p>
-<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb391"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fileRemove</span><span class="op">(</span><span class="st">"random.R"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <hr>
@@ -136,7 +136,7 @@
 <ul>
 <li>If <code>TRUE</code> (default value), a final newline is regarded as part of the message:</li>
 </ul>
-<div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb392"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">foo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">appendLF</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"Beetle"</span>, appendLF <span class="op">=</span> <span class="va">appendLF</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"Juice"</span>, appendLF <span class="op">=</span> <span class="va">appendLF</span><span class="op">)</span></span>
@@ -148,7 +148,7 @@
 <ul>
 <li>If <code>FALSE</code>, messages will be concatenated:</li>
 </ul>
-<div class="sourceCode" id="cb224"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb393"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">foo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">appendLF</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"Beetle"</span>, appendLF <span class="op">=</span> <span class="va">appendLF</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"Juice"</span>, appendLF <span class="op">=</span> <span class="va">appendLF</span><span class="op">)</span></span>
@@ -157,7 +157,7 @@
 <span><span class="fu">foo</span><span class="op">(</span>appendLF <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; BeetleJuice</span></span></code></pre></div>
 <p>On the other hand, <code><a href="https://rdrr.io/r/base/cat.html">cat()</a></code> converts its arguments to character vectors and concatenates them to a single character vector by default:</p>
-<div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb394"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">foo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Beetle"</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Juice"</span><span class="op">)</span></span>
@@ -166,7 +166,7 @@
 <span><span class="fu">foo</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; BeetleJuice</span></span></code></pre></div>
 <p>In order to get <code><a href="https://rdrr.io/r/base/message.html">message()</a></code>-like default behavior for outputs, we can set <code>sep = "\n"</code>:</p>
-<div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb395"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">foo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Beetle"</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Juice"</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
@@ -183,7 +183,7 @@
 </h2>
 <hr>
 <p><strong>Q1.</strong> What extra information does the condition generated by <code><a href="https://rlang.r-lib.org/reference/abort.html">abort()</a></code> contain compared to the condition generated by <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code> i.e. what’s the difference between these two objects? Read the help for <code><a href="https://rlang.r-lib.org/reference/abort.html">?abort</a></code> to learn more.</p>
-<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb396"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rlang.r-lib.org/reference/catch_cnd.html">catch_cnd</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"An error"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rlang.r-lib.org/reference/catch_cnd.html">catch_cnd</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"An error"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><strong>A1.</strong> Compared to <code><a href="https://rdrr.io/r/base/stop.html">base::stop()</a></code>, <code><a href="https://rlang.r-lib.org/reference/abort.html">rlang::abort()</a></code> contains two additional pieces of information:</p>
@@ -193,7 +193,7 @@
 <li>
 <code>parent</code>: Information about another condition used as a parent to create a chained condition.</li>
 </ul>
-<div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb397"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org">rlang</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">stopInfo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/catch_cnd.html">catch_cnd</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"An error"</span><span class="op">)</span><span class="op">)</span></span>
@@ -203,8 +203,9 @@
 <span><span class="co">#&gt; List of 2</span></span>
 <span><span class="co">#&gt;  $ message: chr "An error"</span></span>
 <span><span class="co">#&gt;  $ call   : language force(expr)</span></span>
-<span><span class="co">#&gt;  - attr(*, "class")= chr [1:3] "simpleError" "error" "condition"</span></span>
-<span></span>
+<span><span class="co">#&gt;  - attr(*, "class")= chr [1:3] "simpleError" "error" "condition"</span></span></code></pre></div>
+<div class="sourceCode" id="cb398"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">abortInfo</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 5</span></span>
 <span><span class="co">#&gt;  $ message: chr "An error"</span></span>
@@ -231,7 +232,7 @@
 <span><span class="co">#&gt;  - attr(*, "class")= chr [1:3] "rlang_error" "error" "condition"</span></span></code></pre></div>
 <hr>
 <p><strong>Q2.</strong> Predict the results of evaluating the following code</p>
-<div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb399"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">show_condition</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">code</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span></span>
 <span>    error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">cnd</span><span class="op">)</span> <span class="st">"error"</span>,</span>
@@ -254,7 +255,7 @@
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <p><strong>A2.</strong> Correctly predicted 😉</p>
 <p>The first three pieces of code are straightforward:</p>
-<div class="sourceCode" id="cb230"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb400"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">show_condition</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">code</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span></span>
 <span>    error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">cnd</span><span class="op">)</span> <span class="st">"error"</span>,</span>
@@ -268,16 +269,18 @@
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu">show_condition</span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"!"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "error"</span></span>
-<span><span class="fu">show_condition</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt; NULL</span></span>
-<span><span class="fu">show_condition</span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/warning.html">warning</a></span><span class="op">(</span><span class="st">"?!"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "error"</span></span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">show_condition</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">show_condition</span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/warning.html">warning</a></span><span class="op">(</span><span class="st">"?!"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "warning"</span></span></code></pre></div>
 <p>The last piece of code is the challenging one and it illustrates how <code><a href="https://rdrr.io/r/base/conditions.html">tryCatch()</a></code> works. From its docs:</p>
 <blockquote>
 <p>When several handlers are supplied in a single tryCatch then the first one is considered more recent than the second.</p>
 </blockquote>
-<div class="sourceCode" id="cb231"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb403"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">show_condition</span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="fl">10</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"?"</span><span class="op">)</span></span>
@@ -286,7 +289,7 @@
 <span><span class="co">#&gt; [1] "message"</span></span></code></pre></div>
 <hr>
 <p><strong>Q3.</strong> Explain the results of running this code:</p>
-<div class="sourceCode" id="cb232"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb404"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/conditions.html">withCallingHandlers</a></span><span class="op">(</span></span>
 <span>  message <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">cnd</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/conditions.html">withCallingHandlers</a></span><span class="op">(</span></span>
@@ -303,7 +306,7 @@
 <hr>
 <p><strong>Q4.</strong> Read the source code for <code><a href="https://rlang.r-lib.org/reference/catch_cnd.html">catch_cnd()</a></code> and explain how it works.</p>
 <p><strong>A4.</strong> Let’s look at the source code for <code><a href="https://rlang.r-lib.org/reference/catch_cnd.html">catch_cnd()</a></code>:</p>
-<div class="sourceCode" id="cb233"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb405"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">rlang</span><span class="fu">::</span><span class="va"><a href="https://rlang.r-lib.org/reference/catch_cnd.html">catch_cnd</a></span></span>
 <span><span class="co">#&gt; function (expr, classes = "condition") </span></span>
 <span><span class="co">#&gt; {</span></span>
@@ -314,17 +317,18 @@
 <span><span class="co">#&gt;         return(NULL)</span></span>
 <span><span class="co">#&gt;     })))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x55a9a3406868&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x559c93964c40&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:rlang&gt;</span></span></code></pre></div>
 <p>As mentioned in the function docs:</p>
 <blockquote>
 <p>This is a small wrapper around <code><a href="https://rdrr.io/r/base/conditions.html">tryCatch()</a></code> that captures any condition signalled while evaluating its argument.</p>
 </blockquote>
 <p>The <code>classes</code> argument allows a character vector of condition classes to catch, and the complex tidy evaluation generates the necessary condition (if there is any; otherwise <code>NULL</code>).</p>
-<div class="sourceCode" id="cb234"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb406"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rlang.r-lib.org/reference/catch_cnd.html">catch_cnd</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt; NULL</span></span>
-<span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rlang.r-lib.org/reference/catch_cnd.html">catch_cnd</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"an error"</span>, class <span class="op">=</span> <span class="st">"class1"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;error/class1&gt;</span></span>
 <span><span class="co">#&gt; Error:</span></span>
@@ -336,7 +340,7 @@
 <p><strong>Q5.</strong> How could you rewrite <code>show_condition()</code> to use a single handler?</p>
 <p><strong>A5.</strong> The source code for <code>rlang::catch_cond()</code> gives us a clue as to how we can do this.</p>
 <p>Conditions also have a <code>class</code> attribute, and we can use it to determine which handler will match the condition.</p>
-<div class="sourceCode" id="cb235"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb408"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">show_condition2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">code</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span></span>
 <span>    condition <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">cnd</span><span class="op">)</span> <span class="op">{</span></span>
@@ -357,14 +361,17 @@
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Let’s try this new version with the examples used for the original version:</p>
-<div class="sourceCode" id="cb236"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb409"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">show_condition2</span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"!"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "error"</span></span>
-<span><span class="fu">show_condition2</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt; NULL</span></span>
-<span><span class="fu">show_condition2</span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/warning.html">warning</a></span><span class="op">(</span><span class="st">"?!"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "warning"</span></span>
-<span><span class="fu">show_condition2</span><span class="op">(</span><span class="op">{</span></span>
+<span><span class="co">#&gt; [1] "error"</span></span></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">show_condition2</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<div class="sourceCode" id="cb411"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">show_condition2</span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/warning.html">warning</a></span><span class="op">(</span><span class="st">"?!"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "warning"</span></span></code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">show_condition2</span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="fl">10</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"?"</span><span class="op">)</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/warning.html">warning</a></span><span class="op">(</span><span class="st">"?!"</span><span class="op">)</span></span>
@@ -379,7 +386,7 @@
 <hr>
 <p><strong>Q1.</strong> Inside a package, it’s occasionally useful to check that a package is installed before using it. Write a function that checks if a package is installed (with <code>requireNamespace("pkg", quietly = FALSE))</code> and if not, throws a custom condition that includes the package name in the metadata.</p>
 <p><strong>A1.</strong> Here is the desired function:</p>
-<div class="sourceCode" id="cb237"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb413"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">abort_missing_package</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">msg</span> <span class="op">&lt;-</span> <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"Problem loading `{pkg}` package, which is missing and must be installed."</span><span class="op">)</span></span>
 <span></span>
@@ -399,8 +406,9 @@
 <span></span>
 <span><span class="fu">check_if_pkg_installed</span><span class="op">(</span><span class="st">"xyz123"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in `abort_missing_package()`:</span></span>
-<span><span class="co">#&gt; ! Problem loading `xyz123` package, which is missing and must be installed.</span></span>
-<span><span class="fu">check_if_pkg_installed</span><span class="op">(</span><span class="st">"dplyr"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ! Problem loading `xyz123` package, which is missing and must be installed.</span></span></code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">check_if_pkg_installed</span><span class="op">(</span><span class="st">"dplyr"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>For a reference, also see the source code for following functions:</p>
 <ul>
@@ -411,19 +419,19 @@
 <p><strong>Q2.</strong> Inside a package you often need to stop with an error when something is not right. Other packages that depend on your package might be tempted to check these errors in their unit tests. How could you help these packages to avoid relying on the error message which is part of the user interface rather than the API and might change without notice?</p>
 <p><strong>A2.</strong> As an example, let’s say that another package developer wanted to use the <code>check_if_pkg_installed()</code> function that we just wrote.</p>
 <p>So the developer using it in their own package can write a unit test like this:</p>
-<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb415"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span></span>
 <span>  <span class="fu">check_if_pkg_installed</span><span class="op">(</span><span class="st">"xyz123"</span><span class="op">)</span>,</span>
 <span>  <span class="st">"Problem loading `xyz123` package, which is missing and must be installed."</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>To dissuade developers from having to rely on error messages to check for errors, we can instead provide a custom condition, which can be used for unit testing instead:</p>
-<div class="sourceCode" id="cb239"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb416"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/catch_cnd.html">catch_cnd</a></span><span class="op">(</span><span class="fu">check_if_pkg_installed</span><span class="op">(</span><span class="st">"xyz123"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html">inherits</a></span><span class="op">(</span><span class="va">e</span>, <span class="st">"error_missing_package"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>So that the unit test could be:</p>
-<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb417"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/inheritance-expectations.html">expect_s3_class</a></span><span class="op">(</span><span class="va">e</span>, <span class="st">"error_missing_package"</span><span class="op">)</span></span></code></pre></div>
 <p>This test wouldn’t fail even if we decided to change the exact message.</p>
 <hr>
@@ -435,7 +443,7 @@
 <hr>
 <p><strong>Q1.</strong> Create <code>suppressConditions()</code> that works like <code><a href="https://rdrr.io/r/base/message.html">suppressMessages()</a></code> and <code><a href="https://rdrr.io/r/base/warning.html">suppressWarnings()</a></code> but suppresses everything. Think carefully about how you should handle errors.</p>
 <p><strong>A1.</strong> To create the desired <code>suppressConditions()</code>, we just need to create an equivalent of <code><a href="https://rdrr.io/r/base/warning.html">suppressWarnings()</a></code> and <code><a href="https://rdrr.io/r/base/message.html">suppressMessages()</a></code> for errors. To suppress the error message, we can handle errors within a <code><a href="https://rdrr.io/r/base/conditions.html">tryCatch()</a></code> and return the error object invisibly:</p>
-<div class="sourceCode" id="cb241"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb418"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">suppressErrors</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">expr</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span></span>
 <span>    error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">cnd</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">cnd</span><span class="op">)</span>,</span>
@@ -447,10 +455,11 @@
 <span>  <span class="fu">suppressErrors</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressMessages</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Let’s try out and see if this works as expected:</p>
-<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb419"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">suppressConditions</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb420"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="fu">suppressConditions</span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"I'm messaging you"</span><span class="op">)</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/warning.html">warning</a></span><span class="op">(</span><span class="st">"I'm warning you"</span><span class="op">)</span></span>
@@ -460,7 +469,7 @@
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"I'm stopping this"</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <p>All condition messages are now suppressed, but note that if we assign error object to a variable, we can still extract useful information for debugging:</p>
-<div class="sourceCode" id="cb243"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb421"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">suppressConditions</span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"I'm stopping this"</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
@@ -469,7 +478,7 @@
 <span><span class="co">#&gt; &lt;simpleError in withCallingHandlers(expr, message = function(c) if (inherits(c,     classes)) tryInvokeRestart("muffleMessage")): I'm stopping this&gt;</span></span></code></pre></div>
 <hr>
 <p><strong>Q2.</strong> Compare the following two implementations of <code>message2error()</code>. What is the main advantage of <code><a href="https://rdrr.io/r/base/conditions.html">withCallingHandlers()</a></code> in this scenario? (Hint: look carefully at the traceback.)</p>
-<div class="sourceCode" id="cb244"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb422"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">message2error</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">code</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/conditions.html">withCallingHandlers</a></span><span class="op">(</span><span class="va">code</span>, message <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -477,7 +486,7 @@
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="va">code</span>, message <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p><strong>A2.</strong> With <code><a href="https://rdrr.io/r/base/conditions.html">withCallingHandlers()</a></code>, the condition handler is called from the signaling function itself, and, therefore, provides a more detailed call stack.</p>
-<div class="sourceCode" id="cb245"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb423"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">message2error1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">code</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/conditions.html">withCallingHandlers</a></span><span class="op">(</span><span class="va">code</span>, message <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"error"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -510,7 +519,7 @@
 <span><span class="co">#&gt;        NULL</span></span>
 <span><span class="co">#&gt;    })</span></span></code></pre></div>
 <p>With <code><a href="https://rdrr.io/r/base/conditions.html">tryCatch()</a></code>, the signalling function terminates when a condition is raised, and so it doesn’t provide as detailed call stack.</p>
-<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb424"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">message2error2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">code</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="va">code</span>, message <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"error"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -537,7 +546,7 @@
 <p><strong>Q3.</strong> How would you modify the <code>catch_cnds()</code> definition if you wanted to recreate the original intermingling of warnings and messages?</p>
 <p><strong>A3.</strong> Actually, you won’t have to modify anything about the function defined in the chapter, since it supports this out of the box.</p>
 <p>So nothing additional to do here<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;The best kind of exercise there is!&lt;/p&gt;"><sup>5</sup></a>! 😅</p>
-<div class="sourceCode" id="cb247"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb425"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">catch_cnds</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">expr</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">conds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="va">add_cond</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">cnd</span><span class="op">)</span> <span class="op">{</span></span>
@@ -575,7 +584,7 @@
 <span><span class="co">#&gt; c</span></span></code></pre></div>
 <hr>
 <p><strong>Q4.</strong> Why is catching interrupts dangerous? Run this code to find out.</p>
-<div class="sourceCode" id="cb248"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb426"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bottles_of_beer</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">i</span> <span class="op">=</span> <span class="fl">99</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span></span>
 <span>    <span class="st">"There are "</span>, <span class="va">i</span>, <span class="st">" bottles of beer on the wall, "</span>,</span>
@@ -601,7 +610,7 @@
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p><strong>A4.</strong> Because this function catches the <code>interrupt</code> and there is no way to stop <code>bottles_of_beer()</code>, because the way you would usually stop it by using <code>interrupt</code>!</p>
-<div class="sourceCode" id="cb249"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb427"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">bottles_of_beer</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; There are 99 bottles of beer on the wall, 99 bottles of beer.</span></span>
 <span><span class="co">#&gt; Take one down, pass it around, 98 bottles of beer on the wall.</span></span>
@@ -621,7 +630,7 @@
 <h2>
 <span class="header-section-number">8.5</span> Session information<a class="anchor" aria-label="anchor" href="#session-information-6"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb250"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb428"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ─ Session info ───────────────────────────────────────────</span></span>
 <span><span class="co">#&gt;  setting  value</span></span>
@@ -633,7 +642,7 @@
 <span><span class="co">#&gt;  collate  C.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-05-12</span></span>
+<span><span class="co">#&gt;  date     2024-05-19</span></span>
 <span><span class="co">#&gt;  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────</span></span>
@@ -642,7 +651,7 @@
 <span><span class="co">#&gt;  bookdown      0.39    2024-04-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  brio          1.1.5   2024-04-24 [1] RSPM</span></span>
 <span><span class="co">#&gt;  bslib         0.7.0   2024-03-29 [1] RSPM</span></span>
-<span><span class="co">#&gt;  cachem        1.0.8   2023-05-01 [1] RSPM</span></span>
+<span><span class="co">#&gt;  cachem        1.1.0   2024-05-16 [1] RSPM</span></span>
 <span><span class="co">#&gt;  cli           3.6.2   2023-12-11 [1] RSPM</span></span>
 <span><span class="co">#&gt;  compiler      4.4.0   2024-05-06 [3] local</span></span>
 <span><span class="co">#&gt;  datasets    * 4.4.0   2024-05-06 [3] local</span></span>
@@ -652,7 +661,7 @@
 <span><span class="co">#&gt;  dplyr         1.1.4   2023-11-17 [1] RSPM</span></span>
 <span><span class="co">#&gt;  evaluate      0.23    2023-11-01 [1] RSPM</span></span>
 <span><span class="co">#&gt;  fansi         1.0.6   2023-12-08 [1] RSPM</span></span>
-<span><span class="co">#&gt;  fastmap       1.1.1   2023-02-24 [1] RSPM</span></span>
+<span><span class="co">#&gt;  fastmap       1.2.0   2024-05-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  fs            1.6.4   2024-04-25 [1] RSPM</span></span>
 <span><span class="co">#&gt;  generics      0.1.3   2022-07-05 [1] RSPM</span></span>
 <span><span class="co">#&gt;  glue          1.7.0   2024-01-09 [1] RSPM</span></span>
@@ -671,7 +680,7 @@
 <span><span class="co">#&gt;  pkgload       1.3.4   2024-01-16 [1] RSPM</span></span>
 <span><span class="co">#&gt;  R6            2.5.1   2021-08-19 [1] RSPM</span></span>
 <span><span class="co">#&gt;  rlang       * 1.1.3   2024-01-10 [1] RSPM</span></span>
-<span><span class="co">#&gt;  rmarkdown     2.26    2024-03-05 [1] RSPM</span></span>
+<span><span class="co">#&gt;  rmarkdown     2.27    2024-05-17 [1] RSPM</span></span>
 <span><span class="co">#&gt;  rprojroot     2.0.4   2023-11-05 [1] RSPM</span></span>
 <span><span class="co">#&gt;  sass          0.4.9   2024-03-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  sessioninfo   1.2.2   2021-12-06 [1] RSPM</span></span>
@@ -684,7 +693,7 @@
 <span><span class="co">#&gt;  utils       * 4.4.0   2024-05-06 [3] local</span></span>
 <span><span class="co">#&gt;  vctrs         0.6.5   2023-12-01 [1] RSPM</span></span>
 <span><span class="co">#&gt;  withr         3.0.0   2024-01-16 [1] RSPM</span></span>
-<span><span class="co">#&gt;  xfun          0.43    2024-03-25 [1] RSPM</span></span>
+<span><span class="co">#&gt;  xfun          0.44    2024-05-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  xml2          1.3.6   2023-12-04 [1] RSPM</span></span>
 <span><span class="co">#&gt;  yaml          2.3.8   2023-12-11 [1] RSPM</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -726,7 +735,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2024-05-12.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2024-05-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

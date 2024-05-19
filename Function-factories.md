@@ -5,7 +5,7 @@
 Attaching the needed libraries:
 
 
-```r
+``` r
 library(rlang, warn.conflicts = FALSE)
 library(ggplot2, warn.conflicts = FALSE)
 ```
@@ -17,11 +17,11 @@ library(ggplot2, warn.conflicts = FALSE)
 **Q1.** The definition of `force()` is simple:
 
 
-```r
+``` r
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x559c04028270>
+#> <bytecode: 0x564dbf29be00>
 #> <environment: namespace:base>
 ```
 
@@ -40,18 +40,24 @@ Why is it better to `force(x)` instead of just `x`?
 This function factory returns a function performing the linear (or constant) interpolation.
 
 
-```r
+``` r
 x <- 1:10
 y <- rnorm(10)
 f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x559c089f4580>
-#> <environment: 0x559c089f3c50>
+#> <bytecode: 0x564dc4e0d888>
+#> <environment: 0x564dc4e0cf58>
+```
+
+``` r
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
+```
+
+``` r
 curve(f(x), 0, 11)
 ```
 
@@ -62,13 +68,16 @@ curve(f(x), 0, 11)
 This function factory computes an empirical cumulative distribution function.
 
 
-```r
+``` r
 x <- rnorm(12)
 f <- ecdf(x)
 f
 #> Empirical CDF 
 #> Call: ecdf(x)
 #>  x[1:12] = -1.8793, -1.3221, -1.2392,  ..., 1.1604, 1.7956
+```
+
+``` r
 f(seq(-2, 2, by = 0.1))
 #>  [1] 0.00000000 0.00000000 0.08333333 0.08333333 0.08333333
 #>  [6] 0.08333333 0.08333333 0.16666667 0.25000000 0.25000000
@@ -86,7 +95,7 @@ f(seq(-2, 2, by = 0.1))
 **Q3.** Create a function `pick()` that takes an index, `i`, as an argument and returns a function with an argument `x` that subsets `x` with `i`.
 
 
-```r
+``` r
 pick(1)(x)
 # should be equivalent to
 x[[1]]
@@ -99,7 +108,7 @@ lapply(mtcars, function(x) x[[5]])
 **A3.** To write desired function, we just need to make sure that the argument `i` is eagerly evaluated.
 
 
-```r
+``` r
 pick <- function(i) {
   force(i)
   function(x) x[[i]]
@@ -109,10 +118,13 @@ pick <- function(i) {
 Testing it with specified test cases:
 
 
-```r
+``` r
 x <- list("a", "b", "c")
 identical(x[[1]], pick(1)(x))
 #> [1] TRUE
+```
+
+``` r
 
 identical(
   lapply(mtcars, pick(5)),
@@ -126,7 +138,7 @@ identical(
 **Q4.** Create a function that creates functions that compute the i^th^ [central moment](http://en.wikipedia.org/wiki/Central_moment) of a numeric vector. You can test it by running the following code:
 
 
-```r
+``` r
 m1 <- moment(1)
 m2 <- moment(2)
 x <- runif(100)
@@ -137,7 +149,7 @@ stopifnot(all.equal(m2(x), var(x) * 99 / 100))
 **A4.** The following function satisfied the specified requirements:
 
 
-```r
+``` r
 moment <- function(k) {
   force(k)
 
@@ -148,7 +160,7 @@ moment <- function(k) {
 Testing it with specified test cases:
 
 
-```r
+``` r
 m1 <- moment(1)
 m2 <- moment(2)
 x <- runif(100)
@@ -162,7 +174,7 @@ stopifnot(all.equal(m2(x), var(x) * 99 / 100))
 **Q5.** What happens if you don't use a closure? Make predictions, then verify with the code below.
 
 
-```r
+``` r
 i <- 0
 new_counter2 <- function() {
   i <<- i + 1
@@ -173,15 +185,24 @@ new_counter2 <- function() {
 **A5.** In case closures are not used in this context, the counts are stored in a global variable, which can be modified by other processes or even deleted.
 
 
-```r
+``` r
 new_counter2()
 #> [1] 1
+```
+
+``` r
 
 new_counter2()
 #> [1] 2
+```
+
+``` r
 
 new_counter2()
 #> [1] 3
+```
+
+``` r
 
 i <- 20
 new_counter2()
@@ -193,7 +214,7 @@ new_counter2()
 **Q6.** What happens if you use `<-` instead of `<<-`? Make predictions, then verify with the code below.
 
 
-```r
+``` r
 new_counter3 <- function() {
   i <- 0
   function() {
@@ -206,21 +227,24 @@ new_counter3 <- function() {
 **A6.**  In this case, the function will always return `1`.
 
 
-```r
+``` r
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x559c08876d58>
+#> <environment: 0x564dc4deb2a8>
+```
+
+``` r
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x559c08a258e0>
-#> <environment: 0x559c088f0938>
+#> <bytecode: 0x564dc5099408>
+#> <environment: 0x564dc4e7c478>
 ```
 
 ---
@@ -236,7 +260,7 @@ new_counter3()
 - `ggplot2::label_bquote()`
 
 
-```r
+``` r
 ggplot2::label_bquote
 #> function (rows = NULL, cols = NULL, default) 
 #> {
@@ -258,14 +282,14 @@ ggplot2::label_bquote
 #>     }
 #>     structure(fun, class = "labeller")
 #> }
-#> <bytecode: 0x559c08c44128>
+#> <bytecode: 0x564dc5486468>
 #> <environment: namespace:ggplot2>
 ```
 
 - `scales::number_format()`
 
 
-```r
+``` r
 scales::number_format
 #> function (accuracy = NULL, scale = 1, prefix = "", suffix = "", 
 #>     big.mark = " ", decimal.mark = ".", style_positive = c("none", 
@@ -281,7 +305,7 @@ scales::number_format
 #>             scale_cut = scale_cut, trim = trim, ...)
 #>     }
 #> }
-#> <bytecode: 0x559c090833d8>
+#> <bytecode: 0x564dc568abf8>
 #> <environment: namespace:scales>
 ```
 
@@ -290,7 +314,7 @@ Both of these functions return formatting functions used to style the facets lab
 For example, using plotmath expression in the facet label:
 
 
-```r
+``` r
 library(ggplot2)
 
 p <- ggplot(mtcars, aes(wt, mpg)) +
@@ -303,7 +327,7 @@ p + facet_grid(. ~ vs, labeller = label_bquote(cols = alpha^.(vs)))
 Or to display axes labels in the desired format:
 
 
-```r
+``` r
 library(scales)
 
 ggplot(mtcars, aes(wt, mpg)) +
@@ -328,7 +352,7 @@ The `scales::number_format()` function is a simple pass-through method that forc
 **A1.** We don’t need to force the evaluation of `df` or `model` because these arguments are automatically evaluated by `lm()`:
 
 
-```r
+``` r
 boot_model <- function(df, formula) {
   mod <- lm(formula, data = df)
   fitted <- unname(fitted(mod))
@@ -346,7 +370,7 @@ boot_model <- function(df, formula) {
 **Q2.** Why might you formulate the Box-Cox transformation like this?
 
 
-```r
+``` r
 boxcox3 <- function(x) {
   function(lambda) {
     if (lambda == 0) {
@@ -361,7 +385,7 @@ boxcox3 <- function(x) {
 **A2.** To see why we formulate this transformation like above, we can compare it to the one mentioned in the book:
 
 
-```r
+``` r
 boxcox2 <- function(lambda) {
   if (lambda == 0) {
     function(x) log(x)
@@ -374,10 +398,13 @@ boxcox2 <- function(lambda) {
 Let's have a look at one example with each:
 
 
-```r
+``` r
 boxcox2(1)
 #> function(x) (x^lambda - 1) / lambda
-#> <environment: 0x559c099d69f8>
+#> <environment: 0x564dc438e490>
+```
+
+``` r
 
 boxcox3(mtcars$wt)
 #> function(lambda) {
@@ -387,7 +414,7 @@ boxcox3(mtcars$wt)
 #>       (x^lambda - 1) / lambda
 #>     }
 #>   }
-#> <environment: 0x559c09c72f30>
+#> <environment: 0x564dc44c9e88>
 ```
 
 As can be seen:
@@ -404,7 +431,7 @@ Thus, `boxcox3()` can be handy while exploring different transformations across 
 **A3.** If we look at the source code generated by the function factory, we notice that the exact data frame (`mtcars`) is not referenced:
 
 
-```r
+``` r
 boot_permute <- function(df, var) {
   n <- nrow(df)
   force(var)
@@ -420,21 +447,24 @@ boot_permute(mtcars, "mpg")
 #>     col <- df[[var]]
 #>     col[sample(n, replace = TRUE)]
 #>   }
-#> <environment: 0x559c07162ea8>
+#> <environment: 0x564dc4ebe5e8>
 ```
 
 This is why we don't need to worry about a copy being made because the `df` in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:
 
 
-```r
+``` r
 boot_permute_env <- rlang::fn_env(boot_permute(mtcars, "mpg"))
 rlang::env_print(boot_permute_env)
-#> <environment: 0x559c06117580>
+#> <environment: 0x564dc5428b20>
 #> Parent: <environment: global>
 #> Bindings:
 #> • n: <int>
 #> • df: <df[,11]>
 #> • var: <chr>
+```
+
+``` r
 
 identical(
   lobstr::obj_addr(boot_permute_env$df),
@@ -446,9 +476,12 @@ identical(
 We can also check that the values of these bindings are the same as what we entered into the function factory:
 
 
-```r
+``` r
 identical(boot_permute_env$df, mtcars)
 #> [1] TRUE
+```
+
+``` r
 identical(boot_permute_env$var, "mpg")
 #> [1] TRUE
 ```
@@ -460,7 +493,7 @@ identical(boot_permute_env$var, "mpg")
 **A4.** Let's first compare the performance of these functions with the example in the book:
 
 
-```r
+``` r
 ll_poisson1 <- function(x) {
   n <- length(x)
 
@@ -488,8 +521,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1          29.1µs   31.4µs    30432.    12.8KB     36.6
-#> 2 LL2          15.6µs   16.8µs    56564.        0B     34.0
+#> 1 LL1          28.6µs   30.4µs    31842.    12.8KB     41.4
+#> 2 LL2          15.5µs   16.3µs    58508.        0B     41.0
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -497,7 +530,7 @@ As can be seen, the second version is much faster than the first version.
 We can also vary the length of the vector and confirm that across a wide range of vector lengths, this performance advantage is observed.
 
 
-```r
+``` r
 generate_ll_benches <- function(n) {
   x_vec <- sample.int(n, n)
 
@@ -515,16 +548,19 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 × 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1          40.7µs   42.9µs    22849.
-#>  2     10 LL2          18.5µs   19.6µs    49891.
-#>  3     20 LL1          42.7µs   45.2µs    20881.
-#>  4     20 LL2          18.1µs     19µs    51778.
-#>  5     50 LL1          47.2µs   49.5µs    19863.
-#>  6     50 LL2          17.2µs   18.1µs    54014.
-#>  7    100 LL1          62.9µs   66.5µs    14774.
-#>  8    100 LL2          18.5µs   19.5µs    50641.
-#>  9   1000 LL1         855.6µs  877.6µs     1093.
-#> 10   1000 LL2          56.9µs   58.4µs    16900.
+#>  1     10 LL1          40.5µs   42.5µs    22266.
+#>  2     10 LL2          18.5µs   19.3µs    50774.
+#>  3     20 LL1          43.1µs   44.7µs    22087.
+#>  4     20 LL2            18µs   18.8µs    52357.
+#>  5     50 LL1          47.2µs   48.6µs    20190.
+#>  6     50 LL2          17.1µs   17.7µs    55597.
+#>  7    100 LL1          62.8µs   65.4µs    14854.
+#>  8    100 LL2          18.3µs   19.1µs    51597.
+#>  9   1000 LL1         859.9µs  898.8µs     1085.
+#> 10   1000 LL2          56.7µs   58.2µs    16927.
+```
+
+``` r
 
 ggplot(
   df_bench,
@@ -561,19 +597,28 @@ ggplot(
 **A1.** It depends on whether `with()` is used with a data frame or a list.
 
 
-```r
+``` r
 f <- mean
 z <- 1
 x <- list(f = mean, z = 1)
 
 identical(with(x, f(z)), x$f(x$z))
 #> [1] TRUE
+```
+
+``` r
 
 identical(with(x, f(z)), f(x$z))
 #> [1] TRUE
+```
+
+``` r
 
 identical(with(x, f(z)), x$f(z))
 #> [1] TRUE
+```
+
+``` r
 
 identical(with(x, f(z)), f(z))
 #> [1] TRUE
@@ -588,7 +633,7 @@ identical(with(x, f(z)), f(z))
 - `attach()` adds `funs` to the search path. Since these functions have the same names as functions in `{base}` package, the attached names mask the ones in the `{base}` package.
 
 
-```r
+``` r
 funs <- list(
   mean = function(x) mean(x, na.rm = TRUE),
   sum = function(x) sum(x, na.rm = TRUE)
@@ -598,19 +643,34 @@ attach(funs)
 #> The following objects are masked from package:base:
 #> 
 #>     mean, sum
+```
+
+``` r
 
 mean
 #> function(x) mean(x, na.rm = TRUE)
+```
+
+``` r
 head(search())
 #> [1] ".GlobalEnv"       "funs"             "package:scales"  
 #> [4] "package:ggplot2"  "package:rlang"    "package:magrittr"
+```
+
+``` r
 
 mean <- function(x) stop("Hi!")
 mean
 #> function(x) stop("Hi!")
+```
+
+``` r
 head(search())
 #> [1] ".GlobalEnv"       "funs"             "package:scales"  
 #> [4] "package:ggplot2"  "package:rlang"    "package:magrittr"
+```
+
+``` r
 
 detach(funs)
 ```
@@ -618,14 +678,20 @@ detach(funs)
 - `env_bind()` adds the functions in `funs` to the global environment, instead of masking the names in the `{base}` package.
 
 
-```r
+``` r
 env_bind(globalenv(), !!!funs)
 mean
 #> function(x) mean(x, na.rm = TRUE)
+```
+
+``` r
 
 mean <- function(x) stop("Hi!")
 mean
 #> function(x) stop("Hi!")
+```
+
+``` r
 env_unbind(globalenv(), names(funs))
 ```
 
@@ -636,7 +702,7 @@ Note that there is no `"funs"` in this output.
 ## Session information
 
 
-```r
+``` r
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
@@ -648,7 +714,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-12
+#>  date     2024-05-19
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -657,7 +723,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  bench         1.1.3   2023-05-04 [1] RSPM
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
-#>  cachem        1.0.8   2023-05-01 [1] RSPM
+#>  cachem        1.1.0   2024-05-16 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  colorspace    2.1-0   2023-01-23 [1] RSPM
 #>  compiler      4.4.0   2024-05-06 [3] local
@@ -667,8 +733,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
-#>  farver        2.1.1   2022-07-06 [1] RSPM
-#>  fastmap       1.1.1   2023-02-24 [1] RSPM
+#>  farver        2.1.2   2024-05-13 [1] RSPM
+#>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
 #>  ggplot2     * 3.5.1   2024-04-23 [1] RSPM
@@ -695,7 +761,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  purrr         1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang       * 1.1.3   2024-01-10 [1] RSPM
-#>  rmarkdown     2.26    2024-03-05 [1] RSPM
+#>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  scales      * 1.3.0   2023-11-28 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
@@ -707,7 +773,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.0   2024-05-06 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.43    2024-03-25 [1] RSPM
+#>  xfun          0.44    2024-05-15 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 

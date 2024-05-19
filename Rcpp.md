@@ -3,7 +3,7 @@
 
 
 
-```r
+``` r
 library(Rcpp, warn.conflicts = FALSE)
 ```
 
@@ -12,7 +12,7 @@ library(Rcpp, warn.conflicts = FALSE)
 **Q1.** With the basics of C++ in hand, it's now a great time to practice by reading and writing some simple C++ functions. For each of the following functions, read the code and figure out what the corresponding base R function is. You might not understand every part of the code yet, but you should be able to figure out the basics of what the function does.
 
 
-```cpp
+``` cpp
 #include <Rcpp.h>
 using namespace Rcpp;
 
@@ -81,11 +81,14 @@ NumericVector f5(NumericVector x, NumericVector y) {
 `f1()` is the same as `mean()`:
 
 
-```r
+``` r
 x <- c(1, 2, 3, 4, 5, 6)
 
 f1(x)
 #> [1] 3.5
+```
+
+``` r
 mean(x)
 #> [1] 3.5
 ```
@@ -93,11 +96,14 @@ mean(x)
 `f2()` is the same as `cumsum()`:
 
 
-```r
+``` r
 x <- c(1, 3, 5, 6)
 
 f2(x)
 #> [1]  1  4  9 15
+```
+
+``` r
 cumsum(x)
 #> [1]  1  4  9 15
 ```
@@ -105,17 +111,26 @@ cumsum(x)
 `f3()` is the same as `any()`:
 
 
-```r
+``` r
 x1 <- c(TRUE, FALSE, FALSE, TRUE)
 x2 <- c(FALSE, FALSE)
 
 f3(x1)
 #> [1] TRUE
+```
+
+``` r
 any(x1)
 #> [1] TRUE
+```
+
+``` r
 
 f3(x2)
 #> [1] FALSE
+```
+
+``` r
 any(x2)
 #> [1] FALSE
 ```
@@ -123,11 +138,14 @@ any(x2)
 `f4()` is the same as `Position()`:
 
 
-```r
+``` r
 x <- list("a", TRUE, "m", 2)
 
 f4(is.numeric, x)
 #> [1] 4
+```
+
+``` r
 Position(is.numeric, x)
 #> [1] 4
 ```
@@ -135,12 +153,15 @@ Position(is.numeric, x)
 `f5()` is the same as `pmin()`:
 
 
-```r
+``` r
 v1 <- c(1, 3, 4, 5, 6, 7)
 v2 <- c(1, 2, 7, 2, 8, 1)
 
 f5(v1, v2)
 #> [1] 1 2 4 2 6 1
+```
+
+``` r
 pmin(v1, v2)
 #> [1] 1 2 4 2 6 1
 ```
@@ -160,15 +181,27 @@ pmin(v1, v2)
 **A2.** The performance benefits are not going to be observed if the function is primitive since those are already tuned to the max in R for performance. So, expect performance gain only for `diff()` and `var()`.
 
 
-```r
+``` r
 is.primitive(all)
 #> [1] TRUE
+```
+
+``` r
 is.primitive(cumprod)
 #> [1] TRUE
+```
+
+``` r
 is.primitive(diff)
 #> [1] FALSE
+```
+
+``` r
 is.primitive(range)
 #> [1] TRUE
+```
+
+``` r
 is.primitive(var)
 #> [1] FALSE
 ```
@@ -176,7 +209,7 @@ is.primitive(var)
 - `all()`
 
 
-```cpp
+``` cpp
 #include <vector>
 // [[Rcpp::plugins(cpp11)]]
 
@@ -193,19 +226,31 @@ bool allC(std::vector<bool> x)
 ```
 
 
-```r
+``` r
 v1 <- rep(TRUE, 10)
 v2 <- c(rep(TRUE, 5), rep(FALSE, 5))
 
 all(v1)
 #> [1] TRUE
+```
+
+``` r
 allC(v1)
 #> [1] TRUE
+```
+
+``` r
 
 all(v2)
 #> [1] FALSE
+```
+
+``` r
 allC(v2)
 #> [1] FALSE
+```
+
+``` r
 
 # performance benefits?
 bench::mark(
@@ -216,18 +261,18 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression                                      min
 #>   <bch:expr>                                 <bch:tm>
-#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))     6.1µs
-#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   7.92µs
+#> 1 all(c(rep(TRUE, 1000), rep(FALSE, 1000)))    6.11µs
+#> 2 allC(c(rep(TRUE, 1000), rep(FALSE, 1000)))   7.82µs
 #>     median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1   6.45µs   152578.    15.8KB        0
-#> 2   8.21µs   116891.    15.8KB        0
+#> 1   6.56µs   150061.    15.8KB        0
+#> 2    8.2µs   119070.    15.8KB        0
 ```
 
 - `cumprod()`
 
 
-```cpp
+``` cpp
 #include <vector>
 
 // [[Rcpp::export]]
@@ -246,13 +291,19 @@ std::vector<double> cumprodC(const std::vector<double> &x)
 
 
 
-```r
+``` r
 v1 <- c(10, 4, 6, 8)
 
 cumprod(v1)
 #> [1]   10   40  240 1920
+```
+
+``` r
 cumprodC(v1)
 #> [1]   10   40  240 1920
+```
+
+``` r
 
 # performance benefits?
 bench::mark(
@@ -263,8 +314,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 cumprod(v1)     100ns    110ns  7509472.        0B
-#> 2 cumprodC(v1)    731ns    762ns  1207057.    4.12KB
+#> 1 cumprod(v1)     100ns    110ns  7851788.        0B
+#> 2 cumprodC(v1)    731ns    832ns  1114408.    4.12KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -274,7 +325,7 @@ bench::mark(
 - `cumminC()`
 
 
-```cpp
+``` cpp
 #include <vector>
 // [[Rcpp::plugins(cpp11)]]
 
@@ -293,13 +344,19 @@ std::vector<double> cumminC(const std::vector<double> &x)
 ```
 
 
-```r
+``` r
 v1 <- c(3:1, 2:0, 4:2)
 
 cummin(v1)
 #> [1] 3 2 1 1 1 0 0 0 0
+```
+
+``` r
 cumminC(v1)
 #> [1] 3 2 1 1 1 0 0 0 0
+```
+
+``` r
 
 # performance benefits?
 bench::mark(
@@ -310,14 +367,14 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression       min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>  <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 cummin(v1)     110ns    121ns  7106814.        0B        0
-#> 2 cumminC(v1)    811ns    842ns  1047229.    4.12KB        0
+#> 1 cummin(v1)  229.92ns 250.99ns  3455157.        0B        0
+#> 2 cumminC(v1)   1.34µs   1.43µs   649380.    4.12KB        0
 ```
 
 - `cummaxC()`
 
 
-```cpp
+``` cpp
 #include <vector>
 // [[Rcpp::plugins(cpp11)]]
 
@@ -336,13 +393,19 @@ std::vector<double> cummaxC(const std::vector<double> &x)
 ```
 
 
-```r
+``` r
 v1 <- c(3:1, 2:0, 4:2)
 
 cummax(v1)
 #> [1] 3 3 3 3 3 3 4 4 4
+```
+
+``` r
 cummaxC(v1)
 #> [1] 3 3 3 3 3 3 4 4 4
+```
+
+``` r
 
 # performance benefits?
 bench::mark(
@@ -353,14 +416,14 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression       min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>  <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 cummax(v1)     110ns    121ns  6208888.        0B        0
-#> 2 cummaxC(v1)    832ns    992ns   940058.    4.12KB        0
+#> 1 cummax(v1)     110ns    141ns  5612135.        0B        0
+#> 2 cummaxC(v1)    821ns    982ns   919709.    4.12KB        0
 ```
 
 - `diff()`
 
 
-```cpp
+``` cpp
 #include <vector>
 #include <functional>
 #include <algorithm>
@@ -394,19 +457,31 @@ std::vector<double> diffC(const std::vector<double> &x, int lag)
 ```
 
 
-```r
+``` r
 v1 <- c(1, 2, 4, 8, 13)
 v2 <- c(1, 2, NA, 8, 13)
 
 diff(v1, 2)
 #> [1] 3 6 9
+```
+
+``` r
 diffC(v1, 2)
 #> [1] 3 6 9
+```
+
+``` r
 
 diff(v2, 2)
 #> [1] NA  6 NA
+```
+
+``` r
 diffC(v2, 2)
 #> [1] NA  6 NA
+```
+
+``` r
 
 # performance benefits?
 bench::mark(
@@ -417,8 +492,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 diff(v1, 2)    3.98µs   4.27µs   219835.        0B
-#> 2 diffC(v1, 2)   1.12µs   1.22µs   766810.        0B
+#> 1 diff(v1, 2)    3.83µs   4.29µs   224875.        0B
+#> 2 diffC(v1, 2)   1.12µs   1.23µs   765059.        0B
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -428,7 +503,7 @@ bench::mark(
 - `range()`
 
 
-```cpp
+``` cpp
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -447,13 +522,19 @@ std::vector<double> rangeC(std::vector<double> x)
 ```
 
 
-```r
+``` r
 v1 <- c(10, 4, 6, 8)
 
 range(v1)
 #> [1]  4 10
+```
+
+``` r
 rangeC(v1)
 #> [1]  4 10
+```
+
+``` r
 
 # performance benefits?
 bench::mark(
@@ -464,14 +545,14 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 range(v1)    2.49µs    2.9µs   329467.        0B        0
-#> 2 rangeC(v1) 740.98ns  872.1ns  1066093.    4.12KB        0
+#> 1 range(v1)    2.63µs   3.01µs   316023.        0B        0
+#> 2 rangeC(v1)  741.1ns 831.09ns  1133279.    4.12KB        0
 ```
 
 - `var()`
 
 
-```cpp
+``` cpp
 #include <vector>
 #include <cmath>
 #include <numeric>
@@ -496,13 +577,19 @@ double variance(std::vector<double> x)
 
 
 
-```r
+``` r
 v1 <- c(1, 4, 7, 8)
 
 var(v1)
 #> [1] 10
+```
+
+``` r
 variance(v1)
 #> [1] 10
+```
+
+``` r
 
 # performance benefits?
 bench::mark(
@@ -513,8 +600,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 var(v1)        5.45µs   6.02µs   161982.        0B
-#> 2 variance(v1)  702.1ns  802.1ns  1158318.    4.12KB
+#> 1 var(v1)        5.53µs   6.02µs   161193.        0B
+#> 2 variance(v1) 691.04ns 781.09ns  1194045.    4.12KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -528,7 +615,7 @@ bench::mark(
 **A1.** We will only create a version of `range()` that deals with missing values. The same principle applies to others:
 
 
-```cpp
+``` cpp
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -571,16 +658,25 @@ std::vector<double> rangeC_NA(std::vector<double> x, bool removeNA = true)
 ```
 
 
-```r
+``` r
 v1 <- c(10, 4, NA, 6, 8)
 
 range(v1, na.rm = FALSE)
 #> [1] NA NA
+```
+
+``` r
 rangeC_NA(v1, FALSE)
 #> [1] NA NA
+```
+
+``` r
 
 range(v1, na.rm = TRUE)
 #> [1]  4 10
+```
+
+``` r
 rangeC_NA(v1, TRUE)
 #> [1]  4 10
 ```
@@ -602,7 +698,7 @@ As seen from the examples above, `diffC()` already behaves this way.
 Similarly, `cumsumC()` propagates `NA`s as well.
 
 
-```cpp
+``` cpp
 #include <Rcpp.h>
 using namespace Rcpp;
 // [[Rcpp::plugins(cpp11)]]
@@ -622,17 +718,26 @@ NumericVector cumsumC(NumericVector x) {
 ```
 
 
-```r
+``` r
 v1 <- c(1, 2, 3, 4)
 v2 <- c(1, 2, NA, 4)
 
 cumsum(v1)
 #> [1]  1  3  6 10
+```
+
+``` r
 cumsumC(v1)
 #> [1]  1  3  6 10
+```
+
+``` r
 
 cumsum(v2)
 #> [1]  1  3 NA NA
+```
+
+``` r
 cumsumC(v2)
 #> [1]  1  3 NA NA
 ```
@@ -646,7 +751,7 @@ cumsumC(v2)
 1. `median.default()` using `partial_sort`.
 
 
-```cpp
+``` cpp
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -672,19 +777,31 @@ double medianC(std::vector<double> &x)
 
 
 
-```r
+``` r
 v1 <- c(1, 3, 3, 6, 7, 8, 9)
 v2 <- c(1, 2, 3, 4, 5, 6, 8, 9)
 
 median.default(v1)
 #> [1] 6
+```
+
+``` r
 medianC(v1)
 #> [1] 6
+```
+
+``` r
 
 median.default(v2)
 #> [1] 4.5
+```
+
+``` r
 medianC(v2)
 #> [1] 4.5
+```
+
+``` r
 
 # performance benefits?
 bench::mark(
@@ -695,8 +812,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression              min   median `itr/sec` mem_alloc
 #>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 median.default(v2)   20.5µs   22.1µs    44085.        0B
-#> 2 medianC(v2)           732ns  782.1ns  1019173.        0B
+#> 1 median.default(v2)   20.9µs   22.3µs    43972.        0B
+#> 2 medianC(v2)         731.1ns  811.5ns  1011639.        0B
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -706,7 +823,7 @@ bench::mark(
 1. `%in%` using `unordered_set` and the `find()` or `count()` methods.
 
 
-```cpp
+``` cpp
 #include <vector>
 #include <unordered_set>
 using namespace std;
@@ -728,14 +845,20 @@ std::vector<bool> matchC(const std::vector<double> &x, const std::vector<double>
 ```
 
 
-```r
+``` r
 x1 <- c(3, 4, 8)
 x2 <- c(1, 2, 3, 3, 4, 4, 5, 6)
 
 x1 %in% x2
 #> [1]  TRUE  TRUE FALSE
+```
+
+``` r
 matchC(x1, x2)
 #> [1]  TRUE  TRUE FALSE
+```
+
+``` r
 
 # performance benefits?
 bench::mark(
@@ -746,8 +869,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression          min   median `itr/sec` mem_alloc
 #>   <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 x1 %in% x2     881.03ns   1.04µs   901651.        0B
-#> 2 matchC(x1, x2)   1.29µs   1.38µs   678543.    4.12KB
+#> 1 x1 %in% x2     922.13ns   1.26µs   764450.        0B
+#> 2 matchC(x1, x2)   1.28µs   1.39µs   661649.    4.12KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -757,7 +880,7 @@ bench::mark(
 1. `unique()` using an `unordered_set` (challenge: do it in one line!).
 
 
-```cpp
+``` cpp
 #include <unordered_set>
 #include <vector>
 #include <iostream>
@@ -776,11 +899,14 @@ std::unordered_set<double> uniqueC(const std::vector<double> &x)
 Note that these functions are **not** comparable. As far as I can see, there is no way to get the same output as the R version of the function using the `unordered_set` data structure.
 
 
-```r
+``` r
 v1 <- c(1, 3, 3, 6, 7, 8, 9)
 
 unique(v1)
 #> [1] 1 3 6 7 8 9
+```
+
+``` r
 uniqueC(v1)
 #> [1] 9 8 7 6 3 1
 ```
@@ -788,7 +914,7 @@ uniqueC(v1)
 We can make comparable version using `set` data structure:
 
 
-```cpp
+``` cpp
 #include <set>
 #include <vector>
 #include <iostream>
@@ -805,13 +931,19 @@ std::set<double> uniqueC2(const std::vector<double> &x)
 ```
 
 
-```r
+``` r
 v1 <- c(1, 3, 3, 6, 7, 8, 9)
 
 unique(v1)
 #> [1] 1 3 6 7 8 9
+```
+
+``` r
 uniqueC2(v1)
 #> [1] 1 3 6 7 8 9
+```
+
+``` r
 
 # performance benefits?
 bench::mark(
@@ -822,8 +954,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression        min   median `itr/sec` mem_alloc
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 unique(v1)     2.25µs   2.48µs   374064.        0B
-#> 2 uniqueC2(v1) 932.14ns   1.07µs   868414.    4.12KB
+#> 1 unique(v1)     2.14µs   2.39µs   396285.        0B
+#> 2 uniqueC2(v1) 922.01ns   1.03µs   902917.    4.12KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -833,7 +965,7 @@ bench::mark(
 1. `min()` using `std::min()`, or `max()` using `std::max()`.
 
 
-```cpp
+``` cpp
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -854,13 +986,19 @@ const double maxC(std::vector<double> x)
 ```
 
 
-```r
+``` r
 v1 <- c(3, 3, 6, 1, 9, 7, 8)
 
 min(v1)
 #> [1] 1
+```
+
+``` r
 minC(v1)
 #> [1] 1
+```
+
+``` r
 
 # performance benefits?
 bench::mark(
@@ -871,13 +1009,22 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 min(v1)       220ns    241ns  3416690.        0B        0
-#> 2 minC(v1)      691ns    772ns   959107.    4.12KB        0
+#> 1 min(v1)       250ns    340ns  2611454.        0B        0
+#> 2 minC(v1)      691ns    792ns  1157712.    4.12KB        0
+```
+
+``` r
 
 max(v1)
 #> [1] 9
+```
+
+``` r
 maxC(v1)
 #> [1] 9
+```
+
+``` r
 
 # performance benefits?
 bench::mark(
@@ -888,14 +1035,14 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 max(v1)       220ns    241ns  3351869.        0B        0
-#> 2 maxC(v1)      691ns    791ns  1170792.    4.12KB        0
+#> 1 max(v1)       230ns    241ns  3346880.        0B        0
+#> 2 maxC(v1)      691ns    781ns  1193463.    4.12KB        0
 ```
 
 1. `which.min()` using `min_element`, or `which.max()` using `max_element`.
 
 
-```cpp
+``` cpp
 #include <vector>
 #include <algorithm>
 using namespace std;
@@ -922,13 +1069,19 @@ int which_minC(std::vector<double> &x)
 
 
 
-```r
+``` r
 v1 <- c(3, 3, 6, 1, 9, 7, 8)
 
 which.min(v1)
 #> [1] 4
+```
+
+``` r
 which_minC(v1)
 #> [1] 4
+```
+
+``` r
 
 # performance benefits?
 bench::mark(
@@ -939,17 +1092,26 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression          min   median `itr/sec` mem_alloc
 #>   <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 which.min(v1)     390ns    476ns  1878452.        0B
-#> 2 which_minC(v1)    701ns    781ns  1214788.    4.12KB
+#> 1 which.min(v1)     380ns    481ns  2020519.        0B
+#> 2 which_minC(v1)    701ns    747ns  1237531.    4.12KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
 #> 2        0
+```
+
+``` r
 
 which.max(v1)
 #> [1] 5
+```
+
+``` r
 which_maxC(v1)
 #> [1] 5
+```
+
+``` r
 
 # performance benefits?
 bench::mark(
@@ -960,8 +1122,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression          min   median `itr/sec` mem_alloc
 #>   <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>
-#> 1 which.max(v1)     390ns    411ns  2166981.        0B
-#> 2 which_maxC(v1)    701ns    757ns  1216121.    4.12KB
+#> 1 which.max(v1)     401ns    430ns  2136704.        0B
+#> 2 which_maxC(v1)    701ns    782ns  1183389.    4.12KB
 #>   `gc/sec`
 #>      <dbl>
 #> 1        0
@@ -975,7 +1137,7 @@ Note that the following C++ implementations of given functions are not strictly 
 - `union()`
 
 
-```cpp
+``` cpp
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -1000,12 +1162,15 @@ std::set<int> unionC(std::vector<int> &v1, std::vector<int> &v2)
 ```
 
 
-```r
+``` r
 v1 <- c(1, 4, 5, 5, 5, 6, 2)
 v2 <- c(4, 1, 6, 8)
 
 union(v1, v2)
 #> [1] 1 4 5 6 2 8
+```
+
+``` r
 unionC(v1, v2)
 #> [1] 1 2 4 5 6 8
 ```
@@ -1013,7 +1178,7 @@ unionC(v1, v2)
 - `intersect()`
 
 
-```cpp
+``` cpp
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -1038,12 +1203,15 @@ std::set<int> intersectC(std::vector<int> &v1, std::vector<int> &v2)
 ```
 
 
-```r
+``` r
 v1 <- c(1, 4, 5, 5, 5, 6, 2)
 v2 <- c(4, 1, 6, 8)
 
 intersect(v1, v2)
 #> [1] 1 4 6
+```
+
+``` r
 intersectC(v1, v2)
 #> [1] 1 4 6
 ```
@@ -1051,7 +1219,7 @@ intersectC(v1, v2)
 - `setdiff()`
 
 
-```cpp
+``` cpp
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -1076,12 +1244,15 @@ std::set<int> setdiffC(std::vector<int> &v1, std::vector<int> &v2)
 ```
 
 
-```r
+``` r
 v1 <- c(1, 4, 5, 5, 5, 6, 2)
 v2 <- c(4, 1, 6, 8)
 
 setdiff(v1, v2)
 #> [1] 5 2
+```
+
+``` r
 setdiffC(v1, v2)
 #> [1] 2 5
 ```
@@ -1089,7 +1260,7 @@ setdiffC(v1, v2)
 ## Session information
 
 
-```r
+``` r
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
@@ -1101,7 +1272,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-12
+#>  date     2024-05-19
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1110,7 +1281,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  bench         1.1.3   2023-05-04 [1] RSPM
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
-#>  cachem        1.0.8   2023-05-01 [1] RSPM
+#>  cachem        1.1.0   2024-05-16 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.4.0   2024-05-06 [3] local
 #>  datasets    * 4.4.0   2024-05-06 [3] local
@@ -1118,7 +1289,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
-#>  fastmap       1.1.1   2023-02-24 [1] RSPM
+#>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  glue          1.7.0   2024-01-09 [1] RSPM
 #>  graphics    * 4.4.0   2024-05-06 [3] local
@@ -1137,7 +1308,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  Rcpp        * 1.0.12  2024-01-09 [1] RSPM
 #>  rlang         1.1.3   2024-01-10 [1] RSPM
-#>  rmarkdown     2.26    2024-03-05 [1] RSPM
+#>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.4.0   2024-05-06 [3] local
@@ -1147,7 +1318,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.0   2024-05-06 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.43    2024-03-25 [1] RSPM
+#>  xfun          0.44    2024-05-15 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 

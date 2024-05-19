@@ -5,7 +5,7 @@
 Attaching the needed libraries:
 
 
-```r
+``` r
 library(rlang)
 library(purrr)
 library(lobstr)
@@ -20,7 +20,7 @@ library(ggplot2)
 **Q1.** For each function in the following base R code, identify which arguments are quoted and which are evaluated.
 
 
-```r
+``` r
 library(MASS)
 
 mtcars2 <- subset(mtcars, cyl == 4)
@@ -40,7 +40,7 @@ rm(mtcars2)
 The `package` argument in `library()` is quoted:
 
 
-```r
+``` r
 library(MASS)
 
 MASS
@@ -52,7 +52,7 @@ MASS
 The argument `x` is evaluated, while the argument `subset` is quoted.
 
 
-```r
+``` r
 mtcars2 <- subset(mtcars, cyl == 4)
 
 invisible(mtcars)
@@ -66,9 +66,12 @@ cyl == 4
 The argument `data` is evaluated, while `expr` argument is quoted.
 
 
-```r
+``` r
 with(mtcars2, sum(vs))
 #> [1] 10
+```
+
+``` r
 
 invisible(mtcars2)
 
@@ -81,9 +84,12 @@ sum(vs)
 The argument `...` is evaluated.
 
 
-```r
+``` r
 sum(mtcars2$am)
 #> [1] 8
+```
+
+``` r
 
 mtcars2$am
 #>  [1] 1 0 0 1 1 1 0 1 1 1 1
@@ -94,7 +100,7 @@ mtcars2$am
 The trick we are using so far won't work here since trying to print `mtcars2` will always fail after `rm()` has made a pass at it.
 
 
-```r
+``` r
 rm(mtcars2)
 ```
 
@@ -109,7 +115,7 @@ Thus, this argument is not evaluated, but rather quoted.
 **Q2.** For each function in the following tidyverse code, identify which arguments are quoted and which are evaluated.
 
 
-```r
+``` r
 library(dplyr)
 library(ggplot2)
 
@@ -124,7 +130,7 @@ ggplot(by_cyl, aes(cyl, mean)) +
 **A2.** As seen in the answer for **Q1.**, `library()` quotes its first argument:
 
 
-```r
+``` r
 library(dplyr)
 library(ggplot2)
 ```
@@ -135,7 +141,7 @@ In the following code:
 - `group_by()` and `summarise()` quote their arguments
 
 
-```r
+``` r
 by_cyl <- mtcars %>%
   group_by(cyl) %>%
   summarise(mean = mean(mpg))
@@ -147,7 +153,7 @@ In the following code:
 - `aes()` quotes its arguments
 
 
-```r
+``` r
 ggplot(by_cyl, aes(cyl, mean)) +
   geom_point()
 ```
@@ -165,20 +171,20 @@ ggplot(by_cyl, aes(cyl, mean)) +
 **A1.** Looking at the source code, we can see that `expr()` is a simple wrapper around `enexpr()`, and captures and returns the user-entered expressions:
 
 
-```r
+``` r
 rlang::expr
 #> function (expr) 
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x55fb90c75828>
+#> <bytecode: 0x55aca947faa8>
 #> <environment: namespace:rlang>
 ```
 
 For example:
 
 
-```r
+``` r
 x <- expr(x <- 1)
 x
 #> x <- 1
@@ -187,13 +193,13 @@ x
 In its turn, `enexpr()` calls native code:
 
 
-```r
+``` r
 rlang::enexpr
 #> function (arg) 
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x55fb8fe9c128>
+#> <bytecode: 0x55aca5086cf8>
 #> <environment: namespace:rlang>
 ```
 
@@ -203,7 +209,7 @@ rlang::enexpr
 **Q2.** Compare and contrast the following two functions. Can you predict the output before running them?
 
 
-```r
+``` r
 f1 <- function(x, y) {
   exprs(x = x, y = y)
 }
@@ -217,7 +223,7 @@ f2(a + b, c + d)
 **A2.** The `exprs()` captures and returns the expressions specified by the developer instead of their values:
 
 
-```r
+``` r
 f1 <- function(x, y) {
   exprs(x = x, y = y)
 }
@@ -233,7 +239,7 @@ f1(a + b, c + d)
 On the other hand, `enexprs()` captures the user-entered expressions and returns their values:
 
 
-```r
+``` r
 f2 <- function(x, y) {
   enexprs(x = x, y = y)
 }
@@ -253,7 +259,7 @@ f2(a + b, c + d)
 **A3.** If you try to use `enexpr()` with an expression, it fails because it works only with `symbol`.
 
 
-```r
+``` r
 enexpr(x + y)
 #> Error in `enexpr()`:
 #> ! `arg` must be a symbol
@@ -262,10 +268,13 @@ enexpr(x + y)
 If `enexpr()` is passed a missing argument, it returns a missing argument:
 
 
-```r
+``` r
 arg <- missing_arg()
 
 enexpr(arg)
+```
+
+``` r
 
 is_missing(enexpr(arg))
 #> [1] TRUE
@@ -278,10 +287,13 @@ is_missing(enexpr(arg))
 **A4.** The key difference between `exprs(a)` and `exprs(a = )` is that the former will return an unnamed list, while the latter will return a named list. This is because the former is interpreted as an unnamed argument, while the latter a named argument.
 
 
-```r
+``` r
 exprs(a)
 #> [[1]]
 #> a
+```
+
+``` r
 
 exprs(a = )
 #> $a
@@ -290,10 +302,13 @@ exprs(a = )
 In both cases, `a` is treated as a symbol:
 
 
-```r
+``` r
 map_lgl(exprs(a), is_symbol)
 #>      
 #> TRUE
+```
+
+``` r
 
 map_lgl(exprs(a = ), is_symbol)
 #>    a 
@@ -303,10 +318,13 @@ map_lgl(exprs(a = ), is_symbol)
 But, the argument is missing only in the latter case, since only the name but no corresponding value is provided:
 
 
-```r
+``` r
 map_lgl(exprs(a), is_missing)
 #>       
 #> FALSE
+```
+
+``` r
 
 map_lgl(exprs(a = ), is_missing)
 #>    a 
@@ -322,7 +340,7 @@ map_lgl(exprs(a = ), is_missing)
 - Names: If the inputs are not named, `exprs()` provides a way to name them automatically using `.named` argument.
 
 
-```r
+``` r
 alist("x" = 1, TRUE, "z" = expr(x + y))
 #> $x
 #> [1] 1
@@ -332,6 +350,9 @@ alist("x" = 1, TRUE, "z" = expr(x + y))
 #> 
 #> $z
 #> expr(x + y)
+```
+
+``` r
 
 exprs("x" = 1, TRUE, "z" = expr(x + y), .named = TRUE)
 #> $x
@@ -347,7 +368,7 @@ exprs("x" = 1, TRUE, "z" = expr(x + y), .named = TRUE)
 - Ignoring empty arguments: The `.ignore_empty` argument in `exprs()` gives you a much finer control over what to do with the empty arguments, while `alist()` doesn't provide a way to ignore such arguments.
 
 
-```r
+``` r
 alist("x" = 1, , TRUE, )
 #> $x
 #> [1] 1
@@ -359,6 +380,9 @@ alist("x" = 1, , TRUE, )
 #> [1] TRUE
 #> 
 #> [[4]]
+```
+
+``` r
 
 exprs("x" = 1, , TRUE, , .ignore_empty = "trailing")
 #> $x
@@ -369,6 +393,9 @@ exprs("x" = 1, , TRUE, , .ignore_empty = "trailing")
 #> 
 #> [[3]]
 #> [1] TRUE
+```
+
+``` r
 
 exprs("x" = 1, , TRUE, , .ignore_empty = "none")
 #> $x
@@ -381,6 +408,9 @@ exprs("x" = 1, , TRUE, , .ignore_empty = "none")
 #> [1] TRUE
 #> 
 #> [[4]]
+```
+
+``` r
 
 exprs("x" = 1, , TRUE, , .ignore_empty = "all")
 #> $x
@@ -393,14 +423,20 @@ exprs("x" = 1, , TRUE, , .ignore_empty = "all")
 - Names injection: Using `.unquote_names` argument in `exprs()`, we can inject a name for the argument.
 
 
-```r
+``` r
 alist(foo := bar)
 #> [[1]]
 #> `:=`(foo, bar)
+```
+
+``` r
 
 exprs(foo := bar, .unquote_names = FALSE)
 #> [[1]]
 #> `:=`(foo, bar)
+```
+
+``` r
 
 exprs(foo := bar, .unquote_names = TRUE)
 #> $foo
@@ -429,7 +465,7 @@ Create examples that illustrate each of the above cases.
 Symbol `x` is not bound in `env`, so it remains unchanged. 
 
 
-```r
+``` r
 substitute(x + y, env = list(y = 2))
 #> x + 2
 ```
@@ -438,11 +474,14 @@ substitute(x + y, env = list(y = 2))
 > the expression slot of the promise replaces the symbol. 
 
 
-```r
+``` r
 msg <- "old"
 delayedAssign("myVar", msg) # creates a promise
 substitute(myVar)
 #> myVar
+```
+
+``` r
 msg <- "new!"
 myVar
 #> [1] "new!"
@@ -452,9 +491,12 @@ myVar
 > `env` is .GlobalEnv in which case the symbol is left unchanged.
 
 
-```r
+``` r
 substitute(x + y, env = env(x = 2, y = 1))
 #> 2 + 1
+```
+
+``` r
 
 x <- 2
 y <- 1
@@ -471,7 +513,7 @@ substitute(x + y, env = .GlobalEnv)
 **Q1.** Given the following components:
 
 
-```r
+``` r
 xy <- expr(x + y)
 xz <- expr(x + z)
 yz <- expr(y + z)
@@ -481,7 +523,7 @@ abc <- exprs(a, b, c)
 Use quasiquotation to construct the following calls:
 
 
-```r
+``` r
 (x + y) / (y + z)
 -(x + z)^(y + z)
 (x + y) + (y + z) - (x + y)
@@ -495,7 +537,7 @@ foo(a = x + y, b = y + z)
 **A1.** Using quasiquotation to construct the specified calls:
 
 
-```r
+``` r
 xy <- expr(x + y)
 xz <- expr(x + z)
 yz <- expr(y + z)
@@ -503,24 +545,45 @@ abc <- exprs(a, b, c)
 
 expr((!!xy) / (!!yz))
 #> (x + y)/(y + z)
+```
+
+``` r
 
 expr(-(!!xz)^(!!yz))
 #> -(x + z)^(y + z)
+```
+
+``` r
 
 expr(((!!xy)) + (!!yz) - (!!xy))
 #> (x + y) + (y + z) - (x + y)
+```
+
+``` r
 
 call2("atan2", expr(!!xy), expr(!!yz))
 #> atan2(x + y, y + z)
+```
+
+``` r
 
 call2("sum", expr(!!xy), expr(!!xy), expr(!!yz))
 #> sum(x + y, x + y, y + z)
+```
+
+``` r
 
 call2("sum", !!!abc)
 #> sum(a, b, c)
+```
+
+``` r
 
 expr(mean(c(!!!abc), na.rm = TRUE))
 #> mean(c(a, b, c), na.rm = TRUE)
+```
+
+``` r
 
 call2("foo", a = expr(!!xy), b = expr(!!yz))
 #> foo(a = x + y, b = y + z)
@@ -531,11 +594,17 @@ call2("foo", a = expr(!!xy), b = expr(!!yz))
 **Q2.** The following two calls print the same, but are actually different:
 
 
-```r
+``` r
 (a <- expr(mean(1:10)))
 #> mean(1:10)
+```
+
+``` r
 (b <- expr(mean(!!(1:10))))
 #> mean(1:10)
+```
+
+``` r
 identical(a, b)
 #> [1] FALSE
 ```
@@ -545,13 +614,16 @@ What's the difference? Which one is more natural?
 **A2.** We can see the difference between these two expression if we convert them to lists:
 
 
-```r
+``` r
 as.list(expr(mean(1:10)))
 #> [[1]]
 #> mean
 #> 
 #> [[2]]
 #> 1:10
+```
+
+``` r
 
 as.list(expr(mean(!!(1:10))))
 #> [[1]]
@@ -564,7 +636,7 @@ as.list(expr(mean(!!(1:10))))
 As can be seen, the second element of `a` is a `call` object, while that in `b` is an integer vector:
 
 
-```r
+``` r
 waldo::compare(a, b)
 #> `old[[2]]` is a call
 #> `new[[2]]` is an integer vector (1, 2, 3, 4, 5, ...)
@@ -573,13 +645,16 @@ waldo::compare(a, b)
 The same can also be noticed in ASTs for these expressions:
 
 
-```r
+``` r
 ast(expr(mean(1:10)))
 #> █─expr 
 #> └─█─mean 
 #>   └─█─`:` 
 #>     ├─1 
 #>     └─10
+```
+
+``` r
 
 ast(expr(mean(!!(1:10))))
 #> █─expr 
@@ -598,7 +673,7 @@ The first call is more natural, since the second one inlines a vector directly i
 **Q1.** One way to implement `exec()` is shown below. Describe how it works. What are the key ideas?
 
 
-```r
+``` r
 exec <- function(f, ..., .env = caller_env()) {
   args <- list2(...)
   do.call(f, args, envir = .env)
@@ -614,12 +689,15 @@ exec <- function(f, ..., .env = caller_env()) {
 Here is an example:
 
 
-```r
+``` r
 vec <- c(1:5, NA)
 args_list <- list(trim = 0, na.rm = TRUE)
 
 exec(mean, vec, !!!args_list, , .env = caller_env())
 #> [1] 3
+```
+
+``` r
 
 rm("exec")
 ```
@@ -648,7 +726,7 @@ Using these dots, the functions check:
 **Q3.** Explain the problem with this definition of `set_attr()`
 
 
-```r
+``` r
 set_attr <- function(x, ...) {
   attr <- rlang::list2(...)
   attributes(x) <- attr
@@ -663,7 +741,7 @@ set_attr(1:10, x = 10)
 But, as shown in the example, this creates a problem when the attribute is itself named `x`. Naming the arguments won't help either:
 
 
-```r
+``` r
 set_attr <- function(x, ...) {
   attr <- rlang::list2(...)
   attributes(x) <- attr
@@ -676,7 +754,7 @@ set_attr(x = 1:10, x = 10)
 We can avoid these issues by renaming the parameter:
 
 
-```r
+``` r
 set_attr <- function(.x, ...) {
   attr <- rlang::list2(...)
   attributes(.x) <- attr
@@ -700,7 +778,7 @@ set_attr(.x = 1:10, x = 10)
 **A1.** We can rewrite the `linear()` function from this chapter using `call2()` as follows:
 
 
-```r
+``` r
 linear <- function(var, val) {
   var <- ensym(var)
   coef_name <- map(seq_along(val[-1]), ~ expr((!!var)[[!!.x]]))
@@ -722,7 +800,7 @@ I personally find the version with `call2()` to be much more readable since the 
 **Q2.** Re-implement the Box-Cox transform defined below using unquoting and `new_function()`:
 
 
-```r
+``` r
 bc <- function(lambda) {
   if (lambda == 0) {
     function(x) log(x)
@@ -735,7 +813,7 @@ bc <- function(lambda) {
 **A2.** Re-implementation of the Box-Cox transform using unquoting and `new_function()`:
 
 
-```r
+``` r
 bc_new <- function(lambda) {
   lambda <- enexpr(lambda)
 
@@ -756,14 +834,23 @@ bc_new <- function(lambda) {
 Let's try it out to see if it produces the same output as before:
 
 
-```r
+``` r
 bc(0)(1)
 #> [1] 0
+```
+
+``` r
 bc_new(0)(1)
 #> [1] 0
+```
+
+``` r
 
 bc(2)(2)
 #> [1] 1.5
+```
+
+``` r
 bc_new(2)(2)
 #> [1] 1.5
 ```
@@ -773,7 +860,7 @@ bc_new(2)(2)
 **Q3.**  Re-implement the simple `compose()` defined below using quasiquotation and `new_function()`:
 
 
-```r
+``` r
 compose <- function(f, g) {
   function(...) f(g(...))
 }
@@ -782,7 +869,7 @@ compose <- function(f, g) {
 **A3.** Following is a re-implementation of `compose()` using quasiquotation and `new_function()`:
 
 
-```r
+``` r
 compose_new <- function(f, g) {
   f <- enexpr(f) # or ensym(f)
   g <- enexpr(g) # or ensym(g)
@@ -797,10 +884,13 @@ compose_new <- function(f, g) {
 Checking that the new version behaves the same way as the original version:
 
 
-```r
+``` r
 not_null <- compose(`!`, is.null)
 not_null(4)
 #> [1] TRUE
+```
+
+``` r
 
 not_null2 <- compose_new(`!`, is.null)
 not_null2(4)
@@ -812,7 +902,7 @@ not_null2(4)
 ## Session information
 
 
-```r
+``` r
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
@@ -824,7 +914,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-12
+#>  date     2024-05-19
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -832,7 +922,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  base        * 4.4.0    2024-05-06 [3] local
 #>  bookdown      0.39     2024-04-15 [1] RSPM
 #>  bslib         0.7.0    2024-03-29 [1] RSPM
-#>  cachem        1.0.8    2023-05-01 [1] RSPM
+#>  cachem        1.1.0    2024-05-16 [1] RSPM
 #>  cli           3.6.2    2023-12-11 [1] RSPM
 #>  colorspace    2.1-0    2023-01-23 [1] RSPM
 #>  compiler      4.4.0    2024-05-06 [3] local
@@ -844,8 +934,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  dplyr       * 1.1.4    2023-11-17 [1] RSPM
 #>  evaluate      0.23     2023-11-01 [1] RSPM
 #>  fansi         1.0.6    2023-12-08 [1] RSPM
-#>  farver        2.1.1    2022-07-06 [1] RSPM
-#>  fastmap       1.1.1    2023-02-24 [1] RSPM
+#>  farver        2.1.2    2024-05-13 [1] RSPM
+#>  fastmap       1.2.0    2024-05-15 [1] RSPM
 #>  fs            1.6.4    2024-04-25 [1] RSPM
 #>  generics      0.1.3    2022-07-05 [1] RSPM
 #>  ggplot2     * 3.5.1    2024-04-23 [1] RSPM
@@ -873,7 +963,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  R6            2.5.1    2021-08-19 [1] RSPM
 #>  rematch2      2.1.2    2020-05-01 [1] RSPM
 #>  rlang       * 1.1.3    2024-01-10 [1] RSPM
-#>  rmarkdown     2.26     2024-03-05 [1] RSPM
+#>  rmarkdown     2.27     2024-05-17 [1] RSPM
 #>  sass          0.4.9    2024-03-15 [1] RSPM
 #>  scales        1.3.0    2023-11-28 [1] RSPM
 #>  sessioninfo   1.2.2    2021-12-06 [1] RSPM
@@ -886,7 +976,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  vctrs         0.6.5    2023-12-01 [1] RSPM
 #>  waldo         0.5.2    2023-11-02 [1] RSPM
 #>  withr         3.0.0    2024-01-16 [1] RSPM
-#>  xfun          0.43     2024-03-25 [1] RSPM
+#>  xfun          0.44     2024-05-15 [1] RSPM
 #>  xml2          1.3.6    2023-12-04 [1] RSPM
 #>  yaml          2.3.8    2023-12-11 [1] RSPM
 #> 

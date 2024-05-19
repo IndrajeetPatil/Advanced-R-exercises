@@ -5,7 +5,7 @@
 Attaching the needed libraries:
 
 
-```r
+``` r
 library(rlang)
 ```
 
@@ -20,7 +20,7 @@ library(rlang)
 By default `local = FALSE`, this corresponds to the user's workspace (the global environment, i.e.). 
 
 
-```r
+``` r
 withr::with_tempdir(
   code = {
     f <- tempfile()
@@ -40,7 +40,7 @@ withr::with_tempdir(
 If `local = TRUE`, then the environment from which `source()` is called will be used.
 
 
-```r
+``` r
 withr::with_tempdir(
   code = {
     f <- tempfile()
@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x56064b184070>
+#> <environment: 0x5591e59d0488>
 #> Parent: <environment: global>
 ```
 
@@ -60,7 +60,7 @@ To specify a custom environment, the `sys.source()` function can be used, which 
 **Q2.** Predict the results of the following lines of code:
 
 
-```r
+``` r
 eval(expr(eval(expr(eval(expr(2 + 2))))))
 eval(eval(expr(eval(expr(eval(expr(2 + 2)))))))
 expr(eval(expr(eval(expr(eval(expr(2 + 2)))))))
@@ -69,12 +69,18 @@ expr(eval(expr(eval(expr(eval(expr(2 + 2)))))))
 **A2.** Correctly predicted 😉
 
 
-```r
+``` r
 eval(expr(eval(expr(eval(expr(2 + 2))))))
 #> [1] 4
+```
+
+``` r
 
 eval(eval(expr(eval(expr(eval(expr(2 + 2)))))))
 #> [1] 4
+```
+
+``` r
 
 expr(eval(expr(eval(expr(eval(expr(2 + 2)))))))
 #> eval(expr(eval(expr(eval(expr(2 + 2))))))
@@ -85,7 +91,7 @@ expr(eval(expr(eval(expr(eval(expr(2 + 2)))))))
 **Q3.** Fill in the function bodies below to re-implement `get()` using `sym()` and `eval()`, and `assign()` using `sym()`, `expr()`, and `eval()`. Don't worry about the multiple ways of choosing an environment that `get()` and `assign()` support; assume that the user supplies it explicitly.
 
 
-```r
+``` r
 # name is a string
 get2 <- function(name, env) {}
 assign2 <- function(name, value, env) {}
@@ -96,7 +102,7 @@ assign2 <- function(name, value, env) {}
 - `get()`
 
 
-```r
+``` r
 get2 <- function(name, env = caller_env()) {
   name <- sym(name)
   eval(name, env)
@@ -106,14 +112,23 @@ x <- 2
 
 get2("x")
 #> [1] 2
+```
+
+``` r
 get("x")
 #> [1] 2
+```
+
+``` r
 
 y <- 1:4
 assign("y[1]", 2)
 
 get2("y[1]")
 #> [1] 2
+```
+
+``` r
 get("y[1]")
 #> [1] 2
 ```
@@ -121,7 +136,7 @@ get("y[1]")
 - `assign()`
 
 
-```r
+``` r
 assign2 <- function(name, value, env = caller_env()) {
   name <- sym(name)
   eval(expr(!!name <- !!value), env)
@@ -130,6 +145,9 @@ assign2 <- function(name, value, env = caller_env()) {
 assign("y1", 4)
 y1
 #> [1] 4
+```
+
+``` r
 
 assign2("y2", 4)
 y2
@@ -143,7 +161,7 @@ y2
 **A4.** We can use `purrr::map()` to iterate over every expression and return result of every expression:
 
 
-```r
+``` r
 source2 <- function(path, env = caller_env()) {
   file <- paste(readLines(path, warn = FALSE), collapse = "\n")
   exprs <- parse_exprs(file)
@@ -169,7 +187,7 @@ withr::with_tempdir(
 **Q5.** We can make `base::local()` slightly easier to understand by spreading out over multiple lines:
 
 
-```r
+``` r
 local3 <- function(expr, envir = new.env()) {
   call <- substitute(eval(quote(expr), envir))
   eval(call, envir = parent.frame())
@@ -181,7 +199,7 @@ Explain how `local()` works in words. (Hint: you might want to `print(call)` to 
 **A5.** In order to figure out how this function works, let's add the suggested `print(call)`:
 
 
-```r
+``` r
 local3 <- function(expr, envir = new.env()) {
   call <- substitute(eval(quote(expr), envir))
   print(call)
@@ -209,7 +227,7 @@ As docs for `substitute()` mention:
 Thus, to get the actual expression object, quoted expression needs to be evaluated using `eval()`:
 
 
-```r
+``` r
 is_expression(eval(quote({
   x <- 10
   y <- 200
@@ -221,7 +239,7 @@ is_expression(eval(quote({
 Finally, the generated `call` is evaluated in the caller environment. So the final function call looks like the following:
 
 
-```r
+``` r
 # outer environment
 eval(
   # inner environment
@@ -245,35 +263,47 @@ Note here that the bindings for `x` and `y` are found in the inner environment, 
 **Q1.** Predict what each of the following quosures will return if evaluated.
 
 
-```r
+``` r
 q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x56064bc8ebc0
+#> env:  0x5591e6432a90
+```
+
+``` r
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x56064c7eb7c0
+#> env:  0x5591e6b73c70
+```
+
+``` r
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x56064d0acae0
+#> env:  0x5591e7839148
 ```
 
 **A1.** Correctly predicted 😉
 
 
-```r
+``` r
 q1 <- new_quosure(expr(x), env(x = 1))
 eval_tidy(q1)
 #> [1] 1
+```
+
+``` r
 
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 eval_tidy(q2)
 #> [1] 11
+```
+
+``` r
 
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 eval_tidy(q3)
@@ -287,7 +317,7 @@ eval_tidy(q3)
 **A2.** We can make use of the `get_env()` helper to get the environment associated with an argument:
 
 
-```r
+``` r
 enenv <- function(x) {
   x <- enquo(x)
   get_env(x)
@@ -295,10 +325,13 @@ enenv <- function(x) {
 
 enenv(x)
 #> <environment: R_GlobalEnv>
+```
+
+``` r
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x56064dbf3a60>
+#> <environment: 0x5591e8381308>
 ```
 
 ---
@@ -312,7 +345,7 @@ foo()
 **A1.** To see why `map()` is not appropriate for this function, let's create a version of the function with `map()` and see what happens.
 
 
-```r
+``` r
 transform2 <- function(.data, ...) {
   dots <- enquos(...)
 
@@ -343,7 +376,7 @@ transform3 <- function(.data, ...) {
 When we use a `for()` loop, in each iteration, we are updating the `x` column with the current expression under evaluation. That is, repeatedly modifying the same column works. 
 
 
-```r
+``` r
 df <- data.frame(x = 1:3)
 transform2(df, x = x * 2, x = x * 2)
 #>    x
@@ -355,7 +388,7 @@ transform2(df, x = x * 2, x = x * 2)
 If we use `map()` instead, we are trying to evaluate all expressions at the same time; i.e., the same column is being attempted to modify on using multiple expressions.
 
 
-```r
+``` r
 df <- data.frame(x = 1:3)
 transform3(df, x = x * 2, x = x * 2)
 #> Error in `purrr::map()`:
@@ -370,7 +403,7 @@ transform3(df, x = x * 2, x = x * 2)
 **Q2.** Here's an alternative implementation of `subset2()`:
 
 
-```r
+``` r
 subset3 <- function(data, rows) {
   rows <- enquo(rows)
   eval_tidy(expr(data[!!rows, , drop = FALSE]), data = data)
@@ -384,7 +417,7 @@ Compare and contrast `subset3()` to `subset2()`. What are its advantages and dis
 **A2.** Let's first juxtapose these functions and their outputs so that we can compare them better.
 
 
-```r
+``` r
 subset2 <- function(data, rows) {
   rows <- enquo(rows)
   rows_val <- eval_tidy(rows, data)
@@ -400,7 +433,7 @@ subset2(df, x == 1)
 ```
 
 
-```r
+``` r
 subset3 <- function(data, rows) {
   rows <- enquo(rows)
   eval_tidy(expr(data[!!rows, , drop = FALSE]), data = data)
@@ -416,13 +449,19 @@ subset3(df, x == 1)
 When the filtering conditions specified in `rows` don't evaluate to a logical, the function doesn't fail informatively. Indeed, it silently returns incorrect result.
 
 
-```r
+``` r
 rm("x")
 exists("x")
 #> [1] FALSE
+```
+
+``` r
 
 subset2(df, x + 1)
 #> Error in subset2(df, x + 1): is.logical(rows_val) is not TRUE
+```
+
+``` r
 
 subset3(df, x + 1)
 #>     x
@@ -440,7 +479,7 @@ Some might argue that the function being shorter is an advantage, but this is ve
 **Q3.** The following function implements the basics of `dplyr::arrange()`. Annotate each line with a comment explaining what it does. Can you explain why `!!.na.last` is strictly correct, but omitting the `!!` is unlikely to cause problems?
 
 
-```r
+``` r
 arrange2 <- function(.df, ..., .na.last = TRUE) {
   args <- enquos(...)
   order_call <- expr(order(!!!args, na.last = !!.na.last))
@@ -453,7 +492,7 @@ arrange2 <- function(.df, ..., .na.last = TRUE) {
 **A3.** Annotated version of the function:
 
 
-```r
+``` r
 arrange2 <- function(.df, ..., .na.last = TRUE) {
   # capture user-supplied expressions (and corresponding environments) as quosures
   args <- enquos(...)
@@ -474,11 +513,14 @@ arrange2 <- function(.df, ..., .na.last = TRUE) {
 To see why it doesn't matter whether whether we unquote the `.na.last` argument or not, let's have a look at this smaller example:
 
 
-```r
+``` r
 x <- TRUE
 eval(expr(c(x = !!x)))
 #>    x 
 #> TRUE
+```
+
+``` r
 eval(expr(c(x = x)))
 #>    x 
 #> TRUE
@@ -498,7 +540,7 @@ As can be seen:
 **Q1.** I've included an alternative implementation of `threshold_var()` below. What makes it different to the approach I used above? What makes it harder?
 
 
-```r
+``` r
 threshold_var <- function(df, var, val) {
   var <- ensym(var)
   subset2(df, `$`(.data, !!var) >= !!val)
@@ -508,7 +550,7 @@ threshold_var <- function(df, var, val) {
 **A1.** First, let's compare the two definitions for the same function and make sure that they produce the same output:
 
 
-```r
+``` r
 threshold_var_old <- function(df, var, val) {
   var <- as_string(ensym(var))
   subset2(df, .data[[var]] >= !!val)
@@ -539,7 +581,7 @@ The key difference is in the subsetting operator used:
 **Q1.** Why does this function fail?
 
 
-```r
+``` r
 lm3a <- function(formula, data) {
   formula <- enexpr(formula)
   lm_call <- expr(lm(!!formula, data = data))
@@ -556,7 +598,7 @@ lm3a(mpg ~ disp, mtcars)$call
 To make it work, we need to unquote `data` into the expression:
 
 
-```r
+``` r
 lm3a <- function(formula, data) {
   formula <- enexpr(formula)
   lm_call <- expr(lm(!!formula, data = !!data))
@@ -572,7 +614,7 @@ is_call(lm3a(mpg ~ disp, mtcars)$call)
 **Q2.** When model building, typically the response and data are relatively constant while you rapidly experiment with different predictors. Write a small wrapper that allows you to reduce duplication in the code below.
 
 
-```r
+``` r
 lm(mpg ~ disp, data = mtcars)
 lm(mpg ~ I(1 / disp), data = mtcars)
 lm(mpg ~ disp * cyl, data = mtcars)
@@ -581,7 +623,7 @@ lm(mpg ~ disp * cyl, data = mtcars)
 **A2.** Here is a small wrapper that allows you to enter only the predictors:
 
 
-```r
+``` r
 lm_custom <- function(data = mtcars, x, y = mpg) {
   x <- enexpr(x)
   y <- enexpr(y)
@@ -597,12 +639,18 @@ identical(
   lm(mpg ~ disp, data = mtcars)
 )
 #> [1] TRUE
+```
+
+``` r
 
 identical(
   lm_custom(x = I(1 / disp)),
   lm(mpg ~ I(1 / disp), data = mtcars)
 )
 #> [1] TRUE
+```
+
+``` r
 
 identical(
   lm_custom(x = disp * cyl),
@@ -614,7 +662,7 @@ identical(
 But the function is flexible enough to also allow changing both the data and the dependent variable:
 
 
-```r
+``` r
 lm_custom(data = iris, x = Sepal.Length, y = Petal.Width)
 #> 
 #> Call:
@@ -632,7 +680,7 @@ lm_custom(data = iris, x = Sepal.Length, y = Petal.Width)
 **A3.** In this variant of `resample_lm()`, we are providing the resampled data as an argument. 
 
 
-```r
+``` r
 resample_lm3 <- function(formula,
                          data,
                          resample_data = data[sample(nrow(data), replace = TRUE), , drop = FALSE],
@@ -662,7 +710,7 @@ This makes use of R's lazy evaluation of function arguments. That is, `resample_
 ## Session information
 
 
-```r
+``` r
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
@@ -674,7 +722,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-12
+#>  date     2024-05-19
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -682,7 +730,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  base        * 4.4.0   2024-05-06 [3] local
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
-#>  cachem        1.0.8   2023-05-01 [1] RSPM
+#>  cachem        1.1.0   2024-05-16 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.4.0   2024-05-06 [3] local
 #>  datasets    * 4.4.0   2024-05-06 [3] local
@@ -690,7 +738,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
-#>  fastmap       1.1.1   2023-02-24 [1] RSPM
+#>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  glue          1.7.0   2024-01-09 [1] RSPM
 #>  graphics    * 4.4.0   2024-05-06 [3] local
@@ -707,7 +755,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  purrr         1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang       * 1.1.3   2024-01-10 [1] RSPM
-#>  rmarkdown     2.26    2024-03-05 [1] RSPM
+#>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.4.0   2024-05-06 [3] local
@@ -716,7 +764,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.0   2024-05-06 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.43    2024-03-25 [1] RSPM
+#>  xfun          0.44    2024-05-15 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 

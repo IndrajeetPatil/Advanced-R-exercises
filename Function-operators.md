@@ -5,7 +5,7 @@
 Attaching the needed libraries:
 
 
-```r
+``` r
 library(purrr, warn.conflicts = FALSE)
 ```
 
@@ -23,7 +23,7 @@ The problem is to find indices of matching numeric values for the given threshol
 - `dplyr::near()` (which is vectorized element-wise and thus expects two vectors of equal length)
 
 
-```r
+``` r
 which_near <- function(x, y, tolerance) {
   # Vectorize `dplyr::near()` function only over the `y` argument.
   # `Vectorize()` is a function operator and will return a function.
@@ -49,7 +49,7 @@ which_near <- function(x, y, tolerance) {
 Let's use it:
 
 
-```r
+``` r
 x1 <- c(2.1, 3.3, 8.45, 8, 6)
 x2 <- c(6, 8.40, 3)
 
@@ -60,9 +60,12 @@ which_near(x1, x2, tolerance = 0.1)
 Note that we needed to create a new function for this because neither of the existing functions do what we want.
 
 
-```r
+``` r
 which(x1 %in% x2)
 #> [1] 5
+```
+
+``` r
 
 which(dplyr::near(x1, x2, tol = 0.1))
 #> Warning in x - y: longer object length is not a multiple of
@@ -79,7 +82,7 @@ We solved a complex task here using the `Vectorize()` function!
 **A2.** Let's have a look at the source code for this function:
 
 
-```r
+``` r
 possibly
 #> function (.f, otherwise = NULL, quiet = TRUE) 
 #> {
@@ -94,7 +97,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x557a6a8cec68>
+#> <bytecode: 0x55f67ae29c18>
 #> <environment: namespace:purrr>
 ```
 
@@ -111,7 +114,7 @@ Looking at this code, we can see that `possibly()`:
 **A3.** Let's have a look at the source code for this function:
 
 
-```r
+``` r
 safely
 #> function (.f, otherwise = NULL, quiet = TRUE) 
 #> {
@@ -120,8 +123,11 @@ safely
 #>     check_bool(quiet)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x557a6741d1c8>
+#> <bytecode: 0x55f677a4d1a8>
 #> <environment: namespace:purrr>
+```
+
+``` r
 
 purrr:::capture_error
 #> function (code, otherwise = NULL, quiet = TRUE) 
@@ -132,7 +138,7 @@ purrr:::capture_error
 #>         list(result = otherwise, error = e)
 #>     })
 #> }
-#> <bytecode: 0x557a67343da0>
+#> <bytecode: 0x55f6779b3af0>
 #> <environment: namespace:purrr>
 ```
 
@@ -178,7 +184,7 @@ Here, the first dot is printed after the 9th download is finished, and the 10th 
 **A3.** First, let's create helper functions to compare and print added or removed filenames:
 
 
-```r
+``` r
 print_multiple_entries <- function(header, entries) {
   message(paste0(header, ":\n"), paste0(entries, collapse = "\n"))
 }
@@ -199,7 +205,7 @@ file_comparator <- function(old, new) {
 We can then write a function operator and use it to create functions that will do the necessary tracking:
 
 
-```r
+``` r
 dir_tracker <- function(f) {
   force(f)
   function(...) {
@@ -217,12 +223,15 @@ file_deletion_tracker <- dir_tracker(file.remove)
 Let's try it out:
 
 
-```r
+``` r
 file_creation_tracker(c("a.txt", "b.txt"))
 #> - File added:
 #> a.txt
 #> b.txt
 #> [1] TRUE TRUE
+```
+
+``` r
 
 file_deletion_tracker(c("a.txt", "b.txt"))
 #> - File removed:
@@ -247,7 +256,7 @@ Other global function effects we might want to track:
 **A4.** The following function operator logs a timestamp and message to a file every time a function is run:
 
 
-```r
+``` r
 # helper function to write to a file connection
 write_line <- function(filepath, ...) {
   cat(..., "\n", sep = "", file = filepath, append = TRUE)
@@ -281,10 +290,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2024-05-12 00:44:08.304107
-#> Function called at:  2024-05-12 00:44:13.311051
-#> Function called at:  2024-05-12 00:44:18.316431
-#> Function called at:  2024-05-12 00:44:26.324857
+#> Function created at: 2024-05-19 00:44:42.560302
+#> Function called at:  2024-05-19 00:44:47.567309
+#> Function called at:  2024-05-19 00:44:52.5727
+#> Function called at:  2024-05-19 00:45:00.581164
 ```
 
 ---
@@ -294,7 +303,7 @@ withr::with_tempfile("logfile", code = {
 **A5.** Modified version of the function meeting the specified requirements:
 
 
-```r
+``` r
 delay_by_atleast <- function(f, amount) {
   force(f)
   force(amount)
@@ -321,7 +330,7 @@ delay_by_atleast <- function(f, amount) {
 ## Session information
 
 
-```r
+``` r
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
@@ -333,7 +342,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-12
+#>  date     2024-05-19
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -341,7 +350,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  base        * 4.4.0   2024-05-06 [3] local
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
-#>  cachem        1.0.8   2023-05-01 [1] RSPM
+#>  cachem        1.1.0   2024-05-16 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.4.0   2024-05-06 [3] local
 #>  datasets    * 4.4.0   2024-05-06 [3] local
@@ -350,7 +359,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
-#>  fastmap       1.1.1   2023-02-24 [1] RSPM
+#>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
 #>  glue          1.7.0   2024-01-09 [1] RSPM
@@ -369,7 +378,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  purrr       * 1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang         1.1.3   2024-01-10 [1] RSPM
-#>  rmarkdown     2.26    2024-03-05 [1] RSPM
+#>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.4.0   2024-05-06 [3] local
@@ -380,7 +389,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.0   2024-05-06 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.43    2024-03-25 [1] RSPM
+#>  xfun          0.44    2024-05-15 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 

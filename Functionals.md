@@ -5,7 +5,7 @@
 Attaching the needed libraries:
 
 
-```r
+``` r
 library(purrr, warn.conflicts = FALSE)
 ```
 
@@ -22,7 +22,7 @@ library(purrr, warn.conflicts = FALSE)
 Looking at the experimentation below with `map()` and `as_mapper()`, we can see that, depending on the type of the input, `as_mapper()` creates an extractor function using `pluck()`.
 
 
-```r
+``` r
 # mapping by position -----------------------
 
 x <- list(1, list(2, 3, list(1, 2)))
@@ -33,10 +33,16 @@ map(x, 1)
 #> 
 #> [[2]]
 #> [1] 2
+```
+
+``` r
 as_mapper(1)
 #> function (x, ...) 
 #> pluck_raw(x, list(1), .default = NULL)
-#> <environment: 0x55bf1ebb5ad8>
+#> <environment: 0x55f0798bddc0>
+```
+
+``` r
 
 map(x, list(2, 1))
 #> [[1]]
@@ -44,10 +50,16 @@ map(x, list(2, 1))
 #> 
 #> [[2]]
 #> [1] 3
+```
+
+``` r
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, 1), .default = NULL)
-#> <environment: 0x55bf1ec96578>
+#> <environment: 0x55f0799a3060>
+```
+
+``` r
 
 # mapping by name -----------------------
 
@@ -62,10 +74,16 @@ map(y, "m")
 #> 
 #> [[2]]
 #> NULL
+```
+
+``` r
 as_mapper("m")
 #> function (x, ...) 
 #> pluck_raw(x, list("m"), .default = NULL)
-#> <environment: 0x55bf1edeac08>
+#> <environment: 0x55f079af6a70>
+```
+
+``` r
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -74,10 +92,16 @@ map(y, list(2, "m"))
 #> 
 #> [[2]]
 #> NULL
+```
+
+``` r
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, "m"), .default = NULL)
-#> <environment: 0x55bf1eece838>
+#> <environment: 0x55f079bda2c0>
+```
+
+``` r
 
 # compact functions ----------------------------
 
@@ -87,6 +111,9 @@ map(y, ~ length(.x))
 #> 
 #> [[2]]
 #> [1] 2
+```
+
+``` r
 as_mapper(~ length(.x))
 #> <lambda>
 #> function (..., .x = ..1, .y = ..2, . = ..1) 
@@ -98,7 +125,7 @@ as_mapper(~ length(.x))
 - You can extract attributes using `purrr::attr_getter()`:
 
 
-```r
+``` r
 pluck(Titanic, attr_getter("class"))
 #> [1] "table"
 ```
@@ -110,7 +137,7 @@ pluck(Titanic, attr_getter("class"))
 **A2.** As shown by `as_mapper()` outputs below, the second call is not appropriate for generating random numbers because it translates to `pluck()` function where the indices for plucking are taken to be randomly generated numbers, and these are not valid accessors and so we get `NULL`s in return.
 
 
-```r
+``` r
 map(1:3, ~ runif(2))
 #> [[1]]
 #> [1] 0.2180892 0.9876342
@@ -120,12 +147,18 @@ map(1:3, ~ runif(2))
 #> 
 #> [[3]]
 #> [1] 0.02098596 0.74972687
+```
+
+``` r
 as_mapper(~ runif(2))
 #> <lambda>
 #> function (..., .x = ..1, .y = ..2, . = ..1) 
 #> runif(2)
 #> attr(,"class")
 #> [1] "rlang_lambda_function" "function"
+```
+
+``` r
 
 map(1:3, runif(2))
 #> [[1]]
@@ -136,10 +169,13 @@ map(1:3, runif(2))
 #> 
 #> [[3]]
 #> [1] 3
+```
+
+``` r
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck_raw(x, list(0.597890264587477, 0.587997315218672), .default = NULL)
-#> <environment: 0x55bf1fe6cfb0>
+#> <environment: 0x55f07abb89f8>
 ```
 
 ---
@@ -157,7 +193,7 @@ as_mapper(runif(2))
 - Compute the standard deviation of every column in a numeric data frame:
 
 
-```r
+``` r
 map_dbl(mtcars, sd)
 #>         mpg         cyl        disp          hp        drat 
 #>   6.0269481   1.7859216 123.9386938  68.5628685   0.5346787 
@@ -170,7 +206,7 @@ map_dbl(mtcars, sd)
 - Compute the standard deviation of every numeric column in a mixed data frame:
 
 
-```r
+``` r
 keep(iris, is.numeric) %>%
   map_dbl(sd)
 #> Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
@@ -180,7 +216,7 @@ keep(iris, is.numeric) %>%
 - Compute the number of levels for every factor in a data frame:
 
 
-```r
+``` r
 modify_if(dplyr::starwars, is.character, as.factor) %>%
   keep(is.factor) %>%
   map_int(~ length(levels(.)))
@@ -195,7 +231,7 @@ modify_if(dplyr::starwars, is.character, as.factor) %>%
 **Q4.** The following code simulates the performance of a *t*-test for non-normal data. Extract the *p*-value from each test, then visualise.
 
 
-```r
+``` r
 trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(7, 10)))
 ```
 
@@ -204,7 +240,7 @@ trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(7, 10)))
 - Extract the *p*-value from each test:
 
 
-```r
+``` r
 trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(7, 10)))
 
 (p <- map_dbl(trials, "p.value"))
@@ -233,13 +269,13 @@ trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(7, 10)))
 - Visualise the extracted *p*-values:
 
 
-```r
+``` r
 plot(p)
 ```
 
 <img src="Functionals_files/figure-html/Functionals-11-1.png" width="100%" />
 
-```r
+``` r
 
 hist(p)
 ```
@@ -251,7 +287,7 @@ hist(p)
 **Q5.** The following code uses a map nested inside another map to apply a function to every element of a nested list. Why does it fail, and  what do you need to do to make it work?
 
 
-```r
+``` r
 x <- list(
   list(1, c(3, 9)),
   list(c(3, 6), 7, c(4, 7, 6))
@@ -271,7 +307,7 @@ map(x, map, .f = triple)
 **A5.** This function fails because this call effectively evaluates to the following:
 
 
-```r
+``` r
 map(.x = x, .f = ~ triple(x = .x, map))
 ```
 
@@ -280,7 +316,7 @@ But `triple()` has only one parameter (`x`), and so the execution fails.
 Here is the fixed version:
 
 
-```r
+``` r
 x <- list(
   list(1, c(3, 9)),
   list(c(3, 6), 7, c(4, 7, 6))
@@ -312,7 +348,7 @@ map(x, .f = ~ map(.x, ~ triple(.x)))
 **Q6.** Use `map()` to fit linear models to the `mtcars` dataset using the formulas stored in this list:
 
 
-```r
+``` r
 formulas <- list(
   mpg ~ disp,
   mpg ~ I(1 / disp),
@@ -324,7 +360,7 @@ formulas <- list(
 **A6.** Fitting linear models to the `mtcars` dataset using the provided formulas:
 
 
-```r
+``` r
 formulas <- list(
   mpg ~ disp,
   mpg ~ I(1 / disp),
@@ -378,7 +414,7 @@ map(formulas, ~ lm(formula = ., data = mtcars))
 **Q7.** Fit the model `mpg ~ disp` to each of the bootstrap replicates of `mtcars` in the list below, then extract the $R^2$ of the model fit (Hint: you can compute the $R^2$ with `summary()`.)
 
 
-```r
+``` r
 bootstrap <- function(df) {
   df[sample(nrow(df), replace = TRUE), , drop = FALSE]
 }
@@ -389,7 +425,7 @@ bootstraps <- map(1:10, ~ bootstrap(mtcars))
 **A7.** This can be done using `map_dbl()`:
 
 
-```r
+``` r
 bootstrap <- function(df) {
   df[sample(nrow(df), replace = TRUE), , drop = FALSE]
 }
@@ -415,7 +451,7 @@ bootstraps %>%
 **A1.** `modify()` returns the object of type same as the input. Since the input here is a data frame of certain dimensions and `.f = 1` translates to plucking the first element in each column, it returns a data frame with the same dimensions with the plucked element recycled across rows.
 
 
-```r
+``` r
 head(modify(mtcars, 1))
 #>   mpg cyl disp  hp drat   wt  qsec vs am gear carb
 #> 1  21   6  160 110  3.9 2.62 16.46  0  1    4    4
@@ -431,7 +467,7 @@ head(modify(mtcars, 1))
 **Q2.** Rewrite the following code to use `iwalk()` instead of `walk2()`. What are the advantages and disadvantages?
 
 
-```r
+``` r
 cyls <- split(mtcars, mtcars$cyl)
 paths <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
 walk2(cyls, paths, write.csv)
@@ -440,7 +476,7 @@ walk2(cyls, paths, write.csv)
 **A2.** Let's first rewrite provided code using `iwalk()`:
 
 
-```r
+``` r
 cyls <- split(mtcars, mtcars$cyl)
 names(cyls) <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
 iwalk(cyls, ~ write.csv(.x, .y))
@@ -456,7 +492,7 @@ In `walk2()`, it's explicit what `.x` (`= cyls`) and `.y` (`= paths`) correspond
 **Q3.** Explain how the following code transforms a data frame using functions stored in a list.
 
 
-```r
+``` r
 trans <- list(
   disp = function(x) x * 0.0163871,
   am = function(x) factor(x, labels = c("auto", "manual"))
@@ -469,14 +505,14 @@ mtcars[nm] <- map2(trans, mtcars[nm], function(f, var) f(var))
 Compare and contrast the `map2()` approach to this `map()` approach:
 
 
-```r
+``` r
 mtcars[nm] <- map(nm, ~ trans[[.x]](mtcars[[.x]]))
 ```
 
 **A3.** `map2()` supplies the functions stored in `trans` as anonymous functions via placeholder `f`, while the names of the columns specified in `mtcars[nm]` are supplied as `var` argument to the anonymous function. Note that the function is iterating over indices for vectors of transformations and column names.
 
 
-```r
+``` r
 trans <- list(
   disp = function(x) x * 0.0163871,
   am = function(x) factor(x, labels = c("auto", "manual"))
@@ -489,7 +525,7 @@ mtcars[nm] <- map2(trans, mtcars[nm], function(f, var) f(var))
 In the `map()` approach, the function is iterating over indices for vectors of column names.
 
 
-```r
+``` r
 mtcars[nm] <- map(nm, ~ trans[[.x]](mtcars[[.x]]))
 ```
 
@@ -502,7 +538,7 @@ The latter approach can't afford passing arguments to placeholders in an anonymo
 **A4.** If we use `map2()`, it will work, but it will print `NULL`s to the console for every list element.
 
 
-```r
+``` r
 withr::with_tempdir(
   code = {
     ls <- split(mtcars, mtcars$cyl)
@@ -535,12 +571,18 @@ withr::with_tempdir(
 The `is.na()` function does not return a `logical` scalar, but instead returns a vector and thus isn't a predicate function.
 
 
-```r
+``` r
 # contrast the following behavior of predicate functions
 is.character(c("x", 2))
 #> [1] TRUE
+```
+
+``` r
 is.null(c(3, NULL))
 #> [1] FALSE
+```
+
+``` r
 
 # with this behavior
 is.na(c(NA, 1))
@@ -550,7 +592,7 @@ is.na(c(NA, 1))
 The closest equivalent of a predicate function in base-R is `anyNA()` function.
 
 
-```r
+``` r
 anyNA(c(NA, 1))
 #> [1] TRUE
 ```
@@ -560,7 +602,7 @@ anyNA(c(NA, 1))
 **Q2.** `simple_reduce()` has a problem when `x` is length 0 or length 1. Describe the source of the problem and how you might go about fixing it.
 
 
-```r
+``` r
 simple_reduce <- function(x, f) {
   out <- x[[1]]
   for (i in seq(2, length(x))) {
@@ -573,11 +615,17 @@ simple_reduce <- function(x, f) {
 **A2.** The supplied function struggles with inputs of length 0 and 1 because function tries to subscript out-of-bound values.
 
 
-```r
+``` r
 simple_reduce(numeric(), sum)
 #> Error in x[[1]]: subscript out of bounds
+```
+
+``` r
 simple_reduce(1, sum)
 #> Error in x[[i]]: subscript out of bounds
+```
+
+``` r
 simple_reduce(1:3, sum)
 #> [1] 6
 ```
@@ -585,7 +633,7 @@ simple_reduce(1:3, sum)
 This problem can be solved by adding `init` argument, which supplies the default or initial value:
 
 
-```r
+``` r
 simple_reduce2 <- function(x, f, init = 0) {
   # initializer will become the first value
   if (length(x) == 0L) {
@@ -609,11 +657,17 @@ simple_reduce2 <- function(x, f, init = 0) {
 Let's try it out:
 
 
-```r
+``` r
 simple_reduce2(numeric(), sum)
 #> [1] 0
+```
+
+``` r
 simple_reduce2(1, sum)
 #> [1] 1
+```
+
+``` r
 simple_reduce2(1:3, sum)
 #> [1] 6
 ```
@@ -621,11 +675,17 @@ simple_reduce2(1:3, sum)
 Depending on the function, we can provide a different `init` argument:
 
 
-```r
+``` r
 simple_reduce2(numeric(), `*`, init = 1)
 #> [1] 1
+```
+
+``` r
 simple_reduce2(1, `*`, init = 1)
 #> [1] 1
+```
+
+``` r
 simple_reduce2(1:3, `*`, init = 1)
 #> [1] 6
 ```
@@ -637,7 +697,7 @@ simple_reduce2(1:3, `*`, init = 1)
 **A3.** Implementation of `span()`:
 
 
-```r
+``` r
 span <- function(x, f) {
   running_lengths <- purrr::map_lgl(x, ~ f(.x)) %>% rle()
 
@@ -669,13 +729,22 @@ span <- function(x, f) {
 Testing it once:
 
 
-```r
+``` r
 span(c(0, 0, 0, 0, 0), is.na)
 #> integer(0)
+```
+
+``` r
 span(c(NA, 0, NA, NA, NA), is.na)
 #> [1] 3 4 5
+```
+
+``` r
 span(c(NA, 0, 0, 0, 0), is.na)
 #> [1] 1
+```
+
+``` r
 span(c(NA, NA, 0, 0, 0), is.na)
 #> [1] 1 2
 ```
@@ -683,13 +752,22 @@ span(c(NA, NA, 0, 0, 0), is.na)
 Testing it twice:
 
 
-```r
+``` r
 span(c(3, 1, 2, 4, 5, 6), function(x) x > 3)
 #> [1] 2 3 4
+```
+
+``` r
 span(c(3, 1, 2, 4, 5, 6), function(x) x > 9)
 #> integer(0)
+```
+
+``` r
 span(c(3, 1, 2, 4, 5, 6), function(x) x == 3)
 #> [1] 1
+```
+
+``` r
 span(c(3, 1, 2, 4, 5, 6), function(x) x %in% c(2, 4))
 #> [1] 2 3
 ```
@@ -703,7 +781,7 @@ span(c(3, 1, 2, 4, 5, 6), function(x) x %in% c(2, 4))
 - Implementing `arg_max()`
 
 
-```r
+``` r
 arg_max <- function(.x, .f) {
   df <- dplyr::tibble(
     original = .x,
@@ -715,6 +793,9 @@ arg_max <- function(.x, .f) {
 
 arg_max(-10:5, function(x) x^2)
 #> [1] -10
+```
+
+``` r
 arg_max(-5:5, function(x) x^2)
 #> [1] -5  5
 ```
@@ -722,7 +803,7 @@ arg_max(-5:5, function(x) x^2)
 - Implementing `arg_min()`
 
 
-```r
+``` r
 arg_min <- function(.x, .f) {
   df <- dplyr::tibble(
     original = .x,
@@ -734,6 +815,9 @@ arg_min <- function(.x, .f) {
 
 arg_min(-10:5, function(x) x^2)
 #> [1] 0
+```
+
+``` r
 arg_min(-5:5, function(x) x^2)
 #> [1] 0
 ```
@@ -743,7 +827,7 @@ arg_min(-5:5, function(x) x^2)
 **Q5.** The function below scales a vector so it falls in the range [0, 1]. How would you apply it to every column of a data frame? How would you apply it to every numeric column in a data frame?
 
 
-```r
+``` r
 scale01 <- function(x) {
   rng <- range(x, na.rm = TRUE)
   (x - rng[1]) / (rng[2] - rng[1])
@@ -755,7 +839,7 @@ scale01 <- function(x) {
 - Applying function to every column in a data frame: We will use `anscombe` as example since it has all numeric columns.
 
 
-```r
+``` r
 purrr::map_df(head(anscombe), .f = scale01)
 #> # A tibble: 6 × 8
 #>      x1    x2    x3    x4    y1     y2     y3    y4
@@ -771,7 +855,7 @@ purrr::map_df(head(anscombe), .f = scale01)
 - Applying function to every numeric column in a data frame: We will use `iris` as example since not all of its columns are of numeric type.
 
 
-```r
+``` r
 purrr::modify_if(head(iris), .p = is.numeric, .f = scale01)
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 #> 1        0.625   0.5555556         0.25           0  setosa
@@ -793,7 +877,7 @@ purrr::modify_if(head(iris), .p = is.numeric, .f = scale01)
 **A1.** Let's prepare an array and apply a function over different margins:
 
 
-```r
+``` r
 (m <- as.array(table(mtcars$cyl, mtcars$am, mtcars$vs)))
 #> , ,  = 0
 #> 
@@ -810,6 +894,9 @@ purrr::modify_if(head(iris), .p = is.numeric, .f = scale01)
 #>   4    3      7
 #>   6    4      0
 #>   8    0      0
+```
+
+``` r
 
 # rows
 apply(m, 1, function(x) x^2)
@@ -819,6 +906,9 @@ apply(m, 1, function(x) x^2)
 #>   [2,]  1  9   4
 #>   [3,]  9 16   0
 #>   [4,] 49  0   0
+```
+
+``` r
 
 # columns
 apply(m, 2, function(x) x^2)
@@ -830,6 +920,9 @@ apply(m, 2, function(x) x^2)
 #>   [4,]    9     49
 #>   [5,]   16      0
 #>   [6,]    0      0
+```
+
+``` r
 
 # rows and columns
 apply(m, c(1, 2), function(x) x^2)
@@ -865,7 +958,7 @@ As mentioned in its documentation:
 Here is an example:
 
 
-```r
+``` r
 library(rlang)
 #> 
 #> Attaching package: 'rlang'
@@ -877,14 +970,20 @@ library(rlang)
 #> The following object is masked from 'package:magrittr':
 #> 
 #>     set_names
+```
+
+``` r
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x55bf20990988>
+#> <environment: 0x55f079cfc478>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>
 #> • y: <dbl>
+```
+
+``` r
 
 eapply(e, as.character)
 #> $x
@@ -903,7 +1002,7 @@ eapply(e, as.character)
 Here is an example:
 
 
-```r
+``` r
 X <- list(list(a = TRUE, b = list(c = c(4L, 3.2))), d = 9.0)
 
 rapply(X, as.character, classes = "numeric", how = "replace")
@@ -924,7 +1023,7 @@ rapply(X, as.character, classes = "numeric", how = "replace")
 `{purrr}` has something similar in `modify_tree()`.
 
 
-```r
+``` r
 X <- list(list(a = TRUE, b = list(c = c(4L, 3.2))), d = 9.0)
 
 purrr::modify_tree(X, leaf = length)
@@ -953,7 +1052,7 @@ purrr::modify_tree(X, leaf = length)
 Let's first implement a fixed-point algorithm:
 
 
-```r
+``` r
 close_enough <- function(x1, x2, tolerance = 0.001) {
   if (abs(x1 - x2) < tolerance) {
     return(TRUE)
@@ -977,9 +1076,12 @@ find_fixed_point <- function(.f, .guess, tolerance = 0.001) {
 Let's check if it works as expected:
 
 
-```r
+``` r
 find_fixed_point(cos, 1.0)
 #> [1] 0.7387603
+```
+
+``` r
 
 # cos(x) = x
 cos(find_fixed_point(cos, 1.0))
@@ -991,7 +1093,7 @@ We will solve only one exercise from the reading material. Rest are beyond the s
 > Show that the golden ratio $\phi$ is a fixed point of the transformation $x \mapsto 1 + 1/x$, and use this fact to compute $\phi$ by means of the fixed-point procedure.
 
 
-```r
+``` r
 golden_ratio_f <- function(x) 1 + (1 / x)
 
 find_fixed_point(golden_ratio_f, 1.0)
@@ -1003,7 +1105,7 @@ find_fixed_point(golden_ratio_f, 1.0)
 ## Session information
 
 
-```r
+``` r
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
@@ -1015,7 +1117,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-12
+#>  date     2024-05-19
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1023,7 +1125,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  base        * 4.4.0   2024-05-06 [3] local
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
-#>  cachem        1.0.8   2023-05-01 [1] RSPM
+#>  cachem        1.1.0   2024-05-16 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.4.0   2024-05-06 [3] local
 #>  datasets    * 4.4.0   2024-05-06 [3] local
@@ -1032,7 +1134,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
-#>  fastmap       1.1.1   2023-02-24 [1] RSPM
+#>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
 #>  glue          1.7.0   2024-01-09 [1] RSPM
@@ -1052,7 +1154,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  purrr       * 1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang       * 1.1.3   2024-01-10 [1] RSPM
-#>  rmarkdown     2.26    2024-03-05 [1] RSPM
+#>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.4.0   2024-05-06 [3] local
@@ -1063,7 +1165,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.0   2024-05-06 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.43    2024-03-25 [1] RSPM
+#>  xfun          0.44    2024-05-15 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 

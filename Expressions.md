@@ -5,7 +5,7 @@
 Attaching the needed libraries:
 
 
-```r
+``` r
 library(rlang, warn.conflicts = FALSE)
 library(lobstr, warn.conflicts = FALSE)
 ```
@@ -35,7 +35,7 @@ library(lobstr, warn.conflicts = FALSE)
 **A1.** Below is the reconstructed code.
 
 
-```r
+``` r
 f(g(h()))
 1 + 2 + 3
 (x + y) * z
@@ -44,11 +44,14 @@ f(g(h()))
 We can confirm it by drawing ASTs for them:
 
 
-```r
+``` r
 ast(f(g(h())))
 #> █─f 
 #> └─█─g 
 #>   └─█─h
+```
+
+``` r
 
 ast(1 + 2 + 3)
 #> █─`+` 
@@ -56,6 +59,9 @@ ast(1 + 2 + 3)
 #> │ ├─1 
 #> │ └─2 
 #> └─3
+```
+
+``` r
 
 ast((x + y) * z)
 #> █─`*` 
@@ -69,7 +75,7 @@ ast((x + y) * z)
 **Q2.** Draw the following trees by hand and then check your answers with `ast()`.
 
 
-```r
+``` r
 f(g(h(i(1, 2, 3))))
 f(1, g(2, h(3, i())))
 f(g(1, 2), h(3, i(4, 5)))
@@ -78,7 +84,7 @@ f(g(1, 2), h(3, i(4, 5)))
 **A2.** Successfully drawn by hand. Checking using `ast()`:
 
 
-```r
+``` r
 ast(f(g(h(i(1, 2, 3)))))
 #> █─f 
 #> └─█─g 
@@ -87,6 +93,9 @@ ast(f(g(h(i(1, 2, 3)))))
 #>       ├─1 
 #>       ├─2 
 #>       └─3
+```
+
+``` r
 
 ast(f(1, g(2, h(3, i()))))
 #> █─f 
@@ -96,6 +105,9 @@ ast(f(1, g(2, h(3, i()))))
 #>   └─█─h 
 #>     ├─3 
 #>     └─█─i
+```
+
+``` r
 
 ast(f(g(1, 2), h(3, i(4, 5))))
 #> █─f 
@@ -112,15 +124,21 @@ ast(f(g(1, 2), h(3, i(4, 5))))
 **Q3.** What's happening with the ASTs below? (Hint: carefully read `?"^"`.)
 
 
-```r
+``` r
 ast(`x` + `y`)
 #> █─`+` 
 #> ├─x 
 #> └─y
+```
+
+``` r
 ast(x**y)
 #> █─`^` 
 #> ├─x 
 #> └─y
+```
+
+``` r
 ast(1 -> x)
 #> █─`<-` 
 #> ├─x 
@@ -132,7 +150,7 @@ ast(1 -> x)
 The non-syntactic names are parsed to names. Thus, backticks have been removed in the AST.
 
 
-```r
+``` r
 str2expression("`x` + `y`")
 #> expression(x + y)
 ```
@@ -142,7 +160,7 @@ As mentioned in the docs for `^`:
 > \*\* is translated in the parser to \^
 
 
-```r
+``` r
 str2expression("x**y")
 #> expression(x^y)
 ```
@@ -150,7 +168,7 @@ str2expression("x**y")
 The rightward assignment is parsed to leftward assignment:
 
 
-```r
+``` r
 str2expression("1 -> x")
 #> expression(x <- 1)
 ```
@@ -158,7 +176,7 @@ str2expression("1 -> x")
 **Q4.** What is special about the AST below?
 
 
-```r
+``` r
 ast(function(x = 1, y = 2) {})
 #> █─`function` 
 #> ├─█─x = 1 
@@ -178,7 +196,7 @@ Therefore, the last leaf in this AST, although not specified in the function cal
 **A5.** There is nothing special about this tree. It just shows the nested loop structure inherent to code with `if` and multiple `else if` statements.
 
 
-```r
+``` r
 ast(if (FALSE) 1 else if (FALSE) 2 else if (FALSE) 3 else 4)
 #> █─`if` 
 #> ├─FALSE 
@@ -201,10 +219,13 @@ ast(if (FALSE) 1 else if (FALSE) 2 else if (FALSE) 3 else 4)
 Complex numbers are created via a **function call** (using `+`), as can be seen by its AST:
 
 
-```r
+``` r
 x_complex <- expr(1 + 1i)
 typeof(x_complex)
 #> [1] "language"
+```
+
+``` r
 
 ast(1 + 1i)
 #> █─`+` 
@@ -215,10 +236,13 @@ ast(1 + 1i)
 Similarly, for raw vectors (using `raw()`):
 
 
-```r
+``` r
 x_raw <- expr(raw(2))
 typeof(x_raw)
 #> [1] "language"
+```
+
+``` r
 
 ast(raw(2))
 #> █─raw 
@@ -228,10 +252,13 @@ ast(raw(2))
 Contrast this with other atomic vectors:
 
 
-```r
+``` r
 x_int <- expr(2L)
 typeof(x_int)
 #> [1] "integer"
+```
+
+``` r
 
 ast(2L)
 #> 2L
@@ -240,10 +267,13 @@ ast(2L)
 For the same reason, you can't you create an expression that contains an atomic vector of length greater than one since that itself is a function call that uses `c()` function:
 
 
-```r
+``` r
 x_vec <- expr(c(1, 2))
 typeof(x_vec)
 #> [1] "language"
+```
+
+``` r
 
 ast(c(1, 2))
 #> █─c 
@@ -256,9 +286,12 @@ ast(c(1, 2))
 **A2.** A captured function call like the following creates a call object:
 
 
-```r
+``` r
 expr(read.csv("foo.csv", header = TRUE))
 #> read.csv("foo.csv", header = TRUE)
+```
+
+``` r
 
 typeof(expr(read.csv("foo.csv", header = TRUE)))
 #> [1] "language"
@@ -271,7 +304,7 @@ As mentioned in the [respective section](https://adv-r.hadley.nz/expressions.htm
 Therefore, when the first element in the call object is removed, the next one moves in the function position, and we get the observed output:
 
 
-```r
+``` r
 expr(read.csv("foo.csv", header = TRUE))[-1]
 #> "foo.csv"(header = TRUE)
 ```
@@ -279,7 +312,7 @@ expr(read.csv("foo.csv", header = TRUE))[-1]
 **Q3.** Describe the differences between the following call objects.
 
 
-```r
+``` r
 x <- 1:10
 call2(median, x, na.rm = TRUE)
 call2(expr(median), x, na.rm = TRUE)
@@ -292,9 +325,12 @@ call2(expr(median), expr(x), na.rm = TRUE)
 Types of arguments supplied to `.fn`:
 
 
-```r
+``` r
 typeof(median)
 #> [1] "closure"
+```
+
+``` r
 typeof(expr(median))
 #> [1] "symbol"
 ```
@@ -302,10 +338,13 @@ typeof(expr(median))
 Types of arguments supplied to the dynamic dots:
 
 
-```r
+``` r
 x <- 1:10
 typeof(x)
 #> [1] "integer"
+```
+
+``` r
 typeof(expr(x))
 #> [1] "symbol"
 ```
@@ -316,19 +355,28 @@ The following outputs can be understood using the following properties:
 - when `x` is not a symbol, its value is passed to the function call
 
 
-```r
+``` r
 x <- 1:10
 
 call2(median, x, na.rm = TRUE)
 #> (function (x, na.rm = FALSE, ...) 
 #> UseMethod("median"))(1:10, na.rm = TRUE)
+```
+
+``` r
 
 call2(expr(median), x, na.rm = TRUE)
 #> median(1:10, na.rm = TRUE)
+```
+
+``` r
 
 call2(median, expr(x), na.rm = TRUE)
 #> (function (x, na.rm = FALSE, ...) 
 #> UseMethod("median"))(x, na.rm = TRUE)
+```
+
+``` r
 
 call2(expr(median), expr(x), na.rm = TRUE)
 #> median(x, na.rm = TRUE)
@@ -337,17 +385,26 @@ call2(expr(median), expr(x), na.rm = TRUE)
 Importantly, all of the constructed call objects evaluate to give the same result:
 
 
-```r
+``` r
 x <- 1:10
 
 eval(call2(median, x, na.rm = TRUE))
 #> [1] 5.5
+```
+
+``` r
 
 eval(call2(expr(median), x, na.rm = TRUE))
 #> [1] 5.5
+```
+
+``` r
 
 eval(call2(median, expr(x), na.rm = TRUE))
 #> [1] 5.5
+```
+
+``` r
 
 eval(call2(expr(median), expr(x), na.rm = TRUE))
 #> [1] 5.5
@@ -356,13 +413,19 @@ eval(call2(expr(median), expr(x), na.rm = TRUE))
 **Q4.** `call_standardise()` doesn't work so well for the following calls. Why? What makes `mean()` special?
 
 
-```r
+``` r
 call_standardise(quote(mean(1:10, na.rm = TRUE)))
 #> Warning: `call_standardise()` is deprecated as of rlang 0.4.11
 #> This warning is displayed once every 8 hours.
 #> mean(x = 1:10, na.rm = TRUE)
+```
+
+``` r
 call_standardise(quote(mean(n = T, 1:10)))
 #> mean(x = 1:10, n = T)
+```
+
+``` r
 call_standardise(quote(mean(x = 1:10, , TRUE)))
 #> mean(x = 1:10, , TRUE)
 ```
@@ -370,11 +433,11 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 **A4.** This is because of the ellipsis in `mean()` function signature:
 
 
-```r
+``` r
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55f3c6e6af98>
+#> <bytecode: 0x556b7c6ad8f8>
 #> <environment: namespace:base>
 ```
 
@@ -387,7 +450,7 @@ As mentioned in the respective [section](If the function uses ... it’s not pos
 So, the output can be improved using a specific method. For example:
 
 
-```r
+``` r
 call_standardise(quote(mean.default(n = T, 1:10)))
 #> mean.default(x = 1:10, na.rm = T)
 ```
@@ -395,7 +458,7 @@ call_standardise(quote(mean.default(n = T, 1:10)))
 **Q5.** Why does this code not make sense?
 
 
-```r
+``` r
 x <- expr(foo(x = 1))
 names(x) <- c("x", "y")
 ```
@@ -403,10 +466,13 @@ names(x) <- c("x", "y")
 **A5.** This doesn't make sense because the first position in a call object is reserved for function (function position), and so assigning names to this element will just be ignored by R:
 
 
-```r
+``` r
 x <- expr(foo(x = 1))
 x
 #> foo(x = 1)
+```
+
+``` r
 
 names(x) <- c("x", "y")
 x
@@ -418,11 +484,14 @@ x
 **A6.** Using multiple calls to construct the required expression:
 
 
-```r
+``` r
 x <- 5
 call_obj1 <- call2(">", expr(x), 1)
 call_obj1
 #> x > 1
+```
+
+``` r
 
 call_obj2 <- call2("if", cond = call_obj1, cons.expr = "a", alt.expr = "b")
 call_obj2
@@ -432,7 +501,7 @@ call_obj2
 This construction follows from the prefix form of this expression, revealed by its AST:
 
 
-```r
+``` r
 ast(if (x > 1) "a" else "b")
 #> █─`if` 
 #> ├─█─`>` 
@@ -447,7 +516,7 @@ ast(if (x > 1) "a" else "b")
 **Q1.** R uses parentheses in two slightly different ways as illustrated by these two calls:
 
 
-```r
+``` r
 f((1))
 `(`(1 + 1)
 ```
@@ -457,11 +526,14 @@ Compare and contrast the two uses by referencing the AST.
 **A1.** Let's first have a look at the AST:
 
 
-```r
+``` r
 ast(f((1)))
 #> █─f 
 #> └─█─`(` 
 #>   └─1
+```
+
+``` r
 ast(`(`(1 + 1))
 #> █─`(` 
 #> └─█─`+` 
@@ -484,14 +556,14 @@ This is why, in the AST for `f((1))`, we see only one ``"`(`"`` (the first use c
 - for named arguments in function calls
 
 
-```r
+``` r
 m <- mean(x = 1)
 ```
 
 We can also have a look at its AST:
 
 
-```r
+``` r
 ast({
   m <- mean(x = 1)
 })
@@ -507,7 +579,7 @@ ast({
 **A3.** The expression `-2^2` evaluates to -4 because the operator `^` has higher precedence than the unary `-` operator:
 
 
-```r
+``` r
 -2^2
 #> [1] -4
 ```
@@ -515,7 +587,7 @@ ast({
 The same can also be seen by its AST:
 
 
-```r
+``` r
 ast(-2^2)
 #> █─`-` 
 #> └─█─`^` 
@@ -526,7 +598,7 @@ ast(-2^2)
 A less confusing way to write this would be:
 
 
-```r
+``` r
 -(2^2)
 #> [1] -4
 ```
@@ -540,7 +612,7 @@ This is because the `!` operator has higher precedence than the unary `+` operat
 This can be easily seen by its AST:
 
 
-```r
+``` r
 ast(!1 + !1)
 #> █─`!` 
 #> └─█─`+` 
@@ -554,7 +626,7 @@ ast(!1 + !1)
 **A5.** There are two reasons why the following works as expected:
 
 
-```r
+``` r
 x1 <- x2 <- x3 <- 0
 ```
 
@@ -571,7 +643,7 @@ Therefore, the order of assignment here is:
 - The `<-` operator invisibly returns the assigned value.
 
 
-```r
+``` r
 (x <- 1)
 #> [1] 1
 ```
@@ -579,7 +651,7 @@ Therefore, the order of assignment here is:
 This is easy to surmise from its AST:
 
 
-```r
+``` r
 ast(x1 <- x2 <- x3 <- 0)
 #> █─`<-` 
 #> ├─x1 
@@ -595,13 +667,16 @@ ast(x1 <- x2 <- x3 <- 0)
 **A6.** Looking at the ASTs for these expressions,
 
 
-```r
+``` r
 ast(x + y %+% z)
 #> █─`+` 
 #> ├─x 
 #> └─█─`%+%` 
 #>   ├─y 
 #>   └─z
+```
+
+``` r
 
 ast(x^y %+% z)
 #> █─`%+%` 
@@ -621,7 +696,7 @@ we can say that the custom infix operator `%+%` has:
 **A7.** It produced an error:
 
 
-```r
+``` r
 parse_expr("x + 1; y + 1")
 #> Error in `parse_expr()`:
 #> ! `x` must contain exactly 1 expression, not 2.
@@ -634,7 +709,7 @@ This is expected based on the docs:
 We instead need to use `parse_exprs()`:
 
 
-```r
+``` r
 parse_exprs("x + 1; y + 1")
 #> [[1]]
 #> x + 1
@@ -648,11 +723,14 @@ parse_exprs("x + 1; y + 1")
 **A8.** An invalid expression produces an error:
 
 
-```r
+``` r
 parse_expr("a +")
 #> Error in parse(text = x, keep.source = FALSE): <text>:2:0: unexpected end of input
 #> 1: a +
 #>    ^
+```
+
+``` r
 
 parse_expr("f())")
 #> Error in parse(text = x, keep.source = FALSE): <text>:1:4: unexpected ')'
@@ -663,11 +741,14 @@ parse_expr("f())")
 Since the underlying `parse()` function produces an error:
 
 
-```r
+``` r
 parse(text = "a +")
 #> Error in parse(text = "a +"): <text>:2:0: unexpected end of input
 #> 1: a +
 #>    ^
+```
+
+``` r
 
 parse(text = "f())")
 #> Error in parse(text = "f())"): <text>:1:4: unexpected ')'
@@ -678,7 +759,7 @@ parse(text = "f())")
 **Q9.** `deparse()` produces vectors when the input is long. For example, the following call produces a vector of length two:
 
 
-```r
+``` r
 expr <- expr(g(a + b + c + d + e + f + g + h + i + j + k + l +
   m + n + o + p + q + r + s + t + u + v + w + x + y + z))
 deparse(expr)
@@ -689,13 +770,16 @@ What does `expr_text()` do instead?
 **A9.** The only difference between `deparse()` and `expr_text()` is that the latter turns the (possibly multi-line) expression into a single string. 
 
 
-```r
+``` r
 expr <- expr(g(a + b + c + d + e + f + g + h + i + j + k + l +
   m + n + o + p + q + r + s + t + u + v + w + x + y + z))
 
 deparse(expr)
 #> [1] "g(a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + "
 #> [2] "    p + q + r + s + t + u + v + w + x + y + z)"
+```
+
+``` r
 
 expr_text(expr)
 #> [1] "g(a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + \n    p + q + r + s + t + u + v + w + x + y + z)"
@@ -718,15 +802,24 @@ expr_text(expr)
 Let's try it out:
 
 
-```r
+``` r
 logical_abbr_rec(expr(T(1, 2, 3)))
 #> [1] FALSE
+```
+
+``` r
 
 logical_abbr_rec(expr(F(1, 2, 3)))
 #> [1] FALSE
+```
+
+``` r
 
 logical_abbr_rec(expr(T))
 #> [1] TRUE
+```
+
+``` r
 
 logical_abbr_rec(expr(F))
 #> [1] TRUE
@@ -735,7 +828,7 @@ logical_abbr_rec(expr(F))
 **Q2.** `logical_abbr()` works with expressions. It currently fails when you give it a function. Why? How could you modify `logical_abbr()` to make it work? What components of a function will you need to recurse over?
 
 
-```r
+``` r
 logical_abbr(function(x = TRUE) {
   g(x + T)
 })
@@ -748,7 +841,7 @@ logical_abbr(function(x = TRUE) {
 To see why, let's see what type of object is produced when we capture user provided closure:
 
 
-```r
+``` r
 print_enexpr <- function(.f) {
   print(typeof(enexpr(.f)))
   print(is.call(enexpr(.f)))
@@ -764,7 +857,7 @@ print_enexpr(function(x = TRUE) {
 Given that closures are converted to `call` objects, it is not a surprise that the function works:
 
 
-```r
+``` r
 logical_abbr(function(x = TRUE) {
   g(x + T)
 })
@@ -776,7 +869,7 @@ The function only fails if it can't find any negative case. For example, instead
 <!-- TODO -->
 
 
-```r
+``` r
 logical_abbr(function(x = TRUE) {
   g(x + TRUE)
 })
@@ -788,7 +881,7 @@ logical_abbr(function(x = TRUE) {
 **A3.** Although both simple assignment (`x <- y`) and assignment using replacement functions (`names(x) <- y`) have `<-` operator in their call, in the latter case, `names(x)` will be a call object and not a symbol:
 
 
-```r
+``` r
 expr1 <- expr(names(x) <- y)
 as.list(expr1)
 #> [[1]]
@@ -799,8 +892,14 @@ as.list(expr1)
 #> 
 #> [[3]]
 #> y
+```
+
+``` r
 typeof(expr1[[2]])
 #> [1] "language"
+```
+
+``` r
 
 expr2 <- expr(x <- y)
 as.list(expr2)
@@ -812,6 +911,9 @@ as.list(expr2)
 #> 
 #> [[3]]
 #> y
+```
+
+``` r
 typeof(expr2[[2]])
 #> [1] "symbol"
 ```
@@ -819,7 +921,7 @@ typeof(expr2[[2]])
 That's how we can detect this kind of assignment by checking if the second element of the expression is a `symbol` or `language` type object. 
 
 
-```r
+``` r
 expr_type <- function(x) {
   if (is_syntactic_literal(x)) {
     "constant"
@@ -886,21 +988,36 @@ find_assign <- function(x) find_assign_rec(enexpr(x))
 Let's try it out:
 
 
-```r
+``` r
 find_assign(names(x))
 #> character(0)
+```
+
+``` r
 
 find_assign(names(x) <- y)
 #> [1] "x"
+```
+
+``` r
 
 find_assign(names(f(x)) <- y)
 #> [1] "x"
+```
+
+``` r
 
 find_assign(names(x) <- y <- z <- NULL)
 #> [1] "x" "y" "z"
+```
+
+``` r
 
 find_assign(a <- b <- c <- 1)
 #> [1] "a" "b" "c"
+```
+
+``` r
 
 find_assign(system.time(x <- print(y <- 5)))
 #> [1] "x" "y"
@@ -911,7 +1028,7 @@ find_assign(system.time(x <- print(y <- 5)))
 **A4.** Here is a function that extracts all calls to a specified function:
 
 
-```r
+``` r
 find_function_call <- function(x, .f) {
   if (is_call(x)) {
     if (is_call(x, .f)) {
@@ -928,10 +1045,16 @@ find_function_call <- function(x, .f) {
 find_function_call(expr(mean(1:2)), ":")
 #> [[1]]
 #> 1:2
+```
+
+``` r
 
 find_function_call(expr(sum(mean(1:2))), ":")
 #> [[1]]
 #> 1:2
+```
+
+``` r
 
 find_function_call(expr(list(1:5, 4:6, 3:9)), ":")
 #> [[1]]
@@ -942,6 +1065,9 @@ find_function_call(expr(list(1:5, 4:6, 3:9)), ":")
 #> 
 #> [[3]]
 #> 3:9
+```
+
+``` r
 
 find_function_call(expr(list(1:5, sum(4:6), mean(3:9))), ":")
 #> [[1]]
@@ -952,26 +1078,44 @@ find_function_call(expr(list(1:5, sum(4:6), mean(3:9))), ":")
 #> 
 #> [[3]]
 #> 3:9
+```
+
+``` r
 
 # example-2: with assignment operator `<-`
 find_function_call(expr(names(x)), "<-")
 #> NULL
+```
+
+``` r
 
 find_function_call(expr(names(x) <- y), "<-")
 #> [[1]]
 #> names(x) <- y
+```
+
+``` r
 
 find_function_call(expr(names(f(x)) <- y), "<-")
 #> [[1]]
 #> names(f(x)) <- y
+```
+
+``` r
 
 find_function_call(expr(names(x) <- y <- z <- NULL), "<-")
 #> [[1]]
 #> names(x) <- y <- z <- NULL
+```
+
+``` r
 
 find_function_call(expr(a <- b <- c <- 1), "<-")
 #> [[1]]
 #> a <- b <- c <- 1
+```
+
+``` r
 
 find_function_call(expr(system.time(x <- print(y <- 5))), "<-")
 #> [[1]]
@@ -981,7 +1125,7 @@ find_function_call(expr(system.time(x <- print(y <- 5))), "<-")
 ## Session information
 
 
-```r
+``` r
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
@@ -993,7 +1137,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-12
+#>  date     2024-05-19
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1001,7 +1145,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  base        * 4.4.0   2024-05-06 [3] local
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
-#>  cachem        1.0.8   2023-05-01 [1] RSPM
+#>  cachem        1.1.0   2024-05-16 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.4.0   2024-05-06 [3] local
 #>  crayon        1.5.2   2022-09-29 [1] RSPM
@@ -1010,7 +1154,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
-#>  fastmap       1.1.1   2023-02-24 [1] RSPM
+#>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  glue          1.7.0   2024-01-09 [1] RSPM
 #>  graphics    * 4.4.0   2024-05-06 [3] local
@@ -1028,7 +1172,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  purrr         1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang       * 1.1.3   2024-01-10 [1] RSPM
-#>  rmarkdown     2.26    2024-03-05 [1] RSPM
+#>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.4.0   2024-05-06 [3] local
@@ -1037,7 +1181,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.0   2024-05-06 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.43    2024-03-25 [1] RSPM
+#>  xfun          0.44    2024-05-15 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 

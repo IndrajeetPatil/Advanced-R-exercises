@@ -13,11 +13,14 @@
 The raw type holds raw bytes, and can be created using `charToRaw()`. For example,
 
 
-```r
+``` r
 x <- "A string"
 
 (y <- charToRaw(x))
 #> [1] 41 20 73 74 72 69 6e 67
+```
+
+``` r
 
 typeof(y)
 #> [1] "raw"
@@ -26,12 +29,15 @@ typeof(y)
 An alternative is to use `as.raw()`:
 
 
-```r
+``` r
 as.raw("–") # en-dash
 #> Warning: NAs introduced by coercion
 #> Warning: out-of-range values treated as 0 in coercion to
 #> raw
 #> [1] 00
+```
+
+``` r
 as.raw("—") # em-dash
 #> Warning: NAs introduced by coercion
 #> Warning: out-of-range values treated as 0 in coercion to
@@ -46,9 +52,12 @@ Complex vectors are used to represent (surprise!) complex numbers.
 Example of a complex scalar:
 
 
-```r
+``` r
 (x <- complex(length.out = 1, real = 1, imaginary = 8))
 #> [1] 1+8i
+```
+
+``` r
 
 typeof(x)
 #> [1] "complex"
@@ -57,7 +66,7 @@ typeof(x)
 **Q2.** Test your knowledge of the vector coercion rules by predicting the output of the following uses of `c()`:
 
 
-```r
+``` r
 c(1, FALSE)
 c("a", 1)
 c(TRUE, 1L)
@@ -66,12 +75,18 @@ c(TRUE, 1L)
 **A2.** The vector coercion rules dictate that the data type with smaller size will be converted to data type with bigger size.
 
 
-```r
+``` r
 c(1, FALSE)
 #> [1] 1 0
+```
+
+``` r
 
 c("a", 1)
 #> [1] "a" "1"
+```
+
+``` r
 
 c(TRUE, 1L)
 #> [1] 1 1
@@ -82,30 +97,42 @@ c(TRUE, 1L)
 **A3.** The coercion rules for vectors reveal why some of these comparisons return the results that they do.
 
 
-```r
+``` r
 1 == "1"
 #> [1] TRUE
+```
+
+``` r
 
 c(1, "1")
 #> [1] "1" "1"
 ```
 
 
-```r
+``` r
 -1 < FALSE
 #> [1] TRUE
+```
+
+``` r
 
 c(-1, FALSE)
 #> [1] -1  0
 ```
 
 
-```r
+``` r
 "one" < 2
 #> [1] FALSE
+```
+
+``` r
 
 c("one", 2)
 #> [1] "one" "2"
+```
+
+``` r
 
 sort(c("one", 2))
 #> [1] "2"   "one"
@@ -118,9 +145,12 @@ sort(c("one", 2))
 So `NA` defaulting to any other type (e.g. `"numeric"`) would mean that any time there is a missing element in a vector, rest of the elements would be converted to a type higher in hierarchy, which would be problematic for types lower in hierarchy.
 
 
-```r
+``` r
 typeof(NA)
 #> [1] "logical"
+```
+
+``` r
 
 c(FALSE, NA_character_)
 #> [1] "FALSE" NA
@@ -139,9 +169,12 @@ Quoting docs:
 > `is.atomic` is true for the atomic types ("logical", "integer", "numeric", "complex", "character" and "raw") and `NULL`.
 
 
-```r
+``` r
 is.atomic(NULL)
 #> [1] FALSE
+```
+
+``` r
 
 is.atomic(list(NULL))
 #> [1] FALSE
@@ -156,9 +189,12 @@ Its documentation says:
 Therefore, this function only checks for `double` and `integer` base types and not other types based on top of these types (`factor`, `Date`, `POSIXt`, or `difftime`).
 
 
-```r
+``` r
 is.numeric(1L)
 #> [1] TRUE
+```
+
+``` r
 
 is.numeric(factor(1L))
 #> [1] FALSE
@@ -173,11 +209,14 @@ As per its documentation:
 Thus, the function can be incorrectif the object has attributes other than `names`.
 
 
-```r
+``` r
 x <- c("x" = 1, "y" = 2)
 
 is.vector(x)
 #> [1] TRUE
+```
+
+``` r
 
 attr(x, "m") <- "abcdef"
 
@@ -188,7 +227,7 @@ is.vector(x)
 A better way to check for a vector:
 
 
-```r
+``` r
 is.null(dim(x))
 #> [1] TRUE
 ```
@@ -202,24 +241,27 @@ is.null(dim(x))
 - `setNames()`
 
 
-```r
+``` r
 setNames
 #> function (object = nm, nm) 
 #> {
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x558056a2dc78>
+#> <bytecode: 0x55b529e3bdb8>
 #> <environment: namespace:stats>
 ```
 
 Given this function signature, we can see why, when no first argument is given, the result is still a named vector.
 
 
-```r
+``` r
 setNames(, c("a", "b"))
 #>   a   b 
 #> "a" "b"
+```
+
+``` r
 
 setNames(c(1, 2), c("a", "b"))
 #> a b 
@@ -229,7 +271,7 @@ setNames(c(1, 2), c("a", "b"))
 - `unname()`
 
 
-```r
+``` r
 unname
 #> function (obj, force = FALSE) 
 #> {
@@ -239,14 +281,14 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x558053c3a888>
+#> <bytecode: 0x55b526f15648>
 #> <environment: namespace:base>
 ```
 
 `unname()` removes existing names (or dimnames) by setting them to `NULL`.
 
 
-```r
+``` r
 unname(setNames(, c("a", "b")))
 #> [1] "a" "b"
 ```
@@ -256,7 +298,7 @@ unname(setNames(, c("a", "b")))
 **A2.** Dimensions for a 1-dimensional vector are `NULL`. For example,
 
 
-```r
+``` r
 dim(c(1, 2))
 #> NULL
 ```
@@ -265,36 +307,63 @@ dim(c(1, 2))
 `NROW()` and `NCOL()` are helpful for getting dimensions for 1D vectors by treating them as if they were matrices or dataframes.
 
 
-```r
+``` r
 # example-1
 x <- character(0)
 
 dim(x)
 #> NULL
+```
+
+``` r
 
 nrow(x)
 #> NULL
+```
+
+``` r
 NROW(x)
 #> [1] 0
+```
+
+``` r
 
 ncol(x)
 #> NULL
+```
+
+``` r
 NCOL(x)
 #> [1] 1
+```
+
+``` r
 
 # example-2
 y <- 1:4
 
 dim(y)
 #> NULL
+```
+
+``` r
 
 nrow(y)
 #> NULL
+```
+
+``` r
 NROW(y)
 #> [1] 4
+```
+
+``` r
 
 ncol(y)
 #> NULL
+```
+
+``` r
 NCOL(y)
 #> [1] 1
 ```
@@ -302,7 +371,7 @@ NCOL(y)
 **Q3.** How would you describe the following three objects? What makes them different from `1:5`?
 
 
-```r
+``` r
 x1 <- array(1:5, c(1, 1, 5))
 x2 <- array(1:5, c(1, 5, 1))
 x3 <- array(1:5, c(5, 1, 1))
@@ -315,7 +384,7 @@ x3 <- array(1:5, c(5, 1, 1))
 **Q4.** An early draft used this code to illustrate `structure()`:
 
 
-```r
+``` r
 structure(1:5, comment = "my attribute")
 #> [1] 1 2 3 4 5
 ```
@@ -327,11 +396,14 @@ But when you print that object you don't see the comment attribute. Why? Is the 
 > Note that some attributes (namely class, **comment**, dim, dimnames, names, row.names and tsp) are treated specially and have restrictions on the values which can be set.
 
 
-```r
+``` r
 structure(1:5, x = "my attribute")
 #> [1] 1 2 3 4 5
 #> attr(,"x")
 #> [1] "my attribute"
+```
+
+``` r
 
 structure(1:5, comment = "my attribute")
 #> [1] 1 2 3 4 5
@@ -344,16 +416,22 @@ structure(1:5, comment = "my attribute")
 **A1.** `table()` returns an array of `integer` type and its dimensions scale with the number of variables present.
 
 
-```r
+``` r
 (x <- table(mtcars$am))
 #> 
 #>  0  1 
 #> 19 13
+```
+
+``` r
 (y <- table(mtcars$am, mtcars$cyl))
 #>    
 #>      4  6  8
 #>   0  3  4 12
 #>   1  8  3  2
+```
+
+``` r
 (z <- table(mtcars$am, mtcars$cyl, mtcars$vs))
 #> , ,  = 0
 #> 
@@ -368,6 +446,9 @@ structure(1:5, comment = "my attribute")
 #>      4  6  8
 #>   0  3  4  0
 #>   1  7  0  0
+```
+
+``` r
 
 # type
 purrr::map(list(x, y, z), typeof)
@@ -379,6 +460,9 @@ purrr::map(list(x, y, z), typeof)
 #> 
 #> [[3]]
 #> [1] "integer"
+```
+
+``` r
 
 # attributes
 purrr::map(list(x, y, z), attributes)
@@ -433,7 +517,7 @@ purrr::map(list(x, y, z), attributes)
 **Q2.** What happens to a factor when you modify its levels? 
 
 
-```r
+``` r
 f1 <- factor(letters)
 levels(f1) <- rev(levels(f1))
 ```
@@ -441,19 +525,28 @@ levels(f1) <- rev(levels(f1))
 **A2.** Its levels change but the underlying integer values remain the same.
 
 
-```r
+``` r
 f1 <- factor(letters)
 f1
 #>  [1] a b c d e f g h i j k l m n o p q r s t u v w x y z
 #> 26 Levels: a b c d e f g h i j k l m n o p q r s t u ... z
+```
+
+``` r
 as.integer(f1)
 #>  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18
 #> [19] 19 20 21 22 23 24 25 26
+```
+
+``` r
 
 levels(f1) <- rev(levels(f1))
 f1
 #>  [1] z y x w v u t s r q p o n m l k j i h g f e d c b a
 #> 26 Levels: z y x w v u t s r q p o n m l k j i h g f ... a
+```
+
+``` r
 as.integer(f1)
 #>  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18
 #> [19] 19 20 21 22 23 24 25 26
@@ -462,7 +555,7 @@ as.integer(f1)
 **Q3.** What does this code do? How do `f2` and `f3` differ from `f1`?
 
 
-```r
+``` r
 f2 <- rev(factor(letters))
 f3 <- factor(letters, levels = rev(letters))
 ```
@@ -472,11 +565,14 @@ f3 <- factor(letters, levels = rev(letters))
 - `f2`: Only the underlying integers are reversed, but levels remain unchanged.
 
 
-```r
+``` r
 f2 <- rev(factor(letters))
 f2
 #>  [1] z y x w v u t s r q p o n m l k j i h g f e d c b a
 #> 26 Levels: a b c d e f g h i j k l m n o p q r s t u ... z
+```
+
+``` r
 as.integer(f2)
 #>  [1] 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10  9
 #> [19]  8  7  6  5  4  3  2  1
@@ -485,11 +581,14 @@ as.integer(f2)
 - `f3`: Both the levels and the underlying integers are reversed.
 
 
-```r
+``` r
 f3 <- factor(letters, levels = rev(letters))
 f3
 #>  [1] a b c d e f g h i j k l m n o p q r s t u v w x y z
 #> 26 Levels: z y x w v u t s r q p o n m l k j i h g f ... a
+```
+
+``` r
 as.integer(f3)
 #>  [1] 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10  9
 #> [19]  8  7  6  5  4  3  2  1
@@ -513,13 +612,19 @@ as.integer(f3)
 **A2.** A list already *is* a (generic) vector, so `as.vector()` is not going to change anything, and there is no `as.atomic.vector`. Thus, we need to use `unlist()`.
 
 
-```r
+``` r
 x <- list(a = 1, b = 2)
 
 is.vector(x)
 #> [1] TRUE
+```
+
+``` r
 is.atomic(x)
 #> [1] FALSE
+```
+
+``` r
 
 # still a list
 as.vector(x)
@@ -528,6 +633,9 @@ as.vector(x)
 #> 
 #> $b
 #> [1] 2
+```
+
+``` r
 
 # now a vector
 unlist(x)
@@ -540,7 +648,7 @@ unlist(x)
 **A3.** Let's first create a date and datetime object
 
 
-```r
+``` r
 date <- as.Date("1947-08-15")
 datetime <- as.POSIXct("1950-01-26 00:01", tz = "UTC")
 ```
@@ -548,19 +656,28 @@ datetime <- as.POSIXct("1950-01-26 00:01", tz = "UTC")
 And check their attributes and underlying `double` representation:
 
 
-```r
+``` r
 attributes(date)
 #> $class
 #> [1] "Date"
+```
+
+``` r
 attributes(datetime)
 #> $class
 #> [1] "POSIXct" "POSIXt" 
 #> 
 #> $tzone
 #> [1] "UTC"
+```
+
+``` r
 
 as.double(date) # number of days since the Unix epoch 1970-01-01
 #> [1] -8175
+```
+
+``` r
 as.double(datetime) # number of seconds since then
 #> [1] -628991940
 ```
@@ -570,16 +687,25 @@ as.double(datetime) # number of seconds since then
 Since `S3` method for `c()` dispatches on the first argument, the resulting class of the vector is going to be the same as the first argument. Because of this, some attributes will be lost.
 
 
-```r
+``` r
 c(date, datetime)
 #> [1] "1947-08-15" "1950-01-26"
+```
+
+``` r
 
 attributes(c(date, datetime))
 #> $class
 #> [1] "Date"
+```
+
+``` r
 
 c(datetime, date)
 #> [1] "1950-01-26 00:01:00 UTC" "1947-08-15 00:00:00 UTC"
+```
+
+``` r
 
 attributes(c(datetime, date))
 #> $class
@@ -594,9 +720,12 @@ attributes(c(datetime, date))
 It removes all attributes and we are left only with the underlying double representations of these objects.
 
 
-```r
+``` r
 unlist(list(date, datetime))
 #> [1]      -8175 -628991940
+```
+
+``` r
 
 unlist(list(datetime, date))
 #> [1] -628991940      -8175
@@ -609,7 +738,7 @@ unlist(list(datetime, date))
 **A1.** Data frame with 0 rows is possible. This is basically a list with a vector of length 0.
 
 
-```r
+``` r
 data.frame(x = numeric(0))
 #> [1] x
 #> <0 rows> (or 0-length row.names)
@@ -618,7 +747,7 @@ data.frame(x = numeric(0))
 Data frame with 0 columns is also possible. This will be an empty list.
 
 
-```r
+``` r
 data.frame(row.names = 1)
 #> data frame with 0 columns and 1 row
 ```
@@ -626,9 +755,12 @@ data.frame(row.names = 1)
 And, finally, data frame with 0 rows *and* columns is also possible:
 
 
-```r
+``` r
 data.frame()
 #> data frame with 0 columns and 0 rows
+```
+
+``` r
 
 dim(data.frame())
 #> [1] 0 0
@@ -637,13 +769,19 @@ dim(data.frame())
 Although, it might not be common to *create* such data frames, they can be results of subsetting. For example,
 
 
-```r
+``` r
 BOD[0, ]
 #> [1] Time   demand
 #> <0 rows> (or 0-length row.names)
+```
+
+``` r
 
 BOD[, 0]
 #> data frame with 0 columns and 6 rows
+```
+
+``` r
 
 BOD[0, 0]
 #> data frame with 0 columns and 0 rows
@@ -654,7 +792,7 @@ BOD[0, 0]
 **A2.** If you attempt to set data frame rownames that are not unique, it will not work.
 
 
-```r
+``` r
 data.frame(row.names = c(1, 1))
 #> Error in data.frame(row.names = c(1, 1)): duplicate row.names: 1
 ```
@@ -667,7 +805,7 @@ data.frame(row.names = c(1, 1))
 - coerces all its elements to be of the same type
 
 
-```r
+``` r
 # original
 (df <- head(iris))
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
@@ -677,6 +815,9 @@ data.frame(row.names = c(1, 1))
 #> 4          4.6         3.1          1.5         0.2  setosa
 #> 5          5.0         3.6          1.4         0.2  setosa
 #> 6          5.4         3.9          1.7         0.4  setosa
+```
+
+``` r
 
 # transpose
 t(df)
@@ -692,6 +833,9 @@ t(df)
 #> Petal.Length "1.7"   
 #> Petal.Width  "0.4"   
 #> Species      "setosa"
+```
+
+``` r
 
 # transpose of a transpose
 t(t(df))
@@ -709,28 +853,55 @@ t(t(df))
 #> 4 "setosa"
 #> 5 "setosa"
 #> 6 "setosa"
+```
+
+``` r
 
 # is it a dataframe?
 is.data.frame(df)
 #> [1] TRUE
+```
+
+``` r
 is.data.frame(t(df))
 #> [1] FALSE
+```
+
+``` r
 is.data.frame(t(t(df)))
 #> [1] FALSE
+```
+
+``` r
 
 # check type
 typeof(df)
 #> [1] "list"
+```
+
+``` r
 typeof(t(df))
 #> [1] "character"
+```
+
+``` r
 typeof(t(t(df)))
 #> [1] "character"
+```
+
+``` r
 
 # check dimensions
 dim(df)
 #> [1] 6 5
+```
+
+``` r
 dim(t(df))
 #> [1] 5 6
+```
+
+``` r
 dim(t(t(df)))
 #> [1] 6 5
 ```
@@ -746,7 +917,7 @@ As docs for `as.matrix()` mention:
 Let's experiment:
 
 
-```r
+``` r
 # example with mixed types (coerced to character)
 (df <- head(iris))
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
@@ -756,6 +927,9 @@ Let's experiment:
 #> 4          4.6         3.1          1.5         0.2  setosa
 #> 5          5.0         3.6          1.4         0.2  setosa
 #> 6          5.4         3.9          1.7         0.4  setosa
+```
+
+``` r
 
 as.matrix(df)
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width
@@ -772,12 +946,18 @@ as.matrix(df)
 #> 4 "setosa"
 #> 5 "setosa"
 #> 6 "setosa"
+```
+
+``` r
 
 str(as.matrix(df))
 #>  chr [1:6, 1:5] "5.1" "4.9" "4.7" "4.6" "5.0" "5.4" ...
 #>  - attr(*, "dimnames")=List of 2
 #>   ..$ : chr [1:6] "1" "2" "3" "4" ...
 #>   ..$ : chr [1:5] "Sepal.Length" "Sepal.Width" "Petal.Length" "Petal.Width" ...
+```
+
+``` r
 
 # another example (no such coercion)
 BOD
@@ -788,6 +968,9 @@ BOD
 #> 4    4   16.0
 #> 5    5   15.6
 #> 6    7   19.8
+```
+
+``` r
 
 as.matrix(BOD)
 #>      Time demand
@@ -808,7 +991,7 @@ From documentation of `data.matrix()`:
 Let's experiment:
 
 
-```r
+``` r
 data.matrix(df)
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 #> 1          5.1         3.5          1.4         0.2       1
@@ -817,6 +1000,9 @@ data.matrix(df)
 #> 4          4.6         3.1          1.5         0.2       1
 #> 5          5.0         3.6          1.4         0.2       1
 #> 6          5.4         3.9          1.7         0.4       1
+```
+
+``` r
 
 str(data.matrix(df))
 #>  num [1:6, 1:5] 5.1 4.9 4.7 4.6 5 5.4 3.5 3 3.2 3.1 ...
@@ -828,7 +1014,7 @@ str(data.matrix(df))
 ## Session information
 
 
-```r
+``` r
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
@@ -840,7 +1026,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-12
+#>  date     2024-05-19
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -848,14 +1034,14 @@ sessioninfo::session_info(include_base = TRUE)
 #>  base        * 4.4.0   2024-05-06 [3] local
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
-#>  cachem        1.0.8   2023-05-01 [1] RSPM
+#>  cachem        1.1.0   2024-05-16 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.4.0   2024-05-06 [3] local
 #>  datasets    * 4.4.0   2024-05-06 [3] local
 #>  digest        0.6.35  2024-03-11 [1] RSPM
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
-#>  fastmap       1.1.1   2023-02-24 [1] RSPM
+#>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  graphics    * 4.4.0   2024-05-06 [3] local
 #>  grDevices   * 4.4.0   2024-05-06 [3] local
@@ -870,7 +1056,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  purrr         1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang         1.1.3   2024-01-10 [1] RSPM
-#>  rmarkdown     2.26    2024-03-05 [1] RSPM
+#>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.4.0   2024-05-06 [3] local
@@ -878,7 +1064,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.0   2024-05-06 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.43    2024-03-25 [1] RSPM
+#>  xfun          0.44    2024-05-15 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 

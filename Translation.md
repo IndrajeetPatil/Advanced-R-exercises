@@ -5,7 +5,7 @@
 Needed libraries:
 
 
-```r
+``` r
 library(rlang)
 library(purrr)
 ```
@@ -31,7 +31,7 @@ Adapt the `escape()` to follow these rules when a new argument `script` is set t
 **A1.** Let's first start with the boilerplate code included in the book:
 
 
-```r
+``` r
 escape <- function(x, ...) UseMethod("escape")
 
 escape.character <- function(x, script = FALSE) {
@@ -52,7 +52,7 @@ escape.advr_html <- function(x, ...) x
 We will also need to tweak the boilerplate to pass this additional parameter to `escape()`:
 
 
-```r
+``` r
 html <- function(x) structure(x, class = "advr_html")
 
 print.advr_html <- function(x, ...) {
@@ -115,7 +115,7 @@ script <- tag("script", script = TRUE)
 ```
 
 
-```r
+``` r
 script("'</script>'")
 #> <HTML> <script>'<\/script>'</script>
 ```
@@ -125,7 +125,7 @@ script("'</script>'")
 **Q2.** The use of `...` for all functions has some big downsides. There's no input validation and there will be little information in the documentation or autocomplete about how they are used in the function. Create a new function that, when given a named list of tags and their attribute names (like below), creates tag functions with named arguments.
 
 
-```r
+``` r
 list(
   a = c("href"),
   img = c("src", "width", "height")
@@ -139,7 +139,7 @@ All tags should get `class` and `id` attributes.
 **Q3.** Reason about the following code that calls `with_html()` referencing objects from the environment. Will it work or fail? Why? Run the code to verify your predictions.
 
 
-```r
+``` r
 greeting <- "Hello!"
 with_html(p(greeting))
 p <- function() "p"
@@ -150,7 +150,7 @@ with_html(p(address))
 **A3.** To work with this, we first need to copy-paste relevant code from the book:
 
 
-```r
+``` r
 tags <- c(
   "a", "abbr", "address", "article", "aside", "audio",
   "b", "bdi", "bdo", "blockquote", "body", "button", "canvas",
@@ -190,7 +190,7 @@ Note that `with_html()` uses `eval_tidy()`, and therefore `code` argument is eva
 For this reason, the first example code will work:
 
 
-```r
+``` r
 greeting <- "Hello!"
 with_html(p(greeting))
 #> <HTML> <p>Hello!</p>
@@ -199,9 +199,12 @@ with_html(p(greeting))
 The following code, however, is not going to work because there is already `address` element in the data mask, and so `p()` will take a function `address()` as an input, and `escape()` doesn't know how to deal with objects of `function` type:
 
 
-```r
+``` r
 "address" %in% names(html_tags)
 #> [1] TRUE
+```
+
+``` r
 
 p <- function() "p"
 address <- "123 anywhere street"
@@ -219,7 +222,7 @@ with_html(p(address))
 **A4.** Let's first have a look at what it currently looks like:
 
 
-```r
+``` r
 with_html(
   body(
     h1("A heading", id = "first"),
@@ -237,7 +240,7 @@ We can improve this to follow the [Google HTML/CSS Style Guide](https://google.g
 For this, we need to create a new function to indent the code conditionally:
 
 
-```r
+``` r
 print.advr_html <- function(x, ...) {
   cat(paste("<HTML>", x, sep = "\n"))
 }
@@ -258,7 +261,7 @@ format_code <- function(children, indent = FALSE) {
 We can then update the `body()` function to use this new helper:
 
 
-```r
+``` r
 html_tags$body <- function(...) {
   dots <- dots_partition(...)
   attribs <- html_attributes(dots$named)
@@ -275,7 +278,7 @@ html_tags$body <- function(...) {
 The new formatting looks much better:
 
 
-```r
+``` r
 with_html(
   body(
     h1("A heading", id = "first"),
@@ -310,7 +313,7 @@ I didn't manage to solve these exercises, and so I'd recommend checking out the 
 ## Session information
 
 
-```r
+``` r
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
@@ -322,7 +325,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-12
+#>  date     2024-05-19
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -330,7 +333,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  base        * 4.4.0   2024-05-06 [3] local
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
-#>  cachem        1.0.8   2023-05-01 [1] RSPM
+#>  cachem        1.1.0   2024-05-16 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  compiler      4.4.0   2024-05-06 [3] local
 #>  datasets    * 4.4.0   2024-05-06 [3] local
@@ -338,7 +341,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  downlit       0.4.3   2023-06-29 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
-#>  fastmap       1.1.1   2023-02-24 [1] RSPM
+#>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  glue          1.7.0   2024-01-09 [1] RSPM
 #>  graphics    * 4.4.0   2024-05-06 [3] local
@@ -355,7 +358,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  purrr       * 1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang       * 1.1.3   2024-01-10 [1] RSPM
-#>  rmarkdown     2.26    2024-03-05 [1] RSPM
+#>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.4.0   2024-05-06 [3] local
@@ -364,7 +367,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.0   2024-05-06 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.43    2024-03-25 [1] RSPM
+#>  xfun          0.44    2024-05-15 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 

@@ -91,7 +91,7 @@
 <span class="header-section-number">5.1</span> Choices (Exercises 5.2.4)<a class="anchor" aria-label="anchor" href="#choices-exercises-5.2.4"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> What type of vector does each of the following calls to <code><a href="https://rdrr.io/r/base/ifelse.html">ifelse()</a></code> return?</p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span></span></code></pre></div>
@@ -100,58 +100,65 @@
 <ul>
 <li>It is type unstable, i.e. the type of return will depend on the type of which condition is true (<code>yes</code> or <code>no</code>, i.e.):</li>
 </ul>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span> <span class="co"># `numeric` returned</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span> <span class="co"># `character` returned</span></span>
+<span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span> <span class="co"># `character` returned</span></span>
 <span><span class="co">#&gt; [1] "no"</span></span></code></pre></div>
 <ul>
 <li>It works only for cases where <code>test</code> argument evaluates to a <code>logical</code> type:</li>
 </ul>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">NA_real_</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] NA</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">NaN</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">NaN</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] NA</span></span></code></pre></div>
 <ul>
 <li>If <code>test</code> is argument is of logical type, but <code>NA</code>, it will return <code>NA</code>:</li>
 </ul>
-<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb207"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] NA</span></span></code></pre></div>
 <ul>
 <li>If the <code>test</code> argument doesn’t resolve to <code>logical</code> type, it will try to coerce the output to a <code>logical</code> type:</li>
 </ul>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># will work</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="st">"TRUE"</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="st">"false"</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "no"</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="st">"false"</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "no"</span></span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># won't work</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="st">"tRuE"</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] NA</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">NaN</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="cn">NaN</span>, <span class="fl">1</span>, <span class="st">"no"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] NA</span></span></code></pre></div>
 <p>This is also clarified in the docs for this function:</p>
 <blockquote>
 <p>A vector of the same length and attributes (including dimensions and <code>"class"</code>) as <code>test</code> and data values from the values of <code>yes</code> or <code>no</code>. The mode of the answer will be coerced from logical to accommodate first any values taken from yes and then any values taken from <code>no</code>.</p>
 </blockquote>
 <p><strong>Q2.</strong> Why does the following code work?</p>
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb212"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="st">"not empty"</span> <span class="kw">else</span> <span class="st">"empty"</span></span>
-<span><span class="co">#&gt; [1] "not empty"</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] "not empty"</span></span></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="st">"not empty"</span> <span class="kw">else</span> <span class="st">"empty"</span></span>
 <span><span class="co">#&gt; [1] "empty"</span></span></code></pre></div>
 <p><strong>A2.</strong> The code works because the conditional expressions in <code>if()</code> - even though of <code>numeric</code> type - can be successfully coerced to a <code>logical</code> type.</p>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
 </div>
@@ -160,7 +167,7 @@
 <span class="header-section-number">5.2</span> Loops (Exercises 5.3.3)<a class="anchor" aria-label="anchor" href="#loops-exercises-5.3.3"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Q1.</strong> Why does this code succeed without errors or warnings?</p>
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -168,16 +175,18 @@
 <span><span class="op">}</span></span>
 <span><span class="va">out</span></span></code></pre></div>
 <p><strong>A1.</strong> This works because <code>1:length(x)</code> works in both positive and negative directions.</p>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span></span>
-<span><span class="co">#&gt; [1] 1 2</span></span>
-<span><span class="fl">1</span><span class="op">:</span><span class="fl">0</span></span>
-<span><span class="co">#&gt; [1] 1 0</span></span>
-<span><span class="fl">1</span><span class="op">:</span><span class="op">-</span><span class="fl">3</span></span>
+<span><span class="co">#&gt; [1] 1 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fl">1</span><span class="op">:</span><span class="fl">0</span></span>
+<span><span class="co">#&gt; [1] 1 0</span></span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fl">1</span><span class="op">:</span><span class="op">-</span><span class="fl">3</span></span>
 <span><span class="co">#&gt; [1]  1  0 -1 -2 -3</span></span></code></pre></div>
 <p>In this case, since <code>x</code> is of length <code>0</code>, <code>i</code> will go from <code>1</code> to <code>0</code>.</p>
 <p>Additionally, since out-of-bound (OOB) value for atomic vectors is <code>NA</code>, all related operations with OOB values will also produce <code>NA</code>.</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -187,13 +196,14 @@
 <span>  <span class="va">out</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">^</span><span class="fl">2</span></span>
 <span><span class="op">}</span></span>
 <span><span class="co">#&gt; [1] "i: 1 , x[i]: NA , out[i]: NULL"</span></span>
-<span><span class="co">#&gt; [1] "i: 0 , x[i]:  , out[i]: "</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] "i: 0 , x[i]:  , out[i]: "</span></span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">out</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; [1] NA</span></span></code></pre></div>
 <p>A way to do avoid this unintended behavior is to use <code><a href="https://rdrr.io/r/base/seq.html">seq_along()</a></code> instead:</p>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -204,7 +214,7 @@
 <span><span class="va">out</span></span>
 <span><span class="co">#&gt; list()</span></span></code></pre></div>
 <p><strong>Q2.</strong> When the following code is evaluated, what can you say about the vector being iterated?</p>
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">x</span> <span class="kw">in</span> <span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">x</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -212,7 +222,7 @@
 <span><span class="va">xs</span></span>
 <span><span class="co">#&gt; [1] 1 2 3 2 4 6</span></span></code></pre></div>
 <p><strong>A2.</strong> The iterator variable <code>x</code> initially takes all values of the vector <code>xs</code>. We can check this by printing <code>x</code> for each iteration:</p>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb224"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">x</span> <span class="kw">in</span> <span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"x:"</span>, <span class="va">x</span>, <span class="st">"\n"</span><span class="op">)</span></span>
@@ -227,7 +237,7 @@
 <span><span class="co">#&gt; xs: 1 2 3 2 4 6</span></span></code></pre></div>
 <p>It is worth noting that <code>x</code> is not updated <em>after</em> each iteration; otherwise, it will take increasingly bigger values of <code>xs</code>, and the loop will never end executing.</p>
 <p><strong>Q3.</strong> What does the following code tell you about when the index is updated?</p>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">*</span> <span class="fl">2</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span>
@@ -236,7 +246,7 @@
 <span><span class="co">#&gt; [1] 4</span></span>
 <span><span class="co">#&gt; [1] 6</span></span></code></pre></div>
 <p><strong>A3.</strong> In a <code>for()</code> loop the index is updated in the <strong>beginning</strong> of each iteration. Otherwise, we will encounter an infinite loop.</p>
-<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"before: "</span>, <span class="va">i</span>, <span class="st">"\n"</span><span class="op">)</span></span>
 <span>  <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">*</span> <span class="fl">2</span></span>
@@ -249,7 +259,7 @@
 <span><span class="co">#&gt; before:  3 </span></span>
 <span><span class="co">#&gt; after:   6</span></span></code></pre></div>
 <p>Also, worth contrasting the behavior of <code>for()</code> loop with that of <code>while()</code> loop:</p>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span><span class="kw">while</span> <span class="op">(</span><span class="va">i</span> <span class="op">&lt;</span> <span class="fl">4</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"before: "</span>, <span class="va">i</span>, <span class="st">"\n"</span><span class="op">)</span></span>
@@ -265,7 +275,7 @@
 <h2>
 <span class="header-section-number">5.3</span> Session information<a class="anchor" aria-label="anchor" href="#session-information-3"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">session_info</a></span><span class="op">(</span>include_base <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ─ Session info ───────────────────────────────────────────</span></span>
 <span><span class="co">#&gt;  setting  value</span></span>
@@ -277,7 +287,7 @@
 <span><span class="co">#&gt;  collate  C.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-05-12</span></span>
+<span><span class="co">#&gt;  date     2024-05-19</span></span>
 <span><span class="co">#&gt;  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────</span></span>
@@ -285,14 +295,14 @@
 <span><span class="co">#&gt;  base        * 4.4.0   2024-05-06 [3] local</span></span>
 <span><span class="co">#&gt;  bookdown      0.39    2024-04-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  bslib         0.7.0   2024-03-29 [1] RSPM</span></span>
-<span><span class="co">#&gt;  cachem        1.0.8   2023-05-01 [1] RSPM</span></span>
+<span><span class="co">#&gt;  cachem        1.1.0   2024-05-16 [1] RSPM</span></span>
 <span><span class="co">#&gt;  cli           3.6.2   2023-12-11 [1] RSPM</span></span>
 <span><span class="co">#&gt;  compiler      4.4.0   2024-05-06 [3] local</span></span>
 <span><span class="co">#&gt;  datasets    * 4.4.0   2024-05-06 [3] local</span></span>
 <span><span class="co">#&gt;  digest        0.6.35  2024-03-11 [1] RSPM</span></span>
 <span><span class="co">#&gt;  downlit       0.4.3   2023-06-29 [1] RSPM</span></span>
 <span><span class="co">#&gt;  evaluate      0.23    2023-11-01 [1] RSPM</span></span>
-<span><span class="co">#&gt;  fastmap       1.1.1   2023-02-24 [1] RSPM</span></span>
+<span><span class="co">#&gt;  fastmap       1.2.0   2024-05-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  fs            1.6.4   2024-04-25 [1] RSPM</span></span>
 <span><span class="co">#&gt;  graphics    * 4.4.0   2024-05-06 [3] local</span></span>
 <span><span class="co">#&gt;  grDevices   * 4.4.0   2024-05-06 [3] local</span></span>
@@ -306,14 +316,14 @@
 <span><span class="co">#&gt;  methods     * 4.4.0   2024-05-06 [3] local</span></span>
 <span><span class="co">#&gt;  R6            2.5.1   2021-08-19 [1] RSPM</span></span>
 <span><span class="co">#&gt;  rlang         1.1.3   2024-01-10 [1] RSPM</span></span>
-<span><span class="co">#&gt;  rmarkdown     2.26    2024-03-05 [1] RSPM</span></span>
+<span><span class="co">#&gt;  rmarkdown     2.27    2024-05-17 [1] RSPM</span></span>
 <span><span class="co">#&gt;  sass          0.4.9   2024-03-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  sessioninfo   1.2.2   2021-12-06 [1] RSPM</span></span>
 <span><span class="co">#&gt;  stats       * 4.4.0   2024-05-06 [3] local</span></span>
 <span><span class="co">#&gt;  tools         4.4.0   2024-05-06 [3] local</span></span>
 <span><span class="co">#&gt;  utils       * 4.4.0   2024-05-06 [3] local</span></span>
 <span><span class="co">#&gt;  withr         3.0.0   2024-01-16 [1] RSPM</span></span>
-<span><span class="co">#&gt;  xfun          0.43    2024-03-25 [1] RSPM</span></span>
+<span><span class="co">#&gt;  xfun          0.44    2024-05-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  xml2          1.3.6   2023-12-04 [1] RSPM</span></span>
 <span><span class="co">#&gt;  yaml          2.3.8   2023-12-11 [1] RSPM</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -352,7 +362,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2024-05-12.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2024-05-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

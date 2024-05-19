@@ -5,7 +5,7 @@
 Loading the needed libraries:
 
 
-```r
+``` r
 library(lobstr)
 ```
 
@@ -16,7 +16,7 @@ library(lobstr)
 **Q1.** Explain the relationship between `a`, `b`, `c` and `d` in the following code:
 
 
-```r
+``` r
 a <- 1:10
 b <- a
 c <- b
@@ -26,18 +26,18 @@ d <- 1:10
 **A1.** The names (`a`, `b`, and `c`) have same values and point to the same object in memory, as can be seen by their identical memory addresses:
 
 
-```r
+``` r
 obj_addrs <- obj_addrs(list(a, b, c))
 unique(obj_addrs)
-#> [1] "0x55dd568c7030"
+#> [1] "0x5614f2c09c90"
 ```
 
 Except `d`, which is a different object, even if it has the same value as `a`, `b`, and `c`:
 
 
-```r
+``` r
 obj_addr(d)
-#> [1] "0x55dd5674d8a0"
+#> [1] "0x5614f305ca20"
 ```
 
 ---
@@ -45,7 +45,7 @@ obj_addr(d)
 **Q2.** The following code accesses the mean function in multiple ways. Do they all point to the same underlying function object? Verify this with `lobstr::obj_addr()`.
 
 
-```r
+``` r
 mean
 base::mean
 get("mean")
@@ -56,7 +56,7 @@ match.fun("mean")
 **A2.** All listed function calls point to the same underlying function object in memory, as shown by this object's memory address:
 
 
-```r
+``` r
 obj_addrs <- obj_addrs(list(
   mean,
   base::mean,
@@ -66,7 +66,7 @@ obj_addrs <- obj_addrs(list(
 ))
 
 unique(obj_addrs)
-#> [1] "0x55dd53f01ef0"
+#> [1] "0x5614f0e5b818"
 ```
 
 ---
@@ -88,7 +88,7 @@ To suppress this behavior, one can set `check.names = FALSE`.
 - it adds a `.` as a suffix if the name is a [reserved keyword](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Reserved.html)
 
 
-```r
+``` r
 make.names(c("123abc", "@me", "_yu", "  gh", "else"))
 #> [1] "X123abc" "X.me"    "X_yu"    "X..gh"   "else."
 ```
@@ -100,7 +100,7 @@ make.names(c("123abc", "@me", "_yu", "  gh", "else"))
 **A5.** `.123e1` is not a syntacti name because it is parsed as a number, and not as a string:
 
 
-```r
+``` r
 typeof(.123e1)
 #> [1] "double"
 ```
@@ -120,11 +120,14 @@ And as the docs mention (emphasis mine):
 **A1.** `tracemem()` traces copying of objects in R. For example:
 
 
-```r
+``` r
 x <- 1:10
 
 tracemem(x)
-#> [1] "<0x55dd5824ec18>"
+#> [1] "<0x5614f41f0b68>"
+```
+
+``` r
 
 x <- x + 1
 
@@ -134,12 +137,15 @@ untracemem(x)
 But since the object created in memory by `1:10` is not assigned a name, it can't be addressed or modified from R, and so there is nothing to trace. 
 
 
-```r
+``` r
 obj_addr(1:10)
-#> [1] "0x55dd57e0e380"
+#> [1] "0x5614f4539708"
+```
+
+``` r
 
 tracemem(1:10)
-#> [1] "<0x55dd57e7a558>"
+#> [1] "<0x5614f497b170>"
 ```
 
 ---
@@ -147,7 +153,7 @@ tracemem(1:10)
 **Q2.** Explain why `tracemem()` shows two copies when you run this code. Hint: carefully look at the difference between this code and the code shown earlier in the section.
      
 
-```r
+``` r
 x <- c(1L, 2L, 3L)
 tracemem(x)
 
@@ -158,16 +164,25 @@ untracemem(x)
 **A2.** This is because the initial atomic vector is of type `integer`, but `4` (and not `4L`) is of type `double`. This is why a new copy is created.
 
 
-```r
+``` r
 x <- c(1L, 2L, 3L)
 typeof(x)
 #> [1] "integer"
+```
+
+``` r
 tracemem(x)
-#> [1] "<0x55dd585e21c8>"
+#> [1] "<0x5614f4e05458>"
+```
+
+``` r
 
 x[[3]] <- 4
-#> tracemem[0x55dd585e21c8 -> 0x55dd58719708]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
-#> tracemem[0x55dd58719708 -> 0x55dd5870b788]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x5614f4e05458 -> 0x5614f4f32df8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
+#> tracemem[0x5614f4f32df8 -> 0x5614f4f36a58]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+```
+
+``` r
 untracemem(x)
 
 typeof(x)
@@ -177,15 +192,24 @@ typeof(x)
 Trying with an integer should not create another copy:
 
 
-```r
+``` r
 x <- c(1L, 2L, 3L)
 typeof(x)
 #> [1] "integer"
+```
+
+``` r
 tracemem(x)
-#> [1] "<0x55dd58be45a8>"
+#> [1] "<0x5614f55d6b78>"
+```
+
+``` r
 
 x[[3]] <- 4L
-#> tracemem[0x55dd58be45a8 -> 0x55dd58d19dc8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x5614f55d6b78 -> 0x5614f5706638]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+```
+
+``` r
 untracemem(x)
 
 typeof(x)
@@ -201,7 +225,7 @@ To understand why this still produces a copy, here is an explanation from the [o
 **Q3.** Sketch out the relationship between the following objects:
 
 
-```r
+``` r
 a <- 1:10
 b <- list(a, a)
 c <- list(b, a, 1:10)
@@ -210,26 +234,32 @@ c <- list(b, a, 1:10)
 **A3.** We can understand the relationship between these objects by looking at their memory addresses:
 
 
-```r
+``` r
 a <- 1:10
 b <- list(a, a)
 c <- list(b, a, 1:10)
 
 ref(a)
-#> [1:0x55dd593c50c8] <int>
+#> [1:0x5614f5dc4d90] <int>
+```
+
+``` r
 
 ref(b)
-#> █ [1:0x55dd599217c8] <list> 
-#> ├─[2:0x55dd593c50c8] <int> 
-#> └─[2:0x55dd593c50c8]
+#> █ [1:0x5614f6311cf8] <list> 
+#> ├─[2:0x5614f5dc4d90] <int> 
+#> └─[2:0x5614f5dc4d90]
+```
+
+``` r
 
 ref(c)
-#> █ [1:0x55dd59929fd8] <list> 
-#> ├─█ [2:0x55dd599217c8] <list> 
-#> │ ├─[3:0x55dd593c50c8] <int> 
-#> │ └─[3:0x55dd593c50c8] 
-#> ├─[3:0x55dd593c50c8] 
-#> └─[4:0x55dd59989588] <int>
+#> █ [1:0x5614f6348958] <list> 
+#> ├─█ [2:0x5614f6311cf8] <list> 
+#> │ ├─[3:0x5614f5dc4d90] <int> 
+#> │ └─[3:0x5614f5dc4d90] 
+#> ├─[3:0x5614f5dc4d90] 
+#> └─[4:0x5614f6394d10] <int>
 ```
 
 Here is what we learn:
@@ -243,7 +273,7 @@ Here is what we learn:
 **Q4.** What happens when you run this code?
 
 
-```r
+``` r
 x <- list(1:10)
 x[[2]] <- x
 ```
@@ -253,13 +283,19 @@ Draw a picture.
 **A4.**
 
 
-```r
+``` r
 x <- list(1:10)
 x
 #> [[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+``` r
 obj_addr(x)
-#> [1] "0x55dd59b3e7f0"
+#> [1] "0x5614f64f63b8"
+```
+
+``` r
 
 x[[2]] <- x
 x
@@ -269,14 +305,20 @@ x
 #> [[2]]
 #> [[2]][[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+``` r
 obj_addr(x)
-#> [1] "0x55dd58e3d9c8"
+#> [1] "0x5614f5cc66d8"
+```
+
+``` r
 
 ref(x)
-#> █ [1:0x55dd58e3d9c8] <list> 
-#> ├─[2:0x55dd599aa290] <int> 
-#> └─█ [3:0x55dd59b3e7f0] <list> 
-#>   └─[2:0x55dd599aa290]
+#> █ [1:0x5614f5cc66d8] <list> 
+#> ├─[2:0x5614f6384280] <int> 
+#> └─█ [3:0x5614f64f63b8] <list> 
+#>   └─[2:0x5614f6384280]
 ```
 
 I don't have access to OmniGraffle software, so I am including here the figure from the [official solution manual](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify):
@@ -292,7 +334,7 @@ I don't have access to OmniGraffle software, so I am including here the figure f
 **Q1.** In the following example, why are `object.size(y)` and `obj_size(y)` so radically different? Consult the documentation of `object.size()`.
 
 
-```r
+``` r
 y <- rep(list(runif(1e4)), 100)
 
 object.size(y)
@@ -306,11 +348,14 @@ obj_size(y)
 This is why the sizes are so different:
 
 
-```r
+``` r
 y <- rep(list(runif(1e4)), 100)
 
 object.size(y)
 #> 8005648 bytes
+```
+
+``` r
 
 obj_size(y)
 #> 80.90 kB
@@ -321,7 +366,7 @@ obj_size(y)
 **Q2.**  Take the following list. Why is its size somewhat misleading?
 
 
-```r
+``` r
 funs <- list(mean, sd, var)
 obj_size(funs)
 ```
@@ -329,7 +374,7 @@ obj_size(funs)
 **A2.** These functions are not externally created objects in R, but are always available as part of base packages, so doesn't make much sense to measure their size because they are never going to be *not* available.
 
 
-```r
+``` r
 funs <- list(mean, sd, var)
 obj_size(funs)
 #> 18.76 kB
@@ -340,7 +385,7 @@ obj_size(funs)
 **Q3.** Predict the output of the following code:
 
 
-```r
+``` r
 a <- runif(1e6)
 obj_size(a)
 
@@ -360,26 +405,44 @@ obj_size(a, b)
 **A3.** Correctly predicted 😉
 
 
-```r
+``` r
 a <- runif(1e6)
 obj_size(a)
 #> 8.00 MB
+```
+
+``` r
 
 b <- list(a, a)
 obj_size(b)
 #> 8.00 MB
+```
+
+``` r
 obj_size(a, b)
 #> 8.00 MB
+```
+
+``` r
 
 b[[1]][[1]] <- 10
 obj_size(b)
 #> 16.00 MB
+```
+
+``` r
 obj_size(a, b)
 #> 16.00 MB
+```
+
+``` r
 
 b[[2]][[1]] <- 10
 obj_size(b)
 #> 16.00 MB
+```
+
+``` r
 obj_size(a, b)
 #> 24.00 MB
 ```
@@ -389,7 +452,7 @@ Key pieces of information to keep in mind to make correct predictions:
 - Size of empty vector
 
 
-```r
+``` r
 obj_size(double())
 #> 48 B
 ```
@@ -397,7 +460,7 @@ obj_size(double())
 - Size of a single double: 8 bytes
 
 
-```r
+``` r
 obj_size(double(1))
 #> 56 B
 ```
@@ -413,7 +476,7 @@ obj_size(double(1))
 **Q1.** Explain why the following code doesn't create a circular list.
 
 
-```r
+``` r
 x <- list()
 x[[1]] <- x
 ```
@@ -421,20 +484,29 @@ x[[1]] <- x
 **A1.** Copy-on-modify prevents the creation of a circular list.
 
 
-```r
+``` r
 x <- list()
 
 obj_addr(x)
-#> [1] "0x55dd59eb57c8"
+#> [1] "0x5614f68b39c8"
+```
+
+``` r
 
 tracemem(x)
-#> [1] "<0x55dd59eb57c8>"
+#> [1] "<0x5614f68b39c8>"
+```
+
+``` r
 
 x[[1]] <- x
-#> tracemem[0x55dd59eb57c8 -> 0x55dd59fc4cc8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x5614f68b39c8 -> 0x5614f69c4db8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+```
+
+``` r
 
 obj_addr(x[[1]])
-#> [1] "0x55dd59eb57c8"
+#> [1] "0x5614f68b39c8"
 ```
 
 ---
@@ -444,7 +516,7 @@ obj_addr(x[[1]])
 **A2.** Let's first microbenchmark functions that do and do not create copies for varying lengths of number of columns.
 
 
-```r
+``` r
 library(bench)
 library(tidyverse)
 
@@ -500,7 +572,7 @@ benchDf <- purrr::map_dfr(
 Plotting these benchmarks reveals how the performance gets increasingly worse as the number of data frames increases:
 
 
-```r
+``` r
 ggplot(
   benchDf,
   aes(
@@ -535,7 +607,7 @@ ggplot(
 > It is not useful to trace `NULL`, environments, promises, weak references, or external pointer objects, as these are not duplicated
 
 
-```r
+``` r
 e <- rlang::env(a = 1, b = "3")
 tracemem(e)
 #> Error in tracemem(e): 'tracemem' is not useful for promise and environment objects
@@ -546,7 +618,7 @@ tracemem(e)
 ## Session information
 
 
-```r
+``` r
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
@@ -558,7 +630,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-12
+#>  date     2024-05-19
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -567,7 +639,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  bench       * 1.1.3   2023-05-04 [1] RSPM
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
-#>  cachem        1.0.8   2023-05-01 [1] RSPM
+#>  cachem        1.1.0   2024-05-16 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  colorspace    2.1-0   2023-01-23 [1] RSPM
 #>  compiler      4.4.0   2024-05-06 [3] local
@@ -578,8 +650,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  dplyr       * 1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
-#>  farver        2.1.1   2022-07-06 [1] RSPM
-#>  fastmap       1.1.1   2023-02-24 [1] RSPM
+#>  farver        2.1.2   2024-05-13 [1] RSPM
+#>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  forcats     * 1.0.0   2023-01-29 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
@@ -611,7 +683,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  readr       * 2.1.5   2024-01-10 [1] RSPM
 #>  rlang         1.1.3   2024-01-10 [1] RSPM
-#>  rmarkdown     2.26    2024-03-05 [1] RSPM
+#>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  scales        1.3.0   2023-11-28 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
@@ -629,7 +701,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.0   2024-05-06 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.43    2024-03-25 [1] RSPM
+#>  xfun          0.44    2024-05-15 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 

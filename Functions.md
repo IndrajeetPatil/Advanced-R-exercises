@@ -5,7 +5,7 @@
 Attaching the needed libraries:
 
 
-```r
+``` r
 library(tidyverse, warn.conflicts = FALSE)
 ```
 
@@ -16,23 +16,26 @@ library(tidyverse, warn.conflicts = FALSE)
 **A1.** Given a name, `match.fun()` lets you find a function.
 
 
-```r
+``` r
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x559d39fcdf98>
+#> <bytecode: 0x563ce1bf78f8>
 #> <environment: namespace:base>
 ```
 
 But, given a function, it doesn't make sense to find its name because there can be multiple names bound to the same function.
 
 
-```r
+``` r
 f1 <- function(x) mean(x)
 f2 <- f1
 
 match.fun("f1")
 #> function(x) mean(x)
+```
+
+``` r
 
 match.fun("f2")
 #> function(x) mean(x)
@@ -41,9 +44,12 @@ match.fun("f2")
 **Q2.** It's possible (although typically not useful) to call an anonymous function. Which of the two approaches below is correct? Why?
 
 
-```r
+``` r
 function(x) 3()
 #> function(x) 3()
+```
+
+``` r
 (function(x) 3)()
 #> [1] 3
 ```
@@ -51,12 +57,18 @@ function(x) 3()
 **A2.** The first expression is not correct since the function will evaluate `3()`, which is syntactically not allowed since literals can't be treated like functions.
 
 
-```r
+``` r
 f <- (function(x) 3())
 f
 #> function(x) 3()
+```
+
+``` r
 f()
 #> Error in f(): attempt to apply non-function
+```
+
+``` r
 
 rlang::is_syntactic_literal(3)
 #> [1] TRUE
@@ -65,10 +77,13 @@ rlang::is_syntactic_literal(3)
 This is the correct way to call an anonymous function.
 
 
-```r
+``` r
 g <- (function(x) 3)
 g
 #> function(x) 3
+```
+
+``` r
 g()
 #> [1] 3
 ```
@@ -82,17 +97,26 @@ g()
 **A4.** Use `is.function()` to check if an *object* is a *function*:
 
 
-```r
+``` r
 # these are functions
 f <- function(x) 3
 is.function(mean)
 #> [1] TRUE
+```
+
+``` r
 is.function(f)
 #> [1] TRUE
+```
+
+``` r
 
 # these aren't
 is.function("x")
 #> [1] FALSE
+```
+
+``` r
 is.function(new.env())
 #> [1] FALSE
 ```
@@ -100,16 +124,25 @@ is.function(new.env())
 Use `is.primitive()` to check if a *function* is *primitive*:
 
 
-```r
+``` r
 # primitive
 is.primitive(sum)
 #> [1] TRUE
+```
+
+``` r
 is.primitive(`+`)
 #> [1] TRUE
+```
+
+``` r
 
 # not primitive
 is.primitive(mean)
 #> [1] FALSE
+```
+
+``` r
 is.primitive(read.csv)
 #> [1] FALSE
 ```
@@ -117,7 +150,7 @@ is.primitive(read.csv)
 **Q5.** This code makes a list of all functions in the base package. 
 
 
-```r
+``` r
 objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
 funs <- Filter(is.function, objs)
 ```
@@ -133,7 +166,7 @@ c. How could you adapt the code to find all primitive functions?
 **A5.** The provided code is the following:
 
 
-```r
+``` r
 objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
 funs <- Filter(is.function, objs)
 ```
@@ -143,9 +176,12 @@ a. Which base function has the most arguments?
 We can use `formals()` to extract number of arguments, but because this function returns `NULL` for primitive functions.
 
 
-```r
+``` r
 formals("!")
 #> NULL
+```
+
+``` r
 
 length(formals("!"))
 #> [1] 0
@@ -154,14 +190,14 @@ length(formals("!"))
 Therefore, we will focus only on non-primitive functions.
 
 
-```r
+``` r
 funs <- purrr::discard(funs, is.primitive)
 ```
 
 `scan()` function has the most arguments.
 
 
-```r
+``` r
 df_formals <- purrr::map_df(funs, ~ length(formals(.))) %>%
   tidyr::pivot_longer(
     cols = dplyr::everything(),
@@ -194,7 +230,7 @@ b. How many base functions have no arguments? What’s special about those funct
 At the time of writing, 47 base (non-primitive) functions have no arguments. 
 
 
-```r
+``` r
 dplyr::filter(df_formals, argumentCount == 0)
 #> # A tibble: 47 × 2
 #>    `function`               argumentCount
@@ -215,13 +251,16 @@ dplyr::filter(df_formals, argumentCount == 0)
 c. How could you adapt the code to find all primitive functions?
 
 
-```r
+``` r
 objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
 funs <- Filter(is.function, objs)
 primitives <- Filter(is.primitive, funs)
 
 length(primitives)
 #> [1] 210
+```
+
+``` r
 
 names(primitives)
 #>   [1] "-"                    ":"                   
@@ -344,13 +383,16 @@ names(primitives)
 **A7.** All package functions print their environment:
 
 
-```r
+``` r
 # base
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x559d39fcdf98>
+#> <bytecode: 0x563ce1bf78f8>
 #> <environment: namespace:base>
+```
+
+``` r
 
 # other package function
 purrr::map
@@ -358,7 +400,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x559d3e681568>
+#> <bytecode: 0x563ce62c2978>
 #> <environment: namespace:purrr>
 ```
 
@@ -367,7 +409,7 @@ There are two exceptions where the enclosing environment won't be printed:
 - primitive functions
 
 
-```r
+``` r
 sum
 #> function (..., na.rm = FALSE)  .Primitive("sum")
 ```
@@ -375,7 +417,7 @@ sum
 - functions created in the global environment
 
 
-```r
+``` r
 f <- function(x) mean(x)
 f
 #> function(x) mean(x)
@@ -386,7 +428,7 @@ f
 **Q1.** What does the following code return? Why? Describe how each of the three `c`'s is interpreted.
 
 
-```r
+``` r
 c <- 10
 c(c = c)
 ```
@@ -398,7 +440,7 @@ c(c = c)
 * third *c* as a variable with value `10`
 
 
-```r
+``` r
 c <- 10
 c(c = c)
 #>  c 
@@ -408,7 +450,7 @@ c(c = c)
 You can also see this in the lexical analysis of this expression:
 
 
-```r
+``` r
 p_expr <- parse(text = "c(c = c)", keep.source = TRUE)
 getParseData(p_expr) %>% select(token, text)
 #>                   token text
@@ -438,7 +480,7 @@ getParseData(p_expr) %>% select(token, text)
 **Q3.** What does the following function return? Make a prediction before running the code yourself.
 
 
-```r
+``` r
 f <- function(x) {
   f <- function(x) {
     f <- function() {
@@ -454,7 +496,7 @@ f(10)
 **A3.** Correctly predicted 😉
 
 
-```r
+``` r
 f <- function(x) {
   f <- function(x) {
     f <- function() {
@@ -476,7 +518,7 @@ Although there are multiple `f()` functions, the order of evaluation goes from i
 **Q1.** What important property of `&&` makes `x_ok()` work?
 
 
-```r
+``` r
 x_ok <- function(x) {
   !is.null(x) && length(x) == 1 && x > 0
 }
@@ -489,7 +531,7 @@ x_ok(1:3)
 What is different with this code? Why is this behaviour undesirable here?
     
 
-```r
+``` r
 x_ok <- function(x) {
   !is.null(x) & length(x) == 1 & x > 0
 }
@@ -502,16 +544,22 @@ x_ok(1:3)
 **A1.** `&&` evaluates left to right and has short-circuit evaluation, i.e., if the first operand is `TRUE`, R will short-circuit and not even look at the second operand.
 
 
-```r
+``` r
 x_ok <- function(x) {
   !is.null(x) && length(x) == 1 && x > 0
 }
 
 x_ok(NULL)
 #> [1] FALSE
+```
+
+``` r
 
 x_ok(1)
 #> [1] TRUE
+```
+
+``` r
 
 x_ok(1:3)
 #> [1] FALSE
@@ -520,16 +568,22 @@ x_ok(1:3)
 Replacing `&&` with `&` is undesirable because it performs element-wise logical comparisons and returns a vector of values that is not always useful for a decision (`TRUE`, `FALSE`, or `NA`).
 
 
-```r
+``` r
 x_ok <- function(x) {
   !is.null(x) & length(x) == 1 & x > 0
 }
 
 x_ok(NULL)
 #> logical(0)
+```
+
+``` r
 
 x_ok(1)
 #> [1] TRUE
+```
+
+``` r
 
 x_ok(1:3)
 #> [1] FALSE FALSE FALSE
@@ -538,7 +592,7 @@ x_ok(1:3)
 **Q2.** What does this function return? Why? Which principle does it illustrate?
 
 
-```r
+``` r
 f2 <- function(x = z) {
   z <- 100
   x
@@ -553,7 +607,7 @@ When function execution environment encounters `x`, it evaluates argument `x = z
 We can check this by looking at the memory addresses:
 
 
-```r
+``` r
 f2 <- function(x = z) {
   z <- 100
   print(lobstr::obj_addrs(list(x, z)))
@@ -561,14 +615,14 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x559d43b8d0e8" "0x559d43b8d0e8"
+#> [1] "0x563ceb7e0eb0" "0x563ceb7e0eb0"
 #> [1] 100
 ```
 
 **Q3.** What does this function return? Why? Which principle does it illustrate?
   
 
-```r
+``` r
 y <- 10
 f1 <- function(x =
                  {
@@ -585,7 +639,7 @@ y
 **A3.** Let's first look at what the function returns:
 
 
-```r
+``` r
 y <- 10
 f1 <- function(x =
                  {
@@ -597,6 +651,9 @@ f1 <- function(x =
 }
 f1()
 #> [1] 2 1
+```
+
+``` r
 y
 #> [1] 10
 ```
@@ -604,7 +661,7 @@ y
 This is because of name masking. In the function call `c(x, y)`, when `x` is accessed in the function environment, the following promise is evaluated in the function environment:
 
 
-```r
+``` r
 x <- {
   y <- 1
   2
@@ -618,7 +675,7 @@ Therefore, neither the promise `y = 0` nor global assignment `y <- 10` is ever c
 **Q4.** In `hist()`, the default value of `xlim` is `range(breaks)`, the default value for `breaks` is `"Sturges"`, and
 
 
-```r
+``` r
 range("Sturges")
 #> [1] "Sturges" "Sturges"
 ```
@@ -628,7 +685,7 @@ Explain how `hist()` works to get a correct `xlim` value.
 **A4.** The `xlim` defines the range of the histogram's `x`-axis.
 
 
-```r
+``` r
 hist(mtcars$wt, xlim = c(1, 6))
 ```
 
@@ -637,7 +694,7 @@ hist(mtcars$wt, xlim = c(1, 6))
 The default `xlim = range(breaks)` and `breaks = "Sturges"` arguments reveal that the function uses Sturges' algorithm to compute the number of breaks.
 
 
-```r
+``` r
 nclass.Sturges(mtcars$wt)
 #> [1] 6
 ```
@@ -649,14 +706,14 @@ To see the implementation, run `sloop::s3_get_method("hist.default")`.
 **Q5.** Explain why this function works. Why is it confusing?
 
 
-```r
+``` r
 show_time <- function(x = stop("Error!")) {
   stop <- function(...) Sys.time()
   print(x)
 }
 
 show_time()
-#> [1] "2024-05-12 00:43:55 UTC"
+#> [1] "2024-05-19 00:44:29 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -672,7 +729,7 @@ But, due to lazy evaluation, the promise `stop("Error!")` is evaluated only when
 **A6.** Going solely by its signature, 
 
 
-```r
+``` r
 formals(library)
 #> $package
 #> 
@@ -717,7 +774,7 @@ formals(library)
 it looks like the following arguments are required:
 
 
-```r
+``` r
 formals(library) %>%
   purrr::discard(is.null) %>%
   purrr::map_lgl(~ .x == "") %>%
@@ -736,14 +793,23 @@ It would have been better if there arguments were `NULL` instead of missing; tha
 **Q1.** Explain the following results:
 
 
-```r
+``` r
 sum(1, 2, 3)
 #> [1] 6
+```
+
+``` r
 mean(1, 2, 3)
 #> [1] 1
+```
+
+``` r
 
 sum(1, 2, 3, na.omit = TRUE)
 #> [1] 7
+```
+
+``` r
 mean(1, 2, 3, na.omit = TRUE)
 #> [1] 1
 ```
@@ -751,9 +817,12 @@ mean(1, 2, 3, na.omit = TRUE)
 **A1.** Let's look at arguments for these functions:
 
 
-```r
+``` r
 str(sum)
 #> function (..., na.rm = FALSE)
+```
+
+``` r
 str(mean)
 #> function (x, ...)
 ```
@@ -765,7 +834,7 @@ For `mean()` function, there is only one parameter (`x`) and it's matched by the
 **Q2.** Explain how to find the documentation for the named arguments in the following function call:
 
 
-```r
+``` r
 plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
 ```
 
@@ -800,7 +869,7 @@ The docs for all parameters of interest [reside there](https://rdrr.io/r/graphic
 So having a single argument `col` would not work as it will be ambiguous as to which element to apply this argument to.
 
 
-```r
+``` r
 localTitle <- function(..., col, bg, pch, cex, lty, lwd) title(...)
 
 title <- function(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
@@ -821,7 +890,7 @@ title <- function(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
 **A1.** The `load()` function reloads datasets that were saved using the `save()` function:
 
 
-```r
+``` r
 save(iris, file = "my_iris.rda")
 load("my_iris.rda")
 ```
@@ -831,10 +900,13 @@ We normally don't see any value because the function loads the datasets invisibl
 We can change this by setting `verbose = TRUE`:
 
 
-```r
+``` r
 load("my_iris.rda", verbose = TRUE)
 #> Loading objects:
 #>   iris
+```
+
+``` r
 
 # cleanup
 unlink("my_iris.rda")
@@ -845,14 +917,14 @@ unlink("my_iris.rda")
 **A2.** The `write.table()` writes a data frame to a file and returns a `NULL` invisibly.
 
 
-```r
+``` r
 write.table(BOD, file = "BOD.csv")
 ```
 
 It would have been more helpful if the function invisibly returned the actual object being written to the file, which could then be further used.
 
 
-```r
+``` r
 # cleanup
 unlink("BOD.csv")
 ```
@@ -868,7 +940,7 @@ That is, `chdir` allows changing working directory temporarily but *only* to the
 While `withr::with_dir()` temporarily changes the current working directory:
 
 
-```r
+``` r
 withr::with_dir
 #> function (new, code) 
 #> {
@@ -876,7 +948,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x559d41caf4a8>
+#> <bytecode: 0x563ce991fbd8>
 #> <environment: namespace:withr>
 ```
 
@@ -887,7 +959,7 @@ More importantly, its parameters `dir` allows temporarily changing working direc
 **A4.** Here is a function that opens a graphics device, runs the supplied code, and  closes the graphics device:
 
 
-```r
+``` r
 with_png_device <- function(filename, code, ...) {
   grDevices::png(filename = filename, ...)
   on.exit(grDevices::dev.off(), add = TRUE)
@@ -899,7 +971,7 @@ with_png_device <- function(filename, code, ...) {
 **Q5.** We can use `on.exit()` to implement a simple version of `capture.output()`.
 
 
-```r
+``` r
 capture.output2 <- function(code) {
   temp <- tempfile()
   on.exit(file.remove(temp), add = TRUE, after = TRUE)
@@ -920,7 +992,7 @@ Compare `capture.output()` to `capture.output2()`. How do the functions differ? 
 **A5.** The `capture.output()` is significantly more complex, as can be seen by its definition:
 
 
-```r
+``` r
 capture.output
 #> function (..., file = NULL, append = FALSE, type = c("output", 
 #>     "message"), split = FALSE) 
@@ -958,7 +1030,7 @@ capture.output
 #>         close(file)
 #>     rval %||% invisible(NULL)
 #> }
-#> <bytecode: 0x559d420770f8>
+#> <bytecode: 0x563ce9cf3100>
 #> <environment: namespace:utils>
 ```
 
@@ -967,9 +1039,12 @@ Here are few key differences:
 - `capture.output()` uses `print()` function to print to console:
 
 
-```r
+``` r
 capture.output(1)
 #> [1] "[1] 1"
+```
+
+``` r
 
 capture.output2(1)
 #> character(0)
@@ -978,7 +1053,7 @@ capture.output2(1)
 - `capture.output()` can capture messages as well:
 
 
-```r
+``` r
 capture.output(message("Hi there!"), "a", type = "message")
 #> Hi there!
 #> [1] "a"
@@ -988,7 +1063,7 @@ capture.output(message("Hi there!"), "a", type = "message")
 - `capture.output()` takes into account visibility of the expression:
 
 
-```r
+``` r
 capture.output(1, invisible(2), 3)
 #> [1] "[1] 1" "[1] 3"
 ```
@@ -998,7 +1073,7 @@ capture.output(1, invisible(2), 3)
 **Q1.** Rewrite the following code snippets into prefix form:
 
 
-```r
+``` r
 1 + 2 + 3
 
 1 + (2 + 3)
@@ -1009,7 +1084,7 @@ if (length(x) <= 5) x[[5]] else x[[n]]
 **A1.** Prefix forms for code snippets:
 
 
-```r
+``` r
 # The binary `+`  operator has left to right associative property.
 `+`(`+`(1, 2), 3)
 
@@ -1021,7 +1096,7 @@ if (length(x) <= 5) x[[5]] else x[[n]]
 **Q2.**  Clarify the following list of odd function calls:
 
 
-```r
+``` r
 x <- sample(replace = TRUE, 20, x = c(1:10, NA))
 y <- runif(min = 0, max = 1, 20)
 cor(m = "k", y = y, u = "p", x = x)
@@ -1036,7 +1111,7 @@ cor(m = "k", y = y, u = "p", x = x)
 **Q3.** Explain why the following code fails:
 
 
-```r
+``` r
 modify(get("x"), 1) <- 10
 #> Error: target of assignment expands to non-language object
 ```
@@ -1044,7 +1119,7 @@ modify(get("x"), 1) <- 10
 **A3.** As provided in the book, the replacement function is defined as:
 
 
-```r
+``` r
 `modify<-` <- function(x, position, value) {
   x[position] <- value
   x
@@ -1054,14 +1129,14 @@ modify(get("x"), 1) <- 10
 Let's re-write the provided code in prefix format to understand why it doesn't work:
 
 
-```r
+``` r
 get("x") <- `modify<-`(x = get("x"), position = 1, value = 10)
 ```
 
 Although this works:
 
 
-```r
+``` r
 x <- 5
 `modify<-`(x = get("x"), position = 1, value = 10)
 #> [1] 10
@@ -1070,7 +1145,7 @@ x <- 5
 The following doesn't because the code above evaluates to:
 
 
-```r
+``` r
 `get<-`("x", 10)
 #> Error in `get<-`("x", 10): could not find function "get<-"
 ```
@@ -1082,7 +1157,7 @@ And there is no `get<-` function in R.
 **A4.** A replacement function that modifies a random location in a vector:
 
 
-```r
+``` r
 `random_modify<-` <- function(x, value) {
   random_index <- sample(seq_along(x), size = 1)
   x[random_index] <- value
@@ -1093,21 +1168,30 @@ And there is no `get<-` function in R.
 Let's try it out:
 
 
-```r
+``` r
 x1 <- rep("a", 10)
 random_modify(x1) <- "X"
 x1
 #>  [1] "a" "a" "a" "a" "X" "a" "a" "a" "a" "a"
+```
+
+``` r
 
 x2 <- rep("a", 10)
 random_modify(x2) <- "Y"
 x2
 #>  [1] "a" "a" "a" "a" "a" "Y" "a" "a" "a" "a"
+```
+
+``` r
 
 x3 <- rep(0, 15)
 random_modify(x3) <- -4
 x3
 #>  [1]  0  0  0  0 -4  0  0  0  0  0  0  0  0  0  0
+```
+
+``` r
 
 x4 <- rep(0, 15)
 random_modify(x4) <- -1
@@ -1118,7 +1202,7 @@ x4
 **Q5.** Write your own version of `+` that pastes its inputs together if they are character vectors but behaves as usual otherwise. In other words, make this code work:
 
 
-```r
+``` r
 1 + 2
 #> [1] 3
 
@@ -1129,7 +1213,7 @@ x4
 **A5.** Infix operator to re-create the desired output:
 
 
-```r
+``` r
 `+` <- function(x, y) {
   if (is.character(x) || is.character(y)) {
     paste0(x, y)
@@ -1140,9 +1224,15 @@ x4
 
 1 + 2
 #> [1] 3
+```
+
+``` r
 
 "a" + "b"
 #> [1] "ab"
+```
+
+``` r
 
 rm("+", envir = .GlobalEnv)
 ```
@@ -1154,7 +1244,7 @@ rm("+", envir = .GlobalEnv)
 So, using `apropos()`, we can find all replacement functions in search paths and the filter out the ones that don't belong to `{base}` package:
 
 
-```r
+``` r
 ls_replacement <- apropos("<-", where = TRUE, mode = "function")
 
 base_index <- which(grepl("base", searchpaths()))
@@ -1199,7 +1289,7 @@ unname(ls_replacement)
 The primitive replacement functions can be listed using `is.primitive()`:
 
 
-```r
+``` r
 mget(ls_replacement, envir = baseenv()) %>%
   purrr::keep(is.primitive) %>%
   names()
@@ -1222,7 +1312,7 @@ mget(ls_replacement, envir = baseenv()) %>%
 **A8.** Exclusive OR  is a logical operation that is `TRUE` if and only if its arguments differ (one is `TRUE`, the other is `FALSE`).
 
 
-```r
+``` r
 lv1 <- c(TRUE, FALSE, TRUE, FALSE)
 lv2 <- c(TRUE, TRUE, FALSE, FALSE)
 
@@ -1233,13 +1323,16 @@ xor(lv1, lv2)
 We can create infix operator for exclusive OR like so:
 
 
-```r
+``` r
 `%xor%` <- function(x, y) {
   !((x & y) | !(x | y))
 }
 
 lv1 %xor% lv2
 #> [1] FALSE  TRUE  TRUE FALSE
+```
+
+``` r
 
 TRUE %xor% TRUE
 #> [1] FALSE
@@ -1252,7 +1345,7 @@ The function is vectorized over its inputs because the underlying logical operat
 **A9.** The required infix operators can be created as following:
 
 
-```r
+``` r
 `%n%` <- function(x, y) {
   intersect(x, y)
 }
@@ -1269,16 +1362,28 @@ The function is vectorized over its inputs because the underlying logical operat
 We can check that the outputs agree with the underlying functions:
 
 
-```r
+``` r
 (x <- c(sort(sample(1:20, 9)), NA))
 #>  [1]  4  7  8  9 11 13 15 16 20 NA
+```
+
+``` r
 (y <- c(sort(sample(3:23, 7)), NA))
 #> [1]  9 10 13 15 17 19 20 NA
+```
+
+``` r
 
 identical(intersect(x, y), x %n% y)
 #> [1] TRUE
+```
+
+``` r
 identical(union(x, y), x %u% y)
 #> [1] TRUE
+```
+
+``` r
 identical(setdiff(x, y), x %/% y)
 #> [1] TRUE
 ```
@@ -1286,7 +1391,7 @@ identical(setdiff(x, y), x %/% y)
 ## Session information
 
 
-```r
+``` r
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
@@ -1298,7 +1403,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-12
+#>  date     2024-05-19
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1306,7 +1411,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  base        * 4.4.0   2024-05-06 [3] local
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
-#>  cachem        1.0.8   2023-05-01 [1] RSPM
+#>  cachem        1.1.0   2024-05-16 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
 #>  colorspace    2.1-0   2023-01-23 [1] RSPM
 #>  compiler      4.4.0   2024-05-06 [3] local
@@ -1316,7 +1421,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  dplyr       * 1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.23    2023-11-01 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
-#>  fastmap       1.1.1   2023-02-24 [1] RSPM
+#>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  forcats     * 1.0.0   2023-01-29 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
@@ -1345,7 +1450,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  readr       * 2.1.5   2024-01-10 [1] RSPM
 #>  rlang         1.1.3   2024-01-10 [1] RSPM
-#>  rmarkdown     2.26    2024-03-05 [1] RSPM
+#>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  scales        1.3.0   2023-11-28 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
@@ -1363,7 +1468,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.0   2024-05-06 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.43    2024-03-25 [1] RSPM
+#>  xfun          0.44    2024-05-15 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 
