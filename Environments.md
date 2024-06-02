@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x55664902ae10>
+#> <environment: 0x556391479db8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ``` r
 lobstr::ref(e$loop)
-#> █ [1:0x55664902ae10] <env> 
-#> └─loop = [1:0x55664902ae10]
+#> █ [1:0x556391479db8] <env> 
+#> └─loop = [1:0x556391479db8]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,12 +71,12 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x556649aa1de8" "0x556649aa1de8"
+#> [1] "0x5563923ee880" "0x5563923ee880"
 ```
 
 ``` r
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x556649f0f978" "0x556649f0f978"
+#> [1] "0x55639235f570" "0x55639235f570"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -339,7 +339,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x5566462b58f8>
+#> <bytecode: 0x55638e701850>
 #> <environment: namespace:base>
 ```
 
@@ -569,7 +569,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x556647ce7848>
+#> <bytecode: 0x5563901338a8>
 #> <environment: namespace:rlang>
 ```
 
@@ -625,7 +625,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-26
+#>  date     2024-06-02
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -649,11 +649,11 @@ sessioninfo::session_info(include_base = TRUE)
 #>  glue          1.7.0   2024-01-09 [1] RSPM
 #>  graphics    * 4.4.0   2024-05-25 [3] local
 #>  grDevices   * 4.4.0   2024-05-25 [3] local
-#>  highr         0.10    2022-12-22 [1] RSPM
+#>  highr         0.11    2024-05-26 [1] RSPM
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.46    2024-04-06 [1] RSPM
+#>  knitr         1.47    2024-05-29 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  lobstr        1.1.2   2022-06-22 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM

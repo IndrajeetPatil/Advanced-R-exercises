@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55d07e1258f8>
+#> <bytecode: 0x55bd85017850>
 #> <environment: namespace:base>
 ```
 
@@ -388,7 +388,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55d07e1258f8>
+#> <bytecode: 0x55bd85017850>
 #> <environment: namespace:base>
 ```
 
@@ -400,7 +400,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x55d0827f0f58>
+#> <bytecode: 0x55bd896e39c8>
 #> <environment: namespace:purrr>
 ```
 
@@ -615,7 +615,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x55d087d0c6a0" "0x55d087d0c6a0"
+#> [1] "0x55bd8ec02f60" "0x55bd8ec02f60"
 #> [1] 100
 ```
 
@@ -713,7 +713,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2024-05-26 00:44:21 UTC"
+#> [1] "2024-06-02 00:44:36 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -948,7 +948,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x55d085e4a438>
+#> <bytecode: 0x55bd8cd3e410>
 #> <environment: namespace:withr>
 ```
 
@@ -1030,7 +1030,7 @@ capture.output
 #>         close(file)
 #>     rval %||% invisible(NULL)
 #> }
-#> <bytecode: 0x55d08621e0b0>
+#> <bytecode: 0x55bd8d111088>
 #> <environment: namespace:utils>
 ```
 
@@ -1403,7 +1403,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-26
+#>  date     2024-06-02
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1431,12 +1431,12 @@ sessioninfo::session_info(include_base = TRUE)
 #>  grDevices   * 4.4.0   2024-05-25 [3] local
 #>  grid          4.4.0   2024-05-25 [3] local
 #>  gtable        0.3.5   2024-04-22 [1] RSPM
-#>  highr         0.10    2022-12-22 [1] RSPM
+#>  highr         0.11    2024-05-26 [1] RSPM
 #>  hms           1.1.3   2023-03-21 [1] RSPM
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.46    2024-04-06 [1] RSPM
+#>  knitr         1.47    2024-05-29 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  lobstr        1.1.2   2022-06-22 [1] RSPM
 #>  lubridate   * 1.9.3   2023-09-27 [1] RSPM

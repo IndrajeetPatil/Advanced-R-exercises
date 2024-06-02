@@ -97,7 +97,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x55e2a8d01040>
+#> <bytecode: 0x55f5dba91370>
 #> <environment: namespace:purrr>
 ```
 
@@ -123,7 +123,7 @@ safely
 #>     check_bool(quiet)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x55e2a592cd40>
+#> <bytecode: 0x55f5d86bcb38>
 #> <environment: namespace:purrr>
 ```
 
@@ -138,7 +138,7 @@ purrr:::capture_error
 #>         list(result = otherwise, error = e)
 #>     })
 #> }
-#> <bytecode: 0x55e2a589d360>
+#> <bytecode: 0x55f5d8626810>
 #> <environment: namespace:purrr>
 ```
 
@@ -290,10 +290,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2024-05-26 00:44:33.73207
-#> Function called at:  2024-05-26 00:44:38.73898
-#> Function called at:  2024-05-26 00:44:43.744348
-#> Function called at:  2024-05-26 00:44:51.752794
+#> Function created at: 2024-06-02 00:44:49.913586
+#> Function called at:  2024-06-02 00:44:54.920502
+#> Function called at:  2024-06-02 00:44:59.923256
+#> Function called at:  2024-06-02 00:45:07.931732
 ```
 
 ---
@@ -342,7 +342,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-26
+#>  date     2024-06-02
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -368,7 +368,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.46    2024-04-06 [1] RSPM
+#>  knitr         1.47    2024-05-29 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM

@@ -39,7 +39,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck_raw(x, list(1), .default = NULL)
-#> <environment: 0x55cffeec8790>
+#> <environment: 0x55d9e61fbea8>
 ```
 
 ``` r
@@ -56,7 +56,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, 1), .default = NULL)
-#> <environment: 0x55cffefada30>
+#> <environment: 0x55d9e62db3f8>
 ```
 
 ``` r
@@ -80,7 +80,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck_raw(x, list("m"), .default = NULL)
-#> <environment: 0x55cfff101440>
+#> <environment: 0x55d9e6434b58>
 ```
 
 ``` r
@@ -98,7 +98,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, "m"), .default = NULL)
-#> <environment: 0x55cfff1e4c90>
+#> <environment: 0x55d9e65183a8>
 ```
 
 ``` r
@@ -175,7 +175,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck_raw(x, list(0.597890264587477, 0.587997315218672), .default = NULL)
-#> <environment: 0x55d0001c28e8>
+#> <environment: 0x55d9e74f7410>
 ```
 
 ---
@@ -976,7 +976,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x55cfff311248>
+#> <environment: 0x55d9e665a3d8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>
@@ -1117,7 +1117,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-26
+#>  date     2024-06-02
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1140,11 +1140,11 @@ sessioninfo::session_info(include_base = TRUE)
 #>  glue          1.7.0   2024-01-09 [1] RSPM
 #>  graphics    * 4.4.0   2024-05-25 [3] local
 #>  grDevices   * 4.4.0   2024-05-25 [3] local
-#>  highr         0.10    2022-12-22 [1] RSPM
+#>  highr         0.11    2024-05-26 [1] RSPM
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.46    2024-04-06 [1] RSPM
+#>  knitr         1.47    2024-05-29 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM

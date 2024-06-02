@@ -177,7 +177,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x55e070ed27b8>
+#> <bytecode: 0x5644bdd31e18>
 #> <environment: namespace:rlang>
 ```
 
@@ -199,7 +199,7 @@ rlang::enexpr
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x55e06cad7cf8>
+#> <bytecode: 0x5644b993ad58>
 #> <environment: namespace:rlang>
 ```
 
@@ -914,7 +914,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-05-26
+#>  date     2024-06-02
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -944,11 +944,11 @@ sessioninfo::session_info(include_base = TRUE)
 #>  grDevices   * 4.4.0    2024-05-25 [3] local
 #>  grid          4.4.0    2024-05-25 [3] local
 #>  gtable        0.3.5    2024-04-22 [1] RSPM
-#>  highr         0.10     2022-12-22 [1] RSPM
+#>  highr         0.11     2024-05-26 [1] RSPM
 #>  htmltools     0.5.8.1  2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4    2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8    2023-12-04 [1] RSPM
-#>  knitr         1.46     2024-04-06 [1] RSPM
+#>  knitr         1.47     2024-05-29 [1] RSPM
 #>  labeling      0.4.3    2023-08-29 [1] RSPM
 #>  lifecycle     1.0.4    2023-11-07 [1] RSPM
 #>  lobstr      * 1.1.2    2022-06-22 [1] RSPM
