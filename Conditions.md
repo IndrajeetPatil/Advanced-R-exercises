@@ -301,7 +301,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x55d1586005c8>
+#> <bytecode: 0x55b59c4e0508>
 #> <environment: namespace:rlang>
 ```
 
@@ -718,7 +718,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-02
+#>  date     2024-06-09
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -755,7 +755,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
 #>  pkgload       1.3.4   2024-01-16 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
-#>  rlang       * 1.1.3   2024-01-10 [1] RSPM
+#>  rlang       * 1.1.4   2024-06-04 [1] RSPM
 #>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  rprojroot     2.0.4   2023-11-05 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM

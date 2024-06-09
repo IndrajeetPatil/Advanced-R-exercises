@@ -248,7 +248,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x55c9361d6b50>
+#> <bytecode: 0x55d99d480f70>
 #> <environment: namespace:stats>
 ```
 
@@ -281,7 +281,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x55c9332b03e0>
+#> <bytecode: 0x55d99b3bee70>
 #> <environment: namespace:base>
 ```
 
@@ -1026,7 +1026,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-02
+#>  date     2024-06-09
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1055,7 +1055,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  methods     * 4.4.0   2024-05-25 [3] local
 #>  purrr         1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
-#>  rlang         1.1.3   2024-01-10 [1] RSPM
+#>  rlang         1.1.4   2024-06-04 [1] RSPM
 #>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM

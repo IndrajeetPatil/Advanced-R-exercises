@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55bd85017850>
+#> <bytecode: 0x55821a9d3aa0>
 #> <environment: namespace:base>
 ```
 
@@ -388,7 +388,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55bd85017850>
+#> <bytecode: 0x55821a9d3aa0>
 #> <environment: namespace:base>
 ```
 
@@ -400,7 +400,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x55bd896e39c8>
+#> <bytecode: 0x55821f09b6d8>
 #> <environment: namespace:purrr>
 ```
 
@@ -615,7 +615,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x55bd8ec02f60" "0x55bd8ec02f60"
+#> [1] "0x5582245c36f8" "0x5582245c36f8"
 #> [1] 100
 ```
 
@@ -713,7 +713,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2024-06-02 00:44:36 UTC"
+#> [1] "2024-06-09 00:46:39 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -948,7 +948,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x55bd8cd3e410>
+#> <bytecode: 0x5582226fd590>
 #> <environment: namespace:withr>
 ```
 
@@ -1030,7 +1030,7 @@ capture.output
 #>         close(file)
 #>     rval %||% invisible(NULL)
 #> }
-#> <bytecode: 0x55bd8d111088>
+#> <bytecode: 0x558222acf198>
 #> <environment: namespace:utils>
 ```
 
@@ -1403,7 +1403,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-02
+#>  date     2024-06-09
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1449,7 +1449,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  purrr       * 1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  readr       * 2.1.5   2024-01-10 [1] RSPM
-#>  rlang         1.1.3   2024-01-10 [1] RSPM
+#>  rlang         1.1.4   2024-06-04 [1] RSPM
 #>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  scales        1.3.0   2023-11-28 [1] RSPM

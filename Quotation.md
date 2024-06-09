@@ -177,7 +177,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x5644bdd31e18>
+#> <bytecode: 0x562d10d91838>
 #> <environment: namespace:rlang>
 ```
 
@@ -199,7 +199,7 @@ rlang::enexpr
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x5644b993ad58>
+#> <bytecode: 0x562d0c949cc8>
 #> <environment: namespace:rlang>
 ```
 
@@ -914,7 +914,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-02
+#>  date     2024-06-09
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -962,7 +962,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  purrr       * 1.0.2    2023-08-10 [1] RSPM
 #>  R6            2.5.1    2021-08-19 [1] RSPM
 #>  rematch2      2.1.2    2020-05-01 [1] RSPM
-#>  rlang       * 1.1.3    2024-01-10 [1] RSPM
+#>  rlang       * 1.1.4    2024-06-04 [1] RSPM
 #>  rmarkdown     2.27     2024-05-17 [1] RSPM
 #>  sass          0.4.9    2024-03-15 [1] RSPM
 #>  scales        1.3.0    2023-11-28 [1] RSPM
