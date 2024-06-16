@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x55bdbdb35fa0>
+#> <environment: 0x55d792993c98>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ``` r
 lobstr::ref(e$loop)
-#> █ [1:0x55bdbdb35fa0] <env> 
-#> └─loop = [1:0x55bdbdb35fa0]
+#> █ [1:0x55d792993c98] <env> 
+#> └─loop = [1:0x55d792993c98]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,12 +71,12 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x55bdbdfcca78" "0x55bdbdfcca78"
+#> [1] "0x55d792d50608" "0x55d792d50608"
 ```
 
 ``` r
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x55bdbdec3600" "0x55bdbdec3600"
+#> [1] "0x55d792bc9100" "0x55d792bc9100"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -288,7 +288,7 @@ where("filter")
 #> attr(,"name")
 #> [1] "package:stats"
 #> attr(,"path")
-#> [1] "/opt/R/4.4.0/lib/R/library/stats"
+#> [1] "/opt/R/4.4.1/lib/R/library/stats"
 ```
 
 ``` r
@@ -339,7 +339,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55bdbbcf5aa0>
+#> <bytecode: 0x55d790af2658>
 #> <environment: namespace:base>
 ```
 
@@ -569,7 +569,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x55bdbd738658>
+#> <bytecode: 0x55d79253d720>
 #> <environment: namespace:rlang>
 ```
 
@@ -617,7 +617,7 @@ foo()
 sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
-#>  version  R version 4.4.0 (2024-04-24)
+#>  version  R version 4.4.1 (2024-06-14)
 #>  os       Ubuntu 22.04.4 LTS
 #>  system   x86_64, linux-gnu
 #>  ui       X11
@@ -625,30 +625,30 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-09
+#>  date     2024-06-16
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
-#>  base        * 4.4.0   2024-05-25 [3] local
+#>  base        * 4.4.1   2024-06-14 [3] local
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
 #>  cachem        1.1.0   2024-05-16 [1] RSPM
 #>  cli           3.6.2   2023-12-11 [1] RSPM
-#>  compiler      4.4.0   2024-05-25 [3] local
+#>  compiler      4.4.1   2024-06-14 [3] local
 #>  crayon        1.5.2   2022-09-29 [1] RSPM
-#>  datasets    * 4.4.0   2024-05-25 [3] local
+#>  datasets    * 4.4.1   2024-06-14 [3] local
 #>  digest        0.6.35  2024-03-11 [1] RSPM
-#>  downlit       0.4.3   2023-06-29 [1] RSPM
+#>  downlit       0.4.4   2024-06-10 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
-#>  evaluate      0.23    2023-11-01 [1] RSPM
+#>  evaluate      0.24.0  2024-06-10 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
 #>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
 #>  glue          1.7.0   2024-01-09 [1] RSPM
-#>  graphics    * 4.4.0   2024-05-25 [3] local
-#>  grDevices   * 4.4.0   2024-05-25 [3] local
+#>  graphics    * 4.4.1   2024-06-14 [3] local
+#>  grDevices   * 4.4.1   2024-06-14 [3] local
 #>  highr         0.11    2024-05-26 [1] RSPM
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
@@ -658,7 +658,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  lobstr        1.1.2   2022-06-22 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM
-#>  methods     * 4.4.0   2024-05-25 [3] local
+#>  methods     * 4.4.1   2024-06-14 [3] local
 #>  pillar        1.9.0   2023-03-22 [1] RSPM
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
 #>  png           0.1-8   2022-11-29 [1] RSPM
@@ -667,12 +667,12 @@ sessioninfo::session_info(include_base = TRUE)
 #>  rmarkdown     2.27    2024-05-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
-#>  stats       * 4.4.0   2024-05-25 [3] local
+#>  stats       * 4.4.1   2024-06-14 [3] local
 #>  tibble        3.2.1   2023-03-20 [1] RSPM
 #>  tidyselect    1.2.1   2024-03-11 [1] RSPM
-#>  tools         4.4.0   2024-05-25 [3] local
+#>  tools         4.4.1   2024-06-14 [3] local
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
-#>  utils       * 4.4.0   2024-05-25 [3] local
+#>  utils       * 4.4.1   2024-06-14 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
 #>  xfun          0.44    2024-05-15 [1] RSPM
@@ -680,8 +680,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library
-#>  [2] /opt/R/4.4.0/lib/R/site-library
-#>  [3] /opt/R/4.4.0/lib/R/library
+#>  [2] /opt/R/4.4.1/lib/R/site-library
+#>  [3] /opt/R/4.4.1/lib/R/library
 #> 
 #> ──────────────────────────────────────────────────────────
 ```
