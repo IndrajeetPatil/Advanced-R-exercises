@@ -97,7 +97,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x55cd78e59ce8>
+#> <bytecode: 0x559c5e004118>
 #> <environment: namespace:purrr>
 ```
 
@@ -123,7 +123,7 @@ safely
 #>     check_bool(quiet)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x55cd78fffd58>
+#> <bytecode: 0x559c5e1a6f98>
 #> <environment: namespace:purrr>
 ```
 
@@ -138,7 +138,7 @@ purrr:::capture_error
 #>         list(result = otherwise, error = e)
 #>     })
 #> }
-#> <bytecode: 0x55cd7905b2b0>
+#> <bytecode: 0x559c5e2005d0>
 #> <environment: namespace:purrr>
 ```
 
@@ -290,10 +290,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2024-06-16 00:48:13.756848
-#> Function called at:  2024-06-16 00:48:18.763792
-#> Function called at:  2024-06-16 00:48:23.769636
-#> Function called at:  2024-06-16 00:48:31.778129
+#> Function created at: 2024-06-23 00:46:06.966535
+#> Function called at:  2024-06-23 00:46:11.973581
+#> Function called at:  2024-06-23 00:46:16.978954
+#> Function called at:  2024-06-23 00:46:24.987386
 ```
 
 ---
@@ -342,7 +342,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-16
+#>  date     2024-06-23
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -351,7 +351,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
 #>  cachem        1.1.0   2024-05-16 [1] RSPM
-#>  cli           3.6.2   2023-12-11 [1] RSPM
+#>  cli           3.6.3   2024-06-21 [1] RSPM
 #>  compiler      4.4.1   2024-06-14 [3] local
 #>  datasets    * 4.4.1   2024-06-14 [3] local
 #>  digest        0.6.35  2024-03-11 [1] RSPM
@@ -389,7 +389,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.1   2024-06-14 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.44    2024-05-15 [1] RSPM
+#>  xfun          0.45    2024-06-16 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 

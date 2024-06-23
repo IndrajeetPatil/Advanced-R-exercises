@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x55d792993c98>
+#> <environment: 0x557bf7fd1ff0>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ``` r
 lobstr::ref(e$loop)
-#> █ [1:0x55d792993c98] <env> 
-#> └─loop = [1:0x55d792993c98]
+#> █ [1:0x557bf7fd1ff0] <env> 
+#> └─loop = [1:0x557bf7fd1ff0]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,12 +71,12 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x55d792d50608" "0x55d792d50608"
+#> [1] "0x557bf83ad810" "0x557bf83ad810"
 ```
 
 ``` r
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x55d792bc9100" "0x55d792bc9100"
+#> [1] "0x557bf822b778" "0x557bf822b778"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -339,7 +339,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55d790af2658>
+#> <bytecode: 0x557bf6150658>
 #> <environment: namespace:base>
 ```
 
@@ -569,7 +569,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x55d79253d720>
+#> <bytecode: 0x557bf7b9b730>
 #> <environment: namespace:rlang>
 ```
 
@@ -625,7 +625,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-16
+#>  date     2024-06-23
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -634,9 +634,9 @@ sessioninfo::session_info(include_base = TRUE)
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
 #>  cachem        1.1.0   2024-05-16 [1] RSPM
-#>  cli           3.6.2   2023-12-11 [1] RSPM
+#>  cli           3.6.3   2024-06-21 [1] RSPM
 #>  compiler      4.4.1   2024-06-14 [3] local
-#>  crayon        1.5.2   2022-09-29 [1] RSPM
+#>  crayon        1.5.3   2024-06-20 [1] RSPM
 #>  datasets    * 4.4.1   2024-06-14 [3] local
 #>  digest        0.6.35  2024-03-11 [1] RSPM
 #>  downlit       0.4.4   2024-06-10 [1] RSPM
@@ -675,7 +675,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.1   2024-06-14 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.44    2024-05-15 [1] RSPM
+#>  xfun          0.45    2024-06-16 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 

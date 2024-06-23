@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55b0db143658>
+#> <bytecode: 0x559497cd2658>
 #> <environment: namespace:base>
 ```
 
@@ -388,7 +388,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55b0db143658>
+#> <bytecode: 0x559497cd2658>
 #> <environment: namespace:base>
 ```
 
@@ -400,7 +400,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x55b0df828f08>
+#> <bytecode: 0x55949c3a27f0>
 #> <environment: namespace:purrr>
 ```
 
@@ -615,7 +615,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x55b0e4d78dc8" "0x55b0e4d78dc8"
+#> [1] "0x5594a18faf60" "0x5594a18faf60"
 #> [1] 100
 ```
 
@@ -713,7 +713,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2024-06-16 00:48:00 UTC"
+#> [1] "2024-06-23 00:45:53 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -948,7 +948,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x55b0e2d72af0>
+#> <bytecode: 0x55949fa2bf68>
 #> <environment: namespace:withr>
 ```
 
@@ -1030,7 +1030,7 @@ capture.output
 #>         close(file)
 #>     rval %||% invisible(NULL)
 #> }
-#> <bytecode: 0x55b0e329b588>
+#> <bytecode: 0x55949fe08e00>
 #> <environment: namespace:utils>
 ```
 
@@ -1403,7 +1403,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-16
+#>  date     2024-06-23
 #>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1412,7 +1412,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  bookdown      0.39    2024-04-15 [1] RSPM
 #>  bslib         0.7.0   2024-03-29 [1] RSPM
 #>  cachem        1.1.0   2024-05-16 [1] RSPM
-#>  cli           3.6.2   2023-12-11 [1] RSPM
+#>  cli           3.6.3   2024-06-21 [1] RSPM
 #>  colorspace    2.1-0   2023-01-23 [1] RSPM
 #>  compiler      4.4.1   2024-06-14 [3] local
 #>  datasets    * 4.4.1   2024-06-14 [3] local
@@ -1468,7 +1468,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.1   2024-06-14 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.44    2024-05-15 [1] RSPM
+#>  xfun          0.45    2024-06-16 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.8   2023-12-11 [1] RSPM
 #> 
