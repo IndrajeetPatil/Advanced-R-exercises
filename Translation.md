@@ -325,8 +325,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-23
-#>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
+#>  date     2024-06-30
+#>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
@@ -337,7 +337,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  cli           3.6.3   2024-06-21 [1] RSPM
 #>  compiler      4.4.1   2024-06-14 [3] local
 #>  datasets    * 4.4.1   2024-06-14 [3] local
-#>  digest        0.6.35  2024-03-11 [1] RSPM
+#>  digest        0.6.36  2024-06-23 [1] RSPM
 #>  downlit       0.4.4   2024-06-10 [1] RSPM
 #>  evaluate      0.24.0  2024-06-10 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM

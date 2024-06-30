@@ -39,7 +39,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck_raw(x, list(1), .default = NULL)
-#> <environment: 0x55ff930af148>
+#> <environment: 0x55a8fdf45a80>
 ```
 
 ``` r
@@ -56,7 +56,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, 1), .default = NULL)
-#> <environment: 0x55ff93195c10>
+#> <environment: 0x55a8fe02c548>
 ```
 
 ``` r
@@ -80,7 +80,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck_raw(x, list("m"), .default = NULL)
-#> <environment: 0x55ff932ebd58>
+#> <environment: 0x55a8fe17c940>
 ```
 
 ``` r
@@ -98,7 +98,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, "m"), .default = NULL)
-#> <environment: 0x55ff933d45d8>
+#> <environment: 0x55a8fe2651c0>
 ```
 
 ``` r
@@ -175,7 +175,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck_raw(x, list(0.597890264587477, 0.587997315218672), .default = NULL)
-#> <environment: 0x55ff943b35b8>
+#> <environment: 0x55a8ff244b40>
 ```
 
 ---
@@ -976,7 +976,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x55ff934e09d8>
+#> <environment: 0x55a8fe36ec10>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>
@@ -1117,8 +1117,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-23
-#>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
+#>  date     2024-06-30
+#>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
@@ -1129,7 +1129,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  cli           3.6.3   2024-06-21 [1] RSPM
 #>  compiler      4.4.1   2024-06-14 [3] local
 #>  datasets    * 4.4.1   2024-06-14 [3] local
-#>  digest        0.6.35  2024-03-11 [1] RSPM
+#>  digest        0.6.36  2024-06-23 [1] RSPM
 #>  downlit       0.4.4   2024-06-10 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.24.0  2024-06-10 [1] RSPM

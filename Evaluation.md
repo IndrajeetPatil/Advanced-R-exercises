@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x564b8bb5cd40>
+#> <environment: 0x55bdbe8e05c8>
 #> Parent: <environment: global>
 ```
 
@@ -268,7 +268,7 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x564b8c609f48
+#> env:  0x55bdc0255228
 ```
 
 ``` r
@@ -276,7 +276,7 @@ q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x564b8ccf2150
+#> env:  0x55bdbe8f0410
 ```
 
 ``` r
@@ -284,7 +284,7 @@ q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x564b8da4fc70
+#> env:  0x55bdbce0d408
 ```
 
 **A1.** Correctly predicted 😉
@@ -331,7 +331,7 @@ enenv(x)
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x564b8e59e3a8>
+#> <environment: 0x55bdbeeb27f0>
 ```
 
 ---
@@ -722,8 +722,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-23
-#>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
+#>  date     2024-06-30
+#>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
@@ -734,7 +734,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  cli           3.6.3   2024-06-21 [1] RSPM
 #>  compiler      4.4.1   2024-06-14 [3] local
 #>  datasets    * 4.4.1   2024-06-14 [3] local
-#>  digest        0.6.35  2024-03-11 [1] RSPM
+#>  digest        0.6.36  2024-06-23 [1] RSPM
 #>  downlit       0.4.4   2024-06-10 [1] RSPM
 #>  evaluate      0.24.0  2024-06-10 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM

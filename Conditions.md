@@ -301,7 +301,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x55f1eb455e48>
+#> <bytecode: 0x56240a57dea8>
 #> <environment: namespace:rlang>
 ```
 
@@ -718,8 +718,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-23
-#>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
+#>  date     2024-06-30
+#>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
@@ -732,7 +732,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  compiler      4.4.1   2024-06-14 [3] local
 #>  datasets    * 4.4.1   2024-06-14 [3] local
 #>  desc          1.4.3   2023-12-10 [1] RSPM
-#>  digest        0.6.35  2024-03-11 [1] RSPM
+#>  digest        0.6.36  2024-06-23 [1] RSPM
 #>  downlit       0.4.4   2024-06-10 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.24.0  2024-06-10 [1] RSPM
@@ -753,7 +753,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  methods     * 4.4.1   2024-06-14 [3] local
 #>  pillar        1.9.0   2023-03-22 [1] RSPM
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
-#>  pkgload       1.3.4   2024-01-16 [1] RSPM
+#>  pkgload       1.4.0   2024-06-28 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang       * 1.1.4   2024-06-04 [1] RSPM
 #>  rmarkdown     2.27    2024-05-17 [1] RSPM

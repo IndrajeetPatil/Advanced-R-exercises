@@ -68,7 +68,7 @@ rm
 #>     }
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x556410b052d0>
+#> <bytecode: 0x55a1c841f288>
 #> <environment: namespace:base>
 ```
 
@@ -144,8 +144,8 @@ full_join(t_bench_df, t_systime_df, by = "expression")
 #> # A tibble: 2 × 4
 #>   expression bench_mean systime_with_gc systime_with_nogc
 #>   <bch:expr>   <bch:tm>           <dbl>             <dbl>
-#> 1 sqrt(x)      649.17ns           0.662             0.419
-#> 2 x^0.5          2.17µs           2.01              1.98
+#> 1 sqrt(x)      684.44ns           0.682             0.432
+#> 2 x^0.5          2.22µs           2.01              1.98
 ```
 
 The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.
@@ -180,10 +180,10 @@ bench::mark(
 #> # A tibble: 4 × 2
 #>   expression      median
 #>   <bch:expr>    <bch:tm>
-#> 1 sqrt(x)         3.03µs
-#> 2 exp(log(x)/2)  12.64µs
-#> 3 x^0.5          18.82µs
-#> 4 x^(1/2)        18.93µs
+#> 1 sqrt(x)         3.04µs
+#> 2 exp(log(x)/2)  12.63µs
+#> 3 x^0.5          18.86µs
+#> 4 x^(1/2)        18.99µs
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.
@@ -205,8 +205,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-23
-#>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
+#>  date     2024-06-30
+#>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
@@ -218,7 +218,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  cli           3.6.3   2024-06-21 [1] RSPM
 #>  compiler      4.4.1   2024-06-14 [3] local
 #>  datasets    * 4.4.1   2024-06-14 [3] local
-#>  digest        0.6.35  2024-03-11 [1] RSPM
+#>  digest        0.6.36  2024-06-23 [1] RSPM
 #>  downlit       0.4.4   2024-06-10 [1] RSPM
 #>  dplyr       * 1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.24.0  2024-06-10 [1] RSPM

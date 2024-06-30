@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x559497cd2658>
+#> <bytecode: 0x55a6d6146628>
 #> <environment: namespace:base>
 ```
 
@@ -388,7 +388,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x559497cd2658>
+#> <bytecode: 0x55a6d6146628>
 #> <environment: namespace:base>
 ```
 
@@ -400,7 +400,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x55949c3a27f0>
+#> <bytecode: 0x55a6da8031d8>
 #> <environment: namespace:purrr>
 ```
 
@@ -615,7 +615,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x5594a18faf60" "0x5594a18faf60"
+#> [1] "0x55a6dfd73a28" "0x55a6dfd73a28"
 #> [1] 100
 ```
 
@@ -713,7 +713,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2024-06-23 00:45:53 UTC"
+#> [1] "2024-06-30 00:46:57 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -948,7 +948,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x55949fa2bf68>
+#> <bytecode: 0x55a6ddea8210>
 #> <environment: namespace:withr>
 ```
 
@@ -1030,7 +1030,7 @@ capture.output
 #>         close(file)
 #>     rval %||% invisible(NULL)
 #> }
-#> <bytecode: 0x55949fe08e00>
+#> <bytecode: 0x55a6de283438>
 #> <environment: namespace:utils>
 ```
 
@@ -1403,8 +1403,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-23
-#>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
+#>  date     2024-06-30
+#>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
@@ -1416,7 +1416,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  colorspace    2.1-0   2023-01-23 [1] RSPM
 #>  compiler      4.4.1   2024-06-14 [3] local
 #>  datasets    * 4.4.1   2024-06-14 [3] local
-#>  digest        0.6.35  2024-03-11 [1] RSPM
+#>  digest        0.6.36  2024-06-23 [1] RSPM
 #>  downlit       0.4.4   2024-06-10 [1] RSPM
 #>  dplyr       * 1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.24.0  2024-06-10 [1] RSPM

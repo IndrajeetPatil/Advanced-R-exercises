@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x557bf7fd1ff0>
+#> <environment: 0x55b30b93a7c0>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ``` r
 lobstr::ref(e$loop)
-#> █ [1:0x557bf7fd1ff0] <env> 
-#> └─loop = [1:0x557bf7fd1ff0]
+#> █ [1:0x55b30b93a7c0] <env> 
+#> └─loop = [1:0x55b30b93a7c0]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,12 +71,12 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x557bf83ad810" "0x557bf83ad810"
+#> [1] "0x55b30c8d1370" "0x55b30c8d1370"
 ```
 
 ``` r
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x557bf822b778" "0x557bf822b778"
+#> [1] "0x55b30c85b5c0" "0x55b30c85b5c0"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -339,7 +339,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x557bf6150658>
+#> <bytecode: 0x55b308bb8628>
 #> <environment: namespace:base>
 ```
 
@@ -569,7 +569,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x557bf7b9b730>
+#> <bytecode: 0x55b30a60e558>
 #> <environment: namespace:rlang>
 ```
 
@@ -625,8 +625,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-23
-#>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
+#>  date     2024-06-30
+#>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
@@ -638,7 +638,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  compiler      4.4.1   2024-06-14 [3] local
 #>  crayon        1.5.3   2024-06-20 [1] RSPM
 #>  datasets    * 4.4.1   2024-06-14 [3] local
-#>  digest        0.6.35  2024-03-11 [1] RSPM
+#>  digest        0.6.36  2024-06-23 [1] RSPM
 #>  downlit       0.4.4   2024-06-10 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.24.0  2024-06-10 [1] RSPM

@@ -177,7 +177,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x563a9b691f68>
+#> <bytecode: 0x555bc57ec170>
 #> <environment: namespace:rlang>
 ```
 
@@ -199,7 +199,7 @@ rlang::enexpr
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x563a9724cda0>
+#> <bytecode: 0x555bc4cd2c70>
 #> <environment: namespace:rlang>
 ```
 
@@ -914,8 +914,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-06-23
-#>  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
+#>  date     2024-06-30
+#>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version  date (UTC) lib source
@@ -929,7 +929,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  crayon        1.5.3    2024-06-20 [1] RSPM
 #>  datasets    * 4.4.1    2024-06-14 [3] local
 #>  diffobj       0.3.5    2021-10-05 [1] RSPM
-#>  digest        0.6.35   2024-03-11 [1] RSPM
+#>  digest        0.6.36   2024-06-23 [1] RSPM
 #>  downlit       0.4.4    2024-06-10 [1] RSPM
 #>  dplyr       * 1.1.4    2023-11-17 [1] RSPM
 #>  evaluate      0.24.0   2024-06-10 [1] RSPM
