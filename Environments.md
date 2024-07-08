@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x5563040cb590>
+#> <environment: 0x5584e279f510>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ``` r
 lobstr::ref(e$loop)
-#> █ [1:0x5563040cb590] <env> 
-#> └─loop = [1:0x5563040cb590]
+#> █ [1:0x5584e279f510] <env> 
+#> └─loop = [1:0x5584e279f510]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,12 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x55630503d9e8" "0x55630503d9e8"
-```
-
-``` r
+#> [1] "0x5584e3725468" "0x5584e3725468"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x556304faea18" "0x556304faea18"
+#> [1] "0x5584e3696308" "0x5584e3696308"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -110,9 +107,6 @@ e <- env(a = 1, b = 2, c = 3)
 env_poke2(e, "b", 4)
 #> Error in `env_poke2()`:
 #> ! Can't re-bind existing names.
-```
-
-``` r
 
 # binding new names allowed
 env_poke2(e, "d", 8)
@@ -128,9 +122,6 @@ e <- env(a = 1, b = 2, c = 3)
 
 e$b
 #> [1] 2
-```
-
-``` r
 
 # re-binding old names allowed
 env_poke(e, "b", 4)
@@ -153,9 +144,6 @@ rebind <- function(name, value, env = caller_env()) {
 }
 rebind("a", 10)
 #> Error: Can't find `a`
-```
-
-``` r
 a <- 5
 rebind("a", 10)
 a
@@ -169,9 +157,6 @@ a
 # `x` doesn't exist
 exists("x")
 #> [1] FALSE
-```
-
-``` r
 
 # so `<<-` will create one for us
 {
@@ -182,9 +167,6 @@ exists("x")
 env_has(global_env(), "x")
 #>    x 
 #> TRUE
-```
-
-``` r
 x
 #> [1] 5
 ```
@@ -206,16 +188,10 @@ rebind <- function(name, value, env = caller_env()) {
 # doesn't exist
 exists("abc")
 #> [1] FALSE
-```
-
-``` r
 
 # so function will produce an error instead of creating it for us
 rebind("abc", 10)
 #> Error: Can't find `abc`
-```
-
-``` r
 
 # but it will work as expected when the variable already exists
 abc <- 5
@@ -255,24 +231,15 @@ Let's try it out:
 ``` r
 where("yyy")
 #> list()
-```
-
-``` r
 
 x <- 5
 where("x")
 #> [[1]]
 #> <environment: R_GlobalEnv>
-```
-
-``` r
 
 where("mean")
 #> [[1]]
 #> <environment: base>
-```
-
-``` r
 
 library(dplyr, warn.conflicts = FALSE)
 where("filter")
@@ -289,9 +256,6 @@ where("filter")
 #> [1] "package:stats"
 #> attr(,"path")
 #> [1] "/opt/R/4.4.1/lib/R/library/stats"
-```
-
-``` r
 detach("package:dplyr")
 ```
 
@@ -332,32 +296,20 @@ Let's try it out:
 ``` r
 fget("mean", inherits = FALSE)
 #> Error: No function objects with matching name was found.
-```
-
-``` r
 
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x556301349660>
+#> <bytecode: 0x5584dfa1d660>
 #> <environment: namespace:base>
-```
-
-``` r
 
 mean <- 5
 fget("mean", inherits = FALSE)
 #> Error: No function objects with matching name was found.
-```
-
-``` r
 
 mean <- function() NULL
 fget("mean", inherits = FALSE)
 #> function() NULL
-```
-
-``` r
 rm("mean")
 ```
 
@@ -465,9 +417,6 @@ fget2("mean")
 #> 
 #> $enclosing
 #> <environment: namespace:base>
-```
-
-``` r
 
 mean <- function() NULL
 fget2("mean")
@@ -476,9 +425,6 @@ fget2("mean")
 #> 
 #> $enclosing
 #> <environment: R_GlobalEnv>
-```
-
-``` r
 rm("mean")
 ```
 
@@ -501,9 +447,6 @@ str_function(mean)
 #> 
 #> $enclosing
 #> <environment: namespace:base>
-```
-
-``` r
 
 str_function("mean")
 #> $where
@@ -525,9 +468,6 @@ str_function(mean)
 #> 
 #> $enclosing
 #> <environment: R_GlobalEnv>
-```
-
-``` r
 
 str_function("mean")
 #> $where
@@ -535,9 +475,6 @@ str_function("mean")
 #> 
 #> $enclosing
 #> <environment: R_GlobalEnv>
-```
-
-``` r
 
 rm("mean")
 ```
@@ -569,7 +506,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x556302d9f520>
+#> <bytecode: 0x5584e1473520>
 #> <environment: namespace:rlang>
 ```
 
@@ -584,9 +521,6 @@ y <- 1
 
 ls_env()
 #> [1] "ls_env" "x"      "y"
-```
-
-``` r
 
 ls()
 #> [1] "ls_env" "x"      "y"
@@ -625,7 +559,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-07
+#>  date     2024-07-08
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -653,7 +587,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.47    2024-05-29 [1] RSPM
+#>  knitr         1.48    2024-07-07 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  lobstr        1.1.2   2022-06-22 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM

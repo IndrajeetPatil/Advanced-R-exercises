@@ -156,9 +156,6 @@ str(stopInfo)
 #>  $ message: chr "An error"
 #>  $ call   : language force(expr)
 #>  - attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
-```
-
-``` r
 
 str(abortInfo)
 #> List of 5
@@ -234,14 +231,8 @@ show_condition <- function(code) {
 
 show_condition(stop("!"))
 #> [1] "error"
-```
-
-``` r
 show_condition(10)
 #> NULL
-```
-
-``` r
 show_condition(warning("?!"))
 #> [1] "warning"
 ```
@@ -301,7 +292,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x55b7de9685f0>
+#> <bytecode: 0x55ba3bb92540>
 #> <environment: namespace:rlang>
 ```
 
@@ -315,9 +306,6 @@ The `classes` argument allows a character vector of condition classes to catch, 
 ``` r
 catch_cnd(10)
 #> NULL
-```
-
-``` r
 
 catch_cnd(abort(message = "an error", class = "class1"))
 #> <error/class1>
@@ -365,19 +353,10 @@ Let's try this new version with the examples used for the original version:
 ``` r
 show_condition2(stop("!"))
 #> [1] "error"
-```
-
-``` r
 show_condition2(10)
 #> NULL
-```
-
-``` r
 show_condition2(warning("?!"))
 #> [1] "warning"
-```
-
-``` r
 show_condition2({
   10
   message("?")
@@ -418,9 +397,6 @@ check_if_pkg_installed <- function(pkg) {
 check_if_pkg_installed("xyz123")
 #> Error in `abort_missing_package()`:
 #> ! Problem loading `xyz123` package, which is missing and must be installed.
-```
-
-``` r
 check_if_pkg_installed("dplyr")
 #> [1] TRUE
 ```
@@ -495,9 +471,6 @@ Let's try out and see if this works as expected:
 ``` r
 suppressConditions(1)
 #> [1] 1
-```
-
-``` r
 
 suppressConditions({
   message("I'm messaging you")
@@ -718,7 +691,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-07
+#>  date     2024-07-08
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -746,7 +719,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.47    2024-05-29 [1] RSPM
+#>  knitr         1.48    2024-07-07 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM

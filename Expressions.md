@@ -49,9 +49,6 @@ ast(f(g(h())))
 #> █─f 
 #> └─█─g 
 #>   └─█─h
-```
-
-``` r
 
 ast(1 + 2 + 3)
 #> █─`+` 
@@ -59,9 +56,6 @@ ast(1 + 2 + 3)
 #> │ ├─1 
 #> │ └─2 
 #> └─3
-```
-
-``` r
 
 ast((x + y) * z)
 #> █─`*` 
@@ -93,9 +87,6 @@ ast(f(g(h(i(1, 2, 3)))))
 #>       ├─1 
 #>       ├─2 
 #>       └─3
-```
-
-``` r
 
 ast(f(1, g(2, h(3, i()))))
 #> █─f 
@@ -105,9 +96,6 @@ ast(f(1, g(2, h(3, i()))))
 #>   └─█─h 
 #>     ├─3 
 #>     └─█─i
-```
-
-``` r
 
 ast(f(g(1, 2), h(3, i(4, 5))))
 #> █─f 
@@ -129,16 +117,10 @@ ast(`x` + `y`)
 #> █─`+` 
 #> ├─x 
 #> └─y
-```
-
-``` r
 ast(x**y)
 #> █─`^` 
 #> ├─x 
 #> └─y
-```
-
-``` r
 ast(1 -> x)
 #> █─`<-` 
 #> ├─x 
@@ -223,9 +205,6 @@ Complex numbers are created via a **function call** (using `+`), as can be seen 
 x_complex <- expr(1 + 1i)
 typeof(x_complex)
 #> [1] "language"
-```
-
-``` r
 
 ast(1 + 1i)
 #> █─`+` 
@@ -240,9 +219,6 @@ Similarly, for raw vectors (using `raw()`):
 x_raw <- expr(raw(2))
 typeof(x_raw)
 #> [1] "language"
-```
-
-``` r
 
 ast(raw(2))
 #> █─raw 
@@ -256,9 +232,6 @@ Contrast this with other atomic vectors:
 x_int <- expr(2L)
 typeof(x_int)
 #> [1] "integer"
-```
-
-``` r
 
 ast(2L)
 #> 2L
@@ -271,9 +244,6 @@ For the same reason, you can't you create an expression that contains an atomic 
 x_vec <- expr(c(1, 2))
 typeof(x_vec)
 #> [1] "language"
-```
-
-``` r
 
 ast(c(1, 2))
 #> █─c 
@@ -289,9 +259,6 @@ ast(c(1, 2))
 ``` r
 expr(read.csv("foo.csv", header = TRUE))
 #> read.csv("foo.csv", header = TRUE)
-```
-
-``` r
 
 typeof(expr(read.csv("foo.csv", header = TRUE)))
 #> [1] "language"
@@ -328,9 +295,6 @@ Types of arguments supplied to `.fn`:
 ``` r
 typeof(median)
 #> [1] "closure"
-```
-
-``` r
 typeof(expr(median))
 #> [1] "symbol"
 ```
@@ -342,9 +306,6 @@ Types of arguments supplied to the dynamic dots:
 x <- 1:10
 typeof(x)
 #> [1] "integer"
-```
-
-``` r
 typeof(expr(x))
 #> [1] "symbol"
 ```
@@ -361,22 +322,13 @@ x <- 1:10
 call2(median, x, na.rm = TRUE)
 #> (function (x, na.rm = FALSE, ...) 
 #> UseMethod("median"))(1:10, na.rm = TRUE)
-```
-
-``` r
 
 call2(expr(median), x, na.rm = TRUE)
 #> median(1:10, na.rm = TRUE)
-```
-
-``` r
 
 call2(median, expr(x), na.rm = TRUE)
 #> (function (x, na.rm = FALSE, ...) 
 #> UseMethod("median"))(x, na.rm = TRUE)
-```
-
-``` r
 
 call2(expr(median), expr(x), na.rm = TRUE)
 #> median(x, na.rm = TRUE)
@@ -390,21 +342,12 @@ x <- 1:10
 
 eval(call2(median, x, na.rm = TRUE))
 #> [1] 5.5
-```
-
-``` r
 
 eval(call2(expr(median), x, na.rm = TRUE))
 #> [1] 5.5
-```
-
-``` r
 
 eval(call2(median, expr(x), na.rm = TRUE))
 #> [1] 5.5
-```
-
-``` r
 
 eval(call2(expr(median), expr(x), na.rm = TRUE))
 #> [1] 5.5
@@ -418,14 +361,8 @@ call_standardise(quote(mean(1:10, na.rm = TRUE)))
 #> Warning: `call_standardise()` is deprecated as of rlang 0.4.11
 #> This warning is displayed once every 8 hours.
 #> mean(x = 1:10, na.rm = TRUE)
-```
-
-``` r
 call_standardise(quote(mean(n = T, 1:10)))
 #> mean(x = 1:10, n = T)
-```
-
-``` r
 call_standardise(quote(mean(x = 1:10, , TRUE)))
 #> mean(x = 1:10, , TRUE)
 ```
@@ -437,7 +374,7 @@ call_standardise(quote(mean(x = 1:10, , TRUE)))
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55931465b660>
+#> <bytecode: 0x55c6cf76b660>
 #> <environment: namespace:base>
 ```
 
@@ -470,9 +407,6 @@ names(x) <- c("x", "y")
 x <- expr(foo(x = 1))
 x
 #> foo(x = 1)
-```
-
-``` r
 
 names(x) <- c("x", "y")
 x
@@ -489,9 +423,6 @@ x <- 5
 call_obj1 <- call2(">", expr(x), 1)
 call_obj1
 #> x > 1
-```
-
-``` r
 
 call_obj2 <- call2("if", cond = call_obj1, cons.expr = "a", alt.expr = "b")
 call_obj2
@@ -531,9 +462,6 @@ ast(f((1)))
 #> █─f 
 #> └─█─`(` 
 #>   └─1
-```
-
-``` r
 ast(`(`(1 + 1))
 #> █─`(` 
 #> └─█─`+` 
@@ -674,9 +602,6 @@ ast(x + y %+% z)
 #> └─█─`%+%` 
 #>   ├─y 
 #>   └─z
-```
-
-``` r
 
 ast(x^y %+% z)
 #> █─`%+%` 
@@ -728,9 +653,6 @@ parse_expr("a +")
 #> Error in parse(text = x, keep.source = FALSE): <text>:2:0: unexpected end of input
 #> 1: a +
 #>    ^
-```
-
-``` r
 
 parse_expr("f())")
 #> Error in parse(text = x, keep.source = FALSE): <text>:1:4: unexpected ')'
@@ -746,9 +668,6 @@ parse(text = "a +")
 #> Error in parse(text = "a +"): <text>:2:0: unexpected end of input
 #> 1: a +
 #>    ^
-```
-
-``` r
 
 parse(text = "f())")
 #> Error in parse(text = "f())"): <text>:1:4: unexpected ')'
@@ -777,9 +696,6 @@ expr <- expr(g(a + b + c + d + e + f + g + h + i + j + k + l +
 deparse(expr)
 #> [1] "g(a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + "
 #> [2] "    p + q + r + s + t + u + v + w + x + y + z)"
-```
-
-``` r
 
 expr_text(expr)
 #> [1] "g(a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + \n    p + q + r + s + t + u + v + w + x + y + z)"
@@ -805,21 +721,12 @@ Let's try it out:
 ``` r
 logical_abbr_rec(expr(T(1, 2, 3)))
 #> [1] FALSE
-```
-
-``` r
 
 logical_abbr_rec(expr(F(1, 2, 3)))
 #> [1] FALSE
-```
-
-``` r
 
 logical_abbr_rec(expr(T))
 #> [1] TRUE
-```
-
-``` r
 
 logical_abbr_rec(expr(F))
 #> [1] TRUE
@@ -892,14 +799,8 @@ as.list(expr1)
 #> 
 #> [[3]]
 #> y
-```
-
-``` r
 typeof(expr1[[2]])
 #> [1] "language"
-```
-
-``` r
 
 expr2 <- expr(x <- y)
 as.list(expr2)
@@ -911,9 +812,6 @@ as.list(expr2)
 #> 
 #> [[3]]
 #> y
-```
-
-``` r
 typeof(expr2[[2]])
 #> [1] "symbol"
 ```
@@ -991,33 +889,18 @@ Let's try it out:
 ``` r
 find_assign(names(x))
 #> character(0)
-```
-
-``` r
 
 find_assign(names(x) <- y)
 #> [1] "x"
-```
-
-``` r
 
 find_assign(names(f(x)) <- y)
 #> [1] "x"
-```
-
-``` r
 
 find_assign(names(x) <- y <- z <- NULL)
 #> [1] "x" "y" "z"
-```
-
-``` r
 
 find_assign(a <- b <- c <- 1)
 #> [1] "a" "b" "c"
-```
-
-``` r
 
 find_assign(system.time(x <- print(y <- 5)))
 #> [1] "x" "y"
@@ -1045,16 +928,10 @@ find_function_call <- function(x, .f) {
 find_function_call(expr(mean(1:2)), ":")
 #> [[1]]
 #> 1:2
-```
-
-``` r
 
 find_function_call(expr(sum(mean(1:2))), ":")
 #> [[1]]
 #> 1:2
-```
-
-``` r
 
 find_function_call(expr(list(1:5, 4:6, 3:9)), ":")
 #> [[1]]
@@ -1065,9 +942,6 @@ find_function_call(expr(list(1:5, 4:6, 3:9)), ":")
 #> 
 #> [[3]]
 #> 3:9
-```
-
-``` r
 
 find_function_call(expr(list(1:5, sum(4:6), mean(3:9))), ":")
 #> [[1]]
@@ -1078,44 +952,26 @@ find_function_call(expr(list(1:5, sum(4:6), mean(3:9))), ":")
 #> 
 #> [[3]]
 #> 3:9
-```
-
-``` r
 
 # example-2: with assignment operator `<-`
 find_function_call(expr(names(x)), "<-")
 #> NULL
-```
-
-``` r
 
 find_function_call(expr(names(x) <- y), "<-")
 #> [[1]]
 #> names(x) <- y
-```
-
-``` r
 
 find_function_call(expr(names(f(x)) <- y), "<-")
 #> [[1]]
 #> names(f(x)) <- y
-```
-
-``` r
 
 find_function_call(expr(names(x) <- y <- z <- NULL), "<-")
 #> [[1]]
 #> names(x) <- y <- z <- NULL
-```
-
-``` r
 
 find_function_call(expr(a <- b <- c <- 1), "<-")
 #> [[1]]
 #> a <- b <- c <- 1
-```
-
-``` r
 
 find_function_call(expr(system.time(x <- print(y <- 5))), "<-")
 #> [[1]]
@@ -1137,7 +993,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-07
+#>  date     2024-07-08
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1162,7 +1018,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.47    2024-05-29 [1] RSPM
+#>  knitr         1.48    2024-07-07 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  lobstr      * 1.1.2   2022-06-22 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM

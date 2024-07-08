@@ -21,7 +21,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x55d926496e10>
+#> <bytecode: 0x555bd2c77e10>
 #> <environment: namespace:base>
 ```
 
@@ -47,17 +47,11 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x55d92c01cd80>
-#> <environment: 0x55d92c0213b8>
-```
-
-``` r
+#> <bytecode: 0x555bd88023c0>
+#> <environment: 0x555bd8801a90>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
-```
-
-``` r
 curve(f(x), 0, 11)
 ```
 
@@ -75,9 +69,6 @@ f
 #> Empirical CDF 
 #> Call: ecdf(x)
 #>  x[1:12] = -1.8793, -1.3221, -1.2392,  ..., 1.1604, 1.7956
-```
-
-``` r
 f(seq(-2, 2, by = 0.1))
 #>  [1] 0.00000000 0.00000000 0.08333333 0.08333333 0.08333333
 #>  [6] 0.08333333 0.08333333 0.16666667 0.25000000 0.25000000
@@ -122,9 +113,6 @@ Testing it with specified test cases:
 x <- list("a", "b", "c")
 identical(x[[1]], pick(1)(x))
 #> [1] TRUE
-```
-
-``` r
 
 identical(
   lapply(mtcars, pick(5)),
@@ -188,21 +176,12 @@ new_counter2 <- function() {
 ``` r
 new_counter2()
 #> [1] 1
-```
-
-``` r
 
 new_counter2()
 #> [1] 2
-```
-
-``` r
 
 new_counter2()
 #> [1] 3
-```
-
-``` r
 
 i <- 20
 new_counter2()
@@ -233,18 +212,15 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #>   }
-#> <environment: 0x55d92c007040>
-```
-
-``` r
+#> <environment: 0x555bd87eff60>
 
 new_counter3()
 #> function() {
 #>     i <- i + 1
 #>     i
 #>   }
-#> <bytecode: 0x55d92c2b7e60>
-#> <environment: 0x55d92c09aa90>
+#> <bytecode: 0x555bd8aa5370>
+#> <environment: 0x555bd8883eb0>
 ```
 
 ---
@@ -282,7 +258,7 @@ ggplot2::label_bquote
 #>     }
 #>     structure(fun, class = "labeller")
 #> }
-#> <bytecode: 0x55d92c6a5128>
+#> <bytecode: 0x555bd8e8d3f0>
 #> <environment: namespace:ggplot2>
 ```
 
@@ -305,7 +281,7 @@ scales::number_format
 #>             scale_cut = scale_cut, trim = trim, ...)
 #>     }
 #> }
-#> <bytecode: 0x55d92c8ac0b8>
+#> <bytecode: 0x555bd90951f0>
 #> <environment: namespace:scales>
 ```
 
@@ -401,10 +377,7 @@ Let's have a look at one example with each:
 ``` r
 boxcox2(1)
 #> function(x) (x^lambda - 1) / lambda
-#> <environment: 0x55d92b591198>
-```
-
-``` r
+#> <environment: 0x555bd7d868c8>
 
 boxcox3(mtcars$wt)
 #> function(lambda) {
@@ -414,7 +387,7 @@ boxcox3(mtcars$wt)
 #>       (x^lambda - 1) / lambda
 #>     }
 #>   }
-#> <environment: 0x55d92b6d1e50>
+#> <environment: 0x555bd7ec0730>
 ```
 
 As can be seen:
@@ -447,7 +420,7 @@ boot_permute(mtcars, "mpg")
 #>     col <- df[[var]]
 #>     col[sample(n, replace = TRUE)]
 #>   }
-#> <environment: 0x55d92c0c98d0>
+#> <environment: 0x555bd88bebd0>
 ```
 
 This is why we don't need to worry about a copy being made because the `df` in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:
@@ -456,15 +429,12 @@ This is why we don't need to worry about a copy being made because the `df` in t
 ``` r
 boot_permute_env <- rlang::fn_env(boot_permute(mtcars, "mpg"))
 rlang::env_print(boot_permute_env)
-#> <environment: 0x55d92c63fde0>
+#> <environment: 0x555bd8e313f8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • n: <int>
 #> • df: <df[,11]>
 #> • var: <chr>
-```
-
-``` r
 
 identical(
   lobstr::obj_addr(boot_permute_env$df),
@@ -479,9 +449,6 @@ We can also check that the values of these bindings are the same as what we ente
 ``` r
 identical(boot_permute_env$df, mtcars)
 #> [1] TRUE
-```
-
-``` r
 identical(boot_permute_env$var, "mpg")
 #> [1] TRUE
 ```
@@ -521,8 +488,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1          28.5µs   29.8µs    32616.    12.8KB     42.5
-#> 2 LL2          15.4µs   16.1µs    59426.        0B     41.6
+#> 1 LL1          28.2µs   30.2µs    32116.    12.8KB     41.8
+#> 2 LL2          15.6µs   16.7µs    57122.        0B     40.0
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -548,19 +515,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 × 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1          40.3µs   42.4µs    22274.
-#>  2     10 LL2          18.6µs   19.4µs    50759.
-#>  3     20 LL1          43.3µs   44.7µs    22037.
-#>  4     20 LL2            18µs   18.8µs    52482.
-#>  5     50 LL1          47.5µs     49µs    20067.
-#>  6     50 LL2          16.5µs     18µs    54879.
-#>  7    100 LL1          58.5µs   64.7µs    15145.
-#>  8    100 LL2          18.6µs   19.3µs    51083.
-#>  9   1000 LL1         860.9µs  881.7µs     1089.
-#> 10   1000 LL2          57.2µs   58.6µs    16813.
-```
-
-``` r
+#>  1     10 LL1          40.1µs   42.2µs    22414.
+#>  2     10 LL2          18.5µs   19.3µs    50574.
+#>  3     20 LL1          42.3µs     44µs    22423.
+#>  4     20 LL2            18µs   18.8µs    52570.
+#>  5     50 LL1          47.1µs   48.7µs    20157.
+#>  6     50 LL2          17.2µs     18µs    54801.
+#>  7    100 LL1          62.5µs   65.1µs    14905.
+#>  8    100 LL2          18.5µs   19.3µs    51057.
+#>  9   1000 LL1         856.1µs  893.8µs     1088.
+#> 10   1000 LL2          56.9µs   58.2µs    16893.
 
 ggplot(
   df_bench,
@@ -604,21 +568,12 @@ x <- list(f = mean, z = 1)
 
 identical(with(x, f(z)), x$f(x$z))
 #> [1] TRUE
-```
-
-``` r
 
 identical(with(x, f(z)), f(x$z))
 #> [1] TRUE
-```
-
-``` r
 
 identical(with(x, f(z)), x$f(z))
 #> [1] TRUE
-```
-
-``` r
 
 identical(with(x, f(z)), f(z))
 #> [1] TRUE
@@ -643,34 +598,19 @@ attach(funs)
 #> The following objects are masked from package:base:
 #> 
 #>     mean, sum
-```
-
-``` r
 
 mean
 #> function(x) mean(x, na.rm = TRUE)
-```
-
-``` r
 head(search())
 #> [1] ".GlobalEnv"       "funs"             "package:scales"  
 #> [4] "package:ggplot2"  "package:rlang"    "package:magrittr"
-```
-
-``` r
 
 mean <- function(x) stop("Hi!")
 mean
 #> function(x) stop("Hi!")
-```
-
-``` r
 head(search())
 #> [1] ".GlobalEnv"       "funs"             "package:scales"  
 #> [4] "package:ggplot2"  "package:rlang"    "package:magrittr"
-```
-
-``` r
 
 detach(funs)
 ```
@@ -682,16 +622,10 @@ detach(funs)
 env_bind(globalenv(), !!!funs)
 mean
 #> function(x) mean(x, na.rm = TRUE)
-```
-
-``` r
 
 mean <- function(x) stop("Hi!")
 mean
 #> function(x) stop("Hi!")
-```
-
-``` r
 env_unbind(globalenv(), names(funs))
 ```
 
@@ -714,7 +648,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-07
+#>  date     2024-07-08
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -747,7 +681,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.47    2024-05-29 [1] RSPM
+#>  knitr         1.48    2024-07-07 [1] RSPM
 #>  labeling      0.4.3   2023-08-29 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  lobstr        1.1.2   2022-06-22 [1] RSPM

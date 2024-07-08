@@ -23,9 +23,6 @@ Read the documentation and write down the rules in your own words.
 ``` r
 ifelse(TRUE, 1, "no") # `numeric` returned
 #> [1] 1
-```
-
-``` r
 ifelse(FALSE, 1, "no") # `character` returned
 #> [1] "no"
 ```
@@ -36,9 +33,6 @@ ifelse(FALSE, 1, "no") # `character` returned
 ``` r
 ifelse(NA_real_, 1, "no")
 #> [1] NA
-```
-
-``` r
 ifelse(NaN, 1, "no")
 #> [1] NA
 ```
@@ -58,21 +52,12 @@ ifelse(NA, 1, "no")
 # will work
 ifelse("TRUE", 1, "no")
 #> [1] 1
-```
-
-``` r
 ifelse("false", 1, "no")
 #> [1] "no"
-```
-
-``` r
 
 # won't work
 ifelse("tRuE", 1, "no")
 #> [1] NA
-```
-
-``` r
 ifelse(NaN, 1, "no")
 #> [1] NA
 ```
@@ -88,9 +73,6 @@ This is also clarified in the docs for this function:
 x <- 1:10
 if (length(x)) "not empty" else "empty"
 #> [1] "not empty"
-```
-
-``` r
 
 x <- numeric()
 if (length(x)) "not empty" else "empty"
@@ -103,9 +85,6 @@ if (length(x)) "not empty" else "empty"
 ``` r
 as.logical(length(1:10))
 #> [1] TRUE
-```
-
-``` r
 
 as.logical(length(numeric()))
 #> [1] FALSE
@@ -131,14 +110,8 @@ out
 ``` r
 1:2
 #> [1] 1 2
-```
-
-``` r
 1:0
 #> [1] 1 0
-```
-
-``` r
 1:-3
 #> [1]  1  0 -1 -2 -3
 ```
@@ -159,9 +132,6 @@ for (i in 1:length(x)) {
 }
 #> [1] "i: 1 , x[i]: NA , out[i]: NULL"
 #> [1] "i: 0 , x[i]:  , out[i]: "
-```
-
-``` r
 
 out
 #> [[1]]
@@ -276,7 +246,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-07
+#>  date     2024-07-08
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -298,7 +268,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.47    2024-05-29 [1] RSPM
+#>  knitr         1.48    2024-07-07 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM

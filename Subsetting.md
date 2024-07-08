@@ -88,9 +88,6 @@ A3. The documentation for `upper.tri()` states-
 #> [3,]    3    6    9   12   15
 #> [4,]    4    8   12   16   20
 #> [5,]    5   10   15   20   25
-```
-
-``` r
 
 upper.tri(x)
 #>       [,1]  [,2]  [,3]  [,4]  [,5]
@@ -143,9 +140,6 @@ nrow(mtcars[1:20, ])
 ``` r
 x[!upper.tri(x) & !lower.tri(x)]
 #> [1]  1  4  9 16 25
-```
-
-``` r
 
 diag(x)
 #> [1]  1  4  9 16 25
@@ -166,18 +160,12 @@ diag(x)
 #> 1     1    NA
 #> 2     2     5
 #> 3    NA    NA
-```
-
-``` r
 
 is.na(df)
 #>          x     y
 #> [1,] FALSE  TRUE
 #> [2,] FALSE FALSE
 #> [3,]  TRUE  TRUE
-```
-
-``` r
 
 class(is.na(df))
 #> [1] "matrix" "array"
@@ -193,39 +181,18 @@ class(is.na(df))
 ``` r
 mtcars[["cyl"]][[3]]
 #> [1] 4
-```
-
-``` r
 mtcars[[c(2, 3)]]
 #> [1] 4
-```
-
-``` r
 mtcars[3, ][["cyl"]]
 #> [1] 4
-```
-
-``` r
 mtcars[3, ]$cyl
 #> [1] 4
-```
-
-``` r
 mtcars[3, "cyl"]
 #> [1] 4
-```
-
-``` r
 mtcars[, "cyl"][[3]]
 #> [1] 4
-```
-
-``` r
 mtcars[3, 2]
 #> [1] 4
-```
-
-``` r
 mtcars$cyl[[3]]
 #> [1] 4
 ```
@@ -239,9 +206,6 @@ mtcars$cyl[[3]]
 mod <- lm(mpg ~ wt, data = mtcars)
 class(mod)
 #> [1] "lm"
-```
-
-``` r
 typeof(mod)
 #> [1] "list"
 ```
@@ -252,9 +216,6 @@ typeof(mod)
 ``` r
 mod$df.residual 
 #> [1] 30
-```
-
-``` r
 mod[["df.residual"]]
 #> [1] 30
 ```
@@ -265,9 +226,6 @@ mod[["df.residual"]]
 ``` r
 summary(mod)$r.squared
 #> [1] 0.7528328
-```
-
-``` r
 summary(mod)[["r.squared"]]
 #> [1] 0.7528328
 ```
@@ -389,9 +347,6 @@ df
 #> Hornet 4 Drive       3    1
 #> Hornet Sportabout    3    2
 #> Valiant              3    1
-```
-
-``` r
 
 # number of rows to sample
 m <- 2L
@@ -441,9 +396,6 @@ df[start_row:end_row, ]
 names(mtcars)
 #>  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"  
 #>  [9] "am"   "gear" "carb"
-```
-
-``` r
 
 # columns in alphabetical order
 names(mtcars[order(names(mtcars))])
@@ -466,7 +418,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-07
+#>  date     2024-07-08
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -490,7 +442,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.47    2024-05-29 [1] RSPM
+#>  knitr         1.48    2024-07-07 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM

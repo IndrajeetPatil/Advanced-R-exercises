@@ -18,9 +18,6 @@ x <- "A string"
 
 (y <- charToRaw(x))
 #> [1] 41 20 73 74 72 69 6e 67
-```
-
-``` r
 
 typeof(y)
 #> [1] "raw"
@@ -35,9 +32,6 @@ as.raw("–") # en-dash
 #> Warning: out-of-range values treated as 0 in coercion to
 #> raw
 #> [1] 00
-```
-
-``` r
 as.raw("—") # em-dash
 #> Warning: NAs introduced by coercion
 #> Warning: out-of-range values treated as 0 in coercion to
@@ -55,9 +49,6 @@ Example of a complex scalar:
 ``` r
 (x <- complex(length.out = 1, real = 1, imaginary = 8))
 #> [1] 1+8i
-```
-
-``` r
 
 typeof(x)
 #> [1] "complex"
@@ -78,15 +69,9 @@ c(TRUE, 1L)
 ``` r
 c(1, FALSE)
 #> [1] 1 0
-```
-
-``` r
 
 c("a", 1)
 #> [1] "a" "1"
-```
-
-``` r
 
 c(TRUE, 1L)
 #> [1] 1 1
@@ -100,9 +85,6 @@ c(TRUE, 1L)
 ``` r
 1 == "1"
 #> [1] TRUE
-```
-
-``` r
 
 c(1, "1")
 #> [1] "1" "1"
@@ -112,9 +94,6 @@ c(1, "1")
 ``` r
 -1 < FALSE
 #> [1] TRUE
-```
-
-``` r
 
 c(-1, FALSE)
 #> [1] -1  0
@@ -124,15 +103,9 @@ c(-1, FALSE)
 ``` r
 "one" < 2
 #> [1] FALSE
-```
-
-``` r
 
 c("one", 2)
 #> [1] "one" "2"
-```
-
-``` r
 
 sort(c("one", 2))
 #> [1] "2"   "one"
@@ -148,9 +121,6 @@ So `NA` defaulting to any other type (e.g. `"numeric"`) would mean that any time
 ``` r
 typeof(NA)
 #> [1] "logical"
-```
-
-``` r
 
 c(FALSE, NA_character_)
 #> [1] "FALSE" NA
@@ -172,9 +142,6 @@ Quoting docs:
 ``` r
 is.atomic(NULL)
 #> [1] FALSE
-```
-
-``` r
 
 is.atomic(list(NULL))
 #> [1] FALSE
@@ -192,9 +159,6 @@ Therefore, this function only checks for `double` and `integer` base types and n
 ``` r
 is.numeric(1L)
 #> [1] TRUE
-```
-
-``` r
 
 is.numeric(factor(1L))
 #> [1] FALSE
@@ -214,9 +178,6 @@ x <- c("x" = 1, "y" = 2)
 
 is.vector(x)
 #> [1] TRUE
-```
-
-``` r
 
 attr(x, "m") <- "abcdef"
 
@@ -248,7 +209,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x55ca44896048>
+#> <bytecode: 0x55fb960e2ee8>
 #> <environment: namespace:stats>
 ```
 
@@ -259,9 +220,6 @@ Given this function signature, we can see why, when no first argument is given, 
 setNames(, c("a", "b"))
 #>   a   b 
 #> "a" "b"
-```
-
-``` r
 
 setNames(c(1, 2), c("a", "b"))
 #> a b 
@@ -281,7 +239,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x55ca41dfc3f0>
+#> <bytecode: 0x55fb93649498>
 #> <environment: namespace:base>
 ```
 
@@ -313,57 +271,30 @@ x <- character(0)
 
 dim(x)
 #> NULL
-```
-
-``` r
 
 nrow(x)
 #> NULL
-```
-
-``` r
 NROW(x)
 #> [1] 0
-```
-
-``` r
 
 ncol(x)
 #> NULL
-```
-
-``` r
 NCOL(x)
 #> [1] 1
-```
-
-``` r
 
 # example-2
 y <- 1:4
 
 dim(y)
 #> NULL
-```
-
-``` r
 
 nrow(y)
 #> NULL
-```
-
-``` r
 NROW(y)
 #> [1] 4
-```
-
-``` r
 
 ncol(y)
 #> NULL
-```
-
-``` r
 NCOL(y)
 #> [1] 1
 ```
@@ -401,9 +332,6 @@ structure(1:5, x = "my attribute")
 #> [1] 1 2 3 4 5
 #> attr(,"x")
 #> [1] "my attribute"
-```
-
-``` r
 
 structure(1:5, comment = "my attribute")
 #> [1] 1 2 3 4 5
@@ -421,17 +349,11 @@ structure(1:5, comment = "my attribute")
 #> 
 #>  0  1 
 #> 19 13
-```
-
-``` r
 (y <- table(mtcars$am, mtcars$cyl))
 #>    
 #>      4  6  8
 #>   0  3  4 12
 #>   1  8  3  2
-```
-
-``` r
 (z <- table(mtcars$am, mtcars$cyl, mtcars$vs))
 #> , ,  = 0
 #> 
@@ -446,9 +368,6 @@ structure(1:5, comment = "my attribute")
 #>      4  6  8
 #>   0  3  4  0
 #>   1  7  0  0
-```
-
-``` r
 
 # type
 purrr::map(list(x, y, z), typeof)
@@ -460,9 +379,6 @@ purrr::map(list(x, y, z), typeof)
 #> 
 #> [[3]]
 #> [1] "integer"
-```
-
-``` r
 
 # attributes
 purrr::map(list(x, y, z), attributes)
@@ -530,23 +446,14 @@ f1 <- factor(letters)
 f1
 #>  [1] a b c d e f g h i j k l m n o p q r s t u v w x y z
 #> 26 Levels: a b c d e f g h i j k l m n o p q r s t u ... z
-```
-
-``` r
 as.integer(f1)
 #>  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18
 #> [19] 19 20 21 22 23 24 25 26
-```
-
-``` r
 
 levels(f1) <- rev(levels(f1))
 f1
 #>  [1] z y x w v u t s r q p o n m l k j i h g f e d c b a
 #> 26 Levels: z y x w v u t s r q p o n m l k j i h g f ... a
-```
-
-``` r
 as.integer(f1)
 #>  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18
 #> [19] 19 20 21 22 23 24 25 26
@@ -570,9 +477,6 @@ f2 <- rev(factor(letters))
 f2
 #>  [1] z y x w v u t s r q p o n m l k j i h g f e d c b a
 #> 26 Levels: a b c d e f g h i j k l m n o p q r s t u ... z
-```
-
-``` r
 as.integer(f2)
 #>  [1] 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10  9
 #> [19]  8  7  6  5  4  3  2  1
@@ -586,9 +490,6 @@ f3 <- factor(letters, levels = rev(letters))
 f3
 #>  [1] a b c d e f g h i j k l m n o p q r s t u v w x y z
 #> 26 Levels: z y x w v u t s r q p o n m l k j i h g f ... a
-```
-
-``` r
 as.integer(f3)
 #>  [1] 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10  9
 #> [19]  8  7  6  5  4  3  2  1
@@ -617,14 +518,8 @@ x <- list(a = 1, b = 2)
 
 is.vector(x)
 #> [1] TRUE
-```
-
-``` r
 is.atomic(x)
 #> [1] FALSE
-```
-
-``` r
 
 # still a list
 as.vector(x)
@@ -633,9 +528,6 @@ as.vector(x)
 #> 
 #> $b
 #> [1] 2
-```
-
-``` r
 
 # now a vector
 unlist(x)
@@ -660,24 +552,15 @@ And check their attributes and underlying `double` representation:
 attributes(date)
 #> $class
 #> [1] "Date"
-```
-
-``` r
 attributes(datetime)
 #> $class
 #> [1] "POSIXct" "POSIXt" 
 #> 
 #> $tzone
 #> [1] "UTC"
-```
-
-``` r
 
 as.double(date) # number of days since the Unix epoch 1970-01-01
 #> [1] -8175
-```
-
-``` r
 as.double(datetime) # number of seconds since then
 #> [1] -628991940
 ```
@@ -690,22 +573,13 @@ Since `S3` method for `c()` dispatches on the first argument, the resulting clas
 ``` r
 c(date, datetime)
 #> [1] "1947-08-15" "1950-01-26"
-```
-
-``` r
 
 attributes(c(date, datetime))
 #> $class
 #> [1] "Date"
-```
-
-``` r
 
 c(datetime, date)
 #> [1] "1950-01-26 00:01:00 UTC" "1947-08-15 00:00:00 UTC"
-```
-
-``` r
 
 attributes(c(datetime, date))
 #> $class
@@ -723,9 +597,6 @@ It removes all attributes and we are left only with the underlying double repres
 ``` r
 unlist(list(date, datetime))
 #> [1]      -8175 -628991940
-```
-
-``` r
 
 unlist(list(datetime, date))
 #> [1] -628991940      -8175
@@ -758,9 +629,6 @@ And, finally, data frame with 0 rows *and* columns is also possible:
 ``` r
 data.frame()
 #> data frame with 0 columns and 0 rows
-```
-
-``` r
 
 dim(data.frame())
 #> [1] 0 0
@@ -773,15 +641,9 @@ Although, it might not be common to *create* such data frames, they can be resul
 BOD[0, ]
 #> [1] Time   demand
 #> <0 rows> (or 0-length row.names)
-```
-
-``` r
 
 BOD[, 0]
 #> data frame with 0 columns and 6 rows
-```
-
-``` r
 
 BOD[0, 0]
 #> data frame with 0 columns and 0 rows
@@ -815,9 +677,6 @@ data.frame(row.names = c(1, 1))
 #> 4          4.6         3.1          1.5         0.2  setosa
 #> 5          5.0         3.6          1.4         0.2  setosa
 #> 6          5.4         3.9          1.7         0.4  setosa
-```
-
-``` r
 
 # transpose
 t(df)
@@ -833,9 +692,6 @@ t(df)
 #> Petal.Length "1.7"   
 #> Petal.Width  "0.4"   
 #> Species      "setosa"
-```
-
-``` r
 
 # transpose of a transpose
 t(t(df))
@@ -853,55 +709,28 @@ t(t(df))
 #> 4 "setosa"
 #> 5 "setosa"
 #> 6 "setosa"
-```
-
-``` r
 
 # is it a dataframe?
 is.data.frame(df)
 #> [1] TRUE
-```
-
-``` r
 is.data.frame(t(df))
 #> [1] FALSE
-```
-
-``` r
 is.data.frame(t(t(df)))
 #> [1] FALSE
-```
-
-``` r
 
 # check type
 typeof(df)
 #> [1] "list"
-```
-
-``` r
 typeof(t(df))
 #> [1] "character"
-```
-
-``` r
 typeof(t(t(df)))
 #> [1] "character"
-```
-
-``` r
 
 # check dimensions
 dim(df)
 #> [1] 6 5
-```
-
-``` r
 dim(t(df))
 #> [1] 5 6
-```
-
-``` r
 dim(t(t(df)))
 #> [1] 6 5
 ```
@@ -927,9 +756,6 @@ Let's experiment:
 #> 4          4.6         3.1          1.5         0.2  setosa
 #> 5          5.0         3.6          1.4         0.2  setosa
 #> 6          5.4         3.9          1.7         0.4  setosa
-```
-
-``` r
 
 as.matrix(df)
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width
@@ -946,18 +772,12 @@ as.matrix(df)
 #> 4 "setosa"
 #> 5 "setosa"
 #> 6 "setosa"
-```
-
-``` r
 
 str(as.matrix(df))
 #>  chr [1:6, 1:5] "5.1" "4.9" "4.7" "4.6" "5.0" "5.4" ...
 #>  - attr(*, "dimnames")=List of 2
 #>   ..$ : chr [1:6] "1" "2" "3" "4" ...
 #>   ..$ : chr [1:5] "Sepal.Length" "Sepal.Width" "Petal.Length" "Petal.Width" ...
-```
-
-``` r
 
 # another example (no such coercion)
 BOD
@@ -968,9 +788,6 @@ BOD
 #> 4    4   16.0
 #> 5    5   15.6
 #> 6    7   19.8
-```
-
-``` r
 
 as.matrix(BOD)
 #>      Time demand
@@ -1000,9 +817,6 @@ data.matrix(df)
 #> 4          4.6         3.1          1.5         0.2       1
 #> 5          5.0         3.6          1.4         0.2       1
 #> 6          5.4         3.9          1.7         0.4       1
-```
-
-``` r
 
 str(data.matrix(df))
 #>  num [1:6, 1:5] 5.1 4.9 4.7 4.6 5 5.4 3.5 3 3.2 3.1 ...
@@ -1026,7 +840,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-07
+#>  date     2024-07-08
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1048,7 +862,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.47    2024-05-29 [1] RSPM
+#>  knitr         1.48    2024-07-07 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM

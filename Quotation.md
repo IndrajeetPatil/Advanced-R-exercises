@@ -69,9 +69,6 @@ The argument `data` is evaluated, while `expr` argument is quoted.
 ``` r
 with(mtcars2, sum(vs))
 #> [1] 10
-```
-
-``` r
 
 invisible(mtcars2)
 
@@ -87,9 +84,6 @@ The argument `...` is evaluated.
 ``` r
 sum(mtcars2$am)
 #> [1] 8
-```
-
-``` r
 
 mtcars2$am
 #>  [1] 1 0 0 1 1 1 0 1 1 1 1
@@ -177,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x555716816570>
+#> <bytecode: 0x5619017c21a8>
 #> <environment: namespace:rlang>
 ```
 
@@ -199,7 +193,7 @@ rlang::enexpr
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x555715ce7c38>
+#> <bytecode: 0x561900c93c38>
 #> <environment: namespace:rlang>
 ```
 
@@ -272,9 +266,6 @@ If `enexpr()` is passed a missing argument, it returns a missing argument:
 arg <- missing_arg()
 
 enexpr(arg)
-```
-
-``` r
 
 is_missing(enexpr(arg))
 #> [1] TRUE
@@ -291,9 +282,6 @@ is_missing(enexpr(arg))
 exprs(a)
 #> [[1]]
 #> a
-```
-
-``` r
 
 exprs(a = )
 #> $a
@@ -306,9 +294,6 @@ In both cases, `a` is treated as a symbol:
 map_lgl(exprs(a), is_symbol)
 #>      
 #> TRUE
-```
-
-``` r
 
 map_lgl(exprs(a = ), is_symbol)
 #>    a 
@@ -322,9 +307,6 @@ But, the argument is missing only in the latter case, since only the name but no
 map_lgl(exprs(a), is_missing)
 #>       
 #> FALSE
-```
-
-``` r
 
 map_lgl(exprs(a = ), is_missing)
 #>    a 
@@ -350,9 +332,6 @@ alist("x" = 1, TRUE, "z" = expr(x + y))
 #> 
 #> $z
 #> expr(x + y)
-```
-
-``` r
 
 exprs("x" = 1, TRUE, "z" = expr(x + y), .named = TRUE)
 #> $x
@@ -380,9 +359,6 @@ alist("x" = 1, , TRUE, )
 #> [1] TRUE
 #> 
 #> [[4]]
-```
-
-``` r
 
 exprs("x" = 1, , TRUE, , .ignore_empty = "trailing")
 #> $x
@@ -393,9 +369,6 @@ exprs("x" = 1, , TRUE, , .ignore_empty = "trailing")
 #> 
 #> [[3]]
 #> [1] TRUE
-```
-
-``` r
 
 exprs("x" = 1, , TRUE, , .ignore_empty = "none")
 #> $x
@@ -408,9 +381,6 @@ exprs("x" = 1, , TRUE, , .ignore_empty = "none")
 #> [1] TRUE
 #> 
 #> [[4]]
-```
-
-``` r
 
 exprs("x" = 1, , TRUE, , .ignore_empty = "all")
 #> $x
@@ -427,16 +397,10 @@ exprs("x" = 1, , TRUE, , .ignore_empty = "all")
 alist(foo := bar)
 #> [[1]]
 #> `:=`(foo, bar)
-```
-
-``` r
 
 exprs(foo := bar, .unquote_names = FALSE)
 #> [[1]]
 #> `:=`(foo, bar)
-```
-
-``` r
 
 exprs(foo := bar, .unquote_names = TRUE)
 #> $foo
@@ -479,9 +443,6 @@ msg <- "old"
 delayedAssign("myVar", msg) # creates a promise
 substitute(myVar)
 #> myVar
-```
-
-``` r
 msg <- "new!"
 myVar
 #> [1] "new!"
@@ -494,9 +455,6 @@ myVar
 ``` r
 substitute(x + y, env = env(x = 2, y = 1))
 #> 2 + 1
-```
-
-``` r
 
 x <- 2
 y <- 1
@@ -545,45 +503,24 @@ abc <- exprs(a, b, c)
 
 expr((!!xy) / (!!yz))
 #> (x + y)/(y + z)
-```
-
-``` r
 
 expr(-(!!xz)^(!!yz))
 #> -(x + z)^(y + z)
-```
-
-``` r
 
 expr(((!!xy)) + (!!yz) - (!!xy))
 #> (x + y) + (y + z) - (x + y)
-```
-
-``` r
 
 call2("atan2", expr(!!xy), expr(!!yz))
 #> atan2(x + y, y + z)
-```
-
-``` r
 
 call2("sum", expr(!!xy), expr(!!xy), expr(!!yz))
 #> sum(x + y, x + y, y + z)
-```
-
-``` r
 
 call2("sum", !!!abc)
 #> sum(a, b, c)
-```
-
-``` r
 
 expr(mean(c(!!!abc), na.rm = TRUE))
 #> mean(c(a, b, c), na.rm = TRUE)
-```
-
-``` r
 
 call2("foo", a = expr(!!xy), b = expr(!!yz))
 #> foo(a = x + y, b = y + z)
@@ -597,14 +534,8 @@ call2("foo", a = expr(!!xy), b = expr(!!yz))
 ``` r
 (a <- expr(mean(1:10)))
 #> mean(1:10)
-```
-
-``` r
 (b <- expr(mean(!!(1:10))))
 #> mean(1:10)
-```
-
-``` r
 identical(a, b)
 #> [1] FALSE
 ```
@@ -621,9 +552,6 @@ as.list(expr(mean(1:10)))
 #> 
 #> [[2]]
 #> 1:10
-```
-
-``` r
 
 as.list(expr(mean(!!(1:10))))
 #> [[1]]
@@ -652,9 +580,6 @@ ast(expr(mean(1:10)))
 #>   └─█─`:` 
 #>     ├─1 
 #>     └─10
-```
-
-``` r
 
 ast(expr(mean(!!(1:10))))
 #> █─expr 
@@ -695,9 +620,6 @@ args_list <- list(trim = 0, na.rm = TRUE)
 
 exec(mean, vec, !!!args_list, , .env = caller_env())
 #> [1] 3
-```
-
-``` r
 
 rm("exec")
 ```
@@ -837,20 +759,11 @@ Let's try it out to see if it produces the same output as before:
 ``` r
 bc(0)(1)
 #> [1] 0
-```
-
-``` r
 bc_new(0)(1)
 #> [1] 0
-```
-
-``` r
 
 bc(2)(2)
 #> [1] 1.5
-```
-
-``` r
 bc_new(2)(2)
 #> [1] 1.5
 ```
@@ -888,9 +801,6 @@ Checking that the new version behaves the same way as the original version:
 not_null <- compose(`!`, is.null)
 not_null(4)
 #> [1] TRUE
-```
-
-``` r
 
 not_null2 <- compose_new(`!`, is.null)
 not_null2(4)
@@ -914,7 +824,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-07
+#>  date     2024-07-08
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -948,7 +858,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1  2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4    2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8    2023-12-04 [1] RSPM
-#>  knitr         1.47     2024-05-29 [1] RSPM
+#>  knitr         1.48     2024-07-07 [1] RSPM
 #>  labeling      0.4.3    2023-08-29 [1] RSPM
 #>  lifecycle     1.0.4    2023-11-07 [1] RSPM
 #>  lobstr      * 1.1.2    2022-06-22 [1] RSPM

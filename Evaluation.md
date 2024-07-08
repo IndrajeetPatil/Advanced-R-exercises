@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x55703d8f3408>
+#> <environment: 0x55aa63faf130>
 #> Parent: <environment: global>
 ```
 
@@ -72,15 +72,9 @@ expr(eval(expr(eval(expr(eval(expr(2 + 2)))))))
 ``` r
 eval(expr(eval(expr(eval(expr(2 + 2))))))
 #> [1] 4
-```
-
-``` r
 
 eval(eval(expr(eval(expr(eval(expr(2 + 2)))))))
 #> [1] 4
-```
-
-``` r
 
 expr(eval(expr(eval(expr(eval(expr(2 + 2)))))))
 #> eval(expr(eval(expr(eval(expr(2 + 2))))))
@@ -112,23 +106,14 @@ x <- 2
 
 get2("x")
 #> [1] 2
-```
-
-``` r
 get("x")
 #> [1] 2
-```
-
-``` r
 
 y <- 1:4
 assign("y[1]", 2)
 
 get2("y[1]")
 #> [1] 2
-```
-
-``` r
 get("y[1]")
 #> [1] 2
 ```
@@ -145,9 +130,6 @@ assign2 <- function(name, value, env = caller_env()) {
 assign("y1", 4)
 y1
 #> [1] 4
-```
-
-``` r
 
 assign2("y2", 4)
 y2
@@ -268,23 +250,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x55703e39b210
-```
-
-``` r
+#> env:  0x55aa64a570e8
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x55703ead29a0
-```
-
-``` r
+#> env:  0x55aa65528490
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x55703f7e4308
+#> env:  0x55aa65ea0418
 ```
 
 **A1.** Correctly predicted 😉
@@ -294,16 +270,10 @@ q3
 q1 <- new_quosure(expr(x), env(x = 1))
 eval_tidy(q1)
 #> [1] 1
-```
-
-``` r
 
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 eval_tidy(q2)
 #> [1] 11
-```
-
-``` r
 
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 eval_tidy(q3)
@@ -325,13 +295,10 @@ enenv <- function(x) {
 
 enenv(x)
 #> <environment: R_GlobalEnv>
-```
-
-``` r
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x557040330510>
+#> <environment: 0x55aa669ec6f0>
 ```
 
 ---
@@ -453,15 +420,9 @@ When the filtering conditions specified in `rows` don't evaluate to a logical, t
 rm("x")
 exists("x")
 #> [1] FALSE
-```
-
-``` r
 
 subset2(df, x + 1)
 #> Error in subset2(df, x + 1): is.logical(rows_val) is not TRUE
-```
-
-``` r
 
 subset3(df, x + 1)
 #>     x
@@ -518,9 +479,6 @@ x <- TRUE
 eval(expr(c(x = !!x)))
 #>    x 
 #> TRUE
-```
-
-``` r
 eval(expr(c(x = x)))
 #>    x 
 #> TRUE
@@ -639,18 +597,12 @@ identical(
   lm(mpg ~ disp, data = mtcars)
 )
 #> [1] TRUE
-```
-
-``` r
 
 identical(
   lm_custom(x = I(1 / disp)),
   lm(mpg ~ I(1 / disp), data = mtcars)
 )
 #> [1] TRUE
-```
-
-``` r
 
 identical(
   lm_custom(x = disp * cyl),
@@ -722,7 +674,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-07
+#>  date     2024-07-08
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -746,7 +698,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.47    2024-05-29 [1] RSPM
+#>  knitr         1.48    2024-07-07 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM

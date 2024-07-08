@@ -63,9 +63,6 @@ Note that we needed to create a new function for this because neither of the exi
 ``` r
 which(x1 %in% x2)
 #> [1] 5
-```
-
-``` r
 
 which(dplyr::near(x1, x2, tol = 0.1))
 #> Warning in x - y: longer object length is not a multiple of
@@ -97,7 +94,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x555e5888c050>
+#> <bytecode: 0x56185ca63cf8>
 #> <environment: namespace:purrr>
 ```
 
@@ -123,11 +120,8 @@ safely
 #>     check_bool(quiet)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x555e55493f08>
+#> <bytecode: 0x56185cc06b78>
 #> <environment: namespace:purrr>
-```
-
-``` r
 
 purrr:::capture_error
 #> function (code, otherwise = NULL, quiet = TRUE) 
@@ -138,7 +132,7 @@ purrr:::capture_error
 #>         list(result = otherwise, error = e)
 #>     })
 #> }
-#> <bytecode: 0x555e553d3308>
+#> <bytecode: 0x56185cc620d0>
 #> <environment: namespace:purrr>
 ```
 
@@ -229,9 +223,6 @@ file_creation_tracker(c("a.txt", "b.txt"))
 #> a.txt
 #> b.txt
 #> [1] TRUE TRUE
-```
-
-``` r
 
 file_deletion_tracker(c("a.txt", "b.txt"))
 #> - File removed:
@@ -290,10 +281,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2024-07-07 00:47:34.133923
-#> Function called at:  2024-07-07 00:47:39.140887
-#> Function called at:  2024-07-07 00:47:44.146288
-#> Function called at:  2024-07-07 00:47:52.154752
+#> Function created at: 2024-07-08 21:33:55.381052
+#> Function called at:  2024-07-08 21:34:00.387984
+#> Function called at:  2024-07-08 21:34:05.393383
+#> Function called at:  2024-07-08 21:34:13.402183
 ```
 
 ---
@@ -342,7 +333,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-07
+#>  date     2024-07-08
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -368,7 +359,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.47    2024-05-29 [1] RSPM
+#>  knitr         1.48    2024-07-07 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM

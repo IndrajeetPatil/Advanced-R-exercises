@@ -33,16 +33,10 @@ map(x, 1)
 #> 
 #> [[2]]
 #> [1] 2
-```
-
-``` r
 as_mapper(1)
 #> function (x, ...) 
 #> pluck_raw(x, list(1), .default = NULL)
-#> <environment: 0x563417359df0>
-```
-
-``` r
+#> <environment: 0x55a5e80461d0>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -50,16 +44,10 @@ map(x, list(2, 1))
 #> 
 #> [[2]]
 #> [1] 3
-```
-
-``` r
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, 1), .default = NULL)
-#> <environment: 0x563417440ec8>
-```
-
-``` r
+#> <environment: 0x55a5e812cc98>
 
 # mapping by name -----------------------
 
@@ -74,16 +62,10 @@ map(y, "m")
 #> 
 #> [[2]]
 #> NULL
-```
-
-``` r
 as_mapper("m")
 #> function (x, ...) 
 #> pluck_raw(x, list("m"), .default = NULL)
-#> <environment: 0x5634175908c0>
-```
-
-``` r
+#> <environment: 0x55a5e827d090>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -92,16 +74,10 @@ map(y, list(2, "m"))
 #> 
 #> [[2]]
 #> NULL
-```
-
-``` r
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, "m"), .default = NULL)
-#> <environment: 0x563417678eb0>
-```
-
-``` r
+#> <environment: 0x55a5e8365910>
 
 # compact functions ----------------------------
 
@@ -111,9 +87,6 @@ map(y, ~ length(.x))
 #> 
 #> [[2]]
 #> [1] 2
-```
-
-``` r
 as_mapper(~ length(.x))
 #> <lambda>
 #> function (..., .x = ..1, .y = ..2, . = ..1) 
@@ -147,18 +120,12 @@ map(1:3, ~ runif(2))
 #> 
 #> [[3]]
 #> [1] 0.02098596 0.74972687
-```
-
-``` r
 as_mapper(~ runif(2))
 #> <lambda>
 #> function (..., .x = ..1, .y = ..2, . = ..1) 
 #> runif(2)
 #> attr(,"class")
 #> [1] "rlang_lambda_function" "function"
-```
-
-``` r
 
 map(1:3, runif(2))
 #> [[1]]
@@ -169,13 +136,10 @@ map(1:3, runif(2))
 #> 
 #> [[3]]
 #> [1] 3
-```
-
-``` r
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck_raw(x, list(0.597890264587477, 0.587997315218672), .default = NULL)
-#> <environment: 0x563418656750>
+#> <environment: 0x55a5e9345190>
 ```
 
 ---
@@ -575,14 +539,8 @@ The `is.na()` function does not return a `logical` scalar, but instead returns a
 # contrast the following behavior of predicate functions
 is.character(c("x", 2))
 #> [1] TRUE
-```
-
-``` r
 is.null(c(3, NULL))
 #> [1] FALSE
-```
-
-``` r
 
 # with this behavior
 is.na(c(NA, 1))
@@ -618,14 +576,8 @@ simple_reduce <- function(x, f) {
 ``` r
 simple_reduce(numeric(), sum)
 #> Error in x[[1]]: subscript out of bounds
-```
-
-``` r
 simple_reduce(1, sum)
 #> Error in x[[i]]: subscript out of bounds
-```
-
-``` r
 simple_reduce(1:3, sum)
 #> [1] 6
 ```
@@ -660,14 +612,8 @@ Let's try it out:
 ``` r
 simple_reduce2(numeric(), sum)
 #> [1] 0
-```
-
-``` r
 simple_reduce2(1, sum)
 #> [1] 1
-```
-
-``` r
 simple_reduce2(1:3, sum)
 #> [1] 6
 ```
@@ -678,14 +624,8 @@ Depending on the function, we can provide a different `init` argument:
 ``` r
 simple_reduce2(numeric(), `*`, init = 1)
 #> [1] 1
-```
-
-``` r
 simple_reduce2(1, `*`, init = 1)
 #> [1] 1
-```
-
-``` r
 simple_reduce2(1:3, `*`, init = 1)
 #> [1] 6
 ```
@@ -732,19 +672,10 @@ Testing it once:
 ``` r
 span(c(0, 0, 0, 0, 0), is.na)
 #> integer(0)
-```
-
-``` r
 span(c(NA, 0, NA, NA, NA), is.na)
 #> [1] 3 4 5
-```
-
-``` r
 span(c(NA, 0, 0, 0, 0), is.na)
 #> [1] 1
-```
-
-``` r
 span(c(NA, NA, 0, 0, 0), is.na)
 #> [1] 1 2
 ```
@@ -755,19 +686,10 @@ Testing it twice:
 ``` r
 span(c(3, 1, 2, 4, 5, 6), function(x) x > 3)
 #> [1] 2 3 4
-```
-
-``` r
 span(c(3, 1, 2, 4, 5, 6), function(x) x > 9)
 #> integer(0)
-```
-
-``` r
 span(c(3, 1, 2, 4, 5, 6), function(x) x == 3)
 #> [1] 1
-```
-
-``` r
 span(c(3, 1, 2, 4, 5, 6), function(x) x %in% c(2, 4))
 #> [1] 2 3
 ```
@@ -793,9 +715,6 @@ arg_max <- function(.x, .f) {
 
 arg_max(-10:5, function(x) x^2)
 #> [1] -10
-```
-
-``` r
 arg_max(-5:5, function(x) x^2)
 #> [1] -5  5
 ```
@@ -815,9 +734,6 @@ arg_min <- function(.x, .f) {
 
 arg_min(-10:5, function(x) x^2)
 #> [1] 0
-```
-
-``` r
 arg_min(-5:5, function(x) x^2)
 #> [1] 0
 ```
@@ -894,9 +810,6 @@ purrr::modify_if(head(iris), .p = is.numeric, .f = scale01)
 #>   4    3      7
 #>   6    4      0
 #>   8    0      0
-```
-
-``` r
 
 # rows
 apply(m, 1, function(x) x^2)
@@ -906,9 +819,6 @@ apply(m, 1, function(x) x^2)
 #>   [2,]  1  9   4
 #>   [3,]  9 16   0
 #>   [4,] 49  0   0
-```
-
-``` r
 
 # columns
 apply(m, 2, function(x) x^2)
@@ -920,9 +830,6 @@ apply(m, 2, function(x) x^2)
 #>   [4,]    9     49
 #>   [5,]   16      0
 #>   [6,]    0      0
-```
-
-``` r
 
 # rows and columns
 apply(m, c(1, 2), function(x) x^2)
@@ -970,20 +877,14 @@ library(rlang)
 #> The following object is masked from 'package:magrittr':
 #> 
 #>     set_names
-```
-
-``` r
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x563417782568>
+#> <environment: 0x55a5e8471dd8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>
 #> • y: <dbl>
-```
-
-``` r
 
 eapply(e, as.character)
 #> $x
@@ -1079,9 +980,6 @@ Let's check if it works as expected:
 ``` r
 find_fixed_point(cos, 1.0)
 #> [1] 0.7387603
-```
-
-``` r
 
 # cos(x) = x
 cos(find_fixed_point(cos, 1.0))
@@ -1117,7 +1015,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-07
+#>  date     2024-07-08
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1144,7 +1042,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.47    2024-05-29 [1] RSPM
+#>  knitr         1.48    2024-07-07 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM

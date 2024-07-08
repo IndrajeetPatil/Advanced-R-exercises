@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x56098b0bf660>
+#> <bytecode: 0x55ff21630660>
 #> <environment: namespace:base>
 ```
 
@@ -33,9 +33,6 @@ f2 <- f1
 
 match.fun("f1")
 #> function(x) mean(x)
-```
-
-``` r
 
 match.fun("f2")
 #> function(x) mean(x)
@@ -47,9 +44,6 @@ match.fun("f2")
 ``` r
 function(x) 3()
 #> function(x) 3()
-```
-
-``` r
 (function(x) 3)()
 #> [1] 3
 ```
@@ -61,14 +55,8 @@ function(x) 3()
 f <- (function(x) 3())
 f
 #> function(x) 3()
-```
-
-``` r
 f()
 #> Error in f(): attempt to apply non-function
-```
-
-``` r
 
 rlang::is_syntactic_literal(3)
 #> [1] TRUE
@@ -81,9 +69,6 @@ This is the correct way to call an anonymous function.
 g <- (function(x) 3)
 g
 #> function(x) 3
-```
-
-``` r
 g()
 #> [1] 3
 ```
@@ -102,21 +87,12 @@ g()
 f <- function(x) 3
 is.function(mean)
 #> [1] TRUE
-```
-
-``` r
 is.function(f)
 #> [1] TRUE
-```
-
-``` r
 
 # these aren't
 is.function("x")
 #> [1] FALSE
-```
-
-``` r
 is.function(new.env())
 #> [1] FALSE
 ```
@@ -128,21 +104,12 @@ Use `is.primitive()` to check if a *function* is *primitive*:
 # primitive
 is.primitive(sum)
 #> [1] TRUE
-```
-
-``` r
 is.primitive(`+`)
 #> [1] TRUE
-```
-
-``` r
 
 # not primitive
 is.primitive(mean)
 #> [1] FALSE
-```
-
-``` r
 is.primitive(read.csv)
 #> [1] FALSE
 ```
@@ -179,9 +146,6 @@ We can use `formals()` to extract number of arguments, but because this function
 ``` r
 formals("!")
 #> NULL
-```
-
-``` r
 
 length(formals("!"))
 #> [1] 0
@@ -258,9 +222,6 @@ primitives <- Filter(is.primitive, funs)
 
 length(primitives)
 #> [1] 210
-```
-
-``` r
 
 names(primitives)
 #>   [1] "-"                    ":"                   
@@ -388,11 +349,8 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x56098b0bf660>
+#> <bytecode: 0x55ff21630660>
 #> <environment: namespace:base>
-```
-
-``` r
 
 # other package function
 purrr::map
@@ -400,7 +358,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x56098f77e4c8>
+#> <bytecode: 0x55ff25cee1c0>
 #> <environment: namespace:purrr>
 ```
 
@@ -551,15 +509,9 @@ x_ok <- function(x) {
 
 x_ok(NULL)
 #> [1] FALSE
-```
-
-``` r
 
 x_ok(1)
 #> [1] TRUE
-```
-
-``` r
 
 x_ok(1:3)
 #> [1] FALSE
@@ -575,15 +527,9 @@ x_ok <- function(x) {
 
 x_ok(NULL)
 #> logical(0)
-```
-
-``` r
 
 x_ok(1)
 #> [1] TRUE
-```
-
-``` r
 
 x_ok(1:3)
 #> [1] FALSE FALSE FALSE
@@ -615,7 +561,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x560994ce9b40" "0x560994ce9b40"
+#> [1] "0x55ff2b25d7e8" "0x55ff2b25d7e8"
 #> [1] 100
 ```
 
@@ -651,9 +597,6 @@ f1 <- function(x =
 }
 f1()
 #> [1] 2 1
-```
-
-``` r
 y
 #> [1] 10
 ```
@@ -713,7 +656,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2024-07-07 00:47:21 UTC"
+#> [1] "2024-07-08 21:33:42 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -796,20 +739,11 @@ It would have been better if there arguments were `NULL` instead of missing; tha
 ``` r
 sum(1, 2, 3)
 #> [1] 6
-```
-
-``` r
 mean(1, 2, 3)
 #> [1] 1
-```
-
-``` r
 
 sum(1, 2, 3, na.omit = TRUE)
 #> [1] 7
-```
-
-``` r
 mean(1, 2, 3, na.omit = TRUE)
 #> [1] 1
 ```
@@ -820,9 +754,6 @@ mean(1, 2, 3, na.omit = TRUE)
 ``` r
 str(sum)
 #> function (..., na.rm = FALSE)
-```
-
-``` r
 str(mean)
 #> function (x, ...)
 ```
@@ -904,9 +835,6 @@ We can change this by setting `verbose = TRUE`:
 load("my_iris.rda", verbose = TRUE)
 #> Loading objects:
 #>   iris
-```
-
-``` r
 
 # cleanup
 unlink("my_iris.rda")
@@ -948,7 +876,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x560992e20800>
+#> <bytecode: 0x55ff29393e48>
 #> <environment: namespace:withr>
 ```
 
@@ -1030,7 +958,7 @@ capture.output
 #>         close(file)
 #>     rval %||% invisible(NULL)
 #> }
-#> <bytecode: 0x5609931fb7f8>
+#> <bytecode: 0x55ff2976dd00>
 #> <environment: namespace:utils>
 ```
 
@@ -1042,9 +970,6 @@ Here are few key differences:
 ``` r
 capture.output(1)
 #> [1] "[1] 1"
-```
-
-``` r
 
 capture.output2(1)
 #> character(0)
@@ -1173,25 +1098,16 @@ x1 <- rep("a", 10)
 random_modify(x1) <- "X"
 x1
 #>  [1] "a" "a" "a" "a" "X" "a" "a" "a" "a" "a"
-```
-
-``` r
 
 x2 <- rep("a", 10)
 random_modify(x2) <- "Y"
 x2
 #>  [1] "a" "a" "a" "a" "a" "Y" "a" "a" "a" "a"
-```
-
-``` r
 
 x3 <- rep(0, 15)
 random_modify(x3) <- -4
 x3
 #>  [1]  0  0  0  0 -4  0  0  0  0  0  0  0  0  0  0
-```
-
-``` r
 
 x4 <- rep(0, 15)
 random_modify(x4) <- -1
@@ -1224,15 +1140,9 @@ x4
 
 1 + 2
 #> [1] 3
-```
-
-``` r
 
 "a" + "b"
 #> [1] "ab"
-```
-
-``` r
 
 rm("+", envir = .GlobalEnv)
 ```
@@ -1330,9 +1240,6 @@ We can create infix operator for exclusive OR like so:
 
 lv1 %xor% lv2
 #> [1] FALSE  TRUE  TRUE FALSE
-```
-
-``` r
 
 TRUE %xor% TRUE
 #> [1] FALSE
@@ -1365,25 +1272,13 @@ We can check that the outputs agree with the underlying functions:
 ``` r
 (x <- c(sort(sample(1:20, 9)), NA))
 #>  [1]  4  7  8  9 11 13 15 16 20 NA
-```
-
-``` r
 (y <- c(sort(sample(3:23, 7)), NA))
 #> [1]  9 10 13 15 17 19 20 NA
-```
-
-``` r
 
 identical(intersect(x, y), x %n% y)
 #> [1] TRUE
-```
-
-``` r
 identical(union(x, y), x %u% y)
 #> [1] TRUE
-```
-
-``` r
 identical(setdiff(x, y), x %/% y)
 #> [1] TRUE
 ```
@@ -1403,7 +1298,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-07
+#>  date     2024-07-08
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1436,7 +1331,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
-#>  knitr         1.47    2024-05-29 [1] RSPM
+#>  knitr         1.48    2024-07-07 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  lobstr        1.1.2   2022-06-22 [1] RSPM
 #>  lubridate   * 1.9.3   2023-09-27 [1] RSPM
