@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x55b21e9139b0>
+#> <environment: 0x5600ae973660>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ``` r
 lobstr::ref(e$loop)
-#> █ [1:0x55b21e9139b0] <env> 
-#> └─loop = [1:0x55b21e9139b0]
+#> █ [1:0x5600ae973660] <env> 
+#> └─loop = [1:0x5600ae973660]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x55b21f380998" "0x55b21f380998"
+#> [1] "0x5600af91b1a8" "0x5600af91b1a8"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x55b21f7ec8d8" "0x55b21f7ec8d8"
+#> [1] "0x5600af88bc28" "0x5600af88bc28"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55b21bb91660>
+#> <bytecode: 0x5600abbf1660>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -506,7 +506,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x55b21d5e7530>
+#> <bytecode: 0x5600ad647520>
 #> <environment: namespace:rlang>
 ```
 
@@ -559,7 +559,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-14
+#>  date     2024-07-21
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -609,7 +609,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.1   2024-06-14 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.45    2024-06-16 [1] RSPM
+#>  xfun          0.46    2024-07-18 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.9   2024-07-05 [1] RSPM
 #> 

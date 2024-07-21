@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x560b8a2e8660>
+#> <bytecode: 0x561d213e8660>
 #> <environment: namespace:base>
 ```
 
@@ -349,7 +349,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x560b8a2e8660>
+#> <bytecode: 0x561d213e8660>
 #> <environment: namespace:base>
 
 # other package function
@@ -358,7 +358,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x560b8e9a5810>
+#> <bytecode: 0x561d25aa6d00>
 #> <environment: namespace:purrr>
 ```
 
@@ -561,7 +561,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x560b93f11b68" "0x560b93f11b68"
+#> [1] "0x561d2b013120" "0x561d2b013120"
 #> [1] 100
 ```
 
@@ -656,7 +656,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2024-07-14 00:48:41 UTC"
+#> [1] "2024-07-21 00:48:46 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -876,7 +876,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x560b92048740>
+#> <bytecode: 0x561d29149ee0>
 #> <environment: namespace:withr>
 ```
 
@@ -958,7 +958,7 @@ capture.output
 #>         close(file)
 #>     rval %||% invisible(NULL)
 #> }
-#> <bytecode: 0x560b924259c8>
+#> <bytecode: 0x561d295275c8>
 #> <environment: namespace:utils>
 ```
 
@@ -1298,7 +1298,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-14
+#>  date     2024-07-21
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1363,7 +1363,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.1   2024-06-14 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.0   2024-01-16 [1] RSPM
-#>  xfun          0.45    2024-06-16 [1] RSPM
+#>  xfun          0.46    2024-07-18 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.9   2024-07-05 [1] RSPM
 #> 
