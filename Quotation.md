@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x56515abc8598>
+#> <bytecode: 0x563c89917598>
 #> <environment: namespace:rlang>
 ```
 
@@ -193,7 +193,7 @@ rlang::enexpr
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x56515a099c38>
+#> <bytecode: 0x563c88de8c38>
 #> <environment: namespace:rlang>
 ```
 
@@ -824,7 +824,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-21
+#>  date     2024-07-28
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -834,7 +834,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  bslib         0.7.0    2024-03-29 [1] RSPM
 #>  cachem        1.1.0    2024-05-16 [1] RSPM
 #>  cli           3.6.3    2024-06-21 [1] RSPM
-#>  colorspace    2.1-0    2023-01-23 [1] RSPM
+#>  colorspace    2.1-1    2024-07-26 [1] RSPM
 #>  compiler      4.4.1    2024-06-14 [3] local
 #>  crayon        1.5.3    2024-06-20 [1] RSPM
 #>  datasets    * 4.4.1    2024-06-14 [3] local
@@ -888,7 +888,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  withr         3.0.0    2024-01-16 [1] RSPM
 #>  xfun          0.46     2024-07-18 [1] RSPM
 #>  xml2          1.3.6    2023-12-04 [1] RSPM
-#>  yaml          2.3.9    2024-07-05 [1] RSPM
+#>  yaml          2.3.10   2024-07-26 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library
 #>  [2] /opt/R/4.4.1/lib/R/site-library

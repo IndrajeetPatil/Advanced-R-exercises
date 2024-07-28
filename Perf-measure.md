@@ -68,7 +68,7 @@ rm
 #>     }
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x55f1657c8250>
+#> <bytecode: 0x55a02c2f6250>
 #> <environment: namespace:base>
 ```
 
@@ -144,8 +144,8 @@ full_join(t_bench_df, t_systime_df, by = "expression")
 #> # A tibble: 2 × 4
 #>   expression bench_mean systime_with_gc systime_with_nogc
 #>   <bch:expr>   <bch:tm>           <dbl>             <dbl>
-#> 1 sqrt(x)      655.76ns           0.663              0.42
-#> 2 x^0.5          2.21µs           2.02               1.98
+#> 1 sqrt(x)       662.4ns           0.647             0.400
+#> 2 x^0.5           2.2µs           2.00              1.98
 ```
 
 The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.
@@ -180,9 +180,9 @@ bench::mark(
 #> # A tibble: 4 × 2
 #>   expression      median
 #>   <bch:expr>    <bch:tm>
-#> 1 sqrt(x)         3.04µs
-#> 2 exp(log(x)/2)   12.6µs
-#> 3 x^0.5          18.82µs
+#> 1 sqrt(x)         3.03µs
+#> 2 exp(log(x)/2)  12.62µs
+#> 3 x^0.5          18.84µs
 #> 4 x^(1/2)        18.95µs
 ```
 
@@ -205,7 +205,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-21
+#>  date     2024-07-28
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -260,7 +260,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  withr         3.0.0   2024-01-16 [1] RSPM
 #>  xfun          0.46    2024-07-18 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
-#>  yaml          2.3.9   2024-07-05 [1] RSPM
+#>  yaml          2.3.10  2024-07-26 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library
 #>  [2] /opt/R/4.4.1/lib/R/site-library

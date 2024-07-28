@@ -36,7 +36,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck_raw(x, list(1), .default = NULL)
-#> <environment: 0x55e4b91490b0>
+#> <environment: 0x556c46f37e90>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -47,7 +47,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, 1), .default = NULL)
-#> <environment: 0x55e4b922fb78>
+#> <environment: 0x556c47020878>
 
 # mapping by name -----------------------
 
@@ -65,7 +65,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck_raw(x, list("m"), .default = NULL)
-#> <environment: 0x55e4b937ff70>
+#> <environment: 0x556c47170c70>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -77,7 +77,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, "m"), .default = NULL)
-#> <environment: 0x55e4b94687f0>
+#> <environment: 0x556c472594f0>
 
 # compact functions ----------------------------
 
@@ -139,7 +139,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck_raw(x, list(0.597890264587477, 0.587997315218672), .default = NULL)
-#> <environment: 0x55e4ba446450>
+#> <environment: 0x556c48237290>
 ```
 
 ---
@@ -880,7 +880,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x55e4b9574cf0>
+#> <environment: 0x556c47362df8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>
@@ -1015,7 +1015,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-21
+#>  date     2024-07-28
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1065,7 +1065,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  withr         3.0.0   2024-01-16 [1] RSPM
 #>  xfun          0.46    2024-07-18 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
-#>  yaml          2.3.9   2024-07-05 [1] RSPM
+#>  yaml          2.3.10  2024-07-26 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library
 #>  [2] /opt/R/4.4.1/lib/R/site-library

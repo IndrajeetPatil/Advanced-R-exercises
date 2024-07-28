@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x55ac6286b4e8>
+#> <environment: 0x563a064a64e8>
 #> Parent: <environment: global>
 ```
 
@@ -250,17 +250,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x55ac63313120
+#> env:  0x563a06f4e120
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x55ac63e91c50
+#> env:  0x563a07acd630
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x55ac6475a488
+#> env:  0x563a08395488
 ```
 
 **A1.** Correctly predicted 😉
@@ -298,7 +298,7 @@ enenv(x)
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x55ac652a7f80>
+#> <environment: 0x563a08ee3740>
 ```
 
 ---
@@ -674,7 +674,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-07-21
+#>  date     2024-07-28
 #>  pandoc   3.2.1 @ /opt/hostedtoolcache/pandoc/3.2.1/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -718,7 +718,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  withr         3.0.0   2024-01-16 [1] RSPM
 #>  xfun          0.46    2024-07-18 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
-#>  yaml          2.3.9   2024-07-05 [1] RSPM
+#>  yaml          2.3.10  2024-07-26 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library
 #>  [2] /opt/R/4.4.1/lib/R/site-library
