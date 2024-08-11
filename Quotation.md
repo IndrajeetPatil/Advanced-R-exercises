@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x55609661a3e0>
+#> <bytecode: 0x560f051d7aa8>
 #> <environment: namespace:rlang>
 ```
 
@@ -193,7 +193,7 @@ rlang::enexpr
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x5560921b9be0>
+#> <bytecode: 0x560f00d79c28>
 #> <environment: namespace:rlang>
 ```
 
@@ -824,20 +824,20 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-08-04
+#>  date     2024-08-11
 #>  pandoc   3.3 @ /opt/hostedtoolcache/pandoc/3.3/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version  date (UTC) lib source
-#>  base        * 4.4.1    2024-08-02 [3] local
+#>  base        * 4.4.1    2024-08-06 [3] local
 #>  bookdown      0.40     2024-07-02 [1] RSPM
 #>  bslib         0.8.0    2024-07-29 [1] RSPM
 #>  cachem        1.1.0    2024-05-16 [1] RSPM
 #>  cli           3.6.3    2024-06-21 [1] RSPM
 #>  colorspace    2.1-1    2024-07-26 [1] RSPM
-#>  compiler      4.4.1    2024-08-01 [3] local
+#>  compiler      4.4.1    2024-08-06 [3] local
 #>  crayon        1.5.3    2024-06-20 [1] RSPM
-#>  datasets    * 4.4.1    2024-08-02 [3] local
+#>  datasets    * 4.4.1    2024-08-06 [3] local
 #>  diffobj       0.3.5    2021-10-05 [1] RSPM
 #>  digest        0.6.36   2024-06-23 [1] RSPM
 #>  downlit       0.4.4    2024-06-10 [1] RSPM
@@ -850,9 +850,9 @@ sessioninfo::session_info(include_base = TRUE)
 #>  generics      0.1.3    2022-07-05 [1] RSPM
 #>  ggplot2     * 3.5.1    2024-04-23 [1] RSPM
 #>  glue          1.7.0    2024-01-09 [1] RSPM
-#>  graphics    * 4.4.1    2024-08-02 [3] local
-#>  grDevices   * 4.4.1    2024-08-02 [3] local
-#>  grid          4.4.1    2024-08-02 [3] local
+#>  graphics    * 4.4.1    2024-08-06 [3] local
+#>  grDevices   * 4.4.1    2024-08-06 [3] local
+#>  grid          4.4.1    2024-08-06 [3] local
 #>  gtable        0.3.5    2024-04-22 [1] RSPM
 #>  highr         0.11     2024-05-26 [1] RSPM
 #>  htmltools     0.5.8.1  2024-04-04 [1] RSPM
@@ -865,7 +865,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  magrittr    * 2.0.3    2022-03-30 [1] RSPM
 #>  MASS        * 7.3-60.2 2024-04-26 [3] CRAN (R 4.4.1)
 #>  memoise       2.0.1    2021-11-26 [1] RSPM
-#>  methods     * 4.4.1    2024-08-02 [3] local
+#>  methods     * 4.4.1    2024-08-06 [3] local
 #>  munsell       0.5.1    2024-04-01 [1] RSPM
 #>  pillar        1.9.0    2023-03-22 [1] RSPM
 #>  pkgconfig     2.0.3    2019-09-22 [1] RSPM
@@ -877,12 +877,12 @@ sessioninfo::session_info(include_base = TRUE)
 #>  sass          0.4.9    2024-03-15 [1] RSPM
 #>  scales        1.3.0    2023-11-28 [1] RSPM
 #>  sessioninfo   1.2.2    2021-12-06 [1] RSPM
-#>  stats       * 4.4.1    2024-08-02 [3] local
+#>  stats       * 4.4.1    2024-08-06 [3] local
 #>  tibble        3.2.1    2023-03-20 [1] RSPM
 #>  tidyselect    1.2.1    2024-03-11 [1] RSPM
-#>  tools         4.4.1    2024-08-01 [3] local
+#>  tools         4.4.1    2024-08-06 [3] local
 #>  utf8          1.2.4    2023-10-22 [1] RSPM
-#>  utils       * 4.4.1    2024-08-02 [3] local
+#>  utils       * 4.4.1    2024-08-06 [3] local
 #>  vctrs         0.6.5    2023-12-01 [1] RSPM
 #>  waldo         0.5.2    2023-11-02 [1] RSPM
 #>  withr         3.0.1    2024-07-31 [1] RSPM

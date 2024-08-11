@@ -131,7 +131,7 @@
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt;     .Internal(remove(list, envir, inherits))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x55a709242208&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x563689dbe250&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>I still couldn’t figure out why. I would recommend checking out the <a href="https://advanced-r-solutions.rbind.io/measuring-performance.html#profiling">official answer</a>.</p>
 <hr>
@@ -194,8 +194,8 @@
 <span><span class="co">#&gt; # A tibble: 2 × 4</span></span>
 <span><span class="co">#&gt;   expression bench_mean systime_with_gc systime_with_nogc</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt;           &lt;dbl&gt;             &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 sqrt(x)      631.64ns           0.647             0.427</span></span>
-<span><span class="co">#&gt; 2 x^0.5          2.18µs           2.00              1.98</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 sqrt(x)      641.69ns           0.647             0.429</span></span>
+<span><span class="co">#&gt; 2 x^0.5          2.19µs           2.00              1.97</span></span></code></pre></div>
 <p>The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.</p>
 <hr>
 <p><strong>Q2.</strong> Here are two other ways to compute the square root of a vector. Which do you think will be fastest? Which will be slowest? Use microbenchmarking to test your answers.</p>
@@ -219,10 +219,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span><span class="co">#&gt;   expression      median</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt;    &lt;bch:tm&gt;</span></span>
-<span><span class="co">#&gt; 1 sqrt(x)         3.04µs</span></span>
-<span><span class="co">#&gt; 2 exp(log(x)/2)  12.61µs</span></span>
-<span><span class="co">#&gt; 3 x^0.5          18.86µs</span></span>
-<span><span class="co">#&gt; 4 x^(1/2)        18.98µs</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 sqrt(x)         3.02µs</span></span>
+<span><span class="co">#&gt; 2 exp(log(x)/2)   12.6µs</span></span>
+<span><span class="co">#&gt; 3 x^0.5          18.79µs</span></span>
+<span><span class="co">#&gt; 4 x^(1/2)        18.89µs</span></span></code></pre></div>
 <p>The specialized primitive function <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code> (written in <code>C</code>) is the fastest way to compute square root.</p>
 <hr>
 </div>
@@ -242,19 +242,19 @@
 <span><span class="co">#&gt;  collate  C.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-08-04</span></span>
+<span><span class="co">#&gt;  date     2024-08-11</span></span>
 <span><span class="co">#&gt;  pandoc   3.3 @ /opt/hostedtoolcache/pandoc/3.3/x64/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt;  package     * version date (UTC) lib source</span></span>
-<span><span class="co">#&gt;  base        * 4.4.1   2024-08-02 [3] local</span></span>
+<span><span class="co">#&gt;  base        * 4.4.1   2024-08-06 [3] local</span></span>
 <span><span class="co">#&gt;  bench         1.1.3   2023-05-04 [1] RSPM</span></span>
 <span><span class="co">#&gt;  bookdown      0.40    2024-07-02 [1] RSPM</span></span>
 <span><span class="co">#&gt;  bslib         0.8.0   2024-07-29 [1] RSPM</span></span>
 <span><span class="co">#&gt;  cachem        1.1.0   2024-05-16 [1] RSPM</span></span>
 <span><span class="co">#&gt;  cli           3.6.3   2024-06-21 [1] RSPM</span></span>
-<span><span class="co">#&gt;  compiler      4.4.1   2024-08-01 [3] local</span></span>
-<span><span class="co">#&gt;  datasets    * 4.4.1   2024-08-02 [3] local</span></span>
+<span><span class="co">#&gt;  compiler      4.4.1   2024-08-06 [3] local</span></span>
+<span><span class="co">#&gt;  datasets    * 4.4.1   2024-08-06 [3] local</span></span>
 <span><span class="co">#&gt;  digest        0.6.36  2024-06-23 [1] RSPM</span></span>
 <span><span class="co">#&gt;  downlit       0.4.4   2024-06-10 [1] RSPM</span></span>
 <span><span class="co">#&gt;  dplyr       * 1.1.4   2023-11-17 [1] RSPM</span></span>
@@ -264,8 +264,8 @@
 <span><span class="co">#&gt;  fs            1.6.4   2024-04-25 [1] RSPM</span></span>
 <span><span class="co">#&gt;  generics      0.1.3   2022-07-05 [1] RSPM</span></span>
 <span><span class="co">#&gt;  glue          1.7.0   2024-01-09 [1] RSPM</span></span>
-<span><span class="co">#&gt;  graphics    * 4.4.1   2024-08-02 [3] local</span></span>
-<span><span class="co">#&gt;  grDevices   * 4.4.1   2024-08-02 [3] local</span></span>
+<span><span class="co">#&gt;  graphics    * 4.4.1   2024-08-06 [3] local</span></span>
+<span><span class="co">#&gt;  grDevices   * 4.4.1   2024-08-06 [3] local</span></span>
 <span><span class="co">#&gt;  htmltools     0.5.8.1 2024-04-04 [1] RSPM</span></span>
 <span><span class="co">#&gt;  htmlwidgets   1.6.4   2023-12-06 [1] RSPM</span></span>
 <span><span class="co">#&gt;  jquerylib     0.1.4   2021-04-26 [1] RSPM</span></span>
@@ -274,7 +274,7 @@
 <span><span class="co">#&gt;  lifecycle     1.0.4   2023-11-07 [1] RSPM</span></span>
 <span><span class="co">#&gt;  magrittr    * 2.0.3   2022-03-30 [1] RSPM</span></span>
 <span><span class="co">#&gt;  memoise       2.0.1   2021-11-26 [1] RSPM</span></span>
-<span><span class="co">#&gt;  methods     * 4.4.1   2024-08-02 [3] local</span></span>
+<span><span class="co">#&gt;  methods     * 4.4.1   2024-08-06 [3] local</span></span>
 <span><span class="co">#&gt;  pillar        1.9.0   2023-03-22 [1] RSPM</span></span>
 <span><span class="co">#&gt;  pkgconfig     2.0.3   2019-09-22 [1] RSPM</span></span>
 <span><span class="co">#&gt;  profmem       0.6.0   2020-12-13 [1] RSPM</span></span>
@@ -285,14 +285,14 @@
 <span><span class="co">#&gt;  rmarkdown     2.27    2024-05-17 [1] RSPM</span></span>
 <span><span class="co">#&gt;  sass          0.4.9   2024-03-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  sessioninfo   1.2.2   2021-12-06 [1] RSPM</span></span>
-<span><span class="co">#&gt;  stats       * 4.4.1   2024-08-02 [3] local</span></span>
+<span><span class="co">#&gt;  stats       * 4.4.1   2024-08-06 [3] local</span></span>
 <span><span class="co">#&gt;  stringi       1.8.4   2024-05-06 [1] RSPM</span></span>
 <span><span class="co">#&gt;  stringr       1.5.1   2023-11-14 [1] RSPM</span></span>
 <span><span class="co">#&gt;  tibble        3.2.1   2023-03-20 [1] RSPM</span></span>
 <span><span class="co">#&gt;  tidyselect    1.2.1   2024-03-11 [1] RSPM</span></span>
-<span><span class="co">#&gt;  tools         4.4.1   2024-08-01 [3] local</span></span>
+<span><span class="co">#&gt;  tools         4.4.1   2024-08-06 [3] local</span></span>
 <span><span class="co">#&gt;  utf8          1.2.4   2023-10-22 [1] RSPM</span></span>
-<span><span class="co">#&gt;  utils       * 4.4.1   2024-08-02 [3] local</span></span>
+<span><span class="co">#&gt;  utils       * 4.4.1   2024-08-06 [3] local</span></span>
 <span><span class="co">#&gt;  vctrs         0.6.5   2023-12-01 [1] RSPM</span></span>
 <span><span class="co">#&gt;  withr         3.0.1   2024-07-31 [1] RSPM</span></span>
 <span><span class="co">#&gt;  xfun          0.46    2024-07-18 [1] RSPM</span></span>
@@ -334,7 +334,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2024-08-04.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2024-08-11.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
