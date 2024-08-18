@@ -292,7 +292,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x55cac18f33b0>
+#> <bytecode: 0x55b8067cf450>
 #> <environment: namespace:rlang>
 ```
 
@@ -691,7 +691,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-08-11
+#>  date     2024-08-18
 #>  pandoc   3.3 @ /opt/hostedtoolcache/pandoc/3.3/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
