@@ -94,7 +94,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x556379dbdaf8>
+#> <bytecode: 0x55b80ddc43e0>
 #> <environment: namespace:purrr>
 ```
 
@@ -120,7 +120,7 @@ safely
 #>     check_bool(quiet)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x5563769a08a0>
+#> <bytecode: 0x55b80a9aed38>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -132,7 +132,7 @@ purrr:::capture_error
 #>         list(result = otherwise, error = e)
 #>     })
 #> }
-#> <bytecode: 0x5563768ed548>
+#> <bytecode: 0x55b80a8ee548>
 #> <environment: namespace:purrr>
 ```
 
@@ -281,10 +281,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2024-08-18 00:49:08.228465
-#> Function called at:  2024-08-18 00:49:13.235445
-#> Function called at:  2024-08-18 00:49:18.240854
-#> Function called at:  2024-08-18 00:49:26.249317
+#> Function created at: 2024-08-25 00:50:05.499723
+#> Function called at:  2024-08-25 00:50:10.50665
+#> Function called at:  2024-08-25 00:50:15.512012
+#> Function called at:  2024-08-25 00:50:23.520481
 ```
 
 ---
@@ -333,19 +333,19 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-08-18
+#>  date     2024-08-25
 #>  pandoc   3.3 @ /opt/hostedtoolcache/pandoc/3.3/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
-#>  base        * 4.4.1   2024-08-06 [3] local
+#>  base        * 4.4.1   2024-08-22 [3] local
 #>  bookdown      0.40    2024-07-02 [1] RSPM
 #>  bslib         0.8.0   2024-07-29 [1] RSPM
 #>  cachem        1.1.0   2024-05-16 [1] RSPM
 #>  cli           3.6.3   2024-06-21 [1] RSPM
-#>  compiler      4.4.1   2024-08-06 [3] local
-#>  datasets    * 4.4.1   2024-08-06 [3] local
-#>  digest        0.6.36  2024-06-23 [1] RSPM
+#>  compiler      4.4.1   2024-08-22 [3] local
+#>  datasets    * 4.4.1   2024-08-22 [3] local
+#>  digest        0.6.37  2024-08-19 [1] RSPM
 #>  downlit       0.4.4   2024-06-10 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
 #>  evaluate      0.24.0  2024-06-10 [1] RSPM
@@ -354,8 +354,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
 #>  glue          1.7.0   2024-01-09 [1] RSPM
-#>  graphics    * 4.4.1   2024-08-06 [3] local
-#>  grDevices   * 4.4.1   2024-08-06 [3] local
+#>  graphics    * 4.4.1   2024-08-22 [3] local
+#>  grDevices   * 4.4.1   2024-08-22 [3] local
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.8   2023-12-04 [1] RSPM
@@ -363,24 +363,24 @@ sessioninfo::session_info(include_base = TRUE)
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
 #>  memoise       2.0.1   2021-11-26 [1] RSPM
-#>  methods     * 4.4.1   2024-08-06 [3] local
+#>  methods     * 4.4.1   2024-08-22 [3] local
 #>  pillar        1.9.0   2023-03-22 [1] RSPM
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
 #>  purrr       * 1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang         1.1.4   2024-06-04 [1] RSPM
-#>  rmarkdown     2.27    2024-05-17 [1] RSPM
+#>  rmarkdown     2.28    2024-08-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
-#>  stats       * 4.4.1   2024-08-06 [3] local
+#>  stats       * 4.4.1   2024-08-22 [3] local
 #>  tibble        3.2.1   2023-03-20 [1] RSPM
 #>  tidyselect    1.2.1   2024-03-11 [1] RSPM
-#>  tools         4.4.1   2024-08-06 [3] local
+#>  tools         4.4.1   2024-08-22 [3] local
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
-#>  utils       * 4.4.1   2024-08-06 [3] local
+#>  utils       * 4.4.1   2024-08-22 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.1   2024-07-31 [1] RSPM
-#>  xfun          0.46    2024-07-18 [1] RSPM
+#>  xfun          0.47    2024-08-17 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.10  2024-07-26 [1] RSPM
 #> 
