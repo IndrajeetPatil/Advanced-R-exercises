@@ -68,7 +68,7 @@ rm
 #>     }
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x55a9fa022608>
+#> <bytecode: 0x557657821658>
 #> <environment: namespace:base>
 ```
 
@@ -144,8 +144,8 @@ full_join(t_bench_df, t_systime_df, by = "expression")
 #> # A tibble: 2 × 4
 #>   expression bench_mean systime_with_gc systime_with_nogc
 #>   <bch:expr>   <bch:tm>           <dbl>             <dbl>
-#> 1 sqrt(x)       657.4ns           0.663             0.427
-#> 2 x^0.5           2.2µs           2                 1.98
+#> 1 sqrt(x)      662.48ns           0.675             0.426
+#> 2 x^0.5          2.19µs           2.05              2.02
 ```
 
 The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.
@@ -181,9 +181,9 @@ bench::mark(
 #>   expression      median
 #>   <bch:expr>    <bch:tm>
 #> 1 sqrt(x)         3.04µs
-#> 2 exp(log(x)/2)   12.6µs
+#> 2 exp(log(x)/2)  12.61µs
 #> 3 x^0.5          18.82µs
-#> 4 x^(1/2)        18.94µs
+#> 4 x^(1/2)        18.93µs
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.
@@ -205,7 +205,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-08-25
+#>  date     2024-09-01
 #>  pandoc   3.3 @ /opt/hostedtoolcache/pandoc/3.3/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
