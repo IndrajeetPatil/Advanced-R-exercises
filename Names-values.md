@@ -29,7 +29,7 @@ d <- 1:10
 ``` r
 obj_addrs <- obj_addrs(list(a, b, c))
 unique(obj_addrs)
-#> [1] "0x55b7de754108"
+#> [1] "0x55dcfec4b7a0"
 ```
 
 Except `d`, which is a different object, even if it has the same value as `a`, `b`, and `c`:
@@ -37,7 +37,7 @@ Except `d`, which is a different object, even if it has the same value as `a`, `
 
 ``` r
 obj_addr(d)
-#> [1] "0x55b7de2ec260"
+#> [1] "0x55dcfe7e3f28"
 ```
 
 ---
@@ -66,7 +66,7 @@ obj_addrs <- obj_addrs(list(
 ))
 
 unique(obj_addrs)
-#> [1] "0x55b7db97cff0"
+#> [1] "0x55dcfbe74ff0"
 ```
 
 ---
@@ -124,7 +124,7 @@ And as the docs mention (emphasis mine):
 x <- 1:10
 
 tracemem(x)
-#> [1] "<0x55b7def202d8>"
+#> [1] "<0x55dd001826d8>"
 
 x <- x + 1
 
@@ -136,10 +136,10 @@ But since the object created in memory by `1:10` is not assigned a name, it can'
 
 ``` r
 obj_addr(1:10)
-#> [1] "0x55b7df8caf40"
+#> [1] "0x55dcffdc3060"
 
 tracemem(1:10)
-#> [1] "<0x55b7df936a78>"
+#> [1] "<0x55dcffe2eb98>"
 ```
 
 ---
@@ -163,11 +163,11 @@ x <- c(1L, 2L, 3L)
 typeof(x)
 #> [1] "integer"
 tracemem(x)
-#> [1] "<0x55b7e0060208>"
+#> [1] "<0x55dd0056d988>"
 
 x[[3]] <- 4
-#> tracemem[0x55b7e0060208 -> 0x55b7e018fc48]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
-#> tracemem[0x55b7e018fc48 -> 0x55b7e0178078]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x55dd0056d988 -> 0x55dd0069d3c8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local 
+#> tracemem[0x55dd0069d3c8 -> 0x55dd00683888]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 untracemem(x)
 
 typeof(x)
@@ -182,10 +182,10 @@ x <- c(1L, 2L, 3L)
 typeof(x)
 #> [1] "integer"
 tracemem(x)
-#> [1] "<0x55b7e05cb998>"
+#> [1] "<0x55dd00ad9118>"
 
 x[[3]] <- 4L
-#> tracemem[0x55b7e05cb998 -> 0x55b7e06fd1f8]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x55dd00ad9118 -> 0x55dd00c0a978]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 untracemem(x)
 
 typeof(x)
@@ -216,20 +216,20 @@ b <- list(a, a)
 c <- list(b, a, 1:10)
 
 ref(a)
-#> [1:0x55b7e0e0cc80] <int>
+#> [1:0x55dd0131a400] <int>
 
 ref(b)
-#> █ [1:0x55b7e0dfacf8] <list> 
-#> ├─[2:0x55b7e0e0cc80] <int> 
-#> └─[2:0x55b7e0e0cc80]
+#> █ [1:0x55dd01308478] <list> 
+#> ├─[2:0x55dd0131a400] <int> 
+#> └─[2:0x55dd0131a400]
 
 ref(c)
-#> █ [1:0x55b7e13c6378] <list> 
-#> ├─█ [2:0x55b7e0dfacf8] <list> 
-#> │ ├─[3:0x55b7e0e0cc80] <int> 
-#> │ └─[3:0x55b7e0e0cc80] 
-#> ├─[3:0x55b7e0e0cc80] 
-#> └─[4:0x55b7e13da650] <int>
+#> █ [1:0x55dd018d3af8] <list> 
+#> ├─█ [2:0x55dd01308478] <list> 
+#> │ ├─[3:0x55dd0131a400] <int> 
+#> │ └─[3:0x55dd0131a400] 
+#> ├─[3:0x55dd0131a400] 
+#> └─[4:0x55dd018e7dd0] <int>
 ```
 
 Here is what we learn:
@@ -259,7 +259,7 @@ x
 #> [[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x55b7e1585d28"
+#> [1] "0x55dd01a93470"
 
 x[[2]] <- x
 x
@@ -270,13 +270,13 @@ x
 #> [[2]][[1]]
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 obj_addr(x)
-#> [1] "0x55b7e08e5908"
+#> [1] "0x55dd00df3048"
 
 ref(x)
-#> █ [1:0x55b7e08e5908] <list> 
-#> ├─[2:0x55b7e13d92c8] <int> 
-#> └─█ [3:0x55b7e1585d28] <list> 
-#>   └─[2:0x55b7e13d92c8]
+#> █ [1:0x55dd00df3048] <list> 
+#> ├─[2:0x55dd018e69d8] <int> 
+#> └─█ [3:0x55dd01a93470] <list> 
+#>   └─[2:0x55dd018e69d8]
 ```
 
 I don't have access to OmniGraffle software, so I am including here the figure from the [official solution manual](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify):
@@ -425,16 +425,16 @@ x[[1]] <- x
 x <- list()
 
 obj_addr(x)
-#> [1] "0x55b7e18f8998"
+#> [1] "0x55dd01df11e0"
 
 tracemem(x)
-#> [1] "<0x55b7e18f8998>"
+#> [1] "<0x55dd01df11e0>"
 
 x[[1]] <- x
-#> tracemem[0x55b7e18f8998 -> 0x55b7e1a00e58]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+#> tracemem[0x55dd01df11e0 -> 0x55dd01ef95d0]: eval eval eval_with_user_handlers withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir in_input_dir eng_r block_exec call_block process_group withCallingHandlers <Anonymous> process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 
 obj_addr(x[[1]])
-#> [1] "0x55b7e18f8998"
+#> [1] "0x55dd01df11e0"
 ```
 
 ---
@@ -558,7 +558,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-09-01
+#>  date     2024-09-02
 #>  pandoc   3.3 @ /opt/hostedtoolcache/pandoc/3.3/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
