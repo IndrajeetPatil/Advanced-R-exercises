@@ -207,7 +207,7 @@
 <span><span class="co">#&gt; ├─█─x = 1 </span></span>
 <span><span class="co">#&gt; │ └─y = 2 </span></span>
 <span><span class="co">#&gt; ├─█─`{` </span></span>
-<span><span class="co">#&gt; └─&lt;inline srcref&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; └─NULL</span></span></code></pre></div>
 <p><strong>A4.</strong> As mentioned in <a href="https://adv-r.hadley.nz/functions.html#fun-components">this</a> section:</p>
 <blockquote>
 <p>Like all objects in R, functions can also possess any number of additional <code><a href="https://rdrr.io/r/base/attributes.html">attributes()</a></code>. One attribute used by base R is <code>srcref</code>, short for source reference. It points to the source code used to create the function. The <code>srcref</code> is used for printing because, unlike <code><a href="https://rdrr.io/r/base/body.html">body()</a></code>, it contains code comments and other formatting.</p>
@@ -359,7 +359,7 @@
 <code class="sourceCode R"><span><span class="va">mean</span></span>
 <span><span class="co">#&gt; function (x, ...) </span></span>
 <span><span class="co">#&gt; UseMethod("mean")</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x56049de44098&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x55aca3832820&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span></code></pre></div>
 <p>As mentioned in the respective <a href="If%20the%20function%20uses%20...%20it%E2%80%99s%20not%20possible%20to%20standardise%20all%20arguments.">section</a>:</p>
 <blockquote>
@@ -638,7 +638,7 @@
 <code class="sourceCode R"><span><span class="fu">logical_abbr</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">g</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: Don't know how to handle type integer</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
 <p><strong>Q3.</strong> Modify <code>find_assign</code> to also detect assignment using replacement functions, i.e. <code>names(x) &lt;- y</code>.</p>
 <p><strong>A3.</strong> Although both simple assignment (<code>x &lt;- y</code>) and assignment using replacement functions (<code>names(x) &lt;- y</code>) have <code>&lt;-</code> operator in their call, in the latter case, <code>names(x)</code> will be a call object and not a symbol:</p>
 <div class="sourceCode" id="cb531"><pre class="downlit sourceCode r">
@@ -826,14 +826,14 @@
 <span><span class="co">#&gt; ─ Session info ───────────────────────────────────────────</span></span>
 <span><span class="co">#&gt;  setting  value</span></span>
 <span><span class="co">#&gt;  version  R version 4.4.1 (2024-06-14)</span></span>
-<span><span class="co">#&gt;  os       Ubuntu 22.04.4 LTS</span></span>
+<span><span class="co">#&gt;  os       Ubuntu 22.04.5 LTS</span></span>
 <span><span class="co">#&gt;  system   x86_64, linux-gnu</span></span>
 <span><span class="co">#&gt;  ui       X11</span></span>
 <span><span class="co">#&gt;  language (EN)</span></span>
 <span><span class="co">#&gt;  collate  C.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-09-15</span></span>
+<span><span class="co">#&gt;  date     2024-09-22</span></span>
 <span><span class="co">#&gt;  pandoc   3.4 @ /opt/hostedtoolcache/pandoc/3.4/x64/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────</span></span>
@@ -848,7 +848,7 @@
 <span><span class="co">#&gt;  datasets    * 4.4.1   2024-08-22 [3] local</span></span>
 <span><span class="co">#&gt;  digest        0.6.37  2024-08-19 [1] RSPM</span></span>
 <span><span class="co">#&gt;  downlit       0.4.4   2024-06-10 [1] RSPM</span></span>
-<span><span class="co">#&gt;  evaluate      0.24.0  2024-06-10 [1] RSPM</span></span>
+<span><span class="co">#&gt;  evaluate      1.0.0   2024-09-17 [1] RSPM</span></span>
 <span><span class="co">#&gt;  fansi         1.0.6   2023-12-08 [1] RSPM</span></span>
 <span><span class="co">#&gt;  fastmap       1.2.0   2024-05-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  fs            1.6.4   2024-04-25 [1] RSPM</span></span>
@@ -857,7 +857,7 @@
 <span><span class="co">#&gt;  grDevices   * 4.4.1   2024-08-22 [3] local</span></span>
 <span><span class="co">#&gt;  htmltools     0.5.8.1 2024-04-04 [1] RSPM</span></span>
 <span><span class="co">#&gt;  jquerylib     0.1.4   2021-04-26 [1] RSPM</span></span>
-<span><span class="co">#&gt;  jsonlite      1.8.8   2023-12-04 [1] RSPM</span></span>
+<span><span class="co">#&gt;  jsonlite      1.8.9   2024-09-20 [1] RSPM</span></span>
 <span><span class="co">#&gt;  knitr         1.48    2024-07-07 [1] RSPM</span></span>
 <span><span class="co">#&gt;  lifecycle     1.0.4   2023-11-07 [1] RSPM</span></span>
 <span><span class="co">#&gt;  lobstr      * 1.1.2   2022-06-22 [1] RSPM</span></span>
@@ -918,7 +918,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2024-09-15.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2024-09-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

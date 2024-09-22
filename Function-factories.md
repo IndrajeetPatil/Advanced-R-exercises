@@ -21,7 +21,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x55e28cbd1e10>
+#> <bytecode: 0x55b5aa838e10>
 #> <environment: namespace:base>
 ```
 
@@ -47,8 +47,8 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x55e292184fd8>
-#> <environment: 0x55e2921846a8>
+#> <bytecode: 0x55b5af449be0>
+#> <environment: 0x55b5af449278>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
@@ -208,19 +208,21 @@ new_counter3 <- function() {
 
 ``` r
 new_counter3()
-#> function() {
+#> function () 
+#> {
 #>     i <- i + 1
 #>     i
-#>   }
-#> <environment: 0x55e2920ecfe8>
+#> }
+#> <environment: 0x55b5af2d33a8>
 
 new_counter3()
-#> function() {
+#> function () 
+#> {
 #>     i <- i + 1
 #>     i
-#>   }
-#> <bytecode: 0x55e2927dc220>
-#> <environment: 0x55e292598418>
+#> }
+#> <bytecode: 0x55b5af427460>
+#> <environment: 0x55b5af30e420>
 ```
 
 ---
@@ -258,7 +260,7 @@ ggplot2::label_bquote
 #>     }
 #>     structure(fun, class = "labeller")
 #> }
-#> <bytecode: 0x55e292c7ff98>
+#> <bytecode: 0x55b5af7b7180>
 #> <environment: namespace:ggplot2>
 ```
 
@@ -281,7 +283,7 @@ scales::number_format
 #>             scale_cut = scale_cut, trim = trim, ...)
 #>     }
 #> }
-#> <bytecode: 0x55e292e72ff0>
+#> <bytecode: 0x55b5b00a8190>
 #> <environment: namespace:scales>
 ```
 
@@ -376,18 +378,21 @@ Let's have a look at one example with each:
 
 ``` r
 boxcox2(1)
-#> function(x) (x^lambda - 1) / lambda
-#> <environment: 0x55e291a478c0>
+#> function (x) 
+#> (x^lambda - 1)/lambda
+#> <environment: 0x55b5ad470040>
 
 boxcox3(mtcars$wt)
-#> function(lambda) {
+#> function (lambda) 
+#> {
 #>     if (lambda == 0) {
-#>       log(x)
-#>     } else {
-#>       (x^lambda - 1) / lambda
+#>         log(x)
 #>     }
-#>   }
-#> <environment: 0x55e291ab0628>
+#>     else {
+#>         (x^lambda - 1)/lambda
+#>     }
+#> }
+#> <environment: 0x55b5ad3b58a0>
 ```
 
 As can be seen:
@@ -416,11 +421,12 @@ boot_permute <- function(df, var) {
 }
 
 boot_permute(mtcars, "mpg")
-#> function() {
+#> function () 
+#> {
 #>     col <- df[[var]]
 #>     col[sample(n, replace = TRUE)]
-#>   }
-#> <environment: 0x55e2923f7c88>
+#> }
+#> <environment: 0x55b5ae37b720>
 ```
 
 This is why we don't need to worry about a copy being made because the `df` in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:
@@ -429,7 +435,7 @@ This is why we don't need to worry about a copy being made because the `df` in t
 ``` r
 boot_permute_env <- rlang::fn_env(boot_permute(mtcars, "mpg"))
 rlang::env_print(boot_permute_env)
-#> <environment: 0x55e292bd1038>
+#> <environment: 0x55b5ae5923f0>
 #> Parent: <environment: global>
 #> Bindings:
 #> • n: <int>
@@ -488,8 +494,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1          28.8µs   30.8µs    31616.    12.8KB     41.2
-#> 2 LL2          15.5µs   16.5µs    57155.        0B     40.0
+#> 1 LL1          28.2µs   30.2µs    31844.    12.8KB     35.1
+#> 2 LL2          15.2µs     16µs    59516.        0B     35.7
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -515,16 +521,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 × 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1          40.4µs   42.7µs    22055.
-#>  2     10 LL2          18.5µs   19.3µs    50983.
-#>  3     20 LL1          43.3µs   44.9µs    21943.
-#>  4     20 LL2          18.1µs   18.8µs    52445.
-#>  5     50 LL1          47.6µs   49.2µs    19929.
-#>  6     50 LL2          17.2µs   17.9µs    55034.
-#>  7    100 LL1          62.9µs   65.1µs    14996.
-#>  8    100 LL2          18.3µs   19.4µs    51129.
-#>  9   1000 LL1         860.8µs  869.9µs     1115.
-#> 10   1000 LL2          56.7µs   58.2µs    16890.
+#>  1     10 LL1          40.5µs   42.2µs    23150.
+#>  2     10 LL2          18.3µs   19.1µs    50828.
+#>  3     20 LL1          42.8µs     45µs    20764.
+#>  4     20 LL2          17.9µs   18.6µs    52457.
+#>  5     50 LL1          47.1µs   49.1µs    19908.
+#>  6     50 LL2            17µs   17.7µs    55072.
+#>  7    100 LL1          62.5µs   66.5µs    14703.
+#>  8    100 LL2          18.2µs   19.1µs    51219.
+#>  9   1000 LL1         860.3µs  878.4µs     1000.
+#> 10   1000 LL2          56.4µs   58.2µs    16635.
 
 ggplot(
   df_bench,
@@ -600,14 +606,16 @@ attach(funs)
 #>     mean, sum
 
 mean
-#> function(x) mean(x, na.rm = TRUE)
+#> function (x) 
+#> mean(x, na.rm = TRUE)
 head(search())
 #> [1] ".GlobalEnv"       "funs"             "package:scales"  
 #> [4] "package:ggplot2"  "package:rlang"    "package:magrittr"
 
 mean <- function(x) stop("Hi!")
 mean
-#> function(x) stop("Hi!")
+#> function (x) 
+#> stop("Hi!")
 head(search())
 #> [1] ".GlobalEnv"       "funs"             "package:scales"  
 #> [4] "package:ggplot2"  "package:rlang"    "package:magrittr"
@@ -621,11 +629,13 @@ detach(funs)
 ``` r
 env_bind(globalenv(), !!!funs)
 mean
-#> function(x) mean(x, na.rm = TRUE)
+#> function (x) 
+#> mean(x, na.rm = TRUE)
 
 mean <- function(x) stop("Hi!")
 mean
-#> function(x) stop("Hi!")
+#> function (x) 
+#> stop("Hi!")
 env_unbind(globalenv(), names(funs))
 ```
 
@@ -641,14 +651,14 @@ sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
 #>  version  R version 4.4.1 (2024-06-14)
-#>  os       Ubuntu 22.04.4 LTS
+#>  os       Ubuntu 22.04.5 LTS
 #>  system   x86_64, linux-gnu
 #>  ui       X11
 #>  language (EN)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-09-15
+#>  date     2024-09-22
 #>  pandoc   3.4 @ /opt/hostedtoolcache/pandoc/3.4/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -665,7 +675,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  digest        0.6.37  2024-08-19 [1] RSPM
 #>  downlit       0.4.4   2024-06-10 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
-#>  evaluate      0.24.0  2024-06-10 [1] RSPM
+#>  evaluate      1.0.0   2024-09-17 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
 #>  farver        2.1.2   2024-05-13 [1] RSPM
 #>  fastmap       1.2.0   2024-05-15 [1] RSPM
@@ -680,7 +690,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  highr         0.11    2024-05-26 [1] RSPM
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
-#>  jsonlite      1.8.8   2023-12-04 [1] RSPM
+#>  jsonlite      1.8.9   2024-09-20 [1] RSPM
 #>  knitr         1.48    2024-07-07 [1] RSPM
 #>  labeling      0.4.3   2023-08-29 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM

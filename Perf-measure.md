@@ -68,7 +68,7 @@ rm
 #>     }
 #>     .Internal(remove(list, envir, inherits))
 #> }
-#> <bytecode: 0x55e56a752608>
+#> <bytecode: 0x565308923c58>
 #> <environment: namespace:base>
 ```
 
@@ -144,8 +144,8 @@ full_join(t_bench_df, t_systime_df, by = "expression")
 #> # A tibble: 2 × 4
 #>   expression bench_mean systime_with_gc systime_with_nogc
 #>   <bch:expr>   <bch:tm>           <dbl>             <dbl>
-#> 1 sqrt(x)      681.73ns           0.657             0.426
-#> 2 x^0.5          2.26µs           2.02              2.00
+#> 1 sqrt(x)      478.01ns           0.425             0.422
+#> 2 x^0.5          2.18µs           1.98              1.98
 ```
 
 The comparison reveals that these two approaches yield quite similar results. Slight differences in exact values is possibly due to differences in the precision of timers used internally by these functions.
@@ -180,10 +180,10 @@ bench::mark(
 #> # A tibble: 4 × 2
 #>   expression      median
 #>   <bch:expr>    <bch:tm>
-#> 1 sqrt(x)         3.05µs
-#> 2 exp(log(x)/2)  12.61µs
-#> 3 x^0.5          19.03µs
-#> 4 x^(1/2)        19.11µs
+#> 1 sqrt(x)         3.01µs
+#> 2 exp(log(x)/2)  12.59µs
+#> 3 x^0.5           18.8µs
+#> 4 x^(1/2)        18.91µs
 ```
 
 The specialized primitive function `sqrt()` (written in `C`) is the fastest way to compute square root.
@@ -198,14 +198,14 @@ sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
 #>  version  R version 4.4.1 (2024-06-14)
-#>  os       Ubuntu 22.04.4 LTS
+#>  os       Ubuntu 22.04.5 LTS
 #>  system   x86_64, linux-gnu
 #>  ui       X11
 #>  language (EN)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-09-15
+#>  date     2024-09-22
 #>  pandoc   3.4 @ /opt/hostedtoolcache/pandoc/3.4/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -221,7 +221,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  digest        0.6.37  2024-08-19 [1] RSPM
 #>  downlit       0.4.4   2024-06-10 [1] RSPM
 #>  dplyr       * 1.1.4   2023-11-17 [1] RSPM
-#>  evaluate      0.24.0  2024-06-10 [1] RSPM
+#>  evaluate      1.0.0   2024-09-17 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
 #>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
@@ -232,7 +232,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  htmlwidgets   1.6.4   2023-12-06 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
-#>  jsonlite      1.8.8   2023-12-04 [1] RSPM
+#>  jsonlite      1.8.9   2024-09-20 [1] RSPM
 #>  knitr         1.48    2024-07-07 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
@@ -241,16 +241,13 @@ sessioninfo::session_info(include_base = TRUE)
 #>  pillar        1.9.0   2023-03-22 [1] RSPM
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
 #>  profmem       0.6.0   2020-12-13 [1] RSPM
-#>  profvis     * 0.3.8   2023-05-02 [1] RSPM
-#>  purrr         1.0.2   2023-08-10 [1] RSPM
+#>  profvis     * 0.4.0   2024-09-20 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang         1.1.4   2024-06-04 [1] RSPM
 #>  rmarkdown     2.28    2024-08-17 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.4.1   2024-08-22 [3] local
-#>  stringi       1.8.4   2024-05-06 [1] RSPM
-#>  stringr       1.5.1   2023-11-14 [1] RSPM
 #>  tibble        3.2.1   2023-03-20 [1] RSPM
 #>  tidyselect    1.2.1   2024-03-11 [1] RSPM
 #>  tools         4.4.1   2024-08-22 [3] local

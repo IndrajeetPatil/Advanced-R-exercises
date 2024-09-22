@@ -49,7 +49,7 @@ withr::with_tempdir(
     foo()
   }
 )
-#> <environment: 0x564cf045a0c0>
+#> <environment: 0x559b7eea35f8>
 #> Parent: <environment: global>
 ```
 
@@ -250,17 +250,17 @@ q1 <- new_quosure(expr(x), env(x = 1))
 q1
 #> <quosure>
 #> expr: ^x
-#> env:  0x564cf1de11b0
+#> env:  0x559b80a199c0
 q2 <- new_quosure(expr(x + !!q1), env(x = 10))
 q2
 #> <quosure>
 #> expr: ^x + (^x)
-#> env:  0x564cf045bbb8
+#> env:  0x559b7dd95408
 q3 <- new_quosure(expr(x + !!q2), env(x = 100))
 q3
 #> <quosure>
 #> expr: ^x + (^x + (^x))
-#> env:  0x564cee92efb8
+#> env:  0x559b7ec20b40
 ```
 
 **A1.** Correctly predicted 😉
@@ -298,7 +298,7 @@ enenv(x)
 
 foo <- function(x) enenv(x)
 foo()
-#> <environment: 0x564cf0a468c0>
+#> <environment: 0x559b7f5d96e0>
 ```
 
 ---
@@ -667,14 +667,14 @@ sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
 #>  version  R version 4.4.1 (2024-06-14)
-#>  os       Ubuntu 22.04.4 LTS
+#>  os       Ubuntu 22.04.5 LTS
 #>  system   x86_64, linux-gnu
 #>  ui       X11
 #>  language (EN)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-09-15
+#>  date     2024-09-22
 #>  pandoc   3.4 @ /opt/hostedtoolcache/pandoc/3.4/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -688,7 +688,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  datasets    * 4.4.1   2024-08-22 [3] local
 #>  digest        0.6.37  2024-08-19 [1] RSPM
 #>  downlit       0.4.4   2024-06-10 [1] RSPM
-#>  evaluate      0.24.0  2024-06-10 [1] RSPM
+#>  evaluate      1.0.0   2024-09-17 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
 #>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
@@ -697,7 +697,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  grDevices   * 4.4.1   2024-08-22 [3] local
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
-#>  jsonlite      1.8.8   2023-12-04 [1] RSPM
+#>  jsonlite      1.8.9   2024-09-20 [1] RSPM
 #>  knitr         1.48    2024-07-07 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM

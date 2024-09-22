@@ -44,7 +44,7 @@ The `package` argument in `library()` is quoted:
 library(MASS)
 
 MASS
-#> Error in eval(expr, envir, enclos): object 'MASS' not found
+#> Error: object 'MASS' not found
 ```
 
 - `subset(mtcars, cyl == 4)`
@@ -58,7 +58,7 @@ mtcars2 <- subset(mtcars, cyl == 4)
 invisible(mtcars)
 
 cyl == 4
-#> Error in eval(expr, envir, enclos): object 'cyl' not found
+#> Error: object 'cyl' not found
 ```
 
 - `with(mtcars2, sum(vs))`
@@ -73,7 +73,7 @@ with(mtcars2, sum(vs))
 invisible(mtcars2)
 
 sum(vs)
-#> Error in eval(expr, envir, enclos): object 'vs' not found
+#> Error: object 'vs' not found
 ```
 
 - `sum(mtcars2$am)`
@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x55aeb17091d0>
+#> <bytecode: 0x55d5a9a5eee0>
 #> <environment: namespace:rlang>
 ```
 
@@ -193,7 +193,7 @@ rlang::enexpr
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x55aead29b1c0>
+#> <bytecode: 0x55d5a53b8eb8>
 #> <environment: namespace:rlang>
 ```
 
@@ -817,14 +817,14 @@ sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
 #>  version  R version 4.4.1 (2024-06-14)
-#>  os       Ubuntu 22.04.4 LTS
+#>  os       Ubuntu 22.04.5 LTS
 #>  system   x86_64, linux-gnu
 #>  ui       X11
 #>  language (EN)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-09-15
+#>  date     2024-09-22
 #>  pandoc   3.4 @ /opt/hostedtoolcache/pandoc/3.4/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -842,7 +842,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  digest        0.6.37   2024-08-19 [1] RSPM
 #>  downlit       0.4.4    2024-06-10 [1] RSPM
 #>  dplyr       * 1.1.4    2023-11-17 [1] RSPM
-#>  evaluate      0.24.0   2024-06-10 [1] RSPM
+#>  evaluate      1.0.0    2024-09-17 [1] RSPM
 #>  fansi         1.0.6    2023-12-08 [1] RSPM
 #>  farver        2.1.2    2024-05-13 [1] RSPM
 #>  fastmap       1.2.0    2024-05-15 [1] RSPM
@@ -857,7 +857,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  highr         0.11     2024-05-26 [1] RSPM
 #>  htmltools     0.5.8.1  2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4    2021-04-26 [1] RSPM
-#>  jsonlite      1.8.8    2023-12-04 [1] RSPM
+#>  jsonlite      1.8.9    2024-09-20 [1] RSPM
 #>  knitr         1.48     2024-07-07 [1] RSPM
 #>  labeling      0.4.3    2023-08-29 [1] RSPM
 #>  lifecycle     1.0.4    2023-11-07 [1] RSPM

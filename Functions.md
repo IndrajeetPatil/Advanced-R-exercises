@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x5637ff107098>
+#> <bytecode: 0x56241c325820>
 #> <environment: namespace:base>
 ```
 
@@ -32,10 +32,12 @@ f1 <- function(x) mean(x)
 f2 <- f1
 
 match.fun("f1")
-#> function(x) mean(x)
+#> function (x) 
+#> mean(x)
 
 match.fun("f2")
-#> function(x) mean(x)
+#> function (x) 
+#> mean(x)
 ```
 
 **Q2.** It's possible (although typically not useful) to call an anonymous function. Which of the two approaches below is correct? Why?
@@ -43,7 +45,8 @@ match.fun("f2")
 
 ``` r
 function(x) 3()
-#> function(x) 3()
+#> function (x) 
+#> 3()
 (function(x) 3)()
 #> [1] 3
 ```
@@ -54,7 +57,8 @@ function(x) 3()
 ``` r
 f <- (function(x) 3())
 f
-#> function(x) 3()
+#> function (x) 
+#> 3()
 f()
 #> Error in f(): attempt to apply non-function
 
@@ -68,7 +72,8 @@ This is the correct way to call an anonymous function.
 ``` r
 g <- (function(x) 3)
 g
-#> function(x) 3
+#> function (x) 
+#> 3
 g()
 #> [1] 3
 ```
@@ -349,7 +354,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x5637ff107098>
+#> <bytecode: 0x56241c325820>
 #> <environment: namespace:base>
 
 # other package function
@@ -358,7 +363,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x563802cea488>
+#> <bytecode: 0x56241fa29be8>
 #> <environment: namespace:purrr>
 ```
 
@@ -378,7 +383,8 @@ sum
 ``` r
 f <- function(x) mean(x)
 f
-#> function(x) mean(x)
+#> function (x) 
+#> mean(x)
 ```
 
 ## Lexical scoping (Exercises 6.4.5)
@@ -561,7 +567,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x5638078b88e8" "0x5638078b88e8"
+#> [1] "0x562424ef15b0" "0x562424ef15b0"
 #> [1] 100
 ```
 
@@ -656,7 +662,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2024-09-15 00:55:18 UTC"
+#> [1] "2024-09-22 00:57:17 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -876,7 +882,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x563805452118>
+#> <bytecode: 0x5624210a6af0>
 #> <environment: namespace:withr>
 ```
 
@@ -958,7 +964,7 @@ capture.output
 #>         close(file)
 #>     rval %||% invisible(NULL)
 #> }
-#> <bytecode: 0x563803dbed40>
+#> <bytecode: 0x56241f8b5dc8>
 #> <environment: namespace:utils>
 ```
 
@@ -1291,14 +1297,14 @@ sessioninfo::session_info(include_base = TRUE)
 #> ─ Session info ───────────────────────────────────────────
 #>  setting  value
 #>  version  R version 4.4.1 (2024-06-14)
-#>  os       Ubuntu 22.04.4 LTS
+#>  os       Ubuntu 22.04.5 LTS
 #>  system   x86_64, linux-gnu
 #>  ui       X11
 #>  language (EN)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-09-15
+#>  date     2024-09-22
 #>  pandoc   3.4 @ /opt/hostedtoolcache/pandoc/3.4/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1314,7 +1320,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  digest        0.6.37  2024-08-19 [1] RSPM
 #>  downlit       0.4.4   2024-06-10 [1] RSPM
 #>  dplyr       * 1.1.4   2023-11-17 [1] RSPM
-#>  evaluate      0.24.0  2024-06-10 [1] RSPM
+#>  evaluate      1.0.0   2024-09-17 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
 #>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  forcats     * 1.0.0   2023-01-29 [1] RSPM
@@ -1330,7 +1336,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  hms           1.1.3   2023-03-21 [1] RSPM
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
-#>  jsonlite      1.8.8   2023-12-04 [1] RSPM
+#>  jsonlite      1.8.9   2024-09-20 [1] RSPM
 #>  knitr         1.48    2024-07-07 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  lobstr        1.1.2   2022-06-22 [1] RSPM
