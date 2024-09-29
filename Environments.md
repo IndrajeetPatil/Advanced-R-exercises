@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x55f93e0c8ee8>
+#> <environment: 0x55c7b882aee8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ``` r
 lobstr::ref(e$loop)
-#> █ [1:0x55f93e0c8ee8] <env> 
-#> └─loop = [1:0x55f93e0c8ee8]
+#> █ [1:0x55c7b882aee8] <env> 
+#> └─loop = [1:0x55c7b882aee8]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x55f93fa55780" "0x55f93fa55780"
+#> [1] "0x55c7ba1b7710" "0x55c7ba1b7710"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x55f93fa9c7b8" "0x55f93fa9c7b8"
+#> [1] "0x55c7ba1fe748" "0x55c7ba1fe748"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55f93bca9820>
+#> <bytecode: 0x55c7b640b820>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -507,7 +507,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x55f93d76e928>
+#> <bytecode: 0x55c7b7ed0928>
 #> <environment: namespace:rlang>
 ```
 
@@ -560,7 +560,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-09-22
+#>  date     2024-09-29
 #>  pandoc   3.4 @ /opt/hostedtoolcache/pandoc/3.4/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
