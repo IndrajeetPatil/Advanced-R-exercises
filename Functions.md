@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55b3ce6d9820>
+#> <bytecode: 0x5594c2d28820>
 #> <environment: namespace:base>
 ```
 
@@ -354,7 +354,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55b3ce6d9820>
+#> <bytecode: 0x5594c2d28820>
 #> <environment: namespace:base>
 
 # other package function
@@ -363,7 +363,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x55b3d1ddfb78>
+#> <bytecode: 0x5594c6726a50>
 #> <environment: namespace:purrr>
 ```
 
@@ -567,7 +567,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x55b3d72a85b8" "0x55b3d72a85b8"
+#> [1] "0x5594cb899ba8" "0x5594cb899ba8"
 #> [1] 100
 ```
 
@@ -662,7 +662,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2024-09-29 00:55:31 UTC"
+#> [1] "2024-10-01 21:35:05 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -882,7 +882,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x55b3d345c8c0>
+#> <bytecode: 0x5594c7a56378>
 #> <environment: namespace:withr>
 ```
 
@@ -964,7 +964,7 @@ capture.output
 #>         close(file)
 #>     rval %||% invisible(NULL)
 #> }
-#> <bytecode: 0x55b3d1c6bb98>
+#> <bytecode: 0x5594c6255bf0>
 #> <environment: namespace:utils>
 ```
 
@@ -1304,7 +1304,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-09-29
+#>  date     2024-10-01
 #>  pandoc   3.4 @ /opt/hostedtoolcache/pandoc/3.4/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1327,7 +1327,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
 #>  ggplot2     * 3.5.1   2024-04-23 [1] RSPM
-#>  glue          1.7.0   2024-01-09 [1] RSPM
+#>  glue          1.8.0   2024-09-30 [1] RSPM
 #>  graphics    * 4.4.1   2024-08-22 [3] local
 #>  grDevices   * 4.4.1   2024-08-22 [3] local
 #>  grid          4.4.1   2024-08-22 [3] local

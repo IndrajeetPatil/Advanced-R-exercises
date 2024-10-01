@@ -94,7 +94,7 @@ possibly
 #>         })
 #>     }
 #> }
-#> <bytecode: 0x55d0fd497168>
+#> <bytecode: 0x556e27b0fd88>
 #> <environment: namespace:purrr>
 ```
 
@@ -120,7 +120,7 @@ safely
 #>     check_bool(quiet)
 #>     function(...) capture_error(.f(...), otherwise, quiet)
 #> }
-#> <bytecode: 0x55d0fd669a90>
+#> <bytecode: 0x556e27ce45c0>
 #> <environment: namespace:purrr>
 
 purrr:::capture_error
@@ -132,7 +132,7 @@ purrr:::capture_error
 #>         list(result = otherwise, error = e)
 #>     })
 #> }
-#> <bytecode: 0x55d0fd6a4300>
+#> <bytecode: 0x556e27d1cf10>
 #> <environment: namespace:purrr>
 ```
 
@@ -281,10 +281,10 @@ withr::with_tempfile("logfile", code = {
 
   cat(readLines(logfile), sep = "\n")
 })
-#> Function created at: 2024-09-29 00:55:44.631424
-#> Function called at:  2024-09-29 00:55:49.63831
-#> Function called at:  2024-09-29 00:55:54.643631
-#> Function called at:  2024-09-29 00:56:02.652009
+#> Function created at: 2024-10-01 21:35:19.360914
+#> Function called at:  2024-10-01 21:35:24.367915
+#> Function called at:  2024-10-01 21:35:29.37334
+#> Function called at:  2024-10-01 21:35:37.381786
 ```
 
 ---
@@ -333,7 +333,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-09-29
+#>  date     2024-10-01
 #>  pandoc   3.4 @ /opt/hostedtoolcache/pandoc/3.4/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -353,7 +353,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
-#>  glue          1.7.0   2024-01-09 [1] RSPM
+#>  glue          1.8.0   2024-09-30 [1] RSPM
 #>  graphics    * 4.4.1   2024-08-22 [3] local
 #>  grDevices   * 4.4.1   2024-08-22 [3] local
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM

@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x55c7b882aee8>
+#> <environment: 0x55d2e4519c00>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ``` r
 lobstr::ref(e$loop)
-#> █ [1:0x55c7b882aee8] <env> 
-#> └─loop = [1:0x55c7b882aee8]
+#> █ [1:0x55d2e4519c00] <env> 
+#> └─loop = [1:0x55d2e4519c00]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x55c7ba1b7710" "0x55c7ba1b7710"
+#> [1] "0x55d2e5d92c68" "0x55d2e5d92c68"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x55c7ba1fe748" "0x55c7ba1fe748"
+#> [1] "0x55d2e5d71420" "0x55d2e5d71420"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55c7b640b820>
+#> <bytecode: 0x55d2e20fa820>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -507,7 +507,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x55c7b7ed0928>
+#> <bytecode: 0x55d2e3bbf918>
 #> <environment: namespace:rlang>
 ```
 
@@ -560,7 +560,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-09-29
+#>  date     2024-10-01
 #>  pandoc   3.4 @ /opt/hostedtoolcache/pandoc/3.4/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -581,7 +581,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
-#>  glue          1.7.0   2024-01-09 [1] RSPM
+#>  glue          1.8.0   2024-09-30 [1] RSPM
 #>  graphics    * 4.4.1   2024-08-22 [3] local
 #>  grDevices   * 4.4.1   2024-08-22 [3] local
 #>  highr         0.11    2024-05-26 [1] RSPM
