@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x55d2e4519c00>
+#> <environment: 0x55db6d51b5d8>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ``` r
 lobstr::ref(e$loop)
-#> █ [1:0x55d2e4519c00] <env> 
-#> └─loop = [1:0x55d2e4519c00]
+#> █ [1:0x55db6d51b5d8] <env> 
+#> └─loop = [1:0x55db6d51b5d8]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x55d2e5d92c68" "0x55d2e5d92c68"
+#> [1] "0x55db6eb0a330" "0x55db6eb0a330"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x55d2e5d71420" "0x55d2e5d71420"
+#> [1] "0x55db6ea4eae0" "0x55db6ea4eae0"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55d2e20fa820>
+#> <bytecode: 0x55db6b0d2a20>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -507,7 +507,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x55d2e3bbf918>
+#> <bytecode: 0x55db6cba3280>
 #> <environment: namespace:rlang>
 ```
 
@@ -560,8 +560,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-10-01
-#>  pandoc   3.4 @ /opt/hostedtoolcache/pandoc/3.4/x64/ (via rmarkdown)
+#>  date     2024-10-06
+#>  pandoc   3.5 @ /opt/hostedtoolcache/pandoc/3.5/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
@@ -610,7 +610,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.1   2024-08-22 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.1   2024-07-31 [1] RSPM
-#>  xfun          0.47    2024-08-17 [1] RSPM
+#>  xfun          0.48    2024-10-03 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.10  2024-07-26 [1] RSPM
 #> 

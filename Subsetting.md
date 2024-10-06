@@ -418,8 +418,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-10-01
-#>  pandoc   3.4 @ /opt/hostedtoolcache/pandoc/3.4/x64/ (via rmarkdown)
+#>  date     2024-10-06
+#>  pandoc   3.5 @ /opt/hostedtoolcache/pandoc/3.5/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
@@ -461,7 +461,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utils       * 4.4.1   2024-08-22 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.1   2024-07-31 [1] RSPM
-#>  xfun          0.47    2024-08-17 [1] RSPM
+#>  xfun          0.48    2024-10-03 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.10  2024-07-26 [1] RSPM
 #> 
