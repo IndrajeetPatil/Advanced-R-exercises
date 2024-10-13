@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x557100014cc8>
+#> <bytecode: 0x5626a7f2b100>
 #> <environment: namespace:rlang>
 ```
 
@@ -193,7 +193,7 @@ rlang::enexpr
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x5570fb994a50>
+#> <bytecode: 0x5626a38ada50>
 #> <environment: namespace:rlang>
 ```
 
@@ -824,7 +824,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-10-06
+#>  date     2024-10-13
 #>  pandoc   3.5 @ /opt/hostedtoolcache/pandoc/3.5/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -842,7 +842,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  digest        0.6.37   2024-08-19 [1] RSPM
 #>  downlit       0.4.4    2024-06-10 [1] RSPM
 #>  dplyr       * 1.1.4    2023-11-17 [1] RSPM
-#>  evaluate      1.0.0    2024-09-17 [1] RSPM
+#>  evaluate      1.0.1    2024-10-10 [1] RSPM
 #>  fansi         1.0.6    2023-12-08 [1] RSPM
 #>  farver        2.1.2    2024-05-13 [1] RSPM
 #>  fastmap       1.2.0    2024-05-15 [1] RSPM

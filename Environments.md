@@ -40,7 +40,7 @@ library(rlang)
 e <- env()
 e$loop <- e
 env_print(e)
-#> <environment: 0x55db6d51b5d8>
+#> <environment: 0x55d7d457dd40>
 #> Parent: <environment: global>
 #> Bindings:
 #> • loop: <env>
@@ -51,8 +51,8 @@ The binding `loop` should have the same memory address as the environment `e`:
 
 ``` r
 lobstr::ref(e$loop)
-#> █ [1:0x55db6d51b5d8] <env> 
-#> └─loop = [1:0x55db6d51b5d8]
+#> █ [1:0x55d7d457dd40] <env> 
+#> └─loop = [1:0x55d7d457dd40]
 ```
 
 **Q3.** Create a pair of environments as illustrated by this picture.
@@ -71,9 +71,9 @@ e2$deloop <- e1
 
 # following should be the same
 lobstr::obj_addrs(list(e1, e2$deloop))
-#> [1] "0x55db6eb0a330" "0x55db6eb0a330"
+#> [1] "0x55d7d5b42b78" "0x55d7d5b42b78"
 lobstr::obj_addrs(list(e2, e1$loop))
-#> [1] "0x55db6ea4eae0" "0x55db6ea4eae0"
+#> [1] "0x55d7d5f1a908" "0x55d7d5f1a908"
 ```
 
 **Q4.** Explain why `e[[1]]` and `e[c("a", "b")]` don't make sense when `e` is an environment.
@@ -300,7 +300,7 @@ fget("mean", inherits = FALSE)
 fget("mean", inherits = TRUE)
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55db6b0d2a20>
+#> <bytecode: 0x55d7d2131a20>
 #> <environment: namespace:base>
 
 mean <- 5
@@ -507,7 +507,7 @@ rlang::caller_env
 #> {
 #>     parent.frame(n + 1)
 #> }
-#> <bytecode: 0x55db6cba3280>
+#> <bytecode: 0x55d7d3c02280>
 #> <environment: namespace:rlang>
 ```
 
@@ -560,7 +560,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-10-06
+#>  date     2024-10-13
 #>  pandoc   3.5 @ /opt/hostedtoolcache/pandoc/3.5/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -576,7 +576,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  digest        0.6.37  2024-08-19 [1] RSPM
 #>  downlit       0.4.4   2024-06-10 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
-#>  evaluate      1.0.0   2024-09-17 [1] RSPM
+#>  evaluate      1.0.1   2024-10-10 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
 #>  fastmap       1.2.0   2024-05-15 [1] RSPM
 #>  fs            1.6.4   2024-04-25 [1] RSPM
