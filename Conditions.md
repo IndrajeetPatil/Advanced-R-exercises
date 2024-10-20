@@ -292,7 +292,7 @@ rlang::catch_cnd
 #>         return(NULL)
 #>     })))
 #> }
-#> <bytecode: 0x55a83907d5b0>
+#> <bytecode: 0x5563cf714510>
 #> <environment: namespace:rlang>
 ```
 
@@ -691,13 +691,13 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-10-13
+#>  date     2024-10-20
 #>  pandoc   3.5 @ /opt/hostedtoolcache/pandoc/3.5/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
 #>  package     * version date (UTC) lib source
 #>  base        * 4.4.1   2024-08-22 [3] local
-#>  bookdown      0.40    2024-07-02 [1] RSPM
+#>  bookdown      0.41    2024-10-16 [1] RSPM
 #>  brio          1.1.5   2024-04-24 [1] RSPM
 #>  bslib         0.8.0   2024-07-29 [1] RSPM
 #>  cachem        1.1.0   2024-05-16 [1] RSPM
