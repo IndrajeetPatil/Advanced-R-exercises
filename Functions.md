@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55ed1c37c5b0>
+#> <bytecode: 0x55ce291345b0>
 #> <environment: namespace:base>
 ```
 
@@ -354,7 +354,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55ed1c37c5b0>
+#> <bytecode: 0x55ce291345b0>
 #> <environment: namespace:base>
 
 # other package function
@@ -363,7 +363,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x55ed2006c050>
+#> <bytecode: 0x55ce2cb73360>
 #> <environment: namespace:purrr>
 ```
 
@@ -567,7 +567,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x55ed24fc6b00" "0x55ed24fc6b00"
+#> [1] "0x55ce31d654a0" "0x55ce31d654a0"
 #> [1] 100
 ```
 
@@ -662,7 +662,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2024-10-20 00:56:24 UTC"
+#> [1] "2024-10-27 00:55:37 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -882,7 +882,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x55ed20fd4080>
+#> <bytecode: 0x55ce2de10708>
 #> <environment: namespace:withr>
 ```
 
@@ -964,7 +964,7 @@ capture.output
 #>         close(file)
 #>     rval %||% invisible(NULL)
 #> }
-#> <bytecode: 0x55ed1f9321f8>
+#> <bytecode: 0x55ce2c70eae8>
 #> <environment: namespace:utils>
 ```
 
@@ -1304,7 +1304,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-10-20
+#>  date     2024-10-27
 #>  pandoc   3.5 @ /opt/hostedtoolcache/pandoc/3.5/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -1331,7 +1331,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  graphics    * 4.4.1   2024-08-22 [3] local
 #>  grDevices   * 4.4.1   2024-08-22 [3] local
 #>  grid          4.4.1   2024-08-22 [3] local
-#>  gtable        0.3.5   2024-04-22 [1] RSPM
+#>  gtable        0.3.6   2024-10-25 [1] RSPM
 #>  highr         0.11    2024-05-26 [1] RSPM
 #>  hms           1.1.3   2023-03-21 [1] RSPM
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
