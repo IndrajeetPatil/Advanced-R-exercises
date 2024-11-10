@@ -171,7 +171,7 @@ rlang::expr
 #> {
 #>     enexpr(expr)
 #> }
-#> <bytecode: 0x559568b99cf8>
+#> <bytecode: 0x5561e7a6f8e8>
 #> <environment: namespace:rlang>
 ```
 
@@ -193,7 +193,7 @@ rlang::enexpr
 #> {
 #>     .Call(ffi_enexpr, substitute(arg), parent.frame())
 #> }
-#> <bytecode: 0x55956450da50>
+#> <bytecode: 0x5561e33febf8>
 #> <environment: namespace:rlang>
 ```
 
@@ -824,7 +824,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-11-03
+#>  date     2024-11-10
 #>  pandoc   3.5 @ /opt/hostedtoolcache/pandoc/3.5/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -854,11 +854,10 @@ sessioninfo::session_info(include_base = TRUE)
 #>  grDevices   * 4.4.2   2024-10-31 [3] local
 #>  grid          4.4.2   2024-10-31 [3] local
 #>  gtable        0.3.6   2024-10-25 [1] RSPM
-#>  highr         0.11    2024-05-26 [1] RSPM
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
 #>  jquerylib     0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite      1.8.9   2024-09-20 [1] RSPM
-#>  knitr         1.48    2024-07-07 [1] RSPM
+#>  knitr         1.49    2024-11-08 [1] RSPM
 #>  labeling      0.4.3   2023-08-29 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  lobstr      * 1.1.2   2022-06-22 [1] RSPM
@@ -871,9 +870,8 @@ sessioninfo::session_info(include_base = TRUE)
 #>  pkgconfig     2.0.3   2019-09-22 [1] RSPM
 #>  purrr       * 1.0.2   2023-08-10 [1] RSPM
 #>  R6            2.5.1   2021-08-19 [1] RSPM
-#>  rematch2      2.1.2   2020-05-01 [1] RSPM
 #>  rlang       * 1.1.4   2024-06-04 [1] RSPM
-#>  rmarkdown     2.28    2024-08-17 [1] RSPM
+#>  rmarkdown     2.29    2024-11-04 [1] RSPM
 #>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  scales        1.3.0   2023-11-28 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
@@ -884,7 +882,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  utf8          1.2.4   2023-10-22 [1] RSPM
 #>  utils       * 4.4.2   2024-10-31 [3] local
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
-#>  waldo         0.5.3   2024-08-23 [1] RSPM
+#>  waldo         0.6.1   2024-11-07 [1] RSPM
 #>  withr         3.0.2   2024-10-28 [1] RSPM
 #>  xfun          0.49    2024-10-31 [1] RSPM
 #>  xml2          1.3.6   2023-12-04 [1] RSPM
