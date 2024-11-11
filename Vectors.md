@@ -209,7 +209,7 @@ setNames
 #>     names(object) <- nm
 #>     object
 #> }
-#> <bytecode: 0x55ada336c6b0>
+#> <bytecode: 0x5649224c56b0>
 #> <environment: namespace:stats>
 ```
 
@@ -239,7 +239,7 @@ unname
 #>         dimnames(obj) <- NULL
 #>     obj
 #> }
-#> <bytecode: 0x55ada1ab7328>
+#> <bytecode: 0x564920c10328>
 #> <environment: namespace:base>
 ```
 
@@ -840,7 +840,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-11-10
+#>  date     2024-11-11
 #>  pandoc   3.5 @ /opt/hostedtoolcache/pandoc/3.5/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
