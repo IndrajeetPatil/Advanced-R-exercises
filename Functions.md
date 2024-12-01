@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55f210fbdf38>
+#> <bytecode: 0x563d19fb1f38>
 #> <environment: namespace:base>
 ```
 
@@ -354,7 +354,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55f210fbdf38>
+#> <bytecode: 0x563d19fb1f38>
 #> <environment: namespace:base>
 
 # other package function
@@ -363,7 +363,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x55f214cd30f8>
+#> <bytecode: 0x563d1dd22258>
 #> <environment: namespace:purrr>
 ```
 
@@ -567,7 +567,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x55f219c812f8" "0x55f219c812f8"
+#> [1] "0x563d22c752e0" "0x563d22c752e0"
 #> [1] 100
 ```
 
@@ -662,7 +662,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2024-11-24 00:57:55 UTC"
+#> [1] "2024-12-01 01:04:39 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -882,7 +882,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x55f215c7d078>
+#> <bytecode: 0x563d1ec69030>
 #> <environment: namespace:withr>
 ```
 
@@ -964,7 +964,7 @@ capture.output
 #>         close(file)
 #>     rval %||% invisible(NULL)
 #> }
-#> <bytecode: 0x55f2145b98d8>
+#> <bytecode: 0x563d1d5a5e90>
 #> <environment: namespace:utils>
 ```
 
@@ -1304,7 +1304,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-11-24
+#>  date     2024-12-01
 #>  pandoc   3.5 @ /opt/hostedtoolcache/pandoc/3.5/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
