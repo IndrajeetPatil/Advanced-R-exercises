@@ -21,7 +21,7 @@ library(ggplot2, warn.conflicts = FALSE)
 force
 #> function (x) 
 #> x
-#> <bytecode: 0x55d5cff38e10>
+#> <bytecode: 0x55dd9b09a920>
 #> <environment: namespace:base>
 ```
 
@@ -47,15 +47,15 @@ f <- approxfun(x, y)
 f
 #> function (v) 
 #> .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-#> <bytecode: 0x55d5d4bad1c8>
-#> <environment: 0x55d5d4bb25e8>
+#> <bytecode: 0x55dda16a99a8>
+#> <environment: 0x55dda16a9078>
 f(x)
 #>  [1] -0.7786629 -0.3894764 -2.0337983 -0.9823731  0.2478901
 #>  [6] -2.1038646 -0.3814180  2.0749198  1.0271384  0.4730142
 curve(f(x), 0, 11)
 ```
 
-<img src="Function-factories_files/figure-html/Function-factories-4-1.png" width="100%" />
+<img src="Function-factories_files/figure-epub3/Function-factories-4-1.png" width="100%" />
 
 - `ecdf()`
 
@@ -213,7 +213,7 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #> }
-#> <environment: 0x55d5d49bdbb0>
+#> <environment: 0x55dda0cfca00>
 
 new_counter3()
 #> function () 
@@ -221,8 +221,8 @@ new_counter3()
 #>     i <- i + 1
 #>     i
 #> }
-#> <bytecode: 0x55d5d4b1ebc0>
-#> <environment: 0x55d5d4a08498>
+#> <bytecode: 0x55dda0ea7210>
+#> <environment: 0x55dda0d3df08>
 ```
 
 ---
@@ -260,7 +260,7 @@ ggplot2::label_bquote
 #>     }
 #>     structure(fun, class = "labeller")
 #> }
-#> <bytecode: 0x55d5d4d9b1b8>
+#> <bytecode: 0x55dda1075748>
 #> <environment: namespace:ggplot2>
 ```
 
@@ -283,7 +283,7 @@ scales::number_format
 #>             scale_cut = scale_cut, trim = trim, ...)
 #>     }
 #> }
-#> <bytecode: 0x55d5d52a3c28>
+#> <bytecode: 0x55dda12672e0>
 #> <environment: namespace:scales>
 ```
 
@@ -300,7 +300,7 @@ p <- ggplot(mtcars, aes(wt, mpg)) +
 p + facet_grid(. ~ vs, labeller = label_bquote(cols = alpha^.(vs)))
 ```
 
-<img src="Function-factories_files/figure-html/Function-factories-18-1.png" width="100%" />
+<img src="Function-factories_files/figure-epub3/Function-factories-18-1.png" width="100%" />
 
 Or to display axes labels in the desired format:
 
@@ -313,7 +313,7 @@ ggplot(mtcars, aes(wt, mpg)) +
   scale_y_continuous(labels = number_format(accuracy = 0.01, decimal.mark = ","))
 ```
 
-<img src="Function-factories_files/figure-html/Function-factories-19-1.png" width="100%" />
+<img src="Function-factories_files/figure-epub3/Function-factories-19-1.png" width="100%" />
 
 The `ggplot2::label_bquote()` adds an additional class to the returned function.
 
@@ -380,7 +380,7 @@ Let's have a look at one example with each:
 boxcox2(1)
 #> function (x) 
 #> (x^lambda - 1)/lambda
-#> <environment: 0x55d5d2fc63d8>
+#> <environment: 0x55dda11b0698>
 
 boxcox3(mtcars$wt)
 #> function (lambda) 
@@ -392,7 +392,7 @@ boxcox3(mtcars$wt)
 #>         (x^lambda - 1)/lambda
 #>     }
 #> }
-#> <environment: 0x55d5d2bdb998>
+#> <environment: 0x55dda11ee750>
 ```
 
 As can be seen:
@@ -426,7 +426,7 @@ boot_permute(mtcars, "mpg")
 #>     col <- df[[var]]
 #>     col[sample(n, replace = TRUE)]
 #> }
-#> <environment: 0x55d5d3ab3658>
+#> <environment: 0x55dd9e14b0b8>
 ```
 
 This is why we don't need to worry about a copy being made because the `df` in the function environment points to the memory address of the data frame. We can confirm this by comparing their memory addresses:
@@ -435,7 +435,7 @@ This is why we don't need to worry about a copy being made because the `df` in t
 ``` r
 boot_permute_env <- rlang::fn_env(boot_permute(mtcars, "mpg"))
 rlang::env_print(boot_permute_env)
-#> <environment: 0x55d5d38d4ea8>
+#> <environment: 0x55dd9ed5dea0>
 #> Parent: <environment: global>
 #> Bindings:
 #> • n: <int>
@@ -494,8 +494,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 LL1          28.9µs   31.2µs    30870.    12.8KB     37.1
-#> 2 LL2          15.6µs   16.7µs    56090.        0B     33.7
+#> 1 LL1          28.7µs   30.5µs    31776.    12.8KB     25.4
+#> 2 LL2          15.4µs   16.4µs    59464.        0B     29.7
 ```
 
 As can be seen, the second version is much faster than the first version.
@@ -521,16 +521,16 @@ generate_ll_benches <- function(n) {
 #> # A tibble: 10 × 5
 #>    length expression      min   median `itr/sec`
 #>     <dbl> <bch:expr> <bch:tm> <bch:tm>     <dbl>
-#>  1     10 LL1          41.1µs     44µs    21767.
-#>  2     10 LL2          18.5µs     20µs    47884.
-#>  3     20 LL1          42.8µs   45.6µs    20501.
-#>  4     20 LL2          17.8µs   18.8µs    51136.
-#>  5     50 LL1          47.2µs   49.8µs    19647.
-#>  6     50 LL2          17.1µs     18µs    54113.
-#>  7    100 LL1          62.3µs   66.3µs    14694.
-#>  8    100 LL2          18.4µs   19.3µs    49956.
-#>  9   1000 LL1         843.9µs  951.7µs     1076.
-#> 10   1000 LL2          55.9µs   57.5µs    17021.
+#>  1     10 LL1          40.7µs   42.5µs    23095.
+#>  2     10 LL2          18.4µs   19.4µs    50238.
+#>  3     20 LL1          43.6µs   45.8µs    21365.
+#>  4     20 LL2          17.9µs   19.1µs    50729.
+#>  5     50 LL1          47.2µs   49.6µs    19748.
+#>  6     50 LL2            17µs   18.1µs    53648.
+#>  7    100 LL1            63µs   65.5µs    14941.
+#>  8    100 LL2          18.2µs   19.6µs    48460.
+#>  9   1000 LL1         844.7µs  955.5µs     1060.
+#> 10   1000 LL2          55.8µs   57.5µs    17074.
 
 ggplot(
   df_bench,
@@ -550,7 +550,7 @@ ggplot(
   )
 ```
 
-<img src="Function-factories_files/figure-html/Function-factories-28-1.png" width="100%" />
+<img src="Function-factories_files/figure-epub3/Function-factories-28-1.png" width="100%" />
 
 ---
 
@@ -658,7 +658,7 @@ sessioninfo::session_info(include_base = TRUE)
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2024-12-09
+#>  date     2024-12-12
 #>  pandoc   3.6 @ /opt/hostedtoolcache/pandoc/3.6/x64/ (via rmarkdown)
 #> 
 #> ─ Packages ───────────────────────────────────────────────
@@ -666,20 +666,17 @@ sessioninfo::session_info(include_base = TRUE)
 #>  base        * 4.4.2   2024-10-31 [3] local
 #>  bench         1.1.3   2023-05-04 [1] RSPM
 #>  bookdown      0.41    2024-10-16 [1] RSPM
-#>  bslib         0.8.0   2024-07-29 [1] RSPM
-#>  cachem        1.1.0   2024-05-16 [1] RSPM
 #>  cli           3.6.3   2024-06-21 [1] RSPM
 #>  colorspace    2.1-1   2024-07-26 [1] RSPM
 #>  compiler      4.4.2   2024-10-31 [3] local
 #>  datasets    * 4.4.2   2024-10-31 [3] local
 #>  digest        0.6.37  2024-08-19 [1] RSPM
-#>  downlit       0.4.4   2024-06-10 [1] RSPM
 #>  dplyr         1.1.4   2023-11-17 [1] RSPM
+#>  emoji         16.0.0  2024-10-28 [1] RSPM
 #>  evaluate      1.0.1   2024-10-10 [1] RSPM
 #>  fansi         1.0.6   2023-12-08 [1] RSPM
 #>  farver        2.1.2   2024-05-13 [1] RSPM
 #>  fastmap       1.2.0   2024-05-15 [1] RSPM
-#>  fs            1.6.5   2024-10-30 [1] RSPM
 #>  generics      0.1.3   2022-07-05 [1] RSPM
 #>  ggplot2     * 3.5.1   2024-04-23 [1] RSPM
 #>  glue          1.8.0   2024-09-30 [1] RSPM
@@ -688,14 +685,11 @@ sessioninfo::session_info(include_base = TRUE)
 #>  grid          4.4.2   2024-10-31 [3] local
 #>  gtable        0.3.6   2024-10-25 [1] RSPM
 #>  htmltools     0.5.8.1 2024-04-04 [1] RSPM
-#>  jquerylib     0.1.4   2021-04-26 [1] RSPM
-#>  jsonlite      1.8.9   2024-09-20 [1] RSPM
 #>  knitr         1.49    2024-11-08 [1] RSPM
 #>  labeling      0.4.3   2023-08-29 [1] RSPM
 #>  lifecycle     1.0.4   2023-11-07 [1] RSPM
 #>  lobstr        1.1.2   2022-06-22 [1] RSPM
 #>  magrittr    * 2.0.3   2022-03-30 [1] RSPM
-#>  memoise       2.0.1   2021-11-26 [1] RSPM
 #>  methods     * 4.4.2   2024-10-31 [3] local
 #>  munsell       0.5.1   2024-04-01 [1] RSPM
 #>  pillar        1.9.0   2023-03-22 [1] RSPM
@@ -705,10 +699,11 @@ sessioninfo::session_info(include_base = TRUE)
 #>  R6            2.5.1   2021-08-19 [1] RSPM
 #>  rlang       * 1.1.4   2024-06-04 [1] RSPM
 #>  rmarkdown     2.29    2024-11-04 [1] RSPM
-#>  sass          0.4.9   2024-03-15 [1] RSPM
 #>  scales      * 1.3.0   2023-11-28 [1] RSPM
 #>  sessioninfo   1.2.2   2021-12-06 [1] RSPM
 #>  stats       * 4.4.2   2024-10-31 [3] local
+#>  stringi       1.8.4   2024-05-06 [1] RSPM
+#>  stringr       1.5.1   2023-11-14 [1] RSPM
 #>  tibble        3.2.1   2023-03-20 [1] RSPM
 #>  tidyselect    1.2.1   2024-03-11 [1] RSPM
 #>  tools         4.4.2   2024-10-31 [3] local
@@ -717,7 +712,6 @@ sessioninfo::session_info(include_base = TRUE)
 #>  vctrs         0.6.5   2023-12-01 [1] RSPM
 #>  withr         3.0.2   2024-10-28 [1] RSPM
 #>  xfun          0.49    2024-10-31 [1] RSPM
-#>  xml2          1.3.6   2023-12-04 [1] RSPM
 #>  yaml          2.3.10  2024-07-26 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library

@@ -111,6 +111,7 @@
 <span><span class="co">#&gt; Bindings:</span></span>
 <span><span class="co">#&gt; • .Random.seed: &lt;int&gt;</span></span>
 <span><span class="co">#&gt; • foo: &lt;fn&gt;</span></span>
+<span><span class="co">#&gt; • emojis: &lt;chr&gt;</span></span>
 <span><span class="co">#&gt; • f: &lt;chr&gt;</span></span></code></pre></div>
 <p>If <code>local = TRUE</code>, then the environment from which <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> is called will be used.</p>
 <div class="sourceCode" id="cb586"><pre class="downlit sourceCode r">
@@ -122,7 +123,7 @@
 <span>    <span class="fu">foo</span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x559a74a29e88&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x56426d772da0&gt;</span></span>
 <span><span class="co">#&gt; Parent: &lt;environment: global&gt;</span></span></code></pre></div>
 <p>To specify a custom environment, the <code><a href="https://rdrr.io/r/base/sys.source.html">sys.source()</a></code> function can be used, which provides an <code>envir</code> parameter.</p>
 <hr>
@@ -275,17 +276,17 @@
 <span><span class="va">q1</span></span>
 <span><span class="co">#&gt; &lt;quosure&gt;</span></span>
 <span><span class="co">#&gt; expr: ^x</span></span>
-<span><span class="co">#&gt; env:  0x559a766a0770</span></span>
+<span><span class="co">#&gt; env:  0x56426e319428</span></span>
 <span><span class="va">q2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="op">!</span><span class="op">!</span><span class="va">q1</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">q2</span></span>
 <span><span class="co">#&gt; &lt;quosure&gt;</span></span>
 <span><span class="co">#&gt; expr: ^x + (^x)</span></span>
-<span><span class="co">#&gt; env:  0x559a70f8fc58</span></span>
+<span><span class="co">#&gt; env:  0x56426ea2a9b0</span></span>
 <span><span class="va">q3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="op">!</span><span class="op">!</span><span class="va">q2</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">q3</span></span>
 <span><span class="co">#&gt; &lt;quosure&gt;</span></span>
 <span><span class="co">#&gt; expr: ^x + (^x + (^x))</span></span>
-<span><span class="co">#&gt; env:  0x559a743ca8c0</span></span></code></pre></div>
+<span><span class="co">#&gt; env:  0x56426ccdbec0</span></span></code></pre></div>
 <p><strong>A1.</strong> Correctly predicted 😉</p>
 <div class="sourceCode" id="cb598"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">q1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/new_quosure.html">new_quosure</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html">expr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rlang.r-lib.org/reference/env.html">env</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
@@ -313,7 +314,7 @@
 <span></span>
 <span><span class="va">foo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">enenv</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="fu">foo</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x559a752c7f80&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x56426d9c0970&gt;</span></span></code></pre></div>
 <hr>
 </div>
 <div id="data-masks-exercises-20.4.6" class="section level2" number="20.3">
@@ -608,7 +609,7 @@
 <span><span class="co">#&gt;  collate  C.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-12-09</span></span>
+<span><span class="co">#&gt;  date     2024-12-12</span></span>
 <span><span class="co">#&gt;  pandoc   3.6 @ /opt/hostedtoolcache/pandoc/3.6/x64/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────</span></span>
@@ -622,6 +623,7 @@
 <span><span class="co">#&gt;  datasets    * 4.4.2   2024-10-31 [3] local</span></span>
 <span><span class="co">#&gt;  digest        0.6.37  2024-08-19 [1] RSPM</span></span>
 <span><span class="co">#&gt;  downlit       0.4.4   2024-06-10 [1] RSPM</span></span>
+<span><span class="co">#&gt;  emoji         16.0.0  2024-10-28 [1] RSPM</span></span>
 <span><span class="co">#&gt;  evaluate      1.0.1   2024-10-10 [1] RSPM</span></span>
 <span><span class="co">#&gt;  fansi         1.0.6   2023-12-08 [1] RSPM</span></span>
 <span><span class="co">#&gt;  fastmap       1.2.0   2024-05-15 [1] RSPM</span></span>
@@ -645,6 +647,8 @@
 <span><span class="co">#&gt;  sass          0.4.9   2024-03-15 [1] RSPM</span></span>
 <span><span class="co">#&gt;  sessioninfo   1.2.2   2021-12-06 [1] RSPM</span></span>
 <span><span class="co">#&gt;  stats       * 4.4.2   2024-10-31 [3] local</span></span>
+<span><span class="co">#&gt;  stringi       1.8.4   2024-05-06 [1] RSPM</span></span>
+<span><span class="co">#&gt;  stringr       1.5.1   2023-11-14 [1] RSPM</span></span>
 <span><span class="co">#&gt;  tools         4.4.2   2024-10-31 [3] local</span></span>
 <span><span class="co">#&gt;  utf8          1.2.4   2023-10-22 [1] RSPM</span></span>
 <span><span class="co">#&gt;  utils       * 4.4.2   2024-10-31 [3] local</span></span>
@@ -692,7 +696,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2024-12-09.</p>
+    <p>"<strong>Advanced R Exercises</strong>" was written by <a class="text-light" href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>. It was last built on 2024-12-12.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
