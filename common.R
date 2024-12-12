@@ -21,3 +21,5 @@ set.seed(1024)
 
 # needed for the pipe operator
 library(magrittr)
+
+emojis <- emoji::emoji_name
