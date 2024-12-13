@@ -15,10 +15,12 @@ library(tibble)
 
 
 ``` r
+# styler: off
 mtcars[mtcars$cyl = 4, ]
 mtcars[-1:4, ]
 mtcars[mtcars$cyl <= 5]
 mtcars[mtcars$cyl == 4 | 6, ]
+# styler: on
 ```
 
 **A1.** Fixed versions of these commands:

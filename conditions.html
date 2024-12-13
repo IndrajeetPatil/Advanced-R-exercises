@@ -314,7 +314,7 @@
 <span><span class="co">#&gt;         return(NULL)</span></span>
 <span><span class="co">#&gt;     })))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x556c768b3b20&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x55c084046010&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:rlang&gt;</span></span></code></pre></div>
 <p>As mentioned in the function docs:</p>
 <blockquote>
@@ -578,8 +578,11 @@
 <div class="sourceCode" id="cb248"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bottles_of_beer</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">i</span> <span class="op">=</span> <span class="fl">99</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span></span>
-<span>    <span class="st">"There are "</span>, <span class="va">i</span>, <span class="st">" bottles of beer on the wall, "</span>,</span>
-<span>    <span class="va">i</span>, <span class="st">" bottles of beer."</span></span>
+<span>    <span class="st">"There are "</span>,</span>
+<span>    <span class="va">i</span>,</span>
+<span>    <span class="st">" bottles of beer on the wall, "</span>,</span>
+<span>    <span class="va">i</span>,</span>
+<span>    <span class="st">" bottles of beer."</span></span>
 <span>  <span class="op">)</span></span>
 <span>  <span class="kw">while</span> <span class="op">(</span><span class="va">i</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span></span>
@@ -588,8 +591,11 @@
 <span>        <span class="va">i</span> <span class="op">&lt;&lt;-</span> <span class="va">i</span> <span class="op">-</span> <span class="fl">1</span></span>
 <span>        <span class="kw">if</span> <span class="op">(</span><span class="va">i</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span></span>
-<span>            <span class="st">"Take one down, pass it around, "</span>, <span class="va">i</span>,</span>
-<span>            <span class="st">" bottle"</span>, <span class="kw">if</span> <span class="op">(</span><span class="va">i</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="st">"s"</span>, <span class="st">" of beer on the wall."</span></span>
+<span>            <span class="st">"Take one down, pass it around, "</span>,</span>
+<span>            <span class="va">i</span>,</span>
+<span>            <span class="st">" bottle"</span>,</span>
+<span>            <span class="kw">if</span> <span class="op">(</span><span class="va">i</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="st">"s"</span>,</span>
+<span>            <span class="st">" of beer on the wall."</span></span>
 <span>          <span class="op">)</span></span>
 <span>        <span class="op">}</span></span>
 <span>      <span class="op">}</span></span>

@@ -151,7 +151,9 @@
 <span>      <span class="va">children</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">dots</span><span class="op">$</span><span class="va">unnamed</span>, .f <span class="op">=</span> <span class="op">~</span> <span class="fu">escape</span><span class="op">(</span><span class="va">.x</span>, <span class="op">!</span><span class="op">!</span><span class="va">script</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span>      <span class="fu">html</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span></span>
-<span>        <span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"&lt;"</span>, <span class="va">tag</span><span class="op">)</span>, <span class="va">attribs</span>, <span class="st">"&gt;"</span>,</span>
+<span>        <span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"&lt;"</span>, <span class="va">tag</span><span class="op">)</span>,</span>
+<span>        <span class="va">attribs</span>,</span>
+<span>        <span class="st">"&gt;"</span>,</span>
 <span>        <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">children</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,</span>
 <span>        <span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"&lt;/"</span>, <span class="va">tag</span>, <span class="st">"&gt;"</span><span class="op">)</span></span>
 <span>      <span class="op">)</span><span class="op">)</span></span>
@@ -200,26 +202,119 @@
 <p><strong>A3.</strong> To work with this, we first need to copy-paste relevant code from the book:</p>
 <div class="sourceCode" id="cb627"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"a"</span>, <span class="st">"abbr"</span>, <span class="st">"address"</span>, <span class="st">"article"</span>, <span class="st">"aside"</span>, <span class="st">"audio"</span>,</span>
-<span>  <span class="st">"b"</span>, <span class="st">"bdi"</span>, <span class="st">"bdo"</span>, <span class="st">"blockquote"</span>, <span class="st">"body"</span>, <span class="st">"button"</span>, <span class="st">"canvas"</span>,</span>
-<span>  <span class="st">"caption"</span>, <span class="st">"cite"</span>, <span class="st">"code"</span>, <span class="st">"colgroup"</span>, <span class="st">"data"</span>, <span class="st">"datalist"</span>,</span>
-<span>  <span class="st">"dd"</span>, <span class="st">"del"</span>, <span class="st">"details"</span>, <span class="st">"dfn"</span>, <span class="st">"div"</span>, <span class="st">"dl"</span>, <span class="st">"dt"</span>, <span class="st">"em"</span>,</span>
-<span>  <span class="st">"eventsource"</span>, <span class="st">"fieldset"</span>, <span class="st">"figcaption"</span>, <span class="st">"figure"</span>, <span class="st">"footer"</span>,</span>
-<span>  <span class="st">"form"</span>, <span class="st">"h1"</span>, <span class="st">"h2"</span>, <span class="st">"h3"</span>, <span class="st">"h4"</span>, <span class="st">"h5"</span>, <span class="st">"h6"</span>, <span class="st">"head"</span>, <span class="st">"header"</span>,</span>
-<span>  <span class="st">"hgroup"</span>, <span class="st">"html"</span>, <span class="st">"i"</span>, <span class="st">"iframe"</span>, <span class="st">"ins"</span>, <span class="st">"kbd"</span>, <span class="st">"label"</span>,</span>
-<span>  <span class="st">"legend"</span>, <span class="st">"li"</span>, <span class="st">"mark"</span>, <span class="st">"map"</span>, <span class="st">"menu"</span>, <span class="st">"meter"</span>, <span class="st">"nav"</span>,</span>
-<span>  <span class="st">"noscript"</span>, <span class="st">"object"</span>, <span class="st">"ol"</span>, <span class="st">"optgroup"</span>, <span class="st">"option"</span>, <span class="st">"output"</span>,</span>
-<span>  <span class="st">"p"</span>, <span class="st">"pre"</span>, <span class="st">"progress"</span>, <span class="st">"q"</span>, <span class="st">"ruby"</span>, <span class="st">"rp"</span>, <span class="st">"rt"</span>, <span class="st">"s"</span>, <span class="st">"samp"</span>,</span>
-<span>  <span class="st">"script"</span>, <span class="st">"section"</span>, <span class="st">"select"</span>, <span class="st">"small"</span>, <span class="st">"span"</span>, <span class="st">"strong"</span>,</span>
-<span>  <span class="st">"style"</span>, <span class="st">"sub"</span>, <span class="st">"summary"</span>, <span class="st">"sup"</span>, <span class="st">"table"</span>, <span class="st">"tbody"</span>, <span class="st">"td"</span>,</span>
-<span>  <span class="st">"textarea"</span>, <span class="st">"tfoot"</span>, <span class="st">"th"</span>, <span class="st">"thead"</span>, <span class="st">"time"</span>, <span class="st">"title"</span>, <span class="st">"tr"</span>,</span>
-<span>  <span class="st">"u"</span>, <span class="st">"ul"</span>, <span class="st">"var"</span>, <span class="st">"video"</span></span>
+<span>  <span class="st">"a"</span>,</span>
+<span>  <span class="st">"abbr"</span>,</span>
+<span>  <span class="st">"address"</span>,</span>
+<span>  <span class="st">"article"</span>,</span>
+<span>  <span class="st">"aside"</span>,</span>
+<span>  <span class="st">"audio"</span>,</span>
+<span>  <span class="st">"b"</span>,</span>
+<span>  <span class="st">"bdi"</span>,</span>
+<span>  <span class="st">"bdo"</span>,</span>
+<span>  <span class="st">"blockquote"</span>,</span>
+<span>  <span class="st">"body"</span>,</span>
+<span>  <span class="st">"button"</span>,</span>
+<span>  <span class="st">"canvas"</span>,</span>
+<span>  <span class="st">"caption"</span>,</span>
+<span>  <span class="st">"cite"</span>,</span>
+<span>  <span class="st">"code"</span>,</span>
+<span>  <span class="st">"colgroup"</span>,</span>
+<span>  <span class="st">"data"</span>,</span>
+<span>  <span class="st">"datalist"</span>,</span>
+<span>  <span class="st">"dd"</span>,</span>
+<span>  <span class="st">"del"</span>,</span>
+<span>  <span class="st">"details"</span>,</span>
+<span>  <span class="st">"dfn"</span>,</span>
+<span>  <span class="st">"div"</span>,</span>
+<span>  <span class="st">"dl"</span>,</span>
+<span>  <span class="st">"dt"</span>,</span>
+<span>  <span class="st">"em"</span>,</span>
+<span>  <span class="st">"eventsource"</span>,</span>
+<span>  <span class="st">"fieldset"</span>,</span>
+<span>  <span class="st">"figcaption"</span>,</span>
+<span>  <span class="st">"figure"</span>,</span>
+<span>  <span class="st">"footer"</span>,</span>
+<span>  <span class="st">"form"</span>,</span>
+<span>  <span class="st">"h1"</span>,</span>
+<span>  <span class="st">"h2"</span>,</span>
+<span>  <span class="st">"h3"</span>,</span>
+<span>  <span class="st">"h4"</span>,</span>
+<span>  <span class="st">"h5"</span>,</span>
+<span>  <span class="st">"h6"</span>,</span>
+<span>  <span class="st">"head"</span>,</span>
+<span>  <span class="st">"header"</span>,</span>
+<span>  <span class="st">"hgroup"</span>,</span>
+<span>  <span class="st">"html"</span>,</span>
+<span>  <span class="st">"i"</span>,</span>
+<span>  <span class="st">"iframe"</span>,</span>
+<span>  <span class="st">"ins"</span>,</span>
+<span>  <span class="st">"kbd"</span>,</span>
+<span>  <span class="st">"label"</span>,</span>
+<span>  <span class="st">"legend"</span>,</span>
+<span>  <span class="st">"li"</span>,</span>
+<span>  <span class="st">"mark"</span>,</span>
+<span>  <span class="st">"map"</span>,</span>
+<span>  <span class="st">"menu"</span>,</span>
+<span>  <span class="st">"meter"</span>,</span>
+<span>  <span class="st">"nav"</span>,</span>
+<span>  <span class="st">"noscript"</span>,</span>
+<span>  <span class="st">"object"</span>,</span>
+<span>  <span class="st">"ol"</span>,</span>
+<span>  <span class="st">"optgroup"</span>,</span>
+<span>  <span class="st">"option"</span>,</span>
+<span>  <span class="st">"output"</span>,</span>
+<span>  <span class="st">"p"</span>,</span>
+<span>  <span class="st">"pre"</span>,</span>
+<span>  <span class="st">"progress"</span>,</span>
+<span>  <span class="st">"q"</span>,</span>
+<span>  <span class="st">"ruby"</span>,</span>
+<span>  <span class="st">"rp"</span>,</span>
+<span>  <span class="st">"rt"</span>,</span>
+<span>  <span class="st">"s"</span>,</span>
+<span>  <span class="st">"samp"</span>,</span>
+<span>  <span class="st">"script"</span>,</span>
+<span>  <span class="st">"section"</span>,</span>
+<span>  <span class="st">"select"</span>,</span>
+<span>  <span class="st">"small"</span>,</span>
+<span>  <span class="st">"span"</span>,</span>
+<span>  <span class="st">"strong"</span>,</span>
+<span>  <span class="st">"style"</span>,</span>
+<span>  <span class="st">"sub"</span>,</span>
+<span>  <span class="st">"summary"</span>,</span>
+<span>  <span class="st">"sup"</span>,</span>
+<span>  <span class="st">"table"</span>,</span>
+<span>  <span class="st">"tbody"</span>,</span>
+<span>  <span class="st">"td"</span>,</span>
+<span>  <span class="st">"textarea"</span>,</span>
+<span>  <span class="st">"tfoot"</span>,</span>
+<span>  <span class="st">"th"</span>,</span>
+<span>  <span class="st">"thead"</span>,</span>
+<span>  <span class="st">"time"</span>,</span>
+<span>  <span class="st">"title"</span>,</span>
+<span>  <span class="st">"tr"</span>,</span>
+<span>  <span class="st">"u"</span>,</span>
+<span>  <span class="st">"ul"</span>,</span>
+<span>  <span class="st">"var"</span>,</span>
+<span>  <span class="st">"video"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">void_tags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"area"</span>, <span class="st">"base"</span>, <span class="st">"br"</span>, <span class="st">"col"</span>, <span class="st">"command"</span>, <span class="st">"embed"</span>,</span>
-<span>  <span class="st">"hr"</span>, <span class="st">"img"</span>, <span class="st">"input"</span>, <span class="st">"keygen"</span>, <span class="st">"link"</span>, <span class="st">"meta"</span>, <span class="st">"param"</span>,</span>
-<span>  <span class="st">"source"</span>, <span class="st">"track"</span>, <span class="st">"wbr"</span></span>
+<span>  <span class="st">"area"</span>,</span>
+<span>  <span class="st">"base"</span>,</span>
+<span>  <span class="st">"br"</span>,</span>
+<span>  <span class="st">"col"</span>,</span>
+<span>  <span class="st">"command"</span>,</span>
+<span>  <span class="st">"embed"</span>,</span>
+<span>  <span class="st">"hr"</span>,</span>
+<span>  <span class="st">"img"</span>,</span>
+<span>  <span class="st">"input"</span>,</span>
+<span>  <span class="st">"keygen"</span>,</span>
+<span>  <span class="st">"link"</span>,</span>
+<span>  <span class="st">"meta"</span>,</span>
+<span>  <span class="st">"param"</span>,</span>
+<span>  <span class="st">"source"</span>,</span>
+<span>  <span class="st">"track"</span>,</span>
+<span>  <span class="st">"wbr"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">html_tags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
@@ -289,7 +384,9 @@
 <span>  <span class="va">children</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span><span class="op">(</span><span class="va">dots</span><span class="op">$</span><span class="va">unnamed</span>, <span class="va">escape</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="fu">html</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span></span>
-<span>    <span class="st">"&lt;body"</span>, <span class="va">attribs</span>, <span class="st">"&gt;"</span>,</span>
+<span>    <span class="st">"&lt;body"</span>,</span>
+<span>    <span class="va">attribs</span>,</span>
+<span>    <span class="st">"&gt;"</span>,</span>
 <span>    <span class="fu">format_code</span><span class="op">(</span><span class="va">children</span>, indent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    <span class="st">"&lt;/body&gt;"</span></span>
 <span>  <span class="op">)</span><span class="op">)</span></span>

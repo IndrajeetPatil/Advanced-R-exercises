@@ -20,7 +20,7 @@ library(tidyverse, warn.conflicts = FALSE)
 match.fun("mean")
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55597b950840>
+#> <bytecode: 0x55ae7fcc6840>
 #> <environment: namespace:base>
 ```
 
@@ -354,7 +354,7 @@ names(primitives)
 mean
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55597b950840>
+#> <bytecode: 0x55ae7fcc6840>
 #> <environment: namespace:base>
 
 # other package function
@@ -363,7 +363,7 @@ purrr::map
 #> {
 #>     map_("list", .x, .f, ..., .progress = .progress)
 #> }
-#> <bytecode: 0x5559811c69f0>
+#> <bytecode: 0x55ae8555b1d8>
 #> <environment: namespace:purrr>
 ```
 
@@ -567,7 +567,7 @@ f2 <- function(x = z) {
 }
 
 f2()
-#> [1] "0x555981b756c8" "0x555981b756c8"
+#> [1] "0x55ae85eebd48" "0x55ae85eebd48"
 #> [1] 100
 ```
 
@@ -662,7 +662,7 @@ show_time <- function(x = stop("Error!")) {
 }
 
 show_time()
-#> [1] "2024-12-13 03:59:11 UTC"
+#> [1] "2024-12-13 04:11:27 UTC"
 ```
 
 **A5.** Let's take this step-by-step.
@@ -809,8 +809,13 @@ So having a single argument `col` would not work as it will be ambiguous as to w
 ``` r
 localTitle <- function(..., col, bg, pch, cex, lty, lwd) title(...)
 
-title <- function(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
-                  line = NA, outer = FALSE, ...) {
+title <- function(main = NULL,
+  sub = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  line = NA,
+  outer = FALSE,
+  ...) {
   main <- as.graphicsAnnot(main)
   sub <- as.graphicsAnnot(sub)
   xlab <- as.graphicsAnnot(xlab)
@@ -882,7 +887,7 @@ withr::with_dir
 #>     on.exit(setwd(old))
 #>     force(code)
 #> }
-#> <bytecode: 0x555982a025d8>
+#> <bytecode: 0x55ae86d7a438>
 #> <environment: namespace:withr>
 ```
 
@@ -964,7 +969,7 @@ capture.output
 #>         close(file)
 #>     rval %||% invisible(NULL)
 #> }
-#> <bytecode: 0x555982f455a8>
+#> <bytecode: 0x55ae872b95c8>
 #> <environment: namespace:utils>
 ```
 
