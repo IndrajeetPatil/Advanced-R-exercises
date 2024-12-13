@@ -36,7 +36,7 @@ map(x, 1)
 as_mapper(1)
 #> function (x, ...) 
 #> pluck_raw(x, list(1), .default = NULL)
-#> <environment: 0x55e773b6d830>
+#> <environment: 0x563ae93eca58>
 
 map(x, list(2, 1))
 #> [[1]]
@@ -47,7 +47,7 @@ map(x, list(2, 1))
 as_mapper(list(2, 1))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, 1), .default = NULL)
-#> <environment: 0x55e773eafa90>
+#> <environment: 0x563ae9734110>
 
 # mapping by name -----------------------
 
@@ -65,7 +65,7 @@ map(y, "m")
 as_mapper("m")
 #> function (x, ...) 
 #> pluck_raw(x, list("m"), .default = NULL)
-#> <environment: 0x55e771f21190>
+#> <environment: 0x563ae7772130>
 
 # mixing position and name
 map(y, list(2, "m"))
@@ -77,7 +77,7 @@ map(y, list(2, "m"))
 as_mapper(list(2, "m"))
 #> function (x, ...) 
 #> pluck_raw(x, list(2, "m"), .default = NULL)
-#> <environment: 0x55e771c0c4e8>
+#> <environment: 0x563ae742c738>
 
 # compact functions ----------------------------
 
@@ -139,7 +139,7 @@ map(1:3, runif(2))
 as_mapper(runif(2))
 #> function (x, ...) 
 #> pluck_raw(x, list(0.597890264587477, 0.587997315218672), .default = NULL)
-#> <environment: 0x55e7737a0988>
+#> <environment: 0x563ae901c1d0>
 ```
 
 ---
@@ -880,7 +880,7 @@ library(rlang)
 
 e <- env("x" = 1, "y" = 2)
 rlang::env_print(e)
-#> <environment: 0x55e773f0db10>
+#> <environment: 0x563ae9789438>
 #> Parent: <environment: global>
 #> Bindings:
 #> • x: <dbl>
@@ -964,7 +964,7 @@ close_enough <- function(x1, x2, tolerance = 0.001) {
 
 find_fixed_point <- function(.f, .guess, tolerance = 0.001) {
   .next <- .f(.guess)
-  is_close_enough <- close_enough(.next, .guess, tol = tolerance)
+  is_close_enough <- close_enough(.next, .guess, tolerance = tolerance)
 
   if (is_close_enough) {
     return(.next)
