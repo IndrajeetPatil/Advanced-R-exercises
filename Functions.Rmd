@@ -518,8 +518,13 @@ So having a single argument `col` would not work as it will be ambiguous as to w
 ```{r Functions-46, eval=FALSE}
 localTitle <- function(..., col, bg, pch, cex, lty, lwd) title(...)
 
-title <- function(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
-                  line = NA, outer = FALSE, ...) {
+title <- function(main = NULL,
+  sub = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  line = NA,
+  outer = FALSE,
+  ...) {
   main <- as.graphicsAnnot(main)
   sub <- as.graphicsAnnot(sub)
   xlab <- as.graphicsAnnot(xlab)
