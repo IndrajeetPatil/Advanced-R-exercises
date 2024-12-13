@@ -77,7 +77,7 @@ x <- outer(1:5, 1:5, FUN = "*")
 x[upper.tri(x)]
 ```
 
-A3. The documentation for `upper.tri()` states-
+**A3.** The documentation for `upper.tri()` states-
 
 > Returns a matrix of logicals the same size of a given matrix with entries `TRUE` in the **upper triangle**
 
