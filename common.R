@@ -21,5 +21,6 @@ set.seed(1024)
 
 # needed for the pipe operator
 library(magrittr)
+options(crayon.enabled = FALSE)
 
 emojis <- emoji::emoji_name

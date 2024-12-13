@@ -609,7 +609,7 @@ close_enough <- function(x1, x2, tolerance = 0.001) {
 
 find_fixed_point <- function(.f, .guess, tolerance = 0.001) {
   .next <- .f(.guess)
-  is_close_enough <- close_enough(.next, .guess, tol = tolerance)
+  is_close_enough <- close_enough(.next, .guess, tolerance = tolerance)
 
   if (is_close_enough) {
     return(.next)
